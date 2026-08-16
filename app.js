@@ -1450,335 +1450,6 @@ function ensureTableEmptyStates(view, route) {
   });
 }
 
-const Router = {
-  currentRoute: "dashboard",
-  filters: {}, // Route-specific filter presets (e.g. from drilldown clicks)
-
-  init() {
-    // Nav menu items clicks
-    document.querySelectorAll(".nav-item").forEach(item => {
-      item.setAttribute("role", "button");
-      item.setAttribute("tabindex", "0");
-      item.addEventListener("click", () => {
-        const route = item.getAttribute("data-route");
-        this.navigate(route);
-      });
-      item.addEventListener("keydown", event => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          this.navigate(item.getAttribute("data-route"));
-        }
-      });
-    });
-
-    // Sidebar Collapse button
-    const toggleSidebarBtn = document.getElementById("toggle-sidebar");
-    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-    const sidebarScrim = document.getElementById("sidebar-scrim");
-    const sidebar = document.getElementById("sidebar");
-    const container = document.querySelector(".admin-container");
-    
-    toggleSidebarBtn.addEventListener("click", () => {
-      container.classList.toggle("sidebar-collapsed");
-      const icon = toggleSidebarBtn.querySelector("i");
-      if (container.classList.contains("sidebar-collapsed")) {
-        icon.setAttribute("data-lucide", "chevron-right");
-      } else {
-        icon.setAttribute("data-lucide", "chevron-left");
-      }
-      window.lucide?.createIcons();
-    });
-
-    const setMobileNavigation = (open) => {
-      container.classList.toggle("mobile-nav-open", open);
-      mobileMenuBtn?.setAttribute("aria-expanded", String(open));
-      document.body.classList.toggle("nav-open", open);
-    };
-
-    mobileMenuBtn?.addEventListener("click", () => {
-      setMobileNavigation(!container.classList.contains("mobile-nav-open"));
-    });
-
-    sidebarScrim?.addEventListener("click", () => setMobileNavigation(false));
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setMobileNavigation(false);
-    });
-
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 768) setMobileNavigation(false);
-    });
-
-    // Fast module finder in the navigation rail.
-    const navSearchInput = document.getElementById("nav-search-input");
-    const filterNavigation = () => {
-      const query = navSearchInput.value.trim().toLowerCase();
-      document.querySelectorAll(".sidebar-nav .nav-item").forEach(item => {
-        item.classList.toggle("nav-filtered", Boolean(query) && !item.textContent.toLowerCase().includes(query));
-      });
-      document.querySelectorAll(".sidebar-nav .nav-group").forEach(group => {
-        const hasVisibleItem = group.querySelector(".nav-item:not(.nav-filtered)");
-        group.classList.toggle("nav-group-filtered", Boolean(query) && !hasVisibleItem);
-      });
-    };
-
-    navSearchInput?.addEventListener("input", filterNavigation);
-    document.addEventListener("keydown", event => {
-      if (event.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName)) {
-        event.preventDefault();
-        navSearchInput?.focus();
-      }
-    });
-
-    document.querySelectorAll("[data-route-shortcut]").forEach(button => {
-      button.addEventListener("click", () => this.navigate(button.dataset.routeShortcut));
-    });
-
-    // Clickable counts on Dashboard for drill-down redirection
-    document.querySelectorAll(".dash-card[data-drilldown]").forEach(card => {
-      card.addEventListener("click", () => {
-        const route = card.getAttribute("data-drilldown");
-        this.navigate(route);
-      });
-    });
-
-    // Specific Drill-down Clickable metrics
-    document.getElementById("drill-failed-jobs").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("failed-jobs");
-    });
-    
-    document.getElementById("drill-dead-letters").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("dead-letters");
-    });
-
-    document.getElementById("drill-webhook-exceptions").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("webhooks", { status: "FAILED" });
-    });
-
-    document.getElementById("drill-failed-imports").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("imports", { status: "Dry-run Failed" });
-    });
-
-    document.getElementById("drill-pending-exports").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("exports", { status: "Pending Approval" });
-    });
-
-    document.getElementById("drill-active-impersonations").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("support-access");
-    });
-
-    document.getElementById("drill-security-sessions").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("security-sessions");
-    });
-
-    document.getElementById("drill-security-alerts").addEventListener("click", (e) => {
-      e.stopPropagation();
-      this.navigate("audit-logs");
-    });
-  },
-
-  navigate(route, filterPresets = null) {
-    this.currentRoute = route;
-    this.filters = filterPresets || {};
-    document.querySelector(".admin-container")?.classList.remove("mobile-nav-open");
-    document.getElementById("mobile-menu-btn")?.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("nav-open");
-    
-    // Toggle active sidebar indicator
-    document.querySelectorAll(".nav-item").forEach(item => {
-      item.classList.remove("active");
-    });
-    let activeNavItem = null;
-    if (route === "dashboard") {
-      if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("creator-nav-dashboard");
-      else if (Simulator.activeRole === "csr") activeNavItem = document.getElementById("csr-nav-dashboard");
-      else if (Simulator.activeRole === "coo") activeNavItem = document.getElementById("coo-nav-dashboard");
-      else if (Simulator.activeRole === "operational_manager") activeNavItem = document.getElementById("om-nav-dashboard");
-      else activeNavItem = document.getElementById("nav-dashboard");
-    } else {
-      activeNavItem = document.getElementById(`nav-${route}`);
-    }
-    if (activeNavItem) {
-      activeNavItem.classList.add("active");
-    }
-
-    // Toggle visible content views
-    document.querySelectorAll(".content-view").forEach(view => {
-      view.classList.remove("active");
-    });
-    const isCreatorWorkspace = route.startsWith("creator-");
-    const isCooWorkspace = route.startsWith("coo-");
-    const isOmWorkspace = route.startsWith("om-");
-    const isCsrWorkspace = route.startsWith("csr-");
-    let activeView = null;
-    if (isCreatorWorkspace) activeView = document.getElementById("view-creator-workspace");
-    else if (isCsrWorkspace) activeView = document.getElementById("view-csr-workspace");
-    else if (isCooWorkspace) activeView = document.getElementById("view-coo-workspace");
-    else if (isOmWorkspace) activeView = document.getElementById("view-om-workspace");
-    else activeView = document.getElementById(`view-${route}`);
-    
-    if (activeView) {
-      activeView.classList.remove("hidden");
-      activeView.classList.add("active");
-      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace) prepareModuleView(route, activeView);
-    }
-
-    // Update Header title
-    const viewTitle = document.getElementById("view-title");
-    const routeTitleMap = {
-      "dashboard": "Dashboard Overview",
-      "users": "Users & Account Governance",
-      "invitations": "Outbound Member Invitations",
-      "security-sessions": "Security & Live User Sessions",
-      "roles-permissions": "Access Control Policies & Matrix",
-      "reference-data": "ADM System Reference Data",
-      "system-settings": "System Settings Configuration",
-      "business-rules": "Active Business Logic Rules",
-      "providers": "Integration Infrastructure Providers",
-      "webhooks": "Webhook Endpoints & Logs",
-      "integration-health": "Provider Latency Logs & Health",
-      "queue-jobs": "Background Queue Job Logs",
-      "failed-jobs": "Failed Job Restarts",
-      "dead-letters": "Dead-Letter Jobs",
-      "integration-exceptions": "Logged Integration Exceptions",
-      "imports": "Staged File Imports & Validation",
-      "exports": "Controlled Data Exports & Approvals",
-      "feature-flags": "Release Controls & Feature Flags",
-      "audit-logs": "AUD System Searchable Audit Logs",
-      "system-status": "System Freshness & Resource Status",
-      "retention-policies": "Data Retention Mapping Policies",
-      "archive": "Archived Partitions & Files",
-      "legal-holds": "Active Litigation Holds",
-      "privacy-requests": "Privacy GDPR Erasure/Access Requests",
-      "support-access": "Impersonation Support Access Logs"
-    };
-    
-    const roleDashboardTitles = {
-      platform_admin: "Dashboard Overview",
-      operational_manager: "Operations Command Center",
-      coo: "COO Operating Overview",
-      csr: "CSR Command Center",
-      course_creator: "Authoring Command Center",
-      cto_developer: "Technical Operations Overview",
-      compliance_officer: "Compliance Overview",
-      support_agent: "Support Operations Overview"
-    };
-    viewTitle.textContent = route === "dashboard"
-      ? (roleDashboardTitles[Simulator.activeRole] || "Authoring Command Center")
-      : (creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Platform Operations");
-    
-    // Trigger specific rendering controller for the view
-    this.renderView(route);
-    
-    // Reset Data Freshness indicator
-    freshnessSeconds = 0;
-    updateFreshnessText();
-  },
-
-  renderView(route) {
-    switch (route) {
-      case "dashboard":
-        RenderEngine.dashboard();
-        break;
-      case "users":
-        RenderEngine.users();
-        break;
-      case "invitations":
-        RenderEngine.invitations();
-        break;
-      case "security-sessions":
-        RenderEngine.sessions();
-        break;
-      case "roles-permissions":
-        RenderEngine.rolesMatrix();
-        break;
-      case "reference-data":
-        RenderEngine.referenceData();
-        break;
-      case "system-settings":
-        RenderEngine.systemSettings();
-        break;
-      case "business-rules":
-        RenderEngine.businessRules();
-        break;
-      case "providers":
-        RenderEngine.providers();
-        break;
-      case "webhooks":
-        RenderEngine.webhooks();
-        break;
-      case "integration-health":
-        RenderEngine.integrationHealth();
-        break;
-      case "queue-jobs":
-        RenderEngine.queueJobs();
-        break;
-      case "failed-jobs":
-        RenderEngine.failedJobs();
-        break;
-      case "dead-letters":
-        RenderEngine.deadLetters();
-        break;
-      case "integration-exceptions":
-        RenderEngine.integrationExceptions();
-        break;
-      case "imports":
-        RenderEngine.imports();
-        break;
-      case "exports":
-        RenderEngine.exports();
-        break;
-      case "feature-flags":
-        RenderEngine.featureFlags();
-        break;
-      case "audit-logs":
-        RenderEngine.auditLogs();
-        break;
-      case "system-status":
-        RenderEngine.systemStatus();
-        break;
-      case "retention-policies":
-        RenderEngine.retentionPolicies();
-        break;
-      case "archive":
-        RenderEngine.archive();
-        break;
-      case "legal-holds":
-        RenderEngine.legalHolds();
-        break;
-      case "privacy-requests":
-        RenderEngine.privacyRequests();
-        break;
-      case "support-access":
-        RenderEngine.supportAccess();
-        break;
-      default:
-        if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
-        else if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
-        else if (route.startsWith("coo-")) RenderEngine.cooWorkspace(route);
-        else if (route.startsWith("om-")) RenderEngine.omWorkspace(route);
-        break;
-    }
-    ensureTableEmptyStates(document.getElementById(route.startsWith("creator-") ? "view-creator-workspace" : (route.startsWith("csr-") ? "view-csr-workspace" : (route.startsWith("coo-") ? "view-coo-workspace" : (route.startsWith("om-") ? "view-om-workspace" : `view-${route}`)))), route);
-  }
-};
-
-// ============================================================================
-// 3. UI RENDERING ENGINE (High density data grids)
-// ============================================================================
-
-
-// ============================================================================
-// CSR (CUSTOMER SERVICE & SALES) ROUTE DEFINITIONS & MAPPINGS
-// ============================================================================
-
 
 // ============================================================================
 // COURSE CREATOR (CC) - ROUTE DEFINITIONS & METRICS ENGINE (28 SUB-ROUTES)
@@ -2272,1158 +1943,340 @@ const creatorRouteDefinitions = {
   }
 };
 
-const csrRouteDefinitions = {
-  "csr-dashboard": {
-    title: "CSR Command Center",
-    group: "Customer Service & Sales",
-    description: "Assigned prospect management, trial qualification, follow-ups, and assisted conversion pipeline.",
-    scopeAuthority: "CSR Authority: Leads, follow-ups, trial qualification & scheduling, assisted conversions, attributed commission tracking, and permission-scoped manual payment verification.",
-    metrics: [
-      ["Assigned Leads", () => db.csrData.leads.length, "Active prospect pipeline"],
-      ["Follow-ups Due", () => db.csrData.followups.filter(f => f.status === "Due").length, "Urgent touchpoints today"],
-      ["Trials Scheduled", () => db.csrData.trials.filter(t => t.status === "Scheduled").length, "Active trial windows"],
-      ["Payable Commission", () => "PKR 3,600", "Approved for payroll settlement"]
-    ],
-    dataType: "leads"
+const Router = {
+  currentRoute: "dashboard",
+  filters: {}, // Route-specific filter presets (e.g. from drilldown clicks)
+
+  init() {
+    // Nav menu items clicks
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.setAttribute("role", "button");
+      item.setAttribute("tabindex", "0");
+      item.addEventListener("click", () => {
+        const route = item.getAttribute("data-route");
+        this.navigate(route);
+      });
+      item.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          this.navigate(item.getAttribute("data-route"));
+        }
+      });
+    });
+
+    // Sidebar Collapse button
+    const toggleSidebarBtn = document.getElementById("toggle-sidebar");
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const sidebarScrim = document.getElementById("sidebar-scrim");
+    const sidebar = document.getElementById("sidebar");
+    const container = document.querySelector(".admin-container");
+    
+    toggleSidebarBtn.addEventListener("click", () => {
+      container.classList.toggle("sidebar-collapsed");
+      const icon = toggleSidebarBtn.querySelector("i");
+      if (container.classList.contains("sidebar-collapsed")) {
+        icon.setAttribute("data-lucide", "chevron-right");
+      } else {
+        icon.setAttribute("data-lucide", "chevron-left");
+      }
+      window.lucide?.createIcons();
+    });
+
+    const setMobileNavigation = (open) => {
+      container.classList.toggle("mobile-nav-open", open);
+      mobileMenuBtn?.setAttribute("aria-expanded", String(open));
+      document.body.classList.toggle("nav-open", open);
+    };
+
+    mobileMenuBtn?.addEventListener("click", () => {
+      setMobileNavigation(!container.classList.contains("mobile-nav-open"));
+    });
+
+    sidebarScrim?.addEventListener("click", () => setMobileNavigation(false));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMobileNavigation(false);
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) setMobileNavigation(false);
+    });
+
+    // Fast module finder in the navigation rail.
+    const navSearchInput = document.getElementById("nav-search-input");
+    const filterNavigation = () => {
+      const query = navSearchInput.value.trim().toLowerCase();
+      document.querySelectorAll(".sidebar-nav .nav-item").forEach(item => {
+        item.classList.toggle("nav-filtered", Boolean(query) && !item.textContent.toLowerCase().includes(query));
+      });
+      document.querySelectorAll(".sidebar-nav .nav-group").forEach(group => {
+        const hasVisibleItem = group.querySelector(".nav-item:not(.nav-filtered)");
+        group.classList.toggle("nav-group-filtered", Boolean(query) && !hasVisibleItem);
+      });
+    };
+
+    navSearchInput?.addEventListener("input", filterNavigation);
+    document.addEventListener("keydown", event => {
+      if (event.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName)) {
+        event.preventDefault();
+        navSearchInput?.focus();
+      }
+    });
+
+    document.querySelectorAll("[data-route-shortcut]").forEach(button => {
+      button.addEventListener("click", () => this.navigate(button.dataset.routeShortcut));
+    });
+
+    // Clickable counts on Dashboard for drill-down redirection
+    document.querySelectorAll(".dash-card[data-drilldown]").forEach(card => {
+      card.addEventListener("click", () => {
+        const route = card.getAttribute("data-drilldown");
+        this.navigate(route);
+      });
+    });
+
+    // Specific Drill-down Clickable metrics
+    document.getElementById("drill-failed-jobs").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("failed-jobs");
+    });
+    
+    document.getElementById("drill-dead-letters").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("dead-letters");
+    });
+
+    document.getElementById("drill-webhook-exceptions").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("webhooks", { status: "FAILED" });
+    });
+
+    document.getElementById("drill-failed-imports").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("imports", { status: "Dry-run Failed" });
+    });
+
+    document.getElementById("drill-pending-exports").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("exports", { status: "Pending Approval" });
+    });
+
+    document.getElementById("drill-active-impersonations").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("support-access");
+    });
+
+    document.getElementById("drill-security-sessions").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("security-sessions");
+    });
+
+    document.getElementById("drill-security-alerts").addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.navigate("audit-logs");
+    });
   },
-  "csr-leads-my": {
-    title: "My Assigned Leads",
-    group: "Leads & Prospects",
-    description: "Manage your assigned prospect portfolio, record contact activity, qualify placement, and initiate trials.",
-    scopeAuthority: "Authoritative CSR Scope: Prospect stage updates, contact logs, consent checks, and trial initiation.",
-    metrics: [
-      ["My Leads", () => db.csrData.leads.filter(l => l.csr === "Sarah Jenkins").length, "Assigned to you"],
-      ["New Inquiries", () => db.csrData.leads.filter(l => l.stage === "New" && l.csr === "Sarah Jenkins").length, "Awaiting first contact"],
-      ["Qualified", () => db.csrData.leads.filter(l => l.stage === "Qualified" && l.csr === "Sarah Jenkins").length, "Ready for trial scheduling"],
-      ["Expected Pipeline", () => "PKR 151,000", "Weighted sales potential"]
-    ],
-    dataType: "leads",
-    filterFn: (item) => item.csr === "Sarah Jenkins"
+
+  navigate(route, filterPresets = null) {
+    this.currentRoute = route;
+    this.filters = filterPresets || {};
+    document.querySelector(".admin-container")?.classList.remove("mobile-nav-open");
+    document.getElementById("mobile-menu-btn")?.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("nav-open");
+    
+    // Toggle active sidebar indicator
+    document.querySelectorAll(".nav-item").forEach(item => {
+      item.classList.remove("active");
+    });
+    let activeNavItem = null;
+    if (route === "dashboard" || route === "creator-dashboard") {
+      if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("nav-creator-dashboard");
+      else if (Simulator.activeRole === "csr") activeNavItem = document.getElementById("csr-nav-dashboard");
+      else if (Simulator.activeRole === "coo") activeNavItem = document.getElementById("coo-nav-dashboard");
+      else if (Simulator.activeRole === "operational_manager") activeNavItem = document.getElementById("om-nav-dashboard");
+      else activeNavItem = document.getElementById("nav-dashboard");
+    } else {
+      activeNavItem = document.getElementById(`nav-${route}`);
+    }
+    if (activeNavItem) {
+      activeNavItem.classList.add("active");
+    }
+
+    // Toggle visible content views
+    document.querySelectorAll(".content-view").forEach(view => {
+      view.classList.remove("active");
+    });
+    const isCreatorDashboard = route === "creator-dashboard" || (route === "dashboard" && Simulator.activeRole === "course_creator");
+    const isCreatorWorkspace = route.startsWith("creator-") && !isCreatorDashboard;
+    const isCooWorkspace = route.startsWith("coo-");
+    const isOmWorkspace = route.startsWith("om-");
+    const isCsrWorkspace = route.startsWith("csr-");
+    let activeView = null;
+    if (isCreatorDashboard) activeView = document.getElementById("view-dashboard");
+    else if (isCreatorWorkspace) activeView = document.getElementById("view-creator-workspace");
+    else if (isCsrWorkspace) activeView = document.getElementById("view-csr-workspace");
+    else if (isCooWorkspace) activeView = document.getElementById("view-coo-workspace");
+    else if (isOmWorkspace) activeView = document.getElementById("view-om-workspace");
+    else activeView = document.getElementById(`view-${route}`);
+    
+    if (activeView) {
+      activeView.classList.remove("hidden");
+      activeView.classList.add("active");
+      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace) prepareModuleView(route, activeView);
+    }
+
+    // Update Header title
+    const viewTitle = document.getElementById("view-title");
+    const routeTitleMap = {
+      "dashboard": "Dashboard Overview",
+      "users": "Users & Account Governance",
+      "invitations": "Outbound Member Invitations",
+      "security-sessions": "Security & Live User Sessions",
+      "roles-permissions": "Access Control Policies & Matrix",
+      "reference-data": "ADM System Reference Data",
+      "system-settings": "System Settings Configuration",
+      "business-rules": "Active Business Logic Rules",
+      "providers": "Integration Infrastructure Providers",
+      "webhooks": "Webhook Endpoints & Logs",
+      "integration-health": "Provider Latency Logs & Health",
+      "queue-jobs": "Background Queue Job Logs",
+      "failed-jobs": "Failed Job Restarts",
+      "dead-letters": "Dead-Letter Jobs",
+      "integration-exceptions": "Logged Integration Exceptions",
+      "imports": "Staged File Imports & Validation",
+      "exports": "Controlled Data Exports & Approvals",
+      "feature-flags": "Release Controls & Feature Flags",
+      "audit-logs": "AUD System Searchable Audit Logs",
+      "system-status": "System Freshness & Resource Status",
+      "retention-policies": "Data Retention Mapping Policies",
+      "archive": "Archived Partitions & Files",
+      "legal-holds": "Active Litigation Holds",
+      "privacy-requests": "Privacy GDPR Erasure/Access Requests",
+      "support-access": "Impersonation Support Access Logs"
+    };
+    
+    const roleDashboardTitles = {
+      platform_admin: "Dashboard Overview",
+      operational_manager: "Operations Command Center",
+      coo: "COO Operating Overview",
+      csr: "CSR Command Center",
+      course_creator: "Authoring Command Center",
+      cto_developer: "Technical Operations Overview",
+      compliance_officer: "Compliance Overview",
+      support_agent: "Support Operations Overview"
+    };
+    viewTitle.textContent = route === "dashboard"
+      ? (roleDashboardTitles[Simulator.activeRole] || "Authoring Command Center")
+      : (creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Platform Operations");
+    
+    // Trigger specific rendering controller for the view
+    this.renderView(route);
+    
+    // Reset Data Freshness indicator
+    freshnessSeconds = 0;
+    updateFreshnessText();
   },
-  "csr-leads-new": {
-    title: "New Inbound Leads",
-    group: "Leads & Prospects",
-    description: "Inbound leads requiring first contact attempt, preliminary interest intake, and guardian consent.",
-    scopeAuthority: "Lead ≠ Learner Account. Prospect history is permanently preserved upon subsequent enrolment.",
-    metrics: [
-      ["New Inbound", () => db.csrData.leads.filter(l => l.stage === "New").length, "Awaiting contact"],
-      ["Meta / FB Ads", () => db.csrData.leads.filter(l => l.source.includes("Facebook")).length, "Campaign traffic"],
-      ["Web Portal", () => db.csrData.leads.filter(l => l.source.includes("Web")).length, "Organic inquiries"],
-      ["SLA Target", () => "< 2 Hours", "First contact standard"]
-    ],
-    dataType: "leads",
-    filterFn: (item) => item.stage === "New"
-  },
-  "csr-leads-qualified": {
-    title: "Qualified Prospects",
-    group: "Leads & Prospects",
-    description: "Prospects with confirmed programme interest, placement score, and validated guardian consent.",
-    scopeAuthority: "Qualified leads can be scheduled for live trials or guided directly into assisted enrolment.",
-    metrics: [
-      ["Qualified Prospects", () => db.csrData.leads.filter(l => l.stage === "Qualified").length, "Ready for slot allocation"],
-      ["Avg Placement Score", () => "80%", "Curriculum readiness"],
-      ["Consent Verified", () => db.csrData.leads.filter(l => l.consent.includes("Verified")).length, "Compliance satisfied"],
-      ["Conversion Target", () => "70%", "Trial-to-sale benchmark"]
-    ],
-    dataType: "leads",
-    filterFn: (item) => item.stage === "Qualified"
-  },
-  "csr-leads-converted": {
-    title: "Converted Leads",
-    group: "Leads & Prospects",
-    description: "Successfully enrolled prospects with verified attribution, linked learner accounts, and active orders.",
-    scopeAuthority: "Attribution is locked to the conversion record for auditable commission calculations.",
-    metrics: [
-      ["Converted Leads", () => db.csrData.leads.filter(l => l.stage === "Converted").length, "Active learners"],
-      ["Total Sales Value", () => "PKR 78,000", "Gross enrolled volume"],
-      ["Commission Generated", () => "PKR 7,800", "Attributed earnings"],
-      ["Conversion Cycle", () => "4.2 Days", "Average lead-to-paid time"]
-    ],
-    dataType: "leads",
-    filterFn: (item) => item.stage === "Converted"
-  },
-  "csr-leads-lost": {
-    title: "Lost Prospects & Re-engagement",
-    group: "Leads & Prospects",
-    description: "Prospects closed due to budget constraints, timing mismatch, or no-response with preserved audit history.",
-    scopeAuthority: "History remains preserved. Closed prospects can be re-engaged in future campaign cycles.",
-    metrics: [
-      ["Lost Prospects", () => db.csrData.leads.filter(l => l.stage === "Lost").length, "Archived leads"],
-      ["Price Sensitivity", () => "60%", "Primary loss factor"],
-      ["Scheduled Nurture", () => "2 Leads", "Q4 re-engagement list"],
-      ["Reactivation Target", () => "15%", "Campaign return rate"]
-    ],
-    dataType: "leads",
-    filterFn: (item) => item.stage === "Lost"
-  },
-  "csr-followups-due": {
-    title: "Follow-ups Due Today",
-    group: "Follow-ups",
-    description: "Scheduled callbacks, assessment reminders, and trial confirmation touchpoints requiring immediate action.",
-    scopeAuthority: "Follow-up outcomes feed directly into lead stage transitions and trial reminder jobs.",
-    metrics: [
-      ["Due Today", () => db.csrData.followups.filter(f => f.status === "Due").length, "Urgent tasks"],
-      ["Phone Calls", () => db.csrData.followups.filter(f => f.type === "Phone Call" && f.status === "Due").length, "Voice callbacks"],
-      ["Trial Follow-ups", () => db.csrData.followups.filter(f => f.type.includes("Trial")).length, "Post-trial reviews"],
-      ["Daily Target", () => "100%", "Same-day completion goal"]
-    ],
-    dataType: "followups",
-    filterFn: (item) => item.status === "Due"
-  },
-  "csr-followups-upcoming": {
-    title: "Upcoming Scheduled Follow-ups",
-    group: "Follow-ups",
-    description: "Future prospect touchpoints, planned consultation calls, and queued re-engagement dates.",
-    scopeAuthority: "Proactive scheduling prevents lead decay and ensures consistent prospective learner experience.",
-    metrics: [
-      ["Upcoming", () => db.csrData.followups.filter(f => f.status === "Upcoming").length, "Queued schedule"],
-      ["Tomorrow", () => "2 Tasks", "Next-day workload"],
-      ["This Week", () => "6 Tasks", "Weekly pipeline"],
-      ["Calendar Sync", () => "Active", "Google/Outlook integration"]
-    ],
-    dataType: "followups",
-    filterFn: (item) => item.status === "Upcoming"
-  },
-  "csr-followups-completed": {
-    title: "Completed Follow-ups",
-    group: "Follow-ups",
-    description: "Log of resolved touchpoints with recorded outcomes, contact notes, and downstream lead actions.",
-    scopeAuthority: "Complete contact history remains auditable and linked to customer service performance records.",
-    metrics: [
-      ["Completed", () => db.csrData.followups.filter(f => f.status === "Completed").length, "Successfully resolved"],
-      ["Positive Outcome", () => "85%", "Advanced to next stage"],
-      ["Avg Call Duration", () => "6.5 min", "Interaction quality"],
-      ["Log Integrity", () => "100%", "Full notes attached"]
-    ],
-    dataType: "followups",
-    filterFn: (item) => item.status === "Completed"
-  },
-  "csr-followups-no-response": {
-    title: "No-Response & Exhausted Follow-ups",
-    group: "Follow-ups",
-    description: "Prospects unreachable after multiple contact attempts with automated nurture tagging.",
-    scopeAuthority: "Complies with contact cadence rules to prevent unsolicited spamming while preserving lead context.",
-    metrics: [
-      ["No Response", () => db.csrData.followups.filter(f => f.status === "No Response").length, "Exhausted attempts"],
-      ["Max Attempts", () => "3 Calls", "Policy limit"],
-      ["Auto-Nurture", () => "Enrolled", "Email drip active"],
-      ["Cooling Period", () => "30 Days", "Re-contact threshold"]
-    ],
-    dataType: "followups",
-    filterFn: (item) => item.status === "No Response"
-  },
-  "csr-trials-requests": {
-    title: "Trial Requests & Intake",
-    group: "Trials",
-    description: "Inbound trial consultation requests (FLOW-006). Review placement test answers, availability, and consent.",
-    scopeAuthority: "CSR qualifies trial eligibility, checks duplicate requests, and verifies parent consent.",
-    metrics: [
-      ["Trial Requests", () => db.csrData.trials.length, "Total requests"],
-      ["Awaiting Qualification", () => db.csrData.trials.filter(t => t.status === "Qualification").length, "Need review"],
-      ["Ready for Slot", () => db.csrData.trials.filter(t => t.status === "Ready for Scheduling").length, "Validated"],
-      ["Scheduled", () => db.csrData.trials.filter(t => t.status === "Scheduled").length, "Confirmed"]
-    ],
-    dataType: "trials"
-  },
-  "csr-trials-qualification": {
-    title: "Trial Qualification (FLOW-006)",
-    group: "Trials",
-    description: "Evaluate prospect assessment scores, curriculum match, and prerequisite consent before slot assignment.",
-    scopeAuthority: "Ensures prospect is placed in the appropriate course tier and trainer profile.",
-    metrics: [
-      ["In Qualification", () => db.csrData.trials.filter(t => t.status === "Qualification").length, "Under review"],
-      ["Placement Pending", () => "1 Prospect", "Assessment in progress"],
-      ["Consent Required", () => "1 Minor", "Guardian form sent"],
-      ["Avg Qualification Time", () => "35 min", "Processing speed"]
-    ],
-    dataType: "trials",
-    filterFn: (item) => item.status === "Qualification"
-  },
-  "csr-trials-ready": {
-    title: "Ready for Trial Scheduling (FLOW-007)",
-    group: "Trials",
-    description: "Qualified trial prospects ready for trainer selection, time slot allocation, and Daily.co room generation.",
-    scopeAuthority: "CSR can schedule slots in coordination with trainer availability rules.",
-    metrics: [
-      ["Ready to Schedule", () => db.csrData.trials.filter(t => t.status === "Ready for Scheduling").length, "Awaiting booking"],
-      ["Available Trainers", () => "4 Trainers", "Subject matching"],
-      ["Daily.co Gateway", () => "Operational", "Auto-provisioning ready"],
-      ["Booking SLA", () => "< 4 Hours", "Slot allocation standard"]
-    ],
-    dataType: "trials",
-    filterFn: (item) => item.status === "Ready for Scheduling"
-  },
-  "csr-trials-scheduled": {
-    title: "Scheduled Live Trials",
-    group: "Trials",
-    description: "Confirmed upcoming trial sessions with provisioned Daily.co video rooms and automated learner reminders.",
-    scopeAuthority: "Room tokens provisioned automatically. Attendance telemetry updates upon session launch.",
-    metrics: [
-      ["Scheduled Trials", () => db.csrData.trials.filter(t => t.status === "Scheduled").length, "Upcoming sessions"],
-      ["Today's Sessions", () => "1 Session", "16:00 PKT"],
-      ["Tomorrow's Sessions", () => "1 Session", "11:00 PKT"],
-      ["Room State", () => "Provisioned", "WebRTC gateway active"]
-    ],
-    dataType: "trials",
-    filterFn: (item) => item.status === "Scheduled"
-  },
-  "csr-trials-outcomes": {
-    title: "Trial Outcomes & Follow-up (FLOW-008)",
-    group: "Trials",
-    description: "Reconciled attendance, trainer reports, and automatic conversion follow-up generation.",
-    scopeAuthority: "Session completion automatically creates CSR follow-up task and prevents duplicate follow-up generation.",
-    metrics: [
-      ["Completed Trials", () => db.csrData.trials.filter(t => t.status === "Completed").length, "Delivered"],
-      ["Conversion Rate", () => "100%", "Completed trial to enrolment"],
-      ["No-Show Rate", () => "16%", "1 Learner no-show"],
-      ["Follow-up Sync", () => "Automated", "Tasks dispatched"]
-    ],
-    dataType: "trials",
-    filterFn: (item) => item.status === "Completed" || item.status === "No-Show"
-  },
-  "csr-enrolments-opportunities": {
-    title: "Conversion Opportunities",
-    group: "Assisted Enrolments",
-    description: "High-intent prospects who completed trials and are ready for assisted offering selection and checkout.",
-    scopeAuthority: "CSR assists product selection and initiates membership orders with persistent CSR attribution.",
-    metrics: [
-      ["Conversion Opps", () => db.csrData.enrolments.filter(e => e.status === "Conversion Opportunity").length, "Ready to close"],
-      ["Average Order Value", () => "PKR 35,000", "Vocational track standard"],
-      ["Attribution Lock", () => "100% CSR", "Sarah Jenkins"],
-      ["Closing Target", () => "80%", "Monthly conversion KPI"]
-    ],
-    dataType: "enrolments",
-    filterFn: (item) => item.status === "Conversion Opportunity"
-  },
-  "csr-enrolments-membership-requests": {
-    title: "Membership & Order Requests",
-    group: "Assisted Enrolments",
-    description: "Initiated orders awaiting manual bank transfer evidence or payment verification.",
-    scopeAuthority: "CSR helps learners submit valid payment slips and transaction checksums.",
-    metrics: [
-      ["Pending Payment", () => db.csrData.enrolments.filter(e => e.status === "Membership Request").length, "Awaiting slip"],
-      ["Pipeline Value", () => "PKR 32,000", "Pending orders"],
-      ["Payment Channels", () => "Bank / Easypaisa", "Supported methods"],
-      ["Expiry SLA", () => "48 Hours", "Reservation hold time"]
-    ],
-    dataType: "enrolments",
-    filterFn: (item) => item.status === "Membership Request"
-  },
-  "csr-enrolments-attributed": {
-    title: "Attributed Enrolments",
-    group: "Assisted Enrolments",
-    description: "Verified active enrolments attributed to your sales efforts, establishing commission eligibility.",
-    scopeAuthority: "Permanent attribution ledger links each enrolment to the originating CSR even if ownership changes.",
-    metrics: [
-      ["Attributed Enrolments", () => db.csrData.enrolments.filter(e => e.attribution.includes("Sarah Jenkins")).length, "Your closed sales"],
-      ["Active Learners", () => "2 Learners", "Currently in classes"],
-      ["Pending Activation", () => "2 Learners", "Payment in review"],
-      ["Cumulative Sales", () => "PKR 145,000", "Attributed volume"]
-    ],
-    dataType: "enrolments",
-    filterFn: (item) => item.attribution.includes("Sarah Jenkins")
-  },
-  "csr-enrolments-status": {
-    title: "Enrolment Status Directory",
-    group: "Assisted Enrolments",
-    description: "Operational status tracking for assisted enrolments across payment verification and class activation.",
-    scopeAuthority: "Operations owns trainer and schedule allocation; CSR maintains customer visibility and liaison.",
-    metrics: [
-      ["Total Assisted", () => db.csrData.enrolments.length, "All records"],
-      ["Active", () => db.csrData.enrolments.filter(e => e.status === "Active Enrolment").length, "In learning"],
-      ["Pending Activation", () => db.csrData.enrolments.filter(e => e.status === "Pending Activation").length, "QA in progress"],
-      ["Conversion Yield", () => "85%", "Assisted success rate"]
-    ],
-    dataType: "enrolments"
-  },
-  "csr-payment-queue": {
-    title: "Permissioned Payment Review Queue (FLOW-012)",
-    group: "Payment Review",
-    description: "Scoped bank transfer receipt verification for authorized CSRs. Review slips, amounts, and checksums.",
-    scopeAuthority: "Permission-scoped review: CSR can Approve, Reject, or Request Correction. High-value exceptions escalate to OM/COO.",
-    metrics: [
-      ["Queue Depth", () => db.csrData.payments.filter(p => p.status === "Awaiting Review" || p.status === "Under Review").length, "Submissions"],
-      ["Total Pending PKR", () => "PKR 74,000", "Pending settlement"],
-      ["Oldest Submission", () => "5h ago", "Within 12h SLA"],
-      ["Permission Scope", () => "Normal Submissions", "No broad finance access"]
-    ],
-    dataType: "payments",
-    filterFn: (item) => item.status === "Awaiting Review" || item.status === "Under Review"
-  },
-  "csr-payment-under-review": {
-    title: "Payments Under Active Review",
-    group: "Payment Review",
-    description: "Submissions currently claimed and undergoing receipt validation and bank ledger matching.",
-    scopeAuthority: "Concurrent review lock prevents two reviewers from processing the same submission simultaneously.",
-    metrics: [
-      ["Under Review", () => db.csrData.payments.filter(p => p.status === "Under Review").length, "Active claims"],
-      ["Claimed By", () => "Sarah Jenkins", "Active session"],
-      ["Checksum Status", () => "SHA-256 Valid", "Tamper check passed"],
-      ["Avg Review Time", () => "4.8 min", "Fast turnaround"]
-    ],
-    dataType: "payments",
-    filterFn: (item) => item.status === "Under Review"
-  },
-  "csr-payment-approved": {
-    title: "Approved Manual Payments",
-    group: "Payment Review",
-    description: "Verified bank transfers resulting in official receipts (RCP-xxx) and access grants (AG-xxx).",
-    scopeAuthority: "Approval automatically creates transaction record, debits entitlement balance, and updates order state.",
-    metrics: [
-      ["Approved Payments", () => db.csrData.payments.filter(p => p.status === "Approved").length, "Cleared"],
-      ["Total Approved PKR", () => "PKR 18,000", "Enrolment funded"],
-      ["Audit State", () => "Immutable", "SHA-256 receipt locked"],
-      ["Downstream Effect", () => "Access Granted", "Entitlements debited"]
-    ],
-    dataType: "payments",
-    filterFn: (item) => item.status === "Approved"
-  },
-  "csr-payment-rejected": {
-    title: "Rejected & Correction Submissions",
-    group: "Payment Review",
-    description: "Submissions with unreadable slips, mismatched amounts, or invalid transaction IDs requiring resubmission.",
-    scopeAuthority: "Rejection requires mandatory reason; no payment transaction or platform access is granted.",
-    metrics: [
-      ["Corrections / Rejected", () => db.csrData.payments.filter(p => p.status.includes("Rejected")).length, "Issues found"],
-      ["Mismatch Amount", () => "PKR 10,000 Short", "Underpaid by payer"],
-      ["Notification Sent", () => "Automated", "Learner alert dispatched"],
-      ["Resubmission Allowed", () => "Yes", "Within 48 hours"]
-    ],
-    dataType: "payments",
-    filterFn: (item) => item.status.includes("Rejected")
-  },
-  "csr-payment-exceptions": {
-    title: "Payment Exceptions & Escalations",
-    group: "Payment Review",
-    description: "Mismatched references, duplicate receipts, or threshold overrides requiring OM/COO decision.",
-    scopeAuthority: "Segregation of Duties: High-risk exceptions are escalated to Operational Management.",
-    metrics: [
-      ["Active Exceptions", () => "1 Submission", "Amount mismatch"],
-      ["Escalated To", () => "Operational Manager", "Sarah Connor"],
-      ["Fraud Risk", () => "Low", "Duplicate slip check clear"],
-      ["SLA Countdown", () => "3h remaining", "Priority resolution"]
-    ],
-    dataType: "payments",
-    filterFn: (item) => item.status === "Rejected / Correction"
-  },
-  "csr-commissions-pending": {
-    title: "Commissions Pending Verification",
-    group: "My Commissions",
-    description: "Attributed sales currently undergoing enrolment verification, cooling period, or payment reconciliation.",
-    scopeAuthority: "Commission Candidate enters Pending state upon order placement until conditions are fulfilled.",
-    metrics: [
-      ["Pending Verification", () => db.csrData.commissions.filter(c => c.status === "Pending Verification").length, "Candidates"],
-      ["Pending Commission PKR", () => "PKR 4,200", "Future earnings"],
-      ["Cooling Period", () => "7 Days", "Policy rule"],
-      ["CSR Self-Approval", () => "Blocked", "Governance rule"]
-    ],
-    dataType: "commissions",
-    filterFn: (item) => item.status === "Pending Verification"
-  },
-  "csr-commissions-eligible": {
-    title: "Eligible & Payable Commissions (FLOW-031)",
-    group: "My Commissions",
-    description: "Verified commissions qualified for upcoming payroll reservation and disbursement.",
-    scopeAuthority: "Approved commissions enter the institutional payroll cycle for executive settlement.",
-    metrics: [
-      ["Payable Items", () => db.csrData.commissions.filter(c => c.status === "Payable").length, "Qualified"],
-      ["Payable Total", () => "PKR 3,600", "Aug 2026 Cycle"],
-      ["Commission Plan", () => "Standard 10%", "Active sales plan"],
-      ["Settlement Date", () => "31 Aug 2026", "Scheduled payroll"]
-    ],
-    dataType: "commissions",
-    filterFn: (item) => item.status === "Payable"
-  },
-  "csr-commissions-reserved": {
-    title: "Reserved Commissions in Payroll",
-    group: "My Commissions",
-    description: "Commissions locked into the active monthly payroll batch awaiting final COO sign-off.",
-    scopeAuthority: "Once reserved, commissions cannot be modified except via formal payroll reversal.",
-    metrics: [
-      ["Reserved Items", () => db.csrData.commissions.filter(c => c.status === "Reserved").length, "In payroll batch"],
-      ["Reserved Amount", () => "PKR 3,500", "Locked funds"],
-      ["Payroll Batch", () => "PAYROLL-2026-08", "Active batch"],
-      ["Status", () => "Awaiting COO Sign-off", "Executive review"]
-    ],
-    dataType: "commissions",
-    filterFn: (item) => item.status === "Reserved"
-  },
-  "csr-commissions-paid": {
-    title: "Settled & Paid Commissions",
-    group: "My Commissions",
-    description: "Disbursed commission earnings across historical payroll cycles with attached payout receipts.",
-    scopeAuthority: "Permanent immutable ledger of all settled sales incentives.",
-    metrics: [
-      ["Paid Items", () => db.csrData.commissions.filter(c => c.status === "Paid").length, "Historical payouts"],
-      ["Total Paid YTD", () => "PKR 6,200", "Cumulative earnings"],
-      ["Last Payout", () => "PKR 6,200 (Jul 2026)", "Bank transfer settled"],
-      ["Tax Deduction", () => "Standard WHT (5%)", "Compliant deduction"]
-    ],
-    dataType: "commissions",
-    filterFn: (item) => item.status === "Paid"
-  },
-  "csr-commissions-reversed": {
-    title: "Reversed Commissions",
-    group: "My Commissions",
-    description: "Commissions adjusted due to learner course cancellations, refunds, or attribution reassignment.",
-    scopeAuthority: "Refunds create linked reversal transactions (REV-xxx) rather than erasing original sales records.",
-    metrics: [
-      ["Reversals", () => db.csrData.commissions.filter(c => c.status === "Reversed").length, "Adjustments"],
-      ["Reversed Value", () => "PKR 0", "Zero churn this month"],
-      ["Clawback Rate", () => "0.0%", "Clean conversion record"],
-      ["Reversal Policy", () => "Pro-rata 30d", "Institutional standard"]
-    ],
-    dataType: "commissions",
-    filterFn: (item) => item.status === "Reversed"
-  },
-  "csr-cases": {
-    title: "Inquiries & Communications",
-    group: "Communications",
-    description: "Prospect inquiries, trial scheduling questions, and payment support conversations within CSR scope.",
-    scopeAuthority: "CSR resolves customer inquiries without gaining access to confidential HR or executive Finance data.",
-    metrics: [
-      ["Active Cases", () => db.csrData.cases.length, "Total tickets"],
-      ["Open & In Review", () => db.csrData.cases.filter(c => c.status !== "Resolved").length, "Pending resolution"],
-      ["High Priority", () => db.csrData.cases.filter(c => c.priority === "High").length, "Urgent attention"],
-      ["SLA Health", () => "100% Compliant", "Zero breaches"]
-    ],
-    dataType: "cases"
-  },
-  "csr-analytics": {
-    title: "CSR Sales & Performance Analytics",
-    group: "Analytics",
-    description: "Attributed conversion rates, lead velocity, commission earnings, and payment review throughput.",
-    scopeAuthority: "Scoped to assigned portfolio; authorized CSRs see direct performance metrics with exact source drill-down.",
-    metrics: [
-      ["Monthly Sales Value", () => "PKR 450,000", "75% of PKR 600k target"],
-      ["Lead-to-Trial Rate", () => "62.5%", "High intake conversion"],
-      ["Trial-to-Paid Rate", () => "80.0%", "Assisted closing yield"],
-      ["Verified Commission", () => "PKR 48,500", "YTD earnings"]
-    ],
-    dataType: "leads"
+
+  renderView(route) {
+    switch (route) {
+      case "dashboard":
+        RenderEngine.dashboard();
+        break;
+      case "users":
+        RenderEngine.users();
+        break;
+      case "invitations":
+        RenderEngine.invitations();
+        break;
+      case "security-sessions":
+        RenderEngine.sessions();
+        break;
+      case "roles-permissions":
+        RenderEngine.rolesMatrix();
+        break;
+      case "reference-data":
+        RenderEngine.referenceData();
+        break;
+      case "system-settings":
+        RenderEngine.systemSettings();
+        break;
+      case "business-rules":
+        RenderEngine.businessRules();
+        break;
+      case "providers":
+        RenderEngine.providers();
+        break;
+      case "webhooks":
+        RenderEngine.webhooks();
+        break;
+      case "integration-health":
+        RenderEngine.integrationHealth();
+        break;
+      case "queue-jobs":
+        RenderEngine.queueJobs();
+        break;
+      case "failed-jobs":
+        RenderEngine.failedJobs();
+        break;
+      case "dead-letters":
+        RenderEngine.deadLetters();
+        break;
+      case "integration-exceptions":
+        RenderEngine.integrationExceptions();
+        break;
+      case "imports":
+        RenderEngine.imports();
+        break;
+      case "exports":
+        RenderEngine.exports();
+        break;
+      case "feature-flags":
+        RenderEngine.featureFlags();
+        break;
+      case "audit-logs":
+        RenderEngine.auditLogs();
+        break;
+      case "system-status":
+        RenderEngine.systemStatus();
+        break;
+      case "retention-policies":
+        RenderEngine.retentionPolicies();
+        break;
+      case "archive":
+        RenderEngine.archive();
+        break;
+      case "legal-holds":
+        RenderEngine.legalHolds();
+        break;
+      case "privacy-requests":
+        RenderEngine.privacyRequests();
+        break;
+      case "support-access":
+        RenderEngine.supportAccess();
+        break;
+      default:
+        if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
+        else if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
+        else if (route.startsWith("coo-")) RenderEngine.cooWorkspace(route);
+        else if (route.startsWith("om-")) RenderEngine.omWorkspace(route);
+        break;
+    }
+    ensureTableEmptyStates(document.getElementById(route.startsWith("creator-") ? "view-creator-workspace" : (route.startsWith("csr-") ? "view-csr-workspace" : (route.startsWith("coo-") ? "view-coo-workspace" : (route.startsWith("om-") ? "view-om-workspace" : `view-${route}`)))), route);
   }
 };
 
+// ============================================================================
+// 3. UI RENDERING ENGINE (High density data grids)
+// ============================================================================
+
 const RenderEngine = {
-  
-  // Dashboard Widget Totals & Indicators updates
-  dashboard() {
-    if (Simulator.activeRole === "course_creator") {
+
+  creatorWorkspace(route) {
+    if (route === "creator-dashboard") {
       this.creatorDashboard();
       return;
     }
-    if (Simulator.activeRole === "csr") {
-      this.csrDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "operational_manager") {
-      this.omDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "coo") {
-      const pendingItems = db.cooApprovals.filter(item => item.status === "Pending");
-      const pending = pendingItems.length;
-      const setText = (id, value) => {
-        const element = document.getElementById(id);
-        if (element) element.textContent = String(value);
-      };
-      const approvalCount = type => pendingItems.filter(item => item.type === type).length;
-      const recordCount = category => db.cooRecords.filter(item => item.category === category).length;
-      const agedCount = pendingItems.filter(item => /(^|\s)(\d+d|1[89]h|2\dh)/i.test(item.age)).length;
-      document.querySelectorAll(".count-coo-approvals").forEach(el => el.textContent = pending);
-      setText("coo-pending-decision-count", pending);
-      setText("coo-aged-decision-count", agedCount);
-      setText("coo-class-decision-count", approvalCount("Class Delivery"));
-      setText("coo-payment-decision-count", approvalCount("Payment"));
-      setText("coo-payroll-decision-count", approvalCount("Payroll"));
-      setText("coo-other-decision-count", pending - approvalCount("Class Delivery") - approvalCount("Payment") - approvalCount("Payroll"));
-      setText("coo-attendance-count", recordCount("attendance"));
-      setText("coo-renewal-count", recordCount("renewals"));
-      setText("coo-case-count", recordCount("cases"));
-      setText("coo-people-risk-count", recordCount("hr"));
-      setText("coo-conversion-count", recordCount("conversions"));
-      setText("coo-payment-record-count", recordCount("payments"));
-      setText("coo-entitlement-count", recordCount("entitlements"));
-      setText("coo-finance-record-count", recordCount("finance"));
-      setText("coo-media-count", recordCount("media"));
-      setText("coo-development-count", recordCount("development"));
-      setText("coo-hr-count", recordCount("hr"));
-      window.lucide?.createIcons();
-      return;
-    }
 
-    // Dynamic Badges count update in Sidebar
-    const failedJobsCount = db.jobs.filter(j => j.status === "Failed").length;
-    const deadLettersCount = db.jobs.filter(j => j.status === "Dead-letter").length;
-    const webhookFailuresCount = db.webhooks.filter(w => w.status === "FAILED").length;
-    const failedImportsCount = db.imports.filter(i => i.status === "Dry-run Failed").length;
-    const pendingExportsCount = db.exports.filter(e => e.status === "Pending Approval").length;
-    const activeSupportImpersonations = db.impersonationSession.active ? 1 : 0;
-    const activeSessionsCount = db.sessions.filter(s => s.status === "Active").length;
-    const securityAlertsCount = db.auditLogs.filter(a => a.level === "High").length;
-
-    // Set badges
-    document.querySelectorAll(".count-failed-jobs").forEach(el => el.textContent = failedJobsCount);
-    document.querySelectorAll(".count-dead-letters").forEach(el => el.textContent = deadLettersCount);
-    document.querySelectorAll(".count-integration-exceptions").forEach(el => el.textContent = webhookFailuresCount);
-    document.querySelectorAll(".count-failed-imports").forEach(el => el.textContent = failedImportsCount);
-    document.querySelectorAll(".count-pending-exports").forEach(el => el.textContent = pendingExportsCount);
-
-    // Set Dashboard specific values
-    document.getElementById("val-queued-jobs").textContent = db.jobs.filter(j => ["Queued", "Running", "Retrying"].includes(j.status)).length;
-    document.getElementById("val-webhook-exceptions").textContent = webhookFailuresCount;
-    document.getElementById("val-active-impersonations").textContent = activeSupportImpersonations;
-    document.getElementById("val-active-sessions").textContent = activeSessionsCount;
-    document.getElementById("val-security-alerts").textContent = securityAlertsCount;
-
-    // Feature Flags summary rendering
-    const flagSummaryList = document.getElementById("flag-summary-list");
-    flagSummaryList.innerHTML = "";
-    db.featureFlags.forEach(flag => {
-      const row = document.createElement("div");
-      row.className = "flag-summary-item";
-      row.innerHTML = `
-        <span class="flag-key">${flag.key}</span>
-        <span class="badge ${flag.globalStatus ? 'badge-success' : 'badge-secondary'}">
-          ${flag.globalStatus ? "ENABLED" : "DISABLED"}
-        </span>
-      `;
-      flagSummaryList.appendChild(row);
-    });
-
-    // Governance Audit Events summary rendering
-    const auditBriefList = document.getElementById("audit-brief-list");
-    auditBriefList.innerHTML = "";
-    db.auditLogs.slice(0, 3).forEach(log => {
-      const item = document.createElement("div");
-      item.className = "audit-brief-item";
-      item.innerHTML = `
-        <div class="audit-brief-meta">
-          <span>${log.actor} (${log.module})</span>
-          <span>${log.timestamp.split(" ")[1]}</span>
-        </div>
-        <div class="audit-brief-desc">${log.details}</div>
-      `;
-      auditBriefList.appendChild(item);
-    });
-  },
-
-  
-
-
-  // OPERATIONAL MANAGER (OM) - BESPOKE FLIGHT DECK & WORKSPACE CONTROLLER
-  omDashboard() {
-    if (!db.omData) return;
-    updateOmBadges();
-
-    const dueReports = db.omData.classes.filter(c => c.status === "Report Overdue" || c.reportStatus.includes("Overdue")).length;
-    const pendingPayments = db.omData.payments.filter(p => p.status === "Awaiting Review" || p.status === "Under Review").length;
-    const pendingDeliveries = db.omData.classReviews.filter(r => r.status === "Pending Review" || r.status === "Correction Requested").length;
-    const pendingSetup = db.omData.enrolments.filter(e => e.status === "Pending Setup").length;
-    const readyTrials = db.omData.trials.filter(t => t.status === "Ready for Scheduling").length;
-    const todayClasses = db.omData.classes.filter(c => c.timing.includes("Today")).length;
-    const liveClasses = db.omData.classes.filter(c => c.status === "Live").length;
-
-    const el = (id, val) => {
-      const target = document.getElementById(id);
-      if (target) target.textContent = String(val);
-    };
-
-    el("om-flight-live-count", `${liveClasses || 2} Classes In-Flight`);
-    el("om-flight-reviews-count", pendingDeliveries + pendingPayments);
-    el("om-pipe-trials-count", db.omData.trials.length);
-    el("om-pipe-enrolments-count", pendingSetup);
-    el("om-pipe-classes-today", todayClasses);
-    el("om-pipe-qa-count", pendingDeliveries + pendingPayments);
-    el("om-qa-sub-count", pendingDeliveries);
-    el("om-payment-sub-count", pendingPayments);
-
-    // 1. Render Today's Live Class Radar Grid (Visual Cards)
-    const gridContainer = document.getElementById("om-classes-grid");
-    if (gridContainer) {
-      const todayList = db.omData.classes.filter(c => c.timing.includes("Today"));
-      gridContainer.innerHTML = todayList.map(c => {
-        let badgeClass = "badge-secondary";
-        if (c.status === "Live") badgeClass = "badge-success";
-        if (c.status === "Completed") badgeClass = "badge-primary";
-        if (c.status === "Report Overdue" || c.status === "Technical Exception") badgeClass = "badge-error";
-        if (c.status === "Upcoming") badgeClass = "badge-warning";
-
-        const timeString = c.timing.replace('Today ', '');
-
-        return `
-          <article class="om-class-card">
-            <div class="om-card-time-row">
-              <span class="om-card-time">${timeString}</span>
-              <span class="badge ${badgeClass}">${c.status}</span>
-            </div>
-            <h4 class="om-card-title">${c.title}</h4>
-            <div class="om-card-sub">
-              <span><strong>${c.type}</strong> · Trainer: ${c.trainer}</span>
-              <span>${c.learner || c.participants + ' Participants'} · ${c.attendanceStatus}</span>
-            </div>
-            <div class="om-card-actions">
-              <span class="om-room-pill"><i data-lucide="video"></i> ${c.roomState}</span>
-              <div class="button-row">
-                ${c.status === 'Report Overdue' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openOmRecord('${c.id}')">Review</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${c.id}')">Inspect</button>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join("");
-    }
-
-    // 2. Render Delivery QA Sign-Off Queue
-    const deliveryContainer = document.getElementById("om-delivery-qa-list");
-    if (deliveryContainer) {
-      const reviews = db.omData.classReviews.filter(r => r.status === "Pending Review" || r.status === "Correction Requested");
-      deliveryContainer.innerHTML = reviews.map(r => `
-        <div class="om-action-row">
-          <div class="om-action-main">
-            <div class="om-action-top">
-              <span class="badge ${r.status === 'Pending Review' ? 'badge-warning' : 'badge-error'}">${r.status}</span>
-              <span class="om-checksum-tag">${r.id}</span>
-            </div>
-            <h5>${r.title} (${r.duration})</h5>
-            <p>${r.trainer} submitted report for ${r.learner} · HW: ${r.homework}</p>
-          </div>
-          <button class="btn btn-primary btn-xs" onclick="Actions.openOmClassReview('${r.id}')">Review Delivery</button>
-        </div>
-      `).join("");
-    }
-
-    // 3. Render Manual Payment Verification Queue
-    const paymentContainer = document.getElementById("om-payment-qa-list");
-    if (paymentContainer) {
-      const payments = db.omData.payments.filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
-      paymentContainer.innerHTML = payments.map(p => `
-        <div class="om-action-row">
-          <div class="om-action-main">
-            <div class="om-action-top">
-              <span class="badge ${p.status === 'Awaiting Review' ? 'badge-warning' : 'badge-secondary'}">${p.status}</span>
-              <span class="om-checksum-tag">${p.receiptChecksum.slice(0, 16)}...</span>
-            </div>
-            <h5>${p.learner} — ${p.submittedAmount}</h5>
-            <p>${p.payer} · ${p.channel} (${p.reference})</p>
-          </div>
-          <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReview('${p.id}')">Review Payment</button>
-        </div>
-      `).join("");
-    }
-
-    window.lucide?.createIcons();
-  },
-
-    omWorkspace(route) {
-    const config = omRouteDefinitions[route];
-    const container = document.getElementById("om-workspace-content");
-    if (!config || !container) return;
-
-    updateOmBadges();
-    const liveMetrics = getOmRouteMetrics(config);
-    const metricMarkup = liveMetrics.map(([label, value, note]) => `
-      <article class="coo-workspace-metric">
-        <span>${label}</span>
-        <strong>${value}</strong>
-        <small>${note}</small>
-      </article>
-    `).join("");
-
-    const headingMarkup = `
-      <div class="module-heading coo-module-heading">
-        <div class="module-heading-copy">
-          <span class="module-path">${config.group}</span>
-          <h2>${config.title}</h2>
-          <p>${config.description}</p>
-        </div>
-        <div class="module-heading-context"><span>Operational Scope</span><strong>${config.context}</strong></div>
-      </div>
-      <div class="coo-authority-note"><i data-lucide="shield-check"></i><span>Authoritative operations scope: Scheduling, trials, enrolments, live class review, trainer allocations, resource controls, and manual payment verification.</span></div>
-      <section class="coo-workspace-metrics">${metricMarkup}</section>
-    `;
-
-    const records = getOmRecordsForConfig(config);
-
-    if (config.family === "analytics") {
-      container.innerHTML = `${headingMarkup}
-        <div class="om-analytics-grid">
-          ${records.map(a => `
-            <article class="om-kpi-panel">
-              <div class="om-kpi-header">
-                <h3>${a.metric}</h3>
-                <span class="badge badge-success">${a.status}</span>
-              </div>
-              <div class="om-kpi-value">${a.value}</div>
-              <div class="om-kpi-benchmark"><span>Benchmark Target:</span><strong>${a.target}</strong></div>
-              <p class="om-kpi-detail">${a.detail}</p>
-              <div class="om-kpi-footer">
-                <span><i data-lucide="check-circle"></i> Formula verified server-side</span>
-                <span class="om-fresh-tag">Real-time</span>
-              </div>
-            </article>
-          `).join("")}
-        </div>
-      `;
-    } else {
-      container.innerHTML = `${headingMarkup}
-        <div class="view-header-bar module-toolbar coo-record-toolbar">
-          <div class="search-filter-row">
-            <input type="search" id="om-workspace-search" class="form-control inline" placeholder="Search by name, ID, status, or owner">
-            <select id="om-workspace-status" class="form-control inline">
-              <option value="">All Statuses</option>
-              <option value="Active">Active</option>
-              <option value="Pending">Pending / In Review</option>
-              <option value="Exception">Exceptions / Alerts</option>
-              <option value="Scheduled">Scheduled</option>
-            </select>
-          </div>
-          <div class="button-row">
-            ${route === "om-course-runs" || route === "om-cohorts-sections" ? '<button class="btn btn-primary" onclick="Actions.openOmCohortCreate()"><i data-lucide="plus"></i> Create Course Run</button>' : ''}
-            ${route === "om-resources" ? '<button class="btn btn-primary" onclick="Actions.openOmResourceAssign()"><i data-lucide="upload"></i> Add Resource</button>' : ''}
-            <button class="btn btn-secondary" onclick="Notifications.push('View Saved', 'Your operational filter view was saved.', 'success')"><i data-lucide="bookmark"></i> Save view</button>
-          </div>
-        </div>
-        <div class="table-container">
-          <table>
-            <thead>
-              ${this.omTableHeaders(config.dataType)}
-            </thead>
-            <tbody id="om-workspace-table-body">
-              ${this.omTableRows(config.dataType, records)}
-            </tbody>
-          </table>
-        </div>
-      `;
-
-      const applyFilters = () => {
-        const query = document.getElementById("om-workspace-search")?.value.toLowerCase() || "";
-        const statusFilter = document.getElementById("om-workspace-status")?.value || "";
-        const filtered = records.filter(item => {
-          const rowText = Object.values(item).join(" ").toLowerCase();
-          const matchesQuery = !query || rowText.includes(query);
-          const matchesStatus = !statusFilter
-            || (statusFilter === "Active" && (item.status === "Active" || item.status === "Approved"))
-            || (statusFilter === "Pending" && (item.status?.includes("Pending") || item.status?.includes("Review") || item.status?.includes("Waiting")))
-            || (statusFilter === "Exception" && (item.status?.includes("Exception") || item.status?.includes("Overdue") || item.status?.includes("Conflict") || item.riskLevel?.includes("High")))
-            || (statusFilter === "Scheduled" && item.status === "Scheduled");
-          return matchesQuery && matchesStatus;
-        });
-        document.getElementById("om-workspace-table-body").innerHTML = this.omTableRows(config.dataType, filtered);
-        window.lucide?.createIcons();
-      };
-
-      document.getElementById("om-workspace-search")?.addEventListener("input", applyFilters);
-      document.getElementById("om-workspace-status")?.addEventListener("change", applyFilters);
-    }
-
-    window.lucide?.createIcons();
-  },
-
-  omTableHeaders(dataType) {
-    if (dataType === "trials") {
-      return `<tr><th>Learner / Guardian</th><th>Programme / Score</th><th>Consent Status</th><th>Assigned CSR</th><th>Timing / Room</th><th>Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "enrolments") {
-      return `<tr><th>Learner / Account</th><th>Course Version</th><th>Delivery Mode</th><th>Payment & Grant</th><th>Cohort / Trainer</th><th>Credits & Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "cohorts") {
-      return `<tr><th>Cohort / Run ID</th><th>Course Version</th><th>Enrolled / Capacity</th><th>Assigned Trainer</th><th>Schedule Cadence</th><th>Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "rosters") {
-      return `<tr><th>Roster ID</th><th>Cohort Run</th><th>Learner</th><th>Joined Date</th><th>Attendance Rate</th><th>Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "trainers") {
-      return `<tr><th>Trainer Name</th><th>Programmes</th><th>Weekly Load</th><th>Availability</th><th>Conflict Status</th><th>State</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "classes") {
-      return `<tr><th>Class Occurrence</th><th>Format</th><th>Trainer / Learner</th><th>Timing</th><th>Attendance / Reconciled</th><th>Report State</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "classReviews") {
-      return `<tr><th>Review ID / Class</th><th>Trainer / Learner</th><th>Duration & Attendance</th><th>Syllabus & Homework</th><th>Submitted</th><th>State</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "payments") {
-      return `<tr><th>Submission / Learner</th><th>Payer / Course</th><th>Submitted Amount</th><th>Channel & Reference</th><th>Checksum / Receipt</th><th>State</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "entitlements") {
-      return `<tr><th>Learner / Grant</th><th>Course Plan</th><th>Total / Debited</th><th>Balance Credits</th><th>Expiry & Risk</th><th>Renewal</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "resources") {
-      return `<tr><th>Resource Name</th><th>Format / Version</th><th>Target Scope</th><th>Uploaded By</th><th>Downloads</th><th>Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "cases") {
-      return `<tr><th>Case ID / Subject</th><th>Category</th><th>Priority</th><th>SLA Window</th><th>Learner / Owner</th><th>Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "k12") {
-      return `<tr><th>Section ID</th><th>Grade & Term</th><th>Enrollment</th><th>Lead Teacher</th><th>Subjects</th><th>Status</th><th>Actions</th></tr>`;
-    }
-    if (dataType === "catalogue") {
-      return `<tr><th>Code / Title</th><th>Active Version</th><th>Delivery Modes</th><th>Duration</th><th>Pricing</th><th>State</th><th>Actions</th></tr>`;
-    }
-    return `<tr><th>Record ID</th><th>Title</th><th>Owner</th><th>Detail</th><th>Timing</th><th>State</th><th>Actions</th></tr>`;
-  },
-
-  omTableRows(dataType, items) {
-    if (!items.length) {
-      return `<tr class="table-empty-row"><td colspan="7"><div class="table-empty-state"><strong>No matching records found</strong><span>Adjust search keywords or scope filters.</span></div></td></tr>`;
-    }
-
-    return items.map(item => {
-      let badgeClass = "badge-secondary";
-      if (item.status === "Active" || item.status === "Approved" || item.status === "Completed") badgeClass = "badge-success";
-      if (item.status === "Pending Setup" || item.status === "Ready for Scheduling" || item.status === "Pending Review" || item.status === "Awaiting Review" || item.status === "Under Review") badgeClass = "badge-warning";
-      if (item.status === "Technical Exception" || item.status === "Report Overdue" || item.status === "Conflict Alert" || item.status === "Exception" || item.status === "Quarantined") badgeClass = "badge-error";
-
-      if (dataType === "trials") {
-        return `
-          <tr>
-            <td><strong>${item.learner}</strong><span class="table-subline">${item.id} · ${item.guardian}</span></td>
-            <td><strong>${item.course}</strong><span class="table-subline">Placement: ${item.placementScore}</span></td>
-            <td><span class="badge ${item.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${item.consent.includes('Verified') ? 'Consent Verified' : 'Awaiting Consent'}</span></td>
-            <td>${item.csr}</td>
-            <td>${item.time || item.preferredSlot}<span class="table-subline">${item.room ? 'Daily.co room ready' : 'Room pending'}</span></td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status === 'Ready for Scheduling' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openOmTrialSchedule('${item.id}')">Schedule Slot</button>` : ''}
-                ${item.status === 'Scheduled' ? `<button class="btn btn-secondary btn-xs" onclick="Actions.openOmTrialOutcome('${item.id}')">Record Outcome</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "enrolments") {
-        return `
-          <tr>
-            <td><strong>${item.learner}</strong><span class="table-subline">${item.id} · ${item.email}</span></td>
-            <td><strong>${item.course}</strong><span class="table-subline">${item.version}</span></td>
-            <td>${item.mode}</td>
-            <td><strong>${item.paymentRef}</strong><span class="table-subline">Grant: ${item.grantRef}</span></td>
-            <td>${item.cohort}<span class="table-subline">Trainer: ${item.trainer}</span></td>
-            <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">Credits: ${item.credits || 'Pending'}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status === 'Pending Setup' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openOmEnrolmentSetup('${item.id}')">Configure Setup</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "cohorts") {
-        return `
-          <tr>
-            <td><strong>${item.name}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.course} (${item.version})</td>
-            <td><strong>${item.enrolled} / ${item.capacity}</strong><span class="table-subline">${item.enrolled >= item.capacity ? 'Full capacity' : 'Open for enrolment'}</span></td>
-            <td>${item.trainer}</td>
-            <td>${item.schedule}</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">Manage</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "rosters") {
-        return `
-          <tr>
-            <td><strong>${item.id}</strong></td>
-            <td>${item.cohortId}</td>
-            <td><strong>${item.learner}</strong></td>
-            <td>${item.joined}</td>
-            <td>${item.attendanceRate}</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status === 'Active' ? `<button class="btn btn-secondary btn-xs" onclick="Actions.openOmLearnerTransfer('${item.id}')">Transfer</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "trainers") {
-        return `
-          <tr>
-            <td><strong>${item.name}</strong><span class="table-subline">${item.id} · ${item.email}</span></td>
-            <td>${item.programmes}</td>
-            <td><strong>${item.weeklyLoad}</strong></td>
-            <td>${item.availability}</td>
-            <td><strong class="${item.conflictStatus.includes('Conflict') ? 'error-text' : 'success-text'}">${item.conflictStatus}</strong></td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                <button class="btn btn-primary btn-xs" onclick="Actions.openOmTrainerReassign('${item.id}')">Reassign</button>
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "classes") {
-        return `
-          <tr>
-            <td><strong>${item.title}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.type}</td>
-            <td>${item.trainer}<span class="table-subline">${item.learner || item.participants + ' participants'}</span></td>
-            <td>${item.timing}</td>
-            <td>${item.attendanceStatus}</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status === 'Live' || item.status === 'Upcoming' ? `<button class="btn btn-error btn-xs" onclick="Actions.openOmClassCancelReschedule('${item.id}')">Cancel / Reschedule</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "classReviews") {
-        return `
-          <tr>
-            <td><strong>${item.title}</strong><span class="table-subline">${item.id} / ${item.classId}</span></td>
-            <td>${item.trainer}<span class="table-subline">${item.learner}</span></td>
-            <td><strong>${item.duration}</strong><span class="table-subline">${item.reconciledAttendance}</span></td>
-            <td>${item.syllabus}<span class="table-subline">HW: ${item.homework}</span></td>
-            <td>${item.submittedAt}<span class="table-subline">Age: ${item.age}</span></td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status === 'Pending Review' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openOmClassReview('${item.id}')">Review Delivery</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "payments") {
-        return `
-          <tr>
-            <td><strong>${item.learner}</strong><span class="table-subline">${item.id} · ${item.submittedAt}</span></td>
-            <td>${item.payer}<span class="table-subline">${item.course}</span></td>
-            <td><strong>${item.submittedAmount}</strong><span class="table-subline">Exp: ${item.expectedAmount}</span></td>
-            <td>${item.channel}<span class="table-subline">${item.reference}</span></td>
-            <td><span class="om-checksum-tag">${item.receiptChecksum}</span><span class="table-subline">${item.receiptFile}</span></td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status === 'Awaiting Review' || item.status === 'Under Review' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReview('${item.id}')">Review Payment</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "entitlements") {
-        return `
-          <tr>
-            <td><strong>${item.learner}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.course}</td>
-            <td><strong>${item.totalGranted} Total</strong><span class="table-subline">Debited: ${item.debited}</span></td>
-            <td><strong class="${item.balance <= 2 ? 'error-text' : ''}">${item.balance} Credits</strong></td>
-            <td>${item.expiry}<span class="table-subline ${item.riskLevel.includes('High') ? 'error-text' : ''}">${item.riskLevel}</span></td>
-            <td><span class="badge badge-secondary">${item.renewalNotice}</span></td>
-            <td>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">Inspect Ledger</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "resources") {
-        return `
-          <tr>
-            <td><strong>${item.title}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.format} (${item.version}) · ${item.size}</td>
-            <td>${item.course} (${item.cohort})</td>
-            <td>${item.uploadedBy}<span class="table-subline">${item.date}</span></td>
-            <td>${item.downloads} downloads</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                ${item.status !== 'Quarantined' ? `<button class="btn btn-error btn-xs" onclick="Actions.openOmResourceQuarantine('${item.id}')">Quarantine</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "cases") {
-        return `
-          <tr>
-            <td><strong>${item.subject}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.category}</td>
-            <td><span class="badge ${item.priority === 'High' ? 'badge-error' : 'badge-secondary'}">${item.priority}</span></td>
-            <td><strong class="${item.sla.includes('Breached') || item.sla.includes('m remaining') ? 'error-text' : ''}">${item.sla}</strong></td>
-            <td>${item.learner}<span class="table-subline">Owner: ${item.owner}</span></td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                <button class="btn btn-primary btn-xs" onclick="Actions.openOmCaseInvestigate('${item.id}')">Investigate</button>
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "k12") {
-        return `
-          <tr>
-            <td><strong>${item.section}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.grade} · ${item.academicYear}</td>
-            <td><strong>${item.students} Students</strong></td>
-            <td>${item.leadTeacher}</td>
-            <td>${item.subjects.join(", ")}</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">Manage</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      if (dataType === "catalogue") {
-        return `
-          <tr>
-            <td><strong>${item.title}</strong><span class="table-subline">${item.code}</span></td>
-            <td>${item.activeVersion}</td>
-            <td>${item.deliveryModes.join(", ")}</td>
-            <td>${item.duration}</td>
-            <td>${item.activePrices}</td>
-            <td><span class="badge ${badgeClass}">${item.status}</span></td>
-            <td>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.code}')">View Details</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      }
-
-      return `
-        <tr>
-          <td><strong>${item.id || item.ref || 'REC'}</strong></td>
-          <td>${item.title || item.name || 'Untitled'}</td>
-          <td>${item.owner || item.trainer || '-'}</td>
-          <td>${item.detail || item.notes || ''}</td>
-          <td>${item.timing || item.created || ''}</td>
-          <td><span class="badge ${badgeClass}">${item.status || 'Active'}</span></td>
-          <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id || item.ref}')">View</button></td>
-        </tr>
-      `;
-    }).join("");
-  },
-
-  
-  
-  // ============================================================================
-  // COURSE CREATOR (CC) - RENDER ENGINE (FLIGHT DECK & 28 WORKSPACE SUB-VIEWS)
-  // ============================================================================
-
-  creatorDashboard() {
-    const el = (id, text) => {
-      const e = document.getElementById(id);
-      if (e) e.textContent = text;
-    };
-
-    const draftsCount = db.creatorData.courses.filter(c => c.stage === "Draft").length;
-    const reviewCount = db.creatorData.courses.filter(c => c.stage === "In Review").length;
-    const approvedCount = db.creatorData.courses.filter(c => c.stage === "Approved").length;
-    const publishedCount = db.creatorData.courses.filter(c => c.stage === "Published").length;
-    const openCommentsCount = db.creatorData.reviewComments.filter(c => c.status !== "Resolved").length;
-
-    el("creator-card-draft-count", draftsCount + " Versions");
-    el("creator-card-review-count", reviewCount + " In Review");
-    el("creator-card-approved-count", approvedCount + " Approved");
-    el("creator-card-published-count", publishedCount + " Live");
-
-    el("creator-draft-preview-label", draftsCount + " in Progress");
-    el("creator-review-preview-label", reviewCount + " Under Review");
-    el("creator-approved-preview-label", approvedCount + " Ready to Publish");
-    el("creator-published-preview-label", publishedCount + " Live in Catalogue");
-    el("creator-queue-comments-count", openCommentsCount);
-
-    // Render Queue 1: Reviewer Feedback & Comments
-    const commentsList = document.getElementById("creator-queue-comments-list");
-    if (commentsList) {
-      commentsList.innerHTML = db.creatorData.reviewComments.map(c => `
-        <div class="creator-action-row">
-          <div class="creator-action-info">
-            <div class="creator-action-title">
-              <span class="badge ${c.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${c.severity}</span>
-              <strong>${c.courseTitle}</strong>
-            </div>
-            <div class="creator-action-sub">${c.item} · ${c.reviewer}</div>
-            <p style="margin: 4px 0 0 0; font-size: 11.5px; color: var(--on-surface);">${c.comment}</p>
-          </div>
-          <div class="button-row">
-            ${c.status !== 'Resolved' ? `
-              <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorReviewComment('${c.id}')">Address & Resolve</button>
-            ` : `
-              <span class="badge badge-success">Resolved</span>
-            `}
-          </div>
-        </div>
-      `).join("");
-    }
-
-    // Render Queue 2: Pre-Flight Validation Checks
-    const valList = document.getElementById("creator-queue-validation-list");
-    if (valList) {
-      valList.innerHTML = `
-        <div class="creator-action-row">
-          <div class="creator-action-info">
-            <div class="creator-action-title">
-              <span class="badge badge-warning">Advisory</span>
-              <strong>Modern Full-Stack Web Development (v1.2)</strong>
-            </div>
-            <div class="creator-action-sub">Syllabus & Learning Rules Pre-Flight Audit</div>
-            <p style="margin: 4px 0 0 0; font-size: 11.5px; color: var(--on-surface);">Missing 1 Rubric Weight on ASN-301. Metadata and 28 lesson units fully compliant.</p>
-          </div>
-          <div class="button-row">
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-401')">Inspect Audit</button>
-            <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('VER-401')">Submit Version</button>
-          </div>
-        </div>
-
-        <div class="creator-action-row">
-          <div class="creator-action-info">
-            <div class="creator-action-title">
-              <span class="badge badge-success">Ready</span>
-              <strong>Grade 8 Mathematics: Algebra Mastery (v1.1)</strong>
-            </div>
-            <div class="creator-action-sub">FBISE & Cambridge Board Alignment Check</div>
-            <p style="margin: 4px 0 0 0; font-size: 11.5px; color: var(--on-surface);">10 units, 40 lessons, and 14 assessments verified. Ready for board submission.</p>
-          </div>
-          <div class="button-row">
-            <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('VER-404')">Submit for Review</button>
-          </div>
-        </div>
-      `;
-    }
-
-    window.lucide?.createIcons();
-  },
-
-  creatorWorkspace(route) {
     const config = creatorRouteDefinitions[route];
     if (!config) return;
 
@@ -3462,6 +2315,46 @@ const RenderEngine = {
       `;
     }
 
+    // Dynamic bespoke view switcher
+    let customContentHtml = "";
+
+    if (route === "creator-preview") {
+      customContentHtml = this.renderCreatorLmsPreview();
+    } else if (route === "creator-syllabus-milestones") {
+      customContentHtml = this.renderCreatorMilestonesRoadmap();
+    } else if (route === "creator-syllabus-levels") {
+      customContentHtml = this.renderCreatorLevelsLadder();
+    } else if (route === "creator-syllabus-modules") {
+      customContentHtml = this.renderCreatorModulesStudio();
+    } else if (route === "creator-syllabus-lessons") {
+      customContentHtml = this.renderCreatorLessonsStudio();
+    } else if (route === "creator-syllabus-activities") {
+      customContentHtml = this.renderCreatorActivitiesMatrix();
+    } else if (config.dataType === "courses") {
+      customContentHtml = this.renderCreatorCoursesStudio(records);
+    } else if (config.dataType === "questions") {
+      customContentHtml = this.renderCreatorQuestionBankStudio(records);
+    } else if (config.dataType === "assessments" && route === "creator-assessments-voice") {
+      customContentHtml = this.renderCreatorVoiceStudio(records);
+    } else if (config.dataType === "assessments" && route === "creator-assessments-rubrics") {
+      customContentHtml = this.renderCreatorRubricsStudio(records);
+    } else if (config.dataType === "assessments" && route === "creator-assessments-quizzes") {
+      customContentHtml = this.renderCreatorQuizzesStudio(records);
+    } else {
+      customContentHtml = `
+        <div class="table-container">
+          <table>
+            <thead>
+              ${this.creatorTableHeaders(config.dataType)}
+            </thead>
+            <tbody id="creator-workspace-table-body">
+              ${this.creatorTableRows(config.dataType, records)}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
     container.innerHTML = `
       <div class="coo-workspace-view creator-workspace-view">
         <div class="coo-workspace-header">
@@ -3476,7 +2369,7 @@ const RenderEngine = {
 
         <div class="module-toolbar">
           <div class="search-filter-row">
-            <input type="text" id="creator-workspace-search" class="form-control" placeholder="Search by title, code, keyword, or ID...">
+            <input type="text" id="creator-workspace-search" class="form-control" placeholder="Search by keyword, title, tag, or ID...">
             <select id="creator-workspace-status" class="form-control" style="width: auto; min-width: 170px;">
               <option value="">All Statuses</option>
               <option value="Draft">Draft</option>
@@ -3510,22 +2403,15 @@ const RenderEngine = {
                 <i data-lucide="upload-cloud"></i> Upload Resource
               </button>
             ` : `
-              <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorPreviewModal()">
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-preview')">
                 <i data-lucide="eye"></i> Preview Learner View
               </button>
             `}
           </div>
         </div>
 
-        <div class="table-container">
-          <table>
-            <thead>
-              ${this.creatorTableHeaders(config.dataType)}
-            </thead>
-            <tbody id="creator-workspace-table-body">
-              ${this.creatorTableRows(config.dataType, records)}
-            </tbody>
-          </table>
+        <div id="creator-dynamic-view-canvas">
+          ${customContentHtml}
         </div>
       </div>
     `;
@@ -3542,6 +2428,7 @@ const RenderEngine = {
           || (item.status === statusFilter);
         return matchesQuery && matchesStatus;
       });
+
       const tbody = document.getElementById("creator-workspace-table-body");
       if (tbody) tbody.innerHTML = this.creatorTableRows(config.dataType, filtered);
       window.lucide?.createIcons();
@@ -3551,6 +2438,600 @@ const RenderEngine = {
     document.getElementById("creator-workspace-status")?.addEventListener("change", applyFilters);
 
     window.lucide?.createIcons();
+  },
+
+  renderCreatorMilestonesRoadmap() {
+    const milestones = [
+      {
+        id: "MILE-001",
+        code: "M1",
+        title: "Milestone 1: Web Architecture & DOM Foundations",
+        course: "Modern Full-Stack Web Development",
+        level: "Level 1: Foundations",
+        duration: "2 Weeks (16 Hours)",
+        unitsCount: 4,
+        lessons: [
+          { name: "Lesson 1: Semantic Structure & Accessibility (A11y)", format: "Guide", time: "45m" },
+          { name: "Lesson 2: Advanced CSS Grid & Flexbox Systems", format: "Sandbox IDE", time: "60m" }
+        ],
+        gatekeeper: "QZ-201 (DOM Fundamentals Quiz) >= 80% Required to Unlock M2",
+        prerequisite: "None (Intake Baseline)",
+        reward: "Milestone 1 Verification Badge",
+        status: "Draft (In Authoring)"
+      },
+      {
+        id: "MILE-002",
+        code: "M2",
+        title: "Milestone 2: React 19 & Component Architecture",
+        course: "Modern Full-Stack Web Development",
+        level: "Level 2: Frontend Engineering",
+        duration: "3 Weeks (24 Hours)",
+        unitsCount: 6,
+        lessons: [
+          { name: "Lesson 3: State Machines & Custom React Hooks", format: "Video Lecture", time: "75m" },
+          { name: "Lesson 4: React Server Components & Streaming", format: "Sandbox IDE", time: "90m" }
+        ],
+        gatekeeper: "QZ-202 (React 19 State Quiz) >= 70% + ASN-301 Task",
+        prerequisite: "100% Milestone 1 Complete",
+        reward: "Frontend Specialist Certificate",
+        status: "Draft (In Authoring)"
+      },
+      {
+        id: "MILE-003",
+        code: "M3",
+        title: "Milestone 3: Node.js Microservices & PostgreSQL Engine",
+        course: "Modern Full-Stack Web Development",
+        level: "Level 2: Backend Architecture",
+        duration: "4 Weeks (32 Hours)",
+        unitsCount: 8,
+        lessons: [
+          { name: "Lesson 5: REST & GraphQL API Gateways", format: "Guide", time: "60m" },
+          { name: "Lesson 6: PostgreSQL Indexing & Query Optimizations", format: "Sandbox IDE", time: "90m" }
+        ],
+        gatekeeper: "API Benchmark Test + Capstone Database Schema Sign-off",
+        prerequisite: "100% Milestone 2 Complete",
+        reward: "Backend Architecture Badge",
+        status: "Draft (In Authoring)"
+      },
+      {
+        id: "MILE-004",
+        code: "M4",
+        title: "Milestone 4: Cloud CI/CD & Production Capstone",
+        course: "Modern Full-Stack Web Development",
+        level: "Level 3: Advanced Architect",
+        duration: "3 Weeks (24 Hours)",
+        unitsCount: 4,
+        lessons: [
+          { name: "Lesson 7: Docker Containers & Cloud Deployment", format: "Video Lecture", time: "60m" },
+          { name: "Lesson 8: Full-Stack Production Capstone Defense", format: "Live Project Defense", time: "120m" }
+        ],
+        gatekeeper: "Peer Review Sign-off + 100% Milestone Completion",
+        prerequisite: "100% Milestone 3 Complete",
+        reward: "Full-Stack Software Engineer Credential",
+        status: "Draft (In Authoring)"
+      }
+    ];
+
+    return `
+      <div class="creator-milestones-container">
+        ${milestones.map((m, idx) => `
+          <div class="creator-milestone-card">
+            <div class="creator-milestone-header">
+              <div>
+                <div class="creator-milestone-tagline">
+                  <span class="badge badge-primary">${m.code}</span>
+                  <span class="badge badge-secondary">${m.level}</span>
+                  <span class="badge badge-warning">${m.status}</span>
+                </div>
+                <h3 class="creator-milestone-title">${m.title}</h3>
+                <p class="creator-milestone-desc">${m.course} · Estimated Effort: ${m.duration}</p>
+              </div>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">+ Add Lesson</button>
+                <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorEditRulesModal('RUL-601')">Configure Gatekeeper</button>
+              </div>
+            </div>
+
+            <div class="creator-milestone-body">
+              <div class="creator-milestone-units-preview">
+                <strong style="font-size: 11px; text-transform: uppercase; color: var(--slate); letter-spacing: 0.05em;">Curriculum Units (${m.unitsCount} Total)</strong>
+                <div class="creator-unit-pill-row">
+                  ${m.lessons.map(l => `
+                    <span class="creator-unit-mini-chip">
+                      <i data-lucide="${l.format.includes('Video') ? 'video' : l.format.includes('Sandbox') ? 'code-2' : 'file-text'}"></i>
+                      <strong>${l.name}</strong> (${l.time})
+                    </span>
+                  `).join("")}
+                </div>
+              </div>
+
+              <div class="creator-milestone-gate">
+                <strong><i data-lucide="lock" style="width:12px; height:12px;"></i> Unlock Gatekeeper</strong>
+                <span>${m.gatekeeper}</span>
+              </div>
+
+              <div class="creator-milestone-gate" style="border-left-color: #166534; background: #f4faf6;">
+                <strong style="color: #166534;"><i data-lucide="award" style="width:12px; height:12px;"></i> Milestone Credential</strong>
+                <span>${m.reward}</span>
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorLevelsLadder() {
+    const levels = [
+      {
+        level: "Level 1: Foundations & Core Logic",
+        desc: "Essential computational thinking, HTML5 semantics, CSS token systems, and syntax basics.",
+        milestonesCount: 2,
+        lessonsCount: 8,
+        quizzesCount: 3,
+        targetAudience: "Beginner & Transitioning Learners",
+        prerequisite: "None (Open Intake)"
+      },
+      {
+        level: "Level 2: Professional Component Architecture",
+        desc: "React 19, custom hook design patterns, state machines, and relational database schema design.",
+        milestonesCount: 3,
+        lessonsCount: 14,
+        quizzesCount: 4,
+        targetAudience: "Intermediate Developers",
+        prerequisite: "Level 1 Certified (Pass mark >= 80%)"
+      },
+      {
+        level: "Level 3: Distributed Systems & Capstone",
+        desc: "Production microservices, CI/CD automated deployments, performance telemetry, and Capstone defense.",
+        milestonesCount: 3,
+        lessonsCount: 12,
+        quizzesCount: 2,
+        targetAudience: "Senior & Industry-Ready Engineers",
+        prerequisite: "Level 2 Certified + Project Approval"
+      }
+    ];
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        ${levels.map((lvl, idx) => `
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+            <div style="flex: 1;">
+              <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
+                <span class="badge badge-primary">TIER 0${idx + 1}</span>
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${lvl.level}</h3>
+              </div>
+              <p style="font-size: 12.5px; color: #5a687c; margin: 0 0 10px 0;">${lvl.desc}</p>
+              <div style="display: flex; gap: 14px; font-size: 11.5px; color: var(--navy-medium);">
+                <span><i data-lucide="flag" style="width:13px; color:var(--primary);"></i> <strong>${lvl.milestonesCount}</strong> Milestones</span>
+                <span><i data-lucide="file-text" style="width:13px; color:var(--primary);"></i> <strong>${lvl.lessonsCount}</strong> Lessons</span>
+                <span><i data-lucide="help-circle" style="width:13px; color:var(--primary);"></i> <strong>${lvl.quizzesCount}</strong> Quizzes</span>
+                <span><i data-lucide="shield" style="width:13px; color:var(--primary);"></i> Prereq: <strong>${lvl.prerequisite}</strong></span>
+              </div>
+            </div>
+            <div class="button-row">
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-syllabus-milestones')">View Milestones</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorModulesStudio() {
+    const modules = [
+      {
+        id: "MOD-101",
+        code: "Module 1.1",
+        title: "Modern HTML5 & Responsive Semantic Tokens",
+        lessonsCount: 3,
+        duration: "4.5 Hours",
+        resources: ["RES-101 (Semantic HTML PDF)", "RES-102 (Token CSS)"],
+        activities: ["Interactive DOM Guide", "Sandbox Code Test"]
+      },
+      {
+        id: "MOD-102",
+        code: "Module 1.2",
+        title: "Advanced CSS Grid, Flexbox & Fluid Responsive Layouts",
+        lessonsCount: 4,
+        duration: "6.0 Hours",
+        resources: ["RES-102 (CSS Grid Cheat Sheet)"],
+        activities: ["Dashboard Layout Sandbox", "ASN-301 Responsive Task"]
+      },
+      {
+        id: "MOD-201",
+        code: "Module 2.1",
+        title: "React 19 Server Components, State & Streaming",
+        lessonsCount: 5,
+        duration: "8.0 Hours",
+        resources: ["RES-103 (React 19 Video Lecture)"],
+        activities: ["State Sandbox", "QZ-202 React Quiz"]
+      }
+    ];
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+        ${modules.map(mod => `
+          <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px; margin-bottom: 12px;">
+              <div>
+                <span class="badge badge-secondary" style="margin-bottom: 4px;">${mod.code} · ${mod.id}</span>
+                <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${mod.title}</h3>
+              </div>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">+ Add Lesson Unit</button>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #5a687c;">
+              <span><strong>${mod.lessonsCount} Lessons</strong> · Total Duration: <strong>${mod.duration}</strong></span>
+              <div style="display: flex; gap: 8px;">
+                ${mod.resources.map(r => `<span class="badge badge-secondary">${r}</span>`).join("")}
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorLessonsStudio() {
+    const lessons = db.creatorData.syllabus;
+    return `
+      <div class="creator-lessons-studio-grid">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          ${lessons.map((s, idx) => `
+            <div style="padding: 16px 20px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 10px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+                  <span class="badge badge-primary">Unit 0${idx + 1}</span>
+                  <span class="badge badge-secondary">${s.activityType}</span>
+                </div>
+                <strong style="font-size: 13.5px; color: var(--navy-medium);">${s.lesson}</strong>
+                <div style="font-size: 11.5px; color: var(--slate); margin-top: 2px;">${s.module} · Duration: ${s.duration}</div>
+              </div>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal('${s.id}')">Edit</button>
+                <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-preview')">Preview</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="creator-lesson-inspector-card">
+          <div style="border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px;">
+            <span class="badge badge-success">ACTIVE UNIT INSPECTOR</span>
+            <h3 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 0 0;">Lesson 1: Semantic Structure & A11y</h3>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px;">
+            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Format Mode</label><div style="font-weight: 600; color: var(--navy-medium);">Interactive Formatted Guide + Sandbox</div></div>
+            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Linked Media Asset</label><div style="color: #1e60aa;">RES-101 (HTML5 Blueprint PDF) · Verified SHA-256</div></div>
+            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Gatekeeper Quiz Key</label><div style="color: var(--navy-medium);">QZ-201 (DOM Fundamentals) · 15 Items · Pass: 80%</div></div>
+            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Completion Criteria</label><div style="color: var(--navy-medium);">100% Reading Scroll + Quiz Score >= 80%</div></div>
+          </div>
+          <div style="margin-top: 10px; display: flex; gap: 10px;">
+            <button class="btn btn-primary btn-sm" style="width: 100%;" onclick="Actions.openCreatorAddLessonModal('SYL-501')">Edit Unit Properties</button>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderCreatorActivitiesMatrix() {
+    const activities = [
+      { title: "Browser Monaco IDE Sandbox", type: "Interactive Code", desc: "Live code editor testing HTML5, CSS Grid, and React state in a sandbox.", units: "2 Lessons Attached", icon: "code-2" },
+      { title: "Spoken Acoustic Voice Recorder", type: "Speaking Activity", desc: "Captures 90-120s spoken audio prompts evaluated against phonetic pronunciation rubrics.", units: "1 Lesson Attached", icon: "mic" },
+      { title: "Automated Knowledge Check Quiz", type: "Multiple-Choice Assessment", desc: "Shuffle-enabled question bank quizzes with attempt limits and instant grading.", units: "4 Lessons Attached", icon: "help-circle" },
+      { title: "Downloadable Practice Worksheets", type: "PDF Reference", desc: "Structured problem sets and board-standard worksheet attachments.", units: "4 Lessons Attached", icon: "file-text" }
+    ];
+
+    return `
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; width: 100%;">
+        ${activities.map(act => `
+          <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="display: inline-flex; padding: 8px; background: #fdfbf7; border: 1px solid #e7dfd3; border-radius: 8px; color: var(--primary);"><i data-lucide="${act.icon}"></i></span>
+                <div>
+                  <h4 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${act.title}</h4>
+                  <span class="badge badge-secondary" style="margin-top: 3px;">${act.type}</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-size: 12px; color: #5a687c; margin: 0; line-height: 1.45;">${act.desc}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--navy-medium);">
+              <span><strong>${act.units}</strong></span>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">View Lessons</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorCoursesStudio(courses) {
+    return `
+      <div class="creator-courses-grid">
+        ${courses.map(c => {
+          let badgeModelClass = "creator-badge-selfpaced";
+          let modelIcon = "layers";
+          if (c.deliveryModel.includes("Live Scheduled")) {
+            badgeModelClass = "creator-badge-live";
+            modelIcon = "video";
+          } else if (c.deliveryModel.includes("K-12")) {
+            badgeModelClass = "creator-badge-k12";
+            modelIcon = "graduation-cap";
+          }
+
+          let stageBadge = "badge-secondary";
+          if (c.stage === "Draft") stageBadge = "badge-warning";
+          if (c.stage === "In Review") stageBadge = "badge-warning";
+          if (c.stage === "Approved" || c.stage === "Published") stageBadge = "badge-success";
+
+          return `
+            <article class="creator-course-card">
+              <div class="creator-course-top">
+                <span class="creator-course-badge-model ${badgeModelClass}">
+                  <i data-lucide="${modelIcon}"></i> ${c.deliveryModel}
+                </span>
+                <span class="badge ${stageBadge}">${c.stage}</span>
+              </div>
+
+              <div>
+                <h3>${c.title}</h3>
+                <span class="table-subline" style="margin-top: 3px; display: block;">Code: ${c.code} · Faculty: ${c.faculty}</span>
+              </div>
+
+              <div class="creator-course-meta-pills">
+                <span><i data-lucide="clock"></i> ${c.estimatedEffort}</span>
+                <span><i data-lucide="folder-tree"></i> ${c.modulesCount} Modules</span>
+                <span><i data-lucide="file-text"></i> ${c.lessonsCount} Lessons</span>
+                <span><i data-lucide="git-branch"></i> ${c.activeVersion}</span>
+              </div>
+
+              <div class="creator-course-delivery-box">
+                ${c.deliveryModel.includes("Self-paced") ? `
+                  <strong><i data-lucide="flag"></i> Milestone Self-Paced Track:</strong>
+                  <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">Automated milestone progression state machine. Quiz gatekeepers unlock consecutive modules.</p>
+                ` : c.deliveryModel.includes("Live Scheduled") ? `
+                  <strong><i data-lucide="video"></i> Live Interactive Cohort:</strong>
+                  <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">Daily.co room attachments with 80% live attendance threshold and acoustic voice submissions.</p>
+                ` : `
+                  <strong><i data-lucide="award"></i> K-12 Academic Board Alignment:</strong>
+                  <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">FBISE standard & Cambridge O-Level aligned. Public parent syllabus preview enabled (K12-005).</p>
+                `}
+              </div>
+
+              <div class="creator-course-footer">
+                <span style="font-size: 11.5px; color: var(--slate);">Author: <strong>${c.author}</strong></span>
+                <div class="button-row">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('${c.id}')">Inspect</button>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">Build Syllabus</button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorQuestionBankStudio(questions) {
+    return `
+      <div class="creator-question-cards-grid">
+        ${questions.map(q => `
+          <div class="creator-question-card">
+            <div class="creator-question-header">
+              <span class="badge badge-primary">${q.type}</span>
+              <span class="badge badge-secondary">${q.difficulty}</span>
+            </div>
+            <h4 class="creator-question-stem">${q.title}</h4>
+            
+            <div class="creator-question-choices">
+              <span style="font-size: 10.5px; text-transform: uppercase; color: var(--slate); font-weight: 700;">Answer Key & Options:</span>
+              <div class="creator-choice-item correct">
+                <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
+                <strong>Correct Key: ${q.correctAnswer}</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
+              <span>Tags: <strong>${q.tags.join(", ")}</strong></span>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuestionModal('${q.id}')">Edit Item</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorQuizzesStudio(assessments) {
+    const quizzes = assessments.filter(a => a.type === "Quiz");
+    return `
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
+        ${quizzes.map(qz => `
+          <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span class="badge badge-primary">QUIZ ENGINE</span>
+              <span class="badge badge-warning">${qz.status}</span>
+            </div>
+            <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${qz.title}</h3>
+            <span class="table-subline">${qz.course}</span>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fbf9f5; padding: 12px; border-radius: 8px; font-size: 12px;">
+              <div><span>Pass Mark:</span> <strong>${qz.passMark}</strong></div>
+              <div><span>Time Limit:</span> <strong>${qz.timeLimit}</strong></div>
+              <div><span>Max Attempts:</span> <strong>${qz.maxAttempts}</strong></div>
+              <div><span>Randomization:</span> <strong>Enabled</strong></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <span style="font-size: 11.5px; color: var(--slate);">Questions: <strong>${qz.questionsCount} items</strong></span>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuizModal('${qz.id}')">Configure Rules</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorVoiceStudio(assessments) {
+    const voiceTasks = assessments.filter(a => a.type === "Voice Activity");
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        ${voiceTasks.map(v => `
+          <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <span class="badge badge-primary"><i data-lucide="mic"></i> ACOUSTIC VOICE ACTIVITY</span>
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${v.title}</h3>
+                <span class="table-subline">${v.course} · Linked: ${v.linkedLesson}</span>
+              </div>
+              <span class="badge badge-success">${v.status}</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; background: #fdfbf7; padding: 14px 18px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.15);">
+              <div><strong style="font-size: 11px; color: var(--slate); text-transform: uppercase;">Duration Requirement</strong><div style="font-size: 13px; font-weight: 700; color: var(--navy-medium);">${v.durationRequirement}</div></div>
+              <div><strong style="font-size: 11px; color: var(--slate); text-transform: uppercase;">Format</strong><div style="font-size: 13px; font-weight: 700; color: var(--navy-medium);">.MP3 / .WAV (128kbps)</div></div>
+              <div><strong style="font-size: 11px; color: var(--slate); text-transform: uppercase;">Phonetic Rubric</strong><div style="font-size: 13px; font-weight: 700; color: #1e60aa;">${v.rubric}</div></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <span style="font-size: 12px; color: #5a687c;">Evaluation Mode: <strong>Trainer & AI Speech Evaluation</strong></span>
+              <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-preview')">Test Recording Flow</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderCreatorRubricsStudio() {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04);">
+          <div style="border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span class="badge badge-primary">RUBRIC MATRIX: RUB-101</span>
+              <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 0 0;">Frontend Clean Architecture & Component Design</h3>
+            </div>
+            <button class="btn btn-secondary btn-xs">+ Add Criteria</button>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead>
+              <tr style="background: #fdfbf7; text-align: left;">
+                <th style="padding: 10px;">Criteria & Weight</th>
+                <th style="padding: 10px;">Exemplary (100%)</th>
+                <th style="padding: 10px;">Proficient (75%)</th>
+                <th style="padding: 10px;">Developing (50%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-top: 1px solid #eee8dc;">
+                <td style="padding: 12px 10px;"><strong>Component Modularity</strong><br><span class="table-subline">Weight: 35%</span></td>
+                <td style="padding: 12px 10px;">Zero coupled side-effects; pure components and state machines.</td>
+                <td style="padding: 12px 10px;">Clean components with minor redundant re-renders.</td>
+                <td style="padding: 12px 10px;">Monolithic files with tight prop drilling.</td>
+              </tr>
+              <tr style="border-top: 1px solid #eee8dc;">
+                <td style="padding: 12px 10px;"><strong>Mobile Responsiveness</strong><br><span class="table-subline">Weight: 35%</span></td>
+                <td style="padding: 12px 10px;">Flawless layout adaptation across 390px, 820px, and 1440px.</td>
+                <td style="padding: 12px 10px;">Minor padding truncation on small screens.</td>
+                <td style="padding: 12px 10px;">Horizontal overflow and broken flex layouts.</td>
+              </tr>
+              <tr style="border-top: 1px solid #eee8dc;">
+                <td style="padding: 12px 10px;"><strong>Accessibility (A11y)</strong><br><span class="table-subline">Weight: 30%</span></td>
+                <td style="padding: 12px 10px;">Full keyboard navigation, semantic ARIA attributes, 4.5:1 contrast.</td>
+                <td style="padding: 12px 10px;">Keyboard navigable with minor missing aria-labels.</td>
+                <td style="padding: 12px 10px;">Missing semantic landmarks and focus outlines.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  },
+
+  renderCreatorLmsPreview() {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: linear-gradient(135deg, #182232, #253852); border-radius: 10px; color: #ffffff;">
+          <div>
+            <strong style="font-size: 13.5px; color: #ffffff;">LMS Learner Viewport Simulator (CAT-009)</strong>
+            <span style="font-size: 12px; color: #c9d6e4; display: block;">Testing: Modern Full-Stack Web Development (v1.2 Draft)</span>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span style="font-size: 12px; color: #b0c2d8;">Mode:</span>
+            <button class="btn btn-primary btn-xs" id="lms-sim-guest" onclick="Actions.switchLmsSimMode('guest')">Guest Visitor</button>
+            <button class="btn btn-secondary btn-xs" id="lms-sim-free" onclick="Actions.switchLmsSimMode('free')">Registered Free Learner</button>
+          </div>
+        </div>
+
+        <div class="creator-preview-viewport-box">
+          <div class="creator-preview-player-pane">
+            <div class="creator-player-screen-mock">
+              <i data-lucide="play-circle"></i>
+              <strong style="font-size: 15px;">Interactive Video Lecture & Coding Demo</strong>
+              <span style="font-size: 12px; opacity: 0.85;">Lesson 1: Semantic Structure & Accessibility (45:00)</span>
+            </div>
+
+            <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px;">
+              <button class="btn btn-primary btn-xs">Lesson Guide</button>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Practice Sandbox', 'Loaded interactive code sandbox environment.', 'info')">Coding Sandbox</button>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Attached', 'Downloaded RES-101 HTML5 Semantic PDF.', 'success')">Download Notes</button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuizModal('QZ-201')">Take Quiz</button>
+            </div>
+
+            <div>
+              <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Lesson 1: Semantic Structure & Modern Layout Tokens</h3>
+              <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
+                In this unit, learners master semantic HTML elements (<code style="color:var(--primary);">&lt;main&gt;</code>, <code style="color:var(--primary);">&lt;header&gt;</code>, <code style="color:var(--primary);">&lt;section&gt;</code>) and establish accessible color contrast ratios adhering to WCAG AAA standards.
+              </p>
+            </div>
+          </div>
+
+          <div class="creator-preview-drawer-pane">
+            <strong style="font-size: 13px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Outline</strong>
+            
+            <div class="creator-drawer-item active">
+              <div>
+                <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">FREE PREVIEW</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">1. Semantic Structure & A11y</strong>
+                <small style="color: #6a788e;">45 Mins · Formatted Guide</small>
+              </div>
+              <i data-lucide="play" style="width: 14px; height: 14px; color: var(--primary);"></i>
+            </div>
+
+            <div class="creator-drawer-item" id="sim-drawer-item-2">
+              <div>
+                <span class="badge badge-warning" style="font-size: 9px; margin-bottom: 2px;" id="sim-lock-badge-2"><i data-lucide="lock" style="width:9px; height:9px;"></i> PAID ENROLMENT</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">2. Advanced CSS Grid Systems</strong>
+                <small style="color: #6a788e;">60 Mins · Interactive Sandbox</small>
+              </div>
+              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);" id="sim-lock-icon-2"></i>
+            </div>
+
+            <div class="creator-drawer-item locked">
+              <div>
+                <span class="badge badge-secondary" style="font-size: 9px; margin-bottom: 2px;"><i data-lucide="lock" style="width:9px; height:9px;"></i> PREREQUISITE GATED</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">3. React 19 State Machines</strong>
+                <small style="color: #6a788e;">Requires Milestone 1 Pass</small>
+              </div>
+              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);"></i>
+            </div>
+
+            <div class="creator-drawer-item locked">
+              <div>
+                <span class="badge badge-secondary" style="font-size: 9px; margin-bottom: 2px;"><i data-lucide="lock" style="width:9px; height:9px;"></i> CAPSTONE DEFENSE</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">4. Production Deployment</strong>
+                <small style="color: #6a788e;">Requires 100% Progress</small>
+              </div>
+              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
   },
 
   creatorTableHeaders(dataType) {
@@ -9269,6 +8750,27 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+
+  Actions.switchLmsSimMode = function(mode) {
+    const guestBtn = document.getElementById("lms-sim-guest");
+    const freeBtn = document.getElementById("lms-sim-free");
+    const lockBadge = document.getElementById("sim-lock-badge-2");
+    if (!guestBtn || !freeBtn) return;
+
+    if (mode === "guest") {
+      guestBtn.className = "btn btn-primary btn-xs";
+      freeBtn.className = "btn btn-secondary btn-xs";
+      if (lockBadge) lockBadge.innerHTML = '<i data-lucide="lock" style="width:9px; height:9px;"></i> PAID ENROLMENT';
+      Notifications.push("Simulation Mode", "Viewing as unauthenticated Guest. Paid lessons locked.", "info");
+    } else {
+      guestBtn.className = "btn btn-secondary btn-xs";
+      freeBtn.className = "btn btn-primary btn-xs";
+      if (lockBadge) lockBadge.innerHTML = '<i data-lucide="check" style="width:9px; height:9px;"></i> FREE PREVIEW GRANTED';
+      Notifications.push("Simulation Mode", "Viewing as Registered Free Learner. Trial lessons unlocked.", "success");
+    }
     window.lucide?.createIcons();
   };
 
