@@ -9,6 +9,592 @@
 // ============================================================================
 
 const db = {
+  
+  // ============================================================================
+  // COURSE CREATOR DATASET (CATALOGUE, SYLLABUS, ASSESSMENTS, PREVIEW, REVIEW)
+  // ============================================================================
+  creatorData: {
+    courses: [
+      {
+        id: "CRS-101",
+        code: "TECH-FE-201",
+        title: "Modern Full-Stack Web Development",
+        programme: "Vocational Skills",
+        faculty: "Faculty of Computing & Technology",
+        deliveryModel: "Self-paced Milestone",
+        activeVersion: "v1.2 (Draft)",
+        latestPublished: "v1.0 (Live)",
+        stage: "Draft",
+        language: "English / Urdu",
+        estimatedEffort: "12 Weeks (8 hrs/wk)",
+        modulesCount: 6,
+        lessonsCount: 28,
+        assessmentsCount: 8,
+        author: "Dr. Arsalan Khan",
+        created: "2026-06-15",
+        updated: "2026-08-16 10:45",
+        description: "Comprehensive modern JavaScript, React 19, Node.js microservices, and database architecture.",
+        learningOutcomes: "Build responsive full-stack applications, deploy production REST APIs, and manage state machines.",
+        prerequisites: "Basic Computer Literacy & Logic Foundations",
+        completionRule: "100% Milestones + Capstone Project Sign-off",
+        priceLocked: "PKR 35,000 (Commercial catalogue managed - Read-only)"
+      },
+      {
+        id: "CRS-102",
+        code: "LIT-BAS-101",
+        title: "Foundational Urdu & English Basic Literacy",
+        programme: "Basic Literacy",
+        faculty: "Faculty of Community Foundations",
+        deliveryModel: "Live Scheduled",
+        activeVersion: "v2.0 (In Review)",
+        latestPublished: "v1.0 (Live)",
+        stage: "In Review",
+        language: "Urdu / English",
+        estimatedEffort: "8 Weeks (4 hrs/wk)",
+        modulesCount: 4,
+        lessonsCount: 16,
+        assessmentsCount: 4,
+        author: "Dr. Arsalan Khan",
+        created: "2026-05-10",
+        updated: "2026-08-15 16:30",
+        description: "Primary literacy and phonics for non-traditional adult learners.",
+        learningOutcomes: "Read daily texts, understand essential vocabulary, and complete basic comprehension quizzes.",
+        prerequisites: "Open Intake - No prerequisites",
+        completionRule: "80% Live Attendance + Mid-term & Final Verbal Evaluations",
+        priceLocked: "PKR 12,000 (Subsidized tier - Read-only)"
+      },
+      {
+        id: "CRS-103",
+        code: "ENG-SPK-301",
+        title: "Spoken English Fluency & Professional Voice",
+        programme: "Spoken English",
+        faculty: "Faculty of Languages & Communication",
+        deliveryModel: "Self-paced Milestone",
+        activeVersion: "v1.0 (Approved)",
+        latestPublished: "None (Awaiting Publish)",
+        stage: "Approved",
+        language: "English",
+        estimatedEffort: "6 Weeks (5 hrs/wk)",
+        modulesCount: 5,
+        lessonsCount: 22,
+        assessmentsCount: 12,
+        author: "Dr. Arsalan Khan",
+        created: "2026-07-01",
+        updated: "2026-08-16 09:15",
+        description: "Pronunciation, conversational cadence, workplace presentations, and acoustic voice submissions.",
+        learningOutcomes: "Communicate clearly in workplace scenarios, pass pronunciation rubrics, and deliver speeches.",
+        prerequisites: "Basic English Comprehension",
+        completionRule: "All Voice Activities Graded + 70% Pass Mark",
+        priceLocked: "PKR 18,000 (Commercial catalogue managed - Read-only)"
+      },
+      {
+        id: "CRS-104",
+        code: "K12-MTH-08",
+        title: "Grade 8 Mathematics: Algebra & Geometry Mastery",
+        programme: "K-12",
+        faculty: "Faculty of Secondary Education",
+        deliveryModel: "K-12 Live Tuition",
+        activeVersion: "v1.1 (Draft)",
+        latestPublished: "v1.0 (Live)",
+        stage: "Draft",
+        language: "English",
+        estimatedEffort: "Full Academic Year 2026/27",
+        modulesCount: 8,
+        lessonsCount: 40,
+        assessmentsCount: 14,
+        author: "Dr. Arsalan Khan",
+        created: "2026-06-20",
+        updated: "2026-08-14 11:20",
+        description: "FBISE & Cambridge aligned curriculum covering algebraic expressions, linear equations, and geometric proofs.",
+        learningOutcomes: "Solve linear equations, understand geometric theorems, and complete board-standard worksheets.",
+        prerequisites: "Grade 7 Mathematics Completed",
+        completionRule: "Term Quizzes + Monthly Progress Assessments",
+        priceLocked: "PKR 6,500/Month (Tuition membership - Read-only)"
+      },
+      {
+        id: "CRS-105",
+        code: "TECH-PY-101",
+        title: "Python Programming & Data Analytics Foundations",
+        programme: "Vocational Skills",
+        faculty: "Faculty of Computing & Technology",
+        deliveryModel: "Self-paced Milestone",
+        activeVersion: "v1.0 (Published)",
+        latestPublished: "v1.0 (Live)",
+        stage: "Published",
+        language: "English",
+        estimatedEffort: "10 Weeks (6 hrs/wk)",
+        modulesCount: 5,
+        lessonsCount: 25,
+        assessmentsCount: 6,
+        author: "Dr. Arsalan Khan",
+        created: "2026-04-12",
+        updated: "2026-07-28 14:00",
+        description: "Python 3.12 syntax, data structures, pandas analytics, and interactive notebook exercises.",
+        learningOutcomes: "Write modular Python code, analyze tabular datasets, and construct visualization dashboards.",
+        prerequisites: "Basic Numeracy",
+        completionRule: "5 Milestone Quizzes + Data Analysis Capstone",
+        priceLocked: "PKR 28,000 (Commercial catalogue managed - Read-only)"
+      },
+      {
+        id: "CRS-106",
+        code: "K12-SCI-09",
+        title: "Grade 9 General Science: Physics & Chemistry Labs",
+        programme: "K-12",
+        faculty: "Faculty of Secondary Education",
+        deliveryModel: "K-12 Live Tuition",
+        activeVersion: "v1.0 (Published)",
+        latestPublished: "v1.0 (Live)",
+        stage: "Published",
+        language: "English / Urdu",
+        estimatedEffort: "Full Academic Year 2026/27",
+        modulesCount: 6,
+        lessonsCount: 36,
+        assessmentsCount: 10,
+        author: "Dr. Arsalan Khan",
+        created: "2026-03-15",
+        updated: "2026-06-30 18:00",
+        description: "Kinematics, matter properties, atomic structure, and interactive virtual laboratory experiments.",
+        learningOutcomes: "Understand core scientific principles, formulate hypotheses, and pass standard board exams.",
+        prerequisites: "Grade 8 General Science",
+        completionRule: "Term Lab Reports + Board Standard Exam",
+        priceLocked: "PKR 7,000/Month (Tuition membership - Read-only)"
+      }
+    ],
+
+    versions: [
+      {
+        id: "VER-401",
+        courseId: "CRS-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        versionTag: "v1.2",
+        lifecycleState: "Draft",
+        deliveryModel: "Self-paced Milestone",
+        changesSummary: "Added Next.js 15 App Router module and replaced deprecated state libraries.",
+        author: "Dr. Arsalan Khan",
+        created: "2026-08-01",
+        updated: "2026-08-16 10:45",
+        validationStatus: "Warning (Missing 1 Resource Link)",
+        reviewer: "Prof. Tariq Siddiqui (Assigned)",
+        publishLock: "Immutable once published. Edits allowed in draft."
+      },
+      {
+        id: "VER-402",
+        courseId: "CRS-102",
+        courseTitle: "Foundational Urdu & English Basic Literacy",
+        versionTag: "v2.0",
+        lifecycleState: "In Review",
+        deliveryModel: "Live Scheduled",
+        changesSummary: "Upgraded audio phonics lessons and added bilingual conversational flashcards.",
+        author: "Dr. Arsalan Khan",
+        created: "2026-07-15",
+        updated: "2026-08-15 16:30",
+        validationStatus: "Passed (100% Complete)",
+        reviewer: "Dr. Maria Santos (Academic Board)",
+        publishLock: "Locked during review. Edits frozen."
+      },
+      {
+        id: "VER-403",
+        courseId: "CRS-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        versionTag: "v1.0",
+        lifecycleState: "Approved",
+        deliveryModel: "Self-paced Milestone",
+        changesSummary: "Initial version complete with 12 voice recording activities and pronunciation rubrics.",
+        author: "Dr. Arsalan Khan",
+        created: "2026-07-01",
+        updated: "2026-08-16 09:15",
+        validationStatus: "Passed (Sign-off granted)",
+        reviewer: "Dr. Maria Santos (Approved 16 Aug)",
+        publishLock: "Approved - Awaiting Catalogue Owner Publish."
+      },
+      {
+        id: "VER-404",
+        courseId: "CRS-104",
+        courseTitle: "Grade 8 Mathematics: Algebra & Geometry Mastery",
+        versionTag: "v1.1",
+        lifecycleState: "Draft",
+        deliveryModel: "K-12 Live Tuition",
+        changesSummary: "Updated FBISE board syllabus alignment and added 15 new practice worksheets.",
+        author: "Dr. Arsalan Khan",
+        created: "2026-08-05",
+        updated: "2026-08-14 11:20",
+        validationStatus: "Passed",
+        reviewer: "Unassigned",
+        publishLock: "Draft - Authoring in progress."
+      },
+      {
+        id: "VER-405",
+        courseId: "CRS-105",
+        courseTitle: "Python Programming & Data Analytics Foundations",
+        versionTag: "v1.0",
+        lifecycleState: "Published",
+        deliveryModel: "Self-paced Milestone",
+        changesSummary: "Initial live production release.",
+        author: "Dr. Arsalan Khan",
+        created: "2026-04-12",
+        updated: "2026-07-28 14:00",
+        validationStatus: "Certified",
+        reviewer: "Academic Review Board",
+        publishLock: "Immutable (Live). To update, create Version v2.0."
+      }
+    ],
+
+    syllabus: [
+      {
+        id: "SYL-501",
+        courseId: "CRS-101",
+        versionId: "VER-401",
+        level: "Level 1: Foundations",
+        milestone: "Milestone 1: Web Architecture & DOM",
+        module: "Module 1.1: Modern HTML5 & CSS Layouts",
+        lesson: "Lesson 1: Semantic Structure & Accessibility (A11y)",
+        activityType: "Formatted Text & Code Walkthrough",
+        duration: "45 Mins",
+        linkedResource: "RES-101 (HTML5 Semantic Blueprint PDF)",
+        linkedAssessment: "QZ-201 (DOM Fundamentals Quiz)",
+        completionCondition: "Read 100% + Pass Quiz >= 80%",
+        prerequisite: "None (Entry Point)",
+        status: "Draft (Editable)"
+      },
+      {
+        id: "SYL-502",
+        courseId: "CRS-101",
+        versionId: "VER-401",
+        level: "Level 1: Foundations",
+        milestone: "Milestone 1: Web Architecture & DOM",
+        module: "Module 1.2: Advanced CSS Grid & Flexbox",
+        lesson: "Lesson 2: Responsive Grid Systems & Modern Tokens",
+        activityType: "Interactive Coding Workspace",
+        duration: "60 Mins",
+        linkedResource: "RES-102 (CSS Grid Reference Sheet)",
+        linkedAssessment: "ASN-301 (Responsive Dashboard Task)",
+        completionCondition: "Submit Code Repository + Automated Lint Pass",
+        prerequisite: "Lesson 1 Completed",
+        status: "Draft (Editable)"
+      },
+      {
+        id: "SYL-503",
+        courseId: "CRS-101",
+        versionId: "VER-401",
+        level: "Level 2: Frontend Engineering",
+        milestone: "Milestone 2: React 19 & Component Architecture",
+        module: "Module 2.1: React State & Server Components",
+        lesson: "Lesson 3: State Machines & Custom React Hooks",
+        activityType: "Video Lecture & Sandbox Demo",
+        duration: "75 Mins",
+        linkedResource: "RES-103 (React 19 Architecture Diagram)",
+        linkedAssessment: "QZ-202 (React Lifecycle & Hooks Quiz)",
+        completionCondition: "Watch 90% Video + Quiz Pass >= 70%",
+        prerequisite: "Milestone 1 Completed",
+        status: "Draft (Editable)"
+      },
+      {
+        id: "SYL-504",
+        courseId: "CRS-103",
+        versionId: "VER-403",
+        level: "Level 1: Phonics & Articulation",
+        milestone: "Milestone 1: Vowel Phonemes & Intonation",
+        module: "Module 1.1: English Rhythm & Stress Patterns",
+        lesson: "Lesson 1: Sentence Stress in Professional Dialogues",
+        activityType: "Speaking / Voice Recording Activity",
+        duration: "30 Mins",
+        linkedResource: "RES-104 (Phonics Audio Reference MP3)",
+        linkedAssessment: "VOC-401 (Voice Recording: Workplace Intro)",
+        completionCondition: "Submit Audio Submission + Rubric Score >= 75%",
+        prerequisite: "None",
+        status: "Approved"
+      }
+    ],
+
+    questions: [
+      {
+        id: "QST-801",
+        title: "HTTP Status Code for Unauthorized Authentication",
+        type: "Single Choice",
+        category: "Web Protocols",
+        difficulty: "Beginner",
+        options: ["200 OK", "401 Unauthorized", "403 Forbidden", "500 Server Error"],
+        correctAnswer: "401 Unauthorized",
+        tags: ["HTTP", "REST", "Security"],
+        version: "v1.1",
+        usedInQuizzes: ["QZ-201", "QZ-204"],
+        author: "Dr. Arsalan Khan"
+      },
+      {
+        id: "QST-802",
+        title: "Which CSS properties trigger hardware GPU acceleration?",
+        type: "Multiple Choice",
+        category: "Frontend Styling",
+        difficulty: "Intermediate",
+        options: ["transform", "opacity", "will-change", "margin-top"],
+        correctAnswer: "transform, opacity, will-change",
+        tags: ["CSS", "Performance", "Animation"],
+        version: "v1.0",
+        usedInQuizzes: ["QZ-201"],
+        author: "Dr. Arsalan Khan"
+      },
+      {
+        id: "QST-803",
+        title: "React 19 Server Components can directly read server database connections.",
+        type: "True/False",
+        category: "React Architecture",
+        difficulty: "Intermediate",
+        options: ["True", "False"],
+        correctAnswer: "True",
+        tags: ["React", "RSC", "Fullstack"],
+        version: "v1.0",
+        usedInQuizzes: ["QZ-202"],
+        author: "Dr. Arsalan Khan"
+      },
+      {
+        id: "QST-804",
+        title: "Order the standard software delivery lifecycle stages from start to finish.",
+        type: "Ordering",
+        category: "DevOps Foundations",
+        difficulty: "Intermediate",
+        options: ["1. Requirements Analysis", "2. Architecture Design", "3. Implementation", "4. QA Testing", "5. Production Deployment"],
+        correctAnswer: "1 -> 2 -> 3 -> 4 -> 5",
+        tags: ["SDLC", "Engineering"],
+        version: "v1.0",
+        usedInQuizzes: ["QZ-203"],
+        author: "Dr. Arsalan Khan"
+      }
+    ],
+
+    assessments: [
+      {
+        id: "QZ-201",
+        title: "DOM Fundamentals & Modern HTML5 Mastery",
+        type: "Quiz",
+        course: "Modern Full-Stack Web Development",
+        questionsCount: 15,
+        timeLimit: "30 Mins",
+        passMark: "80%",
+        maxAttempts: 3,
+        randomization: "Enabled (Shuffle Questions & Choices)",
+        resultVisibility: "Immediate with Explanations",
+        status: "Draft",
+        linkedLesson: "Lesson 1: Semantic Structure & Accessibility"
+      },
+      {
+        id: "QZ-202",
+        title: "React 19 State Management & Hook Patterns",
+        type: "Quiz",
+        course: "Modern Full-Stack Web Development",
+        questionsCount: 20,
+        timeLimit: "45 Mins",
+        passMark: "70%",
+        maxAttempts: 2,
+        randomization: "Enabled",
+        resultVisibility: "Score Only until Final Submission",
+        status: "Draft",
+        linkedLesson: "Lesson 3: State Machines & Custom Hooks"
+      },
+      {
+        id: "ASN-301",
+        title: "Responsive Multi-Device Operations Dashboard",
+        type: "Assignment",
+        course: "Modern Full-Stack Web Development",
+        submissionType: "GitHub Link & Live URL",
+        deadline: "End of Milestone 1",
+        rubric: "RUB-101 (Frontend Clean Architecture Rubric)",
+        resubmissionPolicy: "Allowed up to 2 revisions",
+        status: "Draft",
+        linkedLesson: "Lesson 2: Responsive Grid Systems"
+      },
+      {
+        id: "VOC-401",
+        title: "Professional Workplace Self-Introduction (Spoken)",
+        type: "Voice Activity",
+        course: "Spoken English Fluency & Professional Voice",
+        submissionType: "Acoustic Voice Recording (.mp3 / .wav)",
+        durationRequirement: "90 - 120 Seconds",
+        rubric: "RUB-102 (Phonetic Cadence & Pronunciation Rubric)",
+        reviewRequirement: "Trainer / AI Speech Evaluation",
+        status: "Approved",
+        linkedLesson: "Lesson 1: Sentence Stress in Professional Dialogues"
+      }
+    ],
+
+    resources: [
+      {
+        id: "RES-101",
+        title: "HTML5 Semantic Blueprint & Accessibility Standards",
+        format: "PDF Document",
+        size: "2.4 MB",
+        version: "v1.2",
+        sha256: "a94f6e812d09c1482b6e...verified",
+        scanStatus: "Clean / Verified",
+        accessLevel: "Enrolled & Guest Preview Eligible",
+        linkedCoursesCount: 2,
+        uploadedAt: "2026-08-10 11:30",
+        status: "Uploaded (Verified)"
+      },
+      {
+        id: "RES-102",
+        title: "CSS Grid 2026 Cheat Sheet & Token Palette",
+        format: "PDF Document",
+        size: "1.8 MB",
+        version: "v1.0",
+        sha256: "e3b0c44298fc1c149afb...verified",
+        scanStatus: "Clean / Verified",
+        accessLevel: "Enrolled Learners Only",
+        linkedCoursesCount: 3,
+        uploadedAt: "2026-08-11 14:15",
+        status: "Uploaded (Verified)"
+      },
+      {
+        id: "RES-103",
+        title: "React 19 Component Architecture Masterclass Video",
+        format: "MP4 Video (1080p)",
+        size: "184.5 MB",
+        version: "v1.0",
+        sha256: "f48c082a1d77b81938fe...verified",
+        scanStatus: "Clean / Stream Ready",
+        accessLevel: "Enrolled Learners (Protected DRM)",
+        linkedCoursesCount: 1,
+        uploadedAt: "2026-08-12 16:45",
+        status: "Uploaded (Verified)"
+      },
+      {
+        id: "RES-104",
+        title: "British & American Phonetic Audio Reference Samples",
+        format: "Audio MP3 Archive",
+        size: "42.0 MB",
+        version: "v2.1",
+        sha256: "b21a8901ce4829ad4102...verified",
+        scanStatus: "Clean / Verified",
+        accessLevel: "Free Preview + Enrolled",
+        linkedCoursesCount: 2,
+        uploadedAt: "2026-08-14 09:30",
+        status: "Uploaded (Verified)"
+      }
+    ],
+
+    rules: [
+      {
+        id: "RUL-601",
+        course: "Modern Full-Stack Web Development",
+        type: "Prerequisite",
+        targetItem: "Milestone 2: React 19 Engineering",
+        condition: "Milestone 1 Completed AND Score on QZ-201 >= 80%",
+        evaluationEngine: "Automated (Client & Server State Machine)",
+        status: "Draft",
+        updated: "2026-08-15"
+      },
+      {
+        id: "RUL-602",
+        course: "Modern Full-Stack Web Development",
+        type: "Completion Rule",
+        targetItem: "Full Course Certificate Generation",
+        condition: "100% Lesson Viewings + Capstone Repository Verified",
+        evaluationEngine: "Automated + Peer Review Check",
+        status: "Draft",
+        updated: "2026-08-15"
+      },
+      {
+        id: "RUL-603",
+        course: "Spoken English Fluency",
+        type: "Attempt / Retry Rule",
+        targetItem: "Voice Evaluation VOC-401",
+        condition: "Max 3 Attempts · 24-Hour Cooldown between attempts · Highest score retained",
+        evaluationEngine: "Server Milestone Engine",
+        status: "Approved",
+        updated: "2026-08-14"
+      }
+    ],
+
+    reviewComments: [
+      {
+        id: "REV-901",
+        versionId: "VER-401",
+        courseTitle: "Modern Full-Stack Web Development",
+        item: "Module 1.2: Lesson 2 (CSS Grid)",
+        reviewer: "Prof. Tariq Siddiqui (Academic Reviewer)",
+        severity: "Blocking",
+        comment: "The attached assignment ASN-301 is missing grading rubric weights for Mobile Responsiveness. Please update before approval.",
+        status: "Changes Requested",
+        date: "2026-08-15 17:00",
+        resolution: "Pending author update"
+      },
+      {
+        id: "REV-902",
+        versionId: "VER-401",
+        courseTitle: "Modern Full-Stack Web Development",
+        item: "Prerequisite Rules: RUL-601",
+        reviewer: "Dr. Maria Santos (Pedagogy Lead)",
+        severity: "Advisory",
+        comment: "Recommended increasing quiz attempts from 2 to 3 for novice learners.",
+        status: "Resolved",
+        date: "2026-08-14 11:30",
+        resolution: "Updated attempt limits to 3."
+      },
+      {
+        id: "REV-903",
+        versionId: "VER-402",
+        courseTitle: "Foundational Urdu & English Basic Literacy",
+        item: "Lesson 4: Audio Phonics",
+        reviewer: "Dr. Maria Santos (Pedagogy Lead)",
+        severity: "Advisory",
+        comment: "Audio volume on sample 4B is slightly low. Re-normalize before live deployment.",
+        status: "Open",
+        date: "2026-08-15 14:20",
+        resolution: "In Review"
+      }
+    ],
+
+    k12Syllabi: [
+      {
+        id: "K12-SYL-01",
+        grade: "Grade 8",
+        subject: "Mathematics",
+        curriculumBoard: "Federal Board (FBISE) & Cambridge O-Level aligned",
+        academicYear: "2026 / 2027",
+        unitsCount: 10,
+        chapters: "1. Rational Numbers, 2. Linear Equations, 3. Geometry & Polygons, 4. Algebraic Identities",
+        status: "Draft (In Authoring)",
+        leadAuthor: "Dr. Arsalan Khan",
+        updated: "2026-08-14"
+      },
+      {
+        id: "K12-SYL-02",
+        grade: "Grade 9",
+        subject: "General Science",
+        curriculumBoard: "Federal Board (FBISE) Standard",
+        academicYear: "2026 / 2027",
+        unitsCount: 8,
+        chapters: "1. Motion & Forces, 2. Matter & Energy, 3. Chemical Reactions, 4. Ecosystems",
+        status: "Published (Live)",
+        leadAuthor: "Dr. Arsalan Khan",
+        updated: "2026-06-30"
+      }
+    ],
+
+    auditLogs: [
+      {
+        timestamp: "2026-08-16 10:45",
+        actor: "Dr. Arsalan Khan",
+        action: "CREATOR_SYLLABUS_UPDATED",
+        details: "Modified lesson 3 hierarchy and linked assessment QZ-202 in course CRS-101.",
+        severity: "Low"
+      },
+      {
+        timestamp: "2026-08-15 16:30",
+        actor: "Dr. Arsalan Khan",
+        action: "CREATOR_SUBMITTED_FOR_REVIEW",
+        details: "Submitted version VER-402 (Foundational Literacy v2.0) for academic peer review.",
+        severity: "Medium"
+      },
+      {
+        timestamp: "2026-08-14 09:30",
+        actor: "Dr. Arsalan Khan",
+        action: "CREATOR_RESOURCE_UPLOADED",
+        details: "Uploaded and verified SHA-256 for phonetic audio samples RES-104.",
+        severity: "Low"
+      }
+    ]
+  },
+
   csrData: {
     leads: [
       { id: "LD-101", name: "Zubair Hashmi", contact: "+92 300 4567890", email: "zubair.h@gmail.com", source: "Facebook Ads", programme: "Basic Literacy", stage: "New", reason: "Inbound Trial Request", nextAction: "Introductory Call & Consent", expectedValue: "PKR 18,000", consent: "Pending", csr: "Sarah Jenkins", created: "2026-08-16 09:30" },
@@ -1011,7 +1597,9 @@ const Router = {
     });
     let activeNavItem = null;
     if (route === "dashboard") {
-      if (Simulator.activeRole === "coo") activeNavItem = document.getElementById("coo-nav-dashboard");
+      if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("creator-nav-dashboard");
+      else if (Simulator.activeRole === "csr") activeNavItem = document.getElementById("csr-nav-dashboard");
+      else if (Simulator.activeRole === "coo") activeNavItem = document.getElementById("coo-nav-dashboard");
       else if (Simulator.activeRole === "operational_manager") activeNavItem = document.getElementById("om-nav-dashboard");
       else activeNavItem = document.getElementById("nav-dashboard");
     } else {
@@ -1025,11 +1613,13 @@ const Router = {
     document.querySelectorAll(".content-view").forEach(view => {
       view.classList.remove("active");
     });
+    const isCreatorWorkspace = route.startsWith("creator-");
     const isCooWorkspace = route.startsWith("coo-");
     const isOmWorkspace = route.startsWith("om-");
     const isCsrWorkspace = route.startsWith("csr-");
     let activeView = null;
-    if (isCsrWorkspace) activeView = document.getElementById("view-csr-workspace");
+    if (isCreatorWorkspace) activeView = document.getElementById("view-creator-workspace");
+    else if (isCsrWorkspace) activeView = document.getElementById("view-csr-workspace");
     else if (isCooWorkspace) activeView = document.getElementById("view-coo-workspace");
     else if (isOmWorkspace) activeView = document.getElementById("view-om-workspace");
     else activeView = document.getElementById(`view-${route}`);
@@ -1037,7 +1627,7 @@ const Router = {
     if (activeView) {
       activeView.classList.remove("hidden");
       activeView.classList.add("active");
-      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace) prepareModuleView(route, activeView);
+      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace) prepareModuleView(route, activeView);
     }
 
     // Update Header title
@@ -1075,13 +1665,14 @@ const Router = {
       operational_manager: "Operations Command Center",
       coo: "COO Operating Overview",
       csr: "CSR Command Center",
+      course_creator: "Authoring Command Center",
       cto_developer: "Technical Operations Overview",
       compliance_officer: "Compliance Overview",
       support_agent: "Support Operations Overview"
     };
     viewTitle.textContent = route === "dashboard"
-      ? (roleDashboardTitles[Simulator.activeRole] || "Operations Overview")
-      : (csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Platform Operations");
+      ? (roleDashboardTitles[Simulator.activeRole] || "Authoring Command Center")
+      : (creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Platform Operations");
     
     // Trigger specific rendering controller for the view
     this.renderView(route);
@@ -1169,12 +1760,13 @@ const Router = {
         RenderEngine.supportAccess();
         break;
       default:
-        if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
+        if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
+        else if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
         else if (route.startsWith("coo-")) RenderEngine.cooWorkspace(route);
         else if (route.startsWith("om-")) RenderEngine.omWorkspace(route);
         break;
     }
-    ensureTableEmptyStates(document.getElementById(route.startsWith("coo-") ? "view-coo-workspace" : (route.startsWith("om-") ? "view-om-workspace" : `view-${route}`)), route);
+    ensureTableEmptyStates(document.getElementById(route.startsWith("creator-") ? "view-creator-workspace" : (route.startsWith("csr-") ? "view-csr-workspace" : (route.startsWith("coo-") ? "view-coo-workspace" : (route.startsWith("om-") ? "view-om-workspace" : `view-${route}`)))), route);
   }
 };
 
@@ -1186,6 +1778,499 @@ const Router = {
 // ============================================================================
 // CSR (CUSTOMER SERVICE & SALES) ROUTE DEFINITIONS & MAPPINGS
 // ============================================================================
+
+
+// ============================================================================
+// COURSE CREATOR (CC) - ROUTE DEFINITIONS & METRICS ENGINE (28 SUB-ROUTES)
+// ============================================================================
+
+const creatorRouteDefinitions = {
+  "creator-courses-my": {
+    title: "My Authored Courses",
+    group: "Programmes & Courses",
+    desc: "Complete catalog of courses assigned to your authoring portfolio.",
+    scopeNotice: "Authoring Scope: Define course metadata, learning outcomes, estimated effort, and audience. Product pricing is managed separately by the commercial catalogue team.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "My Portfolio", value: db.creatorData.courses.length, hint: "Total assigned courses" },
+      { label: "Active Drafts", value: db.creatorData.courses.filter(c => c.stage === "Draft").length, hint: "In authoring" },
+      { label: "In Review", value: db.creatorData.courses.filter(c => c.stage === "In Review").length, hint: "Academic board" },
+      { label: "Published Live", value: db.creatorData.courses.filter(c => c.stage === "Published").length, hint: "Live in LMS" }
+    ],
+    filter: (items) => items
+  },
+  "creator-courses-draft": {
+    title: "Draft Courses",
+    group: "Programmes & Courses",
+    desc: "Courses currently undergoing syllabus authoring, lesson creation, and assessment linkage.",
+    scopeNotice: "Draft courses remain completely isolated from live learners until approved and published by the catalogue owner.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Draft Courses", value: db.creatorData.courses.filter(c => c.stage === "Draft").length, hint: "Editable versions" },
+      { label: "Total Modules", value: 14, hint: "Across draft courses" },
+      { label: "Total Lessons", value: 68, hint: "Content units" },
+      { label: "Validation State", value: "1 Advisory Note", hint: "Review ready" }
+    ],
+    filter: (items) => items.filter(c => c.stage === "Draft")
+  },
+  "creator-courses-review": {
+    title: "Courses In Peer Review",
+    group: "Programmes & Courses",
+    desc: "Course versions submitted to the Academic Review Board for pedagogical verification.",
+    scopeNotice: "Versions in review are locked to prevent content drift while reviewers inspect rubrics and syllabi.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Under Review", value: db.creatorData.courses.filter(c => c.stage === "In Review").length, hint: "Locked drafts" },
+      { label: "Assigned Reviewers", value: 2, hint: "Academic leads" },
+      { label: "Open Comments", value: 1, hint: "Reviewer feedback" },
+      { label: "Avg Review SLA", value: "48 Hours", hint: "Standard turn-around" }
+    ],
+    filter: (items) => items.filter(c => c.stage === "In Review")
+  },
+  "creator-courses-approved": {
+    title: "Approved Courses",
+    group: "Programmes & Courses",
+    desc: "Courses that have cleared all academic validation checks and await publication.",
+    scopeNotice: "Approved courses require an authorized catalogue manager or COO to schedule and execute live release.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Approved Courses", value: db.creatorData.courses.filter(c => c.stage === "Approved").length, hint: "Ready for launch" },
+      { label: "Readiness Score", value: "100%", hint: "Pre-flight certified" },
+      { label: "Publish Authority", value: "Catalogue Owner", hint: "Segregation of duties" },
+      { label: "Scheduled Runs", value: 2, hint: "Upcoming cohorts" }
+    ],
+    filter: (items) => items.filter(c => c.stage === "Approved")
+  },
+  "creator-courses-published": {
+    title: "Published & Live Courses",
+    group: "Programmes & Courses",
+    desc: "Read-only view of live course versions actively serving registered learners.",
+    scopeNotice: "Published versions are immutable. To make content or syllabus modifications, create a new Draft Version.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Live Courses", value: db.creatorData.courses.filter(c => c.stage === "Published").length, hint: "Serving learners" },
+      { label: "Active Learners", value: "340+", hint: "Enrolled in versions" },
+      { label: "Version State", value: "Immutable", hint: "Protected against drift" },
+      { label: "Next Revision", value: "v2.0 Draft", hint: "In development" }
+    ],
+    filter: (items) => items.filter(c => c.stage === "Published")
+  },
+
+  "creator-versions-draft": {
+    title: "Draft Course Versions",
+    group: "Course Versions",
+    desc: "Manage editable version branches (e.g. v1.1, v2.0) before peer review sign-off.",
+    scopeNotice: "Every course version maintains its own discrete syllabus hierarchy, resource attachments, and learning rules.",
+    dataType: "versions",
+    metrics: () => [
+      { label: "Draft Versions", value: db.creatorData.versions.filter(v => v.lifecycleState === "Draft").length, hint: "Active revisions" },
+      { label: "Delivery Models", value: 3, hint: "Self-paced / Live / K-12" },
+      { label: "Checklist Pass", value: "4 / 5", hint: "Pre-flight checks" },
+      { label: "Target Release", value: "Fall 2026", hint: "Academic cycle" }
+    ],
+    filter: (items) => items.filter(v => v.lifecycleState === "Draft")
+  },
+  "creator-versions-history": {
+    title: "Version History & Lineage",
+    group: "Course Versions",
+    desc: "Complete chronological audit of course versions from initial draft to archived releases.",
+    scopeNotice: "Historical course versions preserve immutable syllabus snapshots for past cohort integrity.",
+    dataType: "versions",
+    metrics: () => [
+      { label: "Total Versions", value: db.creatorData.versions.length, hint: "Across all courses" },
+      { label: "Published Live", value: db.creatorData.versions.filter(v => v.lifecycleState === "Published").length, hint: "Immutable" },
+      { label: "In Review", value: db.creatorData.versions.filter(v => v.lifecycleState === "In Review").length, hint: "Peer review" },
+      { label: "Draft Branches", value: db.creatorData.versions.filter(v => v.lifecycleState === "Draft").length, hint: "Editable" }
+    ],
+    filter: (items) => items
+  },
+  "creator-versions-create": {
+    title: "Create New Course Version",
+    group: "Course Versions",
+    desc: "Branch a new draft version from an existing published release or start a fresh version.",
+    scopeNotice: "Branching creates an isolated working copy. Existing learners remain attached to their original version.",
+    dataType: "versions",
+    metrics: () => [
+      { label: "Available Courses", value: db.creatorData.courses.length, hint: "Eligible for versioning" },
+      { label: "Published Bases", value: 2, hint: "Eligible to branch" },
+      { label: "Branch Strategy", value: "Semantic (vX.Y)", hint: "Major / Minor" },
+      { label: "Active Author", value: "Dr. Arsalan Khan", hint: "Lead author" }
+    ],
+    filter: (items) => items
+  },
+
+  "creator-syllabus-levels": {
+    title: "Syllabus Levels",
+    group: "Syllabus Builder",
+    desc: "Define high-level milestone proficiency levels and macro learning stages.",
+    scopeNotice: "Proficiency levels establish the prerequisite ladder for self-paced and cohort-based progression.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Configured Levels", value: 3, hint: "Foundations / Inter / Adv" },
+      { label: "Total Milestones", value: 8, hint: "Across all levels" },
+      { label: "Total Modules", value: 16, hint: "Topic groupings" },
+      { label: "Active Track", value: "Vocational & Spoken", hint: "STEM Track" }
+    ],
+    filter: (items) => items
+  },
+  "creator-syllabus-milestones": {
+    title: "Syllabus Milestones (MILE-001)",
+    group: "Syllabus Builder",
+    desc: "Milestone checkpoints requiring verified learner completion before subsequent unlock.",
+    scopeNotice: "Milestones contain sequential lessons, activities, and gatekeeper assessments.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Active Milestones", value: 4, hint: "In draft syllabus" },
+      { label: "Gatekeeper Quizzes", value: 4, hint: "Pass mark enforced" },
+      { label: "Voice Tasks", value: 2, hint: "Acoustic submissions" },
+      { label: "Avg Duration", value: "2 Weeks / Milestone", hint: "Learner pace" }
+    ],
+    filter: (items) => items
+  },
+  "creator-syllabus-modules": {
+    title: "Modules & Units",
+    group: "Syllabus Builder",
+    desc: "Thematic lesson groupings and topic units within course milestones.",
+    scopeNotice: "Modules group related technical and conceptual lessons with shared reference resources.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Active Modules", value: 6, hint: "Authored units" },
+      { label: "Total Lessons", value: 28, hint: "Structured units" },
+      { label: "Linked Resources", value: 12, hint: "PDF / Video assets" },
+      { label: "Order Mode", value: "Drag & Sequence", hint: "Draft hierarchy" }
+    ],
+    filter: (items) => items
+  },
+  "creator-syllabus-lessons": {
+    title: "Lessons & Content Units",
+    group: "Syllabus Builder",
+    desc: "Core instructional units featuring formatted text, interactive sandboxes, and video delivery.",
+    scopeNotice: "Lessons declare granular completion conditions and reference reusable question bank items.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Authored Lessons", value: db.creatorData.syllabus.length, hint: "In active courses" },
+      { label: "Interactive Code", value: 2, hint: "Sandbox lessons" },
+      { label: "Video Lectures", value: 1, hint: "Stream ready" },
+      { label: "Voice Lessons", value: 1, hint: "Spoken audio" }
+    ],
+    filter: (items) => items
+  },
+  "creator-syllabus-activities": {
+    title: "Activities & Practical Exercises",
+    group: "Syllabus Builder",
+    desc: "Hands-on coding sandboxes, speaking prompts, and downloadable problem sets.",
+    scopeNotice: "Activities support instant automated validation and optional trainer rubric reviews.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Activities", value: db.creatorData.syllabus.length, hint: "Interactive units" },
+      { label: "Code Workspaces", value: 2, hint: "Browser IDE" },
+      { label: "Voice Prompts", value: 1, hint: "Audio submission" },
+      { label: "Download Sheets", value: 4, hint: "Attached PDFs" }
+    ],
+    filter: (items) => items
+  },
+
+  "creator-assessments-bank": {
+    title: "Reusable Question Bank",
+    group: "Assessments",
+    desc: "Centralized pool of categorized and tagged assessment questions reusable across courses.",
+    scopeNotice: "Questions in the question bank can be linked to multiple quizzes without duplicating data.",
+    dataType: "questions",
+    metrics: () => [
+      { label: "Bank Items", value: db.creatorData.questions.length, hint: "Reusable questions" },
+      { label: "Single Choice", value: db.creatorData.questions.filter(q => q.type === "Single Choice").length, hint: "Standard MCQs" },
+      { label: "Multiple Choice", value: db.creatorData.questions.filter(q => q.type === "Multiple Choice").length, hint: "Multi-select" },
+      { label: "Ordering / True-False", value: 2, hint: "Advanced item types" }
+    ],
+    filter: (items) => items
+  },
+  "creator-assessments-quizzes": {
+    title: "Quizzes & Knowledge Checks",
+    group: "Assessments",
+    desc: "Automated scoring quizzes with attempt controls, pass marks, and question randomization.",
+    scopeNotice: "Quizzes evaluate immediately against question bank keys to trigger automatic milestone progression.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Active Quizzes", value: db.creatorData.assessments.filter(a => a.type === "Quiz").length, hint: "Auto-graded" },
+      { label: "Avg Pass Mark", value: "75%", hint: "Standard threshold" },
+      { label: "Max Attempts", value: "2 - 3", hint: "Retry policies" },
+      { label: "Randomization", value: "100% Enabled", hint: "Anti-cheat order" }
+    ],
+    filter: (items) => items.filter(a => a.type === "Quiz")
+  },
+  "creator-assessments-assignments": {
+    title: "Assignments & Project Tasks",
+    group: "Assessments",
+    desc: "Complex project submissions accepting repository links, PDF reports, and live demo URLs.",
+    scopeNotice: "Assignments link to defined Rubric matrices for objective peer and trainer evaluation.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Assignments", value: db.creatorData.assessments.filter(a => a.type === "Assignment").length, hint: "Project tasks" },
+      { label: "Submission Types", value: "Link & Files", hint: "Flexible upload" },
+      { label: "Linked Rubrics", value: "RUB-101", hint: "Clean architecture" },
+      { label: "Revisions Allowed", value: "Up to 2", hint: "Feedback cycle" }
+    ],
+    filter: (items) => items.filter(a => a.type === "Assignment")
+  },
+  "creator-assessments-voice": {
+    title: "Voice Activities (Spoken English)",
+    group: "Assessments",
+    desc: "Audio recording exercises capturing learner pronunciation, intonation, and fluency.",
+    scopeNotice: "Voice activities integrate with phonetic rubrics for Spoken English programme certifications.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Voice Tasks", value: db.creatorData.assessments.filter(a => a.type === "Voice Activity").length, hint: "Acoustic units" },
+      { label: "Required Duration", value: "90 - 120s", hint: "Per submission" },
+      { label: "Evaluation Mode", value: "Trainer + AI", hint: "Dual sign-off" },
+      { label: "Phonetic Rubric", value: "RUB-102", hint: "Pronunciation standard" }
+    ],
+    filter: (items) => items.filter(a => a.type === "Voice Activity")
+  },
+  "creator-assessments-rubrics": {
+    title: "Assessment Rubrics",
+    group: "Assessments",
+    desc: "Multi-criteria evaluation matrices with weighted scoring bands for objective grading.",
+    scopeNotice: "Course Creators author and version rubrics; actual learner grading is performed by assigned trainers.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Active Rubrics", value: 2, hint: "Frontend & Spoken" },
+      { label: "Criteria Bands", value: "4 Levels", hint: "Exemplary to Developing" },
+      { label: "Weight Total", value: "100%", hint: "Normalized score" },
+      { label: "Role Authority", value: "Authoring Only", hint: "No grading results" }
+    ],
+    filter: (items) => items
+  },
+
+  "creator-resources-library": {
+    title: "Resource Library",
+    group: "Resources",
+    desc: "Private media vault storing PDF reference sheets, video assets, and downloadable datasets.",
+    scopeNotice: "All uploaded objects undergo automated malware scanning and SHA-256 integrity verification.",
+    dataType: "resources",
+    metrics: () => [
+      { label: "Total Assets", value: db.creatorData.resources.length, hint: "In private storage" },
+      { label: "Verified Clean", value: "100%", hint: "Malware scanned" },
+      { label: "Total Storage", value: "230.7 MB", hint: "Cloud assets" },
+      { label: "Linked Usages", value: 8, hint: "Across lessons" }
+    ],
+    filter: (items) => items
+  },
+  "creator-resources-upload": {
+    title: "Upload & Verify Resource",
+    group: "Resources",
+    desc: "Upload new media objects, generate checksums, and set preview eligibility.",
+    scopeNotice: "Uploaded objects remain private until explicitly linked to a lesson or made preview-eligible.",
+    dataType: "resources",
+    metrics: () => [
+      { label: "Supported Formats", value: "PDF, MP4, MP3, ZIP", hint: "Standard media" },
+      { label: "Max File Size", value: "500 MB", hint: "Per resource" },
+      { label: "DRM Protection", value: "Enabled", hint: "Stream protection" },
+      { label: "Scan Engine", value: "SHA-256 + AV", hint: "Automated checks" }
+    ],
+    filter: (items) => items
+  },
+  "creator-resources-linked": {
+    title: "Linked Resource References",
+    group: "Resources",
+    desc: "Audit of resources actively attached to syllabus lessons and milestone checkpoints.",
+    scopeNotice: "Reusable resource linking prevents duplicate file uploads and maintains version consistency.",
+    dataType: "resources",
+    metrics: () => [
+      { label: "Linked Resources", value: db.creatorData.resources.filter(r => r.linkedCoursesCount > 0).length, hint: "In active courses" },
+      { label: "Total References", value: 8, hint: "Lesson attachments" },
+      { label: "Preview Eligible", value: 2, hint: "Guest visible" },
+      { label: "Protected DRM", value: 2, hint: "Enrolled only" }
+    ],
+    filter: (items) => items.filter(r => r.linkedCoursesCount > 0)
+  },
+  "creator-resources-versions": {
+    title: "Resource Versions & Checksums",
+    group: "Resources",
+    desc: "Version lineage for updated reference sheets, revised diagrams, and audio re-recordings.",
+    scopeNotice: "Updating a resource version automatically updates linked lessons in draft courses.",
+    dataType: "resources",
+    metrics: () => [
+      { label: "Resource Versions", value: db.creatorData.resources.length, hint: "Tracked objects" },
+      { label: "Integrity Checks", value: "Passed", hint: "SHA-256 match" },
+      { label: "Storage Health", value: "Optimal", hint: "CDN cached" },
+      { label: "Security Status", value: "Zero Exceptions", hint: "Quarantine clean" }
+    ],
+    filter: (items) => items
+  },
+
+  "creator-rules-prerequisites": {
+    title: "Prerequisite Rules",
+    group: "Learning Rules",
+    desc: "Define structural unlock conditions based on prior milestone completion and quiz scores.",
+    scopeNotice: "Prerequisites prevent learners from jumping ahead into complex modules without demonstrated mastery.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Prerequisite Rules", value: db.creatorData.rules.filter(r => r.type === "Prerequisite").length, hint: "In active drafts" },
+      { label: "Evaluation Mode", value: "State Machine", hint: "Real-time checks" },
+      { label: "Score Threshold", value: ">= 80%", hint: "Passing standard" },
+      { label: "Rule State", value: "Draft Configured", hint: "Preview ready" }
+    ],
+    filter: (items) => items.filter(r => r.type === "Prerequisite")
+  },
+  "creator-rules-release": {
+    title: "Content Release Rules",
+    group: "Learning Rules",
+    desc: "Configure scheduled release, drip cadence, and membership tier unlock conditions.",
+    scopeNotice: "Drip and scheduled release rules adapt automatically to cohort start dates or individual enrolment time.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Release Rules", value: 2, hint: "Milestone paced" },
+      { label: "Drip Cadence", value: "Weekly", hint: "Cohort mode" },
+      { label: "Instant Unlock", value: "Self-Paced", hint: "Milestone mode" },
+      { label: "Tier Gating", value: "Standard / Premium", hint: "Membership access" }
+    ],
+    filter: (items) => items
+  },
+  "creator-rules-completion": {
+    title: "Completion Rules (MILE-004)",
+    group: "Learning Rules",
+    desc: "Define conditions required for lesson, milestone, and full course graduation.",
+    scopeNotice: "Completion rules freeze permanently upon course version publication to preserve credential integrity.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Completion Rules", value: db.creatorData.rules.filter(r => r.type === "Completion Rule").length, hint: "Configured rules" },
+      { label: "Verification Engine", value: "Automated", hint: "Milestone tracker" },
+      { label: "Certificate Grant", value: "Automated on 100%", hint: "Digital credential" },
+      { label: "Audited State", value: "Compliant", hint: "Academic standard" }
+    ],
+    filter: (items) => items.filter(r => r.type === "Completion Rule")
+  },
+  "creator-rules-attempts": {
+    title: "Attempt & Retry Rules (MILE-008)",
+    group: "Learning Rules",
+    desc: "Configure maximum assessment attempts, cooldown timers, and retained score policies.",
+    scopeNotice: "Attempt rules protect question integrity while ensuring fair recovery opportunities for learners.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Attempt Policies", value: db.creatorData.rules.filter(r => r.type.includes("Attempt")).length, hint: "Active rules" },
+      { label: "Max Attempts", value: "3 Tries", hint: "Per assessment" },
+      { label: "Cooldown Period", value: "24 Hours", hint: "Between retries" },
+      { label: "Scoring Strategy", value: "Highest Score", hint: "Retained grade" }
+    ],
+    filter: (items) => items.filter(r => r.type.includes("Attempt"))
+  },
+
+  "creator-preview": {
+    title: "Learner & Guest Experience Preview (CAT-009)",
+    group: "Preview & Simulation",
+    desc: "Interactive preview sandbox evaluating course structure as Guest vs Registered Free Learner.",
+    scopeNotice: "Preview parents cannot accidentally expose paid-only or unpublished child activities.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Preview Mode", value: "Guest & Free", hint: "Dual simulation" },
+      { label: "Active Version", value: "v1.2 (Draft)", hint: "Testing sandbox" },
+      { label: "Locked Gating", value: "100% Verified", hint: "Paid protection" },
+      { label: "Hierarchy Check", value: "Passed", hint: "No broken links" }
+    ],
+    filter: (items) => items
+  },
+
+  "creator-review-validation": {
+    title: "Pre-Flight Validation Engine",
+    group: "Review & Submission",
+    desc: "Automated structural audit verifying metadata completeness, resource attachments, and learning rules.",
+    scopeNotice: "Pre-flight validation must achieve 100% pass rate before a version can be submitted for academic peer review.",
+    dataType: "versions",
+    metrics: () => [
+      { label: "Validation Status", value: "Ready to Submit", hint: "All checks passed" },
+      { label: "Metadata Check", value: "100% Complete", hint: "Titles, Effort, Lang" },
+      { label: "Resource Links", value: "100% Verified", hint: "Zero broken links" },
+      { label: "Assessment Keys", value: "100% Valid", hint: "All items linked" }
+    ],
+    filter: (items) => items
+  },
+  "creator-review-submit": {
+    title: "Submit for Academic Review",
+    group: "Review & Submission",
+    desc: "Formal submission gateway transmitting draft version to the Academic Review Board.",
+    scopeNotice: "Submitting a version locks draft modifications until reviewers grant approval or request specific revisions.",
+    dataType: "versions",
+    metrics: () => [
+      { label: "Ready to Submit", value: db.creatorData.versions.filter(v => v.lifecycleState === "Draft").length, hint: "Validated versions" },
+      { label: "Assigned Board", value: "Faculty Reviewers", hint: "Pedagogy leads" },
+      { label: "Review Window", value: "48 Hours", hint: "Standard turn-around" },
+      { label: "Target Version", value: "v1.2 (Web Dev)", hint: "Current draft" }
+    ],
+    filter: (items) => items.filter(v => v.lifecycleState === "Draft")
+  },
+  "creator-review-comments": {
+    title: "Reviewer Feedback & Comments (CAT-010)",
+    group: "Review & Submission",
+    desc: "Inspect academic reviewer notes, advisory guidance, and required curriculum adjustments.",
+    scopeNotice: "Unresolved blocking comments prevent course version approval and subsequent publication.",
+    dataType: "reviewComments",
+    metrics: () => [
+      { label: "Total Feedback", value: db.creatorData.reviewComments.length, hint: "All comments" },
+      { label: "Open Comments", value: db.creatorData.reviewComments.filter(c => c.status !== "Resolved").length, hint: "Require action" },
+      { label: "Blocking Items", value: db.creatorData.reviewComments.filter(c => c.severity === "Blocking" && c.status !== "Resolved").length, hint: "Must be resolved" },
+      { label: "Resolved", value: db.creatorData.reviewComments.filter(c => c.status === "Resolved").length, hint: "Cleared by author" }
+    ],
+    filter: (items) => items
+  },
+  "creator-review-changes": {
+    title: "Changes Requested & Revisions",
+    group: "Review & Submission",
+    desc: "Action queue of draft course units returned by reviewers with mandatory revision tasks.",
+    scopeNotice: "Address requested changes, document resolution rationale, and resubmit the revised version for final sign-off.",
+    dataType: "reviewComments",
+    metrics: () => [
+      { label: "Revision Tasks", value: db.creatorData.reviewComments.filter(c => c.status === "Changes Requested").length, hint: "Active revisions" },
+      { label: "Target Course", value: "Full-Stack Web", hint: "CRS-101 (v1.2)" },
+      { label: "Severity", value: "Blocking", hint: "Prevents approval" },
+      { label: "SLA Deadline", value: "18 Aug 2026", hint: "Revision window" }
+    ],
+    filter: (items) => items.filter(c => c.status === "Changes Requested")
+  },
+
+  "creator-k12-curriculum": {
+    title: "K-12 Curriculum Standards (K12-001)",
+    group: "K-12 Authoring",
+    desc: "Manage grade-level standards, curriculum board alignments (FBISE / Cambridge), and academic terms.",
+    scopeNotice: "K-12 curriculum structures enforce standard subject syllabus outlines accessible before student enrolment.",
+    dataType: "k12Syllabi",
+    metrics: () => [
+      { label: "K-12 Tracks", value: db.creatorData.k12Syllabi.length, hint: "Grade 8 & 9" },
+      { label: "Curriculum Boards", value: "FBISE & Cambridge", hint: "Standard aligned" },
+      { label: "Academic Year", value: "2026 / 2027", hint: "Active cycle" },
+      { label: "Total Units", value: 18, hint: "Subject chapters" }
+    ],
+    filter: (items) => items
+  },
+  "creator-k12-syllabi": {
+    title: "K-12 Subject Syllabi & Outlines",
+    group: "K-12 Authoring",
+    desc: "Structured chapter outlines, lesson objectives, and board-standard worksheet attachments.",
+    scopeNotice: "K12-005 supports making full syllabus outlines publicly visible to parents and learners prior to admission.",
+    dataType: "k12Syllabi",
+    metrics: () => [
+      { label: "Active Syllabi", value: db.creatorData.k12Syllabi.length, hint: "Authored outlines" },
+      { label: "Grade 8 Math", value: "10 Units (Draft)", hint: "Algebra & Geom" },
+      { label: "Grade 9 Science", value: "8 Units (Live)", hint: "Physics & Chem" },
+      { label: "Worksheets", value: "35 PDF Attachments", hint: "Practice sets" }
+    ],
+    filter: (items) => items
+  },
+
+  "creator-audit-history": {
+    title: "Authoring Audit & Lifecycle History",
+    group: "History / Audit",
+    desc: "Immutable system audit logging all syllabus updates, version branch creations, and review submissions.",
+    scopeNotice: "All lifecycle transitions record actor ID, timestamp, prior state, and justification for academic governance.",
+    dataType: "auditLogs",
+    metrics: () => [
+      { label: "Audit Entries", value: db.creatorData.auditLogs.length, hint: "Contextual log" },
+      { label: "Author", value: "Dr. Arsalan Khan", hint: "Lead author" },
+      { label: "Integrity", value: "Immutable Log", hint: "FLOW-009 compliant" },
+      { label: "Latest Event", value: "Syllabus Updated", hint: "10:45 PKT" }
+    ],
+    filter: (items) => items
+  }
+};
 
 const csrRouteDefinitions = {
   "csr-dashboard": {
@@ -1623,6 +2708,10 @@ const RenderEngine = {
   
   // Dashboard Widget Totals & Indicators updates
   dashboard() {
+    if (Simulator.activeRole === "course_creator") {
+      this.creatorDashboard();
+      return;
+    }
     if (Simulator.activeRole === "csr") {
       this.csrDashboard();
       return;
@@ -2244,6 +3333,476 @@ const RenderEngine = {
   },
 
   
+  
+  // ============================================================================
+  // COURSE CREATOR (CC) - RENDER ENGINE (FLIGHT DECK & 28 WORKSPACE SUB-VIEWS)
+  // ============================================================================
+
+  creatorDashboard() {
+    const el = (id, text) => {
+      const e = document.getElementById(id);
+      if (e) e.textContent = text;
+    };
+
+    const draftsCount = db.creatorData.courses.filter(c => c.stage === "Draft").length;
+    const reviewCount = db.creatorData.courses.filter(c => c.stage === "In Review").length;
+    const approvedCount = db.creatorData.courses.filter(c => c.stage === "Approved").length;
+    const publishedCount = db.creatorData.courses.filter(c => c.stage === "Published").length;
+    const openCommentsCount = db.creatorData.reviewComments.filter(c => c.status !== "Resolved").length;
+
+    el("creator-card-draft-count", draftsCount + " Versions");
+    el("creator-card-review-count", reviewCount + " In Review");
+    el("creator-card-approved-count", approvedCount + " Approved");
+    el("creator-card-published-count", publishedCount + " Live");
+
+    el("creator-draft-preview-label", draftsCount + " in Progress");
+    el("creator-review-preview-label", reviewCount + " Under Review");
+    el("creator-approved-preview-label", approvedCount + " Ready to Publish");
+    el("creator-published-preview-label", publishedCount + " Live in Catalogue");
+    el("creator-queue-comments-count", openCommentsCount);
+
+    // Render Queue 1: Reviewer Feedback & Comments
+    const commentsList = document.getElementById("creator-queue-comments-list");
+    if (commentsList) {
+      commentsList.innerHTML = db.creatorData.reviewComments.map(c => `
+        <div class="creator-action-row">
+          <div class="creator-action-info">
+            <div class="creator-action-title">
+              <span class="badge ${c.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${c.severity}</span>
+              <strong>${c.courseTitle}</strong>
+            </div>
+            <div class="creator-action-sub">${c.item} · ${c.reviewer}</div>
+            <p style="margin: 4px 0 0 0; font-size: 11.5px; color: var(--on-surface);">${c.comment}</p>
+          </div>
+          <div class="button-row">
+            ${c.status !== 'Resolved' ? `
+              <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorReviewComment('${c.id}')">Address & Resolve</button>
+            ` : `
+              <span class="badge badge-success">Resolved</span>
+            `}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // Render Queue 2: Pre-Flight Validation Checks
+    const valList = document.getElementById("creator-queue-validation-list");
+    if (valList) {
+      valList.innerHTML = `
+        <div class="creator-action-row">
+          <div class="creator-action-info">
+            <div class="creator-action-title">
+              <span class="badge badge-warning">Advisory</span>
+              <strong>Modern Full-Stack Web Development (v1.2)</strong>
+            </div>
+            <div class="creator-action-sub">Syllabus & Learning Rules Pre-Flight Audit</div>
+            <p style="margin: 4px 0 0 0; font-size: 11.5px; color: var(--on-surface);">Missing 1 Rubric Weight on ASN-301. Metadata and 28 lesson units fully compliant.</p>
+          </div>
+          <div class="button-row">
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-401')">Inspect Audit</button>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('VER-401')">Submit Version</button>
+          </div>
+        </div>
+
+        <div class="creator-action-row">
+          <div class="creator-action-info">
+            <div class="creator-action-title">
+              <span class="badge badge-success">Ready</span>
+              <strong>Grade 8 Mathematics: Algebra Mastery (v1.1)</strong>
+            </div>
+            <div class="creator-action-sub">FBISE & Cambridge Board Alignment Check</div>
+            <p style="margin: 4px 0 0 0; font-size: 11.5px; color: var(--on-surface);">10 units, 40 lessons, and 14 assessments verified. Ready for board submission.</p>
+          </div>
+          <div class="button-row">
+            <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('VER-404')">Submit for Review</button>
+          </div>
+        </div>
+      `;
+    }
+
+    window.lucide?.createIcons();
+  },
+
+  creatorWorkspace(route) {
+    const config = creatorRouteDefinitions[route];
+    if (!config) return;
+
+    const container = document.getElementById("creator-workspace-content");
+    if (!container) return;
+
+    const metrics = config.metrics ? config.metrics() : [];
+    const rawItems = db.creatorData[config.dataType] || [];
+    const records = config.filter ? config.filter(rawItems) : rawItems;
+
+    let metricsHtml = "";
+    if (metrics.length) {
+      metricsHtml = `
+        <div class="coo-workspace-metrics-strip creator-workspace-metrics-strip">
+          ${metrics.map(m => `
+            <div class="coo-workspace-metric creator-workspace-metric">
+              <span>${m.label}</span>
+              <strong>${m.value}</strong>
+              <small>${m.hint}</small>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    let scopeHtml = "";
+    if (config.scopeNotice) {
+      scopeHtml = `
+        <div class="coo-scope-notice creator-scope-notice">
+          <i data-lucide="shield-check"></i>
+          <div>
+            <strong>COURSE CREATOR AUTHORING BOUNDARY</strong>
+            <p>${config.scopeNotice}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="coo-workspace-view creator-workspace-view">
+        <div class="coo-workspace-header">
+          <div class="coo-workspace-heading">
+            <span class="coo-workspace-group">${config.group}</span>
+            <h2>${config.title}</h2>
+            <p>${config.desc}</p>
+          </div>
+          ${metricsHtml}
+          ${scopeHtml}
+        </div>
+
+        <div class="module-toolbar">
+          <div class="search-filter-row">
+            <input type="text" id="creator-workspace-search" class="form-control" placeholder="Search by title, code, keyword, or ID...">
+            <select id="creator-workspace-status" class="form-control" style="width: auto; min-width: 170px;">
+              <option value="">All Statuses</option>
+              <option value="Draft">Draft</option>
+              <option value="In Review">In Review</option>
+              <option value="Approved">Approved</option>
+              <option value="Published">Published / Live</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('View Saved', 'Current authoring filters saved to your workspace session.', 'info')">
+              <i data-lucide="bookmark"></i> Save view
+            </button>
+          </div>
+          <div class="button-row">
+            ${config.dataType === 'courses' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()">
+                <i data-lucide="plus"></i> New Course
+              </button>
+            ` : config.dataType === 'versions' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewVersionModal()">
+                <i data-lucide="git-branch"></i> Create Version
+              </button>
+            ` : config.dataType === 'questions' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddQuestionModal()">
+                <i data-lucide="plus"></i> New Question
+              </button>
+            ` : config.dataType === 'assessments' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddQuizModal()">
+                <i data-lucide="help-circle"></i> New Assessment
+              </button>
+            ` : config.dataType === 'resources' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorUploadResourceModal()">
+                <i data-lucide="upload-cloud"></i> Upload Resource
+              </button>
+            ` : `
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorPreviewModal()">
+                <i data-lucide="eye"></i> Preview Learner View
+              </button>
+            `}
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              ${this.creatorTableHeaders(config.dataType)}
+            </thead>
+            <tbody id="creator-workspace-table-body">
+              ${this.creatorTableRows(config.dataType, records)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    const applyFilters = () => {
+      const query = document.getElementById("creator-workspace-search")?.value.toLowerCase() || "";
+      const statusFilter = document.getElementById("creator-workspace-status")?.value || "";
+      const filtered = records.filter(item => {
+        const rowText = Object.values(item).join(" ").toLowerCase();
+        const matchesQuery = !query || rowText.includes(query);
+        const matchesStatus = !statusFilter
+          || (item.stage === statusFilter)
+          || (item.lifecycleState === statusFilter)
+          || (item.status === statusFilter);
+        return matchesQuery && matchesStatus;
+      });
+      const tbody = document.getElementById("creator-workspace-table-body");
+      if (tbody) tbody.innerHTML = this.creatorTableRows(config.dataType, filtered);
+      window.lucide?.createIcons();
+    };
+
+    document.getElementById("creator-workspace-search")?.addEventListener("input", applyFilters);
+    document.getElementById("creator-workspace-status")?.addEventListener("change", applyFilters);
+
+    window.lucide?.createIcons();
+  },
+
+  creatorTableHeaders(dataType) {
+    if (dataType === "courses") {
+      return `<tr><th>Course / Code</th><th>Programme & Faculty</th><th>Delivery Model</th><th>Active Version</th><th>Hierarchy Units</th><th>Stage</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "versions") {
+      return `<tr><th>Version / Course</th><th>Delivery Model</th><th>Changes Summary</th><th>Author</th><th>Validation Check</th><th>State</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "syllabus") {
+      return `<tr><th>Level / Milestone</th><th>Module & Lesson</th><th>Activity Format</th><th>Duration</th><th>Linked Assets</th><th>Status</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "questions") {
+      return `<tr><th>Question Prompt</th><th>Type & Category</th><th>Difficulty</th><th>Correct Answer Key</th><th>Quizzes Linked</th><th>Version</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "assessments") {
+      return `<tr><th>Assessment Title</th><th>Format / Course</th><th>Questions / Submission</th><th>Pass Mark & Attempts</th><th>Randomization</th><th>State</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "resources") {
+      return `<tr><th>Resource Name / ID</th><th>Format & Size</th><th>Version</th><th>Integrity Checksum</th><th>Access Gating</th><th>Status</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "rules") {
+      return `<tr><th>Rule Target / Course</th><th>Rule Type</th><th>Condition Expression</th><th>Evaluation Engine</th><th>Updated</th><th>State</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "reviewComments") {
+      return `<tr><th>Course / Item</th><th>Academic Reviewer</th><th>Severity</th><th>Feedback Notes</th><th>Date</th><th>Status</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "k12Syllabi") {
+      return `<tr><th>Grade & Subject</th><th>Curriculum Board</th><th>Academic Year</th><th>Units & Chapters</th><th>Lead Author</th><th>Status</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "auditLogs") {
+      return `<tr><th>Timestamp</th><th>Actor</th><th>Action Code</th><th>Governance Details</th><th>Severity</th></tr>`;
+    }
+    return `<tr><th>Record ID</th><th>Title</th><th>Category</th><th>Details</th><th>Status</th><th>Actions</th></tr>`;
+  },
+
+  creatorTableRows(dataType, items) {
+    if (!items.length) {
+      return `<tr class="table-empty-row"><td colspan="7"><div class="table-empty-state"><strong>No matching authoring records found</strong><span>Adjust search keywords or status filters.</span></div></td></tr>`;
+    }
+
+    return items.map(item => {
+      let badgeClass = "badge-secondary";
+      const statusVal = item.stage || item.lifecycleState || item.status || "Draft";
+      if (["Published", "Approved", "Passed", "Clean / Verified", "Resolved", "Certified"].includes(statusVal)) badgeClass = "badge-success";
+      if (["Draft", "In Review", "Warning", "Advisory", "Uploaded (Verified)"].includes(statusVal)) badgeClass = "badge-warning";
+      if (["Changes Requested", "Blocking", "Quarantined", "Failed"].includes(statusVal)) badgeClass = "badge-error";
+
+      if (dataType === "courses") {
+        return `
+          <tr>
+            <td><strong>${item.title}</strong><br><span class="table-subline">${item.code} · ${item.id}</span></td>
+            <td><strong>${item.programme}</strong><br><span class="table-subline">${item.faculty}</span></td>
+            <td><span class="badge badge-secondary">${item.deliveryModel}</span></td>
+            <td><strong>${item.activeVersion}</strong><br><span class="table-subline">Live: ${item.latestPublished}</span></td>
+            <td>${item.modulesCount} Modules · ${item.lessonsCount} Lessons</td>
+            <td><span class="badge ${badgeClass}">${item.stage}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('${item.id}')">Inspect</button>
+                ${item.stage === 'Draft' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">Edit Syllabus</button>
+                ` : item.stage === 'Approved' ? `
+                  <span class="badge badge-success">Awaiting Publish</span>
+                ` : `
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorNewVersionModal('${item.id}')">Create v2.0</button>
+                `}
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "versions") {
+        return `
+          <tr>
+            <td><strong>${item.versionTag}</strong> — ${item.courseTitle}<br><span class="table-subline">${item.id} · ${item.courseId}</span></td>
+            <td><span class="badge badge-secondary">${item.deliveryModel}</span></td>
+            <td>${item.changesSummary}</td>
+            <td>${item.author}<br><span class="table-subline">Updated: ${item.updated}</span></td>
+            <td><span class="badge ${item.validationStatus.includes('Warning') ? 'badge-warning' : 'badge-success'}">${item.validationStatus}</span></td>
+            <td><span class="badge ${badgeClass}">${item.lifecycleState}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('${item.id}')">Validate</button>
+                ${item.lifecycleState === 'Draft' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('${item.id}')">Submit for Review</button>
+                ` : `
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorPreviewModal('${item.courseId}')">Preview</button>
+                `}
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "syllabus") {
+        return `
+          <tr>
+            <td><strong>${item.level}</strong><br><span class="table-subline">${item.milestone}</span></td>
+            <td><strong>${item.lesson}</strong><br><span class="table-subline">${item.module}</span></td>
+            <td>${item.activityType}</td>
+            <td>${item.duration}</td>
+            <td><span style="font-size: 11.5px; color: var(--navy-medium);">${item.linkedResource}</span><br><span class="table-subline">${item.linkedAssessment}</span></td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal('${item.id}')">Edit Unit</button>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorEditRulesModal('${item.id}')">Rules</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "questions") {
+        return `
+          <tr>
+            <td><strong>${item.title}</strong><br><span class="table-subline">${item.id} · Tags: ${item.tags.join(", ")}</span></td>
+            <td>${item.type}<br><span class="table-subline">${item.category}</span></td>
+            <td><span class="badge badge-secondary">${item.difficulty}</span></td>
+            <td><strong style="color: var(--success);">${item.correctAnswer}</strong></td>
+            <td>${item.usedInQuizzes.join(", ")}</td>
+            <td>${item.version}</td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuestionModal('${item.id}')">Edit Item</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "assessments") {
+        return `
+          <tr>
+            <td><strong>${item.title}</strong><br><span class="table-subline">${item.id}</span></td>
+            <td><strong>${item.type}</strong><br><span class="table-subline">${item.course}</span></td>
+            <td>${item.questionsCount ? item.questionsCount + ' Questions' : item.submissionType}</td>
+            <td>Pass: <strong>${item.passMark || 'Rubric Evaluated'}</strong><br><span class="table-subline">Attempts: ${item.maxAttempts || '2 Revisions'}</span></td>
+            <td>${item.randomization || 'Rubric Matrix'}</td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuizModal('${item.id}')">Configure</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "resources") {
+        return `
+          <tr>
+            <td><strong>${item.title}</strong><br><span class="table-subline">${item.id} · Uploaded: ${item.uploadedAt}</span></td>
+            <td>${item.format} · ${item.size}</td>
+            <td>${item.version}</td>
+            <td><span class="om-checksum-tag" style="font-size: 10px;">SHA: ${item.sha256.slice(0, 14)}...</span></td>
+            <td>${item.accessLevel}</td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Inspected', 'Integrity SHA-256 verified against private storage ledger.', 'success')">Verify Checksum</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "rules") {
+        return `
+          <tr>
+            <td><strong>${item.targetItem}</strong><br><span class="table-subline">${item.course} · ${item.id}</span></td>
+            <td><span class="badge badge-primary">${item.type}</span></td>
+            <td>${item.condition}</td>
+            <td>${item.evaluationEngine}</td>
+            <td>${item.updated}</td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorEditRulesModal('${item.id}')">Edit Expression</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "reviewComments") {
+        return `
+          <tr>
+            <td><strong>${item.courseTitle}</strong><br><span class="table-subline">${item.item} · ${item.id}</span></td>
+            <td>${item.reviewer}</td>
+            <td><span class="badge ${item.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${item.severity}</span></td>
+            <td>${item.comment}</td>
+            <td>${item.date}</td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+            <td>
+              <div class="button-row">
+                ${item.status !== 'Resolved' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorReviewComment('${item.id}')">Resolve</button>
+                ` : `
+                  <span class="badge badge-success">Resolved</span>
+                `}
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "k12Syllabi") {
+        return `
+          <tr>
+            <td><strong>${item.grade} — ${item.subject}</strong><br><span class="table-subline">${item.id}</span></td>
+            <td>${item.curriculumBoard}</td>
+            <td>${item.academicYear}</td>
+            <td><strong>${item.unitsCount} Units</strong><br><span class="table-subline">${item.chapters}</span></td>
+            <td>${item.leadAuthor}</td>
+            <td><span class="badge ${badgeClass}">${item.status}</span></td>
+            <td>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Syllabus Outline', 'K-12 full syllabus outline generated for student & parent enrollment preview (K12-005).', 'info')">Preview Outline</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+
+      if (dataType === "auditLogs") {
+        return `
+          <tr>
+            <td>${item.timestamp}</td>
+            <td><strong>${item.actor}</strong></td>
+            <td><span class="om-checksum-tag">${item.action}</span></td>
+            <td>${item.details}</td>
+            <td><span class="badge ${item.severity === 'High' ? 'badge-error' : 'badge-secondary'}">${item.severity}</span></td>
+          </tr>
+        `;
+      }
+
+      return `
+        <tr>
+          <td><strong>${item.id || 'REC'}</strong></td>
+          <td>${item.title || item.name || 'Untitled'}</td>
+          <td>${item.category || '-'}</td>
+          <td>${item.details || ''}</td>
+          <td><span class="badge ${badgeClass}">${item.status || 'Active'}</span></td>
+          <td><button class="btn btn-secondary btn-xs">View</button></td>
+        </tr>
+      `;
+    }).join("");
+  },
+
   // CSR Dashboard Renderer
   csrDashboard() {
     const el = (id, text) => {
@@ -5354,6 +6913,7 @@ const Simulator = {
       operational_manager: { name: "Sarah Connor", role: "Operational Manager" },
       coo: { name: "Mara Khan", role: "Chief Operating Officer" },
       csr: { name: "Sarah Jenkins", role: "Customer Service & Sales Representative" },
+      course_creator: { name: "Dr. Arsalan Khan", role: "Course Creator" },
       cto_developer: { name: "CTO / Developer", role: "Technical Director" },
       compliance_officer: { name: "Auditor Profile", role: "Compliance Officer" },
       support_agent: { name: "CSR Operator", role: "Support Representative" }
@@ -5365,6 +6925,7 @@ const Simulator = {
       operational_manager: { workspace: "Operational management", shell: "OPERATIONAL MANAGEMENT", title: "Operations Command Center", greeting: "Good afternoon, Sarah.", description: "Coordinate trials, enrolments, live class delivery, trainer schedules, and manual payment verification.", action: "Review class delivery", actionRoute: "om-approval-queue", notifications: "Operations Notifications" },
       coo: { workspace: "Executive operations", shell: "EXECUTIVE OPERATIONS", title: "COO Operating Overview", greeting: "Good afternoon, Mara.", description: "Prioritize decisions, protect service delivery, and keep every business workflow moving.", action: "Open decision inbox", actionRoute: "coo-approvals", notifications: "Operating Notifications" },
       csr: { workspace: "Customer service & sales", shell: "SALES & CUSTOMER SERVICE", title: "CSR Command Center", greeting: "Good afternoon, Sarah.", description: "Assigned prospect management, trial qualification, follow-ups, and assisted conversion pipeline.", action: "View follow-ups due", actionRoute: "csr-followups-due", notifications: "Sales Notifications" },
+      course_creator: { workspace: "Curriculum & course authoring", shell: "CURRICULUM & COURSE AUTHORING", title: "Authoring Command Center", greeting: "Good afternoon, Dr. Arsalan.", description: "Construct syllabus hierarchy, manage reusable question banks, learning rules, and submit versions for academic review.", action: "Review open feedback", actionRoute: "creator-review-comments", notifications: "Authoring Notifications" },
       cto_developer: { workspace: "Technical operations", shell: "TECHNICAL OPERATIONS", title: "Technical Operations Overview", greeting: "Good afternoon, Technical Director.", description: "Monitor integration health, queues, runtime status, releases, and recoverable technical exceptions.", action: "Open system status", actionRoute: "system-status", notifications: "Technical Notifications" },
       compliance_officer: { workspace: "Compliance oversight", shell: "COMPLIANCE OVERSIGHT", title: "Compliance Overview", greeting: "Good afternoon, Compliance Officer.", description: "Review high-risk governance events, retention controls, legal holds, and immutable audit history.", action: "Review audit trail", actionRoute: "audit-logs", notifications: "Governance Notifications" },
       support_agent: { workspace: "Support operations", shell: "SUPPORT OPERATIONS", title: "Support Operations Overview", greeting: "Good afternoon, Support Representative.", description: "Resolve account and onboarding issues through approved, time-limited support workflows.", action: "Open support access", actionRoute: "support-access", notifications: "Support Notifications" }
@@ -5381,23 +6942,27 @@ const Simulator = {
     const isCoo = roleKey === "coo";
     const isOm = roleKey === "operational_manager";
     const isCsr = roleKey === "csr";
+    const isCreator = roleKey === "course_creator";
     const appShell = document.querySelector(".admin-container");
     if (appShell) {
       appShell.classList.toggle("role-coo", isCoo);
       appShell.classList.toggle("role-om", isOm);
       appShell.classList.toggle("role-csr", isCsr);
+      appShell.classList.toggle("role-course_creator", isCreator);
       appShell.dataset.activeRole = roleKey;
     }
 
-    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr);
+    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator);
     document.getElementById("coo-nav")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-nav")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-nav")?.classList.toggle("hidden", !isCsr);
+    document.getElementById("creator-nav")?.classList.toggle("hidden", !isCreator);
 
-    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr);
+    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator);
     document.getElementById("coo-dashboard-shell")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-dashboard-shell")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-dashboard-shell")?.classList.toggle("hidden", !isCsr);
+    document.getElementById("creator-dashboard-shell")?.classList.toggle("hidden", !isCreator);
 
     const shellLabel = document.getElementById("shell-label");
     if (shellLabel) shellLabel.textContent = shell.shell;
@@ -5416,17 +6981,18 @@ const Simulator = {
     
     const searchInput = document.getElementById("nav-search-input");
     if (searchInput) {
-      searchInput.placeholder = isCsr ? "Find sales / lead module" : (isOm ? "Find operations module" : (isCoo ? "Find an operating area" : "Find a module"));
+      searchInput.placeholder = isCreator ? "Find course / syllabus module" : (isCsr ? "Find sales / lead module" : (isOm ? "Find operations module" : (isCoo ? "Find an operating area" : "Find a module")));
     }
     
     const avatar = document.getElementById("admin-avatar");
     if (avatar) {
-      avatar.textContent = isCsr ? "SJ" : (isOm ? "SC" : (isCoo ? "MK" : details.name.split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase()));
+      avatar.textContent = isCreator ? "AK" : (isCsr ? "SJ" : (isOm ? "SC" : (isCoo ? "MK" : details.name.split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase())));
     }
     document.title = `IHS 2.0 ${details.role} Console`;
 
     if (isOm) updateOmBadges();
     if (isCsr) RenderEngine.csrDashboard();
+    if (isCreator) RenderEngine.creatorDashboard();
 
     // Apply security limits on sidebar & dashboard
     this.applySecurityLocks(roleKey);
@@ -5652,7 +7218,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Render the requested workspace when a view query is present; otherwise open Dashboard.
   const requestedView = new URLSearchParams(window.location.search).get("view");
-  const validRequestedView = requestedView && (document.getElementById(`view-${requestedView}`) || (Simulator.activeRole === "coo" && cooRouteDefinitions[requestedView]) || (Simulator.activeRole === "operational_manager" && omRouteDefinitions[requestedView]) || (Simulator.activeRole === "csr" && csrRouteDefinitions[requestedView]));
+  const validRequestedView = requestedView && (document.getElementById(`view-${requestedView}`) || (Simulator.activeRole === "coo" && cooRouteDefinitions[requestedView]) || (Simulator.activeRole === "operational_manager" && omRouteDefinitions[requestedView]) || (Simulator.activeRole === "csr" && csrRouteDefinitions[requestedView]) || (Simulator.activeRole === "course_creator" && creatorRouteDefinitions[requestedView]));
   Router.navigate(validRequestedView ? requestedView : "dashboard");
 
   // Start freshness time tracking
@@ -6859,6 +8425,851 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);
     RenderEngine.csrDashboard();
+  };
+
+
+  // ============================================================================
+  // COURSE CREATOR (CC) - ACTION CONTROLLERS & LIFECYCLE DIALOGS
+  // ============================================================================
+
+  Actions.openCreatorNewCourseModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Create New Course & Initial Version (FLOW-009)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="book-open"></i>
+          <div>
+            <strong>NEW COURSE AUTHORING & METADATA INTAKE (CAT-005)</strong>
+            <p>Creates course entity and initializes Version 1.0 in Draft state. Pricing and publication remain restricted.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Course Title</label>
+          <input type="text" id="cc-course-title" class="form-control" placeholder="e.g. Next-Gen Cloud & Microservices Architecture">
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Course Code (Identifier)</label>
+            <input type="text" id="cc-course-code" class="form-control" placeholder="e.g. TECH-CLD-301">
+          </div>
+          <div class="form-group">
+            <label>Programme Track</label>
+            <select id="cc-course-prog" class="form-control">
+              <option value="Vocational Skills">Vocational Skills (Computing & Tech)</option>
+              <option value="Basic Literacy">Basic Literacy & Community</option>
+              <option value="Spoken English">Spoken English Mastery</option>
+              <option value="K-12">K-12 Secondary Education</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Delivery Model (CAT-002)</label>
+            <select id="cc-course-delivery" class="form-control">
+              <option value="Self-paced Milestone">Self-paced Milestone (MILE-001)</option>
+              <option value="Live Scheduled">Live Scheduled Classes (CAT-002)</option>
+              <option value="K-12 Live Tuition">K-12 Live Tuition (K12-001)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Estimated Effort</label>
+            <input type="text" id="cc-course-effort" class="form-control" placeholder="e.g. 10 Weeks (6 hrs/week)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Learning Outcomes</label>
+          <textarea id="cc-course-outcomes" class="form-control" rows="2" placeholder="List core competencies and skills learners will acquire..."></textarea>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="shield-alert"></i> Segregation of Duties Notice</h5>
+          <p>Upon saving, initial <strong>Version v1.0 (Draft)</strong> is initialized. Base Course Creator role cannot publish or set commercial pricing.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorCourse()">Create Course & Draft Version</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorCourse = function() {
+    const title = document.getElementById("cc-course-title")?.value.trim();
+    const code = document.getElementById("cc-course-code")?.value.trim();
+    const prog = document.getElementById("cc-course-prog")?.value;
+    const delivery = document.getElementById("cc-course-delivery")?.value;
+    const effort = document.getElementById("cc-course-effort")?.value.trim() || "8 Weeks";
+    const outcomes = document.getElementById("cc-course-outcomes")?.value.trim() || "Demonstrate core mastery.";
+
+    if (!title || !code) {
+      Notifications.push("Validation Error", "Course title and course code are mandatory.", "error");
+      return;
+    }
+
+    const newId = "CRS-" + (100 + db.creatorData.courses.length + 1);
+    const newVerId = "VER-" + (400 + db.creatorData.versions.length + 1);
+
+    const newCourse = {
+      id: newId,
+      code,
+      title,
+      programme: prog,
+      faculty: prog === "K-12" ? "Faculty of Secondary Education" : "Faculty of Computing & Technology",
+      deliveryModel: delivery,
+      activeVersion: "v1.0 (Draft)",
+      latestPublished: "None (Draft)",
+      stage: "Draft",
+      language: "English",
+      estimatedEffort: effort,
+      modulesCount: 1,
+      lessonsCount: 4,
+      assessmentsCount: 1,
+      author: "Dr. Arsalan Khan",
+      created: new Date().toISOString().slice(0, 10),
+      updated: new Date().toISOString().replace("T", " ").slice(0, 16),
+      description: outcomes,
+      learningOutcomes: outcomes,
+      prerequisites: "Standard Programme Intake",
+      completionRule: "100% Modules Completed",
+      priceLocked: "Commercial catalogue managed (Read-only)"
+    };
+
+    const newVersion = {
+      id: newVerId,
+      courseId: newId,
+      courseTitle: title,
+      versionTag: "v1.0",
+      lifecycleState: "Draft",
+      deliveryModel: delivery,
+      changesSummary: "Initial version authoring.",
+      author: "Dr. Arsalan Khan",
+      created: new Date().toISOString().slice(0, 10),
+      updated: new Date().toISOString().replace("T", " ").slice(0, 16),
+      validationStatus: "Passed (100% Complete)",
+      reviewer: "Unassigned",
+      publishLock: "Draft - Authoring in progress."
+    };
+
+    db.creatorData.courses.unshift(newCourse);
+    db.creatorData.versions.unshift(newVersion);
+
+    Actions.audit("CREATOR_COURSE_INITIALIZED", `Created new course ${code} (${title}) with draft version ${newVersion.versionTag}.`, "Low");
+    Notifications.push("Course Created", `${title} initialized as draft version ${newVersion.versionTag}.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorNewVersionModal = function(courseId) {
+    const course = courseId ? db.creatorData.courses.find(c => c.id === courseId) : db.creatorData.courses[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Create New Version: ${course ? course.title : 'Select Course'}`;
+    
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="git-branch"></i>
+          <div>
+            <strong>IMMUTABLE VERSIONING LIFECYCLE (CAT-004)</strong>
+            <p>Published versions are immutable. Creating a new version branches a working draft copy without disrupting active learners.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Target Course</label>
+          <select id="cc-ver-course-select" class="form-control">
+            ${db.creatorData.courses.map(c => `
+              <option value="${c.id}" ${course && c.id === course.id ? 'selected' : ''}>${c.code} — ${c.title} (${c.activeVersion})</option>
+            `).join("")}
+          </select>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>New Semantic Version Tag</label>
+            <input type="text" id="cc-ver-tag" class="form-control" value="v2.0" placeholder="e.g. v1.3 or v2.0">
+          </div>
+          <div class="form-group">
+            <label>Version Type</label>
+            <select id="cc-ver-type" class="form-control">
+              <option value="Major Revision">Major Syllabus Overhaul (vX.0)</option>
+              <option value="Minor Update">Minor Content & Assessment Update (vX.Y)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Revision & Changes Justification</label>
+          <textarea id="cc-ver-notes" class="form-control" rows="2" placeholder="Document technical and pedagogical updates in this revision..."></textarea>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="lock"></i> Historical Learner Protection</h5>
+          <p>Learners currently in live cohorts remain attached to their registered version. Only new cohort intakes or authorized migrations enroll in the new version.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.createCreatorVersion()">Branch & Initialize Draft Version</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.createCreatorVersion = function() {
+    const courseId = document.getElementById("cc-ver-course-select")?.value;
+    const tag = document.getElementById("cc-ver-tag")?.value.trim() || "v2.0";
+    const notes = document.getElementById("cc-ver-notes")?.value.trim() || "Updated syllabus modules and assessment keys.";
+    const course = db.creatorData.courses.find(c => c.id === courseId);
+
+    if (!course) return;
+
+    const newVerId = "VER-" + (400 + db.creatorData.versions.length + 1);
+    const newVer = {
+      id: newVerId,
+      courseId: course.id,
+      courseTitle: course.title,
+      versionTag: tag,
+      lifecycleState: "Draft",
+      deliveryModel: course.deliveryModel,
+      changesSummary: notes,
+      author: "Dr. Arsalan Khan",
+      created: new Date().toISOString().slice(0, 10),
+      updated: new Date().toISOString().replace("T", " ").slice(0, 16),
+      validationStatus: "Draft Initialized",
+      reviewer: "Unassigned",
+      publishLock: "Draft - Authoring in progress."
+    };
+
+    course.activeVersion = `${tag} (Draft)`;
+    course.stage = "Draft";
+    db.creatorData.versions.unshift(newVer);
+
+    Actions.audit("CREATOR_VERSION_BRANCHED", `Branched new version ${tag} for course ${course.code} (${course.title}).`, "Low");
+    Notifications.push("Version Created", `Branched ${tag} for ${course.title}. Ready for authoring.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorAddLessonModal = function(unitId) {
+    const item = unitId ? db.creatorData.syllabus.find(s => s.id === unitId) : db.creatorData.syllabus[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = item ? `Edit Syllabus Unit: ${item.lesson}` : "Add Lesson Unit";
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="form-group">
+          <label>Lesson Title</label>
+          <input type="text" id="cc-lesson-title" class="form-control" value="${item ? item.lesson : ''}">
+        </div>
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Module / Milestone</label>
+            <input type="text" id="cc-lesson-mod" class="form-control" value="${item ? item.module : 'Module 1.1: Core Concepts'}">
+          </div>
+          <div class="form-group">
+            <label>Activity Delivery Format</label>
+            <select id="cc-lesson-format" class="form-control">
+              <option value="Interactive Coding Workspace">Interactive Coding Workspace</option>
+              <option value="Video Lecture & Sandbox">Video Lecture & Sandbox</option>
+              <option value="Formatted Text & Guide">Formatted Text & Guide</option>
+              <option value="Speaking / Voice Recording">Speaking / Voice Recording</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Estimated Duration</label>
+          <input type="text" id="cc-lesson-duration" class="form-control" value="${item ? item.duration : '45 Mins'}">
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorLesson('${unitId || ''}')">Save Unit Changes</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorLesson = function(unitId) {
+    const title = document.getElementById("cc-lesson-title")?.value.trim();
+    if (!title) return;
+
+    const item = db.creatorData.syllabus.find(s => s.id === unitId);
+    if (item) {
+      item.lesson = title;
+      item.duration = document.getElementById("cc-lesson-duration")?.value.trim() || item.duration;
+    }
+
+    Actions.audit("CREATOR_LESSON_SAVED", `Saved syllabus unit updates for ${title}.`, "Low");
+    Notifications.push("Lesson Saved", `Syllabus unit ${title} updated.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorAddQuestionModal = function(qid) {
+    const q = qid ? db.creatorData.questions.find(item => item.id === qid) : null;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = q ? `Edit Question: ${q.id}` : "Create Reusable Question";
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="form-group">
+          <label>Question Prompt / Stem</label>
+          <textarea id="cc-q-prompt" class="form-control" rows="2" placeholder="Enter question stem...">${q ? q.title : ''}</textarea>
+        </div>
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Question Type</label>
+            <select id="cc-q-type" class="form-control">
+              <option value="Single Choice">Single Choice (MCQ)</option>
+              <option value="Multiple Choice">Multiple Choice</option>
+              <option value="True/False">True / False</option>
+              <option value="Ordering">Ordering / Sequence</option>
+              <option value="Matching">Matching Pairs</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Difficulty</label>
+            <select id="cc-q-diff" class="form-control">
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Correct Answer Key</label>
+          <input type="text" id="cc-q-answer" class="form-control" value="${q ? q.correctAnswer : ''}" placeholder="e.g. 401 Unauthorized">
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorQuestion('${qid || ''}')">Save Question to Bank</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorQuestion = function(qid) {
+    const prompt = document.getElementById("cc-q-prompt")?.value.trim();
+    const ans = document.getElementById("cc-q-answer")?.value.trim();
+    if (!prompt || !ans) {
+      Notifications.push("Validation Error", "Prompt and answer key are required.", "error");
+      return;
+    }
+
+    if (qid) {
+      const q = db.creatorData.questions.find(item => item.id === qid);
+      if (q) {
+        q.title = prompt;
+        q.correctAnswer = ans;
+      }
+    } else {
+      const newId = "QST-" + (800 + db.creatorData.questions.length + 1);
+      db.creatorData.questions.unshift({
+        id: newId,
+        title: prompt,
+        type: document.getElementById("cc-q-type")?.value || "Single Choice",
+        category: "Authoring Pool",
+        difficulty: document.getElementById("cc-q-diff")?.value || "Intermediate",
+        options: [ans, "Alternative Distractor A", "Alternative Distractor B"],
+        correctAnswer: ans,
+        tags: ["Core", "Syllabus"],
+        version: "v1.0",
+        usedInQuizzes: ["QZ-201"],
+        author: "Dr. Arsalan Khan"
+      });
+    }
+
+    Actions.audit("CREATOR_QUESTION_SAVED", `Saved question to centralized question bank.`, "Low");
+    Notifications.push("Question Saved", "Question pool updated successfully.", "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorAddQuizModal = function(quizId) {
+    const quiz = quizId ? db.creatorData.assessments.find(a => a.id === quizId) : null;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = quiz ? `Configure Assessment: ${quiz.title}` : "New Quiz Configuration";
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="form-group">
+          <label>Quiz Title</label>
+          <input type="text" id="cc-quiz-title" class="form-control" value="${quiz ? quiz.title : ''}" placeholder="e.g. Advanced JavaScript State Quiz">
+        </div>
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Pass Mark Threshold</label>
+            <input type="text" id="cc-quiz-pass" class="form-control" value="${quiz ? quiz.passMark : '80%'}">
+          </div>
+          <div class="form-group">
+            <label>Max Attempts Allowed</label>
+            <input type="number" id="cc-quiz-attempts" class="form-control" value="${quiz ? quiz.maxAttempts : 3}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Randomization & Anti-Cheat</label>
+          <select id="cc-quiz-rand" class="form-control">
+            <option value="Enabled">Enabled (Shuffle Questions & Answer Choices)</option>
+            <option value="Disabled">Fixed Order</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorQuiz('${quizId || ''}')">Save Quiz Settings</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorQuiz = function(quizId) {
+    const title = document.getElementById("cc-quiz-title")?.value.trim();
+    if (!title) return;
+
+    if (quizId) {
+      const q = db.creatorData.assessments.find(a => a.id === quizId);
+      if (q) {
+        q.title = title;
+        q.passMark = document.getElementById("cc-quiz-pass")?.value.trim() || q.passMark;
+      }
+    }
+
+    Actions.audit("CREATOR_ASSESSMENT_SAVED", `Updated assessment configuration for ${title}.`, "Low");
+    Notifications.push("Assessment Saved", `Configuration for ${title} updated.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorUploadResourceModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Upload & Verify Educational Resource (FLOW-022)";
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="upload-cloud"></i>
+          <div>
+            <strong>RESOURCE INTEGRITY & MALWARE SCAN (FLOW-022)</strong>
+            <p>Upload private media objects. Calculates SHA-256 hash and sets access gating policy.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Resource Title</label>
+          <input type="text" id="cc-res-title" class="form-control" placeholder="e.g. Next.js 15 Server Components Blueprint PDF">
+        </div>
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Format</label>
+            <select id="cc-res-format" class="form-control">
+              <option value="PDF Document">PDF Document</option>
+              <option value="MP4 Video (1080p)">MP4 Video (1080p)</option>
+              <option value="Audio MP3">Audio MP3</option>
+              <option value="ZIP Archive">ZIP Code Archive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Access Gating Level</label>
+            <select id="cc-res-access" class="form-control">
+              <option value="Enrolled & Guest Preview Eligible">Free Preview + Enrolled</option>
+              <option value="Enrolled Learners Only">Enrolled Learners Only</option>
+              <option value="Protected DRM Stream">Protected DRM Stream</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorResource()">Upload & Verify Checksum</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorResource = function() {
+    const title = document.getElementById("cc-res-title")?.value.trim();
+    if (!title) return;
+
+    const newId = "RES-" + (100 + db.creatorData.resources.length + 1);
+    db.creatorData.resources.unshift({
+      id: newId,
+      title,
+      format: document.getElementById("cc-res-format")?.value || "PDF Document",
+      size: "3.2 MB",
+      version: "v1.0",
+      sha256: "c89f71a0b33291..." + Math.random().toString(36).substring(7),
+      scanStatus: "Clean / Verified",
+      accessLevel: document.getElementById("cc-res-access")?.value || "Enrolled Learners Only",
+      linkedCoursesCount: 1,
+      uploadedAt: new Date().toISOString().replace("T", " ").slice(0, 16),
+      status: "Uploaded (Verified)"
+    });
+
+    Actions.audit("CREATOR_RESOURCE_UPLOADED", `Uploaded and verified resource ${newId} (${title}).`, "Low");
+    Notifications.push("Resource Uploaded", `${title} scanned and ready for syllabus linkage.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorEditRulesModal = function(id) {
+    const rule = db.creatorData.rules.find(r => r.id === id) || db.creatorData.rules[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Configure Rule: ${rule.type}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="form-group">
+          <label>Target Scope / Milestone</label>
+          <input type="text" class="form-control" value="${rule.targetItem}" readonly>
+        </div>
+        <div class="form-group">
+          <label>Condition Expression</label>
+          <textarea id="cc-rule-cond" class="form-control" rows="3">${rule.condition}</textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorRules('${rule.id}')">Save Rule Condition</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorRules = function(id) {
+    const cond = document.getElementById("cc-rule-cond")?.value.trim();
+    const rule = db.creatorData.rules.find(r => r.id === id);
+    if (rule && cond) rule.condition = cond;
+
+    Actions.audit("CREATOR_RULE_UPDATED", `Updated rule condition for ${id}.`, "Low");
+    Notifications.push("Rule Saved", "Learning progression rules updated.", "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorPreviewModal = function(courseId) {
+    const course = courseId ? db.creatorData.courses.find(c => c.id === courseId) : db.creatorData.courses[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Learner Experience Preview (CAT-009): ${course ? course.title : 'Course'}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background: linear-gradient(135deg, #182232, #253852); color: #ffffff;">
+          <i data-lucide="eye" style="color: #70b8ff;"></i>
+          <div>
+            <strong style="color: #ffffff;">LIVE SYLLABUS SIMULATION & GATING AUDIT</strong>
+            <p style="color: #c9d6e4;">Simulates learner viewport. Verifies that preview parent units never accidentally expose paid/unpublished children.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #ffffff; border: 1px solid #e7dfd3; border-radius: 8px;">
+          <div>
+            <strong style="font-size: 13px; color: var(--navy-medium);">Simulation Viewport Mode:</strong>
+            <span style="font-size: 12px; color: var(--slate); display: block;">Toggle user credential state to inspect locked gating</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary btn-xs" id="preview-mode-guest" onclick="Actions.switchPreviewMode('guest')">Guest Visitor</button>
+            <button class="btn btn-secondary btn-xs" id="preview-mode-free" onclick="Actions.switchPreviewMode('free')">Registered Free User</button>
+          </div>
+        </div>
+
+        <div id="preview-simulator-canvas" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+          <div style="padding: 14px 18px; border: 1px solid #70b8ff; background: #f0f7ff; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span class="badge badge-success" style="margin-bottom: 4px;">FREE PREVIEW UNLOCKED</span>
+              <strong style="display: block; font-size: 13.5px; color: #12233f;">Module 1.1: Modern HTML5 & CSS Layouts</strong>
+              <small style="color: #5a687c;">Lesson 1: Semantic Structure & Accessibility · 45 Mins · Formatted Guide</small>
+            </div>
+            <button class="btn btn-primary btn-xs" onclick="Notifications.push('Preview Player', 'Rendering interactive sandbox lesson in preview mode.', 'info')">Play Lesson</button>
+          </div>
+
+          <div style="padding: 14px 18px; border: 1px solid #e7dfd3; background: #faf8f5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; opacity: 0.85;">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom: 4px;"><i data-lucide="lock" style="width:10px; height:10px;"></i> PAID ENROLMENT REQUIRED</span>
+              <strong style="display: block; font-size: 13.5px; color: #12233f;">Module 1.2: Advanced CSS Grid & Modern Tokens</strong>
+              <small style="color: #5a687c;">Lesson 2: Responsive Grid Systems · 60 Mins · Interactive Sandbox</small>
+            </div>
+            <button class="btn btn-secondary btn-xs" disabled style="cursor: not-allowed;"><i data-lucide="lock"></i> Locked</button>
+          </div>
+
+          <div style="padding: 14px 18px; border: 1px solid #e7dfd3; background: #faf8f5; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; opacity: 0.85;">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom: 4px;"><i data-lucide="lock" style="width:10px; height:10px;"></i> PREREQUISITE GATED</span>
+              <strong style="display: block; font-size: 13.5px; color: #12233f;">Milestone 2: React 19 State Management</strong>
+              <small style="color: #5a687c;">Requires 100% Milestone 1 Completion + DOM Fundamentals Quiz Pass</small>
+            </div>
+            <button class="btn btn-secondary btn-xs" disabled style="cursor: not-allowed;"><i data-lucide="lock"></i> Gated</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Simulator</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCreatorValidationModal('${course ? course.id : 'CRS-101'}')">Run Pre-Flight Check</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.switchPreviewMode = function(mode) {
+    const guestBtn = document.getElementById("preview-mode-guest");
+    const freeBtn = document.getElementById("preview-mode-free");
+    if (!guestBtn || !freeBtn) return;
+    if (mode === "guest") {
+      guestBtn.className = "btn btn-primary btn-xs";
+      freeBtn.className = "btn btn-secondary btn-xs";
+      Notifications.push("Simulation View", "Rendering unauthenticated guest preview state.", "info");
+    } else {
+      guestBtn.className = "btn btn-secondary btn-xs";
+      freeBtn.className = "btn btn-primary btn-xs";
+      Notifications.push("Simulation View", "Rendering registered free learner tier state.", "info");
+    }
+  };
+
+  Actions.openCreatorValidationModal = function(versionId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Course Version Pre-Flight Validation (FLOW-009)";
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="check-square"></i>
+          <div>
+            <strong>PRE-FLIGHT VALIDATION CHECKLIST</strong>
+            <p>Automated verification of metadata, syllabus hierarchy, resource attachments, and learning rule consistency.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Catalogue Metadata:</strong> Title, Code, Effort, Language</span>
+            <span class="badge badge-success">Passed</span>
+          </div>
+
+          <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Syllabus Structure:</strong> Levels, Milestones, 28 Lessons</span>
+            <span class="badge badge-success">Passed</span>
+          </div>
+
+          <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Resource Integrity:</strong> SHA-256 hashes clean & malware-free</span>
+            <span class="badge badge-success">Passed</span>
+          </div>
+
+          <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Learning Rules:</strong> Progression state machines valid</span>
+            <span class="badge badge-success">Passed</span>
+          </div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="margin-top: 14px;">
+          <h5><i data-lucide="shield-check"></i> Ready for Academic Peer Review</h5>
+          <p>Zero blocking errors detected. You may proceed to submit this version to the Academic Review Board.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCreatorSubmitReviewModal('${versionId || 'VER-401'}')">Submit for Academic Review</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorSubmitReviewModal = function(versionId) {
+    const ver = db.creatorData.versions.find(v => v.id === versionId) || db.creatorData.versions[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Submit for Review: ${ver.courseTitle} (${ver.versionTag})`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="send"></i>
+          <div>
+            <strong>SUBMIT FOR ACADEMIC PEER REVIEW (FLOW-009)</strong>
+            <p>Transmits draft version to Faculty Reviewers. Content edits will freeze until reviewers approve or request revisions.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Course</span><strong>${ver.courseTitle}</strong></div>
+          <div class="om-flow-metric"><span>Version Tag</span><strong>${ver.versionTag}</strong></div>
+          <div class="om-flow-metric"><span>Delivery Model</span><strong>${ver.deliveryModel}</strong></div>
+          <div class="om-flow-metric"><span>Author</span><strong>${ver.author}</strong></div>
+        </div>
+
+        <div class="form-group">
+          <label>Submission Note for Academic Reviewers</label>
+          <textarea id="cc-submit-notes" class="form-control" rows="3" placeholder="Highlight key syllabus updates, new assessment questions, and board alignments..."></textarea>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="lock"></i> Review State Lock</h5>
+          <p>Status will transition from <strong>Draft → In Review</strong>. Once approved, the authorized catalogue owner will publish the live release.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCreatorForReview('${ver.id}')">Confirm Submission to Review Board</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCreatorForReview = function(versionId) {
+    const ver = db.creatorData.versions.find(v => v.id === versionId);
+    if (!ver) return;
+
+    ver.lifecycleState = "In Review";
+    const course = db.creatorData.courses.find(c => c.id === ver.courseId);
+    if (course) {
+      course.stage = "In Review";
+      course.activeVersion = `${ver.versionTag} (In Review)`;
+    }
+
+    Actions.audit("CREATOR_SUBMITTED_FOR_REVIEW", `Submitted ${ver.courseTitle} (${ver.versionTag}) for academic review.`, "Medium");
+    Notifications.push("Submitted for Review", `${ver.courseTitle} ${ver.versionTag} submitted to Academic Review Board.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorReviewComment = function(commentId) {
+    const comm = db.creatorData.reviewComments.find(c => c.id === commentId);
+    if (!comm) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Reviewer Feedback: ${comm.id}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="message-square"></i>
+          <div>
+            <strong>ACADEMIC REVIEWER COMMENT (CAT-010)</strong>
+            <p>Reviewer: <strong>${comm.reviewer}</strong> · Item: ${comm.item}</p>
+          </div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="alert-circle"></i> Reviewer Guidance</h5>
+          <p><strong>Severity:</strong> <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity}</span></p>
+          <p>${comm.comment}</p>
+        </div>
+
+        <div class="form-group">
+          <label>Author Resolution Rationale</label>
+          <textarea id="cc-comment-response" class="form-control" rows="3" placeholder="Describe the updates made to resolve this feedback..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.resolveCreatorComment('${comm.id}')">Mark Feedback as Resolved</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.resolveCreatorComment = function(commentId) {
+    const comm = db.creatorData.reviewComments.find(c => c.id === commentId);
+    if (!comm) return;
+
+    const resp = document.getElementById("cc-comment-response")?.value.trim() || "Addressed and updated in draft syllabus.";
+    comm.status = "Resolved";
+    comm.resolution = resp;
+
+    Actions.audit("CREATOR_COMMENT_RESOLVED", `Resolved reviewer comment ${comm.id} for ${comm.courseTitle}.`, "Low");
+    Notifications.push("Comment Resolved", `Feedback on ${comm.item} marked as resolved.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
+    else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.openCreatorCourseDetails = function(courseId) {
+    const c = db.creatorData.courses.find(item => item.id === courseId);
+    if (!c) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Course Specification: ${c.title}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Course Code</span><strong>${c.code}</strong><small>${c.id}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${c.programme}</strong><small>${c.faculty}</small></div>
+          <div class="om-flow-metric"><span>Delivery Model</span><strong>${c.deliveryModel}</strong></div>
+          <div class="om-flow-metric"><span>Active Version</span><strong>${c.activeVersion}</strong><small>Live: ${c.latestPublished}</small></div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="book-open"></i> Learning Outcomes & Syllabus</h5>
+          <p>${c.learningOutcomes}</p>
+          <p><strong>Prerequisites:</strong> ${c.prerequisites}</p>
+          <p><strong>Completion Rule:</strong> ${c.completionRule}</p>
+          <p><strong>Commercial Pricing:</strong> ${c.priceLocked}</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Router.navigate('creator-syllabus-lessons')">Open Syllabus Builder</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
 });

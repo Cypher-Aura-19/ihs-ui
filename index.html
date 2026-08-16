@@ -662,6 +662,205 @@
         <span>Impersonating <strong id="impersonated-user-sidebar">User</strong></span>
         <button id="sidebar-stop-impersonate" class="link-btn">Stop</button>
       </div>
+    
+      <nav class="sidebar-nav" id="creator-nav" aria-label="Course Creator navigation" style="display: none;">
+        <!-- 1. Authoring Home -->
+        <div class="nav-item active" data-route="creator-dashboard" id="nav-creator-dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Authoring Home</span>
+        </div>
+
+        <!-- 2. Programmes & Courses -->
+        <div class="nav-group">
+          <div class="nav-group-title">Programmes & Courses</div>
+          <div class="nav-item" data-route="creator-courses-my" id="nav-creator-courses-my">
+            <i data-lucide="book-open"></i>
+            <span>My Courses</span>
+            <span class="badge badge-primary count-creator-my-courses">8</span>
+          </div>
+          <div class="nav-item" data-route="creator-courses-draft" id="nav-creator-courses-draft">
+            <i data-lucide="file-edit"></i>
+            <span>Draft Courses</span>
+            <span class="badge badge-warning count-creator-drafts">4</span>
+          </div>
+          <div class="nav-item" data-route="creator-courses-review" id="nav-creator-courses-review">
+            <i data-lucide="file-search"></i>
+            <span>In Review</span>
+            <span class="badge badge-secondary count-creator-review">2</span>
+          </div>
+          <div class="nav-item" data-route="creator-courses-approved" id="nav-creator-courses-approved">
+            <i data-lucide="check-circle-2"></i>
+            <span>Approved</span>
+            <span class="badge badge-success count-creator-approved">1</span>
+          </div>
+          <div class="nav-item" data-route="creator-courses-published" id="nav-creator-courses-published">
+            <i data-lucide="archive"></i>
+            <span>Published / Live</span>
+          </div>
+        </div>
+
+        <!-- 3. Course Versions -->
+        <div class="nav-group">
+          <div class="nav-group-title">Course Versions</div>
+          <div class="nav-item" data-route="creator-versions-draft" id="nav-creator-versions-draft">
+            <i data-lucide="git-branch"></i>
+            <span>Draft Versions</span>
+          </div>
+          <div class="nav-item" data-route="creator-versions-history" id="nav-creator-versions-history">
+            <i data-lucide="history"></i>
+            <span>Version History</span>
+          </div>
+          <div class="nav-item" data-route="creator-versions-create" id="nav-creator-versions-create">
+            <i data-lucide="plus-circle"></i>
+            <span>Create Version</span>
+          </div>
+        </div>
+
+        <!-- 4. Syllabus Builder -->
+        <div class="nav-group">
+          <div class="nav-group-title">Syllabus Builder</div>
+          <div class="nav-item" data-route="creator-syllabus-levels" id="nav-creator-syllabus-levels">
+            <i data-lucide="layers"></i>
+            <span>Levels</span>
+          </div>
+          <div class="nav-item" data-route="creator-syllabus-milestones" id="nav-creator-syllabus-milestones">
+            <i data-lucide="flag"></i>
+            <span>Milestones</span>
+          </div>
+          <div class="nav-item" data-route="creator-syllabus-modules" id="nav-creator-syllabus-modules">
+            <i data-lucide="folder-tree"></i>
+            <span>Modules / Units</span>
+          </div>
+          <div class="nav-item" data-route="creator-syllabus-lessons" id="nav-creator-syllabus-lessons">
+            <i data-lucide="file-text"></i>
+            <span>Lessons</span>
+          </div>
+          <div class="nav-item" data-route="creator-syllabus-activities" id="nav-creator-syllabus-activities">
+            <i data-lucide="play-circle"></i>
+            <span>Activities</span>
+          </div>
+        </div>
+
+        <!-- 5. Assessments -->
+        <div class="nav-group">
+          <div class="nav-group-title">Assessments</div>
+          <div class="nav-item" data-route="creator-assessments-bank" id="nav-creator-assessments-bank">
+            <i data-lucide="database"></i>
+            <span>Question Bank</span>
+          </div>
+          <div class="nav-item" data-route="creator-assessments-quizzes" id="nav-creator-assessments-quizzes">
+            <i data-lucide="help-circle"></i>
+            <span>Quizzes</span>
+          </div>
+          <div class="nav-item" data-route="creator-assessments-assignments" id="nav-creator-assessments-assignments">
+            <i data-lucide="clipboard-list"></i>
+            <span>Assignments</span>
+          </div>
+          <div class="nav-item" data-route="creator-assessments-voice" id="nav-creator-assessments-voice">
+            <i data-lucide="mic"></i>
+            <span>Voice Activities</span>
+          </div>
+          <div class="nav-item" data-route="creator-assessments-rubrics" id="nav-creator-assessments-rubrics">
+            <i data-lucide="table"></i>
+            <span>Rubrics</span>
+          </div>
+        </div>
+
+        <!-- 6. Resources -->
+        <div class="nav-group">
+          <div class="nav-group-title">Resources</div>
+          <div class="nav-item" data-route="creator-resources-library" id="nav-creator-resources-library">
+            <i data-lucide="library"></i>
+            <span>Resource Library</span>
+          </div>
+          <div class="nav-item" data-route="creator-resources-upload" id="nav-creator-resources-upload">
+            <i data-lucide="upload-cloud"></i>
+            <span>Upload Resource</span>
+          </div>
+          <div class="nav-item" data-route="creator-resources-linked" id="nav-creator-resources-linked">
+            <i data-lucide="link-2"></i>
+            <span>Linked Resources</span>
+          </div>
+          <div class="nav-item" data-route="creator-resources-versions" id="nav-creator-resources-versions">
+            <i data-lucide="git-commit"></i>
+            <span>Resource Versions</span>
+          </div>
+        </div>
+
+        <!-- 7. Learning Rules -->
+        <div class="nav-group">
+          <div class="nav-group-title">Learning Rules</div>
+          <div class="nav-item" data-route="creator-rules-prerequisites" id="nav-creator-rules-prerequisites">
+            <i data-lucide="git-merge"></i>
+            <span>Prerequisites</span>
+          </div>
+          <div class="nav-item" data-route="creator-rules-release" id="nav-creator-rules-release">
+            <i data-lucide="unlock"></i>
+            <span>Release Rules</span>
+          </div>
+          <div class="nav-item" data-route="creator-rules-completion" id="nav-creator-rules-completion">
+            <i data-lucide="award"></i>
+            <span>Completion Rules</span>
+          </div>
+          <div class="nav-item" data-route="creator-rules-attempts" id="nav-creator-rules-attempts">
+            <i data-lucide="refresh-cw"></i>
+            <span>Attempt / Retry Rules</span>
+          </div>
+        </div>
+
+        <!-- 8. Preview -->
+        <div class="nav-group">
+          <div class="nav-group-title">Preview & Simulation</div>
+          <div class="nav-item" data-route="creator-preview" id="nav-creator-preview">
+            <i data-lucide="eye"></i>
+            <span>Learner Preview</span>
+          </div>
+        </div>
+
+        <!-- 9. Review & Submission -->
+        <div class="nav-group">
+          <div class="nav-group-title">Review & Submission</div>
+          <div class="nav-item" data-route="creator-review-validation" id="nav-creator-review-validation">
+            <i data-lucide="check-square"></i>
+            <span>Pre-Flight Validation</span>
+          </div>
+          <div class="nav-item" data-route="creator-review-submit" id="nav-creator-review-submit">
+            <i data-lucide="send"></i>
+            <span>Submit for Review</span>
+          </div>
+          <div class="nav-item" data-route="creator-review-comments" id="nav-creator-review-comments">
+            <i data-lucide="message-square"></i>
+            <span>Reviewer Comments</span>
+            <span class="badge badge-warning count-creator-comments">3</span>
+          </div>
+          <div class="nav-item" data-route="creator-review-changes" id="nav-creator-review-changes">
+            <i data-lucide="alert-triangle"></i>
+            <span>Changes Requested</span>
+            <span class="badge badge-error count-creator-changes">1</span>
+          </div>
+        </div>
+
+        <!-- 10. K-12 Authoring -->
+        <div class="nav-group">
+          <div class="nav-group-title">K-12 Authoring</div>
+          <div class="nav-item" data-route="creator-k12-curriculum" id="nav-creator-k12-curriculum">
+            <i data-lucide="graduation-cap"></i>
+            <span>K-12 Curriculum</span>
+          </div>
+          <div class="nav-item" data-route="creator-k12-syllabi" id="nav-creator-k12-syllabi">
+            <i data-lucide="book-marked"></i>
+            <span>Subject Syllabi</span>
+          </div>
+        </div>
+
+        <!-- 11. History / Audit -->
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="creator-audit-history" id="nav-creator-audit-history">
+            <i data-lucide="scroll"></i>
+            <span>Authoring Audit</span>
+          </div>
+        </div>
+      </nav>
     </aside>
 
     <button class="sidebar-scrim" id="sidebar-scrim" aria-label="Close navigation" tabindex="-1"></button>
@@ -696,6 +895,7 @@
                 <option value="operational_manager">Operational Manager (OM - Operations Command)</option>
                 <option value="coo">COO (Business Operations)</option>
                 <option value="csr">Customer Service & Sales (CSR - Sales & Intake)</option>
+                <option value="course_creator">Course Creator (Authoring & Syllabus)</option>
                 <option value="cto_developer">CTO & Developer (System, Jobs, Integrations)</option>
                 <option value="compliance_officer">Compliance & Auditor (Audits, Lifecycle)</option>
                 <option value="support_agent">Support Representative (Limited Support View)</option>
@@ -1309,6 +1509,189 @@
           </div>
 
         </div>
+
+        <!-- ================================================================= -->
+        <!-- COURSE CREATOR (CC) - AUTHORING & SYLLABUS COMMAND CENTER SHELL  -->
+        <!-- ================================================================= -->
+        <div id="creator-dashboard-shell" class="creator-command-deck" style="display: none;">
+          
+          <!-- Flight Strip (Authoring Command Banner) -->
+          <div class="creator-flight-strip">
+            <div class="creator-flight-identity">
+              <div class="creator-flight-topline">
+                <span class="creator-flight-badge"><i data-lucide="book-open"></i> AUTHORING COMMAND</span>
+                <span class="creator-flight-rep">Lead Author: <strong>Dr. Arsalan Khan</strong> · Faculty of Computing & Secondary Ed</span>
+              </div>
+              <div class="creator-flight-meta">
+                <span><i data-lucide="layers"></i> Portfolio: <strong>6 Courses</strong></span>
+                <span><i data-lucide="git-branch"></i> Active Drafts: <strong>2 Versions</strong></span>
+                <span><i data-lucide="clock"></i> Review Cycle: <strong>48h SLA</strong></span>
+                <span><i data-lucide="shield-check"></i> Segregation: <strong>Authoring Scope Only</strong></span>
+              </div>
+              <p class="creator-flight-desc">
+                Construct and version structured course syllabi, manage centralized question banks, configure assessment rubrics and learning rules, simulate guest vs learner preview, and submit draft versions for Academic Board review.
+              </p>
+            </div>
+            <div class="creator-flight-actions">
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorPreviewModal('CRS-101')">
+                <i data-lucide="eye"></i> Learner Preview
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorValidationModal('VER-401')">
+                <i data-lucide="check-square"></i> Pre-Flight Check
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()">
+                <i data-lucide="plus"></i> New Course
+              </button>
+            </div>
+          </div>
+
+          <!-- Scope & Track Filter Bar -->
+          <div class="creator-scope-bar">
+            <div class="creator-scope-header">
+              <div class="creator-scope-title">
+                <i data-lucide="sliders-horizontal"></i>
+                <span>Authoring Scope & Catalogue Telemetry</span>
+              </div>
+              <div class="creator-scope-status">
+                <span class="pulse-dot"></span>
+                <span>Real-time Course State Sync · Academic Year 2026/27</span>
+              </div>
+            </div>
+            <div class="creator-scope-grid">
+              <div class="form-group">
+                <label>Programme Track</label>
+                <select id="creator-filter-track" class="form-control">
+                  <option value="">All Programmes (Vocational, Literacy, Spoken, K-12)</option>
+                  <option value="Vocational Skills">Vocational Skills</option>
+                  <option value="Basic Literacy">Basic Literacy</option>
+                  <option value="Spoken English">Spoken English</option>
+                  <option value="K-12">K-12 Secondary</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Delivery Model</label>
+                <select id="creator-filter-delivery" class="form-control">
+                  <option value="">All Delivery Models</option>
+                  <option value="Self-paced Milestone">Self-paced Milestone (MILE-001)</option>
+                  <option value="Live Scheduled">Live Scheduled Classes</option>
+                  <option value="K-12 Live Tuition">K-12 Live Tuition</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Lifecycle Stage</label>
+                <select id="creator-filter-stage" class="form-control">
+                  <option value="">All Stages</option>
+                  <option value="Draft">Draft (In Authoring)</option>
+                  <option value="In Review">In Review (Academic Board)</option>
+                  <option value="Approved">Approved (Awaiting Publish)</option>
+                  <option value="Published">Published / Live</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Action Shortcut</label>
+                <select id="creator-filter-action" class="form-control" onchange="if(this.value) Router.navigate(this.value)">
+                  <option value="">Quick Navigate...</option>
+                  <option value="creator-syllabus-lessons">Syllabus Lessons</option>
+                  <option value="creator-assessments-bank">Question Bank</option>
+                  <option value="creator-resources-library">Resource Library</option>
+                  <option value="creator-review-comments">Reviewer Feedback</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4-Stage Course Lifecycle Matrix -->
+          <div class="creator-pipeline-matrix">
+            
+            <div class="creator-matrix-card" onclick="Router.navigate('creator-courses-draft')" style="cursor: pointer;">
+              <div class="creator-matrix-header">
+                <span class="creator-matrix-step">01. DRAFT</span>
+                <span class="badge badge-warning" id="creator-card-draft-count">2 Versions</span>
+              </div>
+              <h4>Syllabus Authoring</h4>
+              <p>Construct levels, milestones, lessons, activities, and link assessment items.</p>
+              <div class="creator-matrix-footer">
+                <span id="creator-draft-preview-label">2 in Progress</span>
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+
+            <div class="creator-matrix-card" onclick="Router.navigate('creator-courses-review')" style="cursor: pointer;">
+              <div class="creator-matrix-header">
+                <span class="creator-matrix-step">02. REVIEW</span>
+                <span class="badge badge-warning" id="creator-card-review-count">1 In Review</span>
+              </div>
+              <h4>Academic Peer Review</h4>
+              <p>Locked drafts undergoing pedagogical evaluation and rubric verification.</p>
+              <div class="creator-matrix-footer">
+                <span id="creator-review-preview-label">1 Under Review</span>
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+
+            <div class="creator-matrix-card" onclick="Router.navigate('creator-courses-approved')" style="cursor: pointer;">
+              <div class="creator-matrix-header">
+                <span class="creator-matrix-step">03. APPROVED</span>
+                <span class="badge badge-success" id="creator-card-approved-count">1 Approved</span>
+              </div>
+              <h4>Awaiting Publication</h4>
+              <p>Cleared academic review. Ready for commercial catalogue release.</p>
+              <div class="creator-matrix-footer">
+                <span id="creator-approved-preview-label">1 Ready to Publish</span>
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+
+            <div class="creator-matrix-card" onclick="Router.navigate('creator-courses-published')" style="cursor: pointer;">
+              <div class="creator-matrix-header">
+                <span class="creator-matrix-step">04. LIVE</span>
+                <span class="badge badge-success" id="creator-card-published-count">2 Live</span>
+              </div>
+              <h4>Published & Immutable</h4>
+              <p>Actively serving learners. Protected from in-place drift.</p>
+              <div class="creator-matrix-footer">
+                <span id="creator-published-preview-label">2 Live in Catalogue</span>
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Dual Queues Panel (Reviewer Comments & Pre-Flight Validation) -->
+          <div class="creator-queues-grid">
+            
+            <!-- Queue 1: Reviewer Feedback Queue -->
+            <div class="creator-queue-card">
+              <div class="creator-queue-header">
+                <div>
+                  <h3 class="creator-queue-title"><i data-lucide="message-square"></i> Reviewer Feedback & Comments (CAT-010)</h3>
+                  <p class="creator-queue-desc">Action items returned by Academic Reviewers requiring syllabus adjustment.</p>
+                </div>
+                <button class="text-btn" onclick="Router.navigate('creator-review-comments')">View all (<span id="creator-queue-comments-count">1</span>)</button>
+              </div>
+              <div class="creator-queue-list" id="creator-queue-comments-list">
+                <!-- Injected via RenderEngine.creatorDashboard() -->
+              </div>
+            </div>
+
+            <!-- Queue 2: Pre-Flight Validation Checks -->
+            <div class="creator-queue-card">
+              <div class="creator-queue-header">
+                <div>
+                  <h3 class="creator-queue-title"><i data-lucide="shield-check"></i> Pre-Flight Validation Ready (FLOW-009)</h3>
+                  <p class="creator-queue-desc">Automated structural integrity audits before review submission.</p>
+                </div>
+                <button class="text-btn" onclick="Router.navigate('creator-review-validation')">View all</button>
+              </div>
+              <div class="creator-queue-list" id="creator-queue-validation-list">
+                <!-- Injected via RenderEngine.creatorDashboard() -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
       </section>
 
       <section class="content-view" id="view-coo-workspace">
@@ -2076,6 +2459,13 @@
         </div>
       </section>
 
+    
+      <!-- COURSE CREATOR WORKSPACE SUB-VIEWS -->
+      <section class="content-view" id="view-creator-workspace" style="display: none;">
+        <div id="creator-workspace-content">
+          <!-- Dynamic rendering via RenderEngine.creatorWorkspace(route) -->
+        </div>
+      </section>
     </main>
   </div>
 
