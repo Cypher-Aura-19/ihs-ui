@@ -2272,13 +2272,10 @@ const Router = {
 
 const RenderEngine = {
 
+  
   creatorDashboard() {
-    const stats = [
-      { id: "stat-creator-courses", label: "My Portfolio", value: db.creatorData.courses.length, hint: "Total assigned courses", icon: "book-open", delta: "6 Courses", alert: false },
-      { id: "stat-creator-drafts", label: "Active Drafts", value: db.creatorData.courses.filter(c => c.stage === 'Draft').length, hint: "In syllabus authoring", icon: "file-edit", delta: "2 Active", alert: false },
-      { id: "stat-creator-review", label: "Under Peer Review", value: db.creatorData.courses.filter(c => c.stage === 'In Review').length, hint: "Academic Board SLA", icon: "file-search", delta: "1 In Review", alert: false },
-      { id: "stat-creator-published", label: "Live in LMS", value: db.creatorData.courses.filter(c => c.stage === 'Published').length, hint: "Immutable releases", icon: "archive", delta: "2 Published", alert: false }
-    ];
+    const container = document.getElementById("creator-dashboard-shell");
+    if (!container) return;
 
     const pipelineStages = [
       { code: "01. DRAFT", title: "Syllabus Authoring", desc: "Construct levels, milestones, lessons, activities, and link assessment items.", count: "2 Versions", statusText: "2 in Progress", icon: "edit-3", route: "creator-courses-draft", badgeClass: "badge-warning" },
@@ -2287,39 +2284,72 @@ const RenderEngine = {
       { code: "04. LIVE", title: "Published & Immutable", desc: "Actively serving learners. Protected from in-place drift.", count: "2 Live", statusText: "2 Live in Catalogue", icon: "archive", route: "creator-courses-published", badgeClass: "badge-success" }
     ];
 
-    const container = document.getElementById("creator-dashboard-shell");
-    if (!container) return;
-
     container.innerHTML = `
       <div class="creator-command-deck">
+        
+        <!-- Clean, Bright, Premium Top Banner -->
         <div class="creator-flight-strip">
-          <div class="creator-flight-meta">
-            <span class="creator-flight-badge"><i data-lucide="book-open"></i> AUTHORING COMMAND</span>
-            <div class="creator-flight-lead">
-              Lead Author: <strong>Dr. Arsalan Khan</strong> · Faculty of Computing & Secondary Ed
+          <div class="creator-flight-top-row">
+            <div class="creator-flight-heading-box">
+              <div class="creator-flight-tag">
+                <i data-lucide="book-open"></i> COURSE AUTHORING & SYLLABUS STUDIO
+              </div>
+              <h2 class="creator-flight-title">Authoring Command & Portfolio Hub</h2>
+              <p class="creator-flight-subtitle">
+                Author structured course syllabi, configure automated milestone gatekeepers, manage centralized question banks, and submit draft versions for Academic Board review.
+              </p>
             </div>
-            <div class="creator-flight-stats">
-              <span><i data-lucide="layers"></i> Portfolio: <strong>6 Courses</strong></span>
-              <span><i data-lucide="git-branch"></i> Active Drafts: <strong>2 Versions</strong></span>
-              <span><i data-lucide="clock"></i> Review Cycle: <strong>48h SLA</strong></span>
+            
+            <div class="creator-flight-actions">
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-preview')">
+                <i data-lucide="eye"></i> Learner Preview
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorValidationModal('VER-102')">
+                <i data-lucide="check-square"></i> Pre-Flight Check
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()">
+                <i data-lucide="plus"></i> New Course
+              </button>
             </div>
-            <div class="creator-segregation-tag">
-              <i data-lucide="shield-check"></i> Segregation: <strong>Authoring Scope Only</strong>
-            </div>
-            <p class="creator-flight-desc">
-              Construct and version structured course syllabi, manage centralized question banks, configure assessment rubrics and learning rules, simulate guest vs learner preview, and submit draft versions for Academic Board review.
-            </p>
           </div>
-          <div class="creator-flight-actions">
-            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-preview')">
-              <i data-lucide="eye"></i> Learner Preview
-            </button>
-            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorValidationModal('VER-102')">
-              <i data-lucide="check-square"></i> Pre-Flight Check
-            </button>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()">
-              <i data-lucide="plus"></i> New Course
-            </button>
+
+          <!-- Bottom Telemetry Chips -->
+          <div class="creator-flight-chips-grid">
+            <div class="creator-flight-chip">
+              <div class="chip-icon"><i data-lucide="user-check"></i></div>
+              <div class="chip-content">
+                <span>Lead Author</span>
+                <strong>Dr. Arsalan Khan</strong>
+                <small>Faculty of Computing</small>
+              </div>
+            </div>
+
+            <div class="creator-flight-chip">
+              <div class="chip-icon"><i data-lucide="layers"></i></div>
+              <div class="chip-content">
+                <span>Assigned Portfolio</span>
+                <strong>6 Courses</strong>
+                <small>Tech, Spoken & K-12</small>
+              </div>
+            </div>
+
+            <div class="creator-flight-chip">
+              <div class="chip-icon"><i data-lucide="git-branch"></i></div>
+              <div class="chip-content">
+                <span>Active Drafts</span>
+                <strong>2 Versions</strong>
+                <small>Syllabus In Authoring</small>
+              </div>
+            </div>
+
+            <div class="creator-flight-chip guard-chip">
+              <div class="chip-icon"><i data-lucide="shield-check"></i></div>
+              <div class="chip-content">
+                <span>Segregation Boundary</span>
+                <strong>Authoring Scope Only</strong>
+                <small>Pricing & publishing locked</small>
+              </div>
+            </div>
           </div>
         </div>
 

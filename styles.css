@@ -9388,3 +9388,147 @@ td:last-child {
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* ========================================================================== */
+/* BRIGHT, CLEAN & SPACIOUS TOP BANNER (COURSE CREATOR COMMAND)               */
+/* ========================================================================== */
+
+.creator-flight-strip {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 22px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 14px !important;
+  padding: 26px 30px !important;
+  box-shadow: 0 4px 16px rgba(70, 55, 28, 0.035) !important;
+  color: var(--navy-medium) !important;
+}
+
+.creator-flight-top-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
+  padding-bottom: 18px !important;
+}
+
+.creator-flight-heading-box {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.creator-flight-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font: 700 11px/1 'Inter', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  color: var(--primary) !important;
+}
+
+.creator-flight-title {
+  font: 800 22px/1.2 'Manrope', sans-serif !important;
+  color: var(--navy-medium) !important;
+  margin: 0 !important;
+}
+
+.creator-flight-subtitle {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: #5a687c !important;
+  margin: 0 !important;
+  max-width: 860px !important;
+}
+
+.creator-flight-actions {
+  display: flex !important;
+  gap: 10px !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+
+/* Telemetry Chips Grid */
+.creator-flight-chips-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+}
+
+.creator-flight-chip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: #fdfbf7 !important;
+  border: 1px solid rgba(124, 119, 102, 0.16) !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  transition: all 0.15s ease !important;
+}
+
+.creator-flight-chip:hover {
+  background: #ffffff !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 4px 12px rgba(16, 28, 46, 0.04) !important;
+}
+
+.creator-flight-chip .chip-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.18) !important;
+  border-radius: 8px !important;
+  color: var(--primary) !important;
+}
+
+.creator-flight-chip.guard-chip .chip-icon {
+  color: #166534 !important;
+  background: #f4faf6 !important;
+  border-color: rgba(22, 101, 52, 0.2) !important;
+}
+
+.creator-flight-chip .chip-content {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.creator-flight-chip .chip-content span {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: var(--slate) !important;
+  letter-spacing: 0.05em !important;
+}
+
+.creator-flight-chip .chip-content strong {
+  font: 700 14px 'Manrope', sans-serif !important;
+  color: var(--navy-medium) !important;
+}
+
+.creator-flight-chip .chip-content small {
+  font-size: 11px !important;
+  color: #64748b !important;
+}
+
+@media (max-width: 1024px) {
+  .creator-flight-top-row {
+    flex-direction: column !important;
+  }
+  .creator-flight-chips-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .creator-flight-chips-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
