@@ -2270,7 +2270,6 @@ const Router = {
 // ============================================================================
 
 const RenderEngine = {
-
   creatorWorkspace(route) {
     if (route === "creator-dashboard") {
       this.creatorDashboard();
@@ -2315,7 +2314,7 @@ const RenderEngine = {
       `;
     }
 
-    // Dynamic bespoke view switcher
+    // Dynamic clean & connected bespoke view switcher
     let customContentHtml = "";
 
     if (route === "creator-preview") {
@@ -2355,6 +2354,26 @@ const RenderEngine = {
       `;
     }
 
+    // Course Context Bar for Syllabus views
+    const isSyllabusView = route.startsWith("creator-syllabus-");
+    const courseContextBarHtml = isSyllabusView ? `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 10px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Active Course Scope:</span>
+          <select id="creator-course-scope-select" class="form-control" style="width: auto; min-width: 320px; font-weight: 600; font-size: 13px;" onchange="Actions.filterCreatorByCourse(this.value)">
+            <option value="all">All Courses (Multi-track Portfolio)</option>
+            <option value="TECH-FE-201" selected>Modern Full-Stack Web Development (Self-Paced Milestone)</option>
+            <option value="ENG-SPK-301">Spoken English Fluency (Live Scheduled Cohort)</option>
+            <option value="K12-MTH-801">Grade 8 Mathematics (K-12 Board Aligned)</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-courses-my')"><i data-lucide="book-open"></i> Course Catalog</button>
+          <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-preview')"><i data-lucide="eye"></i> Preview Learner View</button>
+        </div>
+      </div>
+    ` : "";
+
     container.innerHTML = `
       <div class="coo-workspace-view creator-workspace-view">
         <div class="coo-workspace-header">
@@ -2367,9 +2386,11 @@ const RenderEngine = {
           ${scopeHtml}
         </div>
 
+        ${courseContextBarHtml}
+
         <div class="module-toolbar">
           <div class="search-filter-row">
-            <input type="text" id="creator-workspace-search" class="form-control" placeholder="Search by keyword, title, tag, or ID...">
+            <input type="text" id="creator-workspace-search" class="form-control" placeholder="Search by title, code, tag, or keyword...">
             <select id="creator-workspace-status" class="form-control" style="width: auto; min-width: 170px;">
               <option value="">All Statuses</option>
               <option value="Draft">Draft</option>
@@ -2377,7 +2398,7 @@ const RenderEngine = {
               <option value="Approved">Approved</option>
               <option value="Published">Published / Live</option>
             </select>
-            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('View Saved', 'Current authoring filters saved to your workspace session.', 'info')">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('View Saved', 'Authoring filters saved to your session.', 'info')">
               <i data-lucide="bookmark"></i> Save view
             </button>
           </div>
@@ -2440,6 +2461,7 @@ const RenderEngine = {
     window.lucide?.createIcons();
   },
 
+  // 1. Bespoke Milestone Progression Roadmap (MILE-001/004/008)
   renderCreatorMilestonesRoadmap() {
     const milestones = [
       {
@@ -2447,6 +2469,7 @@ const RenderEngine = {
         code: "M1",
         title: "Milestone 1: Web Architecture & DOM Foundations",
         course: "Modern Full-Stack Web Development",
+        deliveryModel: "Self-Paced Milestone",
         level: "Level 1: Foundations",
         duration: "2 Weeks (16 Hours)",
         unitsCount: 4,
@@ -2455,7 +2478,6 @@ const RenderEngine = {
           { name: "Lesson 2: Advanced CSS Grid & Flexbox Systems", format: "Sandbox IDE", time: "60m" }
         ],
         gatekeeper: "QZ-201 (DOM Fundamentals Quiz) >= 80% Required to Unlock M2",
-        prerequisite: "None (Intake Baseline)",
         reward: "Milestone 1 Verification Badge",
         status: "Draft (In Authoring)"
       },
@@ -2464,6 +2486,7 @@ const RenderEngine = {
         code: "M2",
         title: "Milestone 2: React 19 & Component Architecture",
         course: "Modern Full-Stack Web Development",
+        deliveryModel: "Self-Paced Milestone",
         level: "Level 2: Frontend Engineering",
         duration: "3 Weeks (24 Hours)",
         unitsCount: 6,
@@ -2472,7 +2495,6 @@ const RenderEngine = {
           { name: "Lesson 4: React Server Components & Streaming", format: "Sandbox IDE", time: "90m" }
         ],
         gatekeeper: "QZ-202 (React 19 State Quiz) >= 70% + ASN-301 Task",
-        prerequisite: "100% Milestone 1 Complete",
         reward: "Frontend Specialist Certificate",
         status: "Draft (In Authoring)"
       },
@@ -2481,6 +2503,7 @@ const RenderEngine = {
         code: "M3",
         title: "Milestone 3: Node.js Microservices & PostgreSQL Engine",
         course: "Modern Full-Stack Web Development",
+        deliveryModel: "Self-Paced Milestone",
         level: "Level 2: Backend Architecture",
         duration: "4 Weeks (32 Hours)",
         unitsCount: 8,
@@ -2489,7 +2512,6 @@ const RenderEngine = {
           { name: "Lesson 6: PostgreSQL Indexing & Query Optimizations", format: "Sandbox IDE", time: "90m" }
         ],
         gatekeeper: "API Benchmark Test + Capstone Database Schema Sign-off",
-        prerequisite: "100% Milestone 2 Complete",
         reward: "Backend Architecture Badge",
         status: "Draft (In Authoring)"
       },
@@ -2498,6 +2520,7 @@ const RenderEngine = {
         code: "M4",
         title: "Milestone 4: Cloud CI/CD & Production Capstone",
         course: "Modern Full-Stack Web Development",
+        deliveryModel: "Self-Paced Milestone",
         level: "Level 3: Advanced Architect",
         duration: "3 Weeks (24 Hours)",
         unitsCount: 4,
@@ -2506,7 +2529,6 @@ const RenderEngine = {
           { name: "Lesson 8: Full-Stack Production Capstone Defense", format: "Live Project Defense", time: "120m" }
         ],
         gatekeeper: "Peer Review Sign-off + 100% Milestone Completion",
-        prerequisite: "100% Milestone 3 Complete",
         reward: "Full-Stack Software Engineer Credential",
         status: "Draft (In Authoring)"
       }
@@ -2524,7 +2546,7 @@ const RenderEngine = {
                   <span class="badge badge-warning">${m.status}</span>
                 </div>
                 <h3 class="creator-milestone-title">${m.title}</h3>
-                <p class="creator-milestone-desc">${m.course} · Estimated Effort: ${m.duration}</p>
+                <p class="creator-milestone-desc">${m.course} · Delivery: <strong>${m.deliveryModel}</strong> · Duration: ${m.duration}</p>
               </div>
               <div class="button-row">
                 <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">+ Add Lesson</button>
@@ -2561,19 +2583,22 @@ const RenderEngine = {
     `;
   },
 
+  // 2. Bespoke Proficiency Levels Ladder
   renderCreatorLevelsLadder() {
     const levels = [
       {
         level: "Level 1: Foundations & Core Logic",
+        course: "Modern Full-Stack Web Development",
         desc: "Essential computational thinking, HTML5 semantics, CSS token systems, and syntax basics.",
         milestonesCount: 2,
         lessonsCount: 8,
         quizzesCount: 3,
         targetAudience: "Beginner & Transitioning Learners",
-        prerequisite: "None (Open Intake)"
+        prerequisite: "None (Open Intake Baseline)"
       },
       {
         level: "Level 2: Professional Component Architecture",
+        course: "Modern Full-Stack Web Development",
         desc: "React 19, custom hook design patterns, state machines, and relational database schema design.",
         milestonesCount: 3,
         lessonsCount: 14,
@@ -2583,12 +2608,13 @@ const RenderEngine = {
       },
       {
         level: "Level 3: Distributed Systems & Capstone",
+        course: "Modern Full-Stack Web Development",
         desc: "Production microservices, CI/CD automated deployments, performance telemetry, and Capstone defense.",
         milestonesCount: 3,
         lessonsCount: 12,
         quizzesCount: 2,
         targetAudience: "Senior & Industry-Ready Engineers",
-        prerequisite: "Level 2 Certified + Project Approval"
+        prerequisite: "Level 2 Certified + Project Defense Approval"
       }
     ];
 
@@ -2602,7 +2628,7 @@ const RenderEngine = {
                 <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${lvl.level}</h3>
               </div>
               <p style="font-size: 12.5px; color: #5a687c; margin: 0 0 10px 0;">${lvl.desc}</p>
-              <div style="display: flex; gap: 14px; font-size: 11.5px; color: var(--navy-medium);">
+              <div style="display: flex; gap: 14px; font-size: 11.5px; color: var(--navy-medium); flex-wrap: wrap;">
                 <span><i data-lucide="flag" style="width:13px; color:var(--primary);"></i> <strong>${lvl.milestonesCount}</strong> Milestones</span>
                 <span><i data-lucide="file-text" style="width:13px; color:var(--primary);"></i> <strong>${lvl.lessonsCount}</strong> Lessons</span>
                 <span><i data-lucide="help-circle" style="width:13px; color:var(--primary);"></i> <strong>${lvl.quizzesCount}</strong> Quizzes</span>
@@ -2618,12 +2644,14 @@ const RenderEngine = {
     `;
   },
 
+  // 3. Bespoke Modules & Accordion Studio
   renderCreatorModulesStudio() {
     const modules = [
       {
         id: "MOD-101",
         code: "Module 1.1",
         title: "Modern HTML5 & Responsive Semantic Tokens",
+        course: "Modern Full-Stack Web Development (Self-Paced)",
         lessonsCount: 3,
         duration: "4.5 Hours",
         resources: ["RES-101 (Semantic HTML PDF)", "RES-102 (Token CSS)"],
@@ -2633,6 +2661,7 @@ const RenderEngine = {
         id: "MOD-102",
         code: "Module 1.2",
         title: "Advanced CSS Grid, Flexbox & Fluid Responsive Layouts",
+        course: "Modern Full-Stack Web Development (Self-Paced)",
         lessonsCount: 4,
         duration: "6.0 Hours",
         resources: ["RES-102 (CSS Grid Cheat Sheet)"],
@@ -2642,6 +2671,7 @@ const RenderEngine = {
         id: "MOD-201",
         code: "Module 2.1",
         title: "React 19 Server Components, State & Streaming",
+        course: "Modern Full-Stack Web Development (Self-Paced)",
         lessonsCount: 5,
         duration: "8.0 Hours",
         resources: ["RES-103 (React 19 Video Lecture)"],
@@ -2657,12 +2687,13 @@ const RenderEngine = {
               <div>
                 <span class="badge badge-secondary" style="margin-bottom: 4px;">${mod.code} · ${mod.id}</span>
                 <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${mod.title}</h3>
+                <span class="table-subline" style="margin-top: 2px;">${mod.course}</span>
               </div>
               <div class="button-row">
                 <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">+ Add Lesson Unit</button>
               </div>
             </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #5a687c;">
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #5a687c; flex-wrap: wrap; gap: 10px;">
               <span><strong>${mod.lessonsCount} Lessons</strong> · Total Duration: <strong>${mod.duration}</strong></span>
               <div style="display: flex; gap: 8px;">
                 ${mod.resources.map(r => `<span class="badge badge-secondary">${r}</span>`).join("")}
@@ -2674,6 +2705,7 @@ const RenderEngine = {
     `;
   },
 
+  // 4. Bespoke Two-Pane Lesson Builder Studio
   renderCreatorLessonsStudio() {
     const lessons = db.creatorData.syllabus;
     return `
@@ -2716,6 +2748,7 @@ const RenderEngine = {
     `;
   },
 
+  // 5. Bespoke Activity Matrix
   renderCreatorActivitiesMatrix() {
     const activities = [
       { title: "Browser Monaco IDE Sandbox", type: "Interactive Code", desc: "Live code editor testing HTML5, CSS Grid, and React state in a sandbox.", units: "2 Lessons Attached", icon: "code-2" },
@@ -2748,6 +2781,7 @@ const RenderEngine = {
     `;
   },
 
+  // 6. Bespoke Courses Studio by Delivery Model (Self-Paced, Live Scheduled, K-12)
   renderCreatorCoursesStudio(courses) {
     return `
       <div class="creator-courses-grid">
@@ -2815,6 +2849,7 @@ const RenderEngine = {
     `;
   },
 
+  // 7. Bespoke Question Bank Studio Cards
   renderCreatorQuestionBankStudio(questions) {
     return `
       <div class="creator-question-cards-grid">
@@ -2844,6 +2879,7 @@ const RenderEngine = {
     `;
   },
 
+  // 8. Bespoke Quiz Engine Studio
   renderCreatorQuizzesStudio(assessments) {
     const quizzes = assessments.filter(a => a.type === "Quiz");
     return `
@@ -2874,6 +2910,7 @@ const RenderEngine = {
     `;
   },
 
+  // 9. Bespoke Spoken English Voice Activity Studio
   renderCreatorVoiceStudio(assessments) {
     const voiceTasks = assessments.filter(a => a.type === "Voice Activity");
     return `
@@ -2905,6 +2942,7 @@ const RenderEngine = {
     `;
   },
 
+  // 10. Bespoke Assessment Rubric Criteria Matrix
   renderCreatorRubricsStudio() {
     return `
       <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
@@ -2952,6 +2990,7 @@ const RenderEngine = {
     `;
   },
 
+  // 11. Bespoke In-Depth Learner Experience Simulator View
   renderCreatorLmsPreview() {
     return `
       <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
@@ -2975,7 +3014,7 @@ const RenderEngine = {
               <span style="font-size: 12px; opacity: 0.85;">Lesson 1: Semantic Structure & Accessibility (45:00)</span>
             </div>
 
-            <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px;">
+            <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; flex-wrap: wrap;">
               <button class="btn btn-primary btn-xs">Lesson Guide</button>
               <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Practice Sandbox', 'Loaded interactive code sandbox environment.', 'info')">Coding Sandbox</button>
               <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Attached', 'Downloaded RES-101 HTML5 Semantic PDF.', 'success')">Download Notes</button>
@@ -8772,6 +8811,11 @@ document.addEventListener("DOMContentLoaded", () => {
       Notifications.push("Simulation Mode", "Viewing as Registered Free Learner. Trial lessons unlocked.", "success");
     }
     window.lucide?.createIcons();
+  };
+
+
+  Actions.filterCreatorByCourse = function(courseCode) {
+    Notifications.push("Course Scope Updated", `Filtered authoring hierarchy to course ${courseCode}.`, "info");
   };
 
 });
