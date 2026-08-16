@@ -7236,7 +7236,7 @@ td:last-child {
   display: flex !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator) #view-dashboard.active #platform-dashboard-shell {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
   display: block !important;
 }
 
@@ -9531,4 +9531,33 @@ td:last-child {
   .creator-flight-chips-grid {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* CORE UTILITY: HIDDEN */
+.hidden, [hidden] {
+  display: none !important;
+}
+
+/* ROLE SHELL VISIBILITY GUARDS */
+#platform-dashboard-shell.hidden,
+#coo-dashboard-shell.hidden,
+#om-dashboard-shell.hidden,
+#csr-dashboard-shell.hidden,
+#creator-dashboard-shell.hidden,
+#reviewer-dashboard-shell.hidden {
+  display: none !important;
+}
+
+/* ROLE SPECIFIC DASHBOARD SHELL VISIBILITY */
+.admin-container[data-active-role="academic_reviewer"] #platform-dashboard-shell,
+.admin-container.role-academic_reviewer #platform-dashboard-shell,
+.admin-container[data-active-role="course_creator"] #platform-dashboard-shell,
+.admin-container.role-course_creator #platform-dashboard-shell,
+.admin-container[data-active-role="csr"] #platform-dashboard-shell,
+.admin-container.role-csr #platform-dashboard-shell,
+.admin-container[data-active-role="operational_manager"] #platform-dashboard-shell,
+.admin-container.role-operational_manager #platform-dashboard-shell,
+.admin-container[data-active-role="coo"] #platform-dashboard-shell,
+.admin-container.role-coo #platform-dashboard-shell {
+  display: none !important;
 }

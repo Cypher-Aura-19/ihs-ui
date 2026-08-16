@@ -13,6 +13,285 @@ const db = {
   // ============================================================================
   // COURSE CREATOR DATASET (CATALOGUE, SYLLABUS, ASSESSMENTS, PREVIEW, REVIEW)
   // ============================================================================
+  
+  // ============================================================================
+  // ACADEMIC REVIEWER DOMAIN DATA (FLOW-009, CAT-010, FLOW-020, FLOW-021)
+  // ============================================================================
+  reviewerData: {
+    reviews: [
+      {
+        id: "REV-201",
+        versionId: "VER-102",
+        courseCode: "TECH-FE-201",
+        courseTitle: "Modern Full-Stack Web Development",
+        version: "v1.2 (Draft)",
+        deliveryModel: "Self-Paced Milestone",
+        author: "Dr. Arsalan Khan",
+        submittedAt: "2026-08-16 09:30 PKT",
+        reviewer: "Prof. Tariq Mahmood",
+        reviewStage: "In Review",
+        blockingIssuesCount: 1,
+        nonBlockingCount: 2,
+        metadataStatus: "Validated",
+        syllabusStatus: "Pending Adjustment",
+        assessmentStatus: "Passed",
+        rulesStatus: "Compliant",
+        publicationReadiness: "Blocked by Comment",
+        summary: "Draft version updating React 19 server components and PostgreSQL indexing milestones."
+      },
+      {
+        id: "REV-202",
+        versionId: "VER-104",
+        courseCode: "K12-MTH-801",
+        courseTitle: "Grade 8 Mathematics & Geometry",
+        version: "v1.1 (Draft)",
+        deliveryModel: "K-12 Live Tuition",
+        author: "Dr. Arsalan Khan",
+        submittedAt: "2026-08-16 11:15 PKT",
+        reviewer: "Prof. Tariq Mahmood",
+        reviewStage: "Awaiting Review",
+        blockingIssuesCount: 0,
+        nonBlockingCount: 1,
+        metadataStatus: "Under Review",
+        syllabusStatus: "Under Review",
+        assessmentStatus: "Under Review",
+        rulesStatus: "Under Review",
+        publicationReadiness: "Awaiting Evaluation",
+        summary: "Curriculum update aligning with Cambridge O-Level Lower Secondary syllabus."
+      },
+      {
+        id: "REV-203",
+        versionId: "VER-103",
+        courseCode: "ENG-SPK-301",
+        courseTitle: "Spoken English Fluency & Accent Reduction",
+        version: "v2.0 (Draft)",
+        deliveryModel: "Live Scheduled Cohort",
+        author: "Sarah Jenkins",
+        submittedAt: "2026-08-15 14:00 PKT",
+        reviewer: "Prof. Tariq Mahmood",
+        reviewStage: "Changes Requested",
+        blockingIssuesCount: 2,
+        nonBlockingCount: 0,
+        metadataStatus: "Revision Required",
+        syllabusStatus: "Revision Required",
+        assessmentStatus: "Passed",
+        rulesStatus: "Compliant",
+        publicationReadiness: "Rejected - Awaiting Resubmission",
+        summary: "Live class cohort pacing requires revised 80% attendance rubric threshold."
+      },
+      {
+        id: "REV-204",
+        versionId: "VER-101",
+        courseCode: "TECH-FE-201",
+        courseTitle: "Modern Full-Stack Web Development",
+        version: "v1.0 (Live)",
+        deliveryModel: "Self-Paced Milestone",
+        author: "Dr. Arsalan Khan",
+        submittedAt: "2026-07-10 10:00 PKT",
+        reviewer: "Prof. Tariq Mahmood",
+        reviewStage: "Approved",
+        blockingIssuesCount: 0,
+        nonBlockingCount: 0,
+        metadataStatus: "Approved",
+        syllabusStatus: "Approved",
+        assessmentStatus: "Approved",
+        rulesStatus: "Approved",
+        publicationReadiness: "Approved for Publication",
+        summary: "Initial major release. Fully audited and immutable."
+      },
+      {
+        id: "REV-205",
+        versionId: "VER-105",
+        courseCode: "LIT-BAS-101",
+        courseTitle: "Basic Urdu Literacy & Functional Reading",
+        version: "v1.0 (Live)",
+        deliveryModel: "Live Scheduled Cohort",
+        author: "Fatima Noor",
+        submittedAt: "2026-06-20 16:30 PKT",
+        reviewer: "Prof. Tariq Mahmood",
+        reviewStage: "Approved",
+        blockingIssuesCount: 0,
+        nonBlockingCount: 0,
+        metadataStatus: "Approved",
+        syllabusStatus: "Approved",
+        assessmentStatus: "Approved",
+        rulesStatus: "Approved",
+        publicationReadiness: "Approved for Publication",
+        summary: "Community adult basic literacy framework."
+      }
+    ],
+
+    comments: [
+      {
+        id: "REV-COM-101",
+        versionId: "VER-102",
+        courseCode: "TECH-FE-201",
+        courseTitle: "Modern Full-Stack Web Dev (v1.2)",
+        nodeType: "Lesson",
+        nodeRef: "Module 1.2: Lesson 2 (CSS Grid Sandbox)",
+        severity: "Blocking",
+        comment: "WCAG 2.1 AA color contrast assertion is missing from the automated CSS test criteria. Must add contrast ratio >= 4.5:1 assertion before publication.",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "2026-08-16 10:15 PKT",
+        status: "Open",
+        authorResponse: "Added contrast validator to Monaco test runner, awaiting re-verification.",
+        resolution: null
+      },
+      {
+        id: "REV-COM-102",
+        versionId: "VER-102",
+        courseCode: "TECH-FE-201",
+        courseTitle: "Modern Full-Stack Web Dev (v1.2)",
+        nodeType: "Assessment",
+        nodeRef: "Gatekeeper QZ-201 (DOM Fundamentals)",
+        severity: "Non-Blocking",
+        comment: "Consider increasing question pool from 15 to 20 items for better randomization coverage.",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "2026-08-16 10:20 PKT",
+        status: "Open",
+        authorResponse: null,
+        resolution: null
+      },
+      {
+        id: "REV-COM-103",
+        versionId: "VER-103",
+        courseCode: "ENG-SPK-301",
+        courseTitle: "Spoken English Fluency (v2.0)",
+        nodeType: "Academic Rule",
+        nodeRef: "Attendance Threshold Rule",
+        severity: "Blocking",
+        comment: "Live class attendance rule was set to 60%. Academic policy requires minimum 80% attendance for certificate eligibility in live cohorts.",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "2026-08-15 14:30 PKT",
+        status: "Open",
+        authorResponse: "Updated attendance policy in version parameters to 80%.",
+        resolution: null
+      },
+      {
+        id: "REV-COM-104",
+        versionId: "VER-101",
+        courseCode: "TECH-FE-201",
+        courseTitle: "Modern Full-Stack Web Dev (v1.0)",
+        nodeType: "Course Metadata",
+        nodeRef: "Learning Outcomes",
+        severity: "Blocking",
+        comment: "Bloom's taxonomy action verbs missing from module 3 outcome statement.",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "2026-07-08 11:00 PKT",
+        status: "Resolved",
+        authorResponse: "Replaced with 'Synthesize distributed microservice topologies'.",
+        resolution: "Verified and resolved on 2026-07-09."
+      }
+    ],
+
+    submissions: [
+      {
+        id: "SUB-801",
+        learner: "Zainab Malik",
+        course: "Modern Full-Stack Web Development",
+        assignment: "ASN-301: Responsive Portfolio Capstone",
+        type: "Code Repository & Live Demo",
+        submittedAt: "2026-08-16 08:45 PKT",
+        status: "Under Review",
+        assignedReviewer: "Prof. Tariq Mahmood",
+        score: null,
+        rubricId: "RUB-101",
+        submissionUrl: "https://github.com/zainab-malik/frontend-capstone",
+        evidence: "Live demo deployed on Vercel; semantic HTML5 score 98/100, Lighthouse accessibility 100/100.",
+        gradeStatus: "Draft",
+        feedback: null
+      },
+      {
+        id: "SUB-802",
+        learner: "Hamza Ahmed",
+        course: "Spoken English Fluency & Accent Reduction",
+        assignment: "VOC-401: Oral Self-Introduction Recording",
+        type: "Acoustic Voice Recording",
+        submittedAt: "2026-08-15 17:20 PKT",
+        status: "Submitted",
+        assignedReviewer: "Prof. Tariq Mahmood",
+        score: null,
+        rubricId: "RUB-102",
+        submissionUrl: "s3://ihs-audio-submissions/voc401-hamza.mp3",
+        evidence: "90-second audio sample covering professional intro and technical background.",
+        gradeStatus: "Draft",
+        feedback: null
+      },
+      {
+        id: "SUB-803",
+        learner: "Bilal Khan",
+        course: "Modern Full-Stack Web Development",
+        assignment: "ASN-301: Responsive Portfolio Capstone",
+        type: "Code Repository",
+        submittedAt: "2026-08-14 12:00 PKT",
+        status: "Accepted",
+        assignedReviewer: "Prof. Tariq Mahmood",
+        score: "92 / 100",
+        rubricId: "RUB-101",
+        submissionUrl: "https://github.com/bilal-khan/portfolio-site",
+        evidence: "Full clean CSS Grid layout with zero mobile overflow.",
+        gradeStatus: "Published",
+        feedback: "Exemplary component architecture and flawless accessibility compliance."
+      }
+    ],
+
+    k12Schemes: [
+      {
+        id: "K12-SCH-01",
+        board: "FBISE Federal Board",
+        grade: "Grade 8 & 9",
+        subject: "Mathematics & General Science",
+        academicYear: "2026 / 2027",
+        termWeightage: "Term 1 (30%) · Term 2 (30%) · Final Board Exam (40%)",
+        passThreshold: "40% Overall",
+        status: "Approved & Active"
+      },
+      {
+        id: "K12-SCH-02",
+        board: "Cambridge O-Level (CAIE)",
+        grade: "Lower Secondary (Year 8)",
+        subject: "English Language & Mathematics",
+        academicYear: "2026 / 2027",
+        termWeightage: "Continuous Formative (40%) · Summative Assessment (60%)",
+        passThreshold: "Grade C (50%)",
+        status: "Approved & Active"
+      }
+    ],
+
+    auditLogs: [
+      {
+        id: "REV-AUD-901",
+        timestamp: "2026-08-16 10:20 PKT",
+        actor: "Prof. Tariq Mahmood",
+        action: "COMMENT_LOGGED_BLOCKING",
+        version: "Modern Full-Stack Web Dev (v1.2)",
+        details: "Logged blocking issue REV-COM-101 against Lesson 2 CSS Grid contrast criteria.",
+        priorState: "In Review",
+        newState: "In Review (Blocked)"
+      },
+      {
+        id: "REV-AUD-902",
+        timestamp: "2026-08-15 14:35 PKT",
+        actor: "Prof. Tariq Mahmood",
+        action: "CHANGES_REQUESTED",
+        version: "Spoken English Fluency (v2.0)",
+        details: "Returned version to author Sarah Jenkins for 80% attendance rule alignment.",
+        priorState: "In Review",
+        newState: "Changes Requested"
+      },
+      {
+        id: "REV-AUD-903",
+        timestamp: "2026-07-10 11:15 PKT",
+        actor: "Prof. Tariq Mahmood",
+        action: "VERSION_ACADEMICALLY_APPROVED",
+        version: "Modern Full-Stack Web Dev (v1.0)",
+        details: "Approved version v1.0 for catalogue publication readiness. Forwarded to Catalogue Owner.",
+        priorState: "In Review",
+        newState: "Approved"
+      }
+    ]
+  },
+
   creatorData: {
     courses: [
       {
@@ -1455,6 +1734,456 @@ function ensureTableEmptyStates(view, route) {
 // COURSE CREATOR (CC) - ROUTE DEFINITIONS & METRICS ENGINE (28 SUB-ROUTES)
 // ============================================================================
 
+
+// ============================================================================
+// ACADEMIC REVIEWER ROUTE CONFIGURATION & METRICS
+// ============================================================================
+
+const reviewerRouteDefinitions = {
+  "reviewer-dashboard": {
+    title: "Academic Review & Quality Assurance",
+    group: "Review Home",
+    desc: "Centralized review workspace for course quality evaluation, academic rule verification, blocking issue tracking, and publication approval.",
+    scopeNotice: "Academic Reviewer evaluates curriculum quality and approves publication readiness. Actual publication is triggered by authorized catalogue owners.",
+    dataType: "reviews"
+  },
+
+  // 2. Course Reviews (FLOW-009)
+  "reviewer-courses-awaiting": {
+    title: "Versions Awaiting Academic Review (FLOW-009)",
+    group: "Course Reviews",
+    desc: "Draft course versions submitted by authors requiring initial pedagogical review and metadata check.",
+    scopeNotice: "Submissions undergo structural inspection before moving to in-depth assessment and rule audits.",
+    dataType: "reviews",
+    metrics: () => [
+      { label: "Awaiting Review", value: db.reviewerData.reviews.filter(r => r.reviewStage === 'Awaiting Review').length, hint: "Intake queue" },
+      { label: "Review SLA", value: "48 Hours", hint: "Board policy" },
+      { label: "Lead Reviewer", value: "Prof. Tariq Mahmood", hint: "Assigned" },
+      { label: "Status", value: "Action Required", hint: "Ready for audit" }
+    ],
+    filter: (items) => items.filter(r => r.reviewStage === "Awaiting Review")
+  },
+  "reviewer-courses-in-review": {
+    title: "Course Versions In Review (FLOW-009)",
+    group: "Course Reviews",
+    desc: "Course versions actively undergoing comprehensive syllabus, assessment, and rule evaluations.",
+    scopeNotice: "Versions in review cannot be published until all blocking comments are addressed and resolved.",
+    dataType: "reviews",
+    metrics: () => [
+      { label: "Active In Review", value: db.reviewerData.reviews.filter(r => r.reviewStage === 'In Review').length, hint: "Under evaluation" },
+      { label: "Open Comments", value: db.reviewerData.comments.filter(c => c.status === 'Open').length, hint: "Action items" },
+      { label: "Blocking Issues", value: db.reviewerData.comments.filter(c => c.status === 'Open' && c.severity === 'Blocking').length, hint: "Halts approval" },
+      { label: "Audit State", value: "Deep Inspection", hint: "Syllabus active" }
+    ],
+    filter: (items) => items.filter(r => r.reviewStage === "In Review")
+  },
+  "reviewer-courses-changes": {
+    title: "Changes Requested & Resubmissions",
+    group: "Course Reviews",
+    desc: "Versions returned to Course Creators with blocking action items awaiting revision.",
+    scopeNotice: "Authors must resolve all blocking citations and provide resolution rationale before resubmitting.",
+    dataType: "reviews",
+    metrics: () => [
+      { label: "Changes Requested", value: db.reviewerData.reviews.filter(r => r.reviewStage === 'Changes Requested').length, hint: "Returned to author" },
+      { label: "Avg Resolution", value: "3.2 Days", hint: "Turnaround SLA" },
+      { label: "Resubmission Status", value: "Pending Author", hint: "In revision" }
+    ],
+    filter: (items) => items.filter(r => r.reviewStage === "Changes Requested")
+  },
+  "reviewer-courses-approved": {
+    title: "Approved Versions (Publication Ready)",
+    group: "Course Reviews",
+    desc: "Course versions that have cleared academic review and are approved for catalogue publication.",
+    scopeNotice: "Approved versions are passed to Catalogue Owners for immediate or scheduled live release.",
+    dataType: "reviews",
+    metrics: () => [
+      { label: "Approved Versions", value: db.reviewerData.reviews.filter(r => r.reviewStage === 'Approved').length, hint: "Publication ready" },
+      { label: "Academic Board Sign-off", value: "100% Verified", hint: "Full sign-off" },
+      { label: "Catalogue Status", value: "Ready for Owner", hint: "Pending publish" }
+    ],
+    filter: (items) => items.filter(r => r.reviewStage === "Approved")
+  },
+  "reviewer-courses-history": {
+    title: "Historical Course Review Decisions",
+    group: "Course Reviews",
+    desc: "Complete chronological log of all academic decisions, approvals, and change requests across course versions.",
+    scopeNotice: "Historical reviews preserve original reviewer findings and audit timestamps.",
+    dataType: "reviews",
+    metrics: () => [
+      { label: "Total Reviewed", value: db.reviewerData.reviews.length, hint: "All cycles" },
+      { label: "Approval Rate", value: "85%", hint: "High standards" },
+      { label: "Audit Integrity", value: "Immutable Log", hint: "FLOW-009" }
+    ],
+    filter: (items) => items
+  },
+
+  // 3. Content Review
+  "reviewer-content-metadata": {
+    title: "Course Metadata Review",
+    group: "Content Review",
+    desc: "Pedagogical evaluation of course titles, learning outcomes, prerequisites, and target audience alignment.",
+    scopeNotice: "Reviewer verifies that outcomes match Bloom's taxonomy and prerequisites accurately reflect baseline requirements.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Courses Audited", value: 3, hint: "Active portfolio" },
+      { label: "Outcomes Validated", value: "100% Clean", hint: "Measurable" },
+      { label: "Prerequisite Logic", value: "Verified", hint: "Academic standard" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-content-syllabus": {
+    title: "Syllabus Hierarchy & Sequencing",
+    group: "Content Review",
+    desc: "Inspect structural progression across Levels, Milestones, Modules, and Lessons.",
+    scopeNotice: "Ensures logical scaffolding, zero duplicate units, and verified delivery model alignment.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Syllabus Nodes", value: 28, hint: "Structured units" },
+      { label: "Levels Verified", value: 3, hint: "Foundations to Adv" },
+      { label: "Milestones Armed", value: 4, hint: "State machine" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-content-lessons": {
+    title: "Lessons & Learning Activities Review",
+    group: "Content Review",
+    desc: "In-depth review of lesson text, coding sandboxes, video duration, and speaking prompts.",
+    scopeNotice: "Validate that interactive sandboxes declare automated test assertions and accessible contrast.",
+    dataType: "syllabus",
+    metrics: () => [
+      { label: "Lessons In Scope", value: 12, hint: "Active draft" },
+      { label: "Interactive Labs", value: 2, hint: "Monaco IDE" },
+      { label: "Acoustic Audio", value: 1, hint: "Spoken English" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-content-outcomes": {
+    title: "Learning Outcomes & Competencies",
+    group: "Content Review",
+    desc: "Verify that learning outcomes are clear, measurable, and tied to objective assessment rubrics.",
+    scopeNotice: "Outcomes must map directly to milestone credentials and capstone defense requirements.",
+    dataType: "courses",
+    metrics: () => [
+      { label: "Target Competencies", value: 18, hint: "Across tracks" },
+      { label: "Rubric Mapped", value: "100%", hint: "Objective grading" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-content-resources": {
+    title: "Course Resources & References Vault",
+    group: "Content Review",
+    desc: "Audit attached PDF worksheets, reading references, and external media assets.",
+    scopeNotice: "All attached resources must verify SHA-256 integrity and meet accessibility standards.",
+    dataType: "resources",
+    metrics: () => [
+      { label: "Vault Assets", value: 6, hint: "Active links" },
+      { label: "SHA-256 Verified", value: "100%", hint: "Secure vault" },
+      { label: "Format Standards", value: "PDF & Web", hint: "Accessible" }
+    ],
+    filter: (items) => items
+  },
+
+  // 4. Academic Rules
+  "reviewer-rules-prerequisites": {
+    title: "Prerequisite State Machine Rules",
+    group: "Academic Rules",
+    desc: "Review gating logic that requires prior milestone completion or quiz pass marks before unlock.",
+    scopeNotice: "Validates that prerequisites enforce meaningful baseline competency without creating deadlocks.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Prerequisite Rules", value: 2, hint: "Gatekeepers" },
+      { label: "Score Threshold", value: ">= 80%", hint: "Enforced standard" },
+      { label: "Deadlock Check", value: "Passed", hint: "Valid graph" }
+    ],
+    filter: (items) => items.filter(r => r.type === "Prerequisite")
+  },
+  "reviewer-rules-release": {
+    title: "Content Release & Drip Cadence",
+    group: "Academic Rules",
+    desc: "Audit scheduled drip timelines for live cohorts and instant progression for self-paced tracks.",
+    scopeNotice: "Drip schedules must allow adequate learning time between milestone submissions.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Release Policies", value: 2, hint: "Milestone & Live" },
+      { label: "Cohort Pacing", value: "Weekly", hint: "Structured cadence" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-rules-completion": {
+    title: "Completion Rules & Certification (MILE-004)",
+    group: "Academic Rules",
+    desc: "Verify lesson, milestone, and graduation rules required for digital credential issuance.",
+    scopeNotice: "Completion criteria become permanently immutable upon version publication.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Completion Rules", value: 2, hint: "Configured" },
+      { label: "Badge Triggers", value: "Automated", hint: "MILE-004 release" }
+    ],
+    filter: (items) => items.filter(r => r.type === "Completion Rule")
+  },
+  "reviewer-rules-attempts": {
+    title: "Attempt & Retry Rules (MILE-008)",
+    group: "Academic Rules",
+    desc: "Audit maximum assessment attempts, cooldown timers, and retained score policies.",
+    scopeNotice: "Protects question bank integrity while giving learners fair recovery opportunities.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Retry Policies", value: 2, hint: "Active" },
+      { label: "Max Attempts", value: "3 Tries", hint: "Enforced limit" },
+      { label: "Cooldown", value: "24 Hours", hint: "Fair retry" }
+    ],
+    filter: (items) => items.filter(r => r.type.includes("Attempt"))
+  },
+  "reviewer-rules-preview": {
+    title: "Public Preview & Guest Gating Rules",
+    group: "Academic Rules",
+    desc: "Validate that unauthenticated guests only access approved preview lessons without exposing paid units.",
+    scopeNotice: "Guest previews protect intellectual property while demonstrating pedagogical value.",
+    dataType: "rules",
+    metrics: () => [
+      { label: "Preview Units", value: "Lesson 1 Free", hint: "Public preview" },
+      { label: "Paywall Protection", value: "100% Sealed", hint: "Paid lessons safe" }
+    ],
+    filter: (items) => items
+  },
+
+  // 5. Assessment Review
+  "reviewer-assessments-bank": {
+    title: "Question Bank Quality Review",
+    group: "Assessment Review",
+    desc: "Audit question stem clarity, difficulty categorization, answer keys, and pedagogical alignment.",
+    scopeNotice: "Reviewer ensures distractor choices are plausible and correct answer keys are unambiguous.",
+    dataType: "questions",
+    metrics: () => [
+      { label: "Bank Items", value: db.reviewerData.reviews.length ? 6 : 6, hint: "Categorized" },
+      { label: "Difficulty Ratio", value: "40% Easy · 40% Med · 20% Hard", hint: "Balanced" },
+      { label: "Key Ambiguity", value: "0 Flagged", hint: "Verified" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-assessments-quizzes": {
+    title: "Quiz Policy & Scoring Validation",
+    group: "Assessment Review",
+    desc: "Inspect pass mark thresholds, time limits, question pools, and randomization anti-cheat settings.",
+    scopeNotice: "Quiz configurations must enforce standard pass thresholds (70%-80%) for milestone gates.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Quizzes Reviewed", value: 2, hint: "Gatekeepers" },
+      { label: "Pass Standard", value: "75% - 80%", hint: "Rigorous" },
+      { label: "Randomization", value: "100% Enabled", hint: "Anti-cheat" }
+    ],
+    filter: (items) => items.filter(a => a.type === "Quiz")
+  },
+  "reviewer-assessments-assignments": {
+    title: "Assignment & Capstone Task Review",
+    group: "Assessment Review",
+    desc: "Review assignment briefs, submission acceptance formats, deadlines, and linked grading rubrics.",
+    scopeNotice: "Assignments must provide unambiguous scoring rubrics and clear submission instructions.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Assignments Audited", value: 1, hint: "Capstone task" },
+      { label: "Rubrics Linked", value: "RUB-101", hint: "Weighted matrix" }
+    ],
+    filter: (items) => items.filter(a => a.type === "Assignment")
+  },
+  "reviewer-assessments-voice": {
+    title: "Voice Activity & Acoustic Standards",
+    group: "Assessment Review",
+    desc: "Audit speaking prompts, recording duration requirements, and phonetic pronunciation rubrics.",
+    scopeNotice: "Voice activities must evaluate spoken fluency against objective phonetic criteria (RUB-102).",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Voice Activities", value: 1, hint: "Spoken English" },
+      { label: "Phonetic Rubric", value: "RUB-102", hint: "Acoustic score" },
+      { label: "Format", value: "MP3 / WAV (128k)", hint: "Standard" }
+    ],
+    filter: (items) => items.filter(a => a.type === "Voice Activity")
+  },
+  "reviewer-assessments-rubrics": {
+    title: "Rubric Matrix Quality Review",
+    group: "Assessment Review",
+    desc: "Validate multi-tier scoring rubrics (Exemplary, Proficient, Developing) and percentage weightings.",
+    scopeNotice: "Rubric criteria weights must sum to exactly 100% and remain immutable once published.",
+    dataType: "assessments",
+    metrics: () => [
+      { label: "Active Rubrics", value: 2, hint: "RUB-101 & RUB-102" },
+      { label: "Weight Sum", value: "100% Balanced", hint: "Math verified" },
+      { label: "Historical Freeze", value: "Immutable", hint: "Gradebook safe" }
+    ],
+    filter: (items) => items
+  },
+
+  // 6. Review Comments (CAT-010)
+  "reviewer-comments-open": {
+    title: "Open Review Comments (CAT-010)",
+    group: "Review Comments",
+    desc: "Action items and pedagogical feedback logged by reviewers awaiting author correction.",
+    scopeNotice: "Authors respond with resolution details before reviewers re-check and resolve.",
+    dataType: "comments",
+    metrics: () => [
+      { label: "Open Comments", value: db.reviewerData.comments.filter(c => c.status === 'Open').length, hint: "Active feedback" },
+      { label: "Blocking Issues", value: db.reviewerData.comments.filter(c => c.status === 'Open' && c.severity === 'Blocking').length, hint: "Stops release" },
+      { label: "Non-Blocking", value: db.reviewerData.comments.filter(c => c.status === 'Open' && c.severity === 'Non-Blocking').length, hint: "Advisory" }
+    ],
+    filter: (items) => items.filter(c => c.status === "Open")
+  },
+  "reviewer-comments-blocking": {
+    title: "Blocking Review Issues (CAT-010)",
+    group: "Review Comments",
+    desc: "Critical academic policy violations and pedagogical flaws that strictly prevent course publication.",
+    scopeNotice: "Approval for publication is locked until every blocking issue is formally resolved.",
+    dataType: "comments",
+    metrics: () => [
+      { label: "Active Blocking Issues", value: db.reviewerData.comments.filter(c => c.status === 'Open' && c.severity === 'Blocking').length, hint: "Must be fixed" },
+      { label: "Blocked Versions", value: 2, hint: "v1.2 & v2.0" },
+      { label: "Policy Guard", value: "Strict Enforcement", hint: "Zero tolerance" }
+    ],
+    filter: (items) => items.filter(c => c.status === "Open" && c.severity === "Blocking")
+  },
+  "reviewer-comments-resolved": {
+    title: "Resolved Review Comments",
+    group: "Review Comments",
+    desc: "Feedback items where the Course Creator updated the syllabus and the Reviewer verified the resolution.",
+    scopeNotice: "Resolved comments serve as an audit record of author corrections during peer review.",
+    dataType: "comments",
+    metrics: () => [
+      { label: "Resolved Feedback", value: db.reviewerData.comments.filter(c => c.status === 'Resolved').length, hint: "Verified fixes" },
+      { label: "Resolution Rate", value: "100% on v1.0", hint: "Audited" }
+    ],
+    filter: (items) => items.filter(c => c.status === "Resolved")
+  },
+
+  // 7. Submission / Grading Review [FLOW-020]
+  "reviewer-grading-queue": {
+    title: "Assigned Manual Grading Queue (FLOW-020)",
+    group: "Submission Review",
+    desc: "Learner assignment and voice activity submissions assigned to this Academic Reviewer for evaluation.",
+    scopeNotice: "Grades are evaluated against published rubrics. Draft grades become visible to learners only when published.",
+    dataType: "submissions",
+    metrics: () => [
+      { label: "Assigned Submissions", value: db.reviewerData.submissions.filter(s => s.status !== 'Accepted').length, hint: "Pending grade" },
+      { label: "Avg Grading Time", value: "15 Mins", hint: "Rubric based" },
+      { label: "Grading Role", value: "Assigned Reviewer", hint: "FLOW-020 scope" }
+    ],
+    filter: (items) => items.filter(s => s.status !== "Accepted")
+  },
+  "reviewer-grading-assignments": {
+    title: "Assignment Submissions & Code Repositories",
+    group: "Submission Review",
+    desc: "Project submissions containing GitHub repository links, live demos, and technical documentation.",
+    scopeNotice: "Submissions are scored on Component Modularity (35%), Mobile Responsiveness (35%), and Accessibility (30%).",
+    dataType: "submissions",
+    metrics: () => [
+      { label: "Code Repositories", value: db.reviewerData.submissions.filter(s => s.type.includes('Code')).length, hint: "Capstone tasks" },
+      { label: "Rubric Standard", value: "RUB-101", hint: "Clean code" }
+    ],
+    filter: (items) => items.filter(s => s.type.includes("Code"))
+  },
+  "reviewer-grading-revisions": {
+    title: "Revision Requests & Resubmissions",
+    group: "Submission Review",
+    desc: "Submissions returned to learners with specific corrective feedback requiring resubmission.",
+    scopeNotice: "Learners resubmit without losing original submission history or prior feedback timestamps.",
+    dataType: "submissions",
+    metrics: () => [
+      { label: "Active Revisions", value: 1, hint: "Awaiting learner" },
+      { label: "Max Revisions", value: "2 Tries", hint: "Course policy" }
+    ],
+    filter: (items) => items.filter(s => s.status === "Submitted")
+  },
+  "reviewer-grading-corrections": {
+    title: "Grade Corrections & Audit Log",
+    group: "Submission Review",
+    desc: "Controlled corrections of previously published grades with mandatory reason and authorization tracking.",
+    scopeNotice: "Grade corrections never overwrite original scores; prior grades remain immutable in audit history.",
+    dataType: "submissions",
+    metrics: () => [
+      { label: "Corrected Grades", value: 1, hint: "Audited events" },
+      { label: "Integrity Standard", value: "Append-Only", hint: "FLOW-020 compliant" }
+    ],
+    filter: (items) => items.filter(s => s.gradeStatus === "Published")
+  },
+
+  // 8. K-12 Academic Review
+  "reviewer-k12-syllabi": {
+    title: "K-12 Board Syllabus Review (K12-001)",
+    group: "K-12 Academic Review",
+    desc: "Review grade-level subject syllabi aligned with FBISE and Cambridge O-Level Lower Secondary curricula.",
+    scopeNotice: "Syllabus outlines are verified for public parent preview (K12-005) prior to term admissions.",
+    dataType: "k12Syllabi",
+    metrics: () => [
+      { label: "K-12 Syllabi", value: db.creatorData.k12Syllabi.length, hint: "Grade 8 & 9" },
+      { label: "Board Compliance", value: "100% Aligned", hint: "FBISE & Cambridge" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-k12-schemes": {
+    title: "K-12 Grading Schemes & Weightings",
+    group: "K-12 Academic Review",
+    desc: "Review term weight distributions (Formative 40% / Summative 60%) and passing grade thresholds.",
+    scopeNotice: "Grading schemes are frozen prior to term start to ensure reproducible report card generation.",
+    dataType: "k12Schemes",
+    metrics: () => [
+      { label: "Grading Schemes", value: db.reviewerData.k12Schemes.length, hint: "FBISE & CAIE" },
+      { label: "Scale Standard", value: "Standard A*-U", hint: "Letter grade" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-k12-categories": {
+    title: "K-12 Assessment Categories",
+    group: "K-12 Academic Review",
+    desc: "Audit categories: Class Participation, Weekly Quizzes, Mid-Term Exams, and Final Board Prep.",
+    scopeNotice: "Categories define standard weighting rules applied across all teacher gradebooks.",
+    dataType: "k12Schemes",
+    metrics: () => [
+      { label: "Active Categories", value: 4, hint: "Standard categories" },
+      { label: "Audit State", value: "Approved", hint: "Academic standard" }
+    ],
+    filter: (items) => items
+  },
+  "reviewer-k12-structure": {
+    title: "K-12 Academic Year & Term Structure",
+    group: "K-12 Academic Review",
+    desc: "Audit academic calendar (2026/27), term boundaries, and scheduled assessment windows.",
+    scopeNotice: "Academic structure ensures aligned reporting periods across school branches.",
+    dataType: "k12Schemes",
+    metrics: () => [
+      { label: "Academic Year", value: "2026 / 2027", hint: "Active cycle" },
+      { label: "Terms Defined", value: "3 Terms", hint: "Autumn, Spring, Board" }
+    ],
+    filter: (items) => items
+  },
+
+  // 9. Approved Versions
+  "reviewer-approved-versions": {
+    title: "Publication Approved Versions",
+    group: "Publication Readiness",
+    desc: "Course versions approved by Academic Review ready for Catalogue Owner publication.",
+    scopeNotice: "Approved versions cannot be altered. Any further edits require creating a new draft version.",
+    dataType: "reviews",
+    metrics: () => [
+      { label: "Approved Releases", value: db.reviewerData.reviews.filter(r => r.reviewStage === 'Approved').length, hint: "Ready to go live" },
+      { label: "Catalogue Handover", value: "Completed", hint: "Awaiting owner" }
+    ],
+    filter: (items) => items.filter(r => r.reviewStage === "Approved")
+  },
+
+  // 10. Audit History
+  "reviewer-audit-history": {
+    title: "Academic Review Decision History",
+    group: "History / Audit",
+    desc: "Immutable system audit logging all academic reviews, blocking issue citations, and approval decisions.",
+    scopeNotice: "Audit logs preserve reviewer identity, timestamps, prior status, and detailed decision reasons.",
+    dataType: "auditLogs",
+    metrics: () => [
+      { label: "Review Decisions", value: db.reviewerData.auditLogs.length, hint: "Audit records" },
+      { label: "Reviewer", value: "Prof. Tariq Mahmood", hint: "Board Chair" },
+      { label: "Integrity", value: "Cryptographically Sealed", hint: "FLOW-009" }
+    ],
+    filter: (items) => items
+  }
+};
+
 const creatorRouteDefinitions = {
   "creator-courses-my": {
     title: "My Authored Courses",
@@ -2090,7 +2819,8 @@ const Router = {
     });
     let activeNavItem = null;
     if (route === "dashboard" || route === "creator-dashboard") {
-      if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("nav-creator-dashboard");
+      if (Simulator.activeRole === "academic_reviewer") activeNavItem = document.getElementById("nav-reviewer-dashboard");
+      else if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("nav-creator-dashboard");
       else if (Simulator.activeRole === "csr") activeNavItem = document.getElementById("csr-nav-dashboard");
       else if (Simulator.activeRole === "coo") activeNavItem = document.getElementById("coo-nav-dashboard");
       else if (Simulator.activeRole === "operational_manager") activeNavItem = document.getElementById("om-nav-dashboard");
@@ -2106,13 +2836,17 @@ const Router = {
     document.querySelectorAll(".content-view").forEach(view => {
       view.classList.remove("active");
     });
+    const isReviewerDashboard = route === "reviewer-dashboard" || (route === "dashboard" && Simulator.activeRole === "academic_reviewer");
+    const isReviewerWorkspace = route.startsWith("reviewer-") && !isReviewerDashboard;
     const isCreatorDashboard = route === "creator-dashboard" || (route === "dashboard" && Simulator.activeRole === "course_creator");
     const isCreatorWorkspace = route.startsWith("creator-") && !isCreatorDashboard;
     const isCooWorkspace = route.startsWith("coo-");
     const isOmWorkspace = route.startsWith("om-");
     const isCsrWorkspace = route.startsWith("csr-");
     let activeView = null;
-    if (isCreatorDashboard) activeView = document.getElementById("view-dashboard");
+    if (isReviewerDashboard) activeView = document.getElementById("view-dashboard");
+    else if (isReviewerWorkspace) activeView = document.getElementById("view-reviewer-workspace");
+    else if (isCreatorDashboard) activeView = document.getElementById("view-dashboard");
     else if (isCreatorWorkspace) activeView = document.getElementById("view-creator-workspace");
     else if (isCsrWorkspace) activeView = document.getElementById("view-csr-workspace");
     else if (isCooWorkspace) activeView = document.getElementById("view-coo-workspace");
@@ -2122,7 +2856,7 @@ const Router = {
     if (activeView) {
       activeView.classList.remove("hidden");
       activeView.classList.add("active");
-      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace) prepareModuleView(route, activeView);
+      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace && !isReviewerWorkspace) prepareModuleView(route, activeView);
     }
 
     // Update Header title
@@ -2161,6 +2895,7 @@ const Router = {
       coo: "COO Operating Overview",
       csr: "CSR Command Center",
       course_creator: "Authoring Command Center",
+      academic_reviewer: "Academic Review & Quality Assurance",
       cto_developer: "Technical Operations Overview",
       compliance_officer: "Compliance Overview",
       support_agent: "Support Operations Overview"
@@ -2168,7 +2903,7 @@ const Router = {
     const isDash = route === "dashboard" || route === "creator-dashboard" || route === "coo-dashboard" || route === "om-dashboard" || route === "csr-dashboard";
     viewTitle.textContent = isDash
       ? (roleDashboardTitles[Simulator.activeRole] || "Authoring Command Center")
-      : (creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Authoring Command Center");
+      : (reviewerRouteDefinitions[route]?.title || creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Academic Review & Quality Assurance");
     
     // Trigger specific rendering controller for the view
     this.renderView(route);
@@ -2256,13 +2991,20 @@ const Router = {
         RenderEngine.supportAccess();
         break;
       default:
-        if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
+        if (route.startsWith("reviewer-")) RenderEngine.reviewerWorkspace(route);
+        else if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
         else if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
         else if (route.startsWith("coo-")) RenderEngine.cooWorkspace(route);
         else if (route.startsWith("om-")) RenderEngine.omWorkspace(route);
         break;
     }
-    ensureTableEmptyStates(document.getElementById(route.startsWith("creator-") ? "view-creator-workspace" : (route.startsWith("csr-") ? "view-csr-workspace" : (route.startsWith("coo-") ? "view-coo-workspace" : (route.startsWith("om-") ? "view-om-workspace" : `view-${route}`)))), route);
+    let viewId = `view-${route}`;
+    if (route.startsWith("reviewer-")) viewId = "view-reviewer-workspace";
+    else if (route.startsWith("creator-")) viewId = "view-creator-workspace";
+    else if (route.startsWith("csr-")) viewId = "view-csr-workspace";
+    else if (route.startsWith("coo-")) viewId = "view-coo-workspace";
+    else if (route.startsWith("om-")) viewId = "view-om-workspace";
+    ensureTableEmptyStates(document.getElementById(viewId), route);
   }
 };
 
@@ -2271,6 +3013,612 @@ const Router = {
 // ============================================================================
 
 const RenderEngine = {
+
+  dashboard() {
+    // If active role has a dedicated dashboard, route to it
+    if (Simulator.activeRole === "academic_reviewer") {
+      this.reviewerDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "course_creator") {
+      this.creatorDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "csr") {
+      this.csrDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "coo") {
+      this.cooDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "operational_manager") {
+      this.omDashboard();
+      return;
+    }
+
+    // Platform Admin Dashboard Telemetry
+    const el = (id, text) => {
+      const e = document.getElementById(id);
+      if (e) e.textContent = String(text);
+    };
+
+    el("metric-users-count", db.users.length);
+    el("metric-active-sessions", db.sessions.filter(s => s.status === 'Active').length);
+    el("metric-failed-jobs-count", db.jobs.filter(j => j.status === 'Failed').length);
+    el("metric-dead-letters-count", db.jobs.filter(j => j.status === 'Dead-letter').length);
+    el("metric-webhooks-failed", db.webhooks.filter(w => w.status === 'FAILED').length);
+
+    // Populate audits widget
+    const auditsList = document.getElementById("widget-recent-audits-list");
+    if (auditsList) {
+      auditsList.innerHTML = db.auditLogs.slice(0, 5).map(a => `
+        <div class="audit-widget-item">
+          <div>
+            <strong>${a.action}</strong>
+            <small style="display:block; color:var(--slate);">${a.actorName} · ${a.timestamp}</small>
+          </div>
+          <span class="badge ${a.severity === 'High' ? 'badge-error' : a.severity === 'Medium' ? 'badge-warning' : 'badge-secondary'}">${a.severity}</span>
+        </div>
+      `).join("");
+    }
+
+    window.lucide?.createIcons();
+  },
+
+
+  // ============================================================================
+  // ACADEMIC REVIEWER RENDERING ENGINE
+  // ============================================================================
+
+  reviewerDashboard() {
+    const container = document.getElementById("reviewer-dashboard-shell");
+    if (!container) return;
+
+    const pipelineStages = [
+      { code: "01. INTAKE", title: "Awaiting Review", desc: "Submitted course versions requiring initial academic evaluation.", count: "1 Version", statusText: "1 Awaiting Audit", icon: "inbox", route: "reviewer-courses-awaiting", badgeClass: "badge-warning" },
+      { code: "02. EVALUATION", title: "Active In Review", desc: "Detailed inspection of syllabus nodes, assessment rubrics, and rules.", count: "1 In Review", statusText: "1 In Inspection", icon: "file-search", route: "reviewer-courses-in-review", badgeClass: "badge-primary" },
+      { code: "03. REVISION", title: "Changes Requested", desc: "Returned to authors with blocking citations awaiting correction.", count: "1 Returned", statusText: "1 Awaiting Author", icon: "alert-triangle", route: "reviewer-courses-changes", badgeClass: "badge-error" },
+      { code: "04. APPROVED", title: "Publication Approved", desc: "Academically approved versions ready for Catalogue Owner release.", count: "2 Approved", statusText: "2 Ready to Publish", icon: "check-circle-2", route: "reviewer-approved-versions", badgeClass: "badge-success" }
+    ];
+
+    container.innerHTML = `
+      <div class="creator-command-deck reviewer-command-deck">
+        
+        <!-- Clean, Bright, Premium Top Banner -->
+        <div class="creator-flight-strip">
+          <div class="creator-flight-top-row">
+            <div class="creator-flight-heading-box">
+              <div class="creator-flight-tag">
+                <i data-lucide="shield-check"></i> ACADEMIC BOARD · CURRICULUM QUALITY & APPROVAL
+              </div>
+              <h2 class="creator-flight-title">Academic Review & Publication Governance Hub</h2>
+              <p class="creator-flight-subtitle">
+                Evaluate pedagogical quality, validate automated milestone rules, manage blocking review issues (CAT-010), grade assigned submissions (FLOW-020), and approve publication readiness under strict academic governance.
+              </p>
+            </div>
+            
+            <div class="creator-flight-actions">
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('reviewer-comments-blocking')">
+                <i data-lucide="shield-alert"></i> Blocking Issues (2)
+              </button>
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('reviewer-grading-queue')">
+                <i data-lucide="check-square"></i> Manual Grading Queue (3)
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openReviewerInspectionModal('VER-102')">
+                <i data-lucide="file-search"></i> Inspect v1.2 Draft
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Telemetry Chips -->
+          <div class="creator-flight-chips-grid">
+            <div class="creator-flight-chip">
+              <div class="chip-icon"><i data-lucide="user-check"></i></div>
+              <div class="chip-content">
+                <span>Lead Reviewer</span>
+                <strong>Prof. Tariq Mahmood</strong>
+                <small>Dean & Board Chair</small>
+              </div>
+            </div>
+
+            <div class="creator-flight-chip">
+              <div class="chip-icon"><i data-lucide="file-search"></i></div>
+              <div class="chip-content">
+                <span>Pending Reviews</span>
+                <strong>2 Versions</strong>
+                <small>Within 48h SLA</small>
+              </div>
+            </div>
+
+            <div class="creator-flight-chip">
+              <div class="chip-icon" style="color:#dc2626; background:#fef2f2; border-color:#fecaca;"><i data-lucide="shield-alert"></i></div>
+              <div class="chip-content">
+                <span>Blocking Issues</span>
+                <strong>2 Unresolved</strong>
+                <small>CAT-010 Strict Guard</small>
+              </div>
+            </div>
+
+            <div class="creator-flight-chip guard-chip">
+              <div class="chip-icon"><i data-lucide="lock"></i></div>
+              <div class="chip-content">
+                <span>Governance Boundary</span>
+                <strong>Approval Only</strong>
+                <small>Pricing & live release locked</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scope & Filter Bar -->
+        <div class="creator-scope-bar">
+          <div class="creator-scope-title">
+            <i data-lucide="sliders"></i>
+            <div>
+              <strong>ACADEMIC REVIEW SCOPE & REVIEW TELEMETRY</strong>
+              <small>Course Quality Governance · Academic Year 2026/27</small>
+            </div>
+          </div>
+          <div class="creator-scope-filters">
+            <div class="creator-scope-field">
+              <label>Review Stream</label>
+              <select id="reviewer-stream-filter" class="form-control">
+                <option value="">All Review Streams (Vocational, Spoken, K-12)</option>
+                <option value="Vocational">Vocational Tech Tracks</option>
+                <option value="Spoken">Spoken English Cohorts</option>
+                <option value="K-12">K-12 Board Syllabi</option>
+              </select>
+            </div>
+            <div class="creator-scope-field">
+              <label>Delivery Model</label>
+              <select id="reviewer-model-filter" class="form-control">
+                <option value="">All Delivery Models</option>
+                <option value="Self-Paced Milestone">Self-Paced Milestone</option>
+                <option value="Live Scheduled Cohort">Live Scheduled Cohort</option>
+                <option value="K-12 Live Tuition">K-12 Live Tuition</option>
+              </select>
+            </div>
+            <div class="creator-scope-field">
+              <label>Review Stage</label>
+              <select id="reviewer-stage-filter" class="form-control">
+                <option value="">All Stages</option>
+                <option value="Awaiting Review">Awaiting Review</option>
+                <option value="In Review">In Review</option>
+                <option value="Changes Requested">Changes Requested</option>
+                <option value="Approved">Approved</option>
+              </select>
+            </div>
+            <div class="creator-scope-field">
+              <label>Action Shortcut</label>
+              <select id="reviewer-action-shortcut" class="form-control" onchange="if(this.value) { Router.navigate(this.value); this.value=''; }">
+                <option value="">Quick Navigate...</option>
+                <option value="reviewer-courses-awaiting">Awaiting Review</option>
+                <option value="reviewer-comments-blocking">Blocking Issues</option>
+                <option value="reviewer-grading-queue">Grading Queue</option>
+                <option value="reviewer-rules-completion">Completion Rules</option>
+                <option value="reviewer-assessments-rubrics">Rubrics Quality</option>
+                <option value="reviewer-approved-versions">Approved Releases</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Column Pipeline Matrix -->
+        <div class="creator-pipeline-matrix">
+          ${pipelineStages.map(stage => `
+            <div class="creator-stage-card" onclick="Router.navigate('${stage.route}')">
+              <div class="creator-stage-head">
+                <span class="creator-stage-code">${stage.code}</span>
+                <span class="badge ${stage.badgeClass}">${stage.count}</span>
+              </div>
+              <h4>${stage.title}</h4>
+              <p>${stage.desc}</p>
+              <div class="creator-stage-foot">
+                <span>${stage.statusText}</span>
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <!-- Queues Grid -->
+        <div class="creator-queues-grid">
+          
+          <!-- Left: Blocking Issues & Reviewer Feedback -->
+          <div class="creator-queue-panel">
+            <div class="creator-queue-header">
+              <div>
+                <h4><i data-lucide="shield-alert" style="color:#dc2626;"></i> Blocking Issues Guard (CAT-010)</h4>
+                <small>Unresolved citations strictly preventing course publication.</small>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-comments-blocking')">View all (${db.reviewerData.comments.filter(c => c.status === 'Open' && c.severity === 'Blocking').length})</button>
+            </div>
+            <div class="creator-feedback-list">
+              ${db.reviewerData.comments.filter(c => c.severity === 'Blocking').slice(0, 2).map(comm => `
+                <div class="creator-feedback-item blocking">
+                  <div class="creator-feedback-meta">
+                    <span class="badge badge-error">BLOCKING</span>
+                    <strong>${comm.courseTitle}</strong> · <span>${comm.nodeRef}</span>
+                  </div>
+                  <p>${comm.comment}</p>
+                  <div class="creator-feedback-actions">
+                    <small>Reviewer: ${comm.reviewer} · ${comm.date}</small>
+                    <div style="display: flex; gap: 6px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${comm.versionId}')">Inspect</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('${comm.id}')">Resolve Citation</button>
+                    </div>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+          <!-- Right: Assigned Submission Grading Queue -->
+          <div class="creator-queue-panel">
+            <div class="creator-queue-header">
+              <div>
+                <h4><i data-lucide="check-square"></i> Assigned Submission Queue (FLOW-020)</h4>
+                <small>Learner capstones & voice recordings assigned for rubric evaluation.</small>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-grading-queue')">View all (${db.reviewerData.submissions.length})</button>
+            </div>
+            <div class="creator-validation-list">
+              ${db.reviewerData.submissions.slice(0, 2).map(sub => `
+                <div class="creator-validation-card ${sub.status === 'Accepted' ? 'pass' : ''}">
+                  <div class="creator-val-head">
+                    <span class="badge ${sub.status === 'Accepted' ? 'badge-success' : 'badge-primary'}">${sub.status.toUpperCase()}</span>
+                    <strong>${sub.learner}</strong> · <span style="font-size: 11.5px; color: var(--slate);">${sub.assignment}</span>
+                  </div>
+                  <p>${sub.evidence}</p>
+                  <div class="creator-val-foot">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerSubmissionModal('${sub.id}')">
+                      ${sub.status === 'Accepted' ? 'View Grade Sheet' : 'Evaluate Rubric'}
+                    </button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+
+    window.lucide?.createIcons();
+  },
+
+  reviewerWorkspace(route) {
+    if (route === "reviewer-dashboard") {
+      this.reviewerDashboard();
+      return;
+    }
+
+    const config = reviewerRouteDefinitions[route];
+    if (!config) return;
+
+    const container = document.getElementById("reviewer-workspace-content");
+    if (!container) return;
+
+    const metrics = config.metrics ? config.metrics() : [];
+    const rawItems = db.reviewerData[config.dataType] || db.creatorData[config.dataType] || [];
+    const records = config.filter ? config.filter(rawItems) : rawItems;
+
+    let metricsHtml = "";
+    if (metrics.length) {
+      metricsHtml = `
+        <div class="coo-workspace-metrics-strip creator-workspace-metrics-strip">
+          ${metrics.map(m => `
+            <div class="coo-workspace-metric creator-workspace-metric">
+              <span>${m.label}</span>
+              <strong>${m.value}</strong>
+              <small>${m.hint}</small>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    let scopeHtml = "";
+    if (config.scopeNotice) {
+      scopeHtml = `
+        <div class="coo-scope-notice creator-scope-notice">
+          <i data-lucide="shield-check"></i>
+          <div>
+            <strong>ACADEMIC GOVERNANCE BOUNDARY</strong>
+            <p>${config.scopeNotice}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Bespoke view switcher or Data Table
+    let customContentHtml = "";
+    if (config.dataType === "reviews") {
+      customContentHtml = this.renderReviewerCoursesCards(records);
+    } else if (config.dataType === "comments") {
+      customContentHtml = this.renderReviewerCommentsMatrix(records);
+    } else if (config.dataType === "submissions") {
+      customContentHtml = this.renderReviewerSubmissionsCards(records);
+    } else if (config.dataType === "k12Schemes") {
+      customContentHtml = this.renderReviewerK12SchemesCards(records);
+    } else {
+      customContentHtml = `
+        <div class="table-container">
+          <table>
+            <thead>
+              ${this.reviewerTableHeaders(config.dataType)}
+            </thead>
+            <tbody id="reviewer-workspace-table-body">
+              ${this.reviewerTableRows(config.dataType, records)}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="coo-workspace-view creator-workspace-view">
+        <div class="coo-workspace-header">
+          <div class="coo-workspace-heading">
+            <span class="coo-workspace-group">${config.group}</span>
+            <h2>${config.title}</h2>
+            <p>${config.desc}</p>
+          </div>
+          ${metricsHtml}
+          ${scopeHtml}
+        </div>
+
+        <div class="module-toolbar">
+          <div class="search-filter-row">
+            <input type="text" id="reviewer-workspace-search" class="form-control" placeholder="Search by course, version, node, or author...">
+            <select id="reviewer-workspace-status" class="form-control" style="width: auto; min-width: 170px;">
+              <option value="">All Statuses</option>
+              <option value="Awaiting Review">Awaiting Review</option>
+              <option value="In Review">In Review</option>
+              <option value="Changes Requested">Changes Requested</option>
+              <option value="Approved">Approved</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('View Saved', 'Review filters saved to your session.', 'info')">
+              <i data-lucide="bookmark"></i> Save view
+            </button>
+          </div>
+          <div class="button-row">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('reviewer-comments-blocking')">
+              <i data-lucide="shield-alert"></i> Blocking Issues
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openReviewerInspectionModal('VER-102')">
+              <i data-lucide="file-search"></i> Inspect Active Version
+            </button>
+          </div>
+        </div>
+
+        <div id="reviewer-dynamic-view-canvas">
+          ${customContentHtml}
+        </div>
+      </div>
+    `;
+
+    const applyFilters = () => {
+      const query = document.getElementById("reviewer-workspace-search")?.value.toLowerCase() || "";
+      const statusFilter = document.getElementById("reviewer-workspace-status")?.value || "";
+      const filtered = records.filter(item => {
+        const rowText = Object.values(item).join(" ").toLowerCase();
+        const matchesQuery = !query || rowText.includes(query);
+        const matchesStatus = !statusFilter
+          || (item.reviewStage === statusFilter)
+          || (item.status === statusFilter);
+        return matchesQuery && matchesStatus;
+      });
+
+      const tbody = document.getElementById("reviewer-workspace-table-body");
+      if (tbody) tbody.innerHTML = this.reviewerTableRows(config.dataType, filtered);
+      window.lucide?.createIcons();
+    };
+
+    document.getElementById("reviewer-workspace-search")?.addEventListener("input", applyFilters);
+    document.getElementById("reviewer-workspace-status")?.addEventListener("change", applyFilters);
+
+    window.lucide?.createIcons();
+  },
+
+  renderReviewerCoursesCards(reviews) {
+    return `
+      <div class="creator-courses-grid">
+        ${reviews.map(rev => {
+          let badgeClass = "badge-secondary";
+          if (rev.reviewStage === "Awaiting Review") badgeClass = "badge-warning";
+          if (rev.reviewStage === "In Review") badgeClass = "badge-primary";
+          if (rev.reviewStage === "Changes Requested") badgeClass = "badge-error";
+          if (rev.reviewStage === "Approved") badgeClass = "badge-success";
+
+          return `
+            <article class="creator-course-card">
+              <div class="creator-course-top">
+                <span class="badge badge-secondary">${rev.version}</span>
+                <span class="badge ${badgeClass}">${rev.reviewStage.toUpperCase()}</span>
+              </div>
+
+              <div>
+                <h3>${rev.courseTitle}</h3>
+                <span class="table-subline" style="margin-top: 3px; display: block;">Code: ${rev.courseCode} · Model: <strong>${rev.deliveryModel}</strong></span>
+              </div>
+
+              <div class="creator-course-meta-pills">
+                <span><i data-lucide="user"></i> ${rev.author}</span>
+                <span><i data-lucide="clock"></i> ${rev.submittedAt}</span>
+                <span><i data-lucide="shield-alert" style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : ''}"></i> ${rev.blockingIssuesCount} Blocking</span>
+              </div>
+
+              <div class="creator-course-delivery-box" style="background: #fdfbf7;">
+                <strong><i data-lucide="file-text"></i> Review Summary:</strong>
+                <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">${rev.summary}</p>
+              </div>
+
+              <div class="creator-course-footer">
+                <span style="font-size: 11.5px; color: var(--slate);">Readiness: <strong style="${rev.publicationReadiness.includes('Approved') ? 'color:#166534;' : 'color:#d97706;'}">${rev.publicationReadiness}</strong></span>
+                <div class="button-row">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}')">Inspect Version</button>
+                  ${rev.reviewStage !== 'Approved' ? `
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerApprovalModal('${rev.versionId}')">Approve</button>
+                  ` : `
+                    <span class="badge badge-success" style="font-size: 10px;">APPROVED</span>
+                  `}
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    `;
+  },
+
+  renderReviewerCommentsMatrix(comments) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+        ${comments.map(comm => `
+          <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-left: 4px solid ${comm.severity === 'Blocking' ? '#dc2626' : '#d97706'}; border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity.toUpperCase()} CITATION</span>
+                <strong style="font-size: 14px; color: var(--navy-medium);">${comm.courseTitle}</strong>
+                <span class="badge badge-secondary">${comm.nodeType}: ${comm.nodeRef}</span>
+              </div>
+              <span class="badge ${comm.status === 'Resolved' ? 'badge-success' : 'badge-warning'}">${comm.status.toUpperCase()}</span>
+            </div>
+
+            <p style="font-size: 12.5px; color: #4a586e; line-height: 1.5; margin: 0;">${comm.comment}</p>
+
+            ${comm.authorResponse ? `
+              <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.15); border-radius: 8px; padding: 10px 14px; font-size: 12px;">
+                <strong style="color: var(--primary);">Author Response:</strong>
+                <span style="color: #4a586e; margin-left: 6px;">${comm.authorResponse}</span>
+              </div>
+            ` : ""}
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
+              <span>Reviewer: <strong>${comm.reviewer}</strong> · ${comm.date}</span>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${comm.versionId}')">Inspect Content Node</button>
+                ${comm.status === 'Open' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('${comm.id}')">Mark Resolved</button>
+                ` : `
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.reopenReviewerComment('${comm.id}')">Re-open</button>
+                `}
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderReviewerSubmissionsCards(submissions) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+        ${submissions.map(sub => `
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="badge badge-primary" style="margin-bottom: 4px;">${sub.type}</span>
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${sub.learner} · ${sub.assignment}</h3>
+                <span class="table-subline" style="margin-top: 2px;">${sub.course} · Submitted: ${sub.submittedAt}</span>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge ${sub.status === 'Accepted' ? 'badge-success' : 'badge-warning'}">${sub.status.toUpperCase()}</span>
+                ${sub.score ? `<div style="font: 700 16px 'Manrope', sans-serif; color: #166534; margin-top: 4px;">${sub.score}</div>` : ""}
+              </div>
+            </div>
+
+            <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.15); border-radius: 8px; padding: 12px 16px; font-size: 12px;">
+              <strong>Submitted Evidence:</strong>
+              <p style="margin: 4px 0 0 0; color: #4a586e;">${sub.evidence}</p>
+              <div style="margin-top: 6px;"><code style="color: #1e60aa;">${sub.submissionUrl}</code></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
+              <span>Rubric Standard: <strong>${sub.rubricId}</strong> · Grader: <strong>${sub.assignedReviewer}</strong></span>
+              <div class="button-row">
+                ${sub.status !== 'Accepted' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerSubmissionModal('${sub.id}')">Evaluate Rubric & Grade</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerRevisionModal('${sub.id}')">Request Revision</button>
+                ` : `
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerGradeCorrectionModal('${sub.id}')">Audited Grade Correction</button>
+                `}
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderReviewerK12SchemesCards(schemes) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+        ${schemes.map(sch => `
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="badge badge-primary">${sch.board}</span>
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${sch.grade} · ${sch.subject}</h3>
+                <span class="table-subline">Academic Year: ${sch.academicYear}</span>
+              </div>
+              <span class="badge badge-success">${sch.status}</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px; background: #fdfbf7; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.15); font-size: 12px;">
+              <div><span>Term Weightage Distribution:</span><div style="font-weight: 700; color: var(--navy-medium); margin-top: 2px;">${sch.termWeightage}</div></div>
+              <div><span>Passing Benchmark:</span><div style="font-weight: 700; color: #166534; margin-top: 2px;">${sch.passThreshold}</div></div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-k12-syllabi')">View Subject Syllabi</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  reviewerTableHeaders(dataType) {
+    if (dataType === "courses") {
+      return `<tr><th>Course / Code</th><th>Programme</th><th>Delivery Model</th><th>Learning Outcomes</th><th>Prerequisites</th><th>Readiness</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "syllabus") {
+      return `<tr><th>Unit / Milestone</th><th>Module & Title</th><th>Activity Format</th><th>Pedagogical Check</th><th>Linked Rubrics</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "rules") {
+      return `<tr><th>Rule Identifier</th><th>Category</th><th>Gating Condition</th><th>Enforcement Policy</th><th>Integrity Check</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "questions") {
+      return `<tr><th>Stem / Question Prompt</th><th>Category</th><th>Difficulty</th><th>Answer Key</th><th>Ambiguity Check</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "assessments") {
+      return `<tr><th>Assessment Title</th><th>Type</th><th>Pass Standard</th><th>Randomization</th><th>Rubric Linked</th><th>Actions</th></tr>`;
+    }
+    if (dataType === "auditLogs") {
+      return `<tr><th>Timestamp</th><th>Actor / Reviewer</th><th>Action</th><th>Course Version</th><th>Details</th><th>Transition</th></tr>`;
+    }
+    return `<tr><th>Item</th><th>Details</th><th>Status</th><th>Actions</th></tr>`;
+  },
+
+  reviewerTableRows(dataType, records) {
+    if (dataType === "auditLogs") {
+      return records.map(l => `
+        <tr>
+          <td><span class="table-timestamp">${l.timestamp}</span></td>
+          <td><strong>${l.actor}</strong></td>
+          <td><span class="badge badge-primary">${l.action}</span></td>
+          <td><strong>${l.version}</strong></td>
+          <td><span style="font-size:12px; color:#4a586e;">${l.details}</span></td>
+          <td><span class="badge badge-secondary">${l.priorState} &rarr; ${l.newState}</span></td>
+        </tr>
+      `).join("");
+    }
+    return `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--slate);">No records found in current view.</td></tr>`;
+  },
+
 
   
   creatorDashboard() {
@@ -6842,6 +8190,7 @@ const Simulator = {
       coo: { name: "Mara Khan", role: "Chief Operating Officer" },
       csr: { name: "Sarah Jenkins", role: "Customer Service & Sales Representative" },
       course_creator: { name: "Dr. Arsalan Khan", role: "Course Creator" },
+      academic_reviewer: { name: "Prof. Tariq Mahmood", role: "Academic Reviewer" },
       cto_developer: { name: "CTO / Developer", role: "Technical Director" },
       compliance_officer: { name: "Auditor Profile", role: "Compliance Officer" },
       support_agent: { name: "CSR Operator", role: "Support Representative" }
@@ -6854,6 +8203,7 @@ const Simulator = {
       coo: { workspace: "Executive operations", shell: "EXECUTIVE OPERATIONS", title: "COO Operating Overview", greeting: "Good afternoon, Mara.", description: "Prioritize decisions, protect service delivery, and keep every business workflow moving.", action: "Open decision inbox", actionRoute: "coo-approvals", notifications: "Operating Notifications" },
       csr: { workspace: "Customer service & sales", shell: "SALES & CUSTOMER SERVICE", title: "CSR Command Center", greeting: "Good afternoon, Sarah.", description: "Assigned prospect management, trial qualification, follow-ups, and assisted conversion pipeline.", action: "View follow-ups due", actionRoute: "csr-followups-due", notifications: "Sales Notifications" },
       course_creator: { workspace: "Curriculum & course authoring", shell: "CURRICULUM & COURSE AUTHORING", title: "Authoring Command Center", greeting: "Good afternoon, Dr. Arsalan.", description: "Construct syllabus hierarchy, manage reusable question banks, learning rules, and submit versions for academic review.", action: "Review open feedback", actionRoute: "creator-review-comments", notifications: "Authoring Notifications" },
+      academic_reviewer: { workspace: "Academic review & quality assurance", shell: "ACADEMIC REVIEW & QUALITY ASSURANCE", title: "Academic Review & Quality Assurance", greeting: "Good afternoon, Prof. Tariq.", description: "Evaluate course quality, validate assessment rubrics, manage blocking citations, and approve publication readiness.", action: "View blocking issues", actionRoute: "reviewer-comments-blocking", notifications: "Review Notifications" },
       cto_developer: { workspace: "Technical operations", shell: "TECHNICAL OPERATIONS", title: "Technical Operations Overview", greeting: "Good afternoon, Technical Director.", description: "Monitor integration health, queues, runtime status, releases, and recoverable technical exceptions.", action: "Open system status", actionRoute: "system-status", notifications: "Technical Notifications" },
       compliance_officer: { workspace: "Compliance oversight", shell: "COMPLIANCE OVERSIGHT", title: "Compliance Overview", greeting: "Good afternoon, Compliance Officer.", description: "Review high-risk governance events, retention controls, legal holds, and immutable audit history.", action: "Review audit trail", actionRoute: "audit-logs", notifications: "Governance Notifications" },
       support_agent: { workspace: "Support operations", shell: "SUPPORT OPERATIONS", title: "Support Operations Overview", greeting: "Good afternoon, Support Representative.", description: "Resolve account and onboarding issues through approved, time-limited support workflows.", action: "Open support access", actionRoute: "support-access", notifications: "Support Notifications" }
@@ -6871,26 +8221,30 @@ const Simulator = {
     const isOm = roleKey === "operational_manager";
     const isCsr = roleKey === "csr";
     const isCreator = roleKey === "course_creator";
+    const isReviewer = roleKey === "academic_reviewer";
     const appShell = document.querySelector(".admin-container");
     if (appShell) {
       appShell.classList.toggle("role-coo", isCoo);
       appShell.classList.toggle("role-om", isOm);
       appShell.classList.toggle("role-csr", isCsr);
       appShell.classList.toggle("role-course_creator", isCreator);
+      appShell.classList.toggle("role-academic_reviewer", isReviewer);
       appShell.dataset.activeRole = roleKey;
     }
 
-    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator);
+    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer);
     document.getElementById("coo-nav")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-nav")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-nav")?.classList.toggle("hidden", !isCsr);
     document.getElementById("creator-nav")?.classList.toggle("hidden", !isCreator);
+    document.getElementById("academic-reviewer-nav")?.classList.toggle("hidden", !isReviewer);
 
-    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator);
+    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer);
     document.getElementById("coo-dashboard-shell")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-dashboard-shell")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-dashboard-shell")?.classList.toggle("hidden", !isCsr);
     document.getElementById("creator-dashboard-shell")?.classList.toggle("hidden", !isCreator);
+    document.getElementById("reviewer-dashboard-shell")?.classList.toggle("hidden", !isReviewer);
 
     const shellLabel = document.getElementById("shell-label");
     if (shellLabel) shellLabel.textContent = shell.shell;
@@ -6909,18 +8263,19 @@ const Simulator = {
     
     const searchInput = document.getElementById("nav-search-input");
     if (searchInput) {
-      searchInput.placeholder = isCreator ? "Find course / syllabus module" : (isCsr ? "Find sales / lead module" : (isOm ? "Find operations module" : (isCoo ? "Find an operating area" : "Find a module")));
+      searchInput.placeholder = isReviewer ? "Find review / syllabus node" : (isCreator ? "Find course / syllabus module" : (isCsr ? "Find sales / lead module" : (isOm ? "Find operations module" : (isCoo ? "Find an operating area" : "Find a module"))));
     }
     
     const avatar = document.getElementById("admin-avatar");
     if (avatar) {
-      avatar.textContent = isCreator ? "AK" : (isCsr ? "SJ" : (isOm ? "SC" : (isCoo ? "MK" : details.name.split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase())));
+      avatar.textContent = isReviewer ? "TM" : (isCreator ? "AK" : (isCsr ? "SJ" : (isOm ? "SC" : (isCoo ? "MK" : details.name.split(/\s+/).map(part => part[0]).join("").slice(0, 2).toUpperCase()))));
     }
     document.title = `IHS 2.0 ${details.role} Console`;
 
     if (isOm) updateOmBadges();
     if (isCsr) RenderEngine.csrDashboard();
     if (isCreator) RenderEngine.creatorDashboard();
+    if (isReviewer) RenderEngine.reviewerDashboard();
 
     // Apply security limits on sidebar & dashboard
     this.applySecurityLocks(roleKey);
@@ -9237,6 +10592,330 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+
+  
+  // ============================================================================
+  // ACADEMIC REVIEWER INTERACTIVE ACTIONS (FLOW-009, CAT-010, FLOW-020)
+  // ============================================================================
+
+  Actions.openReviewerInspectionModal = function(versionId) {
+    const rev = db.reviewerData.reviews.find(r => r.versionId === versionId) || db.reviewerData.reviews[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Academic Review Inspection: ${rev.courseTitle} (${rev.version})`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Course Code</span><strong>${rev.courseCode}</strong><small>${rev.versionId}</small></div>
+          <div class="om-flow-metric"><span>Delivery Model</span><strong>${rev.deliveryModel}</strong></div>
+          <div class="om-flow-metric"><span>Lead Author</span><strong>${rev.author}</strong></div>
+          <div class="om-flow-metric"><span>Review Stage</span><strong style="color:${rev.reviewStage === 'Approved' ? '#166534' : '#d97706'}">${rev.reviewStage}</strong></div>
+        </div>
+
+        <div style="display: flex; gap: 8px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; margin: 12px 0;">
+          <button class="btn btn-primary btn-xs">1. Metadata & Outcomes</button>
+          <button class="btn btn-secondary btn-xs">2. Syllabus Structure</button>
+          <button class="btn btn-secondary btn-xs">3. Assessment Rubrics</button>
+          <button class="btn btn-secondary btn-xs">4. Academic Rules</button>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="check-circle"></i> Quality & Compliance Checklist (FLOW-009)</h5>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
+            <div><span>Learning Outcomes:</span> <strong style="color:#166534;">✓ Bloom's Taxonomy Verified</strong></div>
+            <div><span>Prerequisites:</span> <strong style="color:#166534;">✓ Baseline Gating Validated</strong></div>
+            <div><span>Gatekeeper Quizzes:</span> <strong style="color:#166534;">✓ Pass Mark 80% Enforced</strong></div>
+            <div><span>Blocking Issues:</span> <strong style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : 'color:#166534;'}">${rev.blockingIssuesCount} Unresolved Citations</strong></div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label>Reviewer Academic Finding Notes</label>
+          <textarea id="rev-decision-notes" class="form-control" rows="3" placeholder="Enter evaluation findings, compliance notes, or rationale..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-secondary" style="color: #dc2626; border-color: #fca5a5;" onclick="Actions.openReviewerRequestChangesModal('${rev.versionId}')">Request Changes</button>
+      <button class="btn btn-primary" onclick="Actions.openReviewerApprovalModal('${rev.versionId}')">Approve for Publication</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openReviewerApprovalModal = function(versionId) {
+    const rev = db.reviewerData.reviews.find(r => r.versionId === versionId) || db.reviewerData.reviews[0];
+    const openBlockingComments = db.reviewerData.comments.filter(c => c.versionId === versionId && c.status === "Open" && c.severity === "Blocking");
+
+    if (openBlockingComments.length > 0) {
+      Notifications.push("Publication Approval Blocked (CAT-010)", `Cannot approve ${rev.version} because ${openBlockingComments.length} blocking citation is unresolved.`, "error");
+      Router.navigate("reviewer-comments-blocking");
+      document.getElementById("generic-modal").classList.add("hidden");
+      return;
+    }
+
+    rev.reviewStage = "Approved";
+    rev.publicationReadiness = "Approved for Publication";
+
+    db.reviewerData.auditLogs.unshift({
+      id: "REV-AUD-" + Math.floor(100 + Math.random() * 900),
+      timestamp: new Date().toLocaleTimeString(),
+      actor: "Prof. Tariq Mahmood",
+      action: "VERSION_ACADEMICALLY_APPROVED",
+      version: `${rev.courseTitle} (${rev.version})`,
+      details: "Approved course version for publication readiness. Passed to Catalogue Owner.",
+      priorState: "In Review",
+      newState: "Approved"
+    });
+
+    Notifications.push("Academic Approval Granted", `${rev.courseTitle} (${rev.version}) approved for publication. Forwarded to Catalogue Owner.`, "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.openReviewerRequestChangesModal = function(versionId) {
+    const rev = db.reviewerData.reviews.find(r => r.versionId === versionId) || db.reviewerData.reviews[0];
+    const notes = document.getElementById("rev-decision-notes")?.value.trim() || "Returned to author for blocking issue resolution.";
+
+    rev.reviewStage = "Changes Requested";
+    rev.publicationReadiness = "Rejected - Awaiting Resubmission";
+
+    db.reviewerData.auditLogs.unshift({
+      id: "REV-AUD-" + Math.floor(100 + Math.random() * 900),
+      timestamp: new Date().toLocaleTimeString(),
+      actor: "Prof. Tariq Mahmood",
+      action: "CHANGES_REQUESTED",
+      version: `${rev.courseTitle} (${rev.version})`,
+      details: notes,
+      priorState: "In Review",
+      newState: "Changes Requested"
+    });
+
+    Notifications.push("Changes Requested", `Returned ${rev.version} to ${rev.author} for revision.`, "warning");
+    document.getElementById("generic-modal").classList.add("hidden");
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.openReviewerCommentResolutionModal = function(commentId) {
+    const comm = db.reviewerData.comments.find(c => c.id === commentId);
+    if (!comm) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Resolve Review Citation: ${comm.id}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-evidence-box" style="border-left-color: ${comm.severity === 'Blocking' ? '#dc2626' : '#d97706'}">
+          <h5><i data-lucide="shield-alert"></i> Citation Details</h5>
+          <p><strong>Severity:</strong> <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity}</span></p>
+          <p><strong>Content Node:</strong> ${comm.nodeRef}</p>
+          <p>${comm.comment}</p>
+        </div>
+
+        ${comm.authorResponse ? `
+          <div class="om-flow-metric" style="margin-top: 10px;">
+            <span>Author Resolution Rationale</span>
+            <strong>${comm.authorResponse}</strong>
+          </div>
+        ` : ""}
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label>Reviewer Verification Sign-off Rationale</label>
+          <textarea id="rev-resolution-notes" class="form-control" rows="3" placeholder="Confirm that the author's syllabus changes satisfy academic standards..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.reviewerResolveComment('${comm.id}')">Mark Citation as Resolved</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.reviewerResolveComment = function(commentId) {
+    const comm = db.reviewerData.comments.find(c => c.id === commentId);
+    if (!comm) return;
+
+    const notes = document.getElementById("rev-resolution-notes")?.value.trim() || "Verified and resolved in syllabus inspection.";
+    comm.status = "Resolved";
+    comm.resolution = notes;
+
+    Notifications.push("Citation Resolved", `Citation ${comm.id} marked as resolved.`, "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.reopenReviewerComment = function(commentId) {
+    const comm = db.reviewerData.comments.find(c => c.id === commentId);
+    if (!comm) return;
+    comm.status = "Open";
+    Notifications.push("Citation Re-opened", `Re-opened review comment ${comm.id}.`, "warning");
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.openReviewerSubmissionModal = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId) || db.reviewerData.submissions[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Evaluate Rubric & Grade: ${sub.learner}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Learner</span><strong>${sub.learner}</strong></div>
+          <div class="om-flow-metric"><span>Assignment</span><strong>${sub.assignment}</strong></div>
+          <div class="om-flow-metric"><span>Rubric Applied</span><strong>${sub.rubricId}</strong></div>
+          <div class="om-flow-metric"><span>Submission Status</span><strong>${sub.status}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="link"></i> Submitted Evidence</h5>
+          <p>${sub.evidence}</p>
+          <code style="color: #1e60aa;">${sub.submissionUrl}</code>
+        </div>
+
+        <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 8px; padding: 14px; margin-top: 12px;">
+          <strong style="font-size: 12px; text-transform: uppercase; color: var(--slate);">Rubric Criteria Scoring (RUB-101)</strong>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px; font-size: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Component Modularity (35%)</span>
+              <select id="rub-score-1" class="form-control" style="width: auto;">
+                <option value="35">Exemplary (35/35)</option>
+                <option value="28">Proficient (28/35)</option>
+                <option value="18">Developing (18/35)</option>
+              </select>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Mobile Responsiveness (35%)</span>
+              <select id="rub-score-2" class="form-control" style="width: auto;">
+                <option value="35">Exemplary (35/35)</option>
+                <option value="28">Proficient (28/35)</option>
+                <option value="18">Developing (18/35)</option>
+              </select>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span>Accessibility A11y (30%)</span>
+              <select id="rub-score-3" class="form-control" style="width: auto;">
+                <option value="30">Exemplary (30/30)</option>
+                <option value="22">Proficient (22/30)</option>
+                <option value="15">Developing (15/30)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label>Reviewer Feedback & Guidance</label>
+          <textarea id="rev-submission-feedback" class="form-control" rows="3" placeholder="Provide constructive feedback for the learner..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.reviewerSubmitGrade('${sub.id}')">Publish Grade to Learner</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.reviewerSubmitGrade = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId);
+    if (!sub) return;
+
+    const s1 = parseInt(document.getElementById("rub-score-1")?.value || "35", 10);
+    const s2 = parseInt(document.getElementById("rub-score-2")?.value || "35", 10);
+    const s3 = parseInt(document.getElementById("rub-score-3")?.value || "30", 10);
+    const total = s1 + s2 + s3;
+    const feedback = document.getElementById("rev-submission-feedback")?.value.trim() || "Great project submission.";
+
+    sub.score = `${total} / 100`;
+    sub.status = "Accepted";
+    sub.gradeStatus = "Published";
+    sub.feedback = feedback;
+
+    Notifications.push("Grade Published (FLOW-020)", `Graded ${sub.learner} with ${sub.score}. Result visible in gradebook.`, "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.openReviewerGradeCorrectionModal = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId);
+    if (!sub) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Audited Grade Correction (FLOW-020): ${sub.learner}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="shield-check"></i> Append-Only Grade Correction Policy</h5>
+          <p>Prior published score: <strong>${sub.score}</strong>. Original score remains immutable in audit history.</p>
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label>Corrected Score (Out of 100)</label>
+          <input type="text" id="rev-correct-score" class="form-control" value="${sub.score || '95 / 100'}">
+        </div>
+
+        <div class="form-group">
+          <label>Mandatory Correction Rationale</label>
+          <textarea id="rev-correct-reason" class="form-control" rows="3" placeholder="State academic justification for score modification..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.reviewerSaveGradeCorrection('${sub.id}')">Save & Audit Correction</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.reviewerSaveGradeCorrection = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId);
+    if (!sub) return;
+
+    const newScore = document.getElementById("rev-correct-score")?.value.trim() || sub.score;
+    const reason = document.getElementById("rev-correct-reason")?.value.trim() || "Re-evaluated rubric criteria.";
+
+    const oldScore = sub.score;
+    sub.score = newScore;
+
+    db.reviewerData.auditLogs.unshift({
+      id: "REV-AUD-" + Math.floor(100 + Math.random() * 900),
+      timestamp: new Date().toLocaleTimeString(),
+      actor: "Prof. Tariq Mahmood",
+      action: "GRADE_CORRECTION_AUDITED",
+      version: sub.course,
+      details: `Score adjusted from ${oldScore} to ${newScore}. Reason: ${reason}`,
+      priorState: oldScore,
+      newState: newScore
+    });
+
+    Notifications.push("Grade Corrected & Audited", `Score updated to ${newScore}. Historical grade preserved in audit ledger.`, "info");
+    document.getElementById("generic-modal").classList.add("hidden");
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
 
   window.Actions = Actions;
   window.Router = Router;
