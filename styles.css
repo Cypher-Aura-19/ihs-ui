@@ -8865,3 +8865,173 @@ td:last-child {
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* ========================================================================== */
+/* RICH MULTI-FORMAT LEARNER PREVIEW SIMULATOR (LMS EXPERIENCE)               */
+/* ========================================================================== */
+
+.creator-preview-format-tabs {
+  display: flex !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  background: #fbf9f4 !important;
+  padding: 10px 14px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(124, 119, 102, 0.18) !important;
+}
+
+.creator-preview-tab-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 8px 16px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.2) !important;
+  border-radius: 8px !important;
+  font: 600 12.5px/1 'Inter', sans-serif !important;
+  color: var(--navy-medium) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.creator-preview-tab-btn:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+.creator-preview-tab-btn.active {
+  background: var(--navy-dark) !important;
+  color: #ffffff !important;
+  border-color: var(--navy-dark) !important;
+  box-shadow: 0 3px 10px rgba(16, 28, 46, 0.2) !important;
+}
+
+/* 1. Code Sandbox Mock */
+.creator-code-sandbox-mock {
+  display: grid !important;
+  grid-template-columns: 1fr 1.2fr !important;
+  gap: 16px !important;
+  background: #141c2b !important;
+  border-radius: 12px !important;
+  padding: 18px !important;
+  color: #e2e8f0 !important;
+  font-family: 'Fira Code', monospace !important;
+  min-height: 280px !important;
+}
+
+.creator-code-instructions {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  color: #cbd5e1 !important;
+}
+
+.creator-code-editor-pane {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  background: #0d131f !important;
+  border-radius: 8px !important;
+  padding: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.creator-code-line {
+  font-size: 11.5px !important;
+  line-height: 1.5 !important;
+}
+
+/* 2. Voice Audio Waveform Mock */
+.creator-voice-player-mock {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  padding: 30px !important;
+  background: linear-gradient(135deg, #1b2838 0%, #2b3e55 100%) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  text-align: center !important;
+}
+
+.creator-waveform-bars {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  height: 48px !important;
+}
+
+.creator-waveform-bar {
+  width: 4px !important;
+  background: #70b8ff !important;
+  border-radius: 2px !important;
+  animation: waveformBounce 1.2s infinite ease-in-out !important;
+}
+
+@keyframes waveformBounce {
+  0%, 100% { height: 12px; }
+  50% { height: 42px; }
+}
+
+/* 3. Interactive Quiz Questionnaire Mock */
+.creator-quiz-preview-mock {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 12px !important;
+  padding: 24px !important;
+}
+
+.creator-quiz-option-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  border: 1px solid rgba(124, 119, 102, 0.2) !important;
+  border-radius: 8px !important;
+  background: #fffdfa !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  transition: all 0.15s ease !important;
+}
+
+.creator-quiz-option-label:hover {
+  border-color: var(--primary) !important;
+  background: #fbf9f4 !important;
+}
+
+.creator-quiz-option-label.selected {
+  border-color: var(--primary) !important;
+  background: #eef6ff !important;
+  font-weight: 600 !important;
+}
+
+/* 4. Milestone Journey Credential Mock */
+.creator-milestone-journey-mock {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  background: #fdfbf7 !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 14px !important;
+  padding: 26px 30px !important;
+}
+
+.creator-certificate-frame {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 28px !important;
+  background: #ffffff !important;
+  border: 4px double #d4af37 !important;
+  border-radius: 10px !important;
+  text-align: center !important;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15) !important;
+}

@@ -2270,6 +2270,195 @@ const Router = {
 // ============================================================================
 
 const RenderEngine = {
+
+  creatorDashboard() {
+    const stats = [
+      { id: "stat-creator-courses", label: "My Portfolio", value: db.creatorData.courses.length, hint: "Total assigned courses", icon: "book-open", delta: "6 Courses", alert: false },
+      { id: "stat-creator-drafts", label: "Active Drafts", value: db.creatorData.courses.filter(c => c.stage === 'Draft').length, hint: "In syllabus authoring", icon: "file-edit", delta: "2 Active", alert: false },
+      { id: "stat-creator-review", label: "Under Peer Review", value: db.creatorData.courses.filter(c => c.stage === 'In Review').length, hint: "Academic Board SLA", icon: "file-search", delta: "1 In Review", alert: false },
+      { id: "stat-creator-published", label: "Live in LMS", value: db.creatorData.courses.filter(c => c.stage === 'Published').length, hint: "Immutable releases", icon: "archive", delta: "2 Published", alert: false }
+    ];
+
+    const pipelineStages = [
+      { code: "01. DRAFT", title: "Syllabus Authoring", desc: "Construct levels, milestones, lessons, activities, and link assessment items.", count: "2 Versions", statusText: "2 in Progress", icon: "edit-3", route: "creator-courses-draft", badgeClass: "badge-warning" },
+      { code: "02. REVIEW", title: "Academic Peer Review", desc: "Locked drafts undergoing pedagogical evaluation and rubric verification.", count: "1 In Review", statusText: "1 Under Review", icon: "file-search", route: "creator-courses-review", badgeClass: "badge-warning" },
+      { code: "03. APPROVED", title: "Awaiting Publication", desc: "Cleared academic review. Ready for commercial catalogue release.", count: "1 Approved", statusText: "1 Ready to Publish", icon: "check-circle", route: "creator-courses-approved", badgeClass: "badge-success" },
+      { code: "04. LIVE", title: "Published & Immutable", desc: "Actively serving learners. Protected from in-place drift.", count: "2 Live", statusText: "2 Live in Catalogue", icon: "archive", route: "creator-courses-published", badgeClass: "badge-success" }
+    ];
+
+    const container = document.getElementById("creator-dashboard-shell");
+    if (!container) return;
+
+    container.innerHTML = `
+      <div class="creator-command-deck">
+        <div class="creator-flight-strip">
+          <div class="creator-flight-meta">
+            <span class="creator-flight-badge"><i data-lucide="book-open"></i> AUTHORING COMMAND</span>
+            <div class="creator-flight-lead">
+              Lead Author: <strong>Dr. Arsalan Khan</strong> · Faculty of Computing & Secondary Ed
+            </div>
+            <div class="creator-flight-stats">
+              <span><i data-lucide="layers"></i> Portfolio: <strong>6 Courses</strong></span>
+              <span><i data-lucide="git-branch"></i> Active Drafts: <strong>2 Versions</strong></span>
+              <span><i data-lucide="clock"></i> Review Cycle: <strong>48h SLA</strong></span>
+            </div>
+            <div class="creator-segregation-tag">
+              <i data-lucide="shield-check"></i> Segregation: <strong>Authoring Scope Only</strong>
+            </div>
+            <p class="creator-flight-desc">
+              Construct and version structured course syllabi, manage centralized question banks, configure assessment rubrics and learning rules, simulate guest vs learner preview, and submit draft versions for Academic Board review.
+            </p>
+          </div>
+          <div class="creator-flight-actions">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-preview')">
+              <i data-lucide="eye"></i> Learner Preview
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorValidationModal('VER-102')">
+              <i data-lucide="check-square"></i> Pre-Flight Check
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()">
+              <i data-lucide="plus"></i> New Course
+            </button>
+          </div>
+        </div>
+
+        <div class="creator-scope-bar">
+          <div class="creator-scope-title">
+            <i data-lucide="sliders"></i>
+            <div>
+              <strong>AUTHORING SCOPE & CATALOGUE TELEMETRY</strong>
+              <small>Real-time Course State Sync · Academic Year 2026/27</small>
+            </div>
+          </div>
+          <div class="creator-scope-filters">
+            <div class="creator-scope-field">
+              <label>Programme Track</label>
+              <select id="creator-track-filter" class="form-control">
+                <option value="">All Programmes (Vocational, Literacy, Spoken, K-12)</option>
+                <option value="Vocational">Vocational Skills</option>
+                <option value="Literacy">Basic Literacy</option>
+                <option value="Spoken">Spoken English</option>
+                <option value="K-12">K-12 Tuition</option>
+              </select>
+            </div>
+            <div class="creator-scope-field">
+              <label>Delivery Model</label>
+              <select id="creator-model-filter" class="form-control">
+                <option value="">All Delivery Models</option>
+                <option value="Self-paced">Self-paced Milestone</option>
+                <option value="Live Scheduled">Live Scheduled</option>
+                <option value="K-12 Live Tuition">K-12 Live Tuition</option>
+              </select>
+            </div>
+            <div class="creator-scope-field">
+              <label>Lifecycle Stage</label>
+              <select id="creator-stage-filter" class="form-control">
+                <option value="">All Stages</option>
+                <option value="Draft">Draft</option>
+                <option value="In Review">In Review</option>
+                <option value="Approved">Approved</option>
+                <option value="Published">Published</option>
+              </select>
+            </div>
+            <div class="creator-scope-field">
+              <label>Action Shortcut</label>
+              <select id="creator-action-shortcut" class="form-control" onchange="if(this.value) { Router.navigate(this.value); this.value=''; }">
+                <option value="">Quick Navigate...</option>
+                <option value="creator-syllabus-milestones">Milestone Progression</option>
+                <option value="creator-syllabus-lessons">Lesson Builder</option>
+                <option value="creator-assessments-bank">Question Bank</option>
+                <option value="creator-resources-library">Resource Vault</option>
+                <option value="creator-rules-prerequisites">Prerequisite Rules</option>
+                <option value="creator-preview">Learner Simulator</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="creator-pipeline-matrix">
+          ${pipelineStages.map(stage => `
+            <div class="creator-stage-card" onclick="Router.navigate('${stage.route}')">
+              <div class="creator-stage-head">
+                <span class="creator-stage-code">${stage.code}</span>
+                <span class="badge ${stage.badgeClass}">${stage.count}</span>
+              </div>
+              <h4>${stage.title}</h4>
+              <p>${stage.desc}</p>
+              <div class="creator-stage-foot">
+                <span>${stage.statusText}</span>
+                <i data-lucide="arrow-right"></i>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="creator-queues-grid">
+          <div class="creator-queue-panel">
+            <div class="creator-queue-header">
+              <div>
+                <h4><i data-lucide="message-square"></i> Reviewer Feedback & Comments (CAT-010)</h4>
+                <small>Action items returned by Academic Reviewers requiring syllabus adjustment.</small>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-review-comments')">View all (2)</button>
+            </div>
+            <div class="creator-feedback-list">
+              ${db.creatorData.reviewComments.slice(0, 2).map(comm => `
+                <div class="creator-feedback-item ${comm.severity.toLowerCase()}">
+                  <div class="creator-feedback-meta">
+                    <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity}</span>
+                    <strong>${comm.courseTitle}</strong> · <span>${comm.item}</span>
+                  </div>
+                  <p>${comm.comment}</p>
+                  <div class="creator-feedback-actions">
+                    <small>Reviewer: ${comm.reviewer} · ${comm.date}</small>
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorReviewComment('${comm.id}')">Address Feedback</button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+          <div class="creator-queue-panel">
+            <div class="creator-queue-header">
+              <div>
+                <h4><i data-lucide="shield-alert"></i> Pre-Flight Validation Ready (FLOW-009)</h4>
+                <small>Automated structural integrity audits before review submission.</small>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-review-validation')">View all</button>
+            </div>
+            <div class="creator-validation-list">
+              <div class="creator-validation-card pass">
+                <div class="creator-val-head">
+                  <span class="badge badge-success"><i data-lucide="check"></i> 100% READY</span>
+                  <strong>Modern Full-Stack Web Dev (v1.2)</strong>
+                </div>
+                <p>Metadata complete, 28 Lessons verified, 4 Gatekeepers armed, SHA-256 clean.</p>
+                <div class="creator-val-foot">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-102')">Audit Report</button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('VER-102')">Submit to Board</button>
+                </div>
+              </div>
+
+              <div class="creator-validation-card pass" style="border-left-color: var(--primary);">
+                <div class="creator-val-head">
+                  <span class="badge badge-secondary">AUTHORING IN PROGRESS</span>
+                  <strong>Grade 8 Mathematics (v1.1)</strong>
+                </div>
+                <p>Curriculum outlines complete. 10 Worksheets attached. Awaiting Term 2 rubrics.</p>
+                <div class="creator-val-foot">
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-k12-syllabi')">Open Syllabus</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-104')">Validate Draft</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    window.lucide?.createIcons();
+  },
+
   creatorWorkspace(route) {
     if (route === "creator-dashboard") {
       this.creatorDashboard();
@@ -2461,7 +2650,6 @@ const RenderEngine = {
     window.lucide?.createIcons();
   },
 
-  // 1. Bespoke Milestone Progression Roadmap (MILE-001/004/008)
   renderCreatorMilestonesRoadmap() {
     const milestones = [
       {
@@ -2583,7 +2771,6 @@ const RenderEngine = {
     `;
   },
 
-  // 2. Bespoke Proficiency Levels Ladder
   renderCreatorLevelsLadder() {
     const levels = [
       {
@@ -2644,7 +2831,6 @@ const RenderEngine = {
     `;
   },
 
-  // 3. Bespoke Modules & Accordion Studio
   renderCreatorModulesStudio() {
     const modules = [
       {
@@ -2705,7 +2891,6 @@ const RenderEngine = {
     `;
   },
 
-  // 4. Bespoke Two-Pane Lesson Builder Studio
   renderCreatorLessonsStudio() {
     const lessons = db.creatorData.syllabus;
     return `
@@ -2748,7 +2933,6 @@ const RenderEngine = {
     `;
   },
 
-  // 5. Bespoke Activity Matrix
   renderCreatorActivitiesMatrix() {
     const activities = [
       { title: "Browser Monaco IDE Sandbox", type: "Interactive Code", desc: "Live code editor testing HTML5, CSS Grid, and React state in a sandbox.", units: "2 Lessons Attached", icon: "code-2" },
@@ -2781,7 +2965,6 @@ const RenderEngine = {
     `;
   },
 
-  // 6. Bespoke Courses Studio by Delivery Model (Self-Paced, Live Scheduled, K-12)
   renderCreatorCoursesStudio(courses) {
     return `
       <div class="creator-courses-grid">
@@ -2849,7 +3032,6 @@ const RenderEngine = {
     `;
   },
 
-  // 7. Bespoke Question Bank Studio Cards
   renderCreatorQuestionBankStudio(questions) {
     return `
       <div class="creator-question-cards-grid">
@@ -2879,7 +3061,6 @@ const RenderEngine = {
     `;
   },
 
-  // 8. Bespoke Quiz Engine Studio
   renderCreatorQuizzesStudio(assessments) {
     const quizzes = assessments.filter(a => a.type === "Quiz");
     return `
@@ -2910,7 +3091,6 @@ const RenderEngine = {
     `;
   },
 
-  // 9. Bespoke Spoken English Voice Activity Studio
   renderCreatorVoiceStudio(assessments) {
     const voiceTasks = assessments.filter(a => a.type === "Voice Activity");
     return `
@@ -2942,7 +3122,6 @@ const RenderEngine = {
     `;
   },
 
-  // 10. Bespoke Assessment Rubric Criteria Matrix
   renderCreatorRubricsStudio() {
     return `
       <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
@@ -2990,11 +3169,191 @@ const RenderEngine = {
     `;
   },
 
-  // 11. Bespoke In-Depth Learner Experience Simulator View
-  renderCreatorLmsPreview() {
+  renderCreatorLmsPreview(activeFormat = "video") {
+    let playerCanvasHtml = "";
+
+    if (activeFormat === "sandbox") {
+      playerCanvasHtml = `
+        <div class="creator-preview-player-pane">
+          <div class="creator-code-sandbox-mock">
+            <div class="creator-code-instructions">
+              <strong style="color: #60a5fa; display: block; margin-bottom: 6px; font-size: 13px;">CODING LAB CHALLENGE</strong>
+              <p style="margin: 0 0 8px 0;">Build a semantic responsive card using CSS Grid with minimum 2 columns on desktop and 1 column on mobile.</p>
+              <ul style="padding-left: 18px; margin: 0; font-size: 11px;">
+                <li>Use <code>display: grid</code></li>
+                <li>Set <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code></li>
+                <li>Validate contrast ratio &gt;= 4.5:1</li>
+              </ul>
+            </div>
+            <div class="creator-code-editor-pane">
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
+                <span>styles.css · Monaco IDE</span>
+                <span style="color: #4ade80;">UTF-8</span>
+              </div>
+              <div class="creator-code-line"><span style="color: #f472b6;">.grid-container</span> {</div>
+              <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">display</span>: grid;</div>
+              <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">grid-template-columns</span>: repeat(auto-fit, minmax(240px, 1fr));</div>
+              <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">gap</span>: 20px;</div>
+              <div class="creator-code-line">}</div>
+              <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
+                <button class="btn btn-primary btn-xs" onclick="Notifications.push('Test Passed', 'All CSS Grid test assertions passed (100%).', 'success')">
+                  <i data-lucide="play"></i> Run Tests
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-xs">Instructions</button>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Hint Unlocked', 'Check repeat() syntax.', 'info')">Get Hint</button>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Reset', 'Restored starter code template.', 'warning')">Reset Code</button>
+          </div>
+
+          <div>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Interactive Coding Sandbox · Lesson 2: CSS Grid</h3>
+            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
+              Learners write live CSS in the browser sandbox. The test runner evaluates responsive layout behavior against automated viewport criteria.
+            </p>
+          </div>
+        </div>
+      `;
+    } else if (activeFormat === "voice") {
+      playerCanvasHtml = `
+        <div class="creator-preview-player-pane">
+          <div class="creator-voice-player-mock">
+            <span class="badge badge-primary"><i data-lucide="mic"></i> SPOKEN ENGLISH STUDIO</span>
+            <h3 style="font: 700 17px 'Manrope', sans-serif; margin: 6px 0; color: #ffffff;">Prompt: Workplace Self-Introduction</h3>
+            <p style="font-size: 12.5px; opacity: 0.9; margin: 0 0 12px 0; max-width: 500px;">
+              "Hello, my name is Dr. Arsalan. I am a software engineer specializing in scalable backend architectures and frontend state machines."
+            </p>
+
+            <div class="creator-waveform-bars">
+              <div class="creator-waveform-bar" style="animation-delay: 0.1s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.3s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.2s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.4s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.5s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.2s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.6s;"></div>
+              <div class="creator-waveform-bar" style="animation-delay: 0.3s;"></div>
+            </div>
+
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 8px;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Recording Started', 'Recording 90s audio sample...', 'info')">
+                <i data-lucide="mic"></i> Start Recording
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Audio Evaluated', 'Pronunciation: 94% · Intonation: 90% · Pass', 'success')">
+                <i data-lucide="check-circle"></i> Submit Audio
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Spoken English Fluency & Phonetic Evaluation</h3>
+            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
+              Acoustic recordings are evaluated against phonetic rubric RUB-102 for word stress, articulation, and cadence.
+            </p>
+          </div>
+        </div>
+      `;
+    } else if (activeFormat === "quiz") {
+      playerCanvasHtml = `
+        <div class="creator-preview-player-pane">
+          <div class="creator-quiz-preview-mock">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 10px;">
+              <span class="badge badge-primary">QUESTION 1 OF 5 · SINGLE CHOICE</span>
+              <span style="font-size: 12px; color: var(--slate);"><i data-lucide="clock" style="width:12px; height:12px;"></i> Time Remaining: 14:32</span>
+            </div>
+
+            <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0;">
+              Which HTTP status code signifies that the client must authenticate itself to get the requested response?
+            </h3>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <label class="creator-quiz-option-label" onclick="this.classList.toggle('selected')">
+                <input type="radio" name="preview-quiz-opt">
+                <span><strong>A.</strong> 200 OK</span>
+              </label>
+              <label class="creator-quiz-option-label selected" onclick="this.classList.toggle('selected')">
+                <input type="radio" name="preview-quiz-opt" checked>
+                <span><strong>B.</strong> 401 Unauthorized (Authentication Required)</span>
+              </label>
+              <label class="creator-quiz-option-label" onclick="this.classList.toggle('selected')">
+                <input type="radio" name="preview-quiz-opt">
+                <span><strong>C.</strong> 403 Forbidden</span>
+              </label>
+              <label class="creator-quiz-option-label" onclick="this.classList.toggle('selected')">
+                <input type="radio" name="preview-quiz-opt">
+                <span><strong>D.</strong> 404 Not Found</span>
+              </label>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <span style="font-size: 12px; color: #166534;"><strong>Instant Feedback:</strong> Correct! 401 requires authentication credentials.</span>
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Quiz Answer Submitted', 'Score: 100% (Passed Gatekeeper Requirement)', 'success')">
+                Next Question
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (activeFormat === "milestone") {
+      playerCanvasHtml = `
+        <div class="creator-preview-player-pane">
+          <div class="creator-milestone-journey-mock">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <div>
+                <span class="badge badge-primary">MILESTONE 1 PROGRESS (MILE-001)</span>
+                <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">Web Architecture & DOM Foundations</h3>
+                <p style="font-size: 12.5px; color: #5a687c; margin: 0;">Modern Full-Stack Web Development · Level 1: Foundations</p>
+              </div>
+              <span class="badge badge-success">COMPLETED (100%)</span>
+            </div>
+
+            <div class="creator-certificate-frame">
+              <i data-lucide="award" style="width: 42px; height: 42px; color: #b45309; margin-bottom: 8px;"></i>
+              <strong style="font: 700 18px 'Manrope', sans-serif; color: #101c2e;">CERTIFICATE OF MILESTONE ACHIEVEMENT</strong>
+              <p style="font-size: 12px; color: #64748b; margin: 4px 0 14px 0;">This certifies that the learner has mastered semantic HTML5, CSS Grid, and DOM accessibility.</p>
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Certificate Downloaded', 'Downloaded digital PDF credential.', 'success')">Download PDF</button>
+                <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-milestones')">Unlock Milestone 2</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      // Default: Video Lecture preview
+      playerCanvasHtml = `
+        <div class="creator-preview-player-pane">
+          <div class="creator-player-screen-mock">
+            <i data-lucide="play-circle"></i>
+            <strong style="font-size: 15px;">Interactive Video Lecture & Live Coding Demo</strong>
+            <span style="font-size: 12px; opacity: 0.85;">Lesson 1: Semantic Structure & Accessibility (45:00)</span>
+          </div>
+
+          <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-xs">Lesson Guide</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('sandbox')">Open Sandbox</button>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Attached', 'Downloaded RES-101 HTML5 Semantic PDF.', 'success')">Download Notes</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('quiz')">Take Quiz</button>
+          </div>
+
+          <div>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Lesson 1: Semantic Structure & Modern Layout Tokens</h3>
+            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
+              In this unit, learners master semantic HTML elements (<code style="color:var(--primary);">&lt;main&gt;</code>, <code style="color:var(--primary);">&lt;header&gt;</code>, <code style="color:var(--primary);">&lt;section&gt;</code>) and establish accessible color contrast ratios adhering to WCAG AAA standards.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
     return `
       <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: linear-gradient(135deg, #182232, #253852); border-radius: 10px; color: #ffffff;">
+        
+        <!-- Viewport Mode & Format Selector -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: linear-gradient(135deg, #182232, #253852); border-radius: 10px; color: #ffffff; flex-wrap: wrap; gap: 12px;">
           <div>
             <strong style="font-size: 13.5px; color: #ffffff;">LMS Learner Viewport Simulator (CAT-009)</strong>
             <span style="font-size: 12px; color: #c9d6e4; display: block;">Testing: Modern Full-Stack Web Development (v1.2 Draft)</span>
@@ -3006,66 +3365,76 @@ const RenderEngine = {
           </div>
         </div>
 
+        <!-- Format Switcher Strip -->
+        <div class="creator-preview-format-tabs">
+          <button class="creator-preview-tab-btn ${activeFormat === 'video' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('video')">
+            <i data-lucide="video"></i> Video Lecture Preview
+          </button>
+          <button class="creator-preview-tab-btn ${activeFormat === 'sandbox' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('sandbox')">
+            <i data-lucide="code-2"></i> Coding Sandbox Preview
+          </button>
+          <button class="creator-preview-tab-btn ${activeFormat === 'voice' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('voice')">
+            <i data-lucide="mic"></i> Spoken Audio Preview
+          </button>
+          <button class="creator-preview-tab-btn ${activeFormat === 'quiz' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('quiz')">
+            <i data-lucide="help-circle"></i> Quiz Questionnaire Preview
+          </button>
+          <button class="creator-preview-tab-btn ${activeFormat === 'milestone' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('milestone')">
+            <i data-lucide="award"></i> Milestone Gateway & Badge
+          </button>
+        </div>
+
         <div class="creator-preview-viewport-box">
-          <div class="creator-preview-player-pane">
-            <div class="creator-player-screen-mock">
-              <i data-lucide="play-circle"></i>
-              <strong style="font-size: 15px;">Interactive Video Lecture & Coding Demo</strong>
-              <span style="font-size: 12px; opacity: 0.85;">Lesson 1: Semantic Structure & Accessibility (45:00)</span>
-            </div>
+          <!-- Left: Multi-format Player Pane -->
+          ${playerCanvasHtml}
 
-            <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; flex-wrap: wrap;">
-              <button class="btn btn-primary btn-xs">Lesson Guide</button>
-              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Practice Sandbox', 'Loaded interactive code sandbox environment.', 'info')">Coding Sandbox</button>
-              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Attached', 'Downloaded RES-101 HTML5 Semantic PDF.', 'success')">Download Notes</button>
-              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuizModal('QZ-201')">Take Quiz</button>
-            </div>
-
-            <div>
-              <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Lesson 1: Semantic Structure & Modern Layout Tokens</h3>
-              <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
-                In this unit, learners master semantic HTML elements (<code style="color:var(--primary);">&lt;main&gt;</code>, <code style="color:var(--primary);">&lt;header&gt;</code>, <code style="color:var(--primary);">&lt;section&gt;</code>) and establish accessible color contrast ratios adhering to WCAG AAA standards.
-              </p>
-            </div>
-          </div>
-
+          <!-- Right: Interactive Curriculum Drawer -->
           <div class="creator-preview-drawer-pane">
             <strong style="font-size: 13px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Outline</strong>
             
-            <div class="creator-drawer-item active">
+            <div class="creator-drawer-item ${activeFormat === 'video' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('video')">
               <div>
                 <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">FREE PREVIEW</span>
                 <strong style="display: block; font-size: 12px; color: var(--navy-medium);">1. Semantic Structure & A11y</strong>
-                <small style="color: #6a788e;">45 Mins · Formatted Guide</small>
+                <small style="color: #6a788e;">Video & Formatted Guide</small>
               </div>
               <i data-lucide="play" style="width: 14px; height: 14px; color: var(--primary);"></i>
             </div>
 
-            <div class="creator-drawer-item" id="sim-drawer-item-2">
+            <div class="creator-drawer-item ${activeFormat === 'sandbox' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('sandbox')">
               <div>
-                <span class="badge badge-warning" style="font-size: 9px; margin-bottom: 2px;" id="sim-lock-badge-2"><i data-lucide="lock" style="width:9px; height:9px;"></i> PAID ENROLMENT</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">2. Advanced CSS Grid Systems</strong>
-                <small style="color: #6a788e;">60 Mins · Interactive Sandbox</small>
+                <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">INTERACTIVE LAB</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">2. CSS Grid Browser Sandbox</strong>
+                <small style="color: #6a788e;">Monaco IDE Lab</small>
               </div>
-              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);" id="sim-lock-icon-2"></i>
+              <i data-lucide="code-2" style="width: 14px; height: 14px; color: var(--primary);"></i>
             </div>
 
-            <div class="creator-drawer-item locked">
+            <div class="creator-drawer-item ${activeFormat === 'quiz' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('quiz')">
               <div>
-                <span class="badge badge-secondary" style="font-size: 9px; margin-bottom: 2px;"><i data-lucide="lock" style="width:9px; height:9px;"></i> PREREQUISITE GATED</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">3. React 19 State Machines</strong>
-                <small style="color: #6a788e;">Requires Milestone 1 Pass</small>
+                <span class="badge badge-primary" style="font-size: 9px; margin-bottom: 2px;">GATEKEEPER</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">3. DOM Fundamentals Quiz</strong>
+                <small style="color: #6a788e;">Auto-Graded Test (80%)</small>
               </div>
-              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);"></i>
+              <i data-lucide="help-circle" style="width: 14px; height: 14px; color: var(--primary);"></i>
             </div>
 
-            <div class="creator-drawer-item locked">
+            <div class="creator-drawer-item ${activeFormat === 'voice' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('voice')">
               <div>
-                <span class="badge badge-secondary" style="font-size: 9px; margin-bottom: 2px;"><i data-lucide="lock" style="width:9px; height:9px;"></i> CAPSTONE DEFENSE</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">4. Production Deployment</strong>
-                <small style="color: #6a788e;">Requires 100% Progress</small>
+                <span class="badge badge-secondary" style="font-size: 9px; margin-bottom: 2px;">SPOKEN ENGLISH</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">4. Oral Self-Introduction</strong>
+                <small style="color: #6a788e;">Acoustic Audio Prompt</small>
               </div>
-              <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);"></i>
+              <i data-lucide="mic" style="width: 14px; height: 14px; color: var(--slate);"></i>
+            </div>
+
+            <div class="creator-drawer-item ${activeFormat === 'milestone' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('milestone')">
+              <div>
+                <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">MILESTONE CREDENTIAL</span>
+                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">5. Milestone 1 Certificate</strong>
+                <small style="color: #6a788e;">Digital Verification</small>
+              </div>
+              <i data-lucide="award" style="width: 14px; height: 14px; color: #b45309;"></i>
             </div>
           </div>
         </div>
@@ -4639,7 +5008,15 @@ const RenderEngine = {
 // 4. ACTION CONTROLLERS & GOVERNANCE AUDITING
 // ============================================================================
 
-const Actions = {
+window.Actions = Actions = {
+    switchPreviewFormat(format) {
+      const canvas = document.getElementById("creator-dynamic-view-canvas");
+      if (canvas) {
+        canvas.innerHTML = RenderEngine.renderCreatorLmsPreview(format);
+        window.lucide?.createIcons();
+        Notifications.push("Preview Format Switched", "Switched simulator view to " + format.toUpperCase() + " mode.", "info");
+      }
+    },
   
   // Audits governance actions in real-time
   audit(actionCode, details, level = "Low", changes = "N/A") {
@@ -6721,6 +7098,7 @@ function updateFreshnessText() {
 // ============================================================================
 // 8. EVENT LISTENER ATTACHMENTS (BOOTSTRAP)
 // ============================================================================
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // Init core components
@@ -8818,4 +9196,21 @@ document.addEventListener("DOMContentLoaded", () => {
     Notifications.push("Course Scope Updated", `Filtered authoring hierarchy to course ${courseCode}.`, "info");
   };
 
+
+  Actions.switchPreviewFormat = function(format) {
+    const canvas = document.getElementById("creator-dynamic-view-canvas");
+    if (canvas) {
+      canvas.innerHTML = RenderEngine.renderCreatorLmsPreview(format);
+      window.lucide?.createIcons();
+      Notifications.push("Preview Format Switched", `Switched simulator view to ${format.toUpperCase()} mode.`, "info");
+    }
+  };
+
+
+  window.Actions = Actions;
+  window.Router = Router;
+  window.RenderEngine = RenderEngine;
+  window.Simulator = Simulator;
+  window.db = db;
+  window.Notifications = Notifications;
 });
