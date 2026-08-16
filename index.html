@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IHS 2.0 Operations Console</title>
+  <!-- Google Fonts: Manrope for headings, Inter for body/UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Main Grid Layout -->
+  <div class="admin-container">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-area">
+          <div class="logo-mark">IHS</div>
+          <div class="brand-text">
+            <h2>HUZSAM LMS</h2>
+            <span id="shell-label">PLATFORM OPERATIONS</span>
+          </div>
+        </div>
+        <button id="toggle-sidebar" class="icon-btn" aria-label="Toggle Sidebar">
+          <i data-lucide="chevron-left"></i>
+        </button>
+      </div>
+
+      <div class="nav-search">
+        <i data-lucide="search"></i>
+        <input id="nav-search-input" type="search" placeholder="Find a module" aria-label="Find a module">
+        <kbd>/</kbd>
+      </div>
+
+      <nav class="sidebar-nav" id="platform-admin-nav" aria-label="Platform Admin navigation">
+        <!-- Dashboard Section -->
+        <div class="nav-item active" data-route="dashboard" id="nav-dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </div>
+
+        <!-- Group: User & Access -->
+        <div class="nav-group">
+          <div class="nav-group-title">User & Access</div>
+          <div class="nav-item" data-route="users" id="nav-users">
+            <i data-lucide="users"></i>
+            <span>Users</span>
+          </div>
+          <div class="nav-item" data-route="invitations" id="nav-invitations">
+            <i data-lucide="mail-open"></i>
+            <span>Invitations</span>
+          </div>
+          <div class="nav-item" data-route="security-sessions" id="nav-security-sessions">
+            <i data-lucide="shield-alert"></i>
+            <span>Security & Sessions</span>
+          </div>
+          <div class="nav-item" data-route="roles-permissions" id="nav-roles-permissions">
+            <i data-lucide="user-check"></i>
+            <span>Roles & Permissions</span>
+          </div>
+        </div>
+
+        <!-- Group: Configuration -->
+        <div class="nav-group">
+          <div class="nav-group-title">Configuration</div>
+          <div class="nav-item" data-route="reference-data" id="nav-reference-data">
+            <i data-lucide="database"></i>
+            <span>Reference Data</span>
+          </div>
+          <div class="nav-item" data-route="system-settings" id="nav-system-settings">
+            <i data-lucide="settings-2"></i>
+            <span>System Settings</span>
+          </div>
+          <div class="nav-item" data-route="business-rules" id="nav-business-rules">
+            <i data-lucide="scale"></i>
+            <span>Business Rules</span>
+          </div>
+        </div>
+
+        <!-- Group: Integrations -->
+        <div class="nav-group">
+          <div class="nav-group-title">Integrations</div>
+          <div class="nav-item" data-route="providers" id="nav-providers">
+            <i data-lucide="cable"></i>
+            <span>Providers</span>
+          </div>
+          <div class="nav-item" data-route="webhooks" id="nav-webhooks">
+            <i data-lucide="webhook"></i>
+            <span>Webhooks</span>
+          </div>
+          <div class="nav-item" data-route="integration-health" id="nav-integration-health">
+            <i data-lucide="activity"></i>
+            <span>Integration Health</span>
+          </div>
+        </div>
+
+        <!-- Group: Jobs & Exceptions -->
+        <div class="nav-group">
+          <div class="nav-group-title">Jobs & Exceptions</div>
+          <div class="nav-item" data-route="queue-jobs" id="nav-queue-jobs">
+            <i data-lucide="list-todo"></i>
+            <span>Queue Jobs</span>
+          </div>
+          <div class="nav-item" data-route="failed-jobs" id="nav-failed-jobs">
+            <i data-lucide="alert-triangle"></i>
+            <span>Failed Jobs</span>
+            <span class="badge badge-error count-failed-jobs">0</span>
+          </div>
+          <div class="nav-item" data-route="dead-letters" id="nav-dead-letters">
+            <i data-lucide="skull"></i>
+            <span>Dead Letters</span>
+            <span class="badge badge-error count-dead-letters">0</span>
+          </div>
+          <div class="nav-item" data-route="integration-exceptions" id="nav-integration-exceptions">
+            <i data-lucide="unplug"></i>
+            <span>Exceptions</span>
+            <span class="badge badge-warning count-integration-exceptions">0</span>
+          </div>
+        </div>
+
+        <!-- Group: Data Operations -->
+        <div class="nav-group">
+          <div class="nav-group-title">Data Operations</div>
+          <div class="nav-item" data-route="imports" id="nav-imports">
+            <i data-lucide="file-input"></i>
+            <span>Imports</span>
+            <span class="badge badge-warning count-failed-imports">0</span>
+          </div>
+          <div class="nav-item" data-route="exports" id="nav-exports">
+            <i data-lucide="file-output"></i>
+            <span>Exports</span>
+            <span class="badge badge-primary count-pending-exports">0</span>
+          </div>
+        </div>
+
+        <!-- Release Controls -->
+        <div class="nav-group">
+          <div class="nav-group-title">Release Controls</div>
+          <div class="nav-item" data-route="feature-flags" id="nav-feature-flags">
+            <i data-lucide="flag"></i>
+            <span>Feature Flags</span>
+          </div>
+        </div>
+
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="audit-logs" id="nav-audit-logs">
+            <i data-lucide="file-spreadsheet"></i>
+            <span>Audit Logs</span>
+          </div>
+        </div>
+
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="system-status" id="nav-system-status">
+            <i data-lucide="cpu"></i>
+            <span>System Status</span>
+          </div>
+        </div>
+
+        <!-- Data Lifecycle -->
+        <div class="nav-group">
+          <div class="nav-group-title">Data Lifecycle</div>
+          <div class="nav-item" data-route="retention-policies" id="nav-retention-policies">
+            <i data-lucide="history"></i>
+            <span>Retention</span>
+          </div>
+          <div class="nav-item" data-route="archive" id="nav-archive">
+            <i data-lucide="archive"></i>
+            <span>Archive</span>
+          </div>
+          <div class="nav-item" data-route="legal-holds" id="nav-legal-holds">
+            <i data-lucide="gavel"></i>
+            <span>Legal Hold</span>
+          </div>
+          <div class="nav-item" data-route="privacy-requests" id="nav-privacy-requests">
+            <i data-lucide="eye-off"></i>
+            <span>Privacy Requests</span>
+          </div>
+        </div>
+
+        <!-- Support View -->
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="support-access" id="nav-support-access">
+            <i data-lucide="heart-handshake"></i>
+            <span>Support Access</span>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="sidebar-nav coo-sidebar-nav hidden" id="coo-nav" aria-label="COO navigation">
+        <div class="nav-item active" data-route="dashboard" id="coo-nav-dashboard"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">Approvals</div>
+          <div class="nav-item" data-route="coo-approvals" id="nav-coo-approvals"><i data-lucide="inbox"></i><span>Decision Inbox</span><span class="badge badge-warning count-coo-approvals">12</span></div>
+          <div class="nav-item" data-route="coo-class-approvals" id="nav-coo-class-approvals"><i data-lucide="presentation"></i><span>Class Delivery</span></div>
+          <div class="nav-item" data-route="coo-payment-approvals" id="nav-coo-payment-approvals"><i data-lucide="receipt-text"></i><span>Payments</span></div>
+          <div class="nav-item" data-route="coo-finance-approvals" id="nav-coo-finance-approvals"><i data-lucide="landmark"></i><span>Finance</span></div>
+          <div class="nav-item" data-route="coo-payroll-approvals" id="nav-coo-payroll-approvals"><i data-lucide="badge-dollar-sign"></i><span>Payroll</span></div>
+          <div class="nav-item" data-route="coo-catalogue-approvals" id="nav-coo-catalogue-approvals"><i data-lucide="book-check"></i><span>Catalogue</span></div>
+          <div class="nav-item" data-route="coo-people-approvals" id="nav-coo-people-approvals"><i data-lucide="user-round-check"></i><span>People & Departments</span></div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">Operations</div>
+          <div class="nav-item" data-route="coo-live-classes" id="nav-coo-live-classes"><i data-lucide="radio"></i><span>Live Classes</span></div>
+          <div class="nav-item" data-route="coo-attendance" id="nav-coo-attendance"><i data-lucide="clipboard-check"></i><span>Attendance & Reports</span></div>
+          <div class="nav-item" data-route="coo-enrolments" id="nav-coo-enrolments"><i data-lucide="graduation-cap"></i><span>Enrolments</span></div>
+          <div class="nav-item" data-route="coo-entitlements" id="nav-coo-entitlements"><i data-lucide="ticket-check"></i><span>Entitlements</span></div>
+          <div class="nav-item" data-route="coo-renewals" id="nav-coo-renewals"><i data-lucide="refresh-ccw"></i><span>Renewals</span></div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">Trials & Sales</div>
+          <div class="nav-item" data-route="coo-trials" id="nav-coo-trials"><i data-lucide="calendar-search"></i><span>Trials</span></div>
+          <div class="nav-item" data-route="coo-leads" id="nav-coo-leads"><i data-lucide="contact-round"></i><span>Leads & Follow-ups</span></div>
+          <div class="nav-item" data-route="coo-conversions" id="nav-coo-conversions"><i data-lucide="funnel"></i><span>Conversions</span></div>
+          <div class="nav-item" data-route="coo-commissions" id="nav-coo-commissions"><i data-lucide="circle-dollar-sign"></i><span>CSR Commissions</span></div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">Business Oversight</div>
+          <div class="nav-item" data-route="coo-payments" id="nav-coo-payments"><i data-lucide="credit-card"></i><span>Payments & Memberships</span></div>
+          <div class="nav-item" data-route="coo-catalogue" id="nav-coo-catalogue"><i data-lucide="library-big"></i><span>Catalogue & Products</span></div>
+          <div class="nav-item" data-route="coo-finance" id="nav-coo-finance"><i data-lucide="chart-no-axes-combined"></i><span>Finance</span></div>
+          <div class="nav-item" data-route="coo-payroll" id="nav-coo-payroll"><i data-lucide="wallet-cards"></i><span>Payroll</span></div>
+          <div class="nav-item" data-route="coo-hr" id="nav-coo-hr"><i data-lucide="users-round"></i><span>HR & People</span></div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-group-title">Departments</div>
+          <div class="nav-item" data-route="coo-media" id="nav-coo-media"><i data-lucide="clapperboard"></i><span>Media</span></div>
+          <div class="nav-item" data-route="coo-development" id="nav-coo-development"><i data-lucide="code-xml"></i><span>Development</span></div>
+        </div>
+
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="coo-cases" id="nav-coo-cases"><i data-lucide="messages-square"></i><span>Cases & Escalations</span><span class="badge badge-error">4</span></div>
+          <div class="nav-item" data-route="coo-reports" id="nav-coo-reports"><i data-lucide="chart-spline"></i><span>Reports & Analytics</span></div>
+          <div class="nav-item" data-route="coo-governance" id="nav-coo-governance"><i data-lucide="scale"></i><span>Governance / Audit</span></div>
+        </div>
+      </nav>
+
+      <!-- Operational Manager (OM) Navigation Rail -->
+      <nav class="sidebar-nav om-sidebar-nav hidden" id="om-nav" aria-label="Operational Manager navigation">
+        <div class="nav-item active" data-route="dashboard" id="om-nav-dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </div>
+
+        <!-- Group 2: Trials -->
+        <div class="nav-group">
+          <div class="nav-group-title">Trials</div>
+          <div class="nav-item" data-route="om-trial-requests" id="nav-om-trial-requests">
+            <i data-lucide="clipboard-list"></i>
+            <span>Trial Requests</span>
+            <span class="badge badge-warning count-om-trial-requests">3</span>
+          </div>
+          <div class="nav-item" data-route="om-ready-scheduling" id="nav-om-ready-scheduling">
+            <i data-lucide="calendar-plus"></i>
+            <span>Ready for Scheduling</span>
+            <span class="badge badge-primary count-om-ready-scheduling">2</span>
+          </div>
+          <div class="nav-item" data-route="om-scheduled-trials" id="nav-om-scheduled-trials">
+            <i data-lucide="calendar-clock"></i>
+            <span>Scheduled Trials</span>
+          </div>
+          <div class="nav-item" data-route="om-trial-outcomes" id="nav-om-trial-outcomes">
+            <i data-lucide="calendar-check-2"></i>
+            <span>Trial Outcomes</span>
+          </div>
+        </div>
+
+        <!-- Group 3: Learners & Enrolments -->
+        <div class="nav-group">
+          <div class="nav-group-title">Learners & Enrolments</div>
+          <div class="nav-item" data-route="om-pending-setup" id="nav-om-pending-setup">
+            <i data-lucide="user-plus"></i>
+            <span>Pending Setup</span>
+            <span class="badge badge-warning count-om-pending-setup">4</span>
+          </div>
+          <div class="nav-item" data-route="om-active-enrolments" id="nav-om-active-enrolments">
+            <i data-lucide="graduation-cap"></i>
+            <span>Active Enrolments</span>
+          </div>
+          <div class="nav-item" data-route="om-course-assignments" id="nav-om-course-assignments">
+            <i data-lucide="book-marked"></i>
+            <span>Course Assignments</span>
+          </div>
+          <div class="nav-item" data-route="om-multi-course" id="nav-om-multi-course">
+            <i data-lucide="layers"></i>
+            <span>Multi-Course Learners</span>
+          </div>
+        </div>
+
+        <!-- Group 4: Cohorts & Rosters -->
+        <div class="nav-group">
+          <div class="nav-group-title">Cohorts & Rosters</div>
+          <div class="nav-item" data-route="om-course-runs" id="nav-om-course-runs">
+            <i data-lucide="play-circle"></i>
+            <span>Course Runs</span>
+          </div>
+          <div class="nav-item" data-route="om-cohorts-sections" id="nav-om-cohorts-sections">
+            <i data-lucide="users"></i>
+            <span>Cohorts / Sections</span>
+          </div>
+          <div class="nav-item" data-route="om-rosters" id="nav-om-rosters">
+            <i data-lucide="contact-2"></i>
+            <span>Rosters</span>
+          </div>
+          <div class="nav-item" data-route="om-capacity-transfers" id="nav-om-capacity-transfers">
+            <i data-lucide="arrow-left-right"></i>
+            <span>Capacity / Transfers</span>
+          </div>
+        </div>
+
+        <!-- Group 5: Trainers & Scheduling -->
+        <div class="nav-group">
+          <div class="nav-group-title">Trainers & Scheduling</div>
+          <div class="nav-item" data-route="om-trainer-assignments" id="nav-om-trainer-assignments">
+            <i data-lucide="user-check"></i>
+            <span>Trainer Assignments</span>
+          </div>
+          <div class="nav-item" data-route="om-schedule-plans" id="nav-om-schedule-plans">
+            <i data-lucide="calendar-range"></i>
+            <span>Schedule Plans</span>
+          </div>
+          <div class="nav-item" data-route="om-availability" id="nav-om-availability">
+            <i data-lucide="clock"></i>
+            <span>Availability</span>
+          </div>
+          <div class="nav-item" data-route="om-schedule-conflicts" id="nav-om-schedule-conflicts">
+            <i data-lucide="alert-octagon"></i>
+            <span>Schedule Conflicts</span>
+            <span class="badge badge-error count-om-conflicts">1</span>
+          </div>
+        </div>
+
+        <!-- Group 6: Live Classes -->
+        <div class="nav-group">
+          <div class="nav-group-title">Live Classes</div>
+          <div class="nav-item" data-route="om-classes-today" id="nav-om-classes-today">
+            <i data-lucide="radio"></i>
+            <span>Today</span>
+            <span class="badge badge-primary count-om-classes-today">6</span>
+          </div>
+          <div class="nav-item" data-route="om-classes-upcoming" id="nav-om-classes-upcoming">
+            <i data-lucide="calendar-days"></i>
+            <span>Upcoming</span>
+          </div>
+          <div class="nav-item" data-route="om-attendance" id="nav-om-attendance">
+            <i data-lucide="clipboard-check"></i>
+            <span>Attendance</span>
+          </div>
+          <div class="nav-item" data-route="om-reports-due" id="nav-om-reports-due">
+            <i data-lucide="file-clock"></i>
+            <span>Reports Due</span>
+            <span class="badge badge-warning count-om-reports-due">3</span>
+          </div>
+          <div class="nav-item" data-route="om-reports-in-review" id="nav-om-reports-in-review">
+            <i data-lucide="file-search"></i>
+            <span>In Review</span>
+          </div>
+          <div class="nav-item" data-route="om-technical-exceptions" id="nav-om-technical-exceptions">
+            <i data-lucide="video-off"></i>
+            <span>Technical Exceptions</span>
+            <span class="badge badge-error count-om-tech-exceptions">1</span>
+          </div>
+          <div class="nav-item" data-route="om-cancelled-rescheduled" id="nav-om-cancelled-rescheduled">
+            <i data-lucide="calendar-x"></i>
+            <span>Cancelled / Rescheduled</span>
+          </div>
+        </div>
+
+        <!-- Group 7: Class Review -->
+        <div class="nav-group">
+          <div class="nav-group-title">Class Review</div>
+          <div class="nav-item" data-route="om-trainer-reports" id="nav-om-trainer-reports">
+            <i data-lucide="file-text"></i>
+            <span>Trainer Reports</span>
+          </div>
+          <div class="nav-item" data-route="om-attendance-exceptions" id="nav-om-attendance-exceptions">
+            <i data-lucide="user-x"></i>
+            <span>Attendance Exceptions</span>
+            <span class="badge badge-warning count-om-att-exceptions">2</span>
+          </div>
+          <div class="nav-item" data-route="om-approval-queue" id="nav-om-approval-queue">
+            <i data-lucide="check-circle-2"></i>
+            <span>Approval Queue</span>
+            <span class="badge badge-warning count-om-approvals">4</span>
+          </div>
+          <div class="nav-item" data-route="om-correction-requests" id="nav-om-correction-requests">
+            <i data-lucide="undo-2"></i>
+            <span>Correction Requests</span>
+          </div>
+        </div>
+
+        <!-- Group 8: Entitlements & Renewals -->
+        <div class="nav-group">
+          <div class="nav-item" data-route="om-entitlements-renewals" id="nav-om-entitlements-renewals">
+            <i data-lucide="ticket-check"></i>
+            <span>Entitlements & Renewals</span>
+            <span class="badge badge-warning count-om-entitlement-risks">3</span>
+          </div>
+        </div>
+
+        <!-- Group 9: Payments -->
+        <div class="nav-group">
+          <div class="nav-group-title">Payments</div>
+          <div class="nav-item" data-route="om-payment-review" id="nav-om-payment-review">
+            <i data-lucide="receipt"></i>
+            <span>Payment Review Queue</span>
+            <span class="badge badge-warning count-om-payments-pending">3</span>
+          </div>
+          <div class="nav-item" data-route="om-payments-under-review" id="nav-om-payments-under-review">
+            <i data-lucide="lock"></i>
+            <span>Under Review</span>
+          </div>
+          <div class="nav-item" data-route="om-payments-approved" id="nav-om-payments-approved">
+            <i data-lucide="check-check"></i>
+            <span>Approved</span>
+          </div>
+          <div class="nav-item" data-route="om-payments-rejected-correction" id="nav-om-payments-rejected-correction">
+            <i data-lucide="x-circle"></i>
+            <span>Rejected / Correction</span>
+          </div>
+          <div class="nav-item" data-route="om-payment-exceptions" id="nav-om-payment-exceptions">
+            <i data-lucide="alert-triangle"></i>
+            <span>Payment Exceptions</span>
+            <span class="badge badge-error count-om-pay-exceptions">1</span>
+          </div>
+        </div>
+
+        <!-- Group 10: Resources -->
+        <div class="nav-group">
+          <div class="nav-group-title">Resources</div>
+          <div class="nav-item" data-route="om-resources" id="nav-om-resources">
+            <i data-lucide="folder-git-2"></i>
+            <span>Resources Library</span>
+          </div>
+        </div>
+
+        <!-- Group 11: Cases & Communications -->
+        <div class="nav-group">
+          <div class="nav-group-title">Cases & Communications</div>
+          <div class="nav-item" data-route="om-cases-communications" id="nav-om-cases-communications">
+            <i data-lucide="messages-square"></i>
+            <span>Operational Cases</span>
+            <span class="badge badge-error count-om-open-cases">3</span>
+          </div>
+        </div>
+
+        <!-- Group 12: K-12 Operations -->
+        <div class="nav-group">
+          <div class="nav-group-title">K-12 Operations</div>
+          <div class="nav-item" data-route="om-k12-operations" id="nav-om-k12-operations">
+            <i data-lucide="school"></i>
+            <span>K-12 Operations</span>
+          </div>
+        </div>
+
+        <!-- Group 13: Scoped Catalogue -->
+        <div class="nav-group">
+          <div class="nav-group-title">Catalogue (Scoped)</div>
+          <div class="nav-item" data-route="om-catalogue-operations" id="nav-om-catalogue-operations">
+            <i data-lucide="book-open"></i>
+            <span>Product Operations</span>
+          </div>
+        </div>
+
+        <!-- Group 14: Reports / Analytics -->
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="om-reports-analytics" id="nav-om-reports-analytics">
+            <i data-lucide="chart-pie"></i>
+            <span>Operational Analytics</span>
+          </div>
+        </div>
+      </nav>
+      
+            <!-- CSR (CUSTOMER SERVICE & SALES REPRESENTATIVE) SIDEBAR NAVIGATION -->
+      <nav class="sidebar-nav csr-sidebar-nav hidden" id="csr-nav" aria-label="CSR navigation">
+        <!-- 1. Dashboard -->
+        <div class="nav-item active" data-route="csr-dashboard" id="nav-csr-dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </div>
+
+        <!-- 2. Leads / Prospects -->
+        <div class="nav-group">
+          <div class="nav-group-title">Leads & Prospects</div>
+          <div class="nav-item" data-route="csr-leads-my" id="nav-csr-leads-my">
+            <i data-lucide="user-check"></i>
+            <span>My Leads</span>
+            <span class="badge badge-primary count-csr-my-leads">12</span>
+          </div>
+          <div class="nav-item" data-route="csr-leads-new" id="nav-csr-leads-new">
+            <i data-lucide="user-plus"></i>
+            <span>New Leads</span>
+            <span class="badge badge-warning count-csr-new-leads">5</span>
+          </div>
+          <div class="nav-item" data-route="csr-leads-qualified" id="nav-csr-leads-qualified">
+            <i data-lucide="award"></i>
+            <span>Qualified</span>
+          </div>
+          <div class="nav-item" data-route="csr-leads-converted" id="nav-csr-leads-converted">
+            <i data-lucide="check-check"></i>
+            <span>Converted</span>
+          </div>
+          <div class="nav-item" data-route="csr-leads-lost" id="nav-csr-leads-lost">
+            <i data-lucide="user-x"></i>
+            <span>Lost</span>
+          </div>
+        </div>
+
+        <!-- 3. Follow-ups -->
+        <div class="nav-group">
+          <div class="nav-group-title">Follow-ups</div>
+          <div class="nav-item" data-route="csr-followups-due" id="nav-csr-followups-due">
+            <i data-lucide="alarm-clock"></i>
+            <span>Due Today</span>
+            <span class="badge badge-error count-csr-followups-due">4</span>
+          </div>
+          <div class="nav-item" data-route="csr-followups-upcoming" id="nav-csr-followups-upcoming">
+            <i data-lucide="calendar"></i>
+            <span>Upcoming</span>
+          </div>
+          <div class="nav-item" data-route="csr-followups-completed" id="nav-csr-followups-completed">
+            <i data-lucide="calendar-check"></i>
+            <span>Completed</span>
+          </div>
+          <div class="nav-item" data-route="csr-followups-no-response" id="nav-csr-followups-no-response">
+            <i data-lucide="phone-missed"></i>
+            <span>No Response</span>
+          </div>
+        </div>
+
+        <!-- 4. Trials -->
+        <div class="nav-group">
+          <div class="nav-group-title">Trials</div>
+          <div class="nav-item" data-route="csr-trials-requests" id="nav-csr-trials-requests">
+            <i data-lucide="inbox"></i>
+            <span>Trial Requests</span>
+            <span class="badge badge-warning count-csr-trial-reqs">3</span>
+          </div>
+          <div class="nav-item" data-route="csr-trials-qualification" id="nav-csr-trials-qualification">
+            <i data-lucide="clipboard-check"></i>
+            <span>Qualification</span>
+          </div>
+          <div class="nav-item" data-route="csr-trials-ready" id="nav-csr-trials-ready">
+            <i data-lucide="clock"></i>
+            <span>Ready for Scheduling</span>
+          </div>
+          <div class="nav-item" data-route="csr-trials-scheduled" id="nav-csr-trials-scheduled">
+            <i data-lucide="video"></i>
+            <span>Scheduled Trials</span>
+          </div>
+          <div class="nav-item" data-route="csr-trials-outcomes" id="nav-csr-trials-outcomes">
+            <i data-lucide="target"></i>
+            <span>Trial Outcomes</span>
+          </div>
+        </div>
+
+        <!-- 5. Assisted Enrolments -->
+        <div class="nav-group">
+          <div class="nav-group-title">Assisted Enrolments</div>
+          <div class="nav-item" data-route="csr-enrolments-opportunities" id="nav-csr-enrolments-opportunities">
+            <i data-lucide="sparkles"></i>
+            <span>Conversion Opps</span>
+            <span class="badge badge-primary count-csr-conv-opps">4</span>
+          </div>
+          <div class="nav-item" data-route="csr-enrolments-membership-requests" id="nav-csr-enrolments-membership-requests">
+            <i data-lucide="shopping-bag"></i>
+            <span>Membership Requests</span>
+          </div>
+          <div class="nav-item" data-route="csr-enrolments-attributed" id="nav-csr-enrolments-attributed">
+            <i data-lucide="badge-percent"></i>
+            <span>Attributed Enrolments</span>
+          </div>
+          <div class="nav-item" data-route="csr-enrolments-status" id="nav-csr-enrolments-status">
+            <i data-lucide="layers"></i>
+            <span>Enrolment Status</span>
+          </div>
+        </div>
+
+        <!-- 6. Payment Review (Conditional Permission) -->
+        <div class="nav-group">
+          <div class="nav-group-title">Payment Review</div>
+          <div class="nav-item" data-route="csr-payment-queue" id="nav-csr-payment-queue">
+            <i data-lucide="receipt"></i>
+            <span>Review Queue</span>
+            <span class="badge badge-warning count-csr-payment-queue">3</span>
+          </div>
+          <div class="nav-item" data-route="csr-payment-under-review" id="nav-csr-payment-under-review">
+            <i data-lucide="file-search"></i>
+            <span>Under Review</span>
+          </div>
+          <div class="nav-item" data-route="csr-payment-approved" id="nav-csr-payment-approved">
+            <i data-lucide="check-circle-2"></i>
+            <span>Approved</span>
+          </div>
+          <div class="nav-item" data-route="csr-payment-rejected" id="nav-csr-payment-rejected">
+            <i data-lucide="x-circle"></i>
+            <span>Rejected / Correction</span>
+          </div>
+          <div class="nav-item" data-route="csr-payment-exceptions" id="nav-csr-payment-exceptions">
+            <i data-lucide="alert-triangle"></i>
+            <span>Exceptions</span>
+          </div>
+        </div>
+
+        <!-- 7. My Commissions -->
+        <div class="nav-group">
+          <div class="nav-group-title">My Commissions</div>
+          <div class="nav-item" data-route="csr-commissions-pending" id="nav-csr-commissions-pending">
+            <i data-lucide="hourglass"></i>
+            <span>Pending Verification</span>
+          </div>
+          <div class="nav-item" data-route="csr-commissions-eligible" id="nav-csr-commissions-eligible">
+            <i data-lucide="check"></i>
+            <span>Eligible / Payable</span>
+            <span class="badge badge-success count-csr-comm-payable">2</span>
+          </div>
+          <div class="nav-item" data-route="csr-commissions-reserved" id="nav-csr-commissions-reserved">
+            <i data-lucide="lock"></i>
+            <span>Reserved</span>
+          </div>
+          <div class="nav-item" data-route="csr-commissions-paid" id="nav-csr-commissions-paid">
+            <i data-lucide="banknote"></i>
+            <span>Paid</span>
+          </div>
+          <div class="nav-item" data-route="csr-commissions-reversed" id="nav-csr-commissions-reversed">
+            <i data-lucide="rotate-ccw"></i>
+            <span>Reversed</span>
+          </div>
+        </div>
+
+        <!-- 8. Cases & Communications -->
+        <div class="nav-group">
+          <div class="nav-group-title">Communications</div>
+          <div class="nav-item" data-route="csr-cases" id="nav-csr-cases">
+            <i data-lucide="message-square"></i>
+            <span>Inquiries & Cases</span>
+            <span class="badge badge-error count-csr-open-cases">2</span>
+          </div>
+        </div>
+
+        <!-- 9. Analytics / Performance -->
+        <div class="nav-group nav-group-primary">
+          <div class="nav-item" data-route="csr-analytics" id="nav-csr-analytics">
+            <i data-lucide="trending-up"></i>
+            <span>Sales Performance</span>
+          </div>
+        </div>
+      </nav>
+      <!-- Impersonation indicator in Sidebar footer if active -->
+      <div id="impersonation-sidebar-banner" class="impersonation-sidebar-banner hidden">
+        <i data-lucide="eye"></i>
+        <span>Impersonating <strong id="impersonated-user-sidebar">User</strong></span>
+        <button id="sidebar-stop-impersonate" class="link-btn">Stop</button>
+      </div>
+    </aside>
+
+    <button class="sidebar-scrim" id="sidebar-scrim" aria-label="Close navigation" tabindex="-1"></button>
+
+    <!-- RIGHT CONTAINER -->
+    <main class="main-content">
+      
+      <!-- TOP SIMULATOR & HEADER -->
+      <header class="header">
+        <div class="header-left">
+          <button id="mobile-menu-btn" class="icon-btn mobile-menu-btn" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="header-title-stack">
+            <span id="workspace-label">Platform operations</span>
+            <h1 id="view-title">Dashboard</h1>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="freshness-indicator">
+            <span class="pulse-dot"></span>
+            <span id="freshness-text">Data fresh (0s ago)</span>
+          </div>
+          <!-- Role Simulator Widget -->
+          <div class="simulator-card">
+            <i data-lucide="shield" class="simulator-icon"></i>
+            <div class="simulator-control">
+              <label for="role-simulator-select">Active Role Simulator</label>
+              <select id="role-simulator-select">
+                <option value="platform_admin" selected>Platform Admin (System Scope)</option>
+                <option value="operational_manager">Operational Manager (OM - Operations Command)</option>
+                <option value="coo">COO (Business Operations)</option>
+                <option value="csr">Customer Service & Sales (CSR - Sales & Intake)</option>
+                <option value="cto_developer">CTO & Developer (System, Jobs, Integrations)</option>
+                <option value="compliance_officer">Compliance & Auditor (Audits, Lifecycle)</option>
+                <option value="support_agent">Support Representative (Limited Support View)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Notification Bell -->
+          <div class="notification-wrapper">
+            <button id="notification-btn" class="icon-btn relative">
+              <i data-lucide="bell"></i>
+              <span class="badge badge-error pulse hidden" id="notification-count">0</span>
+            </button>
+            <div class="notification-dropdown hidden" id="notification-dropdown">
+              <div class="dropdown-header">
+                <h3 id="notification-title">System Notifications</h3>
+                <button id="clear-notifications" class="text-btn">Clear All</button>
+              </div>
+              <div class="dropdown-body" id="notification-list">
+                <div class="no-notifications">No active alerts.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Logged In Admin Profile -->
+          <div class="admin-profile">
+            <div class="avatar" id="admin-avatar">AD</div>
+            <div class="profile-details">
+              <h4 id="admin-display-name">Admin User</h4>
+              <span id="admin-display-role">Platform Admin</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW: DASHBOARD -->
+      <section class="content-view active" id="view-dashboard">
+        <div id="platform-dashboard-shell">
+        <div class="dashboard-intro">
+          <div>
+            <span class="dashboard-kicker">Sunday, 16 August</span>
+            <h2 id="platform-dashboard-greeting">Good afternoon, Admin.</h2>
+            <p id="platform-dashboard-description">Monitor platform reliability, governance, and access from one operational workspace.</p>
+          </div>
+          <button id="dashboard-review-audit" class="btn btn-secondary" data-route-shortcut="audit-logs">
+            <i data-lucide="file-search"></i> <span id="platform-dashboard-action-label">Review audit trail</span>
+          </button>
+        </div>
+
+        <div class="command-grid">
+          <article class="command-health" id="widget-system-health">
+            <div class="command-health-top">
+              <div>
+                <span class="command-label">Platform readiness</span>
+                <div class="health-score">98.4%</div>
+                <p>All core learning services are available.</p>
+              </div>
+              <span class="live-status"><span></span> Live</span>
+            </div>
+            <div class="command-providers">
+              <div class="provider-row">
+                <span class="provider-name"><i data-lucide="database" class="provider-icon"></i> Supabase DB</span>
+                <span class="status-indicator success" id="status-supabase"><span class="dot"></span> Operational</span>
+              </div>
+              <div class="provider-row">
+                <span class="provider-name"><i data-lucide="video" class="provider-icon"></i> Daily.co Media</span>
+                <span class="status-indicator success" id="status-dailyco"><span class="dot"></span> Operational</span>
+              </div>
+              <div class="provider-row">
+                <span class="provider-name"><i data-lucide="mail" class="provider-icon"></i> Resend Email</span>
+                <span class="status-indicator warning" id="status-resend"><span class="dot pulse"></span> Degraded</span>
+              </div>
+            </div>
+          </article>
+
+          <aside class="incident-panel" id="active-incident-banner">
+            <div class="incident-icon"><i data-lucide="triangle-alert"></i></div>
+            <div class="incident-copy">
+              <span>Active incident</span>
+              <h3>Outbound email latency</h3>
+              <p>Resend deliveries are experiencing a 12% timeout rate. Core learning flows remain available.</p>
+            </div>
+            <button id="resolve-incident-btn" class="btn btn-secondary btn-sm">Mark resolved</button>
+          </aside>
+        </div>
+
+        <section class="operations-strip" aria-label="Operational metrics">
+          <div class="strip-heading">
+            <div>
+              <h3>Operations pulse</h3>
+              <p>Items that may need attention today.</p>
+            </div>
+            <span>Updated just now</span>
+          </div>
+
+          <div class="strip-metrics">
+            <article class="strip-group clickable dash-card" id="widget-queue-health" data-drilldown="queue-jobs">
+              <div class="strip-group-title"><i data-lucide="layers-3"></i><span>Queue health</span></div>
+              <div class="strip-values">
+                <div><strong id="val-queued-jobs">0</strong><span>Queued</span></div>
+                <div class="clickable-count" id="drill-failed-jobs"><strong class="count-failed-jobs error-text">0</strong><span>Failed</span></div>
+                <div class="clickable-count" id="drill-dead-letters"><strong class="count-dead-letters error-text">0</strong><span>Dead letters</span></div>
+              </div>
+            </article>
+
+            <article class="strip-group" id="widget-data-freshness">
+              <div class="strip-group-title"><i data-lucide="database-zap"></i><span>Data operations</span></div>
+              <div class="strip-values">
+                <div class="clickable-count" id="drill-failed-imports"><strong class="count-failed-imports warning-text">0</strong><span>Blocked imports</span></div>
+                <div class="clickable-count" id="drill-pending-exports"><strong class="count-pending-exports">0</strong><span>Approvals</span></div>
+                <div><strong class="sync-value" id="db-sync-time">Just now</strong><span>Last sync</span></div>
+              </div>
+            </article>
+
+            <article class="strip-group" id="widget-security">
+              <div class="strip-group-title"><i data-lucide="shield-check"></i><span>Access security</span></div>
+              <div class="strip-values">
+                <div class="clickable-count" id="drill-active-impersonations"><strong id="val-active-impersonations">0</strong><span>Support sessions</span></div>
+                <div class="clickable-count" id="drill-security-sessions"><strong id="val-active-sessions">0</strong><span>Active sessions</span></div>
+                <div class="clickable-count" id="drill-security-alerts"><strong class="error-text" id="val-security-alerts">0</strong><span>Security alerts</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="dashboard-workspace">
+          <div class="workspace-main">
+            <article class="dash-card integration-card clickable" id="widget-webhooks" data-drilldown="webhooks">
+              <div class="card-header">
+                <div>
+                  <h3>Integration delivery</h3>
+                  <p>Webhook performance across connected services.</p>
+                </div>
+                <i data-lucide="arrow-up-right" class="drilldown-arrow"></i>
+              </div>
+              <div class="integration-score-row">
+                <div class="integration-score"><strong id="webhook-success-pct">94.8%</strong><span>Successful deliveries</span></div>
+                <div class="integration-track"><div class="progress-fill" id="webhook-progress-fill" style="width: 94.8%;"></div></div>
+              </div>
+              <div class="integration-footer clickable-count" id="drill-webhook-exceptions">
+                <span><i data-lucide="circle-alert"></i> Failed deliveries in the last 24 hours</span>
+                <strong class="count-integration-exceptions" id="val-webhook-exceptions">0</strong>
+              </div>
+            </article>
+
+            <article class="dash-card governance-card clickable" id="widget-recent-audits" data-drilldown="audit-logs">
+              <div class="card-header">
+                <div>
+                  <h3>Governance activity</h3>
+                  <p>Latest security, configuration, and access events.</p>
+                </div>
+                <button class="text-btn">View all</button>
+              </div>
+              <div class="audit-brief-list" id="audit-brief-list"></div>
+            </article>
+          </div>
+
+          <aside class="workspace-side">
+            <article class="dash-card" id="widget-quick-actions">
+              <div class="card-header">
+                <div>
+                  <h3>Admin actions</h3>
+                  <p>Frequently used operational controls.</p>
+                </div>
+              </div>
+              <div class="actions-grid">
+                <button id="qa-trigger-backup" class="action-tile"><i data-lucide="database-backup"></i><span>Trigger backup</span><small>Synchronize platform data</small></button>
+                <button id="qa-clear-cache" class="action-tile"><i data-lucide="refresh-cw"></i><span>Clear edge cache</span><small>Refresh distributed assets</small></button>
+                <button id="qa-force-retention" class="action-tile"><i data-lucide="history"></i><span>Run retention</span><small>Evaluate lifecycle rules</small></button>
+                <button id="qa-flush-deadletters" class="action-tile"><i data-lucide="list-restart"></i><span>Flush dead letters</span><small>Requeue failed jobs</small></button>
+                <button id="qa-impersonate-toggle" class="btn btn-primary btn-block"><i data-lucide="eye"></i> Launch support impersonation</button>
+              </div>
+            </article>
+
+            <article class="dash-card" id="widget-release-controls">
+              <div class="card-header">
+                <div>
+                  <h3>Release controls</h3>
+                  <p>Feature flags currently configured.</p>
+                </div>
+              </div>
+              <div id="flag-summary-list" class="flag-summary-list"></div>
+            </article>
+          </aside>
+        </div>
+        </div>
+
+        <div id="coo-dashboard-shell" class="coo-dashboard hidden">
+          <div class="coo-intro">
+            <div>
+              <span class="dashboard-kicker">Sunday, 16 August</span>
+              <h2>Good afternoon, Mara.</h2>
+              <p>Prioritize decisions, protect service delivery, and keep every business workflow moving.</p>
+            </div>
+            <button class="btn btn-primary" data-route-shortcut="coo-approvals"><i data-lucide="inbox"></i> Open decision inbox</button>
+          </div>
+
+          <div class="coo-filter-bar" aria-label="COO dashboard filters">
+            <div class="coo-filter-heading"><span>Operating view</span><strong>Company-wide</strong></div>
+            <label><span>Date</span><select class="form-control"><option>Today</option><option>This week</option><option>This month</option></select></label>
+            <label><span>Programme</span><select class="form-control"><option>All programmes</option><option>Literacy</option><option>Numeracy</option><option>Technology</option></select></label>
+            <label><span>Delivery</span><select class="form-control"><option>All delivery modes</option><option>One-to-one</option><option>Group</option><option>Trial</option></select></label>
+            <label><span>Owner</span><select class="form-control"><option>All responsible teams</option><option>Operations</option><option>Finance</option><option>HR</option></select></label>
+            <span class="coo-freshness"><i data-lucide="check-circle-2"></i> As of 13:08 PKT</span>
+          </div>
+
+          <section class="coo-decision-hero">
+            <div class="coo-decision-copy">
+              <span>Decision priority</span>
+              <h3><span id="coo-pending-decision-count">17</span> approvals need attention</h3>
+              <p><span id="coo-aged-decision-count">0</span> items are aged 18 hours or more. Delivery, payment, and payroll decisions carry the highest downstream impact.</p>
+              <div class="coo-decision-actions">
+                <button class="btn btn-primary" data-route-shortcut="coo-approvals">Review all decisions</button>
+                <button class="btn btn-secondary" data-route-shortcut="coo-governance">Decision history</button>
+              </div>
+            </div>
+            <div class="coo-decision-stats">
+              <button data-route-shortcut="coo-class-approvals"><span>Class delivery</span><strong id="coo-class-decision-count">0</strong><small>Attendance and reports</small></button>
+              <button data-route-shortcut="coo-payment-approvals"><span>Payments</span><strong id="coo-payment-decision-count">0</strong><small>Private evidence review</small></button>
+              <button data-route-shortcut="coo-payroll-approvals"><span>Payroll</span><strong id="coo-payroll-decision-count">0</strong><small>Runs and adjustments</small></button>
+              <button data-route-shortcut="coo-people-approvals"><span>Other decisions</span><strong id="coo-other-decision-count">0</strong><small>Finance, catalogue, people</small></button>
+            </div>
+          </section>
+
+          <section class="coo-attention-grid" aria-label="Items requiring attention">
+            <button class="coo-attention-item urgent" data-route-shortcut="coo-attendance"><span>Attendance exceptions</span><strong id="coo-attendance-count">0</strong><small>Provider evidence needs reconciliation</small><i data-lucide="arrow-up-right"></i></button>
+            <button class="coo-attention-item" data-route-shortcut="coo-renewals"><span>Renewal risk</span><strong id="coo-renewal-count">0</strong><small>Memberships represented in the risk view</small><i data-lucide="arrow-up-right"></i></button>
+            <button class="coo-attention-item" data-route-shortcut="coo-cases"><span>Open cases</span><strong id="coo-case-count">0</strong><small>Escalated, waiting, and reopened cases</small><i data-lucide="arrow-up-right"></i></button>
+            <button class="coo-attention-item" data-route-shortcut="coo-hr"><span>People risks</span><strong id="coo-people-risk-count">0</strong><small>Documents, onboarding, and scoped cases</small><i data-lucide="arrow-up-right"></i></button>
+          </section>
+
+          <div class="coo-workbench">
+            <section class="coo-today-panel">
+              <div class="coo-section-head"><div><h3>Today in delivery</h3><p>Classes, reports, and participant exceptions from source records.</p></div><button class="text-btn" data-route-shortcut="coo-live-classes">View schedule</button></div>
+              <div class="coo-timeline">
+                <button data-route-shortcut="coo-live-classes"><time>13:30</time><div><strong>Applied Numeracy, Cohort N4</strong><span>Group class · Daily.co room ready</span></div><span class="badge badge-success">Ready</span></button>
+                <button data-route-shortcut="coo-attendance"><time>14:15</time><div><strong>Literacy Foundations, 1:1</strong><span>Trainer report overdue by 46 minutes</span></div><span class="badge badge-warning">Review</span></button>
+                <button data-route-shortcut="coo-live-classes"><time>16:00</time><div><strong>Technology Skills, Trial</strong><span>Prospect confirmed · reminder delivered</span></div><span class="badge badge-secondary">Upcoming</span></button>
+              </div>
+            </section>
+
+            <aside class="coo-performance-panel">
+              <div class="coo-section-head"><div><h3>Commercial pulse</h3><p>Permission-scoped management indicators.</p></div><button class="text-btn" data-route-shortcut="coo-reports">Definitions</button></div>
+              <div class="coo-kpis">
+                <button data-route-shortcut="coo-conversions"><span>Conversion records</span><strong id="coo-conversion-count">0</strong><small>Source-linked outcomes</small></button>
+                <button data-route-shortcut="coo-payments"><span>Payment reviews</span><strong id="coo-payment-record-count">0</strong><small>Current source records</small></button>
+                <button data-route-shortcut="coo-entitlements"><span>Entitlement signals</span><strong id="coo-entitlement-count">0</strong><small>Balances and correction events</small></button>
+                <button data-route-shortcut="coo-finance"><span>Finance records</span><strong id="coo-finance-record-count">0</strong><small>Reconciliation and approvals</small></button>
+              </div>
+            </aside>
+          </div>
+
+          <section class="coo-department-strip">
+            <div class="coo-section-head"><div><h3>Department pulse</h3><p>Executive visibility without replacing each department owner.</p></div></div>
+            <div class="coo-department-grid">
+              <button data-route-shortcut="coo-media"><i data-lucide="clapperboard"></i><span>Media</span><strong><span id="coo-media-count">0</span> records</strong><small>Quality and revision states</small></button>
+              <button data-route-shortcut="coo-development"><i data-lucide="code-xml"></i><span>Development</span><strong><span id="coo-development-count">0</span> records</strong><small>Delivery and blocker states</small></button>
+              <button data-route-shortcut="coo-hr"><i data-lucide="users-round"></i><span>HR & People</span><strong><span id="coo-hr-count">0</span> records</strong><small>Scoped people actions</small></button>
+              <button data-route-shortcut="coo-payroll"><i data-lucide="wallet-cards"></i><span>Payroll</span><strong>Submitted</strong><small>August run awaits approval</small></button>
+            </div>
+          </section>
+        </div>
+
+        <!-- CSR (CUSTOMER SERVICE & SALES) DASHBOARD SHELL -->
+        <div id="csr-dashboard-shell" class="csr-command-deck hidden">
+          
+          <!-- CSR Live Sales & Intake Flight Strip -->
+          <div class="csr-flight-strip">
+            <div class="csr-flight-info">
+              <div class="csr-flight-title-row">
+                <span class="csr-flight-badge"><span class="pulse-dot"></span> SALES & INTAKE COMMAND</span>
+                <span class="csr-flight-tag">Representative: <strong>Sarah Jenkins</strong></span>
+                <span class="csr-flight-tag"><i data-lucide="target"></i> Monthly Quota: <strong class="success-text">PKR 450k / 600k (75%)</strong></span>
+                <span class="csr-flight-tag"><i data-lucide="badge-check"></i> <strong class="success-text">Permissioned Reviewer</strong></span>
+              </div>
+              <p class="csr-flight-sub">Assigned prospect management, trial qualification, follow-ups, and assisted conversion pipeline.</p>
+            </div>
+            <div class="csr-flight-actions">
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openCsrNewLeadModal()"><i data-lucide="user-plus"></i> New Lead</button>
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openCsrScheduleTrialModal()"><i data-lucide="calendar-plus"></i> Schedule Trial</button>
+              <button class="btn btn-primary btn-sm" data-route-shortcut="csr-followups-due"><i data-lucide="alarm-clock"></i> Follow-ups Due (<span id="csr-flight-followups-count">4</span>)</button>
+            </div>
+          </div>
+
+          <!-- CSR Scope & Attribution Filter Bar -->
+          <div class="csr-scope-bar" aria-label="CSR dashboard filters">
+            <div class="csr-scope-header">
+              <div class="csr-scope-title">
+                <i data-lucide="sliders-horizontal"></i>
+                <span>Sales Scope & Attribution Filter</span>
+              </div>
+              <div class="csr-scope-sync">
+                <span class="pulse-dot"></span>
+                <span>As of 13:08 PKT · Real-time Scope</span>
+              </div>
+            </div>
+            <div class="csr-scope-grid">
+              <label class="csr-scope-field">
+                <span>Date Range</span>
+                <select id="csr-filter-date" class="form-control">
+                  <option value="today" selected>Today (16 Aug)</option>
+                  <option value="upcoming">Next 7 Days</option>
+                  <option value="month">Current Month (Aug 2026)</option>
+                  <option value="all">All Records</option>
+                </select>
+              </label>
+              <label class="csr-scope-field">
+                <span>Course Track</span>
+                <select id="csr-filter-course" class="form-control">
+                  <option value="">All Programmes</option>
+                  <option value="Literacy">Basic Literacy</option>
+                  <option value="Numeracy">Applied Numeracy</option>
+                  <option value="Technology">Vocational Technology</option>
+                  <option value="K-12">K-12 Academic</option>
+                </select>
+              </label>
+              <label class="csr-scope-field">
+                <span>Lead Source / Campaign</span>
+                <select id="csr-filter-source" class="form-control">
+                  <option value="">All Inbound Sources</option>
+                  <option value="Facebook Ads">Meta / Facebook Ads</option>
+                  <option value="Google Search">Google Search & Ads</option>
+                  <option value="Direct Referral">Direct / Community Referral</option>
+                  <option value="Web Portal">Organic Web Inquiry</option>
+                </select>
+              </label>
+              <label class="csr-scope-field">
+                <span>Attribution Scope</span>
+                <select id="csr-filter-owner" class="form-control">
+                  <option value="my" selected>My Assigned Prospects (Sarah Jenkins)</option>
+                  <option value="all">All CSR Leads (Team Visibility)</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <!-- CSR 4-Stage Sales & Conversion Pipeline Matrix -->
+          <section class="csr-pipeline-matrix" aria-label="Sales and conversion pipeline">
+            <div class="csr-pipeline-stage" data-route-shortcut="csr-leads-my">
+              <div class="csr-stage-header">
+                <span class="csr-stage-number">01</span>
+                <span class="badge badge-warning"><span id="csr-pipe-leads-count">12</span> Prospects</span>
+              </div>
+              <h4>Leads & Inquiries</h4>
+              <p>Inbound qualification, consent & initial contact</p>
+              <div class="csr-stage-footer">
+                <span><strong>5</strong> New Inquiries</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="csr-pipeline-stage urgent" data-route-shortcut="csr-followups-due">
+              <div class="csr-stage-header">
+                <span class="csr-stage-number">02</span>
+                <span class="badge badge-error"><span id="csr-pipe-followups-count">4</span> Due</span>
+              </div>
+              <h4>Follow-ups & Trials</h4>
+              <p>Scheduled calls, trial reminders & placement support</p>
+              <div class="csr-stage-footer">
+                <span><strong>3</strong> Trials Scheduled</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="csr-pipeline-stage" data-route-shortcut="csr-enrolments-opportunities">
+              <div class="csr-stage-header">
+                <span class="csr-stage-number">03</span>
+                <span class="badge badge-primary"><span id="csr-pipe-opps-count">4</span> Opps</span>
+              </div>
+              <h4>Assisted Enrolment</h4>
+              <p>Post-trial conversion, membership & order assistance</p>
+              <div class="csr-stage-footer">
+                <span><strong>2</strong> Pending Activation</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="csr-pipeline-stage" data-route-shortcut="csr-commissions-eligible">
+              <div class="csr-stage-header">
+                <span class="csr-stage-number">04</span>
+                <span class="badge badge-success"><span id="csr-pipe-comm-count">PKR 32,500</span></span>
+              </div>
+              <h4>Commissions & Review</h4>
+              <p>Attributed verified sales & payment verification</p>
+              <div class="csr-stage-footer">
+                <span><strong>3</strong> Payments in Queue</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+          </section>
+
+          <!-- Middle Zone: Dual Action Queues for CSR -->
+          <div class="csr-queues-grid">
+            
+            <!-- Left Queue: Today's High-Priority Follow-ups & Trial Dispatch -->
+            <section class="csr-queue-card">
+              <div class="csr-queue-head">
+                <div>
+                  <h4><i data-lucide="phone-call"></i> Priority Follow-ups & Callbacks</h4>
+                  <p>Scheduled prospect touchpoints, trial invitations, and outcome reviews.</p>
+                </div>
+                <button class="text-btn" data-route-shortcut="csr-followups-due">View all (<span id="csr-followups-sub-count">4</span>)</button>
+              </div>
+              <div class="csr-actionable-list" id="csr-followups-list">
+                <!-- Dynamically populated -->
+              </div>
+            </section>
+
+            <!-- Right Queue: Conversion Opportunities & Payment Reviews -->
+            <section class="csr-queue-card">
+              <div class="csr-queue-head">
+                <div>
+                  <h4><i data-lucide="sparkles"></i> Conversion Opps & Payment Queue</h4>
+                  <p>Trial-completed leads ready for checkout & permission-scoped bank receipts.</p>
+                </div>
+                <button class="text-btn" data-route-shortcut="csr-enrolments-opportunities">View all (<span id="csr-opps-sub-count">7</span>)</button>
+              </div>
+              <div class="csr-actionable-list" id="csr-conversion-list">
+                <!-- Dynamically populated -->
+              </div>
+            </section>
+
+          </div>
+
+        </div>
+
+        <!-- OPERATIONAL MANAGER (OM) DASHBOARD SHELL -->
+        <div id="om-dashboard-shell" class="om-command-deck hidden">
+          
+          <!-- OM Live Operations Flight Deck Header -->
+          <div class="om-flight-strip">
+            <div class="om-flight-info">
+              <div class="om-flight-title-row">
+                <span class="om-flight-badge"><span class="pulse-dot"></span> LIVE OPERATIONS DECK</span>
+                <span class="om-flight-tag">Supervisor: <strong>Sarah Connor</strong></span>
+                <span class="om-flight-tag"><i data-lucide="activity"></i> WebRTC: <strong class="success-text">99.9% Active</strong></span>
+                <span class="om-flight-tag"><i data-lucide="radio"></i> <strong id="om-flight-live-count">2 Classes In-Flight</strong></span>
+              </div>
+              <p class="om-flight-sub">Tactical operations center for live class dispatch, trial bookings, and delivery sign-offs.</p>
+            </div>
+            <div class="om-flight-actions">
+              <button class="btn btn-secondary btn-sm" data-route-shortcut="om-ready-scheduling"><i data-lucide="calendar-plus"></i> Schedule Trial</button>
+              <button class="btn btn-secondary btn-sm" data-route-shortcut="om-course-runs"><i data-lucide="plus"></i> New Cohort Run</button>
+              <button class="btn btn-primary btn-sm" data-route-shortcut="om-approval-queue"><i data-lucide="check-circle-2"></i> Review Delivery Queue (<span id="om-flight-reviews-count">4</span>)</button>
+            </div>
+          </div>
+
+          <!-- OM Operational Scope Filter Bar -->
+          <div class="om-scope-bar" aria-label="Operational Manager dashboard filters">
+            <div class="om-scope-header">
+              <div class="om-scope-title">
+                <i data-lucide="sliders-horizontal"></i>
+                <span>Operations Scope & Telemetry Filter</span>
+              </div>
+              <div class="om-scope-sync">
+                <span class="pulse-dot"></span>
+                <span>As of 13:08 PKT · Real-time Sync</span>
+              </div>
+            </div>
+            <div class="om-scope-grid">
+              <label class="om-scope-field">
+                <span>Date Range</span>
+                <select id="om-filter-date" class="form-control">
+                  <option value="today" selected>Today (16 Aug)</option>
+                  <option value="upcoming">Next 7 Days</option>
+                  <option value="month">Current Month</option>
+                  <option value="all">All Records</option>
+                </select>
+              </label>
+              <label class="om-scope-field">
+                <span>Course Track</span>
+                <select id="om-filter-course" class="form-control">
+                  <option value="">All Programmes</option>
+                  <option value="Literacy">Basic Literacy</option>
+                  <option value="Numeracy">Applied Numeracy</option>
+                  <option value="Technology">Vocational Technology</option>
+                  <option value="K-12">K-12 Academic</option>
+                </select>
+              </label>
+              <label class="om-scope-field">
+                <span>Delivery Mode</span>
+                <select id="om-filter-delivery" class="form-control">
+                  <option value="">All Delivery Modes</option>
+                  <option value="One-to-One">One-to-One (1:1)</option>
+                  <option value="Group">Group / Cohort</option>
+                  <option value="Trial">Trial Consultation</option>
+                  <option value="K-12">K-12 Section</option>
+                </select>
+              </label>
+              <label class="om-scope-field">
+                <span>Assignment Owner</span>
+                <select id="om-filter-owner" class="form-control">
+                  <option value="">All Operations Staff</option>
+                  <option value="Sarah Connor">Sarah Connor (You)</option>
+                  <option value="Enrolment Ops">Enrolment Ops</option>
+                  <option value="Scheduling Team">Scheduling Team</option>
+                  <option value="Support Team">Support Team</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <!-- OM 4-Stage Operational Pipeline Matrix -->
+          <section class="om-pipeline-matrix" aria-label="End-to-End Operational Lifecycle Pipeline">
+            <div class="om-pipeline-stage" data-route-shortcut="om-trial-requests">
+              <div class="om-stage-header">
+                <span class="om-stage-number">01</span>
+                <span class="om-stage-icon"><i data-lucide="user-plus"></i></span>
+                <span class="badge badge-warning"><span id="om-pipe-trials-count">3</span> Intake</span>
+              </div>
+              <h4>Trial Qualification</h4>
+              <p>Placement checks, consent & slot dispatch</p>
+              <div class="om-stage-footer">
+                <span><strong>2</strong> Ready to Schedule</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="om-pipeline-stage" data-route-shortcut="om-pending-setup">
+              <div class="om-stage-header">
+                <span class="om-stage-number">02</span>
+                <span class="om-stage-icon"><i data-lucide="user-check"></i></span>
+                <span class="badge badge-warning"><span id="om-pipe-enrolments-count">4</span> Pending</span>
+              </div>
+              <h4>Enrolment & Setup</h4>
+              <p>Curriculum matching & trainer allocation</p>
+              <div class="om-stage-footer">
+                <span><strong>9</strong> Active Enrolments</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="om-pipeline-stage" data-route-shortcut="om-classes-today">
+              <div class="om-stage-header">
+                <span class="om-stage-number">03</span>
+                <span class="om-stage-icon"><i data-lucide="video"></i></span>
+                <span class="badge badge-success"><span id="om-pipe-classes-today">6</span> Today</span>
+              </div>
+              <h4>Live Delivery</h4>
+              <p>Daily.co room tokens & telemetry</p>
+              <div class="om-stage-footer">
+                <span><strong>2</strong> Live In-Flight</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+
+            <div class="om-pipeline-stage urgent" data-route-shortcut="om-approval-queue">
+              <div class="om-stage-header">
+                <span class="om-stage-number">04</span>
+                <span class="om-stage-icon"><i data-lucide="file-check-2"></i></span>
+                <span class="badge badge-error"><span id="om-pipe-qa-count">7</span> Action</span>
+              </div>
+              <h4>QA & Sign-Off</h4>
+              <p>Class reports QA & manual payment grants</p>
+              <div class="om-stage-footer">
+                <span><strong>4</strong> Reports · <strong>3</strong> Payments</span>
+                <i data-lucide="chevron-right"></i>
+              </div>
+            </div>
+          </section>
+
+          <!-- Middle Zone: Today's Live Class Operational Radar & Agenda -->
+          <section class="om-live-deck">
+            <div class="om-deck-header">
+              <div>
+                <h3><i data-lucide="radio"></i> Today's Live Class Operations</h3>
+                <p>Real-time room provisioning, participant attendance variance, and trainer sign-offs.</p>
+              </div>
+              <div class="button-row">
+                <button class="btn btn-secondary btn-xs" data-route-shortcut="om-classes-upcoming">Upcoming (7d)</button>
+                <button class="btn btn-primary btn-xs" data-route-shortcut="om-classes-today">View Live Class Board</button>
+              </div>
+            </div>
+
+            <div class="om-classes-grid" id="om-classes-grid">
+              <!-- Dynamically populated card radar items from db.omData.classes -->
+            </div>
+          </section>
+
+          <!-- Bottom Zone: Dual Action Queues (Class Review QA & Manual Payment Verification) -->
+          <div class="om-queues-grid">
+            
+            <!-- Left Queue: Class Delivery Sign-Off Queue -->
+            <section class="om-queue-card">
+              <div class="om-queue-head">
+                <div>
+                  <h4><i data-lucide="file-text"></i> Class Delivery Approval Queue</h4>
+                  <p>Verify syllabus covered & attendance telemetry to create payable earnings.</p>
+                </div>
+                <button class="text-btn" data-route-shortcut="om-approval-queue">View all (<span id="om-qa-sub-count">4</span>)</button>
+              </div>
+              <div class="om-actionable-list" id="om-delivery-qa-list">
+                <!-- Dynamically populated -->
+              </div>
+            </section>
+
+            <!-- Right Queue: Manual Payment & Checksum Verification Queue -->
+            <section class="om-queue-card">
+              <div class="om-queue-head">
+                <div>
+                  <h4><i data-lucide="receipt"></i> Manual Payment Verification Queue</h4>
+                  <p>Validate bank transfer slips and SHA-256 checksums before granting access.</p>
+                </div>
+                <button class="text-btn" data-route-shortcut="om-payment-review">View all (<span id="om-payment-sub-count">3</span>)</button>
+              </div>
+              <div class="om-actionable-list" id="om-payment-qa-list">
+                <!-- Dynamically populated -->
+              </div>
+            </section>
+
+          </div>
+
+        </div>
+      </section>
+
+      <section class="content-view" id="view-coo-workspace">
+        <div id="coo-workspace-content"></div>
+      </section>
+
+      <!-- VIEW: CSR WORKSPACE (SUB-VIEWS) -->
+      <section class="content-view" id="view-csr-workspace">
+        <div id="csr-workspace-content">
+          <!-- Dynamically populated by RenderEngine.csrWorkspace(route) -->
+        </div>
+      </section>
+
+      <!-- VIEW: OPERATIONAL MANAGER WORKSPACE -->
+      <section class="content-view" id="view-om-workspace">
+        <div id="om-workspace-content"></div>
+      </section>
+
+      <!-- VIEW: USERS -->
+      <section class="content-view" id="view-users">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="users-search" class="form-control inline" placeholder="Search users by name, email...">
+            <select id="users-role-filter" class="form-control inline">
+              <option value="">All Roles</option>
+              <option value="Trainer">Trainer</option>
+              <option value="Learner">Learner</option>
+              <option value="Operations">Operations</option>
+              <option value="Platform Admin">Platform Admin</option>
+            </select>
+            <select id="users-status-filter" class="form-control inline">
+              <option value="">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="Pending Verification">Pending Verification</option>
+              <option value="Suspended">Suspended</option>
+              <option value="Locked">Locked</option>
+              <option value="Deactivated">Deactivated</option>
+            </select>
+          </div>
+          <button id="btn-add-user" class="btn btn-primary"><i data-lucide="plus"></i> Add Account</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Person / Account</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>MFA</th>
+                <th>Status</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: INVITATIONS -->
+      <section class="content-view" id="view-invitations">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="invitations-search" class="form-control inline" placeholder="Search invites...">
+          </div>
+          <button id="btn-create-invite" class="btn btn-primary"><i data-lucide="plus"></i> Create Invitation</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Recipient Email</th>
+                <th>Proposed Access</th>
+                <th>Created By</th>
+                <th>Sent Date</th>
+                <th>Onboarding</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="invitations-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: SECURITY SESSIONS -->
+      <section class="content-view" id="view-security-sessions">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">Manage active platform sessions. Terminate user sessions if compromised.</span>
+          </div>
+          <button id="btn-revoke-all-sessions" class="btn btn-error"><i data-lucide="shield-alert"></i> Revoke All Sessions</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>IP Address</th>
+                <th>Location</th>
+                <th>Browser/OS</th>
+                <th>Login Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="security-sessions-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: ROLES & PERMISSIONS -->
+      <section class="content-view" id="view-roles-permissions">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">Role templates and scoped assignments follow default-deny authorization.</span>
+          </div>
+          <div class="button-row">
+            <button id="btn-assign-role" class="btn btn-secondary"><i data-lucide="user-plus"></i> Assign Role</button>
+            <button id="btn-create-role" class="btn btn-primary"><i data-lucide="plus"></i> Create Role</button>
+          </div>
+        </div>
+        <div class="role-matrix-container">
+          <div class="role-sidebar-list" id="role-matrix-list">
+            <!-- Sidebar for roles injected by JS -->
+          </div>
+          <div class="role-permissions-panel">
+            <h4 id="role-panel-title">Select a Role to Manage Permissions</h4>
+            <div id="role-panel-permissions-grid" class="permissions-grid">
+              <!-- Checklist of permissions injected by JS -->
+            </div>
+            <div class="panel-actions hidden" id="role-panel-actions">
+              <button id="btn-save-role-permissions" class="btn btn-primary">Save Role Configuration</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: REFERENCE DATA -->
+      <section class="content-view" id="view-reference-data">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <select id="ref-data-category-select" class="form-control inline">
+              <option value="courses">Course Categories</option>
+              <option value="locations">Training Hubs</option>
+              <option value="rejections">Rejection Reasons</option>
+            </select>
+          </div>
+          <button id="btn-add-ref-data" class="btn btn-primary"><i data-lucide="plus"></i> Add Entry</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Key / Code</th>
+                <th>Label / Value</th>
+                <th>Description</th>
+                <th>State / Protection</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="ref-data-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: SYSTEM SETTINGS -->
+      <section class="content-view" id="view-system-settings">
+        <div class="settings-form-layout" id="system-settings-form">
+          <!-- System Settings categories & inputs injected by JS -->
+        </div>
+      </section>
+
+      <!-- VIEW: BUSINESS RULES -->
+      <section class="content-view" id="view-business-rules">
+        <div class="view-header-bar">
+          <h3>Active Platform Business Logic Configurations</h3>
+        </div>
+        <div class="business-rules-grid" id="business-rules-grid">
+          <!-- Rules details injected by JS -->
+        </div>
+      </section>
+
+      <!-- VIEW: PROVIDERS -->
+      <section class="content-view" id="view-providers">
+        <div class="providers-list" id="providers-container">
+          <!-- Providers status, connection settings, and credentials verification injected by JS -->
+        </div>
+      </section>
+
+      <!-- VIEW: WEBHOOKS -->
+      <section class="content-view" id="view-webhooks">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="webhook-logs-search" class="form-control inline" placeholder="Filter webhook logs...">
+            <select id="webhook-logs-status" class="form-control inline">
+              <option value="">All Deliveries</option>
+              <option value="SUCCESS">Success (200 OK)</option>
+              <option value="FAILED">Failed</option>
+            </select>
+          </div>
+          <button id="btn-webhook-test" class="btn btn-secondary"><i data-lucide="radio"></i> Send Ping Webhook</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Event Type</th>
+                <th>Target URL</th>
+                <th>Verification / Idempotency</th>
+                <th>Timestamp</th>
+                <th>Attempt #</th>
+                <th>HTTP Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="webhooks-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: INTEGRATION LOGS / HEALTH -->
+      <section class="content-view" id="view-integration-health">
+        <div class="health-dashboard">
+          <div class="health-charts-row">
+            <div class="health-chart-card">
+              <h4>External Endpoint Latency (ms)</h4>
+              <div class="latency-meters">
+                <div class="meter-row">
+                  <span>Supabase API</span>
+                  <div class="meter-bar"><div class="fill" style="width: 25%;"></div></div>
+                  <strong>120ms</strong>
+                </div>
+                <div class="meter-row">
+                  <span>Daily.co Rooms</span>
+                  <div class="meter-bar"><div class="fill" style="width: 48%;"></div></div>
+                  <strong>240ms</strong>
+                </div>
+                <div class="meter-row">
+                  <span>Resend Mailer</span>
+                  <div class="meter-bar warning"><div class="fill warning" style="width: 89%;"></div></div>
+                  <strong>890ms</strong>
+                </div>
+              </div>
+            </div>
+            <div class="health-chart-card">
+              <h4>Integrations Health Snapshot</h4>
+              <div class="health-stats-grid">
+                <div class="stat-bubble">
+                  <span class="num" id="val-uptime-days">99.9%</span>
+                  <span class="lbl">Supabase Availability</span>
+                </div>
+                <div class="stat-bubble">
+                  <span class="num">100%</span>
+                  <span class="lbl">Daily.co Up</span>
+                </div>
+                <div class="stat-bubble warning">
+                  <span class="num">88.2%</span>
+                  <span class="lbl">Resend Deliverability</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="view-header-bar margin-top-lg">
+            <h3>Recent Provider Exceptions & Timeouts</h3>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Provider</th>
+                  <th>API Endpoint</th>
+                  <th>Request ID</th>
+                  <th>Method</th>
+                  <th>Response Time</th>
+                  <th>Error Payload</th>
+                </tr>
+              </thead>
+              <tbody id="integration-health-table-body">
+                <!-- JS Injected -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: QUEUE JOBS -->
+      <section class="content-view" id="view-queue-jobs">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="queue-jobs-search" class="form-control inline" placeholder="Filter background jobs...">
+            <select id="queue-jobs-status" class="form-control inline">
+              <option value="">All States</option>
+              <option value="Queued">Queued</option>
+              <option value="Running">Running</option>
+              <option value="Succeeded">Succeeded</option>
+              <option value="Failed">Failed</option>
+              <option value="Retrying">Retrying</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Dead-letter">Dead-letter</option>
+            </select>
+          </div>
+          <button id="btn-trigger-cron" class="btn btn-secondary"><i data-lucide="clock"></i> Trigger Cron Engine</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Job / Queue</th>
+                <th>Task Name</th>
+                <th>Domain / Object</th>
+                <th>Created / Next Run</th>
+                <th>Status</th>
+                <th>Attempts</th>
+                <th>Provider / Correlation</th>
+              </tr>
+            </thead>
+            <tbody id="queue-jobs-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: FAILED JOBS -->
+      <section class="content-view" id="view-failed-jobs">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">These jobs failed execution but are still within the auto-retry limit.</span>
+          </div>
+          <button id="btn-retry-all-failed" class="btn btn-secondary"><i data-lucide="refresh-cw"></i> Retry All Failed</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Task Name</th>
+                <th>Last Failure Timestamp</th>
+                <th>Retry Count</th>
+                <th>Error Message</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="failed-jobs-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: DEAD LETTERS -->
+      <section class="content-view" id="view-dead-letters">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">Jobs that exceeded all retry limits. Platform Admin intervention required.</span>
+          </div>
+          <div class="button-row">
+            <button id="btn-clear-deadletters" class="btn btn-secondary"><i data-lucide="trash-2"></i> Clear All</button>
+            <button id="btn-flush-deadletters" class="btn btn-primary"><i data-lucide="refresh-cw"></i> Retry/Re-queue All</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Task Name</th>
+                <th>Died At</th>
+                <th>Original Queue</th>
+                <th>Stack Trace Summary</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="dead-letters-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: INTEGRATION EXCEPTIONS -->
+      <section class="content-view" id="view-integration-exceptions">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">Errors logged by external system operations.</span>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Integration Provider</th>
+                <th>API Action</th>
+                <th>Failure Date</th>
+                <th>Error Snippet</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="integration-exceptions-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: IMPORTS -->
+      <section class="content-view" id="view-imports">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="imports-search" class="form-control inline" placeholder="Filter imports...">
+          </div>
+          <button id="btn-new-import" class="btn btn-primary"><i data-lucide="upload"></i> Upload Staged File</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Batch ID</th>
+                <th>Import Type</th>
+                <th>Rows / Mode</th>
+                <th>Status</th>
+                <th>Dry-run Result</th>
+                <th>Uploaded At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="imports-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: EXPORTS -->
+      <section class="content-view" id="view-exports">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">Sensitive database exports. Platform Admin approval, reason, and step-up authentication are required.</span>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Scope / Table</th>
+                <th>Requested By</th>
+                <th>Target Format</th>
+                <th>Status</th>
+                <th>Date Requested</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="exports-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: FEATURE FLAGS -->
+      <section class="content-view" id="view-feature-flags">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="flags-search" class="form-control inline" placeholder="Search feature flags...">
+          </div>
+          <button id="btn-add-flag" class="btn btn-primary"><i data-lucide="plus"></i> Add Feature Flag</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Flag Key</th>
+                <th>Description</th>
+                <th>Module</th>
+                <th>Lifecycle</th>
+                <th>Enabled</th>
+                <th>Target Audiences</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="flags-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: AUDIT LOGS -->
+      <section class="content-view" id="view-audit-logs">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="audit-logs-search" class="form-control inline" placeholder="Filter audit trail by action, actor...">
+            <select id="audit-logs-module" class="form-control inline">
+              <option value="">All Modules</option>
+              <option value="ADM">ADM (Administration)</option>
+              <option value="IAM">IAM (Identity & Access)</option>
+              <option value="FIN">FIN (Financial)</option>
+              <option value="AUD">AUD (Auditing)</option>
+            </select>
+          </div>
+          <button id="btn-export-audits" class="btn btn-secondary"><i data-lucide="download"></i> Export CSV</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Actor</th>
+                <th>Module</th>
+                <th>Action Code</th>
+                <th>Details / Target Record</th>
+                <th>Security Level</th>
+                <th>Changes</th>
+                <th>Origin / Correlation</th>
+              </tr>
+            </thead>
+            <tbody id="audit-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: SYSTEM STATUS -->
+      <section class="content-view" id="view-system-status">
+        <div class="system-status-dashboard">
+          <div class="status-metrics-grid">
+            <div class="status-metric-card">
+              <h4>Gateway Latency</h4>
+              <div class="metric-big" id="status-val-latency">48ms</div>
+              <span class="metric-trend text-success"><i data-lucide="trending-down"></i> -4% since last hour</span>
+            </div>
+            <div class="status-metric-card">
+              <h4>Active CPU Load</h4>
+              <div class="metric-big" id="status-val-cpu">14.2%</div>
+              <span class="metric-trend text-success">Within baseline</span>
+            </div>
+            <div class="status-metric-card">
+              <h4>Edge Node Uptime</h4>
+              <div class="metric-big">99.998%</div>
+              <span class="metric-trend">Uptime 67 days</span>
+            </div>
+            <div class="status-metric-card">
+              <h4>Cron Engine Pulse</h4>
+              <div class="metric-big text-success" id="status-val-cron">ACTIVE</div>
+              <span class="metric-trend text-muted">Last run 2m ago</span>
+            </div>
+            <div class="status-metric-card">
+              <h4>Database Freshness</h4>
+              <div class="metric-big">18s</div>
+              <span class="metric-trend text-success">Current</span>
+            </div>
+            <div class="status-metric-card">
+              <h4>Integration Freshness</h4>
+              <div class="metric-big">42s</div>
+              <span class="metric-trend">Resend degraded</span>
+            </div>
+            <div class="status-metric-card">
+              <h4>Queue Freshness</h4>
+              <div class="metric-big">2m</div>
+              <span class="metric-trend text-success">Within threshold</span>
+            </div>
+          </div>
+          
+          <div class="health-chart-card margin-top-lg full-width">
+            <h4>Live Infrastructure Log Stream</h4>
+            <div class="terminal-container">
+              <pre id="system-terminal-logs"></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW: RETENTION POLICIES -->
+      <section class="content-view" id="view-retention-policies">
+        <div class="view-header-bar">
+          <h3>Database Tables Data Retention Mappings</h3>
+          <button id="btn-add-retention" class="btn btn-primary"><i data-lucide="plus"></i> Add Policy</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Database Module</th>
+                <th>Retention Period</th>
+                <th>Action On Limit</th>
+                <th>Legal Hold Overrides</th>
+                <th>Enabled</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="retention-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: ARCHIVE -->
+      <section class="content-view" id="view-archive">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <input type="search" id="archive-search" class="form-control inline" placeholder="Search archive directory...">
+          </div>
+          <button id="btn-flush-archive" class="btn btn-secondary"><i data-lucide="trash"></i> Purge Expired</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Archive ID</th>
+                <th>Table Source</th>
+                <th>Rows Encapsulated</th>
+                <th>Size (KB)</th>
+                <th>Date Archived</th>
+                <th>Purge Trigger Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="archive-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: LEGAL HOLDS -->
+      <section class="content-view" id="view-legal-holds">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">Active litigation and legal holds that disable automatic deletion/retention checks.</span>
+          </div>
+          <button id="btn-new-hold" class="btn btn-primary"><i data-lucide="plus"></i> Create Legal Hold</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Hold Code</th>
+                <th>Name / Reason</th>
+                <th>Target Profiles</th>
+                <th>Created By</th>
+                <th>Date Placed</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="holds-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: PRIVACY REQUESTS -->
+      <section class="content-view" id="view-privacy-requests">
+        <div class="view-header-bar">
+          <div class="search-filter-row">
+            <span class="text-sm">User GDPR / Privacy requests (Data Erasure or Access requests).</span>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Request ID</th>
+                <th>Requester</th>
+                <th>Request Type</th>
+                <th>Verification Code</th>
+                <th>Date Initiated</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="privacy-table-body">
+              <!-- JS Injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW: SUPPORT ACCESS / IMPERSONATION -->
+      <section class="content-view" id="view-support-access">
+        <div class="support-layout">
+          <div class="support-control-card">
+            <h3>Support & Operator Impersonation Control</h3>
+            <p class="description">
+              As a Platform Admin, you can launch a support session to view the platform from a specific user's perspective. 
+              All actions taken during support impersonation sessions are logged under your Admin name with a support access audit code.
+            </p>
+            
+            <div id="impersonation-active-panel" class="impersonation-active-panel hidden">
+              <div class="pulse-indicator">
+                <span class="pulse-dot"></span>
+                <span>Active Impersonation Session</span>
+              </div>
+              <div class="impersonated-user-info">
+                <i data-lucide="user"></i>
+                <div>
+                  <h4 id="impersonated-user-fullname">Huzsam User</h4>
+                  <span id="impersonated-user-role">Learner</span>
+                </div>
+              </div>
+              <div class="support-session-guardrails"><span>Read-only mode</span><span id="impersonation-expiry">Expires automatically</span></div>
+              <button id="btn-stop-impersonation" class="btn btn-error btn-block">Terminate Session</button>
+            </div>
+
+            <div id="impersonation-launch-panel">
+              <div class="form-group">
+                <label for="impersonate-user-select">Select User Profile to Impersonate</label>
+                <select id="impersonate-user-select" class="form-control">
+                  <!-- JS Injected options -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="impersonate-reason">Impersonation Ticket ID / Reason</label>
+                <input type="text" id="impersonate-reason" class="form-control" placeholder="e.g. ticket #2931 - debug grading glitch">
+              </div>
+              <div class="form-group">
+                <label for="impersonate-duration">Approved session duration</label>
+                <select id="impersonate-duration" class="form-control"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option></select>
+              </div>
+              <div class="form-group">
+                <label for="impersonate-approval">Approval reference</label>
+                <input type="text" id="impersonate-approval" class="form-control" placeholder="Approver or approval record ID">
+              </div>
+              <div class="step-up-notice"><strong>Read-only by default</strong><span>User credentials and secrets are never exposed.</span></div>
+              <button id="btn-start-impersonation" class="btn btn-primary btn-block">Launch Impersonation Session</button>
+            </div>
+          </div>
+          
+          <div class="support-log-card">
+            <h3>Support Access Audit Trail</h3>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Operator</th>
+                    <th>Impersonated User</th>
+                    <th>Reason / Ticket</th>
+                    <th>Guardrails</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="support-audit-table-body">
+                  <!-- JS Injected -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- POPUPS / MODALS -->
+  <!-- Generic Edit/View Modal -->
+  <div class="modal-overlay hidden" id="generic-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal Title</h3>
+        <button id="modal-close" class="icon-btn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- JS Injected contents -->
+      </div>
+      <div class="modal-footer" id="modal-footer">
+        <!-- JS Injected buttons -->
+      </div>
+    </div>
+  </div>
+
+  <!-- App Logic Connection -->
+  <script src="app.js"></script>
+</body>
+</html>
