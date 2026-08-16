@@ -9035,3 +9035,356 @@ td:last-child {
   text-align: center !important;
   box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15) !important;
 }
+
+
+/* ========================================================================== */
+/* COURSE CREATOR AUTHORING HOME & COMMAND DECK STYLING                       */
+/* ========================================================================== */
+
+.creator-command-deck {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 22px !important;
+  width: 100% !important;
+  padding-bottom: 30px !important;
+}
+
+/* 1. Flight Strip */
+.creator-flight-strip {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 24px !important;
+  background: linear-gradient(135deg, #162030 0%, #24354c 100%) !important;
+  color: #ffffff !important;
+  border-radius: 14px !important;
+  padding: 24px 28px !important;
+  box-shadow: 0 8px 24px rgba(16, 28, 46, 0.12) !important;
+}
+
+.creator-flight-meta {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.creator-flight-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 4px 10px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 6px !important;
+  font: 700 10.5px/1 'Inter', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: #e2e8f0 !important;
+  width: fit-content !important;
+}
+
+.creator-flight-lead {
+  font: 700 17px/1.2 'Manrope', sans-serif !important;
+  color: #ffffff !important;
+}
+
+.creator-flight-stats {
+  display: flex !important;
+  gap: 16px !important;
+  font-size: 12px !important;
+  color: #cbd5e1 !important;
+  flex-wrap: wrap !important;
+}
+
+.creator-flight-stats span {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.creator-segregation-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11.5px !important;
+  color: #93c5fd !important;
+  background: rgba(147, 197, 253, 0.1) !important;
+  padding: 3px 8px !important;
+  border-radius: 4px !important;
+  width: fit-content !important;
+}
+
+.creator-flight-desc {
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+  color: #94a3b8 !important;
+  margin: 4px 0 0 0 !important;
+  max-width: 820px !important;
+}
+
+.creator-flight-actions {
+  display: flex !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+/* 2. Scope Bar */
+.creator-scope-bar {
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 12px !important;
+  padding: 20px 24px !important;
+  box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035) !important;
+}
+
+.creator-scope-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--navy-medium) !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
+  padding-bottom: 12px !important;
+}
+
+.creator-scope-title strong {
+  font: 700 12.5px 'Inter', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  display: block !important;
+}
+
+.creator-scope-title small {
+  font-size: 11.5px !important;
+  color: var(--slate) !important;
+}
+
+.creator-scope-filters {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+  margin-top: 14px !important;
+}
+
+.creator-scope-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.creator-scope-field label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: var(--slate) !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* 3. Pipeline Matrix */
+.creator-pipeline-matrix {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+}
+
+.creator-stage-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+  box-shadow: 0 4px 14px rgba(70, 55, 28, 0.03) !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.creator-stage-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 8px 20px rgba(16, 28, 46, 0.08) !important;
+}
+
+.creator-stage-head {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 8px !important;
+}
+
+.creator-stage-code {
+  font: 700 11px/1 'Inter', sans-serif !important;
+  color: var(--slate) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+.creator-stage-card h4 {
+  font: 700 15px 'Manrope', sans-serif !important;
+  color: var(--navy-medium) !important;
+  margin: 0 0 6px 0 !important;
+}
+
+.creator-stage-card p {
+  font-size: 12px !important;
+  color: #5a687c !important;
+  line-height: 1.45 !important;
+  margin: 0 0 14px 0 !important;
+}
+
+.creator-stage-foot {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: var(--primary) !important;
+  padding-top: 10px !important;
+  border-top: 1px solid rgba(124, 119, 102, 0.1) !important;
+}
+
+/* 4. Queues Grid */
+.creator-queues-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+}
+
+.creator-queue-panel {
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 14px !important;
+  padding: 22px 26px !important;
+  box-shadow: 0 4px 16px rgba(70, 55, 28, 0.035) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+.creator-queue-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
+  padding-bottom: 12px !important;
+}
+
+.creator-queue-header h4 {
+  font: 700 15px 'Manrope', sans-serif !important;
+  color: var(--navy-medium) !important;
+  margin: 0 0 3px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.creator-queue-header small {
+  font-size: 11.5px !important;
+  color: var(--slate) !important;
+}
+
+.creator-feedback-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.creator-feedback-item {
+  background: #fdfbf7 !important;
+  border-left: 4px solid #d97706 !important;
+  border-radius: 8px !important;
+  padding: 14px 16px !important;
+  border: 1px solid rgba(124, 119, 102, 0.15) !important;
+  border-left-width: 4px !important;
+}
+
+.creator-feedback-item.blocking {
+  border-left-color: #dc2626 !important;
+}
+
+.creator-feedback-meta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 12.5px !important;
+  color: var(--navy-medium) !important;
+  margin-bottom: 6px !important;
+}
+
+.creator-feedback-item p {
+  font-size: 12px !important;
+  color: #4a586e !important;
+  margin: 0 0 10px 0 !important;
+  line-height: 1.4 !important;
+}
+
+.creator-feedback-actions {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 11px !important;
+  color: var(--slate) !important;
+}
+
+.creator-validation-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.creator-validation-card {
+  background: #fdfbf7 !important;
+  border: 1px solid rgba(124, 119, 102, 0.15) !important;
+  border-left: 4px solid #166534 !important;
+  border-radius: 8px !important;
+  padding: 14px 16px !important;
+}
+
+.creator-val-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  color: var(--navy-medium) !important;
+  margin-bottom: 4px !important;
+}
+
+.creator-validation-card p {
+  font-size: 12px !important;
+  color: #4a586e !important;
+  margin: 0 0 10px 0 !important;
+  line-height: 1.4 !important;
+}
+
+.creator-val-foot {
+  display: flex !important;
+  gap: 8px !important;
+  justify-content: flex-end !important;
+}
+
+/* Responsive adjustments for Authoring Home */
+@media (max-width: 1024px) {
+  .creator-scope-filters {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .creator-pipeline-matrix {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .creator-queues-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .creator-flight-strip {
+    flex-direction: column !important;
+  }
+  .creator-scope-filters {
+    grid-template-columns: 1fr !important;
+  }
+  .creator-pipeline-matrix {
+    grid-template-columns: 1fr !important;
+  }
+}

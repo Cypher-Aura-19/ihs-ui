@@ -2165,9 +2165,10 @@ const Router = {
       compliance_officer: "Compliance Overview",
       support_agent: "Support Operations Overview"
     };
-    viewTitle.textContent = route === "dashboard"
+    const isDash = route === "dashboard" || route === "creator-dashboard" || route === "coo-dashboard" || route === "om-dashboard" || route === "csr-dashboard";
+    viewTitle.textContent = isDash
       ? (roleDashboardTitles[Simulator.activeRole] || "Authoring Command Center")
-      : (creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Platform Operations");
+      : (creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Authoring Command Center");
     
     // Trigger specific rendering controller for the view
     this.renderView(route);
