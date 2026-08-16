@@ -7232,11 +7232,11 @@ td:last-child {
   display: none !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator) #platform-admin-nav {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer) #platform-admin-nav {
   display: flex !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
   display: block !important;
 }
 
@@ -9559,5 +9559,29 @@ td:last-child {
 .admin-container.role-operational_manager #platform-dashboard-shell,
 .admin-container[data-active-role="coo"] #platform-dashboard-shell,
 .admin-container.role-coo #platform-dashboard-shell {
+  display: none !important;
+}
+
+/* STRICT SIDEBAR NAVIGATION VISIBILITY */
+.sidebar-nav.hidden,
+#platform-admin-nav.hidden,
+#coo-nav.hidden,
+#om-nav.hidden,
+#csr-nav.hidden,
+#creator-nav.hidden,
+#academic-reviewer-nav.hidden {
+  display: none !important;
+}
+
+.admin-container.role-academic_reviewer #platform-admin-nav,
+.admin-container[data-active-role="academic_reviewer"] #platform-admin-nav,
+.admin-container.role-course_creator #platform-admin-nav,
+.admin-container[data-active-role="course_creator"] #platform-admin-nav,
+.admin-container.role-csr #platform-admin-nav,
+.admin-container[data-active-role="csr"] #platform-admin-nav,
+.admin-container.role-om #platform-admin-nav,
+.admin-container[data-active-role="operational_manager"] #platform-admin-nav,
+.admin-container.role-coo #platform-admin-nav,
+.admin-container[data-active-role="coo"] #platform-admin-nav {
   display: none !important;
 }

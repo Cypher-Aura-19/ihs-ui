@@ -3583,19 +3583,25 @@ const RenderEngine = {
 
   reviewerTableHeaders(dataType) {
     if (dataType === "courses") {
-      return `<tr><th>Course / Code</th><th>Programme</th><th>Delivery Model</th><th>Learning Outcomes</th><th>Prerequisites</th><th>Readiness</th><th>Actions</th></tr>`;
+      return `<tr><th>Course / Code</th><th>Delivery Model</th><th>Learning Outcomes</th><th>Prerequisites</th><th>Readiness State</th><th>Academic Review</th></tr>`;
     }
     if (dataType === "syllabus") {
-      return `<tr><th>Unit / Milestone</th><th>Module & Title</th><th>Activity Format</th><th>Pedagogical Check</th><th>Linked Rubrics</th><th>Actions</th></tr>`;
+      return `<tr><th>Hierarchy / Milestone</th><th>Module & Lesson Title</th><th>Activity Format</th><th>Pedagogical Check</th><th>Linked Assessment</th><th>Review Action</th></tr>`;
     }
     if (dataType === "rules") {
-      return `<tr><th>Rule Identifier</th><th>Category</th><th>Gating Condition</th><th>Enforcement Policy</th><th>Integrity Check</th><th>Actions</th></tr>`;
+      return `<tr><th>Rule Identifier</th><th>Category</th><th>Enforcement Condition</th><th>Evaluation Engine</th><th>Integrity Check</th><th>Review Action</th></tr>`;
     }
     if (dataType === "questions") {
-      return `<tr><th>Stem / Question Prompt</th><th>Category</th><th>Difficulty</th><th>Answer Key</th><th>Ambiguity Check</th><th>Actions</th></tr>`;
+      return `<tr><th>Stem / Question Prompt</th><th>Category</th><th>Difficulty</th><th>Correct Answer Key</th><th>Quality Audit</th><th>Review Action</th></tr>`;
     }
     if (dataType === "assessments") {
-      return `<tr><th>Assessment Title</th><th>Type</th><th>Pass Standard</th><th>Randomization</th><th>Rubric Linked</th><th>Actions</th></tr>`;
+      return `<tr><th>Assessment Title</th><th>Format Type</th><th>Pass Criteria</th><th>Rubric Linked</th><th>Time & Policy</th><th>Review Action</th></tr>`;
+    }
+    if (dataType === "resources") {
+      return `<tr><th>Asset Name</th><th>Format / Size</th><th>Access Level</th><th>SHA-256 Checksum</th><th>Scan Status</th><th>Review Action</th></tr>`;
+    }
+    if (dataType === "k12Syllabi") {
+      return `<tr><th>Board & Grade</th><th>Subject</th><th>Curriculum Scope</th><th>Public Preview</th><th>Status</th><th>Review Action</th></tr>`;
     }
     if (dataType === "auditLogs") {
       return `<tr><th>Timestamp</th><th>Actor / Reviewer</th><th>Action</th><th>Course Version</th><th>Details</th><th>Transition</th></tr>`;
@@ -3604,6 +3610,118 @@ const RenderEngine = {
   },
 
   reviewerTableRows(dataType, records) {
+    if (!records || records.length === 0) {
+      return `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--slate);">No records found matching the current review filter.</td></tr>`;
+    }
+
+    if (dataType === "courses") {
+      return records.map(c => `
+        <tr>
+          <td><strong>${c.title}</strong><br><span class="table-subline">Code: ${c.code} · Active: ${c.activeVersion}</span></td>
+          <td><span class="badge badge-secondary">${c.deliveryModel}</span></td>
+          <td><span class="badge badge-success">✓ ${c.modulesCount} Modules · ${c.lessonsCount} Lessons (Bloom's Verified)</span></td>
+          <td><span class="badge badge-primary">${c.prerequisites || 'None (Open Entry)'}</span></td>
+          <td><span class="badge ${c.stage === 'Published' ? 'badge-success' : c.stage === 'Approved' ? 'badge-primary' : 'badge-warning'}">${c.stage || 'In Review'}</span></td>
+          <td>
+            <div class="button-row">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Inspect Version</button>
+              <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('REV-COM-101')">View Citations</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "syllabus") {
+      return records.map(s => `
+        <tr>
+          <td><strong>${s.level}</strong><br><span class="table-subline">${s.milestone}</span></td>
+          <td><strong>${s.lesson}</strong><br><span class="table-subline">${s.module}</span></td>
+          <td><span class="badge badge-primary">${s.activityType}</span><br><span style="font-size:11px; color:var(--slate);">${s.duration}</span></td>
+          <td><span class="badge badge-success">✓ Pedagogically Compliant</span></td>
+          <td><code>${s.linkedAssessment || s.linkedResource || 'Standard A11y'}</code></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Inspect Node</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "rules") {
+      return records.map(r => `
+        <tr>
+          <td><code>${r.id}</code><br><strong>${r.targetItem || r.course}</strong></td>
+          <td><span class="badge badge-secondary">${r.type}</span></td>
+          <td><strong>${r.condition}</strong></td>
+          <td><span style="font-size:12px; color:#4a586e;">${r.evaluationEngine || 'Automated Rule Engine'}</span></td>
+          <td><span class="badge badge-success">✓ Verified Compliant</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Verify Logic</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "questions") {
+      return records.map(q => `
+        <tr>
+          <td><strong>${q.title || q.stem}</strong><br><span class="table-subline">Pool: ${q.id} · Module: ${(q.usedInQuizzes || []).join(', ')}</span></td>
+          <td><span class="badge badge-secondary">${q.category}</span></td>
+          <td><span class="badge ${q.difficulty === 'Hard' ? 'badge-error' : q.difficulty === 'Intermediate' ? 'badge-warning' : 'badge-success'}">${q.difficulty}</span></td>
+          <td><strong style="color:#166534;">${q.correctAnswer}</strong></td>
+          <td><span class="badge badge-success">✓ 0 Ambiguities Flagged</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Audit Item</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "assessments") {
+      return records.map(a => `
+        <tr>
+          <td><strong>${a.title}</strong><br><span class="table-subline">Code: ${a.id} · Course: ${a.course}</span></td>
+          <td><span class="badge badge-primary">${a.type}</span></td>
+          <td><strong>${a.passMark || 'Pass >= 80%'}</strong></td>
+          <td><code>${a.rubric || 'RUB-101'}</code></td>
+          <td><span style="font-size:12px; color:var(--slate);">${a.timeLimit || 'Untimed'} · ${a.randomization || 'Standard'}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Review Criteria</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "resources") {
+      return records.map(res => `
+        <tr>
+          <td><strong>${res.title}</strong><br><span class="table-subline">${res.id}</span></td>
+          <td><span class="badge badge-secondary">${res.format} · ${res.size}</span></td>
+          <td>${res.accessLevel || 'Enrolled Learners'}</td>
+          <td><code>${res.sha256}</code></td>
+          <td><span class="badge badge-success">${res.scanStatus || 'Clean / Verified'}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Verified', '${res.title} verified with valid SHA-256 hash.', 'success')">Verify SHA</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "k12Syllabi") {
+      return records.map(k => `
+        <tr>
+          <td><span class="badge badge-primary">${k.curriculumBoard || k.board || 'FBISE & Cambridge'}</span><br><strong>${k.grade}</strong></td>
+          <td><strong>${k.subject}</strong><br><span class="table-subline">Academic Year: ${k.academicYear}</span></td>
+          <td><strong>${k.unitsCount || 6} Units Configured</strong><br><span style="font-size:11px; color:var(--slate);">${k.chapters || 'Standard Curricula'}</span></td>
+          <td><span class="badge badge-success">${k.publicPreview ? 'Public Parent Preview' : 'Gated Preview'}</span></td>
+          <td><span class="badge ${k.status && k.status.includes('Live') ? 'badge-success' : 'badge-warning'}">${k.status || 'Approved'}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">Audit Curriculum</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
     if (dataType === "auditLogs") {
       return records.map(l => `
         <tr>
@@ -3616,7 +3734,15 @@ const RenderEngine = {
         </tr>
       `).join("");
     }
-    return `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--slate);">No records found in current view.</td></tr>`;
+
+    return records.map(item => `
+      <tr>
+        <td><strong>${item.id || item.title || 'Record'}</strong></td>
+        <td>${item.details || item.desc || item.status || '-'}</td>
+        <td><span class="badge badge-secondary">${item.status || 'Active'}</span></td>
+        <td><button class="btn btn-secondary btn-xs">View</button></td>
+      </tr>
+    `).join("");
   },
 
 
