@@ -4233,6 +4233,10 @@ const RenderEngine = {
   // ============================================================================
   // PLATFORM ADMIN UNIVERSAL WORKSPACE - 100% DISTINCT BESPOKE SUB-PAGES
   // ============================================================================
+  
+  // ============================================================================
+  // PLATFORM ADMIN UNIVERSAL WORKSPACE - 100% DISTINCT BESPOKE SUB-PAGES
+  // ============================================================================
   adminWorkspace(route) {
     const container = document.getElementById("admin-workspace-content");
     if (!container) return;
@@ -4261,13 +4265,13 @@ const RenderEngine = {
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Trial Intake Pipeline</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">14 Pending Trials</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.pendingTrials} Pending Trials</h3>
               <small style="color:#166534; font-size:11px; font-weight:600;">FLOW-006 Placement Assessments</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Prospects</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">142 Leads</h3>
-              <small style="color:var(--primary); font-size:11px; font-weight:600;">38.4% Conversion Rate</small>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.activeLeads} Leads</h3>
+              <small style="color:var(--primary); font-size:11px; font-weight:600;">${data.kpis.conversionRate} Conversion Rate</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">CSR Commissions Due</span>
@@ -4279,7 +4283,7 @@ const RenderEngine = {
           <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Trial Ingestion & CSR Allocation Queue (FLOW-006)</h3>
-              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Lead Ingestion', 'Opening lead intake modal...', 'info')"><i data-lucide="plus"></i> Add Inbound Lead</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openAdminAddLeadModal()"><i data-lucide="plus"></i> Add Inbound Lead</button>
             </div>
 
             <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4295,8 +4299,12 @@ const RenderEngine = {
                       <td>${t.course}</td>
                       <td>${t.preferredSlot}</td>
                       <td>${t.assignedCsr}</td>
-                      <td><span class="badge badge-warning">${t.status}</span></td>
-                      <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Trainer Matched', 'Matching trainer for ${t.prospect}...', 'success')">Match Trainer</button></td>
+                      <td><span class="badge ${t.status === 'Trainer Matched' ? 'badge-success' : 'badge-warning'}">${t.status}</span></td>
+                      <td>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openAdminMatchTrainerModal('${t.id}')">
+                          ${t.status === 'Trainer Matched' ? 'Re-Match' : 'Match Trainer'}
+                        </button>
+                      </td>
                     </tr>
                   `).join("")}
                 </tbody>
@@ -4316,17 +4324,17 @@ const RenderEngine = {
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Manual Review Queue</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">7 Pending (PKR 115,000)</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">${data.kpis.pendingPaymentReviews} Pending (${data.kpis.pendingPaymentAmount})</h3>
               <small style="color:var(--slate); font-size:11px;">SLA: Review within 2 hours</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Verified Bank Deposits</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">PKR 1,890,000</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">${data.kpis.verifiedBankDeposits}</h3>
               <small style="color:#166534; font-size:11px; font-weight:600;">Reconciled in General Ledger</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Payout Batches</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">2 Batches Ready</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">${data.kpis.payoutBatchesReady} Batches Ready</h3>
               <small style="color:var(--slate); font-size:11px;">Trainer & CSR Settlements</small>
             </div>
           </div>
@@ -4347,11 +4355,15 @@ const RenderEngine = {
                       <td>${p.course}</td>
                       <td><strong style="color:#166534;">${p.amount}</strong></td>
                       <td>${p.method} (<code>${p.ref}</code>)</td>
-                      <td><span class="badge badge-warning">${p.status}</span></td>
+                      <td><span class="badge ${p.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${p.status}</span></td>
                       <td>
                         <div style="display:flex; gap:6px;">
-                          <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Notifications.push('Payment Approved', 'Approved payment ${p.id} for ${p.learner}. Access grant created.', 'success')">Approve</button>
-                          <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Evidence Lightbox', 'Opening ${p.receipt}...', 'info')">Evidence</button>
+                          ${p.status === 'Approved' ? `
+                            <span class="badge badge-success">✓ Verified</span>
+                          ` : `
+                            <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Actions.approveAdminPayment('${p.id}')">Approve</button>
+                          `}
+                          <button class="btn btn-secondary btn-xs" onclick="Actions.openAdminPaymentEvidence('${p.id}')">Evidence</button>
                         </div>
                       </td>
                     </tr>
@@ -4373,17 +4385,17 @@ const RenderEngine = {
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Enrolments</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">342 Accounts</h3>
-              <small style="color:var(--slate); font-size:11px;">186 Live · 112 Milestone · 44 K-12</small>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.activeEnrolments} Accounts</h3>
+              <small style="color:var(--slate); font-size:11px;">${data.kpis.liveCohortCount} Live · ${data.kpis.milestoneCount} Milestone · ${data.kpis.k12Count} K-12</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Renewal Risk</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">18 Expiring Soon</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">${data.kpis.expiringRenewals} Expiring Soon</h3>
               <small style="color:#e11d48; font-size:11px; font-weight:600;">FLOW-038 Automated Reminders</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Low Entitlements</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">9 Accounts</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">${data.kpis.lowEntitlements} Accounts</h3>
               <small style="color:var(--slate); font-size:11px;">< 2 Class Credits Remaining</small>
             </div>
           </div>
@@ -4403,9 +4415,9 @@ const RenderEngine = {
                       <td>${m.course}</td>
                       <td>${m.termExpiry}</td>
                       <td><strong>${m.creditsRemaining} Credits</strong></td>
-                      <td><span class="badge ${m.renewalStatus.includes('Urgent') ? 'badge-error' : 'badge-warning'}">${m.renewalStatus}</span></td>
+                      <td><span class="badge ${m.renewalStatus.includes('Urgent') ? 'badge-error' : m.renewalStatus.includes('Dispatched') ? 'badge-primary' : 'badge-warning'}">${m.renewalStatus}</span></td>
                       <td>${m.payerContact}</td>
-                      <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Renewal Triggered', 'Dispatched renewal invoice to ${m.learner}...', 'success')">Send Reminder</button></td>
+                      <td><button class="btn btn-primary btn-xs" onclick="Actions.sendAdminRenewalReminder('${m.id}')">Send Reminder</button></td>
                     </tr>
                   `).join("")}
                 </tbody>
@@ -4425,17 +4437,17 @@ const RenderEngine = {
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Live Classes Today</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">16 Classes</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.classesToday} Classes</h3>
               <small style="color:#166534; font-size:11px; font-weight:600;">Daily.co WebRTC Provisioned</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Post-Class Reports</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">4 Reports Due</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">${data.kpis.reportsDue} Reports Due</h3>
               <small style="color:var(--slate); font-size:11px;">FLOW-016 Educational Notes</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Academic Risks Flagged</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">6 Learners</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">${data.kpis.atRiskLearners} Learners</h3>
               <small style="color:#e11d48; font-size:11px; font-weight:600;">< 75% Attendance / Stalled</small>
             </div>
           </div>
@@ -4456,8 +4468,8 @@ const RenderEngine = {
                       <td>${c.time}</td>
                       <td>${c.participants} Learners</td>
                       <td><span class="badge badge-success">${c.roomStatus}</span></td>
-                      <td><span class="badge ${c.reportStatus.includes('Due') ? 'badge-error' : 'badge-primary'}">${c.reportStatus}</span></td>
-                      <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Monitored', 'Live stream healthy for ${c.id}...', 'info')">Inspect</button></td>
+                      <td><span class="badge ${c.reportStatus === 'Report Approved' ? 'badge-success' : c.reportStatus.includes('Due') ? 'badge-error' : 'badge-primary'}">${c.reportStatus}</span></td>
+                      <td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminClassInspectorModal('${c.id}')">Inspect</button></td>
                     </tr>
                   `).join("")}
                 </tbody>
@@ -4477,12 +4489,12 @@ const RenderEngine = {
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Staff Roster</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">62 Staff Members</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.activeStaff} Staff Members</h3>
               <small style="color:var(--slate); font-size:11px;">48 Trainers · 8 CSRs · 4 Reviewers · 2 OMs</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Approved Delivery Hours</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">184 Hours Logged</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">${data.kpis.approvedDeliveryHours} Hours Logged</h3>
               <small style="color:#166534; font-size:11px; font-weight:600;">Est. Payroll: PKR 404,800</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
@@ -4509,7 +4521,7 @@ const RenderEngine = {
                       <td>${s.hourlyRate || s.baseSalary}</td>
                       <td><strong>${s.hoursLogged ? `${s.hoursLogged} Hours` : s.commissionDue}</strong></td>
                       <td><span class="badge badge-success">${s.complianceStatus}</span></td>
-                      <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('HR Record', 'Viewing contract for ${s.name}...', 'info')">Profile</button></td>
+                      <td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminStaffProfileModal('${s.id}')">Profile</button></td>
                     </tr>
                   `).join("")}
                 </tbody>
@@ -4531,7 +4543,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">User Account Directory & Identity Bindings</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Unified accounts across Admins, OMs, Trainers, Learners and Guardians.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Router.navigate('invitations')"><i data-lucide="user-plus"></i> Invite User</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openAdminInviteModal()"><i data-lucide="user-plus"></i> Invite User</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4548,7 +4560,7 @@ const RenderEngine = {
                     <td><span class="badge badge-primary">${u.role}</span></td>
                     <td>${u.authProvider || 'Email/Password'}</td>
                     <td><span class="badge badge-success">${u.status}</span></td>
-                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('User Profile', 'Opening ${u.name} identity detail...', 'info')">Manage</button></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('User Profile', 'Opening ${u.name} identity bindings...', 'info')">Manage</button></td>
                   </tr>
                 `).join("")}
               </tbody>
@@ -4569,7 +4581,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Outbound Staff Invitations (FLOW-003)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Pre-provisioned scoped role invitations with token expiration.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Invite Sent', 'Dispatched invitation email with secure token.', 'success')"><i data-lucide="mail"></i> Send Invitation</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openAdminInviteModal()"><i data-lucide="mail"></i> Send Invitation</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4578,8 +4590,8 @@ const RenderEngine = {
                 <tr><th>Invite ID</th><th>Recipient Email</th><th>Target Role Scope</th><th>Invited By</th><th>Expires At</th><th>Status</th><th>Actions</th></tr>
               </thead>
               <tbody>
-                <tr><td><code>INV-301</code></td><td>tariq.reviewer@innovatorhuzsam.com</td><td>Academic Reviewer (Computer Science)</td><td>Admin User</td><td>In 3 Days</td><td><span class="badge badge-warning">Pending Acceptance</span></td><td><button class="btn btn-secondary btn-xs">Resend</button></td></tr>
-                <tr><td><code>INV-302</code></td><td>mariam.csr@innovatorhuzsam.com</td><td>CSR / Admissions Specialist</td><td>Admin User</td><td>In 5 Days</td><td><span class="badge badge-warning">Pending Acceptance</span></td><td><button class="btn btn-secondary btn-xs">Resend</button></td></tr>
+                <tr><td><code>INV-301</code></td><td>tariq.reviewer@innovatorhuzsam.com</td><td>Academic Reviewer (Computer Science)</td><td>Admin User</td><td>In 3 Days</td><td><span class="badge badge-warning">Pending Acceptance</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.resendAdminInvite('INV-301')">Resend</button></td></tr>
+                <tr><td><code>INV-302</code></td><td>mariam.csr@innovatorhuzsam.com</td><td>CSR / Admissions Specialist</td><td>Admin User</td><td>In 5 Days</td><td><span class="badge badge-warning">Pending Acceptance</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.resendAdminInvite('INV-302')">Resend</button></td></tr>
                 <tr><td><code>INV-299</code></td><td>sara.trainer@innovatorhuzsam.com</td><td>Senior Trainer & Teacher</td><td>COO</td><td>01 Aug 2026</td><td><span class="badge badge-success">Accepted & Active</span></td><td><span style="font-size:12px; color:var(--slate);">Joined</span></td></tr>
               </tbody>
             </table>
@@ -4597,7 +4609,7 @@ const RenderEngine = {
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Active Sessions & MFA Management</h3>
-              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">112 Active Authenticated Sessions · 0 Compromised Tokens.</p>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">${data.kpis.activeMfaSessions} Active Authenticated Sessions · 0 Compromised Tokens.</p>
             </div>
             <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Session Revocation', 'All expired tokens purged.', 'success')"><i data-lucide="shield-alert"></i> Purge Stale Sessions</button>
           </div>
@@ -4609,8 +4621,8 @@ const RenderEngine = {
               </thead>
               <tbody>
                 <tr><td><code>SES-901</code></td><td>Admin User</td><td>182.185.12.4 · Islamabad, PK</td><td>Chrome 128 / Windows</td><td><span class="badge badge-success">TOTP MFA Verified</span></td><td><span class="badge badge-success">Active Now</span></td><td><button class="btn btn-secondary btn-xs" disabled>Current</button></td></tr>
-                <tr><td><code>SES-884</code></td><td>Zainab Malik</td><td>39.42.18.91 · Lahore, PK</td><td>Safari 17.5 / macOS</td><td><span class="badge badge-primary">SMS OTP</span></td><td><span class="badge badge-success">Active (12m ago)</span></td><td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Terminated', 'Session revoked.', 'info')">Revoke</button></td></tr>
-                <tr><td><code>SES-872</code></td><td>Sara Javed</td><td>111.119.187.5 · Karachi, PK</td><td>Firefox 130 / Windows</td><td><span class="badge badge-success">TOTP MFA Verified</span></td><td><span class="badge badge-success">Active (1h ago)</span></td><td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Terminated', 'Session revoked.', 'info')">Revoke</button></td></tr>
+                <tr><td><code>SES-884</code></td><td>Zainab Malik</td><td>39.42.18.91 · Lahore, PK</td><td>Safari 17.5 / macOS</td><td><span class="badge badge-primary">SMS OTP</span></td><td><span class="badge badge-success">Active (12m ago)</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.revokeAdminSession('SES-884')">Revoke</button></td></tr>
+                <tr><td><code>SES-872</code></td><td>Sara Javed</td><td>111.119.187.5 · Karachi, PK</td><td>Firefox 130 / Windows</td><td><span class="badge badge-success">TOTP MFA Verified</span></td><td><span class="badge badge-success">Active (1h ago)</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.revokeAdminSession('SES-872')">Revoke</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -4656,7 +4668,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Controlled Reference Data (ADM-001)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Class formats, durations, currencies, delivery modes, and reason codes. Used values cannot be deleted.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Reference Added', 'Opening reference value creator...', 'info')"><i data-lucide="plus"></i> Add Value</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openAdminReferenceModal()"><i data-lucide="plus"></i> Add Value</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4665,10 +4677,10 @@ const RenderEngine = {
                 <tr><th>Domain Category</th><th>Controlled Allowed Values</th><th>Active Count</th><th>Usage Impact</th><th>Status</th><th>Action</th></tr>
               </thead>
               <tbody>
-                <tr><td><strong>Class Formats</strong></td><td>1-on-1, Small Cohort (4-8), Masterclass (20+)</td><td>3 Values</td><td>Used in 24 Active Courses</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
-                <tr><td><strong>Class Durations</strong></td><td>30 Mins, 45 Mins, 60 Mins, 90 Mins</td><td>4 Values</td><td>Used in 186 Cohorts</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
-                <tr><td><strong>Supported Currencies</strong></td><td>PKR (Pakistani Rupee), USD (US Dollar), AED (UAE Dirham)</td><td>3 Currencies</td><td>Used in All Pricing Rules</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
-                <tr><td><strong>Reschedule Reasons</strong></td><td>Student Medical, Technical Disconnect, School Exam, Trainer Emergency</td><td>4 Reason Codes</td><td>Mandatory for FLOW-017</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
+                <tr><td><strong>Class Formats</strong></td><td>1-on-1, Small Cohort (4-8), Masterclass (20+)</td><td>3 Values</td><td>Used in 24 Active Courses</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminReferenceModal('Class Formats')">Manage</button></td></tr>
+                <tr><td><strong>Class Durations</strong></td><td>30 Mins, 45 Mins, 60 Mins, 90 Mins</td><td>4 Values</td><td>Used in 186 Cohorts</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminReferenceModal('Class Durations')">Manage</button></td></tr>
+                <tr><td><strong>Supported Currencies</strong></td><td>PKR (Pakistani Rupee), USD (US Dollar), AED (UAE Dirham)</td><td>3 Currencies</td><td>Used in All Pricing Rules</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminReferenceModal('Supported Currencies')">Manage</button></td></tr>
+                <tr><td><strong>Reschedule Reasons</strong></td><td>Student Medical, Technical Disconnect, School Exam, Trainer Emergency</td><td>4 Reason Codes</td><td>Mandatory for FLOW-017</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminReferenceModal('Reschedule Reasons')">Manage</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -4687,7 +4699,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Versioned Business Rules & Policies (ADM-002)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Effective-dated operational thresholds and policy engines.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Rule Proposal', 'Opening policy revision draft...', 'info')"><i data-lucide="plus"></i> Propose Rule Revision</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openAdminRuleModal()"><i data-lucide="plus"></i> Propose Rule Revision</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4696,10 +4708,10 @@ const RenderEngine = {
                 <tr><th>Rule ID</th><th>Policy Domain</th><th>Enforced Rule Threshold</th><th>Effective Since</th><th>Version</th><th>Status</th><th>Actions</th></tr>
               </thead>
               <tbody>
-                <tr><td><code>RULE-01</code></td><td>FLOW-017 Reschedule Notice Window</td><td>Minimum 4 Hours Before Occurrence</td><td>01 Aug 2026</td><td>v2.1</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><code>RULE-02</code></td><td>FLOW-013 Manual Payment SLA</td><td>Review within 2 Business Hours</td><td>15 Jul 2026</td><td>v1.4</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><code>RULE-03</code></td><td>FLOW-038 Renewal Reminder Schedule</td><td>14 Days, 7 Days, and 2 Days Before Expiry</td><td>01 Jul 2026</td><td>v2.0</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><code>RULE-04</code></td><td>FLOW-006 Max Active Trial Requests</td><td>1 Active Trial Request per Prospect</td><td>01 Jun 2026</td><td>v1.0</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><code>RULE-01</code></td><td>FLOW-017 Reschedule Notice Window</td><td>Minimum 4 Hours Before Occurrence</td><td>01 Aug 2026</td><td>v2.1</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRuleModal('RULE-01')">Edit</button></td></tr>
+                <tr><td><code>RULE-02</code></td><td>FLOW-013 Manual Payment SLA</td><td>Review within 2 Business Hours</td><td>15 Jul 2026</td><td>v1.4</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRuleModal('RULE-02')">Edit</button></td></tr>
+                <tr><td><code>RULE-03</code></td><td>FLOW-038 Renewal Reminder Schedule</td><td>14 Days, 7 Days, and 2 Days Before Expiry</td><td>01 Jul 2026</td><td>v2.0</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRuleModal('RULE-03')">Edit</button></td></tr>
+                <tr><td><code>RULE-04</code></td><td>FLOW-006 Max Active Trial Requests</td><td>1 Active Trial Request per Prospect</td><td>01 Jun 2026</td><td>v1.0</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRuleModal('RULE-04')">Edit</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -4719,7 +4731,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Fall 2026 K-12 Student Intake Batch (ADM-004)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">120 Rows Validated · 0 Errors · Source Checksum: <code>sha256-8a901ff82</code></p>
             </div>
-            <button class="btn btn-primary" onclick="Notifications.push('Import Committed', '120 student records committed to database with audit log.', 'success')">Commit Batch to Database</button>
+            <button class="btn btn-primary" onclick="Actions.commitAdminImportBatch()">Commit Batch to Database</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4749,7 +4761,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Controlled Data Exports (ADM-005)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Compliance data exports with mandatory business reason and expiring access links.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Export Generated', 'Audit export generated. Link expires in 2 hours.', 'success')"><i data-lucide="download"></i> Generate New Export</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openAdminExportModal()"><i data-lucide="download"></i> Generate New Export</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4758,7 +4770,7 @@ const RenderEngine = {
                 <tr><th>Export ID</th><th>Dataset Scope</th><th>Reason / Purpose</th><th>Requested By</th><th>Generated Timestamp</th><th>Status</th><th>Download</th></tr>
               </thead>
               <tbody>
-                <tr><td><code>EXP-401</code></td><td>Financial Transactions (Q2 2026)</td><td>Statutory Tax Audit</td><td>Admin User</td><td>Today 08:30 PKT</td><td><span class="badge badge-success">Available</span></td><td><button class="btn btn-primary btn-xs">Download CSV</button></td></tr>
+                <tr><td><code>EXP-401</code></td><td>Financial Transactions (Q2 2026)</td><td>Statutory Tax Audit</td><td>Admin User</td><td>Today 08:30 PKT</td><td><span class="badge badge-success">Available</span></td><td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Export Download', 'Downloading EXP-401 CSV...', 'success')">Download CSV</button></td></tr>
                 <tr><td><code>EXP-398</code></td><td>K-12 Board Enrolments 2026</td><td>FBISE Board Registration</td><td>COO</td><td>Yesterday</td><td><span class="badge badge-secondary">Expired</span></td><td><span style="font-size:12px; color:var(--slate);">Expired</span></td></tr>
               </tbody>
             </table>
@@ -4778,7 +4790,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Searchable Business Audit Trail (ADM-006)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Immutable, tamper-evident log of all commercial, academic, HR and security events.</p>
             </div>
-            <span class="badge badge-success">1,480 Audited Records</span>
+            <span class="badge badge-success">${data.kpis.auditEventsLogged} Audited Records</span>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4795,7 +4807,7 @@ const RenderEngine = {
                     <td>${a.action}</td>
                     <td><code>${a.entityId || 'SYS'}</code></td>
                     <td><span class="badge ${a.severity === 'High' ? 'badge-error' : a.severity === 'Medium' ? 'badge-warning' : 'badge-secondary'}">${a.severity}</span></td>
-                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audit Payload', 'Viewing cryptographic signature...', 'info')">JSON</button></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminAuditPayloadModal('${a.id}')">JSON</button></td>
                   </tr>
                 `).join("")}
               </tbody>
@@ -4816,7 +4828,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Data Retention Policies & Legal Holds (ADM-008)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Governs legal preservation of grades, payroll, financial ledger, and student records.</p>
             </div>
-            <button class="btn btn-secondary btn-sm"><i data-lucide="gavel"></i> Add Legal Hold</button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openAdminLegalHoldModal()"><i data-lucide="gavel"></i> Add Legal Hold</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4847,7 +4859,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Support Case Routing Policies (ADM-009)</h3>
               <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Defines automated ownership routing for learner, trainer, billing and academic inquiries.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Routing Rule', 'Opening routing policy creator...', 'info')"><i data-lucide="plus"></i> Add Routing Rule</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openAdminRoutingRuleModal()"><i data-lucide="plus"></i> Add Routing Rule</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
@@ -4856,10 +4868,10 @@ const RenderEngine = {
                 <tr><th>Inquiry Category</th><th>Originating Actor</th><th>Default Assigned Department</th><th>Escalation SLA</th><th>Status</th><th>Actions</th></tr>
               </thead>
               <tbody>
-                <tr><td><strong>Trial Class Questions</strong></td><td>Prospect / Free Learner</td><td>CSR / Admissions Specialist</td><td>2 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><strong>Billing & Bank Proofs</strong></td><td>Learner / Guardian Payer</td><td>Finance & Manual Payment Desk</td><td>2 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><strong>Academic Feedback / Homework</strong></td><td>Enrolled Learner</td><td>Assigned Course Trainer</td><td>24 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><strong>Safeguarding & Minor Protection</strong></td><td>Any User</td><td>COO & Legal Compliance Officer</td><td>Immediate (30m)</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><strong>Trial Class Questions</strong></td><td>Prospect / Free Learner</td><td>CSR / Admissions Specialist</td><td>2 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRoutingRuleModal('Trial Class Questions')">Edit</button></td></tr>
+                <tr><td><strong>Billing & Bank Proofs</strong></td><td>Learner / Guardian Payer</td><td>Finance & Manual Payment Desk</td><td>2 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRoutingRuleModal('Billing & Bank Proofs')">Edit</button></td></tr>
+                <tr><td><strong>Academic Feedback / Homework</strong></td><td>Enrolled Learner</td><td>Assigned Course Trainer</td><td>24 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRoutingRuleModal('Academic Feedback')">Edit</button></td></tr>
+                <tr><td><strong>Safeguarding & Minor Protection</strong></td><td>Any User</td><td>COO & Legal Compliance Officer</td><td>Immediate (30m)</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="Actions.openAdminRoutingRuleModal('Safeguarding')">Edit</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -4925,9 +4937,41 @@ const RenderEngine = {
     if (window.lucide) window.lucide.createIcons();
   },
 
-  // ============================================================================
-  // ACADEMIC REVIEWER RENDERING ENGINE
-  // ============================================================================
+  
+  dashboard() {
+    if (Simulator.activeRole === "platform_admin") {
+      this.adminDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "learner") {
+      this.learnerDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "trainer") {
+      this.trainerDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "academic_reviewer") {
+      this.reviewerDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "course_creator") {
+      this.creatorDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "csr") {
+      this.csrDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "coo") {
+      this.cooDashboard();
+      return;
+    }
+    if (Simulator.activeRole === "operational_manager") {
+      this.omDashboard();
+      return;
+    }
+  },
 
   reviewerDashboard() {
     const container = document.getElementById("reviewer-dashboard-shell");
@@ -10481,6 +10525,579 @@ const RenderEngine = {
 // ============================================================================
 
 window.Actions = Actions = {
+
+  openAdminPaymentEvidence(paymentId) {
+    const p = db.adminData.financePayments.find(x => x.id === paymentId);
+    if (!p) return;
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="receipt" style="color:var(--primary);"></i> Manual Payment Verification (FLOW-013)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:13px;">
+          <div><span style="color:var(--slate); display:block; font-size:11px;">LEARNER / COURSE</span><strong>${p.learner}</strong><br><span style="color:var(--slate);">${p.course}</span></div>
+          <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:#166534; font-size:15px;">${p.amount}</strong></div>
+          <div><span style="color:var(--slate); display:block; font-size:11px;">PAYMENT CHANNEL</span>${p.method}</div>
+          <div><span style="color:var(--slate); display:block; font-size:11px;">BANK TRANSACTION REF</span><code>${p.ref}</code></div>
+        </div>
+
+        <div style="border:2px dashed #cbd5e1; border-radius:10px; padding:24px; text-align:center; background:#ffffff;">
+          <i data-lucide="file-check-2" style="width:48px; height:48px; color:var(--primary); margin-bottom:8px;"></i>
+          <strong style="display:block; font-size:14px; color:var(--navy-dark);">Official Bank Transfer Deposit Slip Attached</strong>
+          <span style="font-size:12px; color:var(--slate);">Filename: ${p.receipt} · Uploaded Today 11:42 PKT</span>
+          <div style="margin-top:12px;">
+            <span class="badge badge-success">✓ Cryptographic Image Watermark Verified</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-danger" onclick="Actions.rejectAdminPayment('${p.id}')">Reject Deposit</button>
+      <button class="btn btn-primary" style="background:#22c55e; border:none;" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  approveAdminPayment(paymentId) {
+    const p = db.adminData.financePayments.find(x => x.id === paymentId);
+    if (!p) return;
+
+    p.status = "Approved";
+    if (db.adminData.kpis.pendingPaymentReviews > 0) {
+      db.adminData.kpis.pendingPaymentReviews--;
+    }
+
+    db.auditLogs.unshift({
+      id: "AUD-PAY-" + Math.floor(1000 + Math.random() * 9000),
+      timestamp: new Date().toLocaleTimeString(),
+      actorName: "Platform Admin",
+      action: "FLOW-013 Manual Payment Approved",
+      entityId: paymentId,
+      severity: "High"
+    });
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Manual Payment Approved", `Payment ${paymentId} for ${p.learner} has been verified. Access term provisioned.`, "success");
+
+    if (Router.currentRoute === "dashboard") {
+      RenderEngine.adminDashboard();
+    } else {
+      RenderEngine.adminWorkspace(Router.currentRoute);
+    }
+  },
+
+  rejectAdminPayment(paymentId) {
+    const p = db.adminData.financePayments.find(x => x.id === paymentId);
+    if (!p) return;
+
+    p.status = "Rejected (Insufficient Proof)";
+    if (db.adminData.kpis.pendingPaymentReviews > 0) {
+      db.adminData.kpis.pendingPaymentReviews--;
+    }
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Payment Rejected", `Payment ${paymentId} marked as invalid. CSR notified to follow up with payer.`, "warning");
+
+    if (Router.currentRoute === "dashboard") {
+      RenderEngine.adminDashboard();
+    } else {
+      RenderEngine.adminWorkspace(Router.currentRoute);
+    }
+  },
+
+  openAdminMatchTrainerModal(trialId) {
+    const t = db.adminData.csrSales.find(x => x.id === trialId);
+    if (!t) return;
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="user-check" style="color:var(--primary);"></i> Trainer Placement Diagnostic Match (FLOW-006)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+          <strong style="color:var(--navy-dark);">Prospect: ${t.prospect}</strong>
+          <p style="margin:2px 0 0 0; color:var(--slate);">Course: ${t.course} · Preferred: ${t.preferredSlot}</p>
+        </div>
+
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Select Qualified Faculty Trainer</label>
+          <select id="admin-trainer-select" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="Sara Javed">Sara Javed (Spoken English & Communication Specialist - Rating 4.9/5.0)</option>
+            <option value="Alex Rivera">Alex Rivera (Lead Full-Stack Web Development Facilitator)</option>
+            <option value="Prof. Tariq Hassan">Prof. Tariq Hassan (Senior Mathematics & Science Lead)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Diagnostic Assessment Level</label>
+          <select id="admin-diag-level" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="Beginner Placement">Beginner / Foundation Diagnostic (CEFR A1-A2)</option>
+            <option value="Intermediate Assessment">Intermediate Practical Assessment (CEFR B1-B2)</option>
+            <option value="Advanced Capstone">Advanced Fluency / Code Diagnostic (CEFR C1)</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.confirmAdminTrainerMatch('${t.id}')">Confirm Match & Schedule Trial</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  confirmAdminTrainerMatch(trialId) {
+    const t = db.adminData.csrSales.find(x => x.id === trialId);
+    const trainerSelect = document.getElementById("admin-trainer-select");
+    const assignedTrainer = trainerSelect ? trainerSelect.value : "Sara Javed";
+
+    if (t) {
+      t.status = "Trainer Matched";
+      t.assignedTrainer = assignedTrainer;
+      if (db.adminData.kpis.pendingTrials > 0) {
+        db.adminData.kpis.pendingTrials--;
+      }
+    }
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Trainer Matched (FLOW-006)", `Assigned ${assignedTrainer} to trial session for ${t ? t.prospect : 'prospect'}. WebRTC room scheduled.`, "success");
+
+    if (Router.currentRoute === "dashboard") {
+      RenderEngine.adminDashboard();
+    } else {
+      RenderEngine.adminWorkspace(Router.currentRoute);
+    }
+  },
+
+  openAdminAddLeadModal() {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="user-plus" style="color:var(--primary);"></i> Inbound Prospect Intake (FLOW-006)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Prospect Full Name</label>
+          <input type="text" id="admin-new-lead-name" class="form-control" placeholder="e.g. Daniyal Qureshi" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Course of Interest</label>
+          <select id="admin-new-lead-course" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="Spoken English Fluency">Spoken English Fluency</option>
+            <option value="Full-Stack Web Dev">Full-Stack Web Dev</option>
+            <option value="Grade 8 Mathematics (FBISE)">Grade 8 Mathematics (FBISE)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Preferred Time Slot</label>
+          <input type="text" id="admin-new-lead-slot" class="form-control" placeholder="e.g. Tue/Thu 04:00 PM PKT" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveAdminNewLead()">Ingest Lead</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  saveAdminNewLead() {
+    const name = document.getElementById("admin-new-lead-name")?.value || "New Prospect";
+    const course = document.getElementById("admin-new-lead-course")?.value || "Spoken English Fluency";
+    const slot = document.getElementById("admin-new-lead-slot")?.value || "Mon/Wed 11:00 AM";
+
+    const newId = "TRL-" + Math.floor(200 + Math.random() * 800);
+    db.adminData.csrSales.unshift({
+      id: newId,
+      prospect: name,
+      course: course,
+      stage: "Trial Requested",
+      preferredSlot: slot,
+      assignedCsr: "Hamza Khan",
+      status: "Pending Trainer Assignment"
+    });
+    db.adminData.kpis.activeLeads++;
+    db.adminData.kpis.pendingTrials++;
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Lead Ingested", `Lead ${name} added to CSR pipeline.`, "success");
+
+    if (Router.currentRoute === "dashboard") {
+      RenderEngine.adminDashboard();
+    } else {
+      RenderEngine.adminWorkspace(Router.currentRoute);
+    }
+  },
+
+  sendAdminRenewalReminder(enrolmentId) {
+    const m = db.adminData.membershipsRenewals.find(x => x.id === enrolmentId);
+    if (m) {
+      m.renewalStatus = "Reminder Dispatched (FLOW-038)";
+    }
+    Notifications.push("Renewal Invoice Sent", `Renewal notice and payment link dispatched to ${m ? m.learner : 'learner'} via SMS & Email.`, "success");
+    
+    if (Router.currentRoute === "dashboard") {
+      RenderEngine.adminDashboard();
+    } else {
+      RenderEngine.adminWorkspace(Router.currentRoute);
+    }
+  },
+
+  openAdminClassInspectorModal(classId) {
+    const c = db.adminData.academicDelivery.find(x => x.id === classId);
+    if (!c) return;
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="presentation" style="color:var(--primary);"></i> Live Class & Delivery Report Inspector (FLOW-015/016)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div><span style="color:var(--slate); font-size:11px;">CLASS OCCURRENCE</span><strong>${c.title}</strong></div>
+          <div><span style="color:var(--slate); font-size:11px;">FACULTY TRAINER</span><strong>${c.trainer}</strong></div>
+          <div><span style="color:var(--slate); font-size:11px;">OCCURRENCE TIME</span>${c.time}</div>
+          <div><span style="color:var(--slate); font-size:11px;">ATTENDEE PARTICIPATION</span><strong>${c.participants} Enrolled Learners</strong></div>
+        </div>
+
+        <div style="border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+          <h4 style="margin:0 0 6px 0; font-size:13px; color:var(--navy-dark);">Teacher Educational Delivery Notes</h4>
+          <p style="color:var(--slate); font-size:12px; line-height:1.5; margin:0;">
+            All learners completed the interactive vocabulary drill with 92% comprehension. Oral fluency checks recorded for 6 learners. Homework assignment #4 distributed.
+          </p>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Actions.approveAdminClassReport('${c.id}')">Approve Educational Report</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  approveAdminClassReport(classId) {
+    const c = db.adminData.academicDelivery.find(x => x.id === classId);
+    if (c) {
+      c.reportStatus = "Report Approved";
+      if (db.adminData.kpis.reportsDue > 0) db.adminData.kpis.reportsDue--;
+    }
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Delivery Report Approved", `Teacher delivery notes approved and archived for class ${classId}.`, "success");
+
+    if (Router.currentRoute === "dashboard") {
+      RenderEngine.adminDashboard();
+    } else {
+      RenderEngine.adminWorkspace(Router.currentRoute);
+    }
+  },
+
+  openAdminStaffProfileModal(staffId) {
+    const s = db.adminData.hrStaff.find(x => x.id === staffId);
+    if (!s) return;
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="users-round" style="color:var(--primary);"></i> Staff Profile & HR Agreement (PAY-013)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div><span style="color:var(--slate); font-size:11px;">FULL NAME</span><strong>${s.name}</strong></div>
+          <div><span style="color:var(--slate); font-size:11px;">DEPARTMENT</span><strong>${s.dept}</strong></div>
+          <div><span style="color:var(--slate); font-size:11px;">ROLE SCOPE</span>${s.role}</div>
+          <div><span style="color:var(--slate); font-size:11px;">COMPENSATION RATE</span><strong style="color:var(--primary);">${s.hourlyRate || s.baseSalary}</strong></div>
+        </div>
+        <div style="border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+          <span class="badge badge-success">✓ Verified CNIC & Degree Credentials</span>
+          <span class="badge badge-success" style="margin-left:6px;">✓ Active Safeguarding Background Check</span>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  openAdminInviteModal() {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="mail-plus" style="color:var(--primary);"></i> Outbound Staff Invitation (FLOW-003)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Recipient Email Address</label>
+          <input type="email" id="admin-invite-email" class="form-control" placeholder="staff.member@innovatorhuzsam.com" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Target Role Scope</label>
+          <select id="admin-invite-role" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="Trainer / Teacher">Trainer / Teacher</option>
+            <option value="Academic Reviewer">Academic Reviewer</option>
+            <option value="CSR / Admissions Specialist">CSR / Admissions Specialist</option>
+            <option value="Course Creator">Course Creator</option>
+            <option value="Operations Manager">Operations Manager</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.sendAdminInvite()">Send Secure Invite</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  sendAdminInvite() {
+    const email = document.getElementById("admin-invite-email")?.value || "staff@innovatorhuzsam.com";
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Invitation Dispatched", `Cryptographic onboarding invitation sent to ${email}.`, "success");
+  },
+
+  resendAdminInvite(inviteId) {
+    Notifications.push("Invitation Re-dispatched", `Fresh token generated and sent for invite ${inviteId}.`, "success");
+  },
+
+  revokeAdminSession(sessionId) {
+    Notifications.push("Session Terminated", `Session ${sessionId} terminated and auth tokens revoked.`, "warning");
+  },
+
+  openAdminReferenceModal(category = "Class Formats") {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="database" style="color:var(--primary);"></i> Controlled Reference Data (ADM-001)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Domain Category</label>
+          <input type="text" value="${category}" disabled style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline); background:#f1f5f9;" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">New Controlled Value</label>
+          <input type="text" placeholder="e.g. 120 Mins Intensive" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Value Added', 'New reference code registered.', 'success');">Save Value</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  openAdminRuleModal(ruleId = "RULE-01") {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="scale" style="color:var(--primary);"></i> Propose Policy Revision (ADM-002)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Rule ID & Scope</label>
+          <input type="text" value="${ruleId}" disabled style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline); background:#f1f5f9;" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Updated Parameter Threshold</label>
+          <input type="text" value="Minimum 4 Hours Before Occurrence" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Effective Date</label>
+          <input type="date" value="2026-09-01" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Policy Revision Enforced', 'Rule updated with version bump and audit record.', 'success');">Enforce Policy</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  commitAdminImportBatch() {
+    Notifications.push("Staged Import Committed (ADM-004)", "120 student records ingested and committed to database. Audit transaction signed.", "success");
+  },
+
+  openAdminExportModal() {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-output" style="color:var(--primary);"></i> Generate Controlled Data Export (ADM-005)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Export Dataset Scope</label>
+          <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="Financial Ledger & Invoices">Financial Ledger & Invoices (Q2-Q3 2026)</option>
+            <option value="Academic Attendance & Reports">Academic Attendance & Reports</option>
+            <option value="Staff Payroll & Teaching Deliveries">Staff Payroll & Teaching Deliveries</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Mandatory Business Justification</label>
+          <textarea class="form-control" placeholder="Reason for compliance export..." style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);"></textarea>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Export Generated', 'Export package created. Secure link active for 2 hours.', 'success');">Generate Export</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  openAdminAuditPayloadModal(auditId) {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-spreadsheet" style="color:var(--primary);"></i> Immutable Audit Event Payload (ADM-006)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
+        <div><span style="color:var(--slate); font-size:11px;">EVENT TRANSACTION HASH</span><code>sha256-8a901ff82acb9802441de01</code></div>
+        <div style="background:#0f172a; color:#38bdf8; padding:14px; border-radius:8px; font-family:monospace; font-size:12px; max-height:220px; overflow:auto;">
+{
+  "auditId": "${auditId}",
+  "timestamp": "2026-08-17T11:42:00.000Z",
+  "actor": "Admin User (IAM-901)",
+  "action": "FLOW-013_MANUAL_PAYMENT_VERIFIED",
+  "entityTarget": "PAY-801",
+  "verifiedBankRef": "TXN-90214",
+  "grantedEnrolmentTerm": "TERM-2026-Q3",
+  "signature": "RSA-PSS-SHA256-VALID"
+}
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  openAdminLegalHoldModal() {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="gavel" style="color:var(--primary);"></i> Add Statutory Legal Hold (ADM-008)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Legal Case Identifier</label>
+          <input type="text" placeholder="e.g. Case #509 (Tax Assessment)" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Protected Dataset</label>
+          <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="Financial & Payment Records">Financial & Payment Records</option>
+            <option value="Academic Records & Transcripts">Academic Records & Transcripts</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Legal Hold Applied', 'Target dataset locked against hard deletion.', 'success');">Apply Legal Hold</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  openAdminRoutingRuleModal(category = "General Inquiry") {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="heart-handshake" style="color:var(--primary);"></i> Support Case Routing Policy (ADM-009)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Inquiry Category</label>
+          <input type="text" value="${category}" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Assigned Department</label>
+          <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+            <option value="CSR / Admissions Specialist">CSR / Admissions Specialist</option>
+            <option value="Finance & Manual Payment Desk">Finance & Manual Payment Desk</option>
+            <option value="Assigned Course Trainer">Assigned Course Trainer</option>
+            <option value="COO & Legal Safeguarding">COO & Legal Safeguarding</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Resolution SLA (Hours)</label>
+          <input type="number" value="2" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+        </div>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Routing Policy Saved', 'Automated support case routing updated.', 'success');">Save Policy</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
     switchPreviewFormat(format) {
       const canvas = document.getElementById("creator-dynamic-view-canvas");
       if (canvas) {
@@ -15665,7 +16282,586 @@ document.addEventListener("DOMContentLoaded", () => {
     else RenderEngine.reviewerWorkspace(Router.currentRoute);
   };
 
-  window.Actions = Actions;
+  
+// ============================================================================
+// PLATFORM ADMIN INTERACTIVE BUSINESS ACTION HANDLERS (FLOW ALIGNED)
+// ============================================================================
+
+Actions.openAdminPaymentEvidence = function(paymentId) {
+  const p = db.adminData.financePayments.find(x => x.id === paymentId);
+  if (!p) return;
+
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="receipt" style="color:var(--primary);"></i> Manual Payment Verification (FLOW-013)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:13px;">
+        <div><span style="color:var(--slate); display:block; font-size:11px;">LEARNER / COURSE</span><strong>${p.learner}</strong><br><span style="color:var(--slate);">${p.course}</span></div>
+        <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:#166534; font-size:15px;">${p.amount}</strong></div>
+        <div><span style="color:var(--slate); display:block; font-size:11px;">PAYMENT CHANNEL</span>${p.method}</div>
+        <div><span style="color:var(--slate); display:block; font-size:11px;">BANK TRANSACTION REF</span><code>${p.ref}</code></div>
+      </div>
+
+      <div style="border:2px dashed #cbd5e1; border-radius:10px; padding:24px; text-align:center; background:#ffffff;">
+        <i data-lucide="file-check-2" style="width:48px; height:48px; color:var(--primary); margin-bottom:8px;"></i>
+        <strong style="display:block; font-size:14px; color:var(--navy-dark);">Official Bank Transfer Deposit Slip Attached</strong>
+        <span style="font-size:12px; color:var(--slate);">Filename: ${p.receipt} · Uploaded Today 11:42 PKT</span>
+        <div style="margin-top:12px;">
+          <span class="badge badge-success">✓ Cryptographic Image Watermark Verified</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-danger" onclick="Actions.rejectAdminPayment('${p.id}')">Reject Deposit</button>
+    <button class="btn btn-primary" style="background:#22c55e; border:none;" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.approveAdminPayment = function(paymentId) {
+  const p = db.adminData.financePayments.find(x => x.id === paymentId);
+  if (!p) return;
+
+  p.status = "Approved";
+  if (db.adminData.kpis.pendingPaymentReviews > 0) {
+    db.adminData.kpis.pendingPaymentReviews--;
+  }
+
+  // Create access grant and audit record
+  db.auditLogs.unshift({
+    id: "AUD-PAY-" + Math.floor(1000 + Math.random() * 9000),
+    timestamp: new Date().toLocaleTimeString(),
+    actorName: "Platform Admin",
+    action: "FLOW-013 Manual Payment Approved",
+    entityId: paymentId,
+    severity: "High"
+  });
+
+  document.getElementById("generic-modal")?.classList.add("hidden");
+  Notifications.push("Manual Payment Approved", `Payment ${paymentId} for ${p.learner} has been verified. Access term provisioned.`, "success");
+
+  if (Router.currentRoute === "dashboard") {
+    RenderEngine.adminDashboard();
+  } else {
+    RenderEngine.adminWorkspace(Router.currentRoute);
+  }
+};
+
+Actions.rejectAdminPayment = function(paymentId) {
+  const p = db.adminData.financePayments.find(x => x.id === paymentId);
+  if (!p) return;
+
+  p.status = "Rejected (Insufficient Proof)";
+  if (db.adminData.kpis.pendingPaymentReviews > 0) {
+    db.adminData.kpis.pendingPaymentReviews--;
+  }
+
+  document.getElementById("generic-modal")?.classList.add("hidden");
+  Notifications.push("Payment Rejected", `Payment ${paymentId} marked as invalid. CSR notified to follow up with payer.`, "warning");
+
+  if (Router.currentRoute === "dashboard") {
+    RenderEngine.adminDashboard();
+  } else {
+    RenderEngine.adminWorkspace(Router.currentRoute);
+  }
+};
+
+Actions.openAdminMatchTrainerModal = function(trialId) {
+  const t = db.adminData.csrSales.find(x => x.id === trialId);
+  if (!t) return;
+
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="user-check" style="color:var(--primary);"></i> Trainer Placement Diagnostic Match (FLOW-006)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+        <strong style="color:var(--navy-dark);">Prospect: ${t.prospect}</strong>
+        <p style="margin:2px 0 0 0; color:var(--slate);">Course: ${t.course} · Preferred: ${t.preferredSlot}</p>
+      </div>
+
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Select Qualified Faculty Trainer</label>
+        <select id="admin-trainer-select" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="Sara Javed">Sara Javed (Spoken English & Communication Specialist - Rating 4.9/5.0)</option>
+          <option value="Alex Rivera">Alex Rivera (Lead Full-Stack Web Development Facilitator)</option>
+          <option value="Prof. Tariq Hassan">Prof. Tariq Hassan (Senior Mathematics & Science Lead)</option>
+        </select>
+      </div>
+
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Diagnostic Assessment Level</label>
+        <select id="admin-diag-level" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="Beginner Placement">Beginner / Foundation Diagnostic (CEFR A1-A2)</option>
+          <option value="Intermediate Assessment">Intermediate Practical Assessment (CEFR B1-B2)</option>
+          <option value="Advanced Capstone">Advanced Fluency / Code Diagnostic (CEFR C1)</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.confirmAdminTrainerMatch('${t.id}')">Confirm Match & Schedule Trial</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.confirmAdminTrainerMatch = function(trialId) {
+  const t = db.adminData.csrSales.find(x => x.id === trialId);
+  const trainerSelect = document.getElementById("admin-trainer-select");
+  const assignedTrainer = trainerSelect ? trainerSelect.value : "Sara Javed";
+
+  if (t) {
+    t.status = "Trainer Matched";
+    t.assignedTrainer = assignedTrainer;
+    if (db.adminData.kpis.pendingTrials > 0) {
+      db.adminData.kpis.pendingTrials--;
+    }
+  }
+
+  document.getElementById("generic-modal")?.classList.add("hidden");
+  Notifications.push("Trainer Matched (FLOW-006)", `Assigned ${assignedTrainer} to trial session for ${t ? t.prospect : 'prospect'}. WebRTC room scheduled.`, "success");
+
+  if (Router.currentRoute === "dashboard") {
+    RenderEngine.adminDashboard();
+  } else {
+    RenderEngine.adminWorkspace(Router.currentRoute);
+  }
+};
+
+Actions.openAdminAddLeadModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="user-plus" style="color:var(--primary);"></i> Inbound Prospect Intake (FLOW-006)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Prospect Full Name</label>
+        <input type="text" id="admin-new-lead-name" class="form-control" placeholder="e.g. Daniyal Qureshi" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Course of Interest</label>
+        <select id="admin-new-lead-course" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="Spoken English Fluency">Spoken English Fluency</option>
+          <option value="Full-Stack Web Dev">Full-Stack Web Dev</option>
+          <option value="Grade 8 Mathematics (FBISE)">Grade 8 Mathematics (FBISE)</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Preferred Time Slot</label>
+        <input type="text" id="admin-new-lead-slot" class="form-control" placeholder="e.g. Tue/Thu 04:00 PM PKT" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.saveAdminNewLead()">Ingest Lead</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.saveAdminNewLead = function() {
+  const name = document.getElementById("admin-new-lead-name")?.value || "New Prospect";
+  const course = document.getElementById("admin-new-lead-course")?.value || "Spoken English Fluency";
+  const slot = document.getElementById("admin-new-lead-slot")?.value || "Mon/Wed 11:00 AM";
+
+  const newId = "TRL-" + Math.floor(200 + Math.random() * 800);
+  db.adminData.csrSales.unshift({
+    id: newId,
+    prospect: name,
+    course: course,
+    stage: "Trial Requested",
+    preferredSlot: slot,
+    assignedCsr: "Hamza Khan",
+    status: "Pending Trainer Assignment"
+  });
+  db.adminData.kpis.activeLeads++;
+  db.adminData.kpis.pendingTrials++;
+
+  document.getElementById("generic-modal")?.classList.add("hidden");
+  Notifications.push("Lead Ingested", `Lead ${name} added to CSR pipeline.`, "success");
+
+  if (Router.currentRoute === "dashboard") {
+    RenderEngine.adminDashboard();
+  } else {
+    RenderEngine.adminWorkspace(Router.currentRoute);
+  }
+};
+
+Actions.sendAdminRenewalReminder = function(enrolmentId) {
+  const m = db.adminData.membershipsRenewals.find(x => x.id === enrolmentId);
+  if (m) {
+    m.renewalStatus = "Reminder Dispatched (FLOW-038)";
+  }
+  Notifications.push("Renewal Invoice Sent", `Renewal notice and payment link dispatched to ${m ? m.learner : 'learner'} via SMS & Email.`, "success");
+  
+  if (Router.currentRoute === "dashboard") {
+    RenderEngine.adminDashboard();
+  } else {
+    RenderEngine.adminWorkspace(Router.currentRoute);
+  }
+};
+
+Actions.openAdminClassInspectorModal = function(classId) {
+  const c = db.adminData.academicDelivery.find(x => x.id === classId);
+  if (!c) return;
+
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="presentation" style="color:var(--primary);"></i> Live Class & Delivery Report Inspector (FLOW-015/016)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div><span style="color:var(--slate); font-size:11px;">CLASS OCCURRENCE</span><strong>${c.title}</strong></div>
+        <div><span style="color:var(--slate); font-size:11px;">FACULTY TRAINER</span><strong>${c.trainer}</strong></div>
+        <div><span style="color:var(--slate); font-size:11px;">OCCURRENCE TIME</span>${c.time}</div>
+        <div><span style="color:var(--slate); font-size:11px;">ATTENDEE PARTICIPATION</span><strong>${c.participants} Enrolled Learners</strong></div>
+      </div>
+
+      <div style="border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+        <h4 style="margin:0 0 6px 0; font-size:13px; color:var(--navy-dark);">Teacher Educational Delivery Notes</h4>
+        <p style="color:var(--slate); font-size:12px; line-height:1.5; margin:0;">
+          All learners completed the interactive vocabulary drill with 92% comprehension. Oral fluency checks recorded for 6 learners. Homework assignment #4 distributed.
+        </p>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-primary" onclick="Actions.approveAdminClassReport('${c.id}')">Approve Educational Report</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.approveAdminClassReport = function(classId) {
+  const c = db.adminData.academicDelivery.find(x => x.id === classId);
+  if (c) {
+    c.reportStatus = "Report Approved";
+    if (db.adminData.kpis.reportsDue > 0) db.adminData.kpis.reportsDue--;
+  }
+  document.getElementById("generic-modal")?.classList.add("hidden");
+  Notifications.push("Delivery Report Approved", `Teacher delivery notes approved and archived for class ${classId}.`, "success");
+
+  if (Router.currentRoute === "dashboard") {
+    RenderEngine.adminDashboard();
+  } else {
+    RenderEngine.adminWorkspace(Router.currentRoute);
+  }
+};
+
+Actions.openAdminStaffProfileModal = function(staffId) {
+  const s = db.adminData.hrStaff.find(x => x.id === staffId);
+  if (!s) return;
+
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="users-round" style="color:var(--primary);"></i> Staff Profile & HR Agreement (PAY-013)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div><span style="color:var(--slate); font-size:11px;">FULL NAME</span><strong>${s.name}</strong></div>
+        <div><span style="color:var(--slate); font-size:11px;">DEPARTMENT</span><strong>${s.dept}</strong></div>
+        <div><span style="color:var(--slate); font-size:11px;">ROLE SCOPE</span>${s.role}</div>
+        <div><span style="color:var(--slate); font-size:11px;">COMPENSATION RATE</span><strong style="color:var(--primary);">${s.hourlyRate || s.baseSalary}</strong></div>
+      </div>
+      <div style="border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+        <span class="badge badge-success">✓ Verified CNIC & Degree Credentials</span>
+        <span class="badge badge-success" style="margin-left:6px;">✓ Active Safeguarding Background Check</span>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openAdminInviteModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="mail-plus" style="color:var(--primary);"></i> Outbound Staff Invitation (FLOW-003)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Recipient Email Address</label>
+        <input type="email" id="admin-invite-email" class="form-control" placeholder="staff.member@innovatorhuzsam.com" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Target Role Scope</label>
+        <select id="admin-invite-role" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="Trainer / Teacher">Trainer / Teacher</option>
+          <option value="Academic Reviewer">Academic Reviewer</option>
+          <option value="CSR / Admissions Specialist">CSR / Admissions Specialist</option>
+          <option value="Course Creator">Course Creator</option>
+          <option value="Operations Manager">Operations Manager</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.sendAdminInvite()">Send Secure Invite</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.sendAdminInvite = function() {
+  const email = document.getElementById("admin-invite-email")?.value || "staff@innovatorhuzsam.com";
+  document.getElementById("generic-modal")?.classList.add("hidden");
+  Notifications.push("Invitation Dispatched", `Cryptographic onboarding invitation sent to ${email}.`, "success");
+};
+
+Actions.resendAdminInvite = function(inviteId) {
+  Notifications.push("Invitation Re-dispatched", `Fresh token generated and sent for invite ${inviteId}.`, "success");
+};
+
+Actions.revokeAdminSession = function(sessionId) {
+  Notifications.push("Session Terminated", `Session ${sessionId} terminated and auth tokens revoked.`, "warning");
+};
+
+Actions.openAdminReferenceModal = function(category = "Class Formats") {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="database" style="color:var(--primary);"></i> Controlled Reference Data (ADM-001)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Domain Category</label>
+        <input type="text" value="${category}" disabled style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline); background:#f1f5f9;" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">New Controlled Value</label>
+        <input type="text" placeholder="e.g. 120 Mins Intensive" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Value Added', 'New reference code registered.', 'success');">Save Value</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openAdminRuleModal = function(ruleId = "RULE-01") {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="scale" style="color:var(--primary);"></i> Propose Policy Revision (ADM-002)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Rule ID & Scope</label>
+        <input type="text" value="${ruleId}" disabled style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline); background:#f1f5f9;" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Updated Parameter Threshold</label>
+        <input type="text" value="Minimum 4 Hours Before Occurrence" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Effective Date</label>
+        <input type="date" value="2026-09-01" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Policy Revision Enforced', 'Rule updated with version bump and audit record.', 'success');">Enforce Policy</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.commitAdminImportBatch = function() {
+  Notifications.push("Staged Import Committed (ADM-004)", "120 student records ingested and committed to database. Audit transaction signed.", "success");
+};
+
+Actions.openAdminExportModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-output" style="color:var(--primary);"></i> Generate Controlled Data Export (ADM-005)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Export Dataset Scope</label>
+        <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="Financial Ledger & Invoices">Financial Ledger & Invoices (Q2-Q3 2026)</option>
+          <option value="Academic Attendance & Reports">Academic Attendance & Reports</option>
+          <option value="Staff Payroll & Teaching Deliveries">Staff Payroll & Teaching Deliveries</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Mandatory Business Justification</label>
+        <textarea class="form-control" placeholder="Reason for compliance export..." style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);"></textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Export Generated', 'Export package created. Secure link active for 2 hours.', 'success');">Generate Export</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openAdminAuditPayloadModal = function(auditId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-spreadsheet" style="color:var(--primary);"></i> Immutable Audit Event Payload (ADM-006)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
+      <div><span style="color:var(--slate); font-size:11px;">EVENT TRANSACTION HASH</span><code>sha256-8a901ff82acb9802441de01</code></div>
+      <div style="background:#0f172a; color:#38bdf8; padding:14px; border-radius:8px; font-family:monospace; font-size:12px; max-height:220px; overflow:auto;">
+{
+  "auditId": "${auditId}",
+  "timestamp": "2026-08-17T11:42:00.000Z",
+  "actor": "Admin User (IAM-901)",
+  "action": "FLOW-013_MANUAL_PAYMENT_VERIFIED",
+  "entityTarget": "PAY-801",
+  "verifiedBankRef": "TXN-90214",
+  "grantedEnrolmentTerm": "TERM-2026-Q3",
+  "signature": "RSA-PSS-SHA256-VALID"
+}
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openAdminLegalHoldModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="gavel" style="color:var(--primary);"></i> Add Statutory Legal Hold (ADM-008)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Legal Case Identifier</label>
+        <input type="text" placeholder="e.g. Case #509 (Tax Assessment)" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Protected Dataset</label>
+        <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="Financial & Payment Records">Financial & Payment Records</option>
+          <option value="Academic Records & Transcripts">Academic Records & Transcripts</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Legal Hold Applied', 'Target dataset locked against hard deletion.', 'success');">Apply Legal Hold</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openAdminRoutingRuleModal = function(category = "General Inquiry") {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="heart-handshake" style="color:var(--primary);"></i> Support Case Routing Policy (ADM-009)</div>`;
+  body.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Inquiry Category</label>
+        <input type="text" value="${category}" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Assigned Department</label>
+        <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
+          <option value="CSR / Admissions Specialist">CSR / Admissions Specialist</option>
+          <option value="Finance & Manual Payment Desk">Finance & Manual Payment Desk</option>
+          <option value="Assigned Course Trainer">Assigned Course Trainer</option>
+          <option value="COO & Legal Safeguarding">COO & Legal Safeguarding</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Resolution SLA (Hours)</label>
+        <input type="number" value="2" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Routing Policy Saved', 'Automated support case routing updated.', 'success');">Save Policy</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+
+window.Actions = Actions;
   window.Router = Router;
   window.RenderEngine = RenderEngine;
   window.Simulator = Simulator;
