@@ -4052,7 +4052,7 @@ const RenderEngine = {
           <div class="stat-card clickable" onclick="Router.navigate('admin-csr-sales')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:11px; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px;">CSR & SALES VELOCITY</span>
-              <div style="width:32px; height:32px; border-radius:6px; background:#e0e7ff; color:var(--primary); display:flex; align-items:center; justify-content:center;">
+              <div style="width:32px; height:32px; border-radius:6px; background:#f9f3e8; color:var(--primary); display:flex; align-items:center; justify-content:center;">
                 <i data-lucide="funnel" style="width:16px; height:16px;"></i>
               </div>
             </div>
@@ -4061,7 +4061,7 @@ const RenderEngine = {
               <span style="font-size:12px; color:var(--slate);">${k.activeLeads} Leads · <strong>${k.pendingTrials} Trials Pending</strong></span>
             </div>
             <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-              <span style="color:#166534; font-weight:700;">${k.conversionRate} Conversion</span>
+              <span style="color:var(--secondary); font-weight:700;">${k.conversionRate} Conversion</span>
               <span style="color:var(--primary); font-weight:600;">View Pipeline &rarr;</span>
             </div>
           </div>
@@ -4069,26 +4069,26 @@ const RenderEngine = {
           <!-- KPI 2: FINANCE & PAYMENTS -->
           <div class="stat-card clickable" onclick="Router.navigate('admin-finance-payments')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; font-weight:800; color:#d97706; text-transform:uppercase; letter-spacing:0.5px;">FINANCE & PAYMENTS</span>
-              <div style="width:32px; height:32px; border-radius:6px; background:#fef3c7; color:#d97706; display:flex; align-items:center; justify-content:center;">
+              <span style="font-size:11px; font-weight:800; color:var(--secondary); text-transform:uppercase; letter-spacing:0.5px;">FINANCE & PAYMENTS</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#f3ede2; color:var(--secondary); display:flex; align-items:center; justify-content:center;">
                 <i data-lucide="receipt" style="width:16px; height:16px;"></i>
               </div>
             </div>
             <div>
-              <strong style="font:800 24px 'Manrope', sans-serif; color:#d97706; display:block; margin-bottom:4px;">${k.pendingPaymentReviews} Pending Reviews</strong>
+              <strong style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); display:block; margin-bottom:4px;">${k.pendingPaymentReviews} Pending Reviews</strong>
               <span style="font-size:12px; color:var(--slate);">${k.pendingPaymentAmount} · ${k.payoutBatchesReady} Payouts Ready</span>
             </div>
             <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
               <span style="color:var(--slate);">${k.verifiedBankDeposits} Bank</span>
-              <span style="color:#d97706; font-weight:600;">Review Queue &rarr;</span>
+              <span style="color:var(--secondary); font-weight:600;">Review Queue &rarr;</span>
             </div>
           </div>
 
           <!-- KPI 3: MEMBERSHIPS & RENEWALS -->
           <div class="stat-card clickable" onclick="Router.navigate('admin-memberships-renewals')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; font-weight:800; color:#166534; text-transform:uppercase; letter-spacing:0.5px;">MEMBERSHIPS & ENROLMENTS</span>
-              <div style="width:32px; height:32px; border-radius:6px; background:#dcfce7; color:#166534; display:flex; align-items:center; justify-content:center;">
+              <span style="font-size:11px; font-weight:800; color:var(--secondary); text-transform:uppercase; letter-spacing:0.5px;">MEMBERSHIPS & ENROLMENTS</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#f9f3e8; color:var(--primary); display:flex; align-items:center; justify-content:center;">
                 <i data-lucide="refresh-cw" style="width:16px; height:16px;"></i>
               </div>
             </div>
@@ -4097,16 +4097,16 @@ const RenderEngine = {
               <span style="font-size:12px; color:var(--slate);">${k.liveCohortCount} Live · ${k.milestoneCount} Milestone · ${k.k12Count} K-12</span>
             </div>
             <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-              <span style="color:#e11d48; font-weight:700;">${k.expiringRenewals} Expiring Soon</span>
-              <span style="color:#166534; font-weight:600;">Renewals &rarr;</span>
+              <span style="color:#ba1a1a; font-weight:700;">${k.expiringRenewals} Expiring Soon</span>
+              <span style="color:var(--secondary); font-weight:600;">Renewals &rarr;</span>
             </div>
           </div>
 
           <!-- KPI 4: ACADEMIC DELIVERY -->
           <div class="stat-card clickable" onclick="Router.navigate('admin-academic-delivery')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-size:11px; font-weight:800; color:#7c3aed; text-transform:uppercase; letter-spacing:0.5px;">ACADEMIC DELIVERY</span>
-              <div style="width:32px; height:32px; border-radius:6px; background:#f3e8ff; color:#7c3aed; display:flex; align-items:center; justify-content:center;">
+              <span style="font-size:11px; font-weight:800; color:var(--secondary); text-transform:uppercase; letter-spacing:0.5px;">ACADEMIC DELIVERY</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#eee7dd; color:var(--tertiary); display:flex; align-items:center; justify-content:center;">
                 <i data-lucide="presentation" style="width:16px; height:16px;"></i>
               </div>
             </div>
@@ -4115,8 +4115,8 @@ const RenderEngine = {
               <span style="font-size:12px; color:var(--slate);">${k.reportsDue} Reports Due · <strong>${k.atRiskLearners} At-Risk</strong></span>
             </div>
             <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-              <span style="color:#7c3aed; font-weight:700;">96% Attendance</span>
-              <span style="color:#7c3aed; font-weight:600;">Delivery &rarr;</span>
+              <span style="color:var(--slate); font-weight:700;">96% Attendance</span>
+              <span style="color:var(--secondary); font-weight:600;">Delivery &rarr;</span>
             </div>
           </div>
 
@@ -4146,7 +4146,7 @@ const RenderEngine = {
                     <span style="font-size:11px; color:var(--slate);">${p.course} · ${p.method} (<code>${p.ref}</code>)</span>
                   </div>
                   <div style="display:flex; gap:6px;">
-                    <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Notifications.push('Payment Approved', 'Approved payment for ${p.learner}. Access grant created.', 'success')">Approve</button>
+                    <button class="btn btn-primary btn-xs" class="btn btn-primary" onclick="Notifications.push('Payment Approved', 'Approved payment for ${p.learner}. Access grant created.', 'success')">Approve</button>
                     <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Review Modal', 'Opening evidence for ${p.ref}...', 'info')">Review</button>
                   </div>
                 </div>
@@ -4198,7 +4198,7 @@ const RenderEngine = {
               </div>
               <div style="text-align:right;">
                 <strong style="color:var(--primary); font-size:14px;">${k.approvedDeliveryHours} Approved Hours</strong>
-                <span style="font-size:11px; display:block; color:#166534;">Est. Payroll: PKR 404,800</span>
+                <span style="font-size:11px; display:block; color:var(--secondary);">Est. Payroll: PKR 404,800</span>
               </div>
             </div>
           </div>
@@ -4266,7 +4266,7 @@ const RenderEngine = {
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Trial Intake Pipeline</span>
               <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.pendingTrials} Pending Trials</h3>
-              <small style="color:#166534; font-size:11px; font-weight:600;">FLOW-006 Placement Assessments</small>
+              <small style="color:var(--secondary); font-size:11px; font-weight:600;">FLOW-006 Placement Assessments</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Prospects</span>
@@ -4275,7 +4275,7 @@ const RenderEngine = {
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">CSR Commissions Due</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">PKR 142,500</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--secondary); margin:4px 0 0 0;">PKR 142,500</h3>
               <small style="color:var(--slate); font-size:11px;">FLOW-031 Attributed Accruals</small>
             </div>
           </div>
@@ -4324,13 +4324,13 @@ const RenderEngine = {
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Manual Review Queue</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">${data.kpis.pendingPaymentReviews} Pending (${data.kpis.pendingPaymentAmount})</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--secondary); margin:4px 0 0 0;">${data.kpis.pendingPaymentReviews} Pending (${data.kpis.pendingPaymentAmount})</h3>
               <small style="color:var(--slate); font-size:11px;">SLA: Review within 2 hours</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Verified Bank Deposits</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">${data.kpis.verifiedBankDeposits}</h3>
-              <small style="color:#166534; font-size:11px; font-weight:600;">Reconciled in General Ledger</small>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--secondary); margin:4px 0 0 0;">${data.kpis.verifiedBankDeposits}</h3>
+              <small style="color:var(--secondary); font-size:11px; font-weight:600;">Reconciled in General Ledger</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Payout Batches</span>
@@ -4353,7 +4353,7 @@ const RenderEngine = {
                       <td><strong>${p.learner}</strong></td>
                       <td>${p.payer}</td>
                       <td>${p.course}</td>
-                      <td><strong style="color:#166534;">${p.amount}</strong></td>
+                      <td><strong style="color:var(--secondary);">${p.amount}</strong></td>
                       <td>${p.method} (<code>${p.ref}</code>)</td>
                       <td><span class="badge ${p.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${p.status}</span></td>
                       <td>
@@ -4361,7 +4361,7 @@ const RenderEngine = {
                           ${p.status === 'Approved' ? `
                             <span class="badge badge-success">✓ Verified</span>
                           ` : `
-                            <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Actions.approveAdminPayment('${p.id}')">Approve</button>
+                            <button class="btn btn-primary btn-xs" class="btn btn-primary" onclick="Actions.approveAdminPayment('${p.id}')">Approve</button>
                           `}
                           <button class="btn btn-secondary btn-xs" onclick="Actions.openAdminPaymentEvidence('${p.id}')">Evidence</button>
                         </div>
@@ -4390,12 +4390,12 @@ const RenderEngine = {
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Renewal Risk</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">${data.kpis.expiringRenewals} Expiring Soon</h3>
-              <small style="color:#e11d48; font-size:11px; font-weight:600;">FLOW-038 Automated Reminders</small>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#ba1a1a; margin:4px 0 0 0;">${data.kpis.expiringRenewals} Expiring Soon</h3>
+              <small style="color:#ba1a1a; font-size:11px; font-weight:600;">FLOW-038 Automated Reminders</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Low Entitlements</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">${data.kpis.lowEntitlements} Accounts</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--secondary); margin:4px 0 0 0;">${data.kpis.lowEntitlements} Accounts</h3>
               <small style="color:var(--slate); font-size:11px;">< 2 Class Credits Remaining</small>
             </div>
           </div>
@@ -4438,17 +4438,17 @@ const RenderEngine = {
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Live Classes Today</span>
               <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${data.kpis.classesToday} Classes</h3>
-              <small style="color:#166534; font-size:11px; font-weight:600;">Daily.co WebRTC Provisioned</small>
+              <small style="color:var(--secondary); font-size:11px; font-weight:600;">Daily.co WebRTC Provisioned</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Post-Class Reports</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">${data.kpis.reportsDue} Reports Due</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--secondary); margin:4px 0 0 0;">${data.kpis.reportsDue} Reports Due</h3>
               <small style="color:var(--slate); font-size:11px;">FLOW-016 Educational Notes</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Academic Risks Flagged</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">${data.kpis.atRiskLearners} Learners</h3>
-              <small style="color:#e11d48; font-size:11px; font-weight:600;">< 75% Attendance / Stalled</small>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#ba1a1a; margin:4px 0 0 0;">${data.kpis.atRiskLearners} Learners</h3>
+              <small style="color:#ba1a1a; font-size:11px; font-weight:600;">< 75% Attendance / Stalled</small>
             </div>
           </div>
 
@@ -4495,11 +4495,11 @@ const RenderEngine = {
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Approved Delivery Hours</span>
               <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">${data.kpis.approvedDeliveryHours} Hours Logged</h3>
-              <small style="color:#166534; font-size:11px; font-weight:600;">Est. Payroll: PKR 404,800</small>
+              <small style="color:var(--secondary); font-size:11px; font-weight:600;">Est. Payroll: PKR 404,800</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Compliance & Contracts</span>
-              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">100% Verified</h3>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--secondary); margin:4px 0 0 0;">100% Verified</h3>
               <small style="color:var(--slate); font-size:11px;">Signed Agreements & NDA</small>
             </div>
           </div>
@@ -4917,7 +4917,7 @@ const RenderEngine = {
 
         <!-- SCOPE NOTICE -->
         <div class="banner-box" style="border-left:4px solid var(--primary); background:#ffffff; border-radius:10px; padding:16px 20px; box-shadow:var(--shadow-subtle); margin-bottom:24px; display:flex; align-items:center; gap:16px;">
-          <div style="background:#e0e7ff; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <div style="background:#f9f3e8; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <i data-lucide="shield-check" style="width:22px; height:22px;"></i>
           </div>
           <div>
@@ -5358,7 +5358,7 @@ const RenderEngine = {
               </div>
 
               <div class="creator-course-footer">
-                <span style="font-size: 11.5px; color: var(--slate);">Readiness: <strong style="${rev.publicationReadiness.includes('Approved') ? 'color:#166534;' : 'color:#d97706;'}">${rev.publicationReadiness}</strong></span>
+                <span style="font-size: 11.5px; color: var(--slate);">Readiness: <strong style="${rev.publicationReadiness.includes('Approved') ? 'color:var(--secondary);' : 'color:var(--secondary);'}">${rev.publicationReadiness}</strong></span>
                 <div class="button-row">
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}')">Inspect Version</button>
                   ${rev.reviewStage !== 'Approved' ? `
@@ -5570,7 +5570,7 @@ const RenderEngine = {
           <td><strong>${q.title || q.stem}</strong><br><span class="table-subline">Pool: ${q.id} · Module: ${(q.usedInQuizzes || []).join(', ')}</span></td>
           <td><span class="badge badge-secondary">${q.category}</span></td>
           <td><span class="badge ${q.difficulty === 'Hard' ? 'badge-error' : q.difficulty === 'Intermediate' ? 'badge-warning' : 'badge-success'}">${q.difficulty}</span></td>
-          <td><strong style="color:#166534;">${q.correctAnswer}</strong></td>
+          <td><strong style="color:var(--secondary);">${q.correctAnswer}</strong></td>
           <td><span class="badge badge-success">✓ 0 Ambiguities Flagged</span></td>
           <td>
             <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Audit Item</button>
@@ -5704,13 +5704,13 @@ const RenderEngine = {
             <div class="chip-content" style="display:flex; flex-direction:column;">
               <span style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase;">Overall Attendance</span>
               <strong style="font-size:14px; color:#14532d;">96% Attendance</strong>
-              <small style="font-size:12px; color:#166534;">12 / 13 Classes Present</small>
+              <small style="font-size:12px; color:var(--secondary);">12 / 13 Classes Present</small>
             </div>
           </div>
           <div class="creator-flight-chip" style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
-            <div class="chip-icon" style="background:#fee2e2; color:#e11d48; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="alert-circle" style="width:20px; height:20px;"></i></div>
+            <div class="chip-icon" style="background:#fee2e2; color:#ba1a1a; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="alert-circle" style="width:20px; height:20px;"></i></div>
             <div class="chip-content" style="display:flex; flex-direction:column;">
-              <span style="font-size:11px; font-weight:700; color:#e11d48; text-transform:uppercase;">Tasks Requiring Action</span>
+              <span style="font-size:11px; font-weight:700; color:#ba1a1a; text-transform:uppercase;">Tasks Requiring Action</span>
               <strong style="font-size:14px; color:#9f1239;">${dueWork.length} Tasks</strong>
               <small style="font-size:12px; color:#be123c;">1 HW Due, 1 Revision</small>
             </div>
@@ -5790,7 +5790,7 @@ const RenderEngine = {
                   <span class="badge ${enr.deliveryModel.includes('Live') ? 'badge-primary' : enr.deliveryModel.includes('K-12') ? 'badge-warning' : 'badge-secondary'}">
                     ${enr.deliveryModel}
                   </span>
-                  <span style="font-size:11px; font-weight:700; color:#166534; background:#dcfce7; padding:2px 6px; border-radius:4px;">${enr.status}</span>
+                  <span style="font-size:11px; font-weight:700; color:var(--secondary); background:#dcfce7; padding:2px 6px; border-radius:4px;">${enr.status}</span>
                 </div>
                 <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${enr.title}</h4>
                 <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
@@ -5812,7 +5812,7 @@ const RenderEngine = {
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px; color:#334155;">
                   ${enr.nextOccurrence ? `<div><i data-lucide="clock" style="width:13px; height:13px; color:var(--primary);"></i> Next: <strong>${enr.nextOccurrence}</strong></div>` : ''}
                   ${enr.currentMilestone ? `<div><i data-lucide="milestone" style="width:13px; height:13px; color:#10b981;"></i> <strong>${enr.currentMilestone}</strong></div>` : ''}
-                  ${enr.homeworkDue ? `<div style="color:#b91c1c; font-weight:600;"><i data-lucide="alert-circle" style="width:13px; height:13px; color:#e11d48;"></i> ${enr.homeworkDue}</div>` : ''}
+                  ${enr.homeworkDue ? `<div style="color:#b91c1c; font-weight:600;"><i data-lucide="alert-circle" style="width:13px; height:13px; color:#ba1a1a;"></i> ${enr.homeworkDue}</div>` : ''}
                 </div>
               </div>
 
@@ -5834,7 +5834,7 @@ const RenderEngine = {
           <div class="creator-queue-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
             <div>
               <h3 class="creator-queue-title" style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0; display:flex; align-items:center; gap:8px;">
-                <i data-lucide="alert-circle" style="color:#d97706;"></i> My Work & Due Submissions
+                <i data-lucide="alert-circle" style="color:var(--secondary);"></i> My Work & Due Submissions
               </h3>
               <p class="creator-queue-desc" style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Homework worksheets, quizzes, and voice activities.</p>
             </div>
@@ -6004,7 +6004,7 @@ const RenderEngine = {
           ${data.resources.map(res => `
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:16px;">
               <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:44px; height:44px; border-radius:8px; background:#e0e7ff; color:var(--primary); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <div style="width:44px; height:44px; border-radius:8px; background:#f9f3e8; color:var(--primary); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                   <i data-lucide="${res.type.includes('Audio') ? 'mic' : 'file-text'}" style="width:22px; height:22px;"></i>
                 </div>
                 <div>
@@ -6135,7 +6135,7 @@ const RenderEngine = {
                 </div>
               </div>
               <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <span style="font-size:12px; color:#166534; font-weight:600;">${enr.attendanceRate ? `Attendance: ${enr.attendanceRate}` : `Progress: ${enr.progress}`}</span>
+                <span style="font-size:12px; color:var(--secondary); font-weight:600;">${enr.attendanceRate ? `Attendance: ${enr.attendanceRate}` : `Progress: ${enr.progress}`}</span>
                 <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerCourseWorkspace('${enr.courseCode}')">Open Workspace</button>
               </div>
             </div>
@@ -6190,7 +6190,7 @@ const RenderEngine = {
                   <span class="badge badge-success">✓ Completed</span>
                 </div>
                 <p style="font-size:13px; color:var(--slate); margin:0;">
-                  Teacher: <strong>${c.trainer}</strong> · Final Grade: <strong style="color:#166534;">${c.finalGrade}</strong> · Certificate: <strong>${c.certificateEligibility}</strong>
+                  Teacher: <strong>${c.trainer}</strong> · Final Grade: <strong style="color:var(--secondary);">${c.finalGrade}</strong> · Certificate: <strong>${c.certificateEligibility}</strong>
                 </p>
               </div>
               <button class="btn btn-primary btn-sm" onclick="Notifications.push('Certificate Claimed', 'Downloading official PDF Certificate of Completion...', 'success')">
@@ -6284,7 +6284,7 @@ const RenderEngine = {
                     <strong style="color:#0f172a;">${c.courseTitle}</strong>
                     <span style="color:#64748b;">Trainer: ${c.trainer}</span>
                     <div style="display:flex; gap:6px; margin-top:4px;">
-                      ${c.joinable ? `<button class="btn btn-primary btn-xs" onclick="Actions.openLearnerJoinClassModal('${c.classId}')" style="background:#22c55e; border:none;">Join</button>` : ''}
+                      ${c.joinable ? `<button class="btn btn-primary btn-xs" onclick="Actions.openLearnerJoinClassModal('${c.classId}')" class="btn btn-primary">Join</button>` : ''}
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerRescheduleModal('${c.classId}')">Reschedule</button>
                     </div>
                   </div>
@@ -6679,9 +6679,9 @@ const RenderEngine = {
                 <tr><th>Assessment</th><th>Course</th><th>Category Weight</th><th>Score</th><th>Grade</th><th>Published Date</th></tr>
               </thead>
               <tbody>
-                <tr><td>ASN-301 Frontend Capstone</td><td>Full-Stack Web Dev</td><td>Capstone (40%)</td><td><strong style="color:#166534;">95 / 100</strong></td><td><span class="badge badge-success">A+</span></td><td>Today</td></tr>
-                <tr><td>QZ-101 Phonetics Diagnostic</td><td>Spoken English Fluency</td><td>Quizzes (30%)</td><td><strong style="color:#166534;">88 / 100</strong></td><td><span class="badge badge-success">A</span></td><td>12 Aug 2026</td></tr>
-                <tr><td>HW-801 Linear Equations</td><td>Grade 8 Mathematics</td><td>Homework (30%)</td><td><strong style="color:#166534;">90 / 100</strong></td><td><span class="badge badge-success">A</span></td><td>14 Aug 2026</td></tr>
+                <tr><td>ASN-301 Frontend Capstone</td><td>Full-Stack Web Dev</td><td>Capstone (40%)</td><td><strong style="color:var(--secondary);">95 / 100</strong></td><td><span class="badge badge-success">A+</span></td><td>Today</td></tr>
+                <tr><td>QZ-101 Phonetics Diagnostic</td><td>Spoken English Fluency</td><td>Quizzes (30%)</td><td><strong style="color:var(--secondary);">88 / 100</strong></td><td><span class="badge badge-success">A</span></td><td>12 Aug 2026</td></tr>
+                <tr><td>HW-801 Linear Equations</td><td>Grade 8 Mathematics</td><td>Homework (30%)</td><td><strong style="color:var(--secondary);">90 / 100</strong></td><td><span class="badge badge-success">A</span></td><td>14 Aug 2026</td></tr>
               </tbody>
             </table>
           </div>
@@ -6723,7 +6723,7 @@ const RenderEngine = {
           ${data.resources.map(res => `
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:16px;">
               <div style="display:flex; align-items:center; gap:14px;">
-                <div style="width:44px; height:44px; border-radius:8px; background:#e0e7ff; color:var(--primary); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <div style="width:44px; height:44px; border-radius:8px; background:#f9f3e8; color:var(--primary); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
                   <i data-lucide="${res.type.includes('Audio') ? 'mic' : 'file-text'}" style="width:22px; height:22px;"></i>
                 </div>
                 <div>
@@ -6841,7 +6841,7 @@ const RenderEngine = {
                   <tr>
                     <td><strong>${s.name}</strong></td>
                     <td>${s.teacher}</td>
-                    <td><strong style="color:#166534; font-size:14px;">${s.grade}</strong></td>
+                    <td><strong style="color:var(--secondary); font-size:14px;">${s.grade}</strong></td>
                     <td><span class="badge badge-success">${s.status}</span></td>
                     <td><span style="font-size:12px; color:#475569;">${s.remarks}</span></td>
                   </tr>
@@ -6889,7 +6889,7 @@ const RenderEngine = {
                     <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${p.membershipTitle}</h3>
                     <span class="badge badge-warning">${p.status}</span>
                   </div>
-                  <span style="font-size:13px; color:var(--slate);">Payment Ref: <code>${p.refNumber}</code> · Amount: <strong style="color:#166534;">${p.amount}</strong></span>
+                  <span style="font-size:13px; color:var(--slate);">Payment Ref: <code>${p.refNumber}</code> · Amount: <strong style="color:var(--secondary);">${p.amount}</strong></span>
                 </div>
                 <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('ENR-101')">
                   <i data-lucide="upload-cloud"></i> New Evidence
@@ -6927,7 +6927,7 @@ const RenderEngine = {
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
             <div style="display:flex; align-items:center; gap:12px;">
-              <div style="width:44px; height:44px; border-radius:50%; background:#e0e7ff; color:var(--primary); font-weight:800; display:flex; align-items:center; justify-content:center;">SJ</div>
+              <div style="width:44px; height:44px; border-radius:50%; background:#f9f3e8; color:var(--primary); font-weight:800; display:flex; align-items:center; justify-content:center;">SJ</div>
               <div>
                 <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Sara Javed (Senior Trainer)</h4>
                 <span style="font-size:12px; color:var(--slate);">Spoken English Fluency & Mathematics</span>
@@ -6997,7 +6997,7 @@ const RenderEngine = {
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:20px;">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
             <div style="display:flex; align-items:center; gap:16px;">
-              <div style="width:60px; height:60px; border-radius:50%; background:#e0e7ff; color:var(--primary); font-weight:800; font-size:22px; display:flex; align-items:center; justify-content:center;">
+              <div style="width:60px; height:60px; border-radius:50%; background:#f9f3e8; color:var(--primary); font-weight:800; font-size:22px; display:flex; align-items:center; justify-content:center;">
                 ZM
               </div>
               <div>
@@ -7057,7 +7057,7 @@ const RenderEngine = {
 
         <!-- SCOPE NOTICE -->
         <div class="banner-box" style="border-left:4px solid var(--primary); background:#ffffff; border-radius:10px; padding:16px 20px; box-shadow:var(--shadow-subtle); margin-bottom:24px; display:flex; align-items:center; gap:16px;">
-          <div style="background:#e0e7ff; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <div style="background:#f9f3e8; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <i data-lucide="shield-check" style="width:22px; height:22px;"></i>
           </div>
           <div>
@@ -7244,7 +7244,7 @@ const RenderEngine = {
                   </div>
                   <div style="display:flex; justify-content:space-between;">
                     <span style="color:#64748b;">Overall Attendance:</span>
-                    <strong style="color:#166534;">${l.overallAttendance}</strong>
+                    <strong style="color:var(--secondary);">${l.overallAttendance}</strong>
                   </div>
                   <div style="display:flex; justify-content:space-between;">
                     <span style="color:#64748b;">Current Milestone:</span>
@@ -7291,7 +7291,7 @@ const RenderEngine = {
                 <div style="display:flex; align-items:center; gap:16px; font-size:12px; color:#64748b; margin-top:4px;">
                   <span>Attendance: <strong>${l.overallAttendance}</strong></span>
                   <span>·</span>
-                  <span>Homework: <strong style="color:#e11d48;">${l.homeworkStatus}</strong></span>
+                  <span>Homework: <strong style="color:#ba1a1a;">${l.homeworkStatus}</strong></span>
                   <span>·</span>
                   <span>Last Active: <strong>${l.lastActive}</strong></span>
                 </div>
@@ -7390,7 +7390,7 @@ const RenderEngine = {
                 </div>
                 <div>
                   <span style="color:#64748b; font-weight:700;">Diagnostic Baseline:</span>
-                  <p style="margin:2px 0 0 0; color:#166534;">78% Articulation Accuracy</p>
+                  <p style="margin:2px 0 0 0; color:var(--secondary);">78% Articulation Accuracy</p>
                 </div>
                 <div>
                   <span style="color:#64748b; font-weight:700;">Feedback State:</span>
@@ -7483,7 +7483,7 @@ const RenderEngine = {
 
         <!-- GOVERNANCE & PRIVACY BOUNDARY CARD -->
         <div class="banner-box" style="border-left:4px solid var(--primary); background:#ffffff; border-radius:10px; padding:16px 20px; box-shadow:var(--shadow-subtle); margin-bottom:24px; display:flex; align-items:center; gap:16px;">
-          <div style="background:#e0e7ff; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <div style="background:#f9f3e8; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
             <i data-lucide="shield-check" style="width:22px; height:22px;"></i>
           </div>
           <div>
@@ -7681,7 +7681,7 @@ const RenderEngine = {
           <td><span class="badge badge-primary">${sec.board}</span><br><strong>${sec.grade}</strong></td>
           <td><strong>${sec.subject}</strong></td>
           <td><strong>${sec.learnersCount} Learners</strong></td>
-          <td>${sec.term}<br><span style="font-size:11px; color:#166534;">Attendance Avg: ${sec.attendanceAvg}</span></td>
+          <td>${sec.term}<br><span style="font-size:11px; color:var(--secondary);">Attendance Avg: ${sec.attendanceAvg}</span></td>
           <td>
             <div class="button-row">
               <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerK12HomeworkModal('${sec.id}')">Assign HW</button>
@@ -7713,7 +7713,7 @@ const RenderEngine = {
           <td><strong>${p.approvedClasses} Classes</strong></td>
           <td>${p.grossEarning}</td>
           <td>${p.deductions}</td>
-          <td><strong style="color:#166534; font-size:14px;">${p.netPay}</strong></td>
+          <td><strong style="color:var(--secondary); font-size:14px;">${p.netPay}</strong></td>
           <td><span class="badge badge-success">${p.settlementStatus}</span></td>
         </tr>
       `).join("");
@@ -7726,7 +7726,7 @@ const RenderEngine = {
           <td>${e.date}</td>
           <td>${e.rate}</td>
           <td>${e.hours}</td>
-          <td><strong style="color:#166534;">${e.amount}</strong></td>
+          <td><strong style="color:var(--secondary);">${e.amount}</strong></td>
           <td><span class="badge ${e.opsApproval.includes('Approved') ? 'badge-success' : 'badge-warning'}">${e.opsApproval}</span></td>
         </tr>
       `).join("");
@@ -10540,7 +10540,7 @@ window.Actions = Actions = {
       <div style="display:flex; flex-direction:column; gap:16px;">
         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:13px;">
           <div><span style="color:var(--slate); display:block; font-size:11px;">LEARNER / COURSE</span><strong>${p.learner}</strong><br><span style="color:var(--slate);">${p.course}</span></div>
-          <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:#166534; font-size:15px;">${p.amount}</strong></div>
+          <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:var(--secondary); font-size:15px;">${p.amount}</strong></div>
           <div><span style="color:var(--slate); display:block; font-size:11px;">PAYMENT CHANNEL</span>${p.method}</div>
           <div><span style="color:var(--slate); display:block; font-size:11px;">BANK TRANSACTION REF</span><code>${p.ref}</code></div>
         </div>
@@ -10559,7 +10559,7 @@ window.Actions = Actions = {
     footer.innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
       <button class="btn btn-danger" onclick="Actions.rejectAdminPayment('${p.id}')">Reject Deposit</button>
-      <button class="btn btn-primary" style="background:#22c55e; border:none;" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
+      <button class="btn btn-primary" class="btn btn-primary" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
     `;
 
     modal.classList.remove("hidden");
@@ -13048,7 +13048,7 @@ Actions.openLearnerPaymentModal = function(enrolmentId) {
         Bank: <strong>Meezan Bank Ltd</strong><br>
         Account Title: <strong>Huzsam Education Services (Pvt) Ltd</strong><br>
         IBAN: <strong>PK82MEZN0001020304050607</strong><br>
-        Amount Due: <strong style="color:#166534;">PKR 15,000</strong>
+        Amount Due: <strong style="color:var(--secondary);">PKR 15,000</strong>
       </p>
     </div>
 
@@ -15733,22 +15733,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
-            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Catalogue Metadata:</strong> Title, Code, Effort, Language</span>
+            <span><i data-lucide="check" style="width:14px; color:var(--secondary);"></i> <strong>Catalogue Metadata:</strong> Title, Code, Effort, Language</span>
             <span class="badge badge-success">Passed</span>
           </div>
 
           <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
-            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Syllabus Structure:</strong> Levels, Milestones, 28 Lessons</span>
+            <span><i data-lucide="check" style="width:14px; color:var(--secondary);"></i> <strong>Syllabus Structure:</strong> Levels, Milestones, 28 Lessons</span>
             <span class="badge badge-success">Passed</span>
           </div>
 
           <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
-            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Resource Integrity:</strong> SHA-256 hashes clean & malware-free</span>
+            <span><i data-lucide="check" style="width:14px; color:var(--secondary);"></i> <strong>Resource Integrity:</strong> SHA-256 hashes clean & malware-free</span>
             <span class="badge badge-success">Passed</span>
           </div>
 
           <div style="padding: 10px 14px; background: #edf8f0; border-left: 4px solid #166534; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
-            <span><i data-lucide="check" style="width:14px; color:#166534;"></i> <strong>Learning Rules:</strong> Progression state machines valid</span>
+            <span><i data-lucide="check" style="width:14px; color:var(--secondary);"></i> <strong>Learning Rules:</strong> Progression state machines valid</span>
             <span class="badge badge-success">Passed</span>
           </div>
         </div>
@@ -15987,10 +15987,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="om-flow-evidence-box">
           <h5><i data-lucide="check-circle"></i> Quality & Compliance Checklist (FLOW-009)</h5>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
-            <div><span>Learning Outcomes:</span> <strong style="color:#166534;">✓ Bloom's Taxonomy Verified</strong></div>
-            <div><span>Prerequisites:</span> <strong style="color:#166534;">✓ Baseline Gating Validated</strong></div>
-            <div><span>Gatekeeper Quizzes:</span> <strong style="color:#166534;">✓ Pass Mark 80% Enforced</strong></div>
-            <div><span>Blocking Issues:</span> <strong style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : 'color:#166534;'}">${rev.blockingIssuesCount} Unresolved Citations</strong></div>
+            <div><span>Learning Outcomes:</span> <strong style="color:var(--secondary);">✓ Bloom's Taxonomy Verified</strong></div>
+            <div><span>Prerequisites:</span> <strong style="color:var(--secondary);">✓ Baseline Gating Validated</strong></div>
+            <div><span>Gatekeeper Quizzes:</span> <strong style="color:var(--secondary);">✓ Pass Mark 80% Enforced</strong></div>
+            <div><span>Blocking Issues:</span> <strong style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : 'color:var(--secondary);'}">${rev.blockingIssuesCount} Unresolved Citations</strong></div>
           </div>
         </div>
 
@@ -16301,7 +16301,7 @@ Actions.openAdminPaymentEvidence = function(paymentId) {
     <div style="display:flex; flex-direction:column; gap:16px;">
       <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:13px;">
         <div><span style="color:var(--slate); display:block; font-size:11px;">LEARNER / COURSE</span><strong>${p.learner}</strong><br><span style="color:var(--slate);">${p.course}</span></div>
-        <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:#166534; font-size:15px;">${p.amount}</strong></div>
+        <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:var(--secondary); font-size:15px;">${p.amount}</strong></div>
         <div><span style="color:var(--slate); display:block; font-size:11px;">PAYMENT CHANNEL</span>${p.method}</div>
         <div><span style="color:var(--slate); display:block; font-size:11px;">BANK TRANSACTION REF</span><code>${p.ref}</code></div>
       </div>
@@ -16320,7 +16320,7 @@ Actions.openAdminPaymentEvidence = function(paymentId) {
   footer.innerHTML = `
     <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
     <button class="btn btn-danger" onclick="Actions.rejectAdminPayment('${p.id}')">Reject Deposit</button>
-    <button class="btn btn-primary" style="background:#22c55e; border:none;" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
+    <button class="btn btn-primary" class="btn btn-primary" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
   `;
 
   modal.classList.remove("hidden");
