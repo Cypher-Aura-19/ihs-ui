@@ -4461,6 +4461,10 @@ const RenderEngine = {
   // ============================================================================
   // TRAINER UNIVERSAL WORKSPACE (SUB-VIEWS) - PREMIUM SPACIOUS DESIGN
   // ============================================================================
+  
+  // ============================================================================
+  // TRAINER UNIVERSAL WORKSPACE - BESPOKE FLOW-SPECIFIC UI VIEWS
+  // ============================================================================
   trainerWorkspace(route) {
     const container = document.getElementById("trainer-workspace-content");
     if (!container) return;
@@ -4476,12 +4480,368 @@ const RenderEngine = {
     // Update Top Workspace Header
     const wsLabel = document.getElementById("workspace-label");
     const viewTitle = document.getElementById("view-title");
-    if (wsLabel) wsLabel.textContent = "Trainer / Teacher delivery";
+    if (wsLabel) wsLabel.textContent = "Trainer & Teacher delivery";
     if (viewTitle) viewTitle.textContent = config.title;
 
-    // Filter data
-    const rawItems = db.trainerData[config.dataType] || [];
-    const items = config.filter ? rawItems.filter(config.filter) : rawItems;
+    const data = db.trainerData;
+
+    // Render bespoke view based on route flow
+    let viewContent = "";
+
+    // --------------------------------------------------------------------------
+    // 1. MY CLASSES: TODAY / UPCOMING / COMPLETED / TRIALS
+    // --------------------------------------------------------------------------
+    if (route === "trainer-classes-today" || route === "trainer-classes-upcoming" || route === "trainer-classes-completed" || route === "trainer-classes-trials") {
+      let filteredClasses = data.classes;
+      if (route === "trainer-classes-today") filteredClasses = data.classes.filter(c => c.status === "Today");
+      else if (route === "trainer-classes-upcoming") filteredClasses = data.classes.filter(c => c.status === "Upcoming");
+      else if (route === "trainer-classes-completed") filteredClasses = data.classes.filter(c => c.status === "Completed");
+      else if (route === "trainer-classes-trials") filteredClasses = data.classes.filter(c => c.status === "Trial Classes");
+
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+          ${filteredClasses.map(cls => `
+            <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                  <span class="badge ${cls.joinable ? 'badge-success' : cls.status === 'Trial Classes' ? 'badge-warning' : 'badge-primary'}">
+                    ${cls.joinable ? '● LIVE JOIN WINDOW READY' : cls.status}
+                  </span>
+                  <span style="font-size:12px; color:var(--slate); font-weight:600;">${cls.duration}</span>
+                </div>
+                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${cls.courseTitle}</h3>
+                <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
+                  <code>${cls.courseCode}</code> · Format: <strong>${cls.type}</strong>
+                </p>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:13px; color:#334155; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <i data-lucide="clock" style="width:15px; height:15px; color:var(--primary);"></i>
+                    <strong>${cls.date} · ${cls.slotTime}</strong>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <i data-lucide="book-open" style="width:15px; height:15px; color:#10b981;"></i>
+                    <span>Syllabus: <strong>${cls.syllabusNode}</strong></span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <i data-lucide="users" style="width:15px; height:15px; color:#8b5cf6;"></i>
+                    <span>Enrolled: <strong>${cls.learnersCount} Learners Assigned</strong></span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f1f5f9;">
+                <button class="btn btn-secondary btn-sm" onclick="Actions.openTrainerRosterModal('${cls.id}')"><i data-lucide="users"></i> Roster</button>
+                <div style="display:flex; gap:8px;">
+                  <button class="btn btn-secondary btn-sm" onclick="Actions.openTrainerRescheduleModal('${cls.id}')"><i data-lucide="repeat"></i> Reschedule</button>
+                  ${cls.joinable ? `<button class="btn btn-primary btn-sm" onclick="Actions.openTrainerJoinClassModal('${cls.id}')" style="background:#22c55e; border:none; font-weight:700;"><i data-lucide="video"></i> Join Class</button>` : `<button class="btn btn-primary btn-sm" onclick="Actions.openTrainerJoinClassModal('${cls.id}')"><i data-lucide="video"></i> Test Room</button>`}
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 2. REPORTS DUE / IN REVIEW / CORRECTION REQUESTED (FLOW-016)
+    // --------------------------------------------------------------------------
+    else if (route.includes("reports") || route.includes("awaiting-report") || route.includes("correction-requested")) {
+      let filteredReports = data.reports;
+      if (route.includes("due") || route.includes("awaiting-report")) filteredReports = data.reports.filter(r => r.status === "Reports Due");
+      else if (route.includes("submitted") || route.includes("in-review")) filteredReports = data.reports.filter(r => r.status === "Submitted");
+      else if (route.includes("correction")) filteredReports = data.reports.filter(r => r.status === "Correction Requested");
+      else if (route.includes("accepted") || route.includes("completed")) filteredReports = data.reports.filter(r => r.status === "Accepted");
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${filteredReports.map(rep => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${rep.course}</h3>
+                    <span class="badge ${rep.status === 'Correction Requested' ? 'badge-error' : rep.status === 'Reports Due' ? 'badge-warning' : 'badge-success'}">
+                      ${rep.status}
+                    </span>
+                  </div>
+                  <span style="font-size:12px; color:var(--slate);">Class ID: <code>${rep.classId}</code> · Delivered Date: <strong>${rep.date}</strong></span>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerPostClassReportModal('${rep.classId}')">
+                  <i data-lucide="edit-3"></i> ${rep.status === 'Correction Requested' ? 'Revise Report' : rep.status === 'Reports Due' ? 'Complete Report (FLOW-016)' : 'View Report'}
+                </button>
+              </div>
+
+              ${rep.status === 'Correction Requested' ? `
+                <div style="background:#fff1f2; border:1px solid #fecdd3; border-left:4px solid #e11d48; border-radius:8px; padding:12px 16px;">
+                  <strong style="color:#9f1239; font-size:13px; display:flex; align-items:center; gap:6px;">
+                    <i data-lucide="alert-octagon" style="width:16px; height:16px;"></i> Operations Manager Review Feedback:
+                  </strong>
+                  <p style="font-size:13px; color:#be123c; margin:4px 0 0 0;">${rep.opsReview}</p>
+                </div>
+              ` : ''}
+
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+                <div>
+                  <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Syllabus Covered</span>
+                  <p style="font-size:13px; font-weight:600; color:#1e293b; margin:2px 0 0 0;">${rep.syllabusCovered}</p>
+                  <small style="font-size:12px; color:#64748b;">${rep.topics}</small>
+                </div>
+                <div>
+                  <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Homework Assigned</span>
+                  <p style="font-size:13px; font-weight:600; color:#1e293b; margin:2px 0 0 0;">${rep.homework}</p>
+                  <small style="font-size:12px; color:#64748b;">Resource: ${rep.resources}</small>
+                </div>
+                <div>
+                  <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Learner Feedback Summary</span>
+                  <p style="font-size:13px; color:#334155; margin:2px 0 0 0;">${rep.learnerNotes}</p>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. MY LEARNERS: ROSTERS & PROGRESS
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-learners-rosters" || route === "trainer-learners-progress") {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+          ${data.learners.map(l => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+                  <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="width:44px; height:44px; border-radius:50%; background:#e0e7ff; color:#4338ca; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:16px;">
+                      ${l.name.split(' ').map(n=>n[0]).join('')}
+                    </div>
+                    <div>
+                      <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${l.name}</h3>
+                      <span style="font-size:12px; color:var(--slate);">${l.email}</span>
+                    </div>
+                  </div>
+                  <span class="badge ${l.risk === 'None' ? 'badge-success' : 'badge-error'}">
+                    ${l.risk === 'None' ? 'On Track' : l.risk}
+                  </span>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#64748b;">Enrolled Course:</span>
+                    <strong style="color:#1e293b; max-width:240px; text-align:right;">${l.course.split('&')[0]}</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#64748b;">Overall Attendance:</span>
+                    <strong style="color:#166534;">${l.overallAttendance}</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#64748b;">Current Milestone:</span>
+                    <span class="badge badge-secondary" style="font-size:11px;">${l.currentMilestone}</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <span style="color:#64748b;">Homework Status:</span>
+                    <span style="color:${l.homeworkStatus.includes('Overdue') ? '#e11d48' : '#166534'}; font-weight:600;">${l.homeworkStatus}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+                <span style="font-size:11px; color:#64748b;">Last active: ${l.lastActive}</span>
+                <div style="display:flex; gap:8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')"><i data-lucide="message-square"></i> Message</button>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('trainer-grading-queue')">View Submissions</button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 4. MY LEARNERS: RISKS & INTERVENTIONS
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-learners-risks" || route === "trainer-milestones-interventions") {
+      const risks = data.learners.filter(l => l.risk !== "None");
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${risks.map(l => `
+            <div style="background:#ffffff; border:1px solid #fecdd3; border-left:6px solid #e11d48; border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:20px;">
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${l.name}</h3>
+                  <span class="badge badge-error">${l.risk}</span>
+                  <span style="font-size:12px; color:var(--slate);">${l.course}</span>
+                </div>
+                <p style="font-size:14px; color:#475569; margin:0; line-height:1.4;">
+                  <strong>Risk Description:</strong> ${l.riskDesc}
+                </p>
+                <div style="display:flex; align-items:center; gap:16px; font-size:12px; color:#64748b; margin-top:4px;">
+                  <span>Attendance: <strong>${l.overallAttendance}</strong></span>
+                  <span>·</span>
+                  <span>Homework: <strong style="color:#e11d48;">${l.homeworkStatus}</strong></span>
+                  <span>·</span>
+                  <span>Last Active: <strong>${l.lastActive}</strong></span>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0;">
+                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerMessageModal('${l.id}')">
+                  <i data-lucide="message-square"></i> Send Outreach
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="Actions.openTrainerRescheduleModal('CLS-101')">
+                  <i data-lucide="calendar"></i> Schedule 1:1 Check-in
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 5. MY LEARNERS: WORK & SUBMISSIONS EVIDENCE
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-learners-work") {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+          ${data.gradingQueue.map(g => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                  <span class="badge badge-primary">${g.type}</span>
+                  <span style="font-size:12px; color:var(--slate);">Submitted: ${g.submittedAt}</span>
+                </div>
+                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${g.assignment}</h3>
+                <span style="font-size:13px; color:var(--primary); font-weight:600;">Student: ${g.learner}</span>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-top:10px; font-size:12px;">
+                  <span style="color:#64748b; font-weight:700; text-transform:uppercase;">Evidence URI:</span>
+                  <p style="margin:2px 0 0 0; font-family:monospace; color:#0f172a; word-break:break-all;">${g.evidence}</p>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+                <span class="badge ${g.currentGrade === 'Draft' ? 'badge-warning' : 'badge-success'}">${g.currentGrade}</span>
+                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerGradingModal('${g.id}')">
+                  <i data-lucide="check-square"></i> Evaluate Rubric
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 6. ASSESSMENTS & GRADING: VOICE ACTIVITIES STUDIO (FLOW-020)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-grading-voice") {
+      const voiceSubs = data.gradingQueue.filter(g => g.type.includes("Voice"));
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          ${voiceSubs.map(v => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${v.assignment}</h3>
+                    <span class="badge badge-primary"><i data-lucide="mic"></i> Audio Recording</span>
+                  </div>
+                  <span style="font-size:13px; color:var(--slate);">Learner: <strong>${v.learner}</strong> · Submitted: ${v.submittedAt}</span>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerGradingModal('${v.id}')">
+                  <i data-lucide="award"></i> Grade Audio Rubric
+                </button>
+              </div>
+
+              <!-- AUDIO PLAYER SIMULATOR -->
+              <div style="background:#0f172a; color:#ffffff; border-radius:10px; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+                <button class="btn btn-primary btn-sm" style="border-radius:50%; width:44px; height:44px; padding:0; display:flex; align-items:center; justify-content:center;" onclick="Notifications.push('Audio Playback', 'Playing 90s acoustic recording...', 'info')">
+                  <i data-lucide="play" style="width:20px; height:20px;"></i>
+                </button>
+                <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                  <div style="display:flex; justify-content:space-between; font-size:12px; color:#94a3b8;">
+                    <span>${v.evidence.split('(')[0]}</span>
+                    <span>0:32 / 1:30</span>
+                  </div>
+                  <div style="background:#334155; height:6px; border-radius:3px; overflow:hidden;">
+                    <div style="background:#38bdf8; width:35%; height:100%;"></div>
+                  </div>
+                </div>
+                <span style="font-size:12px; color:#4ade80; font-weight:700; background:rgba(74,222,128,0.1); padding:4px 10px; border-radius:4px;">
+                  HQ WAV (48kHz)
+                </span>
+              </div>
+
+              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; font-size:13px;">
+                <div>
+                  <span style="color:#64748b; font-weight:700;">Acoustic Metric:</span>
+                  <p style="margin:2px 0 0 0; color:#1e293b;">Intonation & Pitch Cadence</p>
+                </div>
+                <div>
+                  <span style="color:#64748b; font-weight:700;">Diagnostic Baseline:</span>
+                  <p style="margin:2px 0 0 0; color:#166534;">78% Articulation Accuracy</p>
+                </div>
+                <div>
+                  <span style="color:#64748b; font-weight:700;">Feedback State:</span>
+                  <p style="margin:2px 0 0 0; color:#334155;">${v.feedback}</p>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 7. SCHEDULE: WEEKLY TIMETABLE GRID (FLOW-017)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-schedule-calendar" || route === "trainer-schedule-availability") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:14px;">
+            ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(day => {
+              const daySlots = data.schedule.filter(s => s.day === day);
+              return `
+                <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:12px;">
+                  <div style="font:800 15px 'Manrope', sans-serif; color:var(--navy-dark); padding-bottom:8px; border-bottom:2px solid var(--primary);">
+                    ${day}
+                  </div>
+                  ${daySlots.length === 0 ? '<div style="color:var(--slate); font-size:12px; text-align:center; padding:20px 0;">No assigned classes</div>' : ''}
+                  ${daySlots.map(s => `
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:6px;">
+                      <span class="badge badge-primary" style="font-size:10px; width:fit-content;">${s.time}</span>
+                      <strong style="color:#0f172a;">${s.title}</strong>
+                      <span style="color:#64748b;">Room: ${s.room}</span>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRescheduleModal('${s.id}')" style="margin-top:4px;">Reschedule</button>
+                    </div>
+                  `).join("")}
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 8. DEFAULT FALLBACK: HIGH DENSITY DATA TABLE
+    // --------------------------------------------------------------------------
+    else {
+      const rawItems = data[config.dataType] || [];
+      const items = config.filter ? rawItems.filter(config.filter) : rawItems;
+
+      viewContent = `
+        <div class="table-container" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; box-shadow:var(--shadow-subtle); overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              ${this.trainerTableHeaders(config.dataType)}
+            </thead>
+            <tbody>
+              ${this.trainerTableRows(config.dataType, items)}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
 
     container.innerHTML = `
       <div class="creator-workspace-deck" style="padding: 24px 32px;">
@@ -4540,17 +4900,8 @@ const RenderEngine = {
           </div>
         </div>
 
-        <!-- DATA TABLE CONTAINER -->
-        <div class="table-container" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; box-shadow:var(--shadow-subtle); overflow:hidden;">
-          <table class="data-table">
-            <thead>
-              ${this.trainerTableHeaders(config.dataType)}
-            </thead>
-            <tbody>
-              ${this.trainerTableRows(config.dataType, items)}
-            </tbody>
-          </table>
-        </div>
+        <!-- BESPOKE VIEW CONTENT -->
+        ${viewContent}
 
       </div>
     `;
