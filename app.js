@@ -4874,6 +4874,10 @@ const RenderEngine = {
   // ============================================================================
   // STUDENT / LEARNER UNIVERSAL WORKSPACE - COMPREHENSIVE BESPOKE FLOW VIEWS
   // ============================================================================
+  
+  // ============================================================================
+  // STUDENT / LEARNER UNIVERSAL WORKSPACE - 100% DISTINCT BESPOKE SUB-PAGES
+  // ============================================================================
   learnerWorkspace(route) {
     const container = document.getElementById("learner-workspace-content");
     if (!container) return;
@@ -4895,71 +4899,66 @@ const RenderEngine = {
     const data = db.learnerData;
     let viewContent = "";
 
-    // --------------------------------------------------------------------------
-    // 1. EXPLORE: COURSE CATALOGUE
-    // --------------------------------------------------------------------------
+    // ==========================================================================
+    // 1. EXPLORE GROUP
+    // ==========================================================================
     if (route === "learner-explore-catalogue") {
       viewContent = `
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
-            <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
-              <div>
-                <span class="badge badge-primary" style="margin-bottom:8px;">LIVE COHORT</span>
-                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Spoken English Fluency & Accent Reduction</h3>
-                <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Interactive 60-minute live drills with acoustic speech analysis and intonation feedback.</p>
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
-                  <span>Price: <strong>PKR 15,000 / Term</strong></span>
-                  <span>Duration: <strong>12 Weeks (24 Live Classes)</strong></span>
-                  <span>Level: <strong>Intermediate (B1 - B2)</strong></span>
-                </div>
-              </div>
-              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-explore-previews')">Preview</button>
-                <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()"><i data-lucide="sparkles"></i> Request Trial</button>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+          <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:8px;">LIVE COHORT</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Spoken English Fluency & Accent Reduction</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Interactive 60-minute live drills with acoustic speech analysis and intonation feedback.</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
+                <span>Price: <strong>PKR 15,000 / Term</strong></span>
+                <span>Duration: <strong>12 Weeks (24 Live Classes)</strong></span>
+                <span>Level: <strong>Intermediate (B1 - B2)</strong></span>
               </div>
             </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-explore-previews')">Preview</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()"><i data-lucide="sparkles"></i> Request Trial</button>
+            </div>
+          </div>
 
-            <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
-              <div>
-                <span class="badge badge-secondary" style="margin-bottom:8px;">MILESTONE SELF-PACED</span>
-                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Modern Full-Stack Web Development</h3>
-                <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Master React 19, TypeScript, state machines, and Next.js with 1:1 facilitator code reviews.</p>
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
-                  <span>Price: <strong>PKR 25,000 / Program</strong></span>
-                  <span>Structure: <strong>3 Levels (12 Lessons + 3 Capstones)</strong></span>
-                  <span>Certification: <strong>Included</strong></span>
-                </div>
-              </div>
-              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Syllabus', 'Opening full syllabus...', 'info')">Syllabus</button>
-                <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('CRS-101')">Enrol Now</button>
+          <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
+            <div>
+              <span class="badge badge-secondary" style="margin-bottom:8px;">MILESTONE SELF-PACED</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Modern Full-Stack Web Development</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Master React 19, TypeScript, state machines, and Next.js with 1:1 facilitator code reviews.</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
+                <span>Price: <strong>PKR 25,000 / Program</strong></span>
+                <span>Structure: <strong>3 Levels (12 Lessons + 3 Capstones)</strong></span>
+                <span>Certification: <strong>Included</strong></span>
               </div>
             </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Syllabus', 'Opening full syllabus...', 'info')">Syllabus</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('CRS-101')">Enrol Now</button>
+            </div>
+          </div>
 
-            <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
-              <div>
-                <span class="badge badge-warning" style="margin-bottom:8px;">K-12 TUITION</span>
-                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Grade 8 Mathematics (FBISE Aligned)</h3>
-                <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Complete board syllabus coverage with live problem-solving drills and weekly homework sheets.</p>
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
-                  <span>Price: <strong>PKR 12,000 / Term</strong></span>
-                  <span>Board: <strong>Federal Board (FBISE)</strong></span>
-                  <span>Teacher: <strong>Sara Javed</strong></span>
-                </div>
+          <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom:8px;">K-12 TUITION</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Grade 8 Mathematics (FBISE Aligned)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Complete board syllabus coverage with live problem-solving drills and weekly homework sheets.</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
+                <span>Price: <strong>PKR 12,000 / Term</strong></span>
+                <span>Board: <strong>Federal Board (FBISE)</strong></span>
+                <span>Teacher: <strong>Sara Javed</strong></span>
               </div>
-              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-explore-free')">Sample Sheet</button>
-                <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()">Request Trial</button>
-              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-explore-free')">Sample Sheet</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()">Request Trial</button>
             </div>
           </div>
         </div>
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 2. EXPLORE: FREE RESOURCES
-    // --------------------------------------------------------------------------
     else if (route === "learner-explore-free") {
       viewContent = `
         <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
@@ -4983,9 +4982,6 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 3. EXPLORE: COURSE PREVIEWS
-    // --------------------------------------------------------------------------
     else if (route === "learner-explore-previews") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:20px;">
@@ -4998,7 +4994,6 @@ const RenderEngine = {
             <span class="badge badge-secondary">Preview Progress: 65%</span>
           </div>
 
-          <!-- SIMULATED INTERACTIVE PREVIEW PLAYER -->
           <div style="background:#0f172a; color:#ffffff; border-radius:10px; padding:24px; display:flex; flex-direction:column; gap:16px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
               <span style="font-size:13px; color:#94a3b8;">Video Stream: <strong>Module 1.1 Rhythm & Stress Cadence (Sample)</strong></span>
@@ -5024,9 +5019,6 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 4. EXPLORE: REQUEST A TRIAL (FLOW-006)
-    // --------------------------------------------------------------------------
     else if (route === "learner-explore-trial") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:20px;">
@@ -5081,9 +5073,161 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 5. SCHEDULE: CALENDAR TIMETABLE (FLOW-017)
-    // --------------------------------------------------------------------------
+    // ==========================================================================
+    // 2. MY COURSES GROUP
+    // ==========================================================================
+    else if (route === "learner-courses-active") {
+      const active = data.enrolments.filter(e => e.status === "Active");
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+          ${active.map(enr => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                  <span class="badge badge-primary">${enr.deliveryModel}</span>
+                  <span class="badge badge-success">${enr.status}</span>
+                </div>
+                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${enr.title}</h3>
+                <p style="font-size:13px; color:var(--slate); margin:0 0 10px 0;">Teacher: <strong>${enr.trainer || enr.teacher}</strong></p>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px;">
+                  ${enr.scheduleSummary ? `<div>${enr.scheduleSummary}</div>` : ''}
+                  ${enr.currentMilestone ? `<div>Milestone: <strong>${enr.currentMilestone}</strong></div>` : ''}
+                  ${enr.currentUnit ? `<div>Unit: <strong>${enr.currentUnit}</strong></div>` : ''}
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+                <span style="font-size:12px; color:#166534; font-weight:600;">${enr.attendanceRate ? `Attendance: ${enr.attendanceRate}` : `Progress: ${enr.progress}`}</span>
+                <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerCourseWorkspace('${enr.courseCode}')">Open Workspace</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-pending") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom:6px;">PENDING COHORT ALLOCATION</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">IELTS Academic Mastery (Band 8.0 Target)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Payment approved. Operations Manager is currently assigning batch timings.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Onboarding Status', 'Operations is assigning Trainer B...', 'info')">Check Status</button>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; font-size:13px; color:#334155;">
+            ✓ Payment Verified (PKR 18,000)<br>
+            ⏳ Trainer Matching & Cohort Schedule Finalization in Progress
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-paused") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span class="badge badge-secondary" style="margin-bottom:6px;">TEMPORARILY PAUSED</span>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Graphic Design & UI/UX Foundations</h3>
+            <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Paused on 01 Aug 2026. You have 45 days remaining on your membership term.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Notifications.push('Enrolment Resumed', 'Enrolment reactivated successfully!', 'success')">
+            <i data-lucide="play"></i> Resume Enrolment
+          </button>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-completed") {
+      const completed = data.enrolments.filter(e => e.status === "Completed");
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${completed.map(c => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${c.title}</h3>
+                  <span class="badge badge-success">✓ Completed</span>
+                </div>
+                <p style="font-size:13px; color:var(--slate); margin:0;">
+                  Teacher: <strong>${c.trainer}</strong> · Final Grade: <strong style="color:#166534;">${c.finalGrade}</strong> · Certificate: <strong>${c.certificateEligibility}</strong>
+                </p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Certificate Claimed', 'Downloading official PDF Certificate of Completion...', 'success')">
+                <i data-lucide="award"></i> Download Certificate
+              </button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-history") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Enrolment ID</th><th>Course Title</th><th>Delivery Model</th><th>Term / Version</th><th>Final State</th><th>Grade / Outcome</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ENR-104</code></td>
+                  <td>Business English Communication</td>
+                  <td>Live Masterclass</td>
+                  <td>2026 Batch (v1.0)</td>
+                  <td><span class="badge badge-success">Completed</span></td>
+                  <td><strong>92% (Grade A)</strong></td>
+                </tr>
+                <tr>
+                  <td><code>ENR-098</code></td>
+                  <td>Spoken English Level 1</td>
+                  <td>Live Cohort</td>
+                  <td>2025 Retake Attempt</td>
+                  <td><span class="badge badge-secondary">Withdrawn (Transferred)</span></td>
+                  <td>42% Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 3. SCHEDULE GROUP
+    // ==========================================================================
+    else if (route === "learner-schedule-upcoming") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${data.schedule.map(s => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:20px;">
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${s.courseTitle}</h3>
+                  <span class="badge ${s.joinable ? 'badge-success' : 'badge-primary'}">${s.status}</span>
+                </div>
+                <p style="font-size:13px; color:var(--slate); margin:0;">
+                  <strong>${s.day}</strong> · ${s.time} · Trainer: <strong>${s.trainer}</strong> · Syllabus: <strong>${s.syllabusNode}</strong>
+                </p>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center; flex-shrink:0;">
+                <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerRescheduleModal('${s.classId}')">
+                  <i data-lucide="repeat"></i> Reschedule
+                </button>
+                ${s.joinable ? `
+                  <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerJoinClassModal('${s.classId}')" style="background:#22c55e; border:none; font-weight:700;">
+                    <i data-lucide="video"></i> Join Class
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
     else if (route === "learner-schedule-calendar" || route === "learner-k12-schedule") {
       viewContent = `
         <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:14px;">
@@ -5113,9 +5257,6 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 6. SCHEDULE: ATTENDANCE TELEMETRY
-    // --------------------------------------------------------------------------
     else if (route === "learner-schedule-attendance") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:20px;">
@@ -5168,51 +5309,242 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 7. MY LEARNING: LESSONS & ACTIVITIES
-    // --------------------------------------------------------------------------
-    else if (route === "learner-learning-lessons" || route === "learner-learning-activities" || route === "learner-learning-continue") {
+    else if (route === "learner-schedule-reschedule") {
       viewContent = `
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <span class="badge badge-primary" style="margin-bottom:6px;">ACTIVE LESSON UNIT</span>
-              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Lesson 2.3: useActionState & Form Transitions in React 19</h3>
-              <p style="font-size:13px; color:var(--slate); margin:4px 0 0 0;">Interactive coding sandbox with server actions mutation boundaries.</p>
+              <span class="badge badge-warning" style="margin-bottom:6px;">FLOW-017 RESCHEDULE REQUEST</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Grade 8 Math (Occurrence CLS-102)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Requested Alternative: <strong>19 Aug 2026 14:00 PKT</strong> · Reason: School exam on original slot.</p>
             </div>
-            <button class="btn btn-primary" onclick="Notifications.push('Sandbox Opened', 'Loading React 19 Coding Sandbox...', 'success')">
-              <i data-lucide="play"></i> Resume Coding Sandbox
+            <span class="badge badge-primary">Pending Operations Review</span>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-schedule-cancellations") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span class="badge badge-secondary" style="margin-bottom:6px;">MAKEUP CREDIT GRANTED</span>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Spoken English Fluency (Teacher Technical Cancellation)</h3>
+            <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">1 Makeup Credit Voucher credited to your entitlement balance.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerRescheduleModal('CLS-105')">Book Makeup Session</button>
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 4. MY LEARNING GROUP
+    // ==========================================================================
+    else if (route === "learner-learning-continue") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:26px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:20px;">
+          <div>
+            <span class="badge badge-primary" style="margin-bottom:6px;">RESUME NEXT ACTIVE LESSON</span>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Lesson 2.3: Server Actions & Mutation Boundaries</h2>
+            <p style="font-size:13px; color:var(--slate); margin:4px 0 0 0;">Course: <strong>Modern Full-Stack Web Development</strong> · Level 1 Milestone 2</p>
+          </div>
+          <div style="background:#0f172a; color:#ffffff; border-radius:8px; padding:20px; font-family:monospace; font-size:13px;">
+            // Exercise 2.3: Define Next.js 15 Server Action with useActionState<br>
+            async function updateLearnerProfile(prevState, formData) {<br>
+            &nbsp;&nbsp;'use server';<br>
+            &nbsp;&nbsp;return { status: 'success', message: 'Profile updated' };<br>
+            }
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:13px; color:#475569;">Estimated completion: 35 mins</span>
+            <button class="btn btn-primary" onclick="Notifications.push('Code Verified', 'Tests passed! Moving to Capstone project...', 'success')">
+              <i data-lucide="check-circle"></i> Run Code & Submit Solution
             </button>
           </div>
+        </div>
+      `;
+    }
 
-          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-              <span class="badge badge-success" style="font-size:11px; margin-bottom:8px;">COMPLETED</span>
-              <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Lesson 2.1: Props & Tree Architecture</h4>
-              <p style="font-size:12px; color:var(--slate); margin:0;">Completed on 14 Aug 2026 · Score: 94%</p>
+    else if (route === "learner-learning-milestones") {
+      viewContent = `
+        <div class="learner-stepper-tree">
+          ${data.milestones.map((m, idx) => `
+            <div class="learner-milestone-node ${m.status.toLowerCase().replace(' ', '-')}" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px 26px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:20px;">
+              <div style="display:flex; align-items:center; gap:16px;">
+                <div style="width:48px; height:48px; border-radius:50%; background:${m.unlocked ? (m.status === 'Completed' ? '#dcfce7' : '#e0e7ff') : '#f1f5f9'}; color:${m.unlocked ? (m.status === 'Completed' ? '#15803d' : '#4338ca') : '#94a3b8'}; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  ${m.unlocked ? (m.status === 'Completed' ? '<i data-lucide="check"></i>' : idx + 1) : '<i data-lucide="lock"></i>'}
+                </div>
+                <div>
+                  <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">${m.level}</span>
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:2px 0 4px 0;">${m.milestone}</h3>
+                  <p style="font-size:13px; color:${m.unlocked ? '#475569' : '#94a3b8'}; margin:0;">
+                    ${m.unlocked ? `Progress: <strong>${m.progress}%</strong> · ${m.lessonsCount} Lessons` : `<strong>Locked:</strong> ${m.lockReason}`}
+                  </p>
+                </div>
+              </div>
+              <div>
+                ${m.unlocked ? `
+                  <button class="btn ${m.status === 'Completed' ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="Notifications.push('Milestone Opened', 'Entering ${m.milestone}...', 'success')">
+                    ${m.status === 'Completed' ? 'Review Units' : 'Continue Milestone'}
+                  </button>
+                ` : `
+                  <span class="badge badge-secondary"><i data-lucide="lock" style="width:12px; height:12px;"></i> Locked</span>
+                `}
+              </div>
             </div>
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-              <span class="badge badge-success" style="font-size:11px; margin-bottom:8px;">COMPLETED</span>
-              <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Lesson 2.2: State Machines</h4>
-              <p style="font-size:12px; color:var(--slate); margin:0;">Completed on 15 Aug 2026 · Score: 96%</p>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-learning-lessons") {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <span class="badge badge-success" style="font-size:11px; margin-bottom:8px;">COMPLETED</span>
+            <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Lesson 2.1: Props & Tree Architecture</h4>
+            <p style="font-size:12px; color:var(--slate); margin:0;">Completed on 14 Aug 2026 · Score: 94%</p>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <span class="badge badge-success" style="font-size:11px; margin-bottom:8px;">COMPLETED</span>
+            <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Lesson 2.2: State Machines</h4>
+            <p style="font-size:12px; color:var(--slate); margin:0;">Completed on 15 Aug 2026 · Score: 96%</p>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <span class="badge badge-primary" style="font-size:11px; margin-bottom:8px;">IN PROGRESS</span>
+            <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Lesson 2.3: Server Actions</h4>
+            <p style="font-size:12px; color:var(--slate); margin:0;">Estimated time: 45 mins</p>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-learning-activities") {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:4px;">CODING SANDBOX</span>
+              <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 2px 0;">React 19 Form Action Sandbox</h4>
+              <p style="font-size:12px; color:var(--slate); margin:0;">Interactive browser emulator.</p>
             </div>
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-              <span class="badge badge-primary" style="font-size:11px; margin-bottom:8px;">IN PROGRESS</span>
-              <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Lesson 2.3: Server Actions</h4>
-              <p style="font-size:12px; color:var(--slate); margin:0;">Estimated time: 45 mins</p>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Sandbox', 'Opening sandbox...', 'info')">Launch</button>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:4px;">AUDIO DRILL</span>
+              <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 2px 0;">Syllable Cadence Simulator</h4>
+              <p style="font-size:12px; color:var(--slate); margin:0;">Acoustic pitch feedback.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Drill', 'Opening audio drill...', 'info')">Launch</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-learning-progress") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Academic Progress Matrix</h3>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+                <span>Modern Full-Stack Web Development (Milestone 2)</span>
+                <span>62%</span>
+              </div>
+              <div style="background:#f1f5f9; height:8px; border-radius:4px; overflow:hidden;"><div style="background:var(--primary); width:62%; height:100%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+                <span>Spoken English Fluency (Level 1)</span>
+                <span>85%</span>
+              </div>
+              <div style="background:#f1f5f9; height:8px; border-radius:4px; overflow:hidden;"><div style="background:#10b981; width:85%; height:100%;"></div></div>
             </div>
           </div>
         </div>
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 8. MY WORK: QUIZZES & VOICE ACTIVITIES
-    // --------------------------------------------------------------------------
-    else if (route === "learner-work-voice" || route === "learner-work-quizzes") {
+    else if (route === "learner-learning-completion") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <span class="badge badge-success" style="margin-bottom:6px;">ELIGIBLE FOR CERTIFICATION</span>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Business English Communication (Certificate #IHS-CERT-2026)</h3>
+            <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">All completion criteria satisfied · Grade: 92% (A)</p>
+          </div>
+          <button class="btn btn-primary" onclick="Notifications.push('Certificate Claimed', 'Downloading certified PDF credential...', 'success')">
+            <i data-lucide="award"></i> Claim Certificate
+          </button>
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 5. MY WORK GROUP
+    // ==========================================================================
+    else if (route === "learner-work-due") {
+      const due = data.myWork.filter(w => w.status === "Due");
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${due.map(w => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="badge badge-warning" style="margin-bottom:4px;">Due: ${w.dueDate}</span>
+                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${w.title}</h3>
+                <span style="font-size:13px; color:var(--slate);">Course: ${w.course} · Format: ${w.type}</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerAssignmentModal('${w.id}')">Submit Work</button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-quizzes") {
+      const quizzes = data.myWork.filter(w => w.type.includes("Quiz"));
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${quizzes.map(q => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="badge badge-success" style="margin-bottom:4px;">Auto-Scored: ${q.score}</span>
+                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${q.title}</h3>
+                <span style="font-size:13px; color:var(--slate);">Course: ${q.course} · 10 Questions Formative</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Quiz Review', 'Opening quiz answer review...', 'info')">Review Answers</button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-assignments" || route === "learner-work-homework") {
+      const workItems = data.myWork.filter(w => route === "learner-work-assignments" ? (w.type.includes("Assignment") || w.type.includes("Capstone")) : w.type.includes("Homework"));
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${workItems.map(w => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="badge ${w.submitted ? 'badge-success' : 'badge-warning'}" style="margin-bottom:4px;">${w.status}</span>
+                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${w.title}</h3>
+                <p style="font-size:13px; color:var(--slate); margin:0;">Course: ${w.course} · Due: <strong>${w.dueDate}</strong></p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerAssignmentModal('${w.id}')">
+                ${w.submitted ? 'View Submission' : 'Submit Evidence'}
+              </button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-voice") {
+      const voice = data.myWork.filter(w => w.type.includes("Voice"));
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          ${data.myWork.filter(w => route === "learner-work-voice" ? w.type.includes("Voice") : w.type.includes("Quiz")).map(w => `
+          ${voice.map(w => `
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
               <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <div>
@@ -5257,9 +5589,121 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 9. MY NOTES: PRIVATE STUDY NOTES
-    // --------------------------------------------------------------------------
+    else if (route === "learner-work-revisions") {
+      const revisions = data.myWork.filter(w => w.status.includes("Revision"));
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${revisions.map(w => `
+            <div style="background:#ffffff; border:1px solid #fecdd3; border-left:4px solid #e11d48; border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="badge badge-error" style="margin-bottom:4px;">Revision Requested</span>
+                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${w.title}</h3>
+                <p style="font-size:13px; color:#be123c; margin:0 0 6px 0;"><strong>Teacher Note:</strong> ${w.revisionReason}</p>
+                <span style="font-size:12px; color:var(--slate);">Due: ${w.dueDate}</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerAssignmentModal('${w.id}')">Re-record / Resubmit</button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-submitted" || route === "learner-work-overdue") {
+      const items = data.myWork.filter(w => route === "learner-work-submitted" ? w.submitted : w.status === "Overdue");
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${items.length === 0 ? '<div style="background:#ffffff; padding:24px; border-radius:12px; text-align:center; color:#64748b;">No overdue items! Great job staying on track.</div>' : ''}
+          ${items.map(w => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <span class="badge badge-success" style="margin-bottom:4px;">${w.status}</span>
+                <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${w.title}</h3>
+                <span style="font-size:13px; color:var(--slate);">Course: ${w.course}</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerAssignmentModal('${w.id}')">View Details</button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 6. GRADES & FEEDBACK GROUP
+    // ==========================================================================
+    else if (route === "learner-grades-gradebook" || route === "learner-k12-grades") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Official Published Gradebook</h3>
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Assessment</th><th>Course</th><th>Category Weight</th><th>Score</th><th>Grade</th><th>Published Date</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>ASN-301 Frontend Capstone</td><td>Full-Stack Web Dev</td><td>Capstone (40%)</td><td><strong style="color:#166534;">95 / 100</strong></td><td><span class="badge badge-success">A+</span></td><td>Today</td></tr>
+                <tr><td>QZ-101 Phonetics Diagnostic</td><td>Spoken English Fluency</td><td>Quizzes (30%)</td><td><strong style="color:#166534;">88 / 100</strong></td><td><span class="badge badge-success">A</span></td><td>12 Aug 2026</td></tr>
+                <tr><td>HW-801 Linear Equations</td><td>Grade 8 Mathematics</td><td>Homework (30%)</td><td><strong style="color:#166534;">90 / 100</strong></td><td><span class="badge badge-success">A</span></td><td>14 Aug 2026</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-grades-results" || route === "learner-grades-feedback" || route === "learner-grades-history") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${data.grades.map(g => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:flex-start; gap:20px;">
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${g.assessment}</h3>
+                  <span class="badge badge-success">Grade: ${g.letterGrade} (${g.score})</span>
+                </div>
+                <span style="font-size:12px; color:var(--slate);">Course: <strong>${g.course}</strong> · Published: ${g.publishedAt}</span>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:13px; color:#334155; margin-top:6px;">
+                  <strong>Rubric Breakdown:</strong> ${g.rubricBreakdown}<br>
+                  <strong style="color:var(--primary);">Teacher Feedback:</strong> ${g.feedback}
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Grade History', 'Viewing score audit log...', 'info')">
+                <i data-lucide="history"></i> Audit Log
+              </button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 7. RESOURCES GROUP
+    // ==========================================================================
+    else if (route.includes("resources")) {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+          ${data.resources.map(res => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:16px;">
+              <div style="display:flex; align-items:center; gap:14px;">
+                <div style="width:44px; height:44px; border-radius:8px; background:#e0e7ff; color:var(--primary); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i data-lucide="${res.type.includes('Audio') ? 'mic' : 'file-text'}" style="width:22px; height:22px;"></i>
+                </div>
+                <div>
+                  <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 2px 0;">${res.title}</h4>
+                  <span style="font-size:12px; color:var(--slate);">Course: ${res.course} · Size: ${res.size}</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Signed Download', 'Opening secure URL for ${res.title}...', 'success')">
+                <i data-lucide="download"></i> Download
+              </button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 8. MY NOTES GROUP
+    // ==========================================================================
     else if (route === "learner-notes-all") {
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
@@ -5287,46 +5731,227 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 10. MESSAGES & SUPPORT CONVERSATIONS (FLOW-023)
-    // --------------------------------------------------------------------------
-    else if (route.includes("messages") || route.includes("cases")) {
+    // ==========================================================================
+    // 9. K-12 GROUP
+    // ==========================================================================
+    else if (route === "learner-k12-subjects") {
       viewContent = `
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <div style="width:44px; height:44px; border-radius:50%; background:#e0e7ff; color:var(--primary); font-weight:800; display:flex; align-items:center; justify-content:center;">
-                SJ
-              </div>
-              <div>
-                <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Sara Javed (Senior Trainer)</h4>
-                <span style="font-size:12px; color:var(--slate);">Spoken English Fluency & Grade 8 Mathematics</span>
-              </div>
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Chat Opened', 'Opening conversation thread with Sara Javed...', 'info')">
-              <i data-lucide="message-square"></i> Open Chat
-            </button>
-          </div>
-
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
           <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 12px 0;">Support Cases</h4>
-            ${data.cases.map(c => `
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                  <strong style="font-size:14px; color:var(--navy-dark);">${c.subject}</strong>
-                  <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">${c.resolution}</p>
-                </div>
-                <span class="badge badge-success">${c.status}</span>
-              </div>
-            `).join("")}
+            <span class="badge badge-warning" style="margin-bottom:6px;">MATHEMATICS</span>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Grade 8 Mathematics</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Teacher: Sara Javed · Attendance: 92%</p>
+            <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-k12-syllabus')">View Syllabus</button>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <span class="badge badge-primary" style="margin-bottom:6px;">ENGLISH</span>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Grade 8 English Language</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Teacher: Sara Javed · Attendance: 94%</p>
+            <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-k12-syllabus')">View Syllabus</button>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <span class="badge badge-secondary" style="margin-bottom:6px;">SCIENCE</span>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Grade 8 General Science</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Teacher: Prof. Tariq · Attendance: 88%</p>
+            <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-k12-syllabus')">View Syllabus</button>
           </div>
         </div>
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 11. PROFILE (FLOW-036)
-    // --------------------------------------------------------------------------
+    else if (route === "learner-k12-syllabus") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Grade 8 Mathematics Syllabus Outline (FBISE)</h3>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+              <strong style="color:var(--navy-dark);">Unit 1: Real Numbers & Sets</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Subsets, Venn Diagrams, Union and Intersection proofs.</p>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+              <strong style="color:var(--navy-dark);">Unit 2: Linear Equations & Polynomials (Current Unit)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Solving single-variable and simultaneous algebraic equations.</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-k12-reportcards") {
+      const rc = data.k12ReportCard;
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:6px;">OFFICIAL ACADEMIC REPORT</span>
+              <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${rc.term}</h2>
+              <p style="font-size:13px; color:var(--slate); margin:4px 0 0 0;">
+                Learner: <strong>${data.profile.name}</strong> · ${rc.grade} · ${rc.schoolBoard}
+              </p>
+            </div>
+            <span class="badge badge-success" style="font-size:12px; padding:6px 12px;">${rc.guardianVerified ? '✓ Guardian Verified' : 'Pending Verification'}</span>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Subject</th><th>Teacher</th><th>Term Grade</th><th>Performance Status</th><th>Teacher Remarks</th></tr>
+              </thead>
+              <tbody>
+                ${rc.subjects.map(s => `
+                  <tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.teacher}</td>
+                    <td><strong style="color:#166534; font-size:14px;">${s.grade}</strong></td>
+                    <td><span class="badge badge-success">${s.status}</span></td>
+                    <td><span style="font-size:12px; color:#475569;">${s.remarks}</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+            <strong style="font-size:13px; color:var(--navy-dark);">General Faculty Comments:</strong>
+            <p style="font-size:13px; color:#334155; margin:4px 0 0 0; line-height:1.5;">${rc.teacherComment}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 10. MEMBERSHIP & PAYMENTS GROUP
+    // ==========================================================================
+    else if (route === "learner-payments-memberships" || route === "learner-payments-renew") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom:6px;">RENEWAL DUE (31 AUG 2026)</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Spoken English Cohort (Term 1)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">2 Class Credits Remaining · Renewal Fee: <strong>PKR 15,000</strong></p>
+            </div>
+            <button class="btn btn-primary" onclick="Actions.openLearnerPaymentModal('ENR-101')">
+              <i data-lucide="refresh-cw"></i> Renew Term 2
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-payments-status" || route === "learner-payments-submissions" || route === "learner-payments-corrections" || route === "learner-payments-receipts") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          ${data.payments.map(p => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${p.membershipTitle}</h3>
+                    <span class="badge badge-warning">${p.status}</span>
+                  </div>
+                  <span style="font-size:13px; color:var(--slate);">Payment Ref: <code>${p.refNumber}</code> · Amount: <strong style="color:#166534;">${p.amount}</strong></span>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('ENR-101')">
+                  <i data-lucide="upload-cloud"></i> New Evidence
+                </button>
+              </div>
+
+              <!-- VERIFICATION TIMELINE -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:28px; height:28px; border-radius:50%; background:#22c55e; color:#ffffff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;">1</div>
+                  <div><strong style="font-size:12px;">Evidence Submitted</strong><br><small style="color:#64748b;">${p.submittedAt}</small></div>
+                </div>
+                <div style="height:2px; flex:1; background:#cbd5e1; margin:0 16px;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:28px; height:28px; border-radius:50%; background:#f59e0b; color:#ffffff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;">2</div>
+                  <div><strong style="font-size:12px;">Under Review</strong><br><small style="color:#64748b;">Operations Manager</small></div>
+                </div>
+                <div style="height:2px; flex:1; background:#e2e8f0; margin:0 16px;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:28px; height:28px; border-radius:50%; background:#e2e8f0; color:#64748b; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;">3</div>
+                  <div><strong style="font-size:12px; color:#94a3b8;">Access Grant</strong><br><small style="color:#94a3b8;">Pending</small></div>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 11. MESSAGES & SUPPORT GROUP
+    // ==========================================================================
+    else if (route === "learner-messages-trainer") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:44px; height:44px; border-radius:50%; background:#e0e7ff; color:var(--primary); font-weight:800; display:flex; align-items:center; justify-content:center;">SJ</div>
+              <div>
+                <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Sara Javed (Senior Trainer)</h4>
+                <span style="font-size:12px; color:var(--slate);">Spoken English Fluency & Mathematics</span>
+              </div>
+            </div>
+            <span class="badge badge-success">● Active in Room</span>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; flex-direction:column; gap:12px;">
+            <div style="align-self:flex-start; background:#e0e7ff; color:#1e1b4b; padding:10px 14px; border-radius:8px; max-width:80%; font-size:13px;">
+              Hi Zainab! Remember to focus on rising intonation in questions for today's session at 10 AM.
+            </div>
+            <div style="align-self:flex-end; background:var(--primary); color:#ffffff; padding:10px 14px; border-radius:8px; max-width:80%; font-size:13px;">
+              Thank you Teacher! I reviewed the Phonics PDF and will join 5 minutes early.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-messages-support" || route === "learner-messages-cases" || route === "learner-messages-announcements") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">Helpdesk Cases & Announcements</h3>
+          ${data.cases.map(c => `
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="font-size:14px; color:var(--navy-dark);">${c.subject}</strong>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">${c.resolution}</p>
+              </div>
+              <span class="badge badge-success">${c.status}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 12. NOTIFICATIONS GROUP
+    // ==========================================================================
+    else if (route === "learner-notifications") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:14px;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);"><i data-lucide="video" style="width:16px; height:16px; color:#22c55e;"></i> Class Join Window Ready</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Spoken English Fluency starts at 10:00 AM PKT.</p>
+            </div>
+            <span style="font-size:11px; color:#64748b;">10 mins ago</span>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);"><i data-lucide="award" style="width:16px; height:16px; color:var(--primary);"></i> Grade Published</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">ASN-301 Frontend Capstone graded: 95/100 (A+).</p>
+            </div>
+            <span style="font-size:11px; color:#64748b;">Today 09:15</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 13. PROFILE GROUP
+    // ==========================================================================
     else if (route.includes("profile")) {
       const p = data.profile;
       viewContent = `
@@ -5366,32 +5991,7 @@ const RenderEngine = {
       `;
     }
 
-    // --------------------------------------------------------------------------
-    // 12. FALLBACK: DATA-DRIVEN CARDS OR TABLE
-    // --------------------------------------------------------------------------
-    else {
-      viewContent = `
-        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
-          ${data.enrolments.map(enr => `
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
-              <div>
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
-                  <span class="badge badge-primary">${enr.deliveryModel}</span>
-                  <span class="badge badge-success">${enr.status}</span>
-                </div>
-                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${enr.title}</h3>
-                <p style="font-size:13px; color:var(--slate); margin:0;">Teacher: <strong>${enr.trainer || enr.teacher}</strong></p>
-              </div>
-              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <span style="font-size:12px; color:#64748b;">${enr.scheduleSummary || enr.currentMilestone || 'Completed'}</span>
-                <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerCourseWorkspace('${enr.courseCode}')">Open</button>
-              </div>
-            </div>
-          `).join("")}
-        </div>
-      `;
-    }
-
+    // Final Container Render
     container.innerHTML = `
       <div class="creator-workspace-deck" style="padding: 24px 32px;">
         
