@@ -18,6 +18,309 @@ const db = {
   // ACADEMIC REVIEWER DOMAIN DATA (FLOW-009, CAT-010, FLOW-020, FLOW-021)
   // ============================================================================
   
+  
+  learnerData: {
+    profile: {
+      id: "LNR-501",
+      name: "Zainab Malik",
+      email: "zainab.malik@gmail.com",
+      phone: "+92 300 1234567",
+      type: "Verified Active Member & K-12 Learner",
+      payer: "Farooq Malik (Authorized Guardian)",
+      guardian: "Farooq Malik",
+      consentStatus: "Verified & Granted",
+      timezone: "Asia/Karachi (PKT)",
+      activeCourseId: "CRS-103"
+    },
+
+    enrolments: [
+      {
+        id: "ENR-101",
+        courseCode: "CRS-103",
+        title: "Spoken English Fluency & Professional Voice",
+        version: "v1.0",
+        deliveryModel: "Live Cohort Interactive",
+        status: "Active",
+        trainer: "Sara Javed",
+        scheduleSummary: "Mon & Wed 10:00 AM – 11:00 AM PKT",
+        attendanceRate: "96%",
+        attendedClasses: "12 / 13 Classes",
+        entitlement: "2 class credits remaining",
+        membershipStatus: "Renewal Due (Expires 31 Aug 2026)",
+        nextOccurrence: "Today 10:00 AM PKT",
+        nextClassId: "CLS-101",
+        syllabusNode: "Module 1.1: English Rhythm & Stress Patterns",
+        type: "Live Cohort"
+      },
+      {
+        id: "ENR-102",
+        courseCode: "CRS-101",
+        title: "Modern Full-Stack Web Development",
+        version: "v1.2",
+        deliveryModel: "Milestone Self-Paced",
+        status: "Active",
+        trainer: "Sara Javed (Facilitator)",
+        currentLevel: "Level 1: Frontend Engineering",
+        currentMilestone: "Milestone 2: React 19 State Machines & Hooks",
+        progress: "62%",
+        completedLessons: "7 / 12 Lessons",
+        nextAction: "Milestone Capstone ASN-301: Component Tree",
+        syllabusNode: "React 19 Architecture & Server Actions",
+        type: "Milestone"
+      },
+      {
+        id: "ENR-103",
+        courseCode: "K12-MTH-08",
+        title: "Grade 8 Mathematics: FBISE Aligned",
+        version: "v1.1",
+        deliveryModel: "K-12 Section 8-A",
+        status: "Active",
+        teacher: "Sara Javed",
+        term: "Term 1 (Academic Year 2026/27)",
+        attendanceRate: "92%",
+        currentUnit: "Chapter 2: Linear Equations & Polynomials",
+        homeworkDue: "HW-802: Quadratic Expressions (Due Tomorrow)",
+        nextOccurrence: "Today 02:00 PM PKT",
+        nextClassId: "CLS-102",
+        type: "K-12"
+      },
+      {
+        id: "ENR-104",
+        courseCode: "CRS-104",
+        title: "Business English Communication & Negotiation",
+        version: "v1.0",
+        deliveryModel: "Live Masterclass Series",
+        status: "Completed",
+        trainer: "Prof. Tariq Mahmood",
+        finalGrade: "92% (Grade A)",
+        certificateEligibility: "Eligible (Ready for Claim)",
+        type: "Completed"
+      }
+    ],
+
+    schedule: [
+      {
+        id: "SCH-L01",
+        classId: "CLS-101",
+        courseCode: "CRS-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        day: "Today (17 Aug 2026)",
+        time: "10:00 AM – 11:00 AM PKT",
+        trainer: "Sara Javed",
+        roomUrl: "https://ihs.daily.co/spoken-eng-sec1",
+        joinable: true,
+        status: "Live in 15 Mins",
+        syllabusNode: "Module 1.1: English Rhythm & Stress Patterns"
+      },
+      {
+        id: "SCH-L02",
+        classId: "CLS-102",
+        courseCode: "K12-MTH-08",
+        courseTitle: "Grade 8 Mathematics: Tuition Section A",
+        day: "Today (17 Aug 2026)",
+        time: "02:00 PM – 03:00 PM PKT",
+        trainer: "Sara Javed",
+        roomUrl: "https://ihs.daily.co/k12-math-8a",
+        joinable: false,
+        status: "Scheduled",
+        syllabusNode: "Chapter 2: Linear Equations with Rational Coefficients"
+      },
+      {
+        id: "SCH-L03",
+        classId: "CLS-105",
+        courseCode: "CRS-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        day: "Wednesday (19 Aug 2026)",
+        time: "10:00 AM – 11:00 AM PKT",
+        trainer: "Sara Javed",
+        roomUrl: "https://ihs.daily.co/spoken-eng-sec1",
+        joinable: false,
+        status: "Scheduled",
+        syllabusNode: "Module 1.2: Vowel Reduction & Cadence"
+      }
+    ],
+
+    milestones: [
+      {
+        id: "MLS-L01",
+        level: "Level 1: Core Fundamentals",
+        milestone: "Milestone 1: HTML5 & Responsive Semantic Layouts",
+        lessonsCount: 6,
+        status: "Completed",
+        progress: 100,
+        unlocked: true,
+        lessons: [
+          { title: "Semantic HTML Elements", status: "Completed", score: "95%" },
+          { title: "CSS Flexbox & Responsive Layouts", status: "Completed", score: "90%" },
+          { title: "CSS Grid Fundamentals", status: "Completed", score: "92%" }
+        ]
+      },
+      {
+        id: "MLS-L02",
+        level: "Level 1: Core Fundamentals",
+        milestone: "Milestone 2: React 19 State Machines & Custom Hooks",
+        lessonsCount: 6,
+        status: "In Progress",
+        progress: 62,
+        unlocked: true,
+        lessons: [
+          { title: "React Component Hierarchy & Props", status: "Completed", score: "94%" },
+          { title: "useActionState & Form Transitions", status: "Completed", score: "96%" },
+          { title: "Server Actions & Mutation Boundaries", status: "In Progress", score: "-" },
+          { title: "Capstone ASN-301 Portfolio Submission", status: "Submitted (Under Review)", score: "Draft" }
+        ]
+      },
+      {
+        id: "MLS-L03",
+        level: "Level 2: Advanced Architecture",
+        milestone: "Milestone 3: Full-Stack APIs & Next.js App Router",
+        lessonsCount: 8,
+        status: "Locked",
+        progress: 0,
+        unlocked: false,
+        lockReason: "Requires Facilitator Sign-off on Milestone 2 & Capstone passing score (70%)."
+      }
+    ],
+
+    myWork: [
+      {
+        id: "WRK-01",
+        title: "HW-802: Quadratic Expressions & Factoring",
+        course: "Grade 8 Mathematics: Section A",
+        courseCode: "K12-MTH-08",
+        type: "Homework Worksheet",
+        status: "Due",
+        dueDate: "Tomorrow 23:59 PKT",
+        description: "Complete textbook exercises 2.4 problems 1 through 15 on worksheet.",
+        submitted: false
+      },
+      {
+        id: "WRK-02",
+        title: "VOC-402: Workplace Presentation Speech",
+        course: "Spoken English Fluency & Professional Voice",
+        courseCode: "CRS-103",
+        type: "Voice Activity Recording",
+        status: "Returned for Revision",
+        dueDate: "19 Aug 2026",
+        description: "Acoustic audio re-recording requested. Previous file had background noise.",
+        revisionReason: "Audio recording had high fan background noise. Please re-record speech in quiet room.",
+        submitted: false
+      },
+      {
+        id: "WRK-03",
+        title: "ASN-301: Responsive Portfolio Capstone",
+        course: "Modern Full-Stack Web Development",
+        courseCode: "CRS-101",
+        type: "Assignment / Code Repository",
+        status: "Graded (95/100)",
+        dueDate: "15 Aug 2026",
+        description: "Deploy portfolio landing page to GitHub Pages / Vercel.",
+        evidence: "https://github.com/zainab-malik/frontend-capstone",
+        teacherFeedback: "Exemplary CSS Grid execution with semantic tokens.",
+        score: "95 / 100 (Grade A+)",
+        submitted: true
+      },
+      {
+        id: "WRK-04",
+        title: "QZ-101: Phonetic Articulation Quiz",
+        course: "Spoken English Fluency & Professional Voice",
+        courseCode: "CRS-103",
+        type: "Interactive Quiz",
+        status: "Graded (88/100)",
+        dueDate: "12 Aug 2026",
+        description: "10-question formative diagnostic on vowel pitch contours.",
+        score: "88 / 100 (Grade A)",
+        submitted: true
+      }
+    ],
+
+    grades: [
+      {
+        id: "GRD-L01",
+        assessment: "ASN-301: Responsive Portfolio Capstone",
+        course: "Modern Full-Stack Web Development",
+        courseCode: "CRS-101",
+        score: "95 / 100",
+        letterGrade: "A+",
+        publishedAt: "Today 09:15 PKT",
+        rubricBreakdown: "Technical Implementation: 40/40 · Code Quality: 35/35 · Documentation: 20/25",
+        feedback: "Exemplary component modularity and CSS tokens implementation.",
+        grader: "Sara Javed (Senior Trainer)"
+      },
+      {
+        id: "GRD-L02",
+        assessment: "QZ-101: Phonetic Articulation Formative Quiz",
+        course: "Spoken English Fluency",
+        courseCode: "CRS-103",
+        score: "88 / 100",
+        letterGrade: "A",
+        publishedAt: "12 Aug 2026",
+        rubricBreakdown: "Auto-scored: 8.8 / 10 Points",
+        feedback: "Great grasp of intonation curves. Review syllable stress in 3-syllable nouns.",
+        grader: "Automated Evaluation Engine"
+      },
+      {
+        id: "GRD-L03",
+        assessment: "HW-801: Linear Equations Problem Set",
+        course: "Grade 8 Mathematics",
+        courseCode: "K12-MTH-08",
+        score: "90 / 100",
+        letterGrade: "A",
+        publishedAt: "14 Aug 2026",
+        rubricBreakdown: "Algebraic Proofs: 36/40 · Problem Accuracy: 36/40 · Presentation: 18/20",
+        feedback: "Correct algebraic derivation across all problem sets.",
+        grader: "Sara Javed (Teacher)"
+      }
+    ],
+
+    resources: [
+      { id: "RES-L01", title: "Phonics Rhythm & Sentence Stress Guide (PDF)", course: "Spoken English Fluency", type: "Lesson PDF", size: "2.4 MB", url: "signed://ihs-cdn/spoken-eng/rhythm-guide.pdf" },
+      { id: "RES-L02", title: "Acoustic Sample Dialog 1A (MP3 Audio Reference)", course: "Spoken English Fluency", type: "Audio Reference", size: "4.8 MB", url: "signed://ihs-cdn/spoken-eng/sample1a.mp3" },
+      { id: "RES-L03", title: "CSS Grid & Flexbox Modern Tokens Cheat Sheet", course: "Full-Stack Web Dev", type: "Blueprint PDF", size: "1.8 MB", url: "signed://ihs-cdn/webdev/css-cheatsheet.pdf" },
+      { id: "RES-L04", title: "Grade 8 Mathematics FBISE Unit 2 Worksheets", course: "Grade 8 Math", type: "Worksheet PDF", size: "3.1 MB", url: "signed://ihs-cdn/k12/math8-unit2.pdf" }
+    ],
+
+    notes: [
+      { id: "NOT-01", course: "Spoken English Fluency", topic: "Pitch cadence in rising intonation questions", date: "Yesterday", content: "Remember to elevate pitch on the final auxiliary verb in surprise queries." },
+      { id: "NOT-02", course: "Full-Stack Web Dev", topic: "React 19 Server Actions vs useEffect", date: "15 Aug 2026", content: "Form submissions can use useActionState to automatically track pending transition states." }
+    ],
+
+    payments: [
+      {
+        id: "PAY-SUB-01",
+        membershipTitle: "Spoken English Fluency (Cohort Term 2)",
+        amount: "PKR 15,000",
+        term: "3 Months (Sep - Nov 2026)",
+        status: "Under Review",
+        method: "Meezan Bank Direct Transfer",
+        refNumber: "MEEZ-99482103",
+        submittedAt: "16 Aug 2026 14:20 PKT",
+        receiptUrl: "s3://ihs-receipts/receipt-zainab-term2.png",
+        payer: "Farooq Malik (Guardian)",
+        reviewNotes: "Evidence submitted; pending Operations Manager verification."
+      }
+    ],
+
+    k12ReportCard: {
+      term: "Term 1 Academic Progress Report (2026/27)",
+      grade: "Grade 8 - Section A",
+      schoolBoard: "Federal Board of Intermediate & Secondary Education (FBISE)",
+      attendanceOverall: "92% (36 / 39 Class Sessions Attended)",
+      subjects: [
+        { name: "Mathematics", teacher: "Sara Javed", grade: "91%", status: "Exemplary", remarks: "Consistent excellence in linear equations." },
+        { name: "English Language & Phonics", teacher: "Sara Javed", grade: "94%", status: "Exemplary", remarks: "Top oral fluency in section." },
+        { name: "General Science", teacher: "Prof. Tariq Mahmood", grade: "88%", status: "Proficient", remarks: "Active participant in lab experiments." }
+      ],
+      teacherComment: "Zainab demonstrates outstanding academic discipline, strong collaborative spirit, and exemplary problem-solving skills.",
+      guardianVerified: true,
+      publishedDate: "15 Aug 2026"
+    },
+
+    cases: [
+      { id: "CAS-L01", subject: "Browser Microphone Permission in Daily Room", category: "Technical Issue", status: "Resolved", date: "10 Aug 2026", resolution: "Resolved: System permissions updated for Chrome WebRTC access." }
+    ]
+  },
+
   trainerData: {
     classes: [
       {
@@ -2118,6 +2421,83 @@ function ensureTableEmptyStates(view, route) {
 // ============================================================================
 
 
+
+const learnerRouteDefinitions = {
+  "learner-dashboard": { title: "Learner Home", scope: "All Courses Overview · Multi-Course Personal Portal (DSH-002/DSH-003)", section: "LEARNER HOME", icon: "layout-dashboard" },
+  
+  "learner-explore-catalogue": { title: "Course Catalogue", scope: "Discover Approved & Published Learning Programs", section: "EXPLORE", icon: "compass", dataType: "catalogue" },
+  "learner-explore-free": { title: "Free Learning Resources", scope: "Open Phonics Audios, Coding Blueprints & Placement Diagnostic", section: "EXPLORE", icon: "gift", dataType: "resources" },
+  "learner-explore-previews": { title: "Course Previews", scope: "Interactive Lessons in Free Preview Mode", section: "EXPLORE", icon: "play-circle", dataType: "catalogue" },
+  "learner-explore-trial": { title: "Request a Free Trial (FLOW-006)", scope: "Submit Live Diagnostic Trial Request with Availability Slots", section: "EXPLORE", icon: "sparkles", dataType: "trial" },
+
+  "learner-courses-active": { title: "Active Enrolments", scope: "My Active Independent Course Enrolments (Live, Milestone & K-12)", section: "MY COURSES", icon: "book-marked", dataType: "enrolments" },
+  "learner-courses-pending": { title: "Pending Activation", scope: "Courses Awaiting Payment Verification or Cohort Allocation", section: "MY COURSES", icon: "clock", dataType: "enrolments" },
+  "learner-courses-paused": { title: "Paused Enrolments", scope: "Temporarily Paused Course Access Terms", section: "MY COURSES", icon: "pause-circle", dataType: "enrolments" },
+  "learner-courses-completed": { title: "Completed Courses", scope: "Successfully Certified Courses & Certificate Eligibility", section: "MY COURSES", icon: "check-circle-2", dataType: "enrolments" },
+  "learner-courses-history": { title: "Enrolment History", scope: "Lifetime Course Attempt Ledgers & Retake History", section: "MY COURSES", icon: "history", dataType: "enrolments" },
+
+  "learner-schedule-upcoming": { title: "Upcoming Live Classes", scope: "Scheduled Live Class Occurrences & Daily.co Room Join (FLOW-015)", section: "SCHEDULE", icon: "calendar-check", dataType: "schedule" },
+  "learner-schedule-calendar": { title: "Timetable Calendar", scope: "Interactive Weekly Class Schedule across All Active Courses", section: "SCHEDULE", icon: "calendar", dataType: "schedule" },
+  "learner-schedule-attendance": { title: "My Attendance Records", scope: "Participant-Specific Presence & Telemetry Breakdown", section: "SCHEDULE", icon: "user-check", dataType: "attendance" },
+  "learner-schedule-reschedule": { title: "Reschedule Requests (FLOW-017)", scope: "Submit & Track Class Reschedule Requests", section: "SCHEDULE", icon: "repeat", dataType: "schedule" },
+  "learner-schedule-cancellations": { title: "Cancelled & Makeup Occurrences", scope: "Linked Makeup Class Sessions & Entitlement Credits", section: "SCHEDULE", icon: "x-circle", dataType: "schedule" },
+
+  "learner-learning-continue": { title: "Continue Learning", scope: "Resume Next Active Lesson & Activity", section: "MY LEARNING", icon: "play", dataType: "milestones" },
+  "learner-learning-milestones": { title: "Levels & Milestones Roadmap", scope: "Milestone Trajectory with Prerequisite & Unlock Rules", section: "MY LEARNING", icon: "milestone", dataType: "milestones" },
+  "learner-learning-lessons": { title: "Course Lessons", scope: "Interactive Lesson Units & Theoretical Modules", section: "MY LEARNING", icon: "book-open", dataType: "milestones" },
+  "learner-learning-activities": { title: "Learning Activities", scope: "Coding Sandboxes, Audio Speech Drills & Practice Problems", section: "MY LEARNING", icon: "layers", dataType: "milestones" },
+  "learner-learning-progress": { title: "Academic Progress Matrix", scope: "Module Progression & Milestone Velocity", section: "MY LEARNING", icon: "trending-up", dataType: "milestones" },
+  "learner-learning-completion": { title: "Certificate Eligibility", scope: "Verified Course Completion Criteria & Credential Status", section: "MY LEARNING", icon: "award", dataType: "enrolments" },
+
+  "learner-work-due": { title: "Due Work & Tasks", scope: "Upcoming Homework, Quizzes & Assignments Requiring Submission", section: "MY WORK", icon: "alert-circle", filter: w => w.status === "Due", dataType: "myWork" },
+  "learner-work-quizzes": { title: "Interactive Quizzes (FLOW-019)", scope: "Formative Quizzes with Auto-Scoring & Manual Item Reviews", section: "MY WORK", icon: "help-circle", filter: w => w.type.includes("Quiz"), dataType: "myWork" },
+  "learner-work-assignments": { title: "Assignments & Projects", scope: "Capstone Projects & Code Submissions", section: "MY WORK", icon: "file-code", filter: w => w.type.includes("Assignment") || w.type.includes("Capstone"), dataType: "myWork" },
+  "learner-work-homework": { title: "Homework Problem Sets", scope: "Weekly Exercises & Syllabus Worksheets", section: "MY WORK", icon: "file-text", filter: w => w.type.includes("Homework"), dataType: "myWork" },
+  "learner-work-voice": { title: "Voice Activities (FLOW-020)", scope: "Acoustic Speech Recordings & Pronunciation Exercises", section: "MY WORK", icon: "mic", filter: w => w.type.includes("Voice"), dataType: "myWork" },
+  "learner-work-revisions": { title: "Returned for Revision", scope: "Submissions Returned by Teacher for Re-recording / Re-submission", section: "MY WORK", icon: "rotate-ccw", filter: w => w.status.includes("Revision"), dataType: "myWork" },
+  "learner-work-submitted": { title: "Submitted Work Archive", scope: "All Submitted Evidence & Teacher Evaluation Status", section: "MY WORK", icon: "send", filter: w => w.submitted, dataType: "myWork" },
+  "learner-work-overdue": { title: "Overdue Tasks", scope: "Tasks Past Submission Deadline", section: "MY WORK", icon: "clock-alert", filter: w => w.status === "Overdue", dataType: "myWork" },
+
+  "learner-grades-gradebook": { title: "Published Gradebook", scope: "Official Published Scores across Weighted Assessment Categories", section: "GRADES & FEEDBACK", icon: "table", dataType: "grades" },
+  "learner-grades-results": { title: "Assessment Results", scope: "Rubric Criterion Scores & Breakdown", section: "GRADES & FEEDBACK", icon: "check-square", dataType: "grades" },
+  "learner-grades-feedback": { title: "Teacher Academic Feedback", scope: "Permitted Learner-Visible Constructive Feedback", section: "GRADES & FEEDBACK", icon: "message-circle", dataType: "grades" },
+  "learner-grades-history": { title: "Grade Decision History", scope: "Audited Grade History & Corrected Scores", section: "GRADES & FEEDBACK", icon: "history", dataType: "grades" },
+
+  "learner-resources-course": { title: "Course Resource Library", scope: "Authorized Supplementary Materials & Guides", section: "RESOURCES", icon: "folder", dataType: "resources" },
+  "learner-resources-class": { title: "Class Materials", scope: "Assets Distributed in Live Class Occurrences", section: "RESOURCES", icon: "folder-check", dataType: "resources" },
+  "learner-resources-lesson": { title: "Lesson Worksheets", scope: "Downloadable Practice Blueprints & Audio References", section: "RESOURCES", icon: "file", dataType: "resources" },
+  "learner-resources-assigned": { title: "Assigned Downloads", scope: "Personalized Educational Assets from Trainer", section: "RESOURCES", icon: "download-cloud", dataType: "resources" },
+
+  "learner-notes-all": { title: "My Private Notes", scope: "Personal Study Notes Scoped to My Courses", section: "MY NOTES", icon: "edit-3", dataType: "notes" },
+
+  "learner-k12-subjects": { title: "My K-12 Subjects", scope: "Enrolled School Subjects (FBISE & Cambridge)", section: "K-12", icon: "layout-grid", dataType: "k12" },
+  "learner-k12-syllabus": { title: "K-12 Syllabus Outline", scope: "Published Curriculum Roadmap & Chapter Breakdowns", section: "K-12", icon: "list-ordered", dataType: "k12" },
+  "learner-k12-schedule": { title: "Term Tuition Schedule", scope: "Class Timetable for Section 8-A", section: "K-12", icon: "calendar", dataType: "schedule" },
+  "learner-k12-homework": { title: "K-12 Homework Sheets", scope: "Assigned Math & Science Problem Sets", section: "K-12", icon: "file-plus", dataType: "myWork" },
+  "learner-k12-grades": { title: "K-12 Term Grades", scope: "Weighted Formative & Summative Grade Breakdown", section: "K-12", icon: "percent", dataType: "grades" },
+  "learner-k12-reportcards": { title: "Term Progress Report Card", scope: "Official Published Progress Report with Teacher Comments", section: "K-12", icon: "graduation-cap", dataType: "k12ReportCard" },
+
+  "learner-payments-memberships": { title: "Active Memberships", scope: "Current Subscription Terms & Entitlement Balances", section: "MEMBERSHIP & PAYMENTS", icon: "credit-card", dataType: "enrolments" },
+  "learner-payments-renew": { title: "Purchase / Renew Membership (FLOW-038)", scope: "Renew Course Term or Purchase New Learning Programs", section: "MEMBERSHIP & PAYMENTS", icon: "refresh-cw", dataType: "enrolments" },
+  "learner-payments-submissions": { title: "Submit Payment Evidence (FLOW-013)", scope: "Upload Bank Transfer Receipt & Payment Reference", section: "MEMBERSHIP & PAYMENTS", icon: "upload-cloud", dataType: "payments" },
+  "learner-payments-status": { title: "Payment Review Status", scope: "Track Verification Lifecycle (Submitted -> Under Review -> Approved)", section: "MEMBERSHIP & PAYMENTS", icon: "clock", dataType: "payments" },
+  "learner-payments-corrections": { title: "Payment Correction Requests", scope: "Review Operations Feedback and Re-submit Evidence", section: "MEMBERSHIP & PAYMENTS", icon: "alert-octagon", dataType: "payments" },
+  "learner-payments-receipts": { title: "Official Receipts", scope: "Authorized Payment Receipts & Invoices", section: "MEMBERSHIP & PAYMENTS", icon: "receipt", dataType: "payments" },
+
+  "learner-messages-trainer": { title: "Trainer Conversations (FLOW-023)", scope: "Contextual Academic Chat with Assigned Course Trainers", section: "MESSAGES & SUPPORT", icon: "message-square", dataType: "cases" },
+  "learner-messages-support": { title: "Support Conversations", scope: "Customer Support & Technical Helpdesk", section: "MESSAGES & SUPPORT", icon: "headphones", dataType: "cases" },
+  "learner-messages-cases": { title: "My Support Cases", scope: "Track Reported Issues & Support Tickets", section: "MESSAGES & SUPPORT", icon: "life-buoy", dataType: "cases" },
+  "learner-messages-announcements": { title: "Platform Announcements", scope: "Institutional & Course-Wide Notifications", section: "MESSAGES & SUPPORT", icon: "megaphone", dataType: "cases" },
+
+  "learner-notifications": { title: "Notifications Inbox", scope: "Real-Time Class Reminders, Grade Notices & Renewal Alerts", section: "NOTIFICATIONS", icon: "bell", dataType: "notifications" },
+
+  "learner-profile-personal": { title: "Personal Details (FLOW-036)", scope: "Learner Account Profile & Demographics", section: "PROFILE", icon: "user", dataType: "profile" },
+  "learner-profile-contact": { title: "Contact & Notification Preferences", scope: "Verified Email, Phone & Notification Channels", section: "PROFILE", icon: "mail", dataType: "profile" },
+  "learner-profile-verification": { title: "Account Verification Status", scope: "Identity & Academic Verification Credentials", section: "PROFILE", icon: "shield-check", dataType: "profile" },
+  "learner-profile-guardian": { title: "Guardian Relationship & Consent", scope: "Authorized Payer & Minor Safeguarding Verification", section: "PROFILE", icon: "users", dataType: "profile" },
+  "learner-profile-history": { title: "Profile Audit History", scope: "Immutable Log of Profile Updates & Verifications", section: "PROFILE", icon: "scroll", dataType: "profile" }
+};
+
 const trainerRouteDefinitions = {
   "trainer-dashboard": { title: "Teaching Home", scope: "Trainer Command Hub · Effective Assignment Scope", section: "TEACHING HOME", icon: "layout-dashboard" },
   "trainer-classes-today": { title: "Today's Assigned Classes", scope: "Live Classes & Occurrence Join Windows (FLOW-015)", section: "MY CLASSES", icon: "calendar-check", filter: c => c.status === "Today", dataType: "classes" },
@@ -3269,7 +3649,8 @@ const Router = {
     });
     let activeNavItem = null;
     if (route === "dashboard" || route === "creator-dashboard" || route === "reviewer-dashboard" || route === "trainer-dashboard") {
-      if (Simulator.activeRole === "trainer") activeNavItem = document.getElementById("nav-trainer-dashboard");
+      if (Simulator.activeRole === "learner") activeNavItem = document.getElementById("nav-learner-dashboard");
+      else if (Simulator.activeRole === "trainer") activeNavItem = document.getElementById("nav-trainer-dashboard");
       else if (Simulator.activeRole === "academic_reviewer") activeNavItem = document.getElementById("nav-reviewer-dashboard");
       else if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("nav-creator-dashboard");
       else if (Simulator.activeRole === "csr") activeNavItem = document.getElementById("csr-nav-dashboard");
@@ -3287,6 +3668,8 @@ const Router = {
     document.querySelectorAll(".content-view").forEach(view => {
       view.classList.remove("active");
     });
+    const isLearnerDashboard = route === "learner-dashboard" || (route === "dashboard" && Simulator.activeRole === "learner");
+    const isLearnerWorkspace = route.startsWith("learner-") && !isLearnerDashboard;
     const isTrainerDashboard = route === "trainer-dashboard" || (route === "dashboard" && Simulator.activeRole === "trainer");
     const isTrainerWorkspace = route.startsWith("trainer-") && !isTrainerDashboard;
     const isReviewerDashboard = route === "reviewer-dashboard" || (route === "dashboard" && Simulator.activeRole === "academic_reviewer");
@@ -3297,7 +3680,9 @@ const Router = {
     const isOmWorkspace = route.startsWith("om-");
     const isCsrWorkspace = route.startsWith("csr-");
     let activeView = null;
-    if (isTrainerDashboard) activeView = document.getElementById("view-dashboard");
+    if (isLearnerDashboard) activeView = document.getElementById("view-dashboard");
+    else if (isLearnerWorkspace) activeView = document.getElementById("view-learner-workspace");
+    else if (isTrainerDashboard) activeView = document.getElementById("view-dashboard");
     else if (isTrainerWorkspace) activeView = document.getElementById("view-trainer-workspace");
     else if (isReviewerDashboard) activeView = document.getElementById("view-dashboard");
     else if (isReviewerWorkspace) activeView = document.getElementById("view-reviewer-workspace");
@@ -3357,7 +3742,8 @@ const Router = {
       support_agent: "Support Operations Overview"
     };
     const isDash = route === "dashboard" || route === "creator-dashboard" || route === "coo-dashboard" || route === "om-dashboard" || route === "csr-dashboard" || route === "reviewer-dashboard" || route === "trainer-dashboard";
-    const dynamicTitle = (typeof trainerRouteDefinitions !== 'undefined' ? trainerRouteDefinitions[route]?.title : null)
+    const dynamicTitle = (typeof learnerRouteDefinitions !== 'undefined' ? learnerRouteDefinitions[route]?.title : null)
+      || (typeof trainerRouteDefinitions !== 'undefined' ? trainerRouteDefinitions[route]?.title : null)
       || (typeof reviewerRouteDefinitions !== 'undefined' ? reviewerRouteDefinitions[route]?.title : null)
       || (typeof creatorRouteDefinitions !== 'undefined' ? creatorRouteDefinitions[route]?.title : null)
       || (typeof csrRouteDefinitions !== 'undefined' ? csrRouteDefinitions[route]?.title : null)
@@ -3456,7 +3842,8 @@ const Router = {
         RenderEngine.supportAccess();
         break;
       default:
-        if (route.startsWith("trainer-")) RenderEngine.trainerWorkspace(route);
+        if (route.startsWith("learner-")) RenderEngine.learnerWorkspace(route);
+        else if (route.startsWith("trainer-")) RenderEngine.trainerWorkspace(route);
         else if (route.startsWith("reviewer-")) RenderEngine.reviewerWorkspace(route);
         else if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
         else if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
@@ -3465,7 +3852,8 @@ const Router = {
         break;
     }
     let viewId = `view-${route}`;
-    if (route.startsWith("trainer-")) viewId = "view-trainer-workspace";
+    if (route.startsWith("learner-")) viewId = "view-learner-workspace";
+    else if (route.startsWith("trainer-")) viewId = "view-trainer-workspace";
     else if (route.startsWith("reviewer-")) viewId = "view-reviewer-workspace";
     else if (route.startsWith("creator-")) viewId = "view-creator-workspace";
     else if (route.startsWith("csr-")) viewId = "view-csr-workspace";
@@ -3483,6 +3871,10 @@ const RenderEngine = {
 
   dashboard() {
     // If active role has a dedicated dashboard, route to it
+    if (Simulator.activeRole === "learner") {
+      this.learnerDashboard();
+      return;
+    }
     if (Simulator.activeRole === "trainer") {
       this.trainerDashboard();
       return;
@@ -4223,6 +4615,594 @@ const RenderEngine = {
   // ============================================================================
   // TRAINER / TEACHER DASHBOARD (DSH-005) - PREMIUM SPACIOUS DESIGN
   // ============================================================================
+  
+  // ============================================================================
+  // STUDENT / LEARNER DASHBOARD (DSH-002 / DSH-003) - ALL COURSES PORTAL
+  // ============================================================================
+  learnerDashboard() {
+    const shell = document.getElementById("learner-dashboard-shell");
+    if (!shell) return;
+
+    const data = db.learnerData;
+    const activeEnrolments = data.enrolments.filter(e => e.status === "Active");
+    const nextClass = data.schedule.find(s => s.joinable) || data.schedule[0];
+    const dueWork = data.myWork.filter(w => w.status === "Due" || w.status.includes("Revision"));
+
+    shell.innerHTML = `
+      <!-- TOP COMMAND HERO (DSH-002) -->
+      <div class="dashboard-hero" style="margin-bottom: 28px; padding: 28px 32px; background: #ffffff; border: 1px solid var(--outline); border-radius: var(--rounded-container); box-shadow: var(--shadow-subtle);">
+        <div class="hero-top-row" style="display:flex; justify-content:space-between; align-items:flex-start; gap:24px;">
+          <div class="hero-brand-group">
+            <span class="hero-kicker" style="color:var(--primary); font-weight:700; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+              <i data-lucide="sparkles" style="width:16px; height:16px;"></i> Personal Learning Portal · Multi-Course Enrolment Hub
+            </span>
+            <h2 class="hero-title" style="font: 800 28px 'Manrope', sans-serif; color: var(--navy-dark); margin: 8px 0 6px 0; letter-spacing: -0.5px;">
+              Welcome back, ${data.profile.name}.
+            </h2>
+            <p class="hero-subtitle" style="font-size: 14px; color: var(--slate); max-width: 720px; line-height: 1.5; margin: 0;">
+              You have <strong>${activeEnrolments.length} active independent enrolments</strong> across Live Cohort, Milestone Self-Paced, and K-12 learning paths.
+            </p>
+          </div>
+          <div class="hero-actions" style="display:flex; gap:10px; align-items:center; flex-shrink:0;">
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-schedule-calendar')" style="padding:10px 16px; font-weight:600;"><i data-lucide="calendar"></i> My Timetable</button>
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-work-due')" style="padding:10px 16px; font-weight:600;"><i data-lucide="alert-circle"></i> Tasks Due (${dueWork.length})</button>
+            <button class="btn btn-primary" onclick="Actions.openLearnerJoinClassModal('${nextClass.classId}')" style="padding:10px 18px; font-weight:700;"><i data-lucide="video"></i> Join Live Class</button>
+          </div>
+        </div>
+
+        <!-- TELEMETRY KEY STATS CHIPS -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #f1f5f9;">
+          <div class="creator-flight-chip" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#e0e7ff; color:#4338ca; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="book-marked" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Active Enrolments</span>
+              <strong style="font-size:14px; color:#0f172a;">3 Courses</strong>
+              <small style="font-size:12px; color:#475569;">Live + Milestone + K-12</small>
+            </div>
+          </div>
+          <div class="creator-flight-chip" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#dcfce7; color:#15803d; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="calendar-check" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase;">Overall Attendance</span>
+              <strong style="font-size:14px; color:#14532d;">96% Attendance</strong>
+              <small style="font-size:12px; color:#166534;">12 / 13 Classes Present</small>
+            </div>
+          </div>
+          <div class="creator-flight-chip" style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#fee2e2; color:#e11d48; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="alert-circle" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#e11d48; text-transform:uppercase;">Tasks Requiring Action</span>
+              <strong style="font-size:14px; color:#9f1239;">${dueWork.length} Tasks</strong>
+              <small style="font-size:12px; color:#be123c;">1 HW Due, 1 Revision</small>
+            </div>
+          </div>
+          <div class="creator-flight-chip" style="background:#fef3c7; border:1px solid #fde68a; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#fef3c7; color:#b45309; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="refresh-cw" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#b45309; text-transform:uppercase;">Membership Renewal</span>
+              <strong style="font-size:14px; color:#92400e;">Renewal Due</strong>
+              <small style="font-size:12px; color:#b45309;">Expires 31 Aug 2026</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COURSE SWITCHER BAR (DSH-002) -->
+      <div style="margin-bottom: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+          <h3 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin:0; display:flex; align-items:center; gap:8px;">
+            <i data-lucide="layers" style="color:var(--primary); width:16px; height:16px;"></i> My Active Enrolment Contexts
+          </h3>
+          <span style="font-size:12px; color:var(--slate);">Select course to switch active workspace</span>
+        </div>
+        <div class="learner-course-switcher-bar">
+          ${data.enrolments.map(enr => `
+            <div class="learner-course-chip ${enr.courseCode === data.profile.activeCourseId ? 'active' : ''}" onclick="Actions.setLearnerActiveCourse('${enr.courseCode}')">
+              <span>${enr.title.split(':')[0]}</span>
+              <span class="chip-badge">${enr.type}</span>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <!-- NEXT LIVE CLASS SPOTLIGHT CARD -->
+      <div class="trainer-next-class-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border-radius: 12px; padding: 24px 28px; margin-bottom: 28px; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15); display: flex; justify-content: space-between; align-items: center; gap: 24px; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="trainer-next-class-meta" style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="badge-live" style="background:rgba(34, 197, 94, 0.2); color:#4ade80; border:1px solid rgba(34, 197, 94, 0.4); font-weight:700; font-size:11px; padding:3px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:6px;">
+              <span class="pulse-dot"></span> LIVE IN 15 MINS · DAILY.CO TOKEN READY
+            </span>
+            <span style="font-size:12px; color:#94a3b8; font-weight:600;">Code: ${nextClass.courseCode} · Trainer: ${nextClass.trainer}</span>
+          </div>
+          <h3 style="font: 800 22px 'Manrope', sans-serif; color: #f8fafc; margin: 0; letter-spacing: -0.3px;">
+            ${nextClass.courseTitle}
+          </h3>
+          <p style="font-size: 13px; color: #cbd5e1; display: flex; align-items: center; gap: 16px; margin: 0;">
+            <span style="display:flex; align-items:center; gap:6px;"><i data-lucide="clock" style="width:15px; height:15px; color:#38bdf8;"></i> ${nextClass.time}</span>
+            <span>·</span>
+            <span style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open" style="width:15px; height:15px; color:#34d399;"></i> ${nextClass.syllabusNode}</span>
+          </p>
+        </div>
+        <div class="trainer-next-class-actions" style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
+          <button class="btn btn-secondary" onclick="Actions.openLearnerRescheduleModal('${nextClass.classId}')" style="background:rgba(255,255,255,0.08); color:#ffffff; border:1px solid rgba(255,255,255,0.2); font-weight:600; padding:10px 16px; border-radius:8px;">
+            <i data-lucide="repeat"></i> Request Reschedule
+          </button>
+          <button class="btn btn-join-daily" onclick="Actions.openLearnerJoinClassModal('${nextClass.classId}')" style="background:#22c55e; color:#ffffff; font-weight:700; padding:10px 22px; border-radius:8px; border:none; box-shadow:0 4px 14px rgba(34,197,94,0.4); display:inline-flex; align-items:center; gap:8px;">
+            <i data-lucide="video"></i> Join Class
+          </button>
+        </div>
+      </div>
+
+      <!-- MULTI-COURSE ENROLMENT CARDS GRID (DSH-003) -->
+      <div style="margin-bottom: 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+          <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); display:flex; align-items:center; gap:8px; margin:0;">
+            <i data-lucide="book-open" style="color:var(--primary); width:18px; height:18px;"></i> My Courses & Learning Paths
+          </h3>
+          <button class="text-btn" onclick="Router.navigate('learner-courses-active')" style="font-size:13px; font-weight:600; color:var(--primary); background:none; border:none; cursor:pointer;">
+            View all courses &rarr;
+          </button>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:18px;">
+          ${data.enrolments.slice(0, 3).map(enr => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                  <span class="badge ${enr.deliveryModel.includes('Live') ? 'badge-primary' : enr.deliveryModel.includes('K-12') ? 'badge-warning' : 'badge-secondary'}">
+                    ${enr.deliveryModel}
+                  </span>
+                  <span style="font-size:11px; font-weight:700; color:#166534; background:#dcfce7; padding:2px 6px; border-radius:4px;">${enr.status}</span>
+                </div>
+                <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${enr.title}</h4>
+                <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
+                  Teacher: <strong>${enr.trainer || enr.teacher}</strong>
+                </p>
+
+                ${enr.progress ? `
+                  <div style="margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">
+                      <span>Progress</span>
+                      <span>${enr.progress}</span>
+                    </div>
+                    <div style="background:#f1f5f9; height:6px; border-radius:3px; overflow:hidden;">
+                      <div style="background:var(--primary); width:${enr.progress}; height:100%;"></div>
+                    </div>
+                  </div>
+                ` : ''}
+
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px; color:#334155;">
+                  ${enr.nextOccurrence ? `<div><i data-lucide="clock" style="width:13px; height:13px; color:var(--primary);"></i> Next: <strong>${enr.nextOccurrence}</strong></div>` : ''}
+                  ${enr.currentMilestone ? `<div><i data-lucide="milestone" style="width:13px; height:13px; color:#10b981;"></i> <strong>${enr.currentMilestone}</strong></div>` : ''}
+                  ${enr.homeworkDue ? `<div style="color:#b91c1c; font-weight:600;"><i data-lucide="alert-circle" style="width:13px; height:13px; color:#e11d48;"></i> ${enr.homeworkDue}</div>` : ''}
+                </div>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+                <span style="font-size:11px; color:#64748b;">${enr.attendanceRate ? `Attendance: ${enr.attendanceRate}` : `Lessons: ${enr.completedLessons || 'Complete'}`}</span>
+                <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerCourseWorkspace('${enr.courseCode}')">
+                  Open Workspace
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <!-- DUAL ACTION SECTION: TASKS DUE & MEMBERSHIP RENEWAL ALERT -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px;">
+        <!-- 1. Due Tasks Inbox -->
+        <div class="creator-queue-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+          <div class="creator-queue-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+            <div>
+              <h3 class="creator-queue-title" style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="alert-circle" style="color:#d97706;"></i> My Work & Due Submissions
+              </h3>
+              <p class="creator-queue-desc" style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Homework worksheets, quizzes, and voice activities.</p>
+            </div>
+            <button class="text-btn" onclick="Router.navigate('learner-work-due')" style="font-size:13px; font-weight:600; color:var(--primary); background:none; border:none; cursor:pointer;">View all</button>
+          </div>
+          <div class="creator-queue-list" style="display:flex; flex-direction:column; gap:12px;">
+            ${dueWork.map(w => `
+              <div class="creator-queue-item" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                <div class="creator-queue-item-meta" style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <strong style="font-size:14px; color:var(--navy-dark);">${w.title}</strong>
+                    <span class="badge ${w.status.includes('Revision') ? 'badge-error' : 'badge-warning'}">${w.status}</span>
+                  </div>
+                  <span style="font-size:12px; color:var(--slate);">${w.course} · Due: <strong>${w.dueDate}</strong></span>
+                </div>
+                <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerAssignmentModal('${w.id}')" style="padding:6px 14px; font-weight:600;">
+                  ${w.type.includes('Voice') ? 'Record Speech' : 'Submit Work'}
+                </button>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <!-- 2. Membership Renewal & Payment Alert (FLOW-038) -->
+        <div class="creator-queue-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div class="creator-queue-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+              <div>
+                <h3 class="creator-queue-title" style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0; display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="refresh-cw" style="color:#b45309;"></i> Membership & Entitlement Status
+                </h3>
+                <p class="creator-queue-desc" style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Active access grants and renewal alerts (FLOW-038).</p>
+              </div>
+              <span class="badge badge-warning">Low Balance</span>
+            </div>
+            
+            <div style="background:#fffbeb; border:1px solid #fde68a; border-left:4px solid #d97706; border-radius:8px; padding:14px 16px; margin-bottom:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <strong style="color:#92400e; font-size:14px;">Spoken English Cohort (Term 1)</strong>
+                  <p style="font-size:12px; color:#b45309; margin:4px 0 0 0;">
+                    2 class credits remaining · Access expires <strong>31 Aug 2026</strong>.
+                  </p>
+                </div>
+                <span class="badge badge-warning" style="background:#fef3c7; color:#92400e;">Action Required</span>
+              </div>
+            </div>
+
+            <div style="font-size:13px; color:#475569; display:flex; flex-direction:column; gap:6px;">
+              <div style="display:flex; justify-content:space-between;">
+                <span>Latest Payment Evidence:</span>
+                <span class="badge badge-primary">Submitted (Under Review)</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span>Payment Reference:</span>
+                <code>MEEZ-99482103</code>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid #f1f5f9; margin-top:12px;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-payments-status')"><i data-lucide="clock"></i> Track Status</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('ENR-101')" style="font-weight:700;"><i data-lucide="upload-cloud"></i> Submit Payment (FLOW-013)</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  // ============================================================================
+  // STUDENT / LEARNER UNIVERSAL WORKSPACE - BESPOKE FLOW-SPECIFIC VIEWS
+  // ============================================================================
+  learnerWorkspace(route) {
+    const container = document.getElementById("learner-workspace-content");
+    if (!container) return;
+
+    const config = learnerRouteDefinitions[route] || {
+      title: "Learner Workspace",
+      scope: "Personal Learning Context",
+      section: "STUDENT PORTAL",
+      icon: "graduation-cap",
+      dataType: "enrolments"
+    };
+
+    // Update Top Workspace Header
+    const wsLabel = document.getElementById("workspace-label");
+    const viewTitle = document.getElementById("view-title");
+    if (wsLabel) wsLabel.textContent = "Student & Learner portal";
+    if (viewTitle) viewTitle.textContent = config.title;
+
+    const data = db.learnerData;
+    let viewContent = "";
+
+    // --------------------------------------------------------------------------
+    // 1. EXPLORE: CATALOGUE & TRIAL REQUEST (FLOW-006)
+    // --------------------------------------------------------------------------
+    if (route === "learner-explore-catalogue" || route === "learner-explore-previews" || route === "learner-explore-free" || route === "learner-explore-trial") {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+            <div>
+              <span class="badge badge-success" style="margin-bottom:8px;">FREE PREVIEW AVAILABLE</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Spoken English Fluency & Accent Reduction</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Live cohort training with native acoustic rhythm drills and intonation feedback.</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px;">
+                <span>Delivery: <strong>Live Interactive (60 Mins)</strong></span><br>
+                <span>Free Placement Diagnostic: <strong>Included</strong></span>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Preview Opened', 'Opening free preview lesson 1.1...', 'info')">Preview Lesson</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()"><i data-lucide="sparkles"></i> Request Trial</button>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:8px;">MILESTONE SELF-PACED</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Modern Full-Stack Web Development</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Master React 19, TypeScript, and server-side state machines with 1:1 facilitator reviews.</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px;">
+                <span>Delivery: <strong>Milestone (12 Lessons)</strong></span><br>
+                <span>Capstones: <strong>3 Certified Projects</strong></span>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Syllabus Opened', 'Viewing Full-Stack syllabus...', 'info')">Syllabus</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('CRS-101')">Enrol Now</button>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom:8px;">K-12 TUITION</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Grade 8 Mathematics: FBISE Aligned</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Complete board syllabus coverage with live problem-solving drills and homework sheets.</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px;">
+                <span>Curriculum: <strong>Federal Board (FBISE)</strong></span><br>
+                <span>Teacher: <strong>Sara Javed</strong></span>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Sample Sheet', 'Opening Grade 8 Math worksheet...', 'info')">Sample Sheet</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()">Request Trial</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 2. MY LEARNING: MILESTONES ROADMAP & STEPPER
+    // --------------------------------------------------------------------------
+    else if (route.includes("milestones") || route.includes("learning") || route.includes("lessons")) {
+      viewContent = `
+        <div class="learner-stepper-tree">
+          ${data.milestones.map((m, idx) => `
+            <div class="learner-milestone-node ${m.status.toLowerCase().replace(' ', '-')}" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px 26px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:20px;">
+              <div style="display:flex; align-items:center; gap:16px;">
+                <div style="width:48px; height:48px; border-radius:50%; background:${m.unlocked ? (m.status === 'Completed' ? '#dcfce7' : '#e0e7ff') : '#f1f5f9'}; color:${m.unlocked ? (m.status === 'Completed' ? '#15803d' : '#4338ca') : '#94a3b8'}; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  ${m.unlocked ? (m.status === 'Completed' ? '<i data-lucide="check"></i>' : idx + 1) : '<i data-lucide="lock"></i>'}
+                </div>
+                <div>
+                  <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">${m.level}</span>
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:2px 0 4px 0;">${m.milestone}</h3>
+                  <p style="font-size:13px; color:${m.unlocked ? '#475569' : '#94a3b8'}; margin:0;">
+                    ${m.unlocked ? `Progress: <strong>${m.progress}%</strong> · ${m.lessonsCount} Lessons` : `<strong>Locked:</strong> ${m.lockReason}`}
+                  </p>
+                </div>
+              </div>
+              <div>
+                ${m.unlocked ? `
+                  <button class="btn ${m.status === 'Completed' ? 'btn-secondary' : 'btn-primary'} btn-sm" onclick="Notifications.push('Milestone Opened', 'Entering ${m.milestone}...', 'success')">
+                    ${m.status === 'Completed' ? 'Review Units' : 'Continue Milestone'}
+                  </button>
+                ` : `
+                  <span class="badge badge-secondary"><i data-lucide="lock" style="width:12px; height:12px;"></i> Locked</span>
+                `}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 3. MY WORK: SUBMISSIONS & DUE TASKS
+    // --------------------------------------------------------------------------
+    else if (route.includes("work") || route.includes("assignments") || route.includes("homework")) {
+      viewContent = `
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
+          ${data.myWork.map(w => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                  <span class="badge ${w.status.includes('Revision') ? 'badge-error' : w.status === 'Due' ? 'badge-warning' : 'badge-success'}">
+                    ${w.status}
+                  </span>
+                  <span style="font-size:12px; color:var(--slate);">Due: ${w.dueDate}</span>
+                </div>
+                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${w.title}</h3>
+                <span style="font-size:13px; color:var(--primary); font-weight:600;">Course: ${w.course}</span>
+                <p style="font-size:13px; color:#475569; margin:8px 0 0 0; line-height:1.4;">${w.description}</p>
+                
+                ${w.revisionReason ? `
+                  <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:6px; padding:10px; margin-top:10px; font-size:12px; color:#be123c;">
+                    <strong>Teacher Note:</strong> ${w.revisionReason}
+                  </div>
+                ` : ''}
+
+                ${w.teacherFeedback ? `
+                  <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:10px; margin-top:10px; font-size:12px; color:#166534;">
+                    <strong>Published Feedback:</strong> ${w.teacherFeedback}
+                  </div>
+                ` : ''}
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
+                <span style="font-size:12px; font-weight:700; color:var(--navy-medium);">${w.type}</span>
+                <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerAssignmentModal('${w.id}')">
+                  ${w.type.includes('Voice') ? '<i data-lucide="mic"></i> Record Voice' : w.submitted ? 'View Submission' : '<i data-lucide="upload-cloud"></i> Submit Work'}
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 4. GRADES & FEEDBACK: PUBLISHED RESULTS
+    // --------------------------------------------------------------------------
+    else if (route.includes("grades") || route.includes("feedback")) {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          ${data.grades.map(g => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:flex-start; gap:20px;">
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${g.assessment}</h3>
+                  <span class="badge badge-success">Grade: ${g.letterGrade} (${g.score})</span>
+                </div>
+                <span style="font-size:12px; color:var(--slate);">Course: <strong>${g.course}</strong> · Published: ${g.publishedAt}</span>
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:13px; color:#334155; margin-top:6px;">
+                  <strong>Rubric Breakdown:</strong> ${g.rubricBreakdown}<br>
+                  <strong style="color:var(--primary);">Teacher Feedback:</strong> ${g.feedback}
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Grade History', 'Viewing audited score logs for ${g.assessment}...', 'info')">
+                <i data-lucide="history"></i> History
+              </button>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 5. K-12: TERM PROGRESS REPORT CARD
+    // --------------------------------------------------------------------------
+    else if (route.includes("k12") || route.includes("reportcards")) {
+      const rc = data.k12ReportCard;
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:6px;">OFFICIAL ACADEMIC REPORT</span>
+              <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${rc.term}</h2>
+              <p style="font-size:13px; color:var(--slate); margin:4px 0 0 0;">
+                Learner: <strong>${data.profile.name}</strong> · ${rc.grade} · ${rc.schoolBoard}
+              </p>
+            </div>
+            <span class="badge badge-success" style="font-size:12px; padding:6px 12px;">${rc.guardianVerified ? '✓ Guardian Verified' : 'Pending Verification'}</span>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Subject</th><th>Teacher</th><th>Term Grade</th><th>Performance Status</th><th>Teacher Remarks</th></tr>
+              </thead>
+              <tbody>
+                ${rc.subjects.map(s => `
+                  <tr>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.teacher}</td>
+                    <td><strong style="color:#166534; font-size:14px;">${s.grade}</strong></td>
+                    <td><span class="badge badge-success">${s.status}</span></td>
+                    <td><span style="font-size:12px; color:#475569;">${s.remarks}</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+            <strong style="font-size:13px; color:var(--navy-dark);">General Faculty Comments:</strong>
+            <p style="font-size:13px; color:#334155; margin:4px 0 0 0; line-height:1.5;">${rc.teacherComment}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 6. MEMBERSHIP & PAYMENTS: SUBMISSIONS & STATUS (FLOW-013)
+    // --------------------------------------------------------------------------
+    else if (route.includes("payments") || route.includes("memberships")) {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          ${data.payments.map(p => `
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${p.membershipTitle}</h3>
+                    <span class="badge badge-warning">${p.status}</span>
+                  </div>
+                  <span style="font-size:13px; color:var(--slate);">Payment Ref: <code>${p.refNumber}</code> · Amount: <strong style="color:#166534;">${p.amount}</strong></span>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentModal('ENR-101')">
+                  <i data-lucide="upload-cloud"></i> New Evidence
+                </button>
+              </div>
+
+              <!-- VERIFICATION TIMELINE -->
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:28px; height:28px; border-radius:50%; background:#22c55e; color:#ffffff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;">1</div>
+                  <div><strong style="font-size:12px;">Evidence Submitted</strong><br><small style="color:#64748b;">${p.submittedAt}</small></div>
+                </div>
+                <div style="height:2px; flex:1; background:#cbd5e1; margin:0 16px;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:28px; height:28px; border-radius:50%; background:#f59e0b; color:#ffffff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;">2</div>
+                  <div><strong style="font-size:12px;">Under Review</strong><br><small style="color:#64748b;">Operations Manager</small></div>
+                </div>
+                <div style="height:2px; flex:1; background:#e2e8f0; margin:0 16px;"></div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:28px; height:28px; border-radius:50%; background:#e2e8f0; color:#64748b; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;">3</div>
+                  <div><strong style="font-size:12px; color:#94a3b8;">Access Grant</strong><br><small style="color:#94a3b8;">Pending</small></div>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 7. DEFAULT FALLBACK
+    // --------------------------------------------------------------------------
+    else {
+      viewContent = `
+        <div class="table-container" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; box-shadow:var(--shadow-subtle); padding:24px; text-align:center; color:var(--slate);">
+          <i data-lucide="info" style="width:32px; height:32px; color:var(--primary); margin-bottom:8px;"></i>
+          <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark);">${config.title}</h3>
+          <p style="font-size:13px;">${config.scope}</p>
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="creator-workspace-deck" style="padding: 24px 32px;">
+        
+        <!-- HEADER & BREADCRUMB ROW -->
+        <div class="creator-deck-header" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; gap:20px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate); font-weight:600; text-transform:uppercase; margin-bottom:6px;">
+              <span>Student Portal</span>
+              <span>&rsaquo;</span>
+              <span style="color:var(--primary);">${config.section}</span>
+            </div>
+            <h2 class="creator-deck-title" style="font:800 26px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0; letter-spacing:-0.4px;">
+              ${config.title}
+            </h2>
+            <p class="creator-deck-subtitle" style="font-size:14px; color:var(--slate); margin:0;">
+              ${config.scope}
+            </p>
+          </div>
+          <div class="creator-deck-actions" style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-dashboard')" style="font-weight:600;"><i data-lucide="arrow-left"></i> Learner Home</button>
+            <button class="btn btn-primary" onclick="Actions.openLearnerJoinClassModal('CLS-101')" style="font-weight:600;"><i data-lucide="video"></i> Join Live Class</button>
+          </div>
+        </div>
+
+        <!-- SCOPE NOTICE -->
+        <div class="banner-box" style="border-left:4px solid var(--primary); background:#ffffff; border-radius:10px; padding:16px 20px; box-shadow:var(--shadow-subtle); margin-bottom:24px; display:flex; align-items:center; gap:16px;">
+          <div style="background:#e0e7ff; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <i data-lucide="shield-check" style="width:22px; height:22px;"></i>
+          </div>
+          <div>
+            <strong style="color:var(--navy-dark); font-size:14px;">Authenticated Learner Scope</strong>
+            <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+              Access is strictly restricted to your own enrolments, submissions, and published grades. Safeguarding rules apply.
+            </p>
+          </div>
+        </div>
+
+        <!-- BESPOKE VIEW CONTENT -->
+        ${viewContent}
+
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
   trainerDashboard() {
     const shell = document.getElementById("trainer-dashboard-shell");
     if (!shell) return;
@@ -9682,6 +10662,250 @@ function oldRolePermissionsCount(role) {
 // ============================================================================
 // TRAINER / TEACHER ACTION WORKFLOWS
 // ============================================================================
+
+// ============================================================================
+// STUDENT / LEARNER ACTION WORKFLOWS
+// ============================================================================
+Actions.setLearnerActiveCourse = function(courseId) {
+  db.learnerData.profile.activeCourseId = courseId;
+  Notifications.push("Course Switched", `Switched active workspace context to ${courseId}.`, "info");
+  RenderEngine.learnerDashboard();
+};
+
+Actions.openLearnerCourseWorkspace = function(courseCode) {
+  this.setLearnerActiveCourse(courseCode);
+  if (courseCode === "CRS-103") Router.navigate("learner-schedule-upcoming");
+  else if (courseCode === "CRS-101") Router.navigate("learner-learning-milestones");
+  else if (courseCode.startsWith("K12")) Router.navigate("learner-k12-subjects");
+};
+
+Actions.openLearnerJoinClassModal = function(classId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = "Live Class Join Simulator (FLOW-015)";
+  body.innerHTML = `
+    <div style="background:#0f172a; color:#ffffff; padding:18px; border-radius:8px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-weight:700; color:#4ade80;"><span class="pulse-dot"></span> DAILY.CO SHORT-LIVED TOKEN VALIDATED</span>
+        <span style="font-size:12px; color:#94a3b8;">Window: 10:00 AM – 11:00 AM PKT</span>
+      </div>
+      <h4 style="font:700 16px 'Manrope', sans-serif; color:#f8fafc; margin-bottom:4px;">Spoken English Fluency & Professional Voice</h4>
+      <p style="font-size:12px; color:#cbd5e1;">Teacher: <strong>Sara Javed</strong> · Class: <code>${classId}</code></p>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--outline); padding:14px; border-radius:6px; margin-bottom:16px; font-size:12px;">
+      ✓ Participant Authenticated: <strong>Zainab Malik (LNR-501)</strong><br>
+      ✓ Entitlement Checked: <strong>Active Enrolment (2 credits left)</strong><br>
+      ✓ Reconciled Telemetry: <strong>Presence recording active</strong>
+    </div>
+
+    <div style="background:#1e293b; height:160px; border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; gap:8px;">
+      <i data-lucide="video" style="font-size:32px; color:#4ade80;"></i>
+      <span>Protected WebRTC Stream Ready</span>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-primary" onclick="Actions.completeLearnerClassJoin('${classId}')"><i data-lucide="video"></i> Launch Daily Video Room</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.completeLearnerClassJoin = function(classId) {
+  document.getElementById("generic-modal").classList.add("hidden");
+  Notifications.push("Joined Live Class", "Connected to Daily room. Telemetry presence recording started.", "success");
+  this.audit("LEARNER_CLASS_JOINED", `Learner Zainab Malik joined occurrence ${classId}.`, "Low", "Join Window Active");
+};
+
+Actions.openLearnerTrialRequestModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = "Request a Free Trial Class (FLOW-006)";
+  body.innerHTML = `
+    <div class="form-group">
+      <label for="trial-course">Course of Interest</label>
+      <select id="trial-course" class="form-control">
+        <option value="Spoken English">Spoken English Fluency & Accent Reduction</option>
+        <option value="Full-Stack Web Dev">Modern Full-Stack Web Development</option>
+        <option value="Grade 8 Math">Grade 8 Mathematics (FBISE Aligned)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="trial-level">Current Self-Assessed Level</label>
+      <select id="trial-level" class="form-control">
+        <option value="Beginner">Beginner</option>
+        <option value="Intermediate" selected>Intermediate</option>
+        <option value="Advanced">Advanced</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="trial-days">Preferred Available Days</label>
+      <input type="text" id="trial-days" class="form-control" value="Monday, Wednesday, Friday">
+    </div>
+    <div class="form-group">
+      <label for="trial-time">Preferred Time Slot (PKT)</label>
+      <select id="trial-time" class="form-control">
+        <option value="Evening (5 PM - 8 PM)">Evening (5:00 PM – 8:00 PM PKT)</option>
+        <option value="Morning (10 AM - 1 PM)">Morning (10:00 AM – 1:00 PM PKT)</option>
+      </select>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitLearnerTrialRequest()">Submit Trial Request</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.submitLearnerTrialRequest = function() {
+  document.getElementById("generic-modal").classList.add("hidden");
+  Notifications.push("Trial Request Submitted", "Trial request submitted to Operations & CSR for scheduling.", "success");
+  this.audit("TRIAL_REQUEST_SUBMITTED", "Learner Zainab Malik submitted trial request (FLOW-006).", "Medium", "Draft -> Submitted");
+};
+
+Actions.openLearnerAssignmentModal = function(workId) {
+  const w = db.learnerData.myWork.find(item => item.id === workId) || db.learnerData.myWork[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Submit Work: ${w.title}`;
+  body.innerHTML = `
+    <div style="background:var(--surface); border:1px solid var(--outline); padding:12px; border-radius:6px; margin-bottom:16px;">
+      <strong>${w.course}</strong><br>
+      <span style="font-size:12px; color:var(--slate);">Due: ${w.dueDate} · Type: ${w.type}</span>
+    </div>
+
+    ${w.type.includes('Voice') ? `
+      <div style="background:#0f172a; color:#ffffff; border-radius:8px; padding:18px; text-align:center; margin-bottom:16px;">
+        <i data-lucide="mic" style="font-size:32px; color:#38bdf8; margin-bottom:8px;"></i>
+        <p style="font-size:13px; color:#cbd5e1; margin:0 0 10px 0;">Record your 90-second workplace presentation speech</p>
+        <button class="btn btn-primary btn-sm" onclick="Notifications.push('Recording Started', 'Capturing microphone audio...', 'info')">
+          <i data-lucide="circle-dot"></i> Start Recording
+        </button>
+      </div>
+    ` : `
+      <div class="form-group">
+        <label for="work-evidence">Repository URL / Cloud Document Link</label>
+        <input type="url" id="work-evidence" class="form-control" value="https://github.com/zainab-malik/frontend-capstone">
+      </div>
+      <div class="form-group">
+        <label for="work-notes">Notes for Teacher</label>
+        <textarea id="work-notes" class="form-control" rows="3" placeholder="Explain your submission...">Completed all required responsive breakpoints and semantic CSS tokens.</textarea>
+      </div>
+    `}
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitLearnerAssignment('${w.id}')">Submit for Teacher Review</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitLearnerAssignment = function(workId) {
+  const w = db.learnerData.myWork.find(item => item.id === workId);
+  if (w) {
+    w.status = "Submitted (Under Review)";
+    w.submitted = true;
+  }
+  document.getElementById("generic-modal").classList.add("hidden");
+  Notifications.push("Work Submitted", "Submission delivered to teacher grading queue.", "success");
+  this.audit("LEARNER_SUBMISSION_CREATED", `Submitted work for ${w?.title}.`, "Medium", "Due -> Submitted");
+  Router.renderView(Router.currentRoute);
+};
+
+Actions.openLearnerPaymentModal = function(enrolmentId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = "Submit Payment Evidence (FLOW-013)";
+  body.innerHTML = `
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:16px; font-size:13px;">
+      <strong style="color:var(--navy-dark);">Official Bank Transfer Details:</strong>
+      <p style="color:#475569; margin:4px 0 0 0;">
+        Bank: <strong>Meezan Bank Ltd</strong><br>
+        Account Title: <strong>Huzsam Education Services (Pvt) Ltd</strong><br>
+        IBAN: <strong>PK82MEZN0001020304050607</strong><br>
+        Amount Due: <strong style="color:#166534;">PKR 15,000</strong>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label for="pay-ref">Transaction Reference Number / Sender Name</label>
+      <input type="text" id="pay-ref" class="form-control" value="MEEZ-99482103 (Farooq Malik)">
+    </div>
+
+    <div class="form-group">
+      <label for="pay-receipt">Receipt Image Upload (JPG / PNG / PDF)</label>
+      <input type="file" id="pay-receipt" class="form-control">
+      <small style="color:var(--slate);">Receipt is stored securely in private institutional storage.</small>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitLearnerPaymentEvidence('${enrolmentId}')">Submit for Verification</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.submitLearnerPaymentEvidence = function(enrolmentId) {
+  document.getElementById("generic-modal").classList.add("hidden");
+  Notifications.push("Evidence Uploaded", "Payment evidence submitted to Operations Manager for review.", "success");
+  this.audit("PAYMENT_EVIDENCE_SUBMITTED", "Learner submitted payment receipt (FLOW-013).", "High", "Awaiting Evidence -> Submitted");
+  Router.renderView("learner-payments-status");
+};
+
+Actions.openLearnerRescheduleModal = function(classId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = "Request Class Reschedule (FLOW-017)";
+  body.innerHTML = `
+    <div class="form-group">
+      <label for="reschedule-alt-date">Preferred Alternative Date & Time</label>
+      <input type="datetime-local" id="reschedule-alt-date" class="form-control" value="2026-08-19T14:00">
+    </div>
+    <div class="form-group">
+      <label for="reschedule-reason">Reason for Reschedule</label>
+      <textarea id="reschedule-reason" class="form-control" rows="3" placeholder="Explain scheduling conflict...">School exam on original slot.</textarea>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitLearnerRescheduleRequest('${classId}')">Submit Request</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.submitLearnerRescheduleRequest = function(classId) {
+  document.getElementById("generic-modal").classList.add("hidden");
+  Notifications.push("Reschedule Requested", "Reschedule request logged for Operations review.", "info");
+  this.audit("LEARNER_RESCHEDULE_REQUESTED", `Reschedule requested for ${classId}.`, "Medium", "Pending Operations Validation");
+};
+
 Actions.openTrainerJoinClassModal = function(classId) {
   const cls = db.trainerData.classes.find(c => c.id === classId) || db.trainerData.classes[0];
   const modal = document.getElementById("generic-modal");
@@ -10114,6 +11338,7 @@ const Simulator = {
       course_creator: { name: "Dr. Arsalan Khan", role: "Course Creator" },
       academic_reviewer: { name: "Prof. Tariq Mahmood", role: "Academic Reviewer" },
       trainer: { name: "Sara Javed", role: "Senior Trainer & Teacher" },
+      learner: { name: "Zainab Malik", role: "Active Learner & Student" },
       cto_developer: { name: "CTO / Developer", role: "Technical Director" },
       compliance_officer: { name: "Auditor Profile", role: "Compliance Officer" },
       support_agent: { name: "CSR Operator", role: "Support Representative" }
@@ -10128,6 +11353,7 @@ const Simulator = {
       course_creator: { workspace: "Curriculum & course authoring", shell: "CURRICULUM & COURSE AUTHORING", title: "Authoring Command Center", greeting: "Good afternoon, Dr. Arsalan.", description: "Construct syllabus hierarchy, manage reusable question banks, learning rules, and submit versions for academic review.", action: "Review open feedback", actionRoute: "creator-review-comments", notifications: "Authoring Notifications" },
       academic_reviewer: { workspace: "Academic review & quality assurance", shell: "ACADEMIC REVIEW & QUALITY ASSURANCE", title: "Academic Review & Quality Assurance", greeting: "Good afternoon, Prof. Tariq.", description: "Evaluate course quality, validate assessment rubrics, manage blocking citations, and approve publication readiness.", action: "View blocking issues", actionRoute: "reviewer-comments-blocking", notifications: "Review Notifications" },
       trainer: { workspace: "Trainer & Teacher delivery", shell: "TEACHING & LEARNING DELIVERY", title: "Teaching Home", greeting: "Good afternoon, Sara.", description: "Conduct live classes, submit post-class educational reports, track learner risks, and evaluate rubric assignments.", action: "Join Next Class", actionRoute: "trainer-classes-today", notifications: "Teaching Notifications" },
+      learner: { workspace: "Student & Learner portal", shell: "STUDENT & LEARNER PORTAL", title: "Learner Home", greeting: "Welcome back, Zainab.", description: "Track your course progress, attend live classes, submit assignments, and review published teacher grades.", action: "Join Live Class", actionRoute: "learner-schedule-upcoming", notifications: "Learner Notifications" },
       cto_developer: { workspace: "Technical operations", shell: "TECHNICAL OPERATIONS", title: "Technical Operations Overview", greeting: "Good afternoon, Technical Director.", description: "Monitor integration health, queues, runtime status, releases, and recoverable technical exceptions.", action: "Open system status", actionRoute: "system-status", notifications: "Technical Notifications" },
       compliance_officer: { workspace: "Compliance oversight", shell: "COMPLIANCE OVERSIGHT", title: "Compliance Overview", greeting: "Good afternoon, Compliance Officer.", description: "Review high-risk governance events, retention controls, legal holds, and immutable audit history.", action: "Review audit trail", actionRoute: "audit-logs", notifications: "Governance Notifications" },
       support_agent: { workspace: "Support operations", shell: "SUPPORT OPERATIONS", title: "Support Operations Overview", greeting: "Good afternoon, Support Representative.", description: "Resolve account and onboarding issues through approved, time-limited support workflows.", action: "Open support access", actionRoute: "support-access", notifications: "Support Notifications" }
@@ -10147,6 +11373,7 @@ const Simulator = {
     const isCreator = roleKey === "course_creator";
     const isReviewer = roleKey === "academic_reviewer";
     const isTrainer = roleKey === "trainer";
+    const isLearner = roleKey === "learner";
     const appShell = document.querySelector(".admin-container");
     if (appShell) {
       appShell.classList.toggle("role-coo", isCoo);
@@ -10155,24 +11382,27 @@ const Simulator = {
       appShell.classList.toggle("role-course_creator", isCreator);
       appShell.classList.toggle("role-academic_reviewer", isReviewer);
       appShell.classList.toggle("role-trainer", isTrainer);
+      appShell.classList.toggle("role-learner", isLearner);
       appShell.dataset.activeRole = roleKey;
     }
 
-    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer);
+    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer || isLearner);
     document.getElementById("coo-nav")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-nav")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-nav")?.classList.toggle("hidden", !isCsr);
     document.getElementById("creator-nav")?.classList.toggle("hidden", !isCreator);
     document.getElementById("academic-reviewer-nav")?.classList.toggle("hidden", !isReviewer);
     document.getElementById("trainer-nav")?.classList.toggle("hidden", !isTrainer);
+    document.getElementById("learner-nav")?.classList.toggle("hidden", !isLearner);
 
-    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer);
+    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer || isLearner);
     document.getElementById("coo-dashboard-shell")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-dashboard-shell")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-dashboard-shell")?.classList.toggle("hidden", !isCsr);
     document.getElementById("creator-dashboard-shell")?.classList.toggle("hidden", !isCreator);
     document.getElementById("reviewer-dashboard-shell")?.classList.toggle("hidden", !isReviewer);
     document.getElementById("trainer-dashboard-shell")?.classList.toggle("hidden", !isTrainer);
+    document.getElementById("learner-dashboard-shell")?.classList.toggle("hidden", !isLearner);
 
     const shellLabel = document.getElementById("shell-label");
     if (shellLabel) shellLabel.textContent = shell.shell;
@@ -10205,6 +11435,7 @@ const Simulator = {
     if (isCreator) RenderEngine.creatorDashboard();
     if (isReviewer) RenderEngine.reviewerDashboard();
     if (isTrainer) RenderEngine.trainerDashboard();
+    if (isLearner) RenderEngine.learnerDashboard();
 
     // Apply security limits on sidebar & dashboard
     this.applySecurityLocks(roleKey);

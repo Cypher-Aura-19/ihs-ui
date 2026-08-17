@@ -7232,11 +7232,11 @@ td:last-child {
   display: none !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-trainer) #platform-admin-nav {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-trainer):not(.role-learner) #platform-admin-nav {
   display: flex !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-trainer):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-trainer):not(.role-learner):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
   display: block !important;
 }
 
@@ -9817,4 +9817,114 @@ td:last-child {
     max-width: 100% !important;
     width: 100% !important;
   }
+}
+
+/* LEARNER ROLE VISIBILITY GUARDS */
+#learner-dashboard-shell.hidden,
+#learner-nav.hidden {
+  display: none !important;
+}
+
+.admin-container.role-learner #platform-admin-nav,
+.admin-container[data-active-role="learner"] #platform-admin-nav,
+.admin-container.role-learner #platform-dashboard-shell,
+.admin-container[data-active-role="learner"] #platform-dashboard-shell {
+  display: none !important;
+}
+
+.admin-container.role-learner #view-dashboard.active #learner-dashboard-shell:not(.hidden),
+.admin-container[data-active-role="learner"] #view-dashboard.active #learner-dashboard-shell:not(.hidden) {
+  display: block !important;
+}
+
+.admin-container.role-learner #learner-nav:not(.hidden),
+.admin-container[data-active-role="learner"] #learner-nav:not(.hidden) {
+  display: flex !important;
+}
+
+/* LEARNER COURSE SWITCHER CHIPS */
+.learner-course-switcher-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 24px;
+}
+
+.learner-course-chip {
+  background: #ffffff;
+  border: 1px solid var(--outline);
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-dark);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-subtle);
+}
+
+.learner-course-chip:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.learner-course-chip.active {
+  background: var(--navy-dark);
+  color: #ffffff;
+  border-color: var(--navy-dark);
+}
+
+.learner-course-chip.active .chip-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.learner-course-chip .chip-badge {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* MILESTONE STEPPER & ACTIVITY ROADMAP */
+.learner-stepper-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.learner-milestone-node {
+  background: #ffffff;
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.learner-milestone-node.locked {
+  background: #f8fafc;
+  opacity: 0.85;
+  border-left: 4px solid #cbd5e1;
+}
+
+.learner-milestone-node.active {
+  border-left: 4px solid var(--primary);
+}
+
+.learner-milestone-node.completed {
+  border-left: 4px solid #22c55e;
 }

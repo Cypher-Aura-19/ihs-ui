@@ -1366,6 +1366,320 @@
         </div>
 
       </nav>
+      <!-- STUDENT / LEARNER NAVIGATION -->
+      <nav class="sidebar-nav hidden" id="learner-nav" aria-label="Student & Learner navigation">
+        
+        <!-- 1. Learner Home -->
+        <div class="nav-item active" data-route="learner-dashboard" id="nav-learner-dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Learner Home</span>
+        </div>
+
+        <!-- 2. Explore -->
+        <div class="nav-group">
+          <div class="nav-group-title">Explore & Admissions</div>
+          <div class="nav-item" data-route="learner-explore-catalogue" id="nav-learner-explore-catalogue">
+            <i data-lucide="compass"></i>
+            <span>Course Catalogue</span>
+          </div>
+          <div class="nav-item" data-route="learner-explore-free" id="nav-learner-explore-free">
+            <i data-lucide="gift"></i>
+            <span>Free Resources</span>
+          </div>
+          <div class="nav-item" data-route="learner-explore-previews" id="nav-learner-explore-previews">
+            <i data-lucide="play-circle"></i>
+            <span>Course Previews</span>
+          </div>
+          <div class="nav-item" data-route="learner-explore-trial" id="nav-learner-explore-trial">
+            <i data-lucide="sparkles"></i>
+            <span>Request a Trial (FLOW-006)</span>
+          </div>
+        </div>
+
+        <!-- 3. My Courses -->
+        <div class="nav-group">
+          <div class="nav-group-title">My Courses (Enrolments)</div>
+          <div class="nav-item" data-route="learner-courses-active" id="nav-learner-courses-active">
+            <i data-lucide="book-marked"></i>
+            <span>Active Courses</span>
+            <span class="badge badge-primary count-learner-courses-active">3</span>
+          </div>
+          <div class="nav-item" data-route="learner-courses-pending" id="nav-learner-courses-pending">
+            <i data-lucide="clock"></i>
+            <span>Pending Activation</span>
+          </div>
+          <div class="nav-item" data-route="learner-courses-paused" id="nav-learner-courses-paused">
+            <i data-lucide="pause-circle"></i>
+            <span>Paused Courses</span>
+          </div>
+          <div class="nav-item" data-route="learner-courses-completed" id="nav-learner-courses-completed">
+            <i data-lucide="check-circle-2"></i>
+            <span>Completed Courses</span>
+            <span class="badge badge-success">1</span>
+          </div>
+          <div class="nav-item" data-route="learner-courses-history" id="nav-learner-courses-history">
+            <i data-lucide="history"></i>
+            <span>Course History</span>
+          </div>
+        </div>
+
+        <!-- 4. Schedule -->
+        <div class="nav-group">
+          <div class="nav-group-title">Schedule & Classes</div>
+          <div class="nav-item" data-route="learner-schedule-upcoming" id="nav-learner-schedule-upcoming">
+            <i data-lucide="calendar-check"></i>
+            <span>Upcoming Classes</span>
+            <span class="badge badge-primary count-learner-schedule-upcoming">2</span>
+          </div>
+          <div class="nav-item" data-route="learner-schedule-calendar" id="nav-learner-schedule-calendar">
+            <i data-lucide="calendar"></i>
+            <span>Timetable Calendar</span>
+          </div>
+          <div class="nav-item" data-route="learner-schedule-attendance" id="nav-learner-schedule-attendance">
+            <i data-lucide="user-check"></i>
+            <span>My Attendance</span>
+          </div>
+          <div class="nav-item" data-route="learner-schedule-reschedule" id="nav-learner-schedule-reschedule">
+            <i data-lucide="repeat"></i>
+            <span>Reschedule Requests (FLOW-017)</span>
+          </div>
+          <div class="nav-item" data-route="learner-schedule-cancellations" id="nav-learner-schedule-cancellations">
+            <i data-lucide="x-circle"></i>
+            <span>Cancelled / Makeup</span>
+          </div>
+        </div>
+
+        <!-- 5. My Learning -->
+        <div class="nav-group">
+          <div class="nav-group-title">My Learning (Milestones)</div>
+          <div class="nav-item" data-route="learner-learning-continue" id="nav-learner-learning-continue">
+            <i data-lucide="play"></i>
+            <span>Continue Learning</span>
+          </div>
+          <div class="nav-item" data-route="learner-learning-milestones" id="nav-learner-learning-milestones">
+            <i data-lucide="milestone"></i>
+            <span>Levels & Milestones</span>
+          </div>
+          <div class="nav-item" data-route="learner-learning-lessons" id="nav-learner-learning-lessons">
+            <i data-lucide="book-open"></i>
+            <span>Lessons</span>
+          </div>
+          <div class="nav-item" data-route="learner-learning-activities" id="nav-learner-learning-activities">
+            <i data-lucide="layers"></i>
+            <span>Activities</span>
+          </div>
+          <div class="nav-item" data-route="learner-learning-progress" id="nav-learner-learning-progress">
+            <i data-lucide="trending-up"></i>
+            <span>Progress Matrix</span>
+          </div>
+          <div class="nav-item" data-route="learner-learning-completion" id="nav-learner-learning-completion">
+            <i data-lucide="award"></i>
+            <span>Certificate Eligibility</span>
+          </div>
+        </div>
+
+        <!-- 6. My Work -->
+        <div class="nav-group">
+          <div class="nav-group-title">My Work (Submissions)</div>
+          <div class="nav-item" data-route="learner-work-due" id="nav-learner-work-due">
+            <i data-lucide="alert-circle"></i>
+            <span>Due Work</span>
+            <span class="badge badge-warning count-learner-work-due">2</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-quizzes" id="nav-learner-work-quizzes">
+            <i data-lucide="help-circle"></i>
+            <span>Quizzes (FLOW-019)</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-assignments" id="nav-learner-work-assignments">
+            <i data-lucide="file-code"></i>
+            <span>Assignments</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-homework" id="nav-learner-work-homework">
+            <i data-lucide="file-text"></i>
+            <span>Homework</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-voice" id="nav-learner-work-voice">
+            <i data-lucide="mic"></i>
+            <span>Voice Activities (FLOW-020)</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-revisions" id="nav-learner-work-revisions">
+            <i data-lucide="rotate-ccw"></i>
+            <span>Returned for Revision</span>
+            <span class="badge badge-error count-learner-work-revision">1</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-submitted" id="nav-learner-work-submitted">
+            <i data-lucide="send"></i>
+            <span>Submitted Work</span>
+          </div>
+          <div class="nav-item" data-route="learner-work-overdue" id="nav-learner-work-overdue">
+            <i data-lucide="clock-alert"></i>
+            <span>Overdue</span>
+          </div>
+        </div>
+
+        <!-- 7. Grades & Feedback -->
+        <div class="nav-group">
+          <div class="nav-group-title">Grades & Feedback</div>
+          <div class="nav-item" data-route="learner-grades-gradebook" id="nav-learner-grades-gradebook">
+            <i data-lucide="table"></i>
+            <span>Gradebook</span>
+          </div>
+          <div class="nav-item" data-route="learner-grades-results" id="nav-learner-grades-results">
+            <i data-lucide="check-square"></i>
+            <span>Assessment Results</span>
+          </div>
+          <div class="nav-item" data-route="learner-grades-feedback" id="nav-learner-grades-feedback">
+            <i data-lucide="message-circle"></i>
+            <span>Teacher Feedback</span>
+          </div>
+          <div class="nav-item" data-route="learner-grades-history" id="nav-learner-grades-history">
+            <i data-lucide="history"></i>
+            <span>Grade History</span>
+          </div>
+        </div>
+
+        <!-- 8. Resources -->
+        <div class="nav-group">
+          <div class="nav-group-title">Resources</div>
+          <div class="nav-item" data-route="learner-resources-course" id="nav-learner-resources-course">
+            <i data-lucide="folder"></i>
+            <span>Course Resources</span>
+          </div>
+          <div class="nav-item" data-route="learner-resources-class" id="nav-learner-resources-class">
+            <i data-lucide="folder-check"></i>
+            <span>Class Resources</span>
+          </div>
+          <div class="nav-item" data-route="learner-resources-lesson" id="nav-learner-resources-lesson">
+            <i data-lucide="file"></i>
+            <span>Lesson Resources</span>
+          </div>
+          <div class="nav-item" data-route="learner-resources-assigned" id="nav-learner-resources-assigned">
+            <i data-lucide="download-cloud"></i>
+            <span>Assigned Downloads</span>
+          </div>
+        </div>
+
+        <!-- 9. My Notes -->
+        <div class="nav-item" data-route="learner-notes-all" id="nav-learner-notes-all">
+          <i data-lucide="edit-3"></i>
+          <span>My Notes</span>
+        </div>
+
+        <!-- 10. K-12 Teaching -->
+        <div class="nav-group">
+          <div class="nav-group-title">K-12 Subjects & Term</div>
+          <div class="nav-item" data-route="learner-k12-subjects" id="nav-learner-k12-subjects">
+            <i data-lucide="layout-grid"></i>
+            <span>My Subjects</span>
+          </div>
+          <div class="nav-item" data-route="learner-k12-syllabus" id="nav-learner-k12-syllabus">
+            <i data-lucide="list-ordered"></i>
+            <span>Syllabus Outline</span>
+          </div>
+          <div class="nav-item" data-route="learner-k12-schedule" id="nav-learner-k12-schedule">
+            <i data-lucide="calendar"></i>
+            <span>Term Schedule</span>
+          </div>
+          <div class="nav-item" data-route="learner-k12-homework" id="nav-learner-k12-homework">
+            <i data-lucide="file-plus"></i>
+            <span>Homework Worksheets</span>
+          </div>
+          <div class="nav-item" data-route="learner-k12-grades" id="nav-learner-k12-grades">
+            <i data-lucide="percent"></i>
+            <span>Term Grades</span>
+          </div>
+          <div class="nav-item" data-route="learner-k12-reportcards" id="nav-learner-k12-reportcards">
+            <i data-lucide="graduation-cap"></i>
+            <span>Report Cards</span>
+          </div>
+        </div>
+
+        <!-- 11. Membership & Payments -->
+        <div class="nav-group">
+          <div class="nav-group-title">Membership & Payments</div>
+          <div class="nav-item" data-route="learner-payments-memberships" id="nav-learner-payments-memberships">
+            <i data-lucide="credit-card"></i>
+            <span>Memberships</span>
+          </div>
+          <div class="nav-item" data-route="learner-payments-renew" id="nav-learner-payments-renew">
+            <i data-lucide="refresh-cw"></i>
+            <span>Purchase / Renew (FLOW-038)</span>
+            <span class="badge badge-warning">Renewal Due</span>
+          </div>
+          <div class="nav-item" data-route="learner-payments-submissions" id="nav-learner-payments-submissions">
+            <i data-lucide="upload-cloud"></i>
+            <span>Payment Submissions (FLOW-013)</span>
+          </div>
+          <div class="nav-item" data-route="learner-payments-status" id="nav-learner-payments-status">
+            <i data-lucide="clock"></i>
+            <span>Payment Status</span>
+          </div>
+          <div class="nav-item" data-route="learner-payments-corrections" id="nav-learner-payments-corrections">
+            <i data-lucide="alert-octagon"></i>
+            <span>Correction Requests</span>
+          </div>
+          <div class="nav-item" data-route="learner-payments-receipts" id="nav-learner-payments-receipts">
+            <i data-lucide="receipt"></i>
+            <span>Receipts (Payer Authorized)</span>
+          </div>
+        </div>
+
+        <!-- 12. Messages & Support -->
+        <div class="nav-group">
+          <div class="nav-group-title">Messages & Support</div>
+          <div class="nav-item" data-route="learner-messages-trainer" id="nav-learner-messages-trainer">
+            <i data-lucide="message-square"></i>
+            <span>Trainer Conversations</span>
+            <span class="badge badge-primary">2</span>
+          </div>
+          <div class="nav-item" data-route="learner-messages-support" id="nav-learner-messages-support">
+            <i data-lucide="headphones"></i>
+            <span>Support Conversations</span>
+          </div>
+          <div class="nav-item" data-route="learner-messages-cases" id="nav-learner-messages-cases">
+            <i data-lucide="life-buoy"></i>
+            <span>My Cases</span>
+          </div>
+          <div class="nav-item" data-route="learner-messages-announcements" id="nav-learner-messages-announcements">
+            <i data-lucide="megaphone"></i>
+            <span>Announcements</span>
+          </div>
+        </div>
+
+        <!-- 13. Notifications -->
+        <div class="nav-item" data-route="learner-notifications" id="nav-learner-notifications">
+          <i data-lucide="bell"></i>
+          <span>Notifications</span>
+          <span class="badge badge-primary">3</span>
+        </div>
+
+        <!-- 14. Profile -->
+        <div class="nav-group nav-group-primary">
+          <div class="nav-group-title">Account & Profile</div>
+          <div class="nav-item" data-route="learner-profile-personal" id="nav-learner-profile-personal">
+            <i data-lucide="user"></i>
+            <span>Personal Details</span>
+          </div>
+          <div class="nav-item" data-route="learner-profile-contact" id="nav-learner-profile-contact">
+            <i data-lucide="mail"></i>
+            <span>Contact Details</span>
+          </div>
+          <div class="nav-item" data-route="learner-profile-verification" id="nav-learner-profile-verification">
+            <i data-lucide="shield-check"></i>
+            <span>Verification Status</span>
+          </div>
+          <div class="nav-item" data-route="learner-profile-guardian" id="nav-learner-profile-guardian">
+            <i data-lucide="users"></i>
+            <span>Guardian & Consent</span>
+          </div>
+          <div class="nav-item" data-route="learner-profile-history" id="nav-learner-profile-history">
+            <i data-lucide="scroll"></i>
+            <span>Profile History</span>
+          </div>
+        </div>
+
+      </nav>
+
 
 
     </aside>
@@ -1405,6 +1719,7 @@
                 <option value="course_creator">Course Creator (Authoring & Syllabus)</option>
                 <option value="academic_reviewer">Academic Reviewer (Quality & Approval)</option>
                 <option value="trainer">Trainer / Teacher (Delivery & Grading)</option>
+                <option value="learner">Student / Learner (Personal Learning Portal)</option>
                 <option value="cto_developer">CTO & Developer (System, Jobs, Integrations)</option>
                 <option value="compliance_officer">Compliance & Auditor (Audits, Lifecycle)</option>
                 <option value="support_agent">Support Representative (Limited Support View)</option>
@@ -2207,6 +2522,9 @@
         <!-- TRAINER DASHBOARD SHELL -->
         <div id="trainer-dashboard-shell" class="hidden"></div>
 
+        <!-- LEARNER DASHBOARD SHELL -->
+        <div id="learner-dashboard-shell" class="hidden"></div>
+
       </section>
 
       <section class="content-view" id="view-coo-workspace">
@@ -2238,6 +2556,11 @@
       <!-- VIEW: TRAINER WORKSPACE -->
       <section class="content-view hidden" id="view-trainer-workspace">
         <div id="trainer-workspace-content"></div>
+      </section>
+
+      <!-- VIEW: LEARNER WORKSPACE -->
+      <section class="content-view hidden" id="view-learner-workspace">
+        <div id="learner-workspace-content"></div>
       </section>
 
       <!-- VIEW: USERS -->
