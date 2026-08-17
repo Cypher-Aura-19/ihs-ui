@@ -17,6 +17,384 @@ const db = {
   // ============================================================================
   // ACADEMIC REVIEWER DOMAIN DATA (FLOW-009, CAT-010, FLOW-020, FLOW-021)
   // ============================================================================
+  
+  trainerData: {
+    classes: [
+      {
+        id: "CLS-101",
+        courseCode: "CRS-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        version: "v1.0",
+        type: "Live Cohort Interactive",
+        slotTime: "10:00 AM – 11:00 AM PKT",
+        date: "Today (17 Aug 2026)",
+        status: "Today",
+        joinable: true,
+        duration: "60 Mins",
+        learnersCount: 4,
+        roomUrl: "https://ihs.daily.co/spoken-eng-sec1",
+        syllabusNode: "Module 1.1: English Rhythm & Stress Patterns",
+        roster: [
+          { id: "LNR-501", name: "Zainab Malik", attendance: "Present", minutes: 55, status: "Connected" },
+          { id: "LNR-502", name: "Hamza Ahmed", attendance: "Late", minutes: 43, status: "Connected" },
+          { id: "LNR-503", name: "Bilal Khan", attendance: "Tech Issue", minutes: 31, status: "Reconnected (3x)" },
+          { id: "LNR-504", name: "Areeba Farooq", attendance: "Absent", minutes: 0, status: "Offline" }
+        ],
+        notes: "Focus on oral cadence and vowel phoneme pitch variations."
+      },
+      {
+        id: "CLS-102",
+        courseCode: "K12-MTH-08",
+        courseTitle: "Grade 8 Mathematics: Algebra & Geometry Mastery",
+        version: "v1.1",
+        type: "K-12 Section A Tuition",
+        slotTime: "02:00 PM – 03:00 PM PKT",
+        date: "Today (17 Aug 2026)",
+        status: "Upcoming",
+        joinable: false,
+        duration: "60 Mins",
+        learnersCount: 8,
+        roomUrl: "https://ihs.daily.co/k12-math-8a",
+        syllabusNode: "Chapter 2: Linear Equations with Rational Coefficients",
+        roster: [
+          { id: "LNR-504", name: "Areeba Farooq", attendance: "Pending", minutes: 0, status: "Scheduled" }
+        ],
+        notes: "Board problem sets 2.1 to 2.4."
+      },
+      {
+        id: "CLS-103",
+        courseCode: "CRS-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        version: "v1.2",
+        type: "1:1 Milestone Mentorship",
+        slotTime: "04:30 PM – 05:30 PM PKT",
+        date: "Today (17 Aug 2026)",
+        status: "Upcoming",
+        joinable: false,
+        duration: "60 Mins",
+        learnersCount: 1,
+        roomUrl: "https://ihs.daily.co/webdev-mentor-zainab",
+        syllabusNode: "Milestone 2: React 19 State Machines & Custom Hooks",
+        roster: [
+          { id: "LNR-501", name: "Zainab Malik", attendance: "Pending", minutes: 0, status: "Scheduled" }
+        ],
+        notes: "Architecture review for capstone dashboard component tree."
+      },
+      {
+        id: "CLS-104",
+        courseCode: "CRS-103",
+        courseTitle: "Spoken English Trial Consultation",
+        version: "v1.0",
+        type: "Free Placement Trial (FLOW-008)",
+        slotTime: "06:00 PM – 06:45 PM PKT",
+        date: "Today (17 Aug 2026)",
+        status: "Trial Classes",
+        joinable: false,
+        duration: "45 Mins",
+        learnersCount: 1,
+        roomUrl: "https://ihs.daily.co/trial-zubair",
+        syllabusNode: "Initial Acoustic Assessment & Fluency Diagnostic",
+        roster: [
+          { id: "LD-101", name: "Zubair Hashmi (Prospect)", attendance: "Pending", minutes: 0, status: "Scheduled" }
+        ],
+        notes: "Evaluate baseline speaking confidence and placement score 74%."
+      },
+      {
+        id: "CLS-105",
+        courseCode: "CRS-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        version: "v1.0",
+        type: "Live Cohort Interactive",
+        slotTime: "10:00 AM – 11:00 AM PKT",
+        date: "Yesterday (16 Aug 2026)",
+        status: "Awaiting Report",
+        joinable: false,
+        duration: "60 Mins",
+        learnersCount: 4,
+        roomUrl: "https://ihs.daily.co/spoken-eng-sec1",
+        syllabusNode: "Module 1.1: Phonetic Articulation & Intonation",
+        roster: [
+          { id: "LNR-501", name: "Zainab Malik", attendance: "Present", minutes: 58, status: "Completed" },
+          { id: "LNR-502", name: "Hamza Ahmed", attendance: "Absent", minutes: 0, status: "Absent (Consecutive 2nd)" },
+          { id: "LNR-503", name: "Bilal Khan", attendance: "Present", minutes: 54, status: "Completed" },
+          { id: "LNR-504", name: "Areeba Farooq", attendance: "Present", minutes: 56, status: "Completed" }
+        ],
+        notes: "Class finished on time. Post-class educational report due within 24h."
+      },
+      {
+        id: "CLS-106",
+        courseCode: "CRS-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        version: "v1.2",
+        type: "Interactive Coding Workshop",
+        slotTime: "03:00 PM – 04:30 PM PKT",
+        date: "15 Aug 2026",
+        status: "In Review",
+        joinable: false,
+        duration: "90 Mins",
+        learnersCount: 6,
+        roomUrl: "https://ihs.daily.co/webdev-lab-106",
+        syllabusNode: "Module 1.2: CSS Grid Layouts & Responsive Tokens",
+        roster: [],
+        notes: "Report submitted; currently under Operations Delivery Review."
+      },
+      {
+        id: "CLS-107",
+        courseCode: "K12-MTH-08",
+        courseTitle: "Grade 8 Mathematics: Geometry Lab",
+        version: "v1.1",
+        type: "K-12 Tuition",
+        slotTime: "02:00 PM – 03:00 PM PKT",
+        date: "14 Aug 2026",
+        status: "Correction Requested",
+        joinable: false,
+        duration: "60 Mins",
+        learnersCount: 8,
+        roomUrl: "https://ihs.daily.co/k12-math-8a",
+        syllabusNode: "Chapter 1: Geometric Theorems & Polygons",
+        roster: [],
+        notes: "Operations flagged report: 'Please specify assigned textbook problems 14-22'."
+      },
+      {
+        id: "CLS-108",
+        courseCode: "CRS-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        version: "v1.0",
+        type: "Live Cohort Interactive",
+        slotTime: "10:00 AM – 11:00 AM PKT",
+        date: "12 Aug 2026",
+        status: "Completed",
+        joinable: false,
+        duration: "60 Mins",
+        learnersCount: 4,
+        roomUrl: "https://ihs.daily.co/spoken-eng-sec1",
+        syllabusNode: "Orientation & Course Objectives",
+        roster: [],
+        notes: "Delivery approved by Operations Manager. Earning credited."
+      }
+    ],
+
+    learners: [
+      {
+        id: "LNR-501",
+        name: "Zainab Malik",
+        email: "zainab.malik@gmail.com",
+        course: "Modern Full-Stack Web Development & Spoken English",
+        enrolmentType: "Active Cohort & Milestone",
+        overallAttendance: "96%",
+        currentMilestone: "Milestone 2: React 19 Architecture",
+        homeworkStatus: "Submitted (Under Review)",
+        lastActive: "Today 09:30 PKT",
+        risk: "None",
+        riskDesc: "Top performer in cohort; exemplary component modularity."
+      },
+      {
+        id: "LNR-502",
+        name: "Hamza Ahmed",
+        email: "hamza.a@outlook.com",
+        course: "Spoken English Fluency & Accent Reduction",
+        enrolmentType: "Standard Cohort (3 Months)",
+        overallAttendance: "60%",
+        currentMilestone: "Milestone 1: Vowel Phonemes",
+        homeworkStatus: "Overdue (3 Days)",
+        lastActive: "3 Days ago",
+        risk: "Repeated Absence",
+        riskDesc: "2 consecutive classes missed. Requires trainer outreach."
+      },
+      {
+        id: "LNR-503",
+        name: "Bilal Khan",
+        email: "bilal.k@yahoo.com",
+        course: "Modern Full-Stack Web Development",
+        enrolmentType: "Milestone Self-Paced",
+        overallAttendance: "88%",
+        currentMilestone: "Milestone 1: HTML5 & CSS Foundations",
+        homeworkStatus: "Overdue (4 Days)",
+        lastActive: "Yesterday",
+        risk: "Overdue Assignment",
+        riskDesc: "Capstone ASN-301 is 4 days overdue. Milestone stalled."
+      },
+      {
+        id: "LNR-504",
+        name: "Areeba Farooq",
+        email: "areeba.f@hotmail.com",
+        course: "Grade 8 Mathematics: Tuition Section A",
+        enrolmentType: "K-12 Full Academic Year",
+        overallAttendance: "75%",
+        currentMilestone: "Unit 2: Linear Equations",
+        homeworkStatus: "Pending Next Class",
+        lastActive: "10 Days ago",
+        risk: "Milestone Stalled",
+        riskDesc: "No activity logged in algebraic proofs for 10 days."
+      }
+    ],
+
+    attendance: [
+      { id: "ATT-801", classId: "CLS-105", learner: "Zainab Malik", status: "Present", minutes: "58 / 60 min", evidence: "Daily telemetry verified (join: 10:02, leave: 11:00)", corrected: false },
+      { id: "ATT-802", classId: "CLS-105", learner: "Hamza Ahmed", status: "Absent", minutes: "0 / 60 min", evidence: "No connection logged", corrected: false },
+      { id: "ATT-803", classId: "CLS-105", learner: "Bilal Khan", status: "Present", minutes: "54 / 60 min", evidence: "Daily telemetry verified (join: 10:05, leave: 10:59)", corrected: false },
+      { id: "ATT-804", classId: "CLS-105", learner: "Areeba Farooq", status: "Present", minutes: "56 / 60 min", evidence: "Daily telemetry verified (join: 10:03, leave: 10:59)", corrected: false },
+      { id: "ATT-805", classId: "CLS-101", learner: "Bilal Khan", status: "Tech Issue", minutes: "31 / 60 min", evidence: "3 disconnects recorded; packet loss > 18%", corrected: true, proposedStatus: "Present (Attended Fallback Session)", correctionReason: "Learner joined fallback audio stream after local ISP failure.", reviewStatus: "Pending Ops Review" }
+    ],
+
+    reports: [
+      {
+        id: "REP-901",
+        classId: "CLS-105",
+        course: "Spoken English Fluency & Professional Voice",
+        date: "16 Aug 2026",
+        status: "Reports Due",
+        syllabusCovered: "Module 1.1: Sentence Stress in Professional Dialogues",
+        topics: "Intonation curves, pitch inflection, business pitch drills",
+        homework: "Record 60s pitch audio addressing product benefits",
+        resources: "RES-104 (Phonics Audio Reference MP3)",
+        learnerNotes: "Zainab Malik participated actively. Hamza Ahmed was absent.",
+        opsReview: "Pending Submission"
+      },
+      {
+        id: "REP-902",
+        classId: "CLS-106",
+        course: "Modern Full-Stack Web Development",
+        date: "15 Aug 2026",
+        status: "Submitted",
+        syllabusCovered: "Module 1.2: CSS Grid Layouts & Responsive Tokens",
+        topics: "Grid template areas, auto-fill vs auto-fit, clamp() typography",
+        homework: "Deploy portfolio landing page to Vercel/GitHub Pages",
+        resources: "RES-102 (CSS Grid Cheat Sheet PDF)",
+        learnerNotes: "Bilal Khan successfully completed the 12-column grid exercise.",
+        opsReview: "In Review by Sarah Connor (OM)"
+      },
+      {
+        id: "REP-903",
+        classId: "CLS-107",
+        course: "Grade 8 Mathematics: Geometry Lab",
+        date: "14 Aug 2026",
+        status: "Correction Requested",
+        syllabusCovered: "Chapter 1: Geometric Theorems & Polygons",
+        topics: "Angle sum property, interior/exterior angles",
+        homework: "Textbook Exercises 14 to 22",
+        resources: "K12-MTH-WS01 (Geometry Worksheets)",
+        learnerNotes: "Areeba Farooq requires extra practice on polygon angle proofs.",
+        opsReview: "Correction Requested: 'Please specify assigned textbook problem numbers.'"
+      },
+      {
+        id: "REP-904",
+        classId: "CLS-108",
+        course: "Spoken English Fluency & Professional Voice",
+        date: "12 Aug 2026",
+        status: "Accepted",
+        syllabusCovered: "Orientation & Speech Diagnostic",
+        topics: "Acoustic baseline test, pronunciation diagnostic",
+        homework: "Listen to sample dialog 1A",
+        resources: "RES-104",
+        learnerNotes: "All learners completed orientation diagnostic.",
+        opsReview: "Approved by Operations Manager. Delivery verified."
+      }
+    ],
+
+    gradingQueue: [
+      {
+        id: "GRD-701",
+        learner: "Zainab Malik",
+        course: "Modern Full-Stack Web Development",
+        assignment: "ASN-301: Responsive Portfolio Capstone",
+        type: "Code Repository & Live Demo",
+        rubricId: "RUB-101",
+        submittedAt: "Today 08:45 PKT",
+        status: "Grading Queue",
+        evidence: "https://github.com/zainab-malik/frontend-capstone",
+        currentGrade: "Draft",
+        feedback: "Exemplary CSS Grid execution with semantic tokens."
+      },
+      {
+        id: "GRD-702",
+        learner: "Hamza Ahmed",
+        course: "Spoken English Fluency & Professional Voice",
+        assignment: "VOC-401: Oral Self-Introduction Recording",
+        type: "Acoustic Voice Recording",
+        rubricId: "RUB-102",
+        submittedAt: "Yesterday 17:20 PKT",
+        status: "Voice Activities",
+        evidence: "s3://ihs-audio-submissions/voc401-hamza.mp3 (90s audio)",
+        currentGrade: "Draft",
+        feedback: "Clear pronunciation; work on rhythm cadence in sentence endings."
+      },
+      {
+        id: "GRD-703",
+        learner: "Areeba Farooq",
+        course: "Grade 8 Mathematics: Section A",
+        assignment: "HW-801: Linear Equations Problem Set",
+        type: "K-12 Homework Sheet",
+        rubricId: "RUB-K12-MATH",
+        submittedAt: "15 Aug 2026",
+        status: "Homework",
+        evidence: "Problem set exercises 2.1 to 2.4 (Scanned PDF)",
+        currentGrade: "Draft",
+        feedback: "Correct algebraic derivation; review signs in question 4."
+      },
+      {
+        id: "GRD-704",
+        learner: "Bilal Khan",
+        course: "Modern Full-Stack Web Development",
+        assignment: "QZ-202: React Lifecycle Manual Review Question",
+        type: "Quiz Manual Item Review",
+        rubricId: "RUB-QUIZ",
+        submittedAt: "14 Aug 2026",
+        status: "Quiz Manual Review",
+        evidence: "Manual written explanation on React 19 Server Components DB boundaries.",
+        currentGrade: "Draft",
+        feedback: "Accurate description of server/client execution environments."
+      },
+      {
+        id: "GRD-705",
+        learner: "Zainab Malik",
+        course: "Spoken English Fluency",
+        assignment: "VOC-402: Workplace Presentation Speech",
+        type: "Acoustic Voice Recording",
+        rubricId: "RUB-102",
+        submittedAt: "13 Aug 2026",
+        status: "Revision Requests",
+        evidence: "Audio resubmission pending (background noise re-recording requested).",
+        currentGrade: "Revision Requested",
+        feedback: "Audio recording had high fan background noise. Please re-record."
+      }
+    ],
+
+    milestones: [
+      { id: "MLS-301", learner: "Zainab Malik", milestone: "Milestone 2: React 19 Architecture", course: "Modern Full-Stack Web Development", status: "Sign-off Required", completedLessons: "6 / 6 Lessons", capstoneStatus: "Submitted (ASN-301)", action: "Facilitator Sign-off" },
+      { id: "MLS-302", learner: "Bilal Khan", milestone: "Milestone 1: HTML5 & CSS Foundations", course: "Modern Full-Stack Web Development", status: "Sign-off Complete", completedLessons: "6 / 6 Lessons", capstoneStatus: "Approved", action: "Completed" }
+    ],
+
+    k12Sections: [
+      { id: "SEC-8A", name: "Section 8-A: Mathematics", grade: "Grade 8", subject: "Mathematics", board: "Federal Board (FBISE)", learnersCount: 18, term: "Term 1 (Academic Year 2026/27)", nextClass: "Today 02:00 PM", attendanceAvg: "92%", homeworkAssigned: 4 },
+      { id: "SEC-8B", name: "Section 8-B: Mathematics", grade: "Grade 8", subject: "Mathematics", board: "Cambridge O-Level", learnersCount: 16, term: "Term 1 (Academic Year 2026/27)", nextClass: "Tomorrow 11:00 AM", attendanceAvg: "89%", homeworkAssigned: 3 }
+    ],
+
+    schedule: [
+      { id: "SCH-101", day: "Monday", time: "10:00 AM - 11:00 AM", title: "Spoken English Level 1 (Cohort 1)", room: "Daily Room 1", status: "Confirmed" },
+      { id: "SCH-102", day: "Monday", time: "02:00 PM - 03:00 PM", title: "Grade 8 Math (Section A)", room: "Daily Room 8A", status: "Confirmed" },
+      { id: "SCH-103", day: "Monday", time: "04:30 PM - 05:30 PM", title: "Web Dev 1:1 Mentorship", room: "Daily Room Mentorship", status: "Confirmed" },
+      { id: "SCH-104", day: "Tuesday", time: "11:00 AM - 12:00 PM", title: "Grade 8 Math (Section B)", room: "Daily Room 8B", status: "Confirmed" },
+      { id: "SCH-105", day: "Wednesday", time: "10:00 AM - 11:00 AM", title: "Spoken English Level 1 (Cohort 1)", room: "Daily Room 1", status: "Confirmed" }
+    ],
+
+    payStatements: [
+      { id: "PAY-2026-08", period: "August 2026 (1 Aug - 15 Aug)", approvedClasses: 18, grossEarning: "PKR 63,000", deductions: "PKR 0", netPay: "PKR 63,000", settlementStatus: "Settled / Paid (Bank Transfer)", settlementDate: "16 Aug 2026" },
+      { id: "PAY-2026-07", period: "July 2026 (16 Jul - 31 Jul)", approvedClasses: 22, grossEarning: "PKR 77,000", deductions: "PKR 0", netPay: "PKR 77,000", settlementStatus: "Settled / Paid (Bank Transfer)", settlementDate: "01 Aug 2026" }
+    ],
+
+    earnings: [
+      { id: "ERN-401", classId: "CLS-108", title: "Spoken English Fluency & Voice", date: "12 Aug 2026", rate: "PKR 3,500 / Hour", hours: "1.0 Hr", amount: "PKR 3,500", opsApproval: "Approved (Sarah Connor - OM)", payrollBatch: "PAY-2026-08" },
+      { id: "ERN-402", classId: "CLS-106", title: "Web Dev Mentorship Workshop", date: "15 Aug 2026", rate: "PKR 4,000 / Hour", hours: "1.5 Hrs", amount: "PKR 6,000", opsApproval: "Pending Review", payrollBatch: "Pending Settlement" }
+    ],
+
+    auditLogs: [
+      { timestamp: "2026-08-17 08:50", actor: "Sara Javed (Trainer)", action: "TRAINER_GRADE_DRAFTED", classVersion: "ASN-301", details: "Drafted rubric evaluation for Zainab Malik capstone.", priorState: "Submitted", newState: "Under Review" },
+      { timestamp: "2026-08-16 11:15", actor: "Sara Javed (Trainer)", action: "TRAINER_ATTENDANCE_CORRECTION_SUBMITTED", classVersion: "CLS-105", details: "Submitted justified attendance correction for Bilal Khan (Tech Issue -> Present).", priorState: "Tech Issue", newState: "Pending Ops Review" },
+      { timestamp: "2026-08-16 11:30", actor: "Sara Javed (Trainer)", action: "TRAINER_POST_CLASS_REPORT_SUBMITTED", classVersion: "CLS-105", details: "Submitted educational post-class report for Spoken English cohort.", priorState: "Draft", newState: "In Review" }
+    ]
+  },
+
   reviewerData: {
     reviews: [
       {
@@ -1739,6 +2117,78 @@ function ensureTableEmptyStates(view, route) {
 // ACADEMIC REVIEWER ROUTE CONFIGURATION & METRICS
 // ============================================================================
 
+
+const trainerRouteDefinitions = {
+  "trainer-dashboard": { title: "Teaching Home", scope: "Trainer Command Hub · Effective Assignment Scope", section: "TEACHING HOME", icon: "layout-dashboard" },
+  "trainer-classes-today": { title: "Today's Assigned Classes", scope: "Live Classes & Occurrence Join Windows (FLOW-015)", section: "MY CLASSES", icon: "calendar-check", filter: c => c.status === "Today", dataType: "classes" },
+  "trainer-classes-upcoming": { title: "Upcoming Classes", scope: "Scheduled Class Occurrences & Syllabi Context", section: "MY CLASSES", icon: "calendar-days", filter: c => c.status === "Upcoming", dataType: "classes" },
+  "trainer-classes-awaiting-report": { title: "Classes Awaiting Report (FLOW-016)", scope: "Delivered Classes Requiring Post-Class Educational Reports", section: "MY CLASSES", icon: "file-clock", filter: c => c.status === "Awaiting Report", dataType: "classes" },
+  "trainer-classes-in-review": { title: "Class Reports In Review", scope: "Submitted Reports Awaiting Operations Delivery Approval", section: "MY CLASSES", icon: "clock", filter: c => c.status === "In Review", dataType: "classes" },
+  "trainer-classes-correction-requested": { title: "Reports Correction Requested", scope: "Reports Returned by Operations for Teaching Details Correction", section: "MY CLASSES", icon: "alert-circle", filter: c => c.status === "Correction Requested", dataType: "classes" },
+  "trainer-classes-completed": { title: "Completed Classes", scope: "Approved Teaching Deliveries with Credited Earnings", section: "MY CLASSES", icon: "check-circle-2", filter: c => c.status === "Completed", dataType: "classes" },
+  "trainer-classes-trials": { title: "Trial Classes (FLOW-007 / FLOW-008)", scope: "Assigned Diagnostic & Free Placement Trials", section: "MY CLASSES", icon: "sparkles", filter: c => c.status === "Trial Classes", dataType: "classes" },
+  
+  "trainer-learners-rosters": { title: "Assigned Learner Rosters", scope: "Learners Currently Enrolled in Effective Course Runs", section: "MY LEARNERS", icon: "users", dataType: "learners" },
+  "trainer-learners-progress": { title: "Learner Academic Progress", scope: "Milestone Trajectory, Unit Progression & Attendance Rate", section: "MY LEARNERS", icon: "trending-up", dataType: "learners" },
+  "trainer-learners-attendance": { title: "Learner Attendance Records", scope: "Per-Participant Presence, Lateness & Reconciliation Telemetry", section: "MY LEARNERS", icon: "user-check", dataType: "learners" },
+  "trainer-learners-risks": { title: "Learner Risks & Interventions", scope: "Repeated Absence, Overdue Assignments & Inactivity Flags", section: "MY LEARNERS", icon: "alert-triangle", filter: l => l.risk !== "None", dataType: "learners" },
+  "trainer-learners-work": { title: "Learner Submissions & Evidence", scope: "Submitted Repositories, Problem Sets & Audio Files", section: "MY LEARNERS", icon: "folder-git-2", dataType: "learners" },
+
+  "trainer-attendance-class": { title: "Class Attendance Log", scope: "Participant-Specific Presence & Telemetry Breakdowns", section: "ATTENDANCE", icon: "clipboard-check", dataType: "attendance" },
+  "trainer-attendance-corrections": { title: "Attendance Correction Requests", scope: "Audited Justified Attendance Modifications with Reason Tracking", section: "ATTENDANCE", icon: "file-edit", filter: a => a.corrected, dataType: "attendance" },
+  "trainer-attendance-issues": { title: "Attendance Issues & Disconnects", scope: "Telemetry Exceptions, Inactivity & Technical Dropouts", section: "ATTENDANCE", icon: "shield-alert", filter: a => a.status === "Tech Issue" || a.status === "Absent", dataType: "attendance" },
+  "trainer-attendance-history": { title: "Attendance Decision History", scope: "Reconciled Participant Attendance Ledgers", section: "ATTENDANCE", icon: "history", dataType: "attendance" },
+
+  "trainer-reports-due": { title: "Post-Class Reports Due (FLOW-016)", scope: "Delivered Classes Requiring Immediate Teaching Submission", section: "CLASS REPORTS", icon: "file-warning", filter: r => r.status === "Reports Due", dataType: "reports" },
+  "trainer-reports-draft": { title: "Draft Class Reports", scope: "Saved Unsubmitted Teaching Notes & Homework Drafts", section: "CLASS REPORTS", icon: "file-text", filter: r => r.status === "Draft", dataType: "reports" },
+  "trainer-reports-submitted": { title: "Submitted Class Reports", scope: "Pending Operations Manager Delivery Approval", section: "CLASS REPORTS", icon: "send", filter: r => r.status === "Submitted", dataType: "reports" },
+  "trainer-reports-correction-requested": { title: "Reports Correction Requested", scope: "Reports Requiring Teaching Detail Revisions", section: "CLASS REPORTS", icon: "alert-octagon", filter: r => r.status === "Correction Requested", dataType: "reports" },
+  "trainer-reports-accepted": { title: "Accepted Delivery Reports", scope: "Approved Deliveries Credited to Learning Progress & Pay", section: "CLASS REPORTS", icon: "check-check", filter: r => r.status === "Accepted", dataType: "reports" },
+
+  "trainer-grading-queue": { title: "Assigned Grading Queue (FLOW-020)", scope: "Submissions Awaiting Rubric Evaluation & Score Publication", section: "ASSESSMENTS & GRADING", icon: "check-square", dataType: "gradingQueue" },
+  "trainer-grading-quizzes": { title: "Quiz Manual Review Queue (FLOW-019)", scope: "Subjective & Code Essay Quiz Items Awaiting Manual Evaluation", section: "ASSESSMENTS & GRADING", icon: "help-circle", filter: g => g.type.includes("Quiz"), dataType: "gradingQueue" },
+  "trainer-grading-assignments": { title: "Assignment Submissions", scope: "Capstone Projects & Code Repositories", section: "ASSESSMENTS & GRADING", icon: "file-code", filter: g => g.type.includes("Code"), dataType: "gradingQueue" },
+  "trainer-grading-homework": { title: "Homework Submissions", scope: "K-12 Problem Sets & Weekly Tasks", section: "ASSESSMENTS & GRADING", icon: "book-open", filter: g => g.type.includes("Homework"), dataType: "gradingQueue" },
+  "trainer-grading-voice": { title: "Voice Activity Evaluations", scope: "Acoustic Audio Fluency Recordings & Pronunciation Rubrics", section: "ASSESSMENTS & GRADING", icon: "mic", filter: g => g.type.includes("Voice"), dataType: "gradingQueue" },
+  "trainer-grading-revisions": { title: "Revision Requests Queue", scope: "Returned Submissions Awaiting Learner Re-recording / Re-submission", section: "ASSESSMENTS & GRADING", icon: "rotate-ccw", filter: g => g.status === "Revision Requests", dataType: "gradingQueue" },
+  "trainer-grading-gradebook": { title: "Assigned Gradebook", scope: "Published Learner Grades & Gradebook Categories", section: "ASSESSMENTS & GRADING", icon: "table", dataType: "gradingQueue" },
+  "trainer-grading-corrections": { title: "Audited Grade Corrections", scope: "Append-Only Score Adjustments with Mandatory Audit Rationale", section: "ASSESSMENTS & GRADING", icon: "edit-3", dataType: "auditLogs" },
+
+  "trainer-resources-teaching": { title: "Assigned Teaching Resources", scope: "Lesson Blueprint PDFs, Code Sandboxes & Audio References", section: "RESOURCES", icon: "folder", dataType: "resources" },
+  "trainer-resources-shared": { title: "Resources Shared with Learners", scope: "Assets Made Available to Assigned Rosters", section: "RESOURCES", icon: "share-2", dataType: "resources" },
+  "trainer-resources-upload": { title: "Upload Teaching Resource (FLOW-022)", scope: "Upload Supplementary Worksheets & Lesson Aids", section: "RESOURCES", icon: "upload-cloud", dataType: "resources" },
+  "trainer-resources-history": { title: "Resource Version History", scope: "Audit Trail of Uploaded Learning Assets", section: "RESOURCES", icon: "archive", dataType: "resources" },
+
+  "trainer-milestones-queue": { title: "Milestone Review Queue (FLOW-018)", scope: "Self-Paced Learners Awaiting Facilitator Milestone Sign-off", section: "MILESTONE SUPPORT", icon: "milestone", dataType: "milestones" },
+  "trainer-milestones-progress": { title: "Milestone Learner Progress", scope: "Module Progression Trajectory across Active Milestones", section: "MILESTONE SUPPORT", icon: "bar-chart-2", dataType: "milestones" },
+  "trainer-milestones-signoffs": { title: "Trainer Milestone Sign-offs", scope: "Certified Milestones Unlocking Subsequent Course Units", section: "MILESTONE SUPPORT", icon: "award", dataType: "milestones" },
+  "trainer-milestones-interventions": { title: "Milestone Interventions", scope: "Automated Stalled Milestone Escalations & Support Outreach", section: "MILESTONE SUPPORT", icon: "life-buoy", dataType: "milestones" },
+
+  "trainer-k12-sections": { title: "My K-12 Sections (FLOW-021)", scope: "Grade 8 Mathematics Sections A & B", section: "K-12 TEACHING", icon: "layout-grid", dataType: "k12Sections" },
+  "trainer-k12-subjects": { title: "Assigned Subjects & Curricula", scope: "Federal Board (FBISE) & Cambridge O-Level Curricula", section: "K-12 TEACHING", icon: "book-open", dataType: "k12Sections" },
+  "trainer-k12-syllabus": { title: "K-12 Syllabus Outlines", scope: "Chapter Breakdowns, Learning Objectives & Term Plans", section: "K-12 TEACHING", icon: "list-ordered", dataType: "k12Syllabi" },
+  "trainer-k12-homework": { title: "K-12 Homework & Assessment Assigner", scope: "Create and Assign Syllabus-Aligned Problem Sets", section: "K-12 TEACHING", icon: "file-plus", dataType: "k12Sections" },
+  "trainer-k12-gradebook": { title: "K-12 Term Gradebook", scope: "Formative & Summative Weighted Grading Schemes", section: "K-12 TEACHING", icon: "graduation-cap", dataType: "k12Sections" },
+  "trainer-k12-comments": { title: "Report Card Teacher Comments", scope: "Draft Academic Feedback for Term Progress Reports", section: "K-12 TEACHING", icon: "message-square", dataType: "k12Sections" },
+
+  "trainer-messages-learners": { title: "Learner Conversations (FLOW-023)", scope: "Contextual Pedagogical Messaging with Assigned Learners", section: "MESSAGES", icon: "messages-square", dataType: "learners" },
+  "trainer-messages-guardians": { title: "Guardian Communications", scope: "Permitted Safeguarded Parent/Guardian Communications", section: "MESSAGES", icon: "shield-check", dataType: "learners" },
+  "trainer-messages-notifications": { title: "Teaching Notifications", scope: "Automated Reminders, Grade Requests & Ops Feedback", section: "MESSAGES", icon: "bell", dataType: "auditLogs" },
+
+  "trainer-schedule-calendar": { title: "Teaching Schedule & Calendar", scope: "Weekly Calendar of Assigned Live Class Occurrences", section: "SCHEDULE", icon: "calendar", dataType: "schedule" },
+  "trainer-schedule-availability": { title: "Trainer Availability & Working Hours", scope: "Preferred Working Hours, Recurring Slots & Blackouts", section: "SCHEDULE", icon: "clock", dataType: "schedule" },
+  "trainer-schedule-reschedule": { title: "Reschedule Requests (FLOW-017)", scope: "Trainer-Initiated Class Occurrence Reschedule Requests", section: "SCHEDULE", icon: "repeat", dataType: "schedule" },
+  "trainer-schedule-cancellations": { title: "Cancellation & Makeup Requests", scope: "Report Trainer Absence & Request Linked Makeup Occurrences", section: "SCHEDULE", icon: "x-circle", dataType: "schedule" },
+
+  "trainer-pay-earnings": { title: "Approved Delivery Earnings (PAY-013)", scope: "Immutable Payable Events Created from Approved Class Reports", section: "MY COMPENSATION", icon: "wallet", dataType: "earnings" },
+  "trainer-pay-statements": { title: "Personal Pay Statements", scope: "Monthly Pay Statements & Bank Settlement Ledgers", section: "MY COMPENSATION", icon: "receipt", dataType: "payStatements" },
+
+  "trainer-history-classes": { title: "Class Delivery History", scope: "Historical Class Occurrences & Attendance Logs", section: "TEACHING HISTORY", icon: "history", dataType: "classes" },
+  "trainer-history-reports": { title: "Submitted Report History", scope: "Archive of Educational Post-Class Reports", section: "TEACHING HISTORY", icon: "file-check", dataType: "reports" },
+  "trainer-history-grading": { title: "Historical Grading Decisions", scope: "Published Rubric Scores & Learner Feedback Ledgers", section: "TEACHING HISTORY", icon: "check-square", dataType: "gradingQueue" },
+  "trainer-history-corrections": { title: "Audited Teaching Corrections", scope: "Immutable Audit Log of Attendance & Grade Corrections", section: "TEACHING HISTORY", icon: "edit", dataType: "auditLogs" }
+};
+
 const reviewerRouteDefinitions = {
   "reviewer-dashboard": {
     title: "Academic Review & Quality Assurance",
@@ -2818,8 +3268,9 @@ const Router = {
       item.classList.remove("active");
     });
     let activeNavItem = null;
-    if (route === "dashboard" || route === "creator-dashboard") {
-      if (Simulator.activeRole === "academic_reviewer") activeNavItem = document.getElementById("nav-reviewer-dashboard");
+    if (route === "dashboard" || route === "creator-dashboard" || route === "reviewer-dashboard" || route === "trainer-dashboard") {
+      if (Simulator.activeRole === "trainer") activeNavItem = document.getElementById("nav-trainer-dashboard");
+      else if (Simulator.activeRole === "academic_reviewer") activeNavItem = document.getElementById("nav-reviewer-dashboard");
       else if (Simulator.activeRole === "course_creator") activeNavItem = document.getElementById("nav-creator-dashboard");
       else if (Simulator.activeRole === "csr") activeNavItem = document.getElementById("csr-nav-dashboard");
       else if (Simulator.activeRole === "coo") activeNavItem = document.getElementById("coo-nav-dashboard");
@@ -2836,6 +3287,8 @@ const Router = {
     document.querySelectorAll(".content-view").forEach(view => {
       view.classList.remove("active");
     });
+    const isTrainerDashboard = route === "trainer-dashboard" || (route === "dashboard" && Simulator.activeRole === "trainer");
+    const isTrainerWorkspace = route.startsWith("trainer-") && !isTrainerDashboard;
     const isReviewerDashboard = route === "reviewer-dashboard" || (route === "dashboard" && Simulator.activeRole === "academic_reviewer");
     const isReviewerWorkspace = route.startsWith("reviewer-") && !isReviewerDashboard;
     const isCreatorDashboard = route === "creator-dashboard" || (route === "dashboard" && Simulator.activeRole === "course_creator");
@@ -2844,7 +3297,9 @@ const Router = {
     const isOmWorkspace = route.startsWith("om-");
     const isCsrWorkspace = route.startsWith("csr-");
     let activeView = null;
-    if (isReviewerDashboard) activeView = document.getElementById("view-dashboard");
+    if (isTrainerDashboard) activeView = document.getElementById("view-dashboard");
+    else if (isTrainerWorkspace) activeView = document.getElementById("view-trainer-workspace");
+    else if (isReviewerDashboard) activeView = document.getElementById("view-dashboard");
     else if (isReviewerWorkspace) activeView = document.getElementById("view-reviewer-workspace");
     else if (isCreatorDashboard) activeView = document.getElementById("view-dashboard");
     else if (isCreatorWorkspace) activeView = document.getElementById("view-creator-workspace");
@@ -2856,7 +3311,7 @@ const Router = {
     if (activeView) {
       activeView.classList.remove("hidden");
       activeView.classList.add("active");
-      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace && !isReviewerWorkspace) prepareModuleView(route, activeView);
+      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace && !isReviewerWorkspace && !isTrainerWorkspace) prepareModuleView(route, activeView);
     }
 
     // Update Header title
@@ -2896,14 +3351,24 @@ const Router = {
       csr: "CSR Command Center",
       course_creator: "Authoring Command Center",
       academic_reviewer: "Academic Review & Quality Assurance",
+      trainer: "Teaching Home & Delivery Command",
       cto_developer: "Technical Operations Overview",
       compliance_officer: "Compliance Overview",
       support_agent: "Support Operations Overview"
     };
-    const isDash = route === "dashboard" || route === "creator-dashboard" || route === "coo-dashboard" || route === "om-dashboard" || route === "csr-dashboard";
+    const isDash = route === "dashboard" || route === "creator-dashboard" || route === "coo-dashboard" || route === "om-dashboard" || route === "csr-dashboard" || route === "reviewer-dashboard" || route === "trainer-dashboard";
+    const dynamicTitle = (typeof trainerRouteDefinitions !== 'undefined' ? trainerRouteDefinitions[route]?.title : null)
+      || (typeof reviewerRouteDefinitions !== 'undefined' ? reviewerRouteDefinitions[route]?.title : null)
+      || (typeof creatorRouteDefinitions !== 'undefined' ? creatorRouteDefinitions[route]?.title : null)
+      || (typeof csrRouteDefinitions !== 'undefined' ? csrRouteDefinitions[route]?.title : null)
+      || (typeof omRouteDefinitions !== 'undefined' ? omRouteDefinitions[route]?.headerTitle : null)
+      || (typeof cooRouteDefinitions !== 'undefined' ? cooRouteDefinitions[route]?.headerTitle : null)
+      || routeTitleMap[route]
+      || "Operations Console";
+
     viewTitle.textContent = isDash
-      ? (roleDashboardTitles[Simulator.activeRole] || "Authoring Command Center")
-      : (reviewerRouteDefinitions[route]?.title || creatorRouteDefinitions[route]?.title || csrRouteDefinitions[route]?.title || omRouteDefinitions[route]?.headerTitle || cooRouteDefinitions[route]?.headerTitle || routeTitleMap[route] || "Academic Review & Quality Assurance");
+      ? (roleDashboardTitles[Simulator.activeRole] || "Dashboard Overview")
+      : dynamicTitle;
     
     // Trigger specific rendering controller for the view
     this.renderView(route);
@@ -2991,7 +3456,8 @@ const Router = {
         RenderEngine.supportAccess();
         break;
       default:
-        if (route.startsWith("reviewer-")) RenderEngine.reviewerWorkspace(route);
+        if (route.startsWith("trainer-")) RenderEngine.trainerWorkspace(route);
+        else if (route.startsWith("reviewer-")) RenderEngine.reviewerWorkspace(route);
         else if (route.startsWith("creator-")) RenderEngine.creatorWorkspace(route);
         else if (route.startsWith("csr-")) RenderEngine.csrWorkspace(route);
         else if (route.startsWith("coo-")) RenderEngine.cooWorkspace(route);
@@ -2999,7 +3465,8 @@ const Router = {
         break;
     }
     let viewId = `view-${route}`;
-    if (route.startsWith("reviewer-")) viewId = "view-reviewer-workspace";
+    if (route.startsWith("trainer-")) viewId = "view-trainer-workspace";
+    else if (route.startsWith("reviewer-")) viewId = "view-reviewer-workspace";
     else if (route.startsWith("creator-")) viewId = "view-creator-workspace";
     else if (route.startsWith("csr-")) viewId = "view-csr-workspace";
     else if (route.startsWith("coo-")) viewId = "view-coo-workspace";
@@ -3016,6 +3483,10 @@ const RenderEngine = {
 
   dashboard() {
     // If active role has a dedicated dashboard, route to it
+    if (Simulator.activeRole === "trainer") {
+      this.trainerDashboard();
+      return;
+    }
     if (Simulator.activeRole === "academic_reviewer") {
       this.reviewerDashboard();
       return;
@@ -3744,6 +4215,583 @@ const RenderEngine = {
       </tr>
     `).join("");
   },
+
+  // ============================================================================
+  // TRAINER / TEACHER DASHBOARD (DSH-005)
+  // ============================================================================
+  
+  // ============================================================================
+  // TRAINER / TEACHER DASHBOARD (DSH-005) - PREMIUM SPACIOUS DESIGN
+  // ============================================================================
+  trainerDashboard() {
+    const shell = document.getElementById("trainer-dashboard-shell");
+    if (!shell) return;
+
+    const data = db.trainerData;
+    const nextClass = data.classes.find(c => c.id === "CLS-101") || data.classes[0];
+    const risks = data.learners.filter(l => l.risk !== "None");
+
+    shell.innerHTML = `
+      <!-- TOP COMMAND HERO (DSH-005) -->
+      <div class="dashboard-hero" style="margin-bottom: 28px; padding: 28px 32px; background: #ffffff; border: 1px solid var(--outline); border-radius: var(--rounded-container); box-shadow: var(--shadow-subtle);">
+        <div class="hero-top-row" style="display:flex; justify-content:space-between; align-items:flex-start; gap:24px;">
+          <div class="hero-brand-group">
+            <span class="hero-kicker" style="color:var(--primary); font-weight:700; font-size:12px; letter-spacing:0.5px; text-transform:uppercase; display:flex; align-items:center; gap:6px;">
+              <i data-lucide="graduation-cap" style="width:16px; height:16px;"></i> Teaching Command Deck · Effective Assignment Scope
+            </span>
+            <h2 class="hero-title" style="font: 800 28px 'Manrope', sans-serif; color: var(--navy-dark); margin: 8px 0 6px 0; letter-spacing: -0.5px;">
+              Welcome back, Sara Javed.
+            </h2>
+            <p class="hero-subtitle" style="font-size: 14px; color: var(--slate); max-width: 680px; line-height: 1.5; margin: 0;">
+              Manage live class delivery, post-class educational reporting (FLOW-016), learner risks, and rubric grading across your assigned cohorts and sections.
+            </p>
+          </div>
+          <div class="hero-actions" style="display:flex; gap:10px; align-items:center; flex-shrink:0;">
+            <button class="btn btn-secondary" onclick="Router.navigate('trainer-schedule-calendar')" style="padding:10px 16px; font-weight:600;"><i data-lucide="calendar"></i> My Calendar</button>
+            <button class="btn btn-secondary" onclick="Router.navigate('trainer-reports-due')" style="padding:10px 16px; font-weight:600;"><i data-lucide="file-warning"></i> Reports Due (${data.reports.filter(r => r.status === 'Reports Due').length})</button>
+            <button class="btn btn-primary" onclick="Actions.openTrainerJoinClassModal('${nextClass.id}')" style="padding:10px 18px; font-weight:700;"><i data-lucide="video"></i> Join Next Class</button>
+          </div>
+        </div>
+
+        <!-- TELEMETRY KEY STATS CHIPS -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #f1f5f9;">
+          <div class="creator-flight-chip" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#e0e7ff; color:#4338ca; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="user-check" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Assigned Profile</span>
+              <strong style="font-size:14px; color:#0f172a;">Senior Trainer</strong>
+              <small style="font-size:12px; color:#475569;">Spoken Eng & K-12 Math</small>
+            </div>
+          </div>
+          <div class="creator-flight-chip" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#fef3c7; color:#b45309; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="calendar-check" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Today's Classes</span>
+              <strong style="font-size:14px; color:#0f172a;">4 Occurrences</strong>
+              <small style="font-size:12px; color:#475569;">1 Live, 3 Scheduled</small>
+            </div>
+          </div>
+          <div class="creator-flight-chip" style="background:#fff1f2; border:1px solid #fecdd3; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#fee2e2; color:#e11d48; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="alert-triangle" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#e11d48; text-transform:uppercase;">Learner Risks</span>
+              <strong style="font-size:14px; color:#9f1239;">3 Interventions</strong>
+              <small style="font-size:12px; color:#be123c;">Absence & Stalled</small>
+            </div>
+          </div>
+          <div class="creator-flight-chip" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:12px;">
+            <div class="chip-icon" style="background:#dcfce7; color:#15803d; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><i data-lucide="check-square" style="width:20px; height:20px;"></i></div>
+            <div class="chip-content" style="display:flex; flex-direction:column;">
+              <span style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase;">Grading Queue</span>
+              <strong style="font-size:14px; color:#14532d;">7 Submissions</strong>
+              <small style="font-size:12px; color:#166534;">Within 48h SLA</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEXT CLASS BANNER (DSH-005) -->
+      <div class="trainer-next-class-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; border-radius: 12px; padding: 24px 28px; margin-bottom: 28px; box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15); display: flex; justify-content: space-between; align-items: center; gap: 24px; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="trainer-next-class-meta" style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="badge-live" style="background:rgba(34, 197, 94, 0.2); color:#4ade80; border:1px solid rgba(34, 197, 94, 0.4); font-weight:700; font-size:11px; padding:3px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:6px;">
+              <span class="pulse-dot"></span> LIVE IN 15 MINS · DAILY.CO ROOM READY
+            </span>
+            <span style="font-size:12px; color:#94a3b8; font-weight:600;">Code: ${nextClass.courseCode} · Format: ${nextClass.type}</span>
+          </div>
+          <h3 style="font: 800 22px 'Manrope', sans-serif; color: #f8fafc; margin: 0; letter-spacing: -0.3px;">
+            ${nextClass.courseTitle}
+          </h3>
+          <p style="font-size: 13px; color: #cbd5e1; display: flex; align-items: center; gap: 16px; margin: 0;">
+            <span style="display:flex; align-items:center; gap:6px;"><i data-lucide="clock" style="width:15px; height:15px; color:#38bdf8;"></i> ${nextClass.slotTime}</span>
+            <span>·</span>
+            <span style="display:flex; align-items:center; gap:6px;"><i data-lucide="users" style="width:15px; height:15px; color:#a78bfa;"></i> ${nextClass.learnersCount} Learners Enrolled</span>
+            <span>·</span>
+            <span style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open" style="width:15px; height:15px; color:#34d399;"></i> ${nextClass.syllabusNode}</span>
+          </p>
+        </div>
+        <div class="trainer-next-class-actions" style="display:flex; align-items:center; gap:12px; flex-shrink:0;">
+          <button class="btn btn-secondary" onclick="Actions.openTrainerRosterModal('${nextClass.id}')" style="background:rgba(255,255,255,0.08); color:#ffffff; border:1px solid rgba(255,255,255,0.2); font-weight:600; padding:10px 18px; border-radius:8px;">
+            <i data-lucide="users"></i> View Roster
+          </button>
+          <button class="btn btn-secondary" onclick="Router.navigate('trainer-classes-today')" style="background:rgba(255,255,255,0.08); color:#ffffff; border:1px solid rgba(255,255,255,0.2); font-weight:600; padding:10px 18px; border-radius:8px;">
+            <i data-lucide="external-link"></i> Class Details
+          </button>
+          <button class="btn btn-join-daily" onclick="Actions.openTrainerJoinClassModal('${nextClass.id}')" style="background:#22c55e; color:#ffffff; font-weight:700; padding:10px 22px; border-radius:8px; border:none; box-shadow:0 4px 14px rgba(34,197,94,0.4); display:inline-flex; align-items:center; gap:8px;">
+            <i data-lucide="video"></i> Join Class
+          </button>
+        </div>
+      </div>
+
+      <!-- DSH-005 TODAY'S TEACHING PULSE STATS -->
+      <div style="margin-bottom: 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+          <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); display:flex; align-items:center; gap:8px; margin:0;">
+            <i data-lucide="activity" style="color:var(--primary); width:18px; height:18px;"></i> Today's Teaching Pulse
+          </h3>
+          <span style="font-size:12px; color:var(--slate);">Updated just now</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px;">
+          <div class="stat-card" style="cursor:pointer; background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; transition:transform 0.15s ease;" onclick="Router.navigate('trainer-classes-today')">
+            <span class="stat-label" style="font-size:12px; font-weight:600; color:var(--slate); text-transform:uppercase;">Upcoming Classes</span>
+            <span class="stat-value" style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); display:block; margin:4px 0;">4</span>
+            <span class="stat-subline" style="font-size:11px; font-weight:600; color:#166534;">Next in 15 mins</span>
+          </div>
+          <div class="stat-card" style="cursor:pointer; background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; transition:transform 0.15s ease;" onclick="Router.navigate('trainer-reports-due')">
+            <span class="stat-label" style="font-size:12px; font-weight:600; color:var(--slate); text-transform:uppercase;">Reports Due</span>
+            <span class="stat-value" style="font:800 24px 'Manrope', sans-serif; color:#d97706; display:block; margin:4px 0;">2</span>
+            <span class="stat-subline" style="font-size:11px; font-weight:600; color:#d97706;">FLOW-016 Action</span>
+          </div>
+          <div class="stat-card" style="cursor:pointer; background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; transition:transform 0.15s ease;" onclick="Router.navigate('trainer-grading-queue')">
+            <span class="stat-label" style="font-size:12px; font-weight:600; color:var(--slate); text-transform:uppercase;">Grading Queue</span>
+            <span class="stat-value" style="font:800 24px 'Manrope', sans-serif; color:var(--primary); display:block; margin:4px 0;">7</span>
+            <span class="stat-subline" style="font-size:11px; font-weight:600; color:var(--slate);">Rubric Evaluation</span>
+          </div>
+          <div class="stat-card" style="cursor:pointer; background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; transition:transform 0.15s ease;" onclick="Router.navigate('trainer-grading-quizzes')">
+            <span class="stat-label" style="font-size:12px; font-weight:600; color:var(--slate); text-transform:uppercase;">Quiz Reviews</span>
+            <span class="stat-value" style="font:800 24px 'Manrope', sans-serif; color:#475569; display:block; margin:4px 0;">1</span>
+            <span class="stat-subline" style="font-size:11px; font-weight:600; color:var(--slate);">Subjective Item</span>
+          </div>
+          <div class="stat-card" style="cursor:pointer; background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; transition:transform 0.15s ease;" onclick="Router.navigate('trainer-learners-risks')">
+            <span class="stat-label" style="font-size:12px; font-weight:600; color:var(--slate); text-transform:uppercase;">Learners at Risk</span>
+            <span class="stat-value" style="font:800 24px 'Manrope', sans-serif; color:#dc2626; display:block; margin:4px 0;">3</span>
+            <span class="stat-subline" style="font-size:11px; font-weight:600; color:#dc2626;">Intervention Req</span>
+          </div>
+          <div class="stat-card" style="cursor:pointer; background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; transition:transform 0.15s ease;" onclick="Router.navigate('trainer-messages-learners')">
+            <span class="stat-label" style="font-size:12px; font-weight:600; color:var(--slate); text-transform:uppercase;">Unread Messages</span>
+            <span class="stat-value" style="font:800 24px 'Manrope', sans-serif; color:#0284c7; display:block; margin:4px 0;">5</span>
+            <span class="stat-subline" style="font-size:11px; font-weight:600; color:#0284c7;">Assigned Learners</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIONABLE LEARNER RISKS GRID -->
+      <div style="margin-bottom: 28px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px;">
+          <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); display:flex; align-items:center; gap:8px; margin:0;">
+            <i data-lucide="alert-triangle" style="color:var(--error); width:18px; height:18px;"></i> Actionable Learner Risks & Interventions
+          </h3>
+          <button class="text-btn" onclick="Router.navigate('trainer-learners-risks')" style="font-size:13px; font-weight:600; color:var(--primary); background:none; border:none; cursor:pointer;">
+            View all risks &rarr;
+          </button>
+        </div>
+        <div class="trainer-risks-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+          ${risks.map(l => `
+            <div class="trainer-risk-card" style="background:#ffffff; border:1px solid var(--outline); border-left:4px solid #ef4444; border-radius:10px; padding:18px 20px; display:flex; flex-direction:column; gap:10px; box-shadow:var(--shadow-subtle);">
+              <div class="trainer-risk-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                  <h4 style="font:700 15px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${l.name}</h4>
+                  <span style="font-size:12px; color:var(--slate);">${l.course.split('&')[0]}</span>
+                </div>
+                <span class="trainer-risk-type" style="font-size:11px; font-weight:700; text-transform:uppercase; color:#b91c1c; background:#fee2e2; padding:3px 8px; border-radius:4px;">${l.risk}</span>
+              </div>
+              <p class="trainer-risk-desc" style="font-size:13px; color:#475569; line-height:1.4; margin:0;">${l.riskDesc}</p>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:10px; border-top:1px solid #f1f5f9;">
+                <span style="font-size:11px; color:#64748b;">Last Active: <strong>${l.lastActive}</strong></span>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')" style="padding:4px 10px; font-weight:600;"><i data-lucide="message-square"></i> Outreach</button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <!-- DUAL ACTION QUEUES: POST-CLASS REPORTS & GRADING QUEUE -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px;">
+        <!-- 1. Reports Due Queue -->
+        <div class="creator-queue-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+          <div class="creator-queue-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+            <div>
+              <h3 class="creator-queue-title" style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="file-warning" style="color:#d97706;"></i> Post-Class Reports Due (FLOW-016)
+              </h3>
+              <p class="creator-queue-desc" style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Delivered classes requiring educational reporting for Operations approval.</p>
+            </div>
+            <button class="text-btn" onclick="Router.navigate('trainer-reports-due')" style="font-size:13px; font-weight:600; color:var(--primary); background:none; border:none; cursor:pointer;">View all</button>
+          </div>
+          <div class="creator-queue-list" style="display:flex; flex-direction:column; gap:12px;">
+            ${data.reports.filter(r => r.status === 'Reports Due' || r.status === 'Correction Requested').map(rep => `
+              <div class="creator-queue-item" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                <div class="creator-queue-item-meta" style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <strong style="font-size:14px; color:var(--navy-dark);">${rep.course}</strong>
+                    <span class="badge ${rep.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}">${rep.status}</span>
+                  </div>
+                  <span style="font-size:12px; color:var(--slate);">Delivered: ${rep.date} · ${rep.syllabusCovered}</span>
+                </div>
+                <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerPostClassReportModal('${rep.classId}')" style="padding:6px 14px; font-weight:600;">
+                  ${rep.status === 'Correction Requested' ? 'Fix Report' : 'Complete Report'}
+                </button>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+
+        <!-- 2. Grading Queue -->
+        <div class="creator-queue-card" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+          <div class="creator-queue-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+            <div>
+              <h3 class="creator-queue-title" style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="check-square" style="color:var(--primary);"></i> Submissions Awaiting Grade (FLOW-020)
+              </h3>
+              <p class="creator-queue-desc" style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Assigned learner capstones, problem sets, and voice recordings.</p>
+            </div>
+            <button class="text-btn" onclick="Router.navigate('trainer-grading-queue')" style="font-size:13px; font-weight:600; color:var(--primary); background:none; border:none; cursor:pointer;">View all</button>
+          </div>
+          <div class="creator-queue-list" style="display:flex; flex-direction:column; gap:12px;">
+            ${data.gradingQueue.slice(0, 3).map(g => `
+              <div class="creator-queue-item" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                <div class="creator-queue-item-meta" style="display:flex; flex-direction:column; gap:4px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <strong style="font-size:14px; color:var(--navy-dark);">${g.learner}</strong>
+                    <span class="badge badge-primary">${g.type.split(' ')[0]}</span>
+                  </div>
+                  <span style="font-size:12px; color:var(--slate);">${g.assignment} · Submitted ${g.submittedAt}</span>
+                </div>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerGradingModal('${g.id}')" style="padding:6px 14px; font-weight:600;">Evaluate</button>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  // ============================================================================
+  // TRAINER UNIVERSAL WORKSPACE (SUB-VIEWS) - PREMIUM SPACIOUS DESIGN
+  // ============================================================================
+  trainerWorkspace(route) {
+    const container = document.getElementById("trainer-workspace-content");
+    if (!container) return;
+
+    const config = trainerRouteDefinitions[route] || {
+      title: "Trainer Workspace",
+      scope: "Teaching Delivery & Evaluation",
+      section: "TRAINER",
+      icon: "graduation-cap",
+      dataType: "classes"
+    };
+
+    // Update Top Workspace Header
+    const wsLabel = document.getElementById("workspace-label");
+    const viewTitle = document.getElementById("view-title");
+    if (wsLabel) wsLabel.textContent = "Trainer / Teacher delivery";
+    if (viewTitle) viewTitle.textContent = config.title;
+
+    // Filter data
+    const rawItems = db.trainerData[config.dataType] || [];
+    const items = config.filter ? rawItems.filter(config.filter) : rawItems;
+
+    container.innerHTML = `
+      <div class="creator-workspace-deck" style="padding: 24px 32px;">
+        
+        <!-- HEADER & BREADCRUMB ROW -->
+        <div class="creator-deck-header" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; gap:20px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate); font-weight:600; text-transform:uppercase; margin-bottom:6px;">
+              <span>Teaching Workspace</span>
+              <span>&rsaquo;</span>
+              <span style="color:var(--primary);">${config.section}</span>
+            </div>
+            <h2 class="creator-deck-title" style="font:800 26px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0; letter-spacing:-0.4px;">
+              ${config.title}
+            </h2>
+            <p class="creator-deck-subtitle" style="font-size:14px; color:var(--slate); margin:0;">
+              ${config.scope}
+            </p>
+          </div>
+          <div class="creator-deck-actions" style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-secondary" onclick="Router.navigate('trainer-dashboard')" style="font-weight:600;"><i data-lucide="arrow-left"></i> Teaching Home</button>
+            ${route.includes("reports") ? '<button class="btn btn-primary" onclick="Actions.openTrainerPostClassReportModal(\'CLS-105\')" style="font-weight:600;"><i data-lucide="plus"></i> New Report</button>' : ''}
+            ${route.includes("classes") ? '<button class="btn btn-primary" onclick="Actions.openTrainerJoinClassModal(\'CLS-101\')" style="font-weight:600;"><i data-lucide="video"></i> Join Class</button>' : ''}
+            ${route.includes("homework") || route.includes("k12") ? '<button class="btn btn-primary" onclick="Actions.openTrainerK12HomeworkModal(\'SEC-8A\')" style="font-weight:600;"><i data-lucide="plus"></i> Assign Homework</button>' : ''}
+          </div>
+        </div>
+
+        <!-- GOVERNANCE & PRIVACY BOUNDARY CARD -->
+        <div class="banner-box" style="border-left:4px solid var(--primary); background:#ffffff; border-radius:10px; padding:16px 20px; box-shadow:var(--shadow-subtle); margin-bottom:24px; display:flex; align-items:center; gap:16px;">
+          <div style="background:#e0e7ff; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <i data-lucide="shield-check" style="width:22px; height:22px;"></i>
+          </div>
+          <div>
+            <strong style="color:var(--navy-dark); font-size:14px;">Effective Assignment Scope & Pedagogical Privacy</strong>
+            <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+              Access is strictly restricted to your assigned rosters, active course runs, and K-12 sections. Permitted learner-visible feedback is isolated from internal staff notes and guardian communications.
+            </p>
+          </div>
+        </div>
+
+        <!-- SEARCH & CONTROLS BAR -->
+        <div class="creator-controls-bar" style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:14px 18px; box-shadow:var(--shadow-subtle); margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; gap:16px;">
+          <div class="search-filter-row" style="display:flex; align-items:center; gap:12px; flex:1;">
+            <input type="search" class="form-control inline" placeholder="Search by learner, class, course, or date..." style="max-width:340px; padding:8px 14px; border-radius:6px;">
+            <select class="form-control inline" style="max-width:200px; padding:8px 12px; border-radius:6px;">
+              <option value="">All Statuses</option>
+              <option value="Active">Active / Scheduled</option>
+              <option value="Completed">Completed / Accepted</option>
+              <option value="Pending">Pending Evaluation</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" style="padding:8px 14px; font-weight:600;"><i data-lucide="filter"></i> Filter</button>
+          </div>
+          <div class="button-row" style="display:flex; align-items:center; gap:10px;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('trainer-schedule-calendar')" style="font-weight:600;"><i data-lucide="calendar"></i> Schedule</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('trainer-grading-queue')" style="font-weight:600;"><i data-lucide="check-square"></i> Grading Queue (${db.trainerData.gradingQueue.length})</button>
+          </div>
+        </div>
+
+        <!-- DATA TABLE CONTAINER -->
+        <div class="table-container" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; box-shadow:var(--shadow-subtle); overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              ${this.trainerTableHeaders(config.dataType)}
+            </thead>
+            <tbody>
+              ${this.trainerTableRows(config.dataType, items)}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  trainerTableHeaders(dataType) {
+    if (dataType === "classes") {
+      return `<tr><th>Class Code & Course</th><th>Date & Scheduled Time</th><th>Format & Duration</th><th>Assigned Learners</th><th>Occurrence Status</th><th>Teaching Action</th></tr>`;
+    }
+    if (dataType === "learners") {
+      return `<tr><th>Learner / Contact</th><th>Assigned Course & Type</th><th>Attendance Rate</th><th>Active Milestone</th><th>Risk State</th><th>Teacher Action</th></tr>`;
+    }
+    if (dataType === "attendance") {
+      return `<tr><th>Participant Name</th><th>Class Occurrence</th><th>Status</th><th>Telemetry Duration</th><th>Evidence & State</th><th>Correction Action</th></tr>`;
+    }
+    if (dataType === "reports") {
+      return `<tr><th>Class & Course</th><th>Delivery Date</th><th>Syllabus Covered</th><th>Homework Assigned</th><th>Ops Review Status</th><th>Report Action</th></tr>`;
+    }
+    if (dataType === "gradingQueue") {
+      return `<tr><th>Learner Name</th><th>Course & Assignment</th><th>Submission Type</th><th>Submitted At</th><th>Grade Status</th><th>Evaluation Action</th></tr>`;
+    }
+    if (dataType === "milestones") {
+      return `<tr><th>Learner Name</th><th>Milestone Unit</th><th>Course</th><th>Completion Progress</th><th>Sign-off Status</th><th>Facilitator Action</th></tr>`;
+    }
+    if (dataType === "k12Sections") {
+      return `<tr><th>Section Name</th><th>Grade & Board</th><th>Subject</th><th>Enrolled Learners</th><th>Term Progression</th><th>Teacher Action</th></tr>`;
+    }
+    if (dataType === "schedule") {
+      return `<tr><th>Day & Time</th><th>Class Occurrence Title</th><th>Room / Meeting URL</th><th>Status</th><th>Reschedule</th></tr>`;
+    }
+    if (dataType === "payStatements") {
+      return `<tr><th>Pay Statement Period</th><th>Approved Deliveries</th><th>Gross Earning</th><th>Deductions</th><th>Net Payout</th><th>Settlement Status</th></tr>`;
+    }
+    if (dataType === "earnings") {
+      return `<tr><th>Earning ID & Class</th><th>Delivery Date</th><th>Hourly Rate</th><th>Hours</th><th>Amount</th><th>Ops Approval</th></tr>`;
+    }
+    if (dataType === "auditLogs") {
+      return `<tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Target Item</th><th>Details</th><th>State Transition</th></tr>`;
+    }
+    return `<tr><th>Item</th><th>Details</th><th>Status</th><th>Actions</th></tr>`;
+  },
+
+  trainerTableRows(dataType, records) {
+    if (!records || records.length === 0) {
+      return `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--slate);">No records found matching current trainer assignment filter.</td></tr>`;
+    }
+
+    if (dataType === "classes") {
+      return records.map(c => `
+        <tr>
+          <td><strong>${c.courseTitle}</strong><br><span class="table-subline">Code: ${c.courseCode} · Version: ${c.version}</span></td>
+          <td><strong>${c.date}</strong><br><span style="font-size:12px; color:var(--slate);">${c.slotTime}</span></td>
+          <td><span class="badge badge-secondary">${c.type}</span><br><span style="font-size:11px; color:var(--slate);">${c.duration}</span></td>
+          <td><span class="badge badge-primary">${c.learnersCount} Learners</span></td>
+          <td>
+            <span class="badge ${c.status === 'Completed' ? 'badge-success' : c.status === 'Awaiting Report' ? 'badge-warning' : c.status === 'Correction Requested' ? 'badge-error' : 'badge-primary'}">
+              ${c.status}
+            </span>
+          </td>
+          <td>
+            <div class="button-row">
+              ${c.joinable ? `<button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${c.id}')"><i data-lucide="video"></i> Join</button>` : ''}
+              ${c.status === 'Awaiting Report' || c.status === 'Correction Requested' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openTrainerPostClassReportModal('${c.id}')">Submit Report</button>` : ''}
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRosterModal('${c.id}')">Roster</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "learners") {
+      return records.map(l => `
+        <tr>
+          <td><strong>${l.name}</strong><br><span class="table-subline">${l.email}</span></td>
+          <td><strong>${l.course.split('&')[0]}</strong><br><span class="table-subline">${l.enrolmentType}</span></td>
+          <td><strong>${l.overallAttendance}</strong></td>
+          <td><span class="badge badge-secondary">${l.currentMilestone}</span></td>
+          <td>
+            <span class="badge ${l.risk === 'None' ? 'badge-success' : 'badge-error'}">${l.risk === 'None' ? 'On Track' : l.risk}</span>
+          </td>
+          <td>
+            <div class="button-row">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')">Message</button>
+              <button class="btn btn-primary btn-xs" onclick="Router.navigate('trainer-grading-queue')">View Work</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "attendance") {
+      return records.map(a => `
+        <tr>
+          <td><strong>${a.learner}</strong></td>
+          <td><code>${a.classId}</code></td>
+          <td>
+            <span class="attendance-pill ${a.status.toLowerCase().replace(' ', '-')}">
+              ${a.status}
+            </span>
+          </td>
+          <td><strong>${a.minutes}</strong></td>
+          <td><span style="font-size:12px; color:var(--slate);">${a.evidence}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerAttendanceCorrectionModal('${a.id}')">
+              ${a.corrected ? 'View Request' : 'Request Correction'}
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "reports") {
+      return records.map(r => `
+        <tr>
+          <td><strong>${r.course}</strong><br><span class="table-subline">Class: ${r.classId}</span></td>
+          <td>${r.date}</td>
+          <td><strong>${r.syllabusCovered}</strong><br><span style="font-size:11px; color:var(--slate);">${r.topics}</span></td>
+          <td>${r.homework}</td>
+          <td><span class="badge ${r.status === 'Accepted' ? 'badge-success' : r.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}">${r.status}</span></td>
+          <td>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerPostClassReportModal('${r.classId}')">
+              ${r.status === 'Accepted' ? 'View Report' : 'Edit Report'}
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "gradingQueue") {
+      return records.map(g => `
+        <tr>
+          <td><strong>${g.learner}</strong></td>
+          <td><strong>${g.assignment}</strong><br><span class="table-subline">${g.course}</span></td>
+          <td><span class="badge badge-secondary">${g.type}</span></td>
+          <td>${g.submittedAt}</td>
+          <td><span class="badge ${g.currentGrade === 'Draft' ? 'badge-warning' : 'badge-primary'}">${g.currentGrade}</span></td>
+          <td>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerGradingModal('${g.id}')">Evaluate Rubric</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "milestones") {
+      return records.map(m => `
+        <tr>
+          <td><strong>${m.learner}</strong></td>
+          <td><strong>${m.milestone}</strong></td>
+          <td>${m.course}</td>
+          <td><span class="badge badge-secondary">${m.completedLessons}</span></td>
+          <td><span class="badge ${m.status.includes('Complete') ? 'badge-success' : 'badge-warning'}">${m.status}</span></td>
+          <td>
+            <button class="btn btn-primary btn-xs" onclick="Notifications.push('Milestone Certified', 'Certified milestone for ${m.learner}. Next unit unlocked.', 'success')">${m.action}</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "k12Sections") {
+      return records.map(sec => `
+        <tr>
+          <td><strong>${sec.name}</strong></td>
+          <td><span class="badge badge-primary">${sec.board}</span><br><strong>${sec.grade}</strong></td>
+          <td><strong>${sec.subject}</strong></td>
+          <td><strong>${sec.learnersCount} Learners</strong></td>
+          <td>${sec.term}<br><span style="font-size:11px; color:#166534;">Attendance Avg: ${sec.attendanceAvg}</span></td>
+          <td>
+            <div class="button-row">
+              <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerK12HomeworkModal('${sec.id}')">Assign HW</button>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('trainer-classes-today')">Section Class</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "schedule") {
+      return records.map(s => `
+        <tr>
+          <td><strong>${s.day}</strong><br><span style="font-size:12px; color:var(--slate);">${s.time}</span></td>
+          <td><strong>${s.title}</strong></td>
+          <td><code>${s.room}</code></td>
+          <td><span class="badge badge-success">${s.status}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRescheduleModal('${s.id}')">Request Reschedule</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "payStatements") {
+      return records.map(p => `
+        <tr>
+          <td><strong>${p.period}</strong><br><span class="table-subline">Statement: ${p.id}</span></td>
+          <td><strong>${p.approvedClasses} Classes</strong></td>
+          <td>${p.grossEarning}</td>
+          <td>${p.deductions}</td>
+          <td><strong style="color:#166534; font-size:14px;">${p.netPay}</strong></td>
+          <td><span class="badge badge-success">${p.settlementStatus}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "earnings") {
+      return records.map(e => `
+        <tr>
+          <td><code>${e.id}</code><br><strong>${e.title}</strong></td>
+          <td>${e.date}</td>
+          <td>${e.rate}</td>
+          <td>${e.hours}</td>
+          <td><strong style="color:#166534;">${e.amount}</strong></td>
+          <td><span class="badge ${e.opsApproval.includes('Approved') ? 'badge-success' : 'badge-warning'}">${e.opsApproval}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    if (dataType === "auditLogs") {
+      return records.map(l => `
+        <tr>
+          <td><span class="table-timestamp">${l.timestamp}</span></td>
+          <td><strong>${l.actor}</strong></td>
+          <td><span class="badge badge-primary">${l.action}</span></td>
+          <td><code>${l.classVersion}</code></td>
+          <td><span style="font-size:12px; color:#4a586e;">${l.details}</span></td>
+          <td><span class="badge badge-secondary">${l.priorState} &rarr; ${l.newState}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    return records.map(item => `
+      <tr>
+        <td><strong>${item.id || item.title || 'Record'}</strong></td>
+        <td>${item.details || item.desc || item.status || '-'}</td>
+        <td><span class="badge badge-secondary">${item.status || 'Active'}</span></td>
+        <td><button class="btn btn-secondary btn-xs">View</button></td>
+      </tr>
+    `).join("");
+  },
+
 
 
   
@@ -8279,6 +9327,403 @@ function oldRolePermissionsCount(role) {
 // 5. SIMULATOR ACCESS RESOLUTION ENGINE
 // ============================================================================
 
+
+// ============================================================================
+// TRAINER / TEACHER ACTION WORKFLOWS
+// ============================================================================
+Actions.openTrainerJoinClassModal = function(classId) {
+  const cls = db.trainerData.classes.find(c => c.id === classId) || db.trainerData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Live Class Join Simulator (FLOW-015): ${cls.courseTitle}`;
+  body.innerHTML = `
+    <div style="background:#0f172a; color:#ffffff; padding:18px; border-radius:8px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-weight:700; color:#4ade80;"><span class="pulse-dot"></span> DAILY.CO SHORT-LIVED TOKEN VALIDATED</span>
+        <span style="font-size:12px; color:#94a3b8;">Window: 10:00 AM – 11:00 AM PKT</span>
+      </div>
+      <h4 style="font:700 16px 'Manrope', sans-serif; color:#f8fafc; margin-bottom:4px;">${cls.courseTitle}</h4>
+      <p style="font-size:12px; color:#cbd5e1;">Syllabus Unit: <strong>${cls.syllabusNode}</strong></p>
+    </div>
+
+    <div style="background:var(--surface); border:1px solid var(--outline); padding:14px; border-radius:6px; margin-bottom:16px;">
+      <strong style="font-size:13px; color:var(--navy-medium);">Security & Telemetry Audit (FLOW-015)</strong>
+      <p style="font-size:12px; color:var(--slate); margin-top:4px;">
+        ✓ Authenticated Account: <strong>Sara Javed (Senior Trainer)</strong><br>
+        ✓ Effective TrainerAssignment: <strong>Confirmed Active for ${cls.courseCode}</strong><br>
+        ✓ Reconciled Telemetry: <strong>Participant join/leave webhooks active</strong>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label>Simulated Room Feed Preview</label>
+      <div style="background:#1e293b; height:180px; border-radius:6px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; gap:8px;">
+        <i data-lucide="video" style="font-size:32px; color:#4ade80;"></i>
+        <span>Daily.co Protected WebRTC Stream Ready</span>
+        <small style="color:#64748b;">API credentials never exposed to client browser.</small>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-primary" onclick="Actions.completeTrainerClassJoin('${cls.id}')"><i data-lucide="video"></i> Launch Daily Video Room</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.completeTrainerClassJoin = function(classId) {
+  document.getElementById("generic-modal").classList.add("hidden");
+  Notifications.push("Class Session Started", "Connected to Daily.co room. Attendance telemetry is recording live.", "success");
+  this.audit("TRAINER_CLASS_JOINED", `Trainer Sara Javed joined live occurrence ${classId}.`, "Medium", "Join Window Active");
+};
+
+Actions.openTrainerPostClassReportModal = function(classId) {
+  const cls = db.trainerData.classes.find(c => c.id === classId) || db.trainerData.classes[0];
+  const rep = db.trainerData.reports.find(r => r.classId === classId) || db.trainerData.reports[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Post-Class Educational Report (FLOW-016): ${cls.courseTitle}`;
+  body.innerHTML = `
+    <div class="banner-box" style="margin-bottom:16px; border-left:4px solid var(--primary);">
+      <i data-lucide="file-text"></i>
+      <div>
+        <strong>Educational Delivery Report</strong>
+        <p style="font-size:12px; color:var(--slate);">Submit teaching details for Operations Delivery Approval. Approved reports trigger learner progress, entitlement debits, and trainer earnings.</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="trainer-report-syllabus">Syllabus Node Covered</label>
+      <input type="text" id="trainer-report-syllabus" class="form-control" value="${rep.syllabusCovered}">
+    </div>
+
+    <div class="form-group">
+      <label for="trainer-report-topics">Specific Topics & Exercises Delivered</label>
+      <textarea id="trainer-report-topics" class="form-control" rows="2">${rep.topics}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="trainer-report-homework">Assigned Homework & Due Date</label>
+      <input type="text" id="trainer-report-homework" class="form-control" value="${rep.homework}">
+    </div>
+
+    <div class="form-group">
+      <label for="trainer-report-notes">Permitted Learner-Visible Feedback vs Private Staff Notes</label>
+      <textarea id="trainer-report-notes" class="form-control" rows="2" placeholder="Learner feedback...">${rep.learnerNotes}</textarea>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerClassReport('${cls.id}')">Submit Report for Operations Review</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitTrainerClassReport = function(classId) {
+  const rep = db.trainerData.reports.find(r => r.classId === classId);
+  if (rep) {
+    rep.status = "Submitted";
+    rep.opsReview = "In Review by Operations Manager";
+  }
+
+  this.audit("TRAINER_REPORT_SUBMITTED", `Submitted post-class report for ${classId}.`, "Medium", "Draft -> In Review");
+  Notifications.push("Report Submitted", "Educational post-class report submitted to Operations Manager for review.", "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  Router.renderView("trainer-reports-due");
+  RenderEngine.trainerDashboard();
+};
+
+Actions.openTrainerAttendanceCorrectionModal = function(attId) {
+  const att = db.trainerData.attendance.find(a => a.id === attId) || db.trainerData.attendance[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Attendance Correction Request: ${att.learner}`;
+  body.innerHTML = `
+    <div style="background:var(--surface); border:1px solid var(--outline); padding:12px; border-radius:6px; margin-bottom:16px;">
+      <p style="font-size:12px; color:var(--slate);">
+        Learner: <strong>${att.learner}</strong> · Class: <strong>${att.classId}</strong><br>
+        Current System Telemetry: <span class="badge badge-warning">${att.status} (${att.minutes})</span>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label for="att-proposed-status">Proposed Corrected Status</label>
+      <select id="att-proposed-status" class="form-control">
+        <option value="Present">Present (Attended Full Duration)</option>
+        <option value="Late">Late (Attended Partial Duration)</option>
+        <option value="Excused">Excused (Prior Notice Granted)</option>
+        <option value="Tech Issue">Technical Issue (Fallback Stream Used)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="att-correction-reason">Mandatory Justification Reason</label>
+      <textarea id="att-correction-reason" class="form-control" rows="3" placeholder="Explain discrepancy (e.g. Student joined fallback audio stream after local ISP failure)...">Student joined fallback link after Daily room issue.</textarea>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerAttendanceCorrection('${att.id}')">Submit Justified Correction</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitTrainerAttendanceCorrection = function(attId) {
+  const proposed = document.getElementById("att-proposed-status")?.value;
+  const reason = document.getElementById("att-correction-reason")?.value;
+  const att = db.trainerData.attendance.find(a => a.id === attId);
+  if (att) {
+    att.corrected = true;
+    att.proposedStatus = proposed;
+    att.correctionReason = reason;
+    att.reviewStatus = "Pending Ops Review";
+  }
+
+  this.audit("TRAINER_ATTENDANCE_CORRECTION", `Submitted attendance correction for ${att?.learner}: ${att?.status} -> ${proposed}`, "High", `Reason: ${reason}`);
+  Notifications.push("Correction Request Logged", "Attendance correction submitted to Operations review queue.", "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  Router.renderView("trainer-attendance-corrections");
+};
+
+Actions.openTrainerGradingModal = function(subId) {
+  const sub = db.trainerData.gradingQueue.find(g => g.id === subId) || db.trainerData.gradingQueue[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Rubric Evaluation Studio (FLOW-020): ${sub.learner}`;
+  body.innerHTML = `
+    <div style="background:var(--surface); border:1px solid var(--outline); padding:14px; border-radius:6px; margin-bottom:16px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <strong>${sub.learner}</strong> · <span style="font-size:12px; color:var(--slate);">${sub.assignment}</span>
+        </div>
+        <span class="badge badge-primary">${sub.rubricId}</span>
+      </div>
+      <p style="font-size:12px; color:var(--primary); margin-top:6px;">
+        Submitted Evidence: <code>${sub.evidence}</code>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <label>Rubric Criterion 1: Technical Implementation (40%)</label>
+      <select id="rubric-c1" class="form-control">
+        <option value="40">Exemplary (40/40) - Clean modular architecture</option>
+        <option value="32">Proficient (32/40) - Minor formatting inconsistencies</option>
+        <option value="24">Developing (24/40) - Incomplete requirements</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Rubric Criterion 2: Code Quality / Fluency (35%)</label>
+      <select id="rubric-c2" class="form-control">
+        <option value="35">Exemplary (35/35) - Full test pass & accessibility</option>
+        <option value="28">Proficient (28/35) - Meets baseline standard</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Rubric Criterion 3: Documentation & Presentation (25%)</label>
+      <select id="rubric-c3" class="form-control">
+        <option value="25">Exemplary (25/25) - Clear README & deployment</option>
+        <option value="20">Proficient (20/25) - Standard documentation</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="trainer-feedback-learner">Learner-Visible Academic Feedback</label>
+      <textarea id="trainer-feedback-learner" class="form-control" rows="2">${sub.feedback}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="trainer-feedback-staff">Internal Staff Note (Never Exposed to Learner/Guardian)</label>
+      <input type="text" id="trainer-feedback-staff" class="form-control" value="Top performer. Eligible for advanced React track.">
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerGrade('${sub.id}')">Publish Grade to Gradebook</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitTrainerGrade = function(subId) {
+  const sub = db.trainerData.gradingQueue.find(g => g.id === subId);
+  if (sub) {
+    sub.currentGrade = "Published (95/100)";
+    sub.feedback = document.getElementById("trainer-feedback-learner")?.value || sub.feedback;
+  }
+
+  this.audit("TRAINER_GRADE_PUBLISHED", `Published grade 95/100 for ${sub?.learner} on ${sub?.assignment}.`, "High", "Draft -> Published");
+  Notifications.push("Grade Published", `Published grade for ${sub?.learner}. Learning progress event fired.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  Router.renderView("trainer-grading-queue");
+  RenderEngine.trainerDashboard();
+};
+
+Actions.openTrainerRescheduleModal = function(classId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Request Reschedule (FLOW-017): ${classId}`;
+  body.innerHTML = `
+    <div class="form-group">
+      <label for="reschedule-date">Proposed New Date & Time</label>
+      <input type="datetime-local" id="reschedule-date" class="form-control" value="2026-08-18T14:00">
+    </div>
+    <div class="form-group">
+      <label for="reschedule-reason">Academic / Scheduling Justification</label>
+      <textarea id="reschedule-reason" class="form-control" rows="3" placeholder="State reason for reschedule request...">Trainer unavailable due to university board exam. All 4 learners polled and agree to Tuesday 14:00 slot.</textarea>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerRescheduleRequest('${classId}')">Submit Reschedule Request</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.submitTrainerRescheduleRequest = function(classId) {
+  this.audit("TRAINER_RESCHEDULE_REQUESTED", `Trainer requested reschedule for ${classId}.`, "Medium", "Pending Operations Validation");
+  Notifications.push("Reschedule Requested", "Reschedule request submitted to Operations Manager for policy validation.", "info");
+  document.getElementById("generic-modal").classList.add("hidden");
+};
+
+Actions.openTrainerK12HomeworkModal = function(secId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Assign K-12 Homework (FLOW-021): Section 8-A`;
+  body.innerHTML = `
+    <div class="form-group">
+      <label for="hw-title">Homework Title & Problem Set</label>
+      <input type="text" id="hw-title" class="form-control" value="HW-802: Quadratic Expressions & Factoring">
+    </div>
+    <div class="form-group">
+      <label for="hw-due">Due Date & Submission Window</label>
+      <input type="date" id="hw-due" class="form-control" value="2026-08-21">
+    </div>
+    <div class="form-group">
+      <label for="hw-category">Gradebook Category Weight</label>
+      <select id="hw-category" class="form-control">
+        <option value="HW">Homework & Problem Sets (20% Weight)</option>
+        <option value="QZ">Formative Quizzes (20% Weight)</option>
+        <option value="PART">Class Participation (10% Weight)</option>
+      </select>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerK12Homework('${secId}')">Assign to Section 8-A</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.submitTrainerK12Homework = function(secId) {
+  const title = document.getElementById("hw-title")?.value;
+  this.audit("K12_HOMEWORK_ASSIGNED", `Assigned homework ${title} to Section ${secId}.`, "Medium", "Assigned -> Active");
+  Notifications.push("Homework Assigned", `${title} successfully assigned to all 18 learners in Section 8-A.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  Router.renderView("trainer-k12-homework");
+};
+
+Actions.openTrainerRosterModal = function(classId) {
+  const cls = db.trainerData.classes.find(c => c.id === classId) || db.trainerData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Assigned Class Roster: ${cls.courseTitle}`;
+  body.innerHTML = `
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr><th>Learner Name</th><th>Attendance Telemetry</th><th>Minutes</th><th>Connection State</th><th>Direct Action</th></tr>
+        </thead>
+        <tbody>
+          ${cls.roster.map(r => `
+            <tr>
+              <td><strong>${r.name}</strong></td>
+              <td><span class="attendance-pill ${r.attendance.toLowerCase().replace(' ', '-')}">${r.attendance}</span></td>
+              <td><strong>${r.minutes} min</strong></td>
+              <td>${r.status}</td>
+              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${r.id}')">Message</button></td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.openTrainerMessageModal = function(learnerId) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId) || { name: "Learner" };
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Contextual Message: ${learner.name} (FLOW-023)`;
+  body.innerHTML = `
+    <div style="background:var(--surface); border:1px solid var(--outline); padding:10px; border-radius:6px; margin-bottom:12px; font-size:12px; color:var(--slate);">
+      Safeguarding active. All messages are contextual to course milestones and auditable.
+    </div>
+    <div class="form-group">
+      <label for="trainer-msg-content">Message Content</label>
+      <textarea id="trainer-msg-content" class="form-control" rows="3" placeholder="Write message to ${learner.name}...">Hi ${learner.name}, noticed you missed the last live class. Please review the recorded video lecture and submit your assignment.</textarea>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.sendTrainerMessage('${learnerId}')">Send Message</button>
+  `;
+
+  modal.classList.remove("hidden");
+};
+
+Actions.sendTrainerMessage = function(learnerId) {
+  Notifications.push("Message Sent", "Message delivered to assigned learner inbox.", "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+};
+
 const Simulator = {
   activeRole: "platform_admin",
 
@@ -8317,6 +9762,7 @@ const Simulator = {
       csr: { name: "Sarah Jenkins", role: "Customer Service & Sales Representative" },
       course_creator: { name: "Dr. Arsalan Khan", role: "Course Creator" },
       academic_reviewer: { name: "Prof. Tariq Mahmood", role: "Academic Reviewer" },
+      trainer: { name: "Sara Javed", role: "Senior Trainer & Teacher" },
       cto_developer: { name: "CTO / Developer", role: "Technical Director" },
       compliance_officer: { name: "Auditor Profile", role: "Compliance Officer" },
       support_agent: { name: "CSR Operator", role: "Support Representative" }
@@ -8330,6 +9776,7 @@ const Simulator = {
       csr: { workspace: "Customer service & sales", shell: "SALES & CUSTOMER SERVICE", title: "CSR Command Center", greeting: "Good afternoon, Sarah.", description: "Assigned prospect management, trial qualification, follow-ups, and assisted conversion pipeline.", action: "View follow-ups due", actionRoute: "csr-followups-due", notifications: "Sales Notifications" },
       course_creator: { workspace: "Curriculum & course authoring", shell: "CURRICULUM & COURSE AUTHORING", title: "Authoring Command Center", greeting: "Good afternoon, Dr. Arsalan.", description: "Construct syllabus hierarchy, manage reusable question banks, learning rules, and submit versions for academic review.", action: "Review open feedback", actionRoute: "creator-review-comments", notifications: "Authoring Notifications" },
       academic_reviewer: { workspace: "Academic review & quality assurance", shell: "ACADEMIC REVIEW & QUALITY ASSURANCE", title: "Academic Review & Quality Assurance", greeting: "Good afternoon, Prof. Tariq.", description: "Evaluate course quality, validate assessment rubrics, manage blocking citations, and approve publication readiness.", action: "View blocking issues", actionRoute: "reviewer-comments-blocking", notifications: "Review Notifications" },
+      trainer: { workspace: "Trainer & Teacher delivery", shell: "TEACHING & LEARNING DELIVERY", title: "Teaching Home", greeting: "Good afternoon, Sara.", description: "Conduct live classes, submit post-class educational reports, track learner risks, and evaluate rubric assignments.", action: "Join Next Class", actionRoute: "trainer-classes-today", notifications: "Teaching Notifications" },
       cto_developer: { workspace: "Technical operations", shell: "TECHNICAL OPERATIONS", title: "Technical Operations Overview", greeting: "Good afternoon, Technical Director.", description: "Monitor integration health, queues, runtime status, releases, and recoverable technical exceptions.", action: "Open system status", actionRoute: "system-status", notifications: "Technical Notifications" },
       compliance_officer: { workspace: "Compliance oversight", shell: "COMPLIANCE OVERSIGHT", title: "Compliance Overview", greeting: "Good afternoon, Compliance Officer.", description: "Review high-risk governance events, retention controls, legal holds, and immutable audit history.", action: "Review audit trail", actionRoute: "audit-logs", notifications: "Governance Notifications" },
       support_agent: { workspace: "Support operations", shell: "SUPPORT OPERATIONS", title: "Support Operations Overview", greeting: "Good afternoon, Support Representative.", description: "Resolve account and onboarding issues through approved, time-limited support workflows.", action: "Open support access", actionRoute: "support-access", notifications: "Support Notifications" }
@@ -8348,6 +9795,7 @@ const Simulator = {
     const isCsr = roleKey === "csr";
     const isCreator = roleKey === "course_creator";
     const isReviewer = roleKey === "academic_reviewer";
+    const isTrainer = roleKey === "trainer";
     const appShell = document.querySelector(".admin-container");
     if (appShell) {
       appShell.classList.toggle("role-coo", isCoo);
@@ -8355,22 +9803,25 @@ const Simulator = {
       appShell.classList.toggle("role-csr", isCsr);
       appShell.classList.toggle("role-course_creator", isCreator);
       appShell.classList.toggle("role-academic_reviewer", isReviewer);
+      appShell.classList.toggle("role-trainer", isTrainer);
       appShell.dataset.activeRole = roleKey;
     }
 
-    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer);
+    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer);
     document.getElementById("coo-nav")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-nav")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-nav")?.classList.toggle("hidden", !isCsr);
     document.getElementById("creator-nav")?.classList.toggle("hidden", !isCreator);
     document.getElementById("academic-reviewer-nav")?.classList.toggle("hidden", !isReviewer);
+    document.getElementById("trainer-nav")?.classList.toggle("hidden", !isTrainer);
 
-    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer);
+    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer);
     document.getElementById("coo-dashboard-shell")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-dashboard-shell")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-dashboard-shell")?.classList.toggle("hidden", !isCsr);
     document.getElementById("creator-dashboard-shell")?.classList.toggle("hidden", !isCreator);
     document.getElementById("reviewer-dashboard-shell")?.classList.toggle("hidden", !isReviewer);
+    document.getElementById("trainer-dashboard-shell")?.classList.toggle("hidden", !isTrainer);
 
     const shellLabel = document.getElementById("shell-label");
     if (shellLabel) shellLabel.textContent = shell.shell;
@@ -8402,6 +9853,7 @@ const Simulator = {
     if (isCsr) RenderEngine.csrDashboard();
     if (isCreator) RenderEngine.creatorDashboard();
     if (isReviewer) RenderEngine.reviewerDashboard();
+    if (isTrainer) RenderEngine.trainerDashboard();
 
     // Apply security limits on sidebar & dashboard
     this.applySecurityLocks(roleKey);

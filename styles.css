@@ -7232,11 +7232,11 @@ td:last-child {
   display: none !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer) #platform-admin-nav {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-trainer) #platform-admin-nav {
   display: flex !important;
 }
 
-.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
+.admin-container:not(.role-coo):not(.role-om):not(.role-csr):not(.role-course_creator):not(.role-academic_reviewer):not(.role-trainer):not(.role-academic_reviewer) #view-dashboard.active #platform-dashboard-shell {
   display: block !important;
 }
 
@@ -9584,4 +9584,237 @@ td:last-child {
 .admin-container.role-coo #platform-admin-nav,
 .admin-container[data-active-role="coo"] #platform-admin-nav {
   display: none !important;
+}
+
+/* TRAINER ROLE VISIBILITY GUARDS */
+#trainer-dashboard-shell.hidden,
+#trainer-nav.hidden {
+  display: none !important;
+}
+
+.admin-container.role-trainer #platform-admin-nav,
+.admin-container[data-active-role="trainer"] #platform-admin-nav,
+.admin-container.role-trainer #platform-dashboard-shell,
+.admin-container[data-active-role="trainer"] #platform-dashboard-shell {
+  display: none !important;
+}
+
+.admin-container.role-trainer #view-dashboard.active #trainer-dashboard-shell:not(.hidden),
+.admin-container[data-active-role="trainer"] #view-dashboard.active #trainer-dashboard-shell:not(.hidden) {
+  display: block !important;
+}
+
+.admin-container.role-trainer #trainer-nav:not(.hidden),
+.admin-container[data-active-role="trainer"] #trainer-nav:not(.hidden) {
+  display: flex !important;
+}
+
+/* TEACHING HOME CARDS & NEXT CLASS BANNER (DSH-005) */
+.trainer-next-class-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  border-radius: var(--rounded-container);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-elevated);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.trainer-next-class-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trainer-next-class-meta .badge-live {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trainer-next-class-meta h3 {
+  font: 700 20px 'Manrope', sans-serif;
+  color: #f8fafc;
+  letter-spacing: -0.3px;
+}
+
+.trainer-next-class-meta p {
+  font-size: 13px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trainer-next-class-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-join-daily {
+  background: #22c55e !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35) !important;
+  transition: all var(--transition-fast) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.btn-join-daily:hover {
+  background: #16a34a !important;
+  transform: translateY(-1px) !important;
+}
+
+/* LEARNER RISK CARDS GRID */
+.trainer-risks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.trainer-risk-card {
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-left: 4px solid var(--error);
+  border-radius: var(--rounded-container);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.trainer-risk-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-subtle);
+}
+
+.trainer-risk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.trainer-risk-header h4 {
+  font: 700 15px 'Manrope', sans-serif;
+  color: var(--navy-medium);
+}
+
+.trainer-risk-type {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--error);
+  background: var(--error-container);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.trainer-risk-desc {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.4;
+}
+
+/* ATTENDANCE PILL BADGES */
+.attendance-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.attendance-pill.present {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.attendance-pill.late {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #fef08a;
+}
+
+.attendance-pill.absent {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.attendance-pill.tech-issue {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+@media (max-width: 1024px) {
+  .trainer-next-class-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .trainer-risks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .trainer-risks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* TRAINER RESPONSIVE & MOBILE POLISH */
+@media (max-width: 768px) {
+  .dashboard-hero .hero-top-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .dashboard-hero .hero-actions {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+  }
+  .creator-flight-chips-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .creator-workspace-deck {
+    padding: 16px !important;
+  }
+  .creator-controls-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .creator-controls-bar .search-filter-row {
+    flex-direction: column !important;
+  }
+  .creator-controls-bar .search-filter-row input,
+  .creator-controls-bar .search-filter-row select {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
 }
