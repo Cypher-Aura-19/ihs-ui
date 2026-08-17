@@ -9,6 +9,64 @@
 // ============================================================================
 
 const db = {
+  adminData: {
+    kpis: {
+      grossRevenue: "PKR 2,450,000",
+      activeLeads: 142,
+      pendingTrials: 14,
+      conversionRate: "38.4%",
+      pendingPaymentReviews: 7,
+      pendingPaymentAmount: "PKR 115,000",
+      verifiedBankDeposits: "PKR 1,890,000",
+      payoutBatchesReady: 2,
+      activeEnrolments: 342,
+      liveCohortCount: 186,
+      milestoneCount: 112,
+      k12Count: 44,
+      expiringRenewals: 18,
+      lowEntitlements: 9,
+      classesToday: 16,
+      reportsDue: 4,
+      atRiskLearners: 6,
+      pendingGrading: 12,
+      activeStaff: 62,
+      approvedDeliveryHours: 184,
+      activeMfaSessions: 112,
+      auditEventsLogged: 1480
+    },
+    csrSales: [
+      { id: "TRL-201", prospect: "Ayesha Tariq", course: "Spoken English Fluency", stage: "Trial Requested", preferredSlot: "Mon/Wed 10:00 AM", assignedCsr: "Hamza Khan", status: "Pending Trainer Assignment" },
+      { id: "TRL-202", prospect: "Bilal Ahmed", course: "Full-Stack Web Dev", stage: "Placement Done", preferredSlot: "Tue/Thu 06:00 PM", assignedCsr: "Fatima Noor", status: "Qualified" },
+      { id: "TRL-203", prospect: "Usman Raza", course: "Grade 8 Mathematics", stage: "Follow-up Due", preferredSlot: "Weekend 02:00 PM", assignedCsr: "Hamza Khan", status: "Trial Attended" }
+    ],
+    financePayments: [
+      { id: "PAY-801", learner: "Zainab Malik", payer: "Farooq Malik", course: "Spoken English Term 2", amount: "PKR 15,000", method: "Meezan Bank Transfer", ref: "TXN-90214", receipt: "receipt_801.pdf", status: "Pending Review" },
+      { id: "PAY-802", learner: "Kamran Ali", payer: "Kamran Ali", course: "Full-Stack Web Dev", amount: "PKR 25,000", method: "Standard Chartered", ref: "TXN-88412", receipt: "receipt_802.pdf", status: "Pending Review" },
+      { id: "PAY-803", learner: "Sana Mir", payer: "Rashid Mir", course: "Grade 8 Mathematics", amount: "PKR 12,000", method: "JazzCash Direct", ref: "TXN-77319", receipt: "receipt_803.pdf", status: "Pending Review" }
+    ],
+    membershipsRenewals: [
+      { id: "ENR-101", learner: "Zainab Malik", course: "Spoken English Fluency", termExpiry: "31 Aug 2026", creditsRemaining: 2, renewalStatus: "Renewal Due", payerContact: "+92 300 1234567" },
+      { id: "ENR-105", learner: "Omer Sheikh", course: "Grade 8 Math (FBISE)", termExpiry: "28 Aug 2026", creditsRemaining: 1, renewalStatus: "Urgent Renewal", payerContact: "+92 321 9876543" },
+      { id: "ENR-109", learner: "Hiba Tariq", course: "Full-Stack Web Dev", termExpiry: "15 Sep 2026", creditsRemaining: 6, renewalStatus: "Active", payerContact: "+92 333 4567890" }
+    ],
+    academicDelivery: [
+      { id: "CLS-105", title: "Spoken English Live Drill", trainer: "Sara Javed", time: "10:00 AM – 11:00 AM PKT", participants: 8, roomStatus: "WebRTC Ready", reportStatus: "Pending Delivery" },
+      { id: "CLS-102", title: "Grade 8 Math Linear Equations", trainer: "Sara Javed", time: "02:00 PM – 03:00 PM PKT", participants: 12, roomStatus: "Scheduled", reportStatus: "Pending Delivery" },
+      { id: "CLS-099", title: "Full-Stack Capstone Review", trainer: "Alex Rivera", time: "05:00 PM – 06:30 PM PKT", participants: 6, roomStatus: "Scheduled", reportStatus: "Report Due" }
+    ],
+    hrStaff: [
+      { id: "STF-01", name: "Sara Javed", role: "Senior Trainer & Teacher", dept: "Academics", hourlyRate: "PKR 2,200", hoursLogged: 42, complianceStatus: "Verified" },
+      { id: "STF-02", name: "Alex Rivera", role: "Lead Facilitator", dept: "Computer Science", hourlyRate: "PKR 3,000", hoursLogged: 36, complianceStatus: "Verified" },
+      { id: "STF-03", name: "Hamza Khan", role: "Senior CSR", dept: "Admissions", baseSalary: "PKR 65,000", commissionDue: "PKR 18,500", complianceStatus: "Verified" }
+    ],
+    governance: [
+      { id: "REF-01", domain: "Class Formats", items: "1-on-1, Small Cohort (4-8), Large Masterclass (20+)", status: "Active" },
+      { id: "RULE-01", policy: "FLOW-017 Reschedule Notice Window", value: "Minimum 4 Hours Before Occurrence", effectiveDate: "01 Aug 2026", status: "Active" },
+      { id: "RULE-02", policy: "FLOW-013 Manual Payment SLA", value: "Review Within 2 Business Hours", effectiveDate: "15 Jul 2026", status: "Active" },
+      { id: "IMP-01", name: "Fall 2026 K-12 Student Intake Batch", rows: 120, validated: 120, errors: 0, status: "Ready for Commit" }
+    ]
+  },
+
   
   // ============================================================================
   // COURSE CREATOR DATASET (CATALOGUE, SYLLABUS, ASSESSMENTS, PREVIEW, REVIEW)
@@ -3679,6 +3737,7 @@ const Router = {
     const isCooWorkspace = route.startsWith("coo-");
     const isOmWorkspace = route.startsWith("om-");
     const isCsrWorkspace = route.startsWith("csr-");
+    const isAdminWorkspace = (route.startsWith("admin-") || ["users", "invitations", "security-sessions", "roles-permissions", "reference-data", "business-rules", "imports", "exports", "audit-logs", "retention-policies", "support-access"].includes(route)) && Simulator.activeRole === "platform_admin";
     let activeView = null;
     if (isLearnerDashboard) activeView = document.getElementById("view-dashboard");
     else if (isLearnerWorkspace) activeView = document.getElementById("view-learner-workspace");
@@ -3691,6 +3750,7 @@ const Router = {
     else if (isCsrWorkspace) activeView = document.getElementById("view-csr-workspace");
     else if (isCooWorkspace) activeView = document.getElementById("view-coo-workspace");
     else if (isOmWorkspace) activeView = document.getElementById("view-om-workspace");
+    else if (isAdminWorkspace) activeView = document.getElementById("view-admin-workspace");
     else activeView = document.getElementById(`view-${route}`);
     
     if (activeView) {
@@ -3765,6 +3825,18 @@ const Router = {
   },
 
   renderView(route) {
+      if (route.startsWith("admin-") || ["users", "invitations", "security-sessions", "roles-permissions", "reference-data", "business-rules", "imports", "exports", "audit-logs", "retention-policies", "support-access"].includes(route)) {
+        if (Simulator.activeRole === "platform_admin") {
+          RenderEngine.adminWorkspace(route);
+          let viewEl = document.getElementById("view-admin-workspace");
+          if (viewEl) {
+            document.querySelectorAll(".content-view").forEach(v => v.classList.add("hidden"));
+            viewEl.classList.remove("hidden");
+            return;
+          }
+        }
+      }
+    
     switch (route) {
       case "dashboard":
         RenderEngine.dashboard();
@@ -3867,10 +3939,602 @@ const Router = {
 // 3. UI RENDERING ENGINE (High density data grids)
 // ============================================================================
 
+
+const adminRouteDefinitions = {
+  "admin-csr-sales": { title: "CSR & Sales Pipeline", scope: "Prospect Intake, Trials & Commissions", section: "BUSINESS OVERSIGHT", icon: "funnel" },
+  "admin-finance-payments": { title: "Finance & Manual Payments", scope: "Payment Evidence Review & Cashflow", section: "BUSINESS OVERSIGHT", icon: "receipt" },
+  "admin-memberships-renewals": { title: "Memberships & Renewals", scope: "Enrolments, Term Expiry & Entitlements", section: "BUSINESS OVERSIGHT", icon: "refresh-cw" },
+  "admin-academic-delivery": { title: "Academic Delivery & Quality", scope: "Live Classes, Delivery Reports & Risks", section: "BUSINESS OVERSIGHT", icon: "presentation" },
+  "admin-hr-staff": { title: "HR & Staff Rosters", scope: "Staff Directory, Hourly Pay & Compliance", section: "BUSINESS OVERSIGHT", icon: "users-round" },
+  "users": { title: "User Directory", scope: "Accounts, Profiles & Role Bindings", section: "USER & ACCESS", icon: "users" },
+  "invitations": { title: "Staff Invitations", scope: "Pending Invites & Onboarding", section: "USER & ACCESS", icon: "mail-open" },
+  "security-sessions": { title: "Security & Sessions", scope: "Active MFA Sessions & Revocations", section: "USER & ACCESS", icon: "shield-alert" },
+  "roles-permissions": { title: "Roles & Permissions (FLOW-004)", scope: "RBAC Scopes & Policy Matrix", section: "USER & ACCESS", icon: "user-check" },
+  "reference-data": { title: "Controlled Reference Data (ADM-001)", scope: "Formats, Durations, Currencies & Reason Codes", section: "BUSINESS GOVERNANCE", icon: "database" },
+  "business-rules": { title: "Versioned Business Rules (ADM-002)", scope: "Effective-Dated Policy Thresholds", section: "BUSINESS GOVERNANCE", icon: "scale" },
+  "imports": { title: "Staged Business Imports (ADM-004)", scope: "Validated CSV/JSON Batch Intake", section: "BUSINESS GOVERNANCE", icon: "file-input" },
+  "exports": { title: "Controlled Data Exports (ADM-005)", scope: "Scoped Compliance Data Generation", section: "BUSINESS GOVERNANCE", icon: "file-output" },
+  "audit-logs": { title: "Searchable Business Audit (ADM-006)", scope: "Immutable Governance & Security Trail", section: "BUSINESS GOVERNANCE", icon: "file-spreadsheet" },
+  "retention-policies": { title: "Data Retention & Archive (ADM-008)", scope: "Retention Rules, Archive & Legal Holds", section: "BUSINESS GOVERNANCE", icon: "history" },
+  "support-access": { title: "Support Case Routing (ADM-009)", scope: "Case Routing Rules & Delegation Policies", section: "BUSINESS GOVERNANCE", icon: "heart-handshake" }
+};
+
 const RenderEngine = {
+  // ============================================================================
+  // PLATFORM ADMIN BUSINESS DASHBOARD (ENTERPRISE COMMAND GRID)
+  // ============================================================================
+  adminDashboard() {
+    const viewDashboard = document.getElementById("view-dashboard");
+    if (!viewDashboard) return;
+
+    const data = db.adminData || {
+      kpis: {
+        grossRevenue: "PKR 2,450,000",
+        activeLeads: 142,
+        pendingTrials: 14,
+        conversionRate: "38.4%",
+        pendingPaymentReviews: 7,
+        pendingPaymentAmount: "PKR 115,000",
+        verifiedBankDeposits: "PKR 1,890,000",
+        payoutBatchesReady: 2,
+        activeEnrolments: 342,
+        liveCohortCount: 186,
+        milestoneCount: 112,
+        k12Count: 44,
+        expiringRenewals: 18,
+        lowEntitlements: 9,
+        classesToday: 16,
+        reportsDue: 4,
+        atRiskLearners: 6,
+        pendingGrading: 12,
+        activeStaff: 62,
+        approvedDeliveryHours: 184,
+        activeMfaSessions: 112,
+        auditEventsLogged: 1480
+      },
+      csrSales: [
+        { id: "TRL-201", prospect: "Ayesha Tariq", course: "Spoken English Fluency", stage: "Trial Requested", preferredSlot: "Mon/Wed 10:00 AM", assignedCsr: "Hamza Khan", status: "Pending Trainer Assignment" },
+        { id: "TRL-202", prospect: "Bilal Ahmed", course: "Full-Stack Web Dev", stage: "Placement Done", preferredSlot: "Tue/Thu 06:00 PM", assignedCsr: "Fatima Noor", status: "Qualified" },
+        { id: "TRL-203", prospect: "Usman Raza", course: "Grade 8 Mathematics", stage: "Follow-up Due", preferredSlot: "Weekend 02:00 PM", assignedCsr: "Hamza Khan", status: "Trial Attended" }
+      ],
+      financePayments: [
+        { id: "PAY-801", learner: "Zainab Malik", payer: "Farooq Malik", course: "Spoken English Term 2", amount: "PKR 15,000", method: "Meezan Bank Transfer", ref: "TXN-90214", receipt: "receipt_801.pdf", status: "Pending Review" },
+        { id: "PAY-802", learner: "Kamran Ali", payer: "Kamran Ali", course: "Full-Stack Web Dev", amount: "PKR 25,000", method: "Standard Chartered", ref: "TXN-88412", receipt: "receipt_802.pdf", status: "Pending Review" },
+        { id: "PAY-803", learner: "Sana Mir", payer: "Rashid Mir", course: "Grade 8 Mathematics", amount: "PKR 12,000", method: "JazzCash Direct", ref: "TXN-77319", receipt: "receipt_803.pdf", status: "Pending Review" }
+      ],
+      membershipsRenewals: [
+        { id: "ENR-101", learner: "Zainab Malik", course: "Spoken English Fluency", termExpiry: "31 Aug 2026", creditsRemaining: 2, renewalStatus: "Renewal Due", payerContact: "+92 300 1234567" },
+        { id: "ENR-105", learner: "Omer Sheikh", course: "Grade 8 Math (FBISE)", termExpiry: "28 Aug 2026", creditsRemaining: 1, renewalStatus: "Urgent Renewal", payerContact: "+92 321 9876543" },
+        { id: "ENR-109", learner: "Hiba Tariq", course: "Full-Stack Web Dev", termExpiry: "15 Sep 2026", creditsRemaining: 6, renewalStatus: "Active", payerContact: "+92 333 4567890" }
+      ],
+      academicDelivery: [
+        { id: "CLS-105", title: "Spoken English Live Drill", trainer: "Sara Javed", time: "10:00 AM – 11:00 AM PKT", participants: 8, roomStatus: "WebRTC Ready", reportStatus: "Pending Delivery" },
+        { id: "CLS-102", title: "Grade 8 Math Linear Equations", trainer: "Sara Javed", time: "02:00 PM – 03:00 PM PKT", participants: 12, roomStatus: "Scheduled", reportStatus: "Pending Delivery" },
+        { id: "CLS-099", title: "Full-Stack Capstone Review", trainer: "Alex Rivera", time: "05:00 PM – 06:30 PM PKT", participants: 6, roomStatus: "Scheduled", reportStatus: "Report Due" }
+      ],
+      hrStaff: [
+        { id: "STF-01", name: "Sara Javed", role: "Senior Trainer & Teacher", dept: "Academics", hourlyRate: "PKR 2,200", hoursLogged: 42, complianceStatus: "Verified" },
+        { id: "STF-02", name: "Alex Rivera", role: "Lead Facilitator", dept: "Computer Science", hourlyRate: "PKR 3,000", hoursLogged: 36, complianceStatus: "Verified" },
+        { id: "STF-03", name: "Hamza Khan", role: "Senior CSR", dept: "Admissions", baseSalary: "PKR 65,000", commissionDue: "PKR 18,500", complianceStatus: "Verified" }
+      ]
+    };
+
+    const k = data.kpis;
+
+    viewDashboard.innerHTML = `
+      <div class="creator-workspace-deck" style="padding: 24px 32px; display:flex; flex-direction:column; gap:24px;">
+        
+        <!-- HEADER ROW -->
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:20px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate); font-weight:700; text-transform:uppercase; margin-bottom:6px;">
+              <span>Platform Administration</span>
+              <span>&rsaquo;</span>
+              <span style="color:var(--primary);">Executive Operations Command</span>
+            </div>
+            <h1 style="font:800 28px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0; letter-spacing:-0.5px;">
+              Enterprise Operations & Business Command
+            </h1>
+            <p style="font-size:14px; color:var(--slate); margin:0;">
+              Full oversight over CSR & Sales, Finance & Manual Payments, Memberships & Renewals, Academic Delivery, HR & Staff, and Governance.
+            </p>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-secondary" onclick="Router.navigate('audit-logs')"><i data-lucide="file-spreadsheet"></i> Audit Log</button>
+            <button class="btn btn-primary" onclick="Router.navigate('admin-finance-payments')"><i data-lucide="receipt"></i> Review Payments (${k.pendingPaymentReviews})</button>
+          </div>
+        </div>
+
+        <!-- 4-COLUMN PRIMARY BUSINESS KPI GRID -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:18px;">
+          
+          <!-- KPI 1: CSR & SALES -->
+          <div class="stat-card clickable" onclick="Router.navigate('admin-csr-sales')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px;">CSR & SALES VELOCITY</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#e0e7ff; color:var(--primary); display:flex; align-items:center; justify-content:center;">
+                <i data-lucide="funnel" style="width:16px; height:16px;"></i>
+              </div>
+            </div>
+            <div>
+              <strong style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); display:block; margin-bottom:4px;">${k.grossRevenue}</strong>
+              <span style="font-size:12px; color:var(--slate);">${k.activeLeads} Leads · <strong>${k.pendingTrials} Trials Pending</strong></span>
+            </div>
+            <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+              <span style="color:#166534; font-weight:700;">${k.conversionRate} Conversion</span>
+              <span style="color:var(--primary); font-weight:600;">View Pipeline &rarr;</span>
+            </div>
+          </div>
+
+          <!-- KPI 2: FINANCE & PAYMENTS -->
+          <div class="stat-card clickable" onclick="Router.navigate('admin-finance-payments')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:800; color:#d97706; text-transform:uppercase; letter-spacing:0.5px;">FINANCE & PAYMENTS</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#fef3c7; color:#d97706; display:flex; align-items:center; justify-content:center;">
+                <i data-lucide="receipt" style="width:16px; height:16px;"></i>
+              </div>
+            </div>
+            <div>
+              <strong style="font:800 24px 'Manrope', sans-serif; color:#d97706; display:block; margin-bottom:4px;">${k.pendingPaymentReviews} Pending Reviews</strong>
+              <span style="font-size:12px; color:var(--slate);">${k.pendingPaymentAmount} · ${k.payoutBatchesReady} Payouts Ready</span>
+            </div>
+            <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+              <span style="color:var(--slate);">${k.verifiedBankDeposits} Bank</span>
+              <span style="color:#d97706; font-weight:600;">Review Queue &rarr;</span>
+            </div>
+          </div>
+
+          <!-- KPI 3: MEMBERSHIPS & RENEWALS -->
+          <div class="stat-card clickable" onclick="Router.navigate('admin-memberships-renewals')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:800; color:#166534; text-transform:uppercase; letter-spacing:0.5px;">MEMBERSHIPS & ENROLMENTS</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#dcfce7; color:#166534; display:flex; align-items:center; justify-content:center;">
+                <i data-lucide="refresh-cw" style="width:16px; height:16px;"></i>
+              </div>
+            </div>
+            <div>
+              <strong style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); display:block; margin-bottom:4px;">${k.activeEnrolments} Active</strong>
+              <span style="font-size:12px; color:var(--slate);">${k.liveCohortCount} Live · ${k.milestoneCount} Milestone · ${k.k12Count} K-12</span>
+            </div>
+            <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+              <span style="color:#e11d48; font-weight:700;">${k.expiringRenewals} Expiring Soon</span>
+              <span style="color:#166534; font-weight:600;">Renewals &rarr;</span>
+            </div>
+          </div>
+
+          <!-- KPI 4: ACADEMIC DELIVERY -->
+          <div class="stat-card clickable" onclick="Router.navigate('admin-academic-delivery')" style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:12px; cursor:pointer;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:800; color:#7c3aed; text-transform:uppercase; letter-spacing:0.5px;">ACADEMIC DELIVERY</span>
+              <div style="width:32px; height:32px; border-radius:6px; background:#f3e8ff; color:#7c3aed; display:flex; align-items:center; justify-content:center;">
+                <i data-lucide="presentation" style="width:16px; height:16px;"></i>
+              </div>
+            </div>
+            <div>
+              <strong style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); display:block; margin-bottom:4px;">${k.classesToday} Classes Today</strong>
+              <span style="font-size:12px; color:var(--slate);">${k.reportsDue} Reports Due · <strong>${k.atRiskLearners} At-Risk</strong></span>
+            </div>
+            <div style="padding-top:10px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+              <span style="color:#7c3aed; font-weight:700;">96% Attendance</span>
+              <span style="color:#7c3aed; font-weight:600;">Delivery &rarr;</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2-COLUMN OPERATIONAL QUEUES & INTERVENTIONS -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          
+          <!-- PANEL 1: MANUAL PAYMENT VERIFICATION QUEUE (FLOW-013) -->
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+              <div>
+                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Manual Payment Review Queue (FLOW-013)</h3>
+                <span style="font-size:12px; color:var(--slate);">Payer receipt evidence requiring COO/OM/Admin approval</span>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('admin-finance-payments')">View All</button>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${data.financePayments.map(p => `
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <strong style="color:var(--navy-dark); font-size:13px;">${p.learner}</strong>
+                      <span class="badge badge-warning" style="font-size:10px;">${p.amount}</span>
+                    </div>
+                    <span style="font-size:11px; color:var(--slate);">${p.course} · ${p.method} (<code>${p.ref}</code>)</span>
+                  </div>
+                  <div style="display:flex; gap:6px;">
+                    <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Notifications.push('Payment Approved', 'Approved payment for ${p.learner}. Access grant created.', 'success')">Approve</button>
+                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Review Modal', 'Opening evidence for ${p.ref}...', 'info')">Review</button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+          <!-- PANEL 2: CSR TRIAL INTAKE & ALLOCATIONS (FLOW-006) -->
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+              <div>
+                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Trial Ingestion & CSR Allocation (FLOW-006)</h3>
+                <span style="font-size:12px; color:var(--slate);">Diagnostic placement requests awaiting trainer matching</span>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('admin-csr-sales')">View All</button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${data.csrSales.map(t => `
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <strong style="color:var(--navy-dark); font-size:13px;">${t.prospect}</strong>
+                      <span class="badge badge-primary" style="font-size:10px;">${t.stage}</span>
+                    </div>
+                    <span style="font-size:11px; color:var(--slate);">${t.course} · Slot: ${t.preferredSlot} (CSR: ${t.assignedCsr})</span>
+                  </div>
+                  <button class="btn btn-primary btn-xs" onclick="Notifications.push('Trainer Matching', 'Assigning trainer for ${t.prospect}...', 'info')">Match Slot</button>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ROW 3: HR & STAFF PERFORMANCE + GOVERNANCE OVERVIEW -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          
+          <!-- HR & STAFF PERFORMANCE (PAY-013) -->
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:10px; border-bottom:1px solid #f1f5f9;">
+              <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Staff Delivery Rosters & Payroll (PAY-013)</h3>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('admin-hr-staff')">Rosters</button>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+              <div>
+                <strong style="font-size:14px; color:var(--navy-dark);">${k.activeStaff} Active Staff Members</strong>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">48 Trainers · 8 CSRs · 4 Reviewers · 2 Operations Managers</p>
+              </div>
+              <div style="text-align:right;">
+                <strong style="color:var(--primary); font-size:14px;">${k.approvedDeliveryHours} Approved Hours</strong>
+                <span style="font-size:11px; display:block; color:#166534;">Est. Payroll: PKR 404,800</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- GOVERNANCE, AUDIT & SECURITY (ADM-006) -->
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:10px; border-bottom:1px solid #f1f5f9;">
+              <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Business Governance & Audit (ADM-006)</h3>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('audit-logs')">Audit Trail</button>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+              <div>
+                <strong style="font-size:14px; color:var(--navy-dark);">${k.auditEventsLogged} Tamper-Evident Records</strong>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">${k.activeMfaSessions} Active MFA Sessions · 0 Security Violations</p>
+              </div>
+              <span class="badge badge-success">✓ Fully Compliant</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  // ============================================================================
+  // PLATFORM ADMIN UNIVERSAL WORKSPACE - ALL 16 SUB-SCREENS
+  // ============================================================================
+  adminWorkspace(route) {
+    const container = document.getElementById("admin-workspace-content");
+    if (!container) return;
+
+    const config = adminRouteDefinitions[route] || {
+      title: "Platform Administration",
+      scope: "Executive Operations Scope",
+      section: "ADMINISTRATION",
+      icon: "shield-check"
+    };
+
+    const wsLabel = document.getElementById("workspace-label");
+    const viewTitle = document.getElementById("view-title");
+    if (wsLabel) wsLabel.textContent = "Platform Admin portal";
+    if (viewTitle) viewTitle.textContent = config.title;
+
+    const data = db.adminData;
+    let viewContent = "";
+
+    // 1. CSR & SALES
+    if (route === "admin-csr-sales") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Trial Intake Pipeline</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">14 Pending Trials</h3>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Prospects</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">142 Leads</h3>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">CSR Commissions Due</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">PKR 142,500</h3>
+            </div>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Trial ID</th><th>Prospect Name</th><th>Course Requested</th><th>Preferred Slot</th><th>Assigned CSR</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                ${data.csrSales.map(t => `
+                  <tr>
+                    <td><code>${t.id}</code></td>
+                    <td><strong>${t.prospect}</strong></td>
+                    <td>${t.course}</td>
+                    <td>${t.preferredSlot}</td>
+                    <td>${t.assignedCsr}</td>
+                    <td><span class="badge badge-warning">${t.status}</span></td>
+                    <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('CSR Match', 'Matching trainer for ${t.prospect}...', 'info')">Match Slot</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. FINANCE & PAYMENTS
+    else if (route === "admin-finance-payments") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Payment ID</th><th>Learner</th><th>Payer</th><th>Course</th><th>Amount</th><th>Method & Ref</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                ${data.financePayments.map(p => `
+                  <tr>
+                    <td><code>${p.id}</code></td>
+                    <td><strong>${p.learner}</strong></td>
+                    <td>${p.payer}</td>
+                    <td>${p.course}</td>
+                    <td><strong style="color:#166534;">${p.amount}</strong></td>
+                    <td>${p.method} (<code>${p.ref}</code>)</td>
+                    <td><span class="badge badge-warning">${p.status}</span></td>
+                    <td>
+                      <div style="display:flex; gap:4px;">
+                        <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Notifications.push('Payment Approved', 'Payment ${p.id} approved. Access term granted.', 'success')">Approve</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Evidence View', 'Opening ${p.receipt}...', 'info')">Evidence</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. MEMBERSHIPS & RENEWALS
+    else if (route === "admin-memberships-renewals") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Enrolment ID</th><th>Learner</th><th>Course</th><th>Term Expiry</th><th>Credits Remaining</th><th>Renewal Risk Status</th><th>Payer Contact</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                ${data.membershipsRenewals.map(m => `
+                  <tr>
+                    <td><code>${m.id}</code></td>
+                    <td><strong>${m.learner}</strong></td>
+                    <td>${m.course}</td>
+                    <td>${m.termExpiry}</td>
+                    <td><strong>${m.creditsRemaining} Credits</strong></td>
+                    <td><span class="badge ${m.renewalStatus.includes('Urgent') ? 'badge-error' : 'badge-warning'}">${m.renewalStatus}</span></td>
+                    <td>${m.payerContact}</td>
+                    <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Reminder Sent', 'Renewal invoice sent to ${m.learner}...', 'success')">Send Reminder</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. ACADEMIC DELIVERY
+    else if (route === "admin-academic-delivery") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Class ID</th><th>Title</th><th>Trainer</th><th>Time</th><th>Participants</th><th>Room Telemetry</th><th>Report Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                ${data.academicDelivery.map(c => `
+                  <tr>
+                    <td><code>${c.id}</code></td>
+                    <td><strong>${c.title}</strong></td>
+                    <td>${c.trainer}</td>
+                    <td>${c.time}</td>
+                    <td>${c.participants} Learners</td>
+                    <td><span class="badge badge-success">${c.roomStatus}</span></td>
+                    <td><span class="badge ${c.reportStatus.includes('Due') ? 'badge-error' : 'badge-primary'}">${c.reportStatus}</span></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Room Telemetry', 'Inspecting Daily.co room ${c.id}...', 'info')">Inspect</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. HR & STAFF
+    else if (route === "admin-hr-staff") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Staff ID</th><th>Name</th><th>Role</th><th>Department</th><th>Compensation Model</th><th>Hours / Output</th><th>Compliance</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                ${data.hrStaff.map(s => `
+                  <tr>
+                    <td><code>${s.id}</code></td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.role}</td>
+                    <td>${s.dept}</td>
+                    <td>${s.hourlyRate || s.baseSalary}</td>
+                    <td><strong>${s.hoursLogged ? `${s.hoursLogged} Hours` : s.commissionDue}</strong></td>
+                    <td><span class="badge badge-success">${s.complianceStatus}</span></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Staff Record', 'Opening ${s.name} HR record...', 'info')">Profile</button></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. BUSINESS GOVERNANCE & OTHERS
+    else if (route === "reference-data" || route === "business-rules") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Controlled Business Rules & Policies (ADM-002)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Versioned, effective-dated operational policies.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Rule Proposed', 'New rule change proposal opened...', 'info')"><i data-lucide="plus"></i> Propose Rule Change</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Rule ID</th><th>Policy Name</th><th>Current Enforced Value</th><th>Effective Date</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>RULE-01</code></td><td>FLOW-017 Reschedule Notice Window</td><td>Minimum 4 Hours Before Occurrence</td><td>01 Aug 2026</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><code>RULE-02</code></td><td>FLOW-013 Manual Payment Review SLA</td><td>Review Within 2 Business Hours</td><td>15 Jul 2026</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><code>RULE-03</code></td><td>FLOW-038 Renewal Reminder Schedule</td><td>14 Days, 7 Days, and 2 Days Before Expiry</td><td>01 Jul 2026</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "imports" || route === "exports") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-success" style="margin-bottom:6px;">STAGED INTAKE BATCH</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Fall 2026 K-12 Student Intake Batch (ADM-004)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">120 Rows Validated · 0 Errors · Source Checksum: <code>sha256-8a901</code></p>
+            </div>
+            <button class="btn btn-primary" onclick="Notifications.push('Import Committed', '120 student records committed to database.', 'success')">Commit Batch</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Audit ID</th><th>Timestamp</th><th>Actor</th><th>Action Event</th><th>Target Entity</th><th>Severity</th></tr>
+              </thead>
+              <tbody>
+                ${db.auditLogs.map(a => `
+                  <tr>
+                    <td><code>${a.id}</code></td>
+                    <td>${a.timestamp}</td>
+                    <td><strong>${a.actorName}</strong></td>
+                    <td>${a.action}</td>
+                    <td><code>${a.entityId || 'SYS'}</code></td>
+                    <td><span class="badge ${a.severity === 'High' ? 'badge-error' : 'badge-secondary'}">${a.severity}</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Workspace Wrapper
+    container.innerHTML = `
+      <div class="creator-workspace-deck" style="padding: 24px 32px;">
+        
+        <!-- HEADER & BREADCRUMB ROW -->
+        <div class="creator-deck-header" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; gap:20px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate); font-weight:700; text-transform:uppercase; margin-bottom:6px;">
+              <span>Platform Admin</span>
+              <span>&rsaquo;</span>
+              <span style="color:var(--primary);">${config.section}</span>
+            </div>
+            <h2 class="creator-deck-title" style="font:800 26px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0; letter-spacing:-0.4px;">
+              ${config.title}
+            </h2>
+            <p class="creator-deck-subtitle" style="font-size:14px; color:var(--slate); margin:0;">
+              ${config.scope}
+            </p>
+          </div>
+          <div class="creator-deck-actions" style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-secondary" onclick="Router.navigate('dashboard')" style="font-weight:600;"><i data-lucide="arrow-left"></i> Enterprise Dashboard</button>
+            <button class="btn btn-primary" onclick="Router.navigate('admin-finance-payments')" style="font-weight:600;"><i data-lucide="receipt"></i> Review Payments</button>
+          </div>
+        </div>
+
+        <!-- SCOPE NOTICE -->
+        <div class="banner-box" style="border-left:4px solid var(--primary); background:#ffffff; border-radius:10px; padding:16px 20px; box-shadow:var(--shadow-subtle); margin-bottom:24px; display:flex; align-items:center; gap:16px;">
+          <div style="background:#e0e7ff; color:var(--primary); width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <i data-lucide="shield-check" style="width:22px; height:22px;"></i>
+          </div>
+          <div>
+            <strong style="color:var(--navy-dark); font-size:14px;">Enterprise Operations Command Authority</strong>
+            <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+              Governed by FRS v2.2, Entity Model v1.2, and System Flows v1.2. All actions are written to immutable audit ledgers.
+            </p>
+          </div>
+        </div>
+
+        <!-- VIEW CONTENT -->
+        ${viewContent}
+
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
 
   dashboard() {
     // If active role has a dedicated dashboard, route to it
+    if (Simulator.activeRole === "platform_admin") {
+      this.adminDashboard();
+      return;
+    }
     if (Simulator.activeRole === "learner") {
       this.learnerDashboard();
       return;

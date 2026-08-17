@@ -48,7 +48,36 @@
         <!-- Dashboard Section -->
         <div class="nav-item active" data-route="dashboard" id="nav-dashboard">
           <i data-lucide="layout-dashboard"></i>
-          <span>Dashboard</span>
+          <span>Enterprise Dashboard</span>
+        </div>
+
+        <!-- Group: Business Oversight -->
+        <div class="nav-group">
+          <div class="nav-group-title">Business Oversight</div>
+          <div class="nav-item" data-route="admin-csr-sales" id="nav-admin-csr-sales">
+            <i data-lucide="funnel"></i>
+            <span>CSR & Sales Pipeline</span>
+            <span class="badge badge-primary">14 Trials</span>
+          </div>
+          <div class="nav-item" data-route="admin-finance-payments" id="nav-admin-finance-payments">
+            <i data-lucide="receipt"></i>
+            <span>Finance & Payments</span>
+            <span class="badge badge-warning">7 Pending</span>
+          </div>
+          <div class="nav-item" data-route="admin-memberships-renewals" id="nav-admin-memberships-renewals">
+            <i data-lucide="refresh-cw"></i>
+            <span>Memberships & Renewals</span>
+            <span class="badge badge-error">18 Expiring</span>
+          </div>
+          <div class="nav-item" data-route="admin-academic-delivery" id="nav-admin-academic-delivery">
+            <i data-lucide="presentation"></i>
+            <span>Academic Delivery</span>
+            <span class="badge badge-primary">16 Classes</span>
+          </div>
+          <div class="nav-item" data-route="admin-hr-staff" id="nav-admin-hr-staff">
+            <i data-lucide="users-round"></i>
+            <span>HR & Staff Rosters</span>
+          </div>
         </div>
 
         <!-- Group: User & Access -->
@@ -56,147 +85,57 @@
           <div class="nav-group-title">User & Access</div>
           <div class="nav-item" data-route="users" id="nav-users">
             <i data-lucide="users"></i>
-            <span>Users</span>
+            <span>User Directory</span>
           </div>
           <div class="nav-item" data-route="invitations" id="nav-invitations">
             <i data-lucide="mail-open"></i>
-            <span>Invitations</span>
+            <span>Staff Invitations</span>
           </div>
           <div class="nav-item" data-route="security-sessions" id="nav-security-sessions">
             <i data-lucide="shield-alert"></i>
-            <span>Security & Sessions</span>
+            <span>Security & Sessions (MFA)</span>
           </div>
           <div class="nav-item" data-route="roles-permissions" id="nav-roles-permissions">
             <i data-lucide="user-check"></i>
-            <span>Roles & Permissions</span>
+            <span>Roles & Permissions (FLOW-004)</span>
           </div>
         </div>
 
-        <!-- Group: Configuration -->
+        <!-- Group: Business Governance -->
         <div class="nav-group">
-          <div class="nav-group-title">Configuration</div>
+          <div class="nav-group-title">Business Governance</div>
           <div class="nav-item" data-route="reference-data" id="nav-reference-data">
             <i data-lucide="database"></i>
-            <span>Reference Data</span>
-          </div>
-          <div class="nav-item" data-route="system-settings" id="nav-system-settings">
-            <i data-lucide="settings-2"></i>
-            <span>System Settings</span>
+            <span>Controlled Reference Data</span>
           </div>
           <div class="nav-item" data-route="business-rules" id="nav-business-rules">
             <i data-lucide="scale"></i>
-            <span>Business Rules</span>
+            <span>Versioned Business Rules</span>
           </div>
-        </div>
-
-        <!-- Group: Integrations -->
-        <div class="nav-group">
-          <div class="nav-group-title">Integrations</div>
-          <div class="nav-item" data-route="providers" id="nav-providers">
-            <i data-lucide="cable"></i>
-            <span>Providers</span>
-          </div>
-          <div class="nav-item" data-route="webhooks" id="nav-webhooks">
-            <i data-lucide="webhook"></i>
-            <span>Webhooks</span>
-          </div>
-          <div class="nav-item" data-route="integration-health" id="nav-integration-health">
-            <i data-lucide="activity"></i>
-            <span>Integration Health</span>
-          </div>
-        </div>
-
-        <!-- Group: Jobs & Exceptions -->
-        <div class="nav-group">
-          <div class="nav-group-title">Jobs & Exceptions</div>
-          <div class="nav-item" data-route="queue-jobs" id="nav-queue-jobs">
-            <i data-lucide="list-todo"></i>
-            <span>Queue Jobs</span>
-          </div>
-          <div class="nav-item" data-route="failed-jobs" id="nav-failed-jobs">
-            <i data-lucide="alert-triangle"></i>
-            <span>Failed Jobs</span>
-            <span class="badge badge-error count-failed-jobs">0</span>
-          </div>
-          <div class="nav-item" data-route="dead-letters" id="nav-dead-letters">
-            <i data-lucide="skull"></i>
-            <span>Dead Letters</span>
-            <span class="badge badge-error count-dead-letters">0</span>
-          </div>
-          <div class="nav-item" data-route="integration-exceptions" id="nav-integration-exceptions">
-            <i data-lucide="unplug"></i>
-            <span>Exceptions</span>
-            <span class="badge badge-warning count-integration-exceptions">0</span>
-          </div>
-        </div>
-
-        <!-- Group: Data Operations -->
-        <div class="nav-group">
-          <div class="nav-group-title">Data Operations</div>
           <div class="nav-item" data-route="imports" id="nav-imports">
             <i data-lucide="file-input"></i>
-            <span>Imports</span>
-            <span class="badge badge-warning count-failed-imports">0</span>
+            <span>Staged Business Imports</span>
           </div>
           <div class="nav-item" data-route="exports" id="nav-exports">
             <i data-lucide="file-output"></i>
-            <span>Exports</span>
-            <span class="badge badge-primary count-pending-exports">0</span>
+            <span>Controlled Data Exports</span>
           </div>
-        </div>
-
-        <!-- Release Controls -->
-        <div class="nav-group">
-          <div class="nav-group-title">Release Controls</div>
-          <div class="nav-item" data-route="feature-flags" id="nav-feature-flags">
-            <i data-lucide="flag"></i>
-            <span>Feature Flags</span>
-          </div>
-        </div>
-
-        <div class="nav-group nav-group-primary">
           <div class="nav-item" data-route="audit-logs" id="nav-audit-logs">
             <i data-lucide="file-spreadsheet"></i>
-            <span>Audit Logs</span>
+            <span>Searchable Business Audit</span>
           </div>
-        </div>
-
-        <div class="nav-group nav-group-primary">
-          <div class="nav-item" data-route="system-status" id="nav-system-status">
-            <i data-lucide="cpu"></i>
-            <span>System Status</span>
-          </div>
-        </div>
-
-        <!-- Data Lifecycle -->
-        <div class="nav-group">
-          <div class="nav-group-title">Data Lifecycle</div>
           <div class="nav-item" data-route="retention-policies" id="nav-retention-policies">
             <i data-lucide="history"></i>
-            <span>Retention</span>
+            <span>Data Retention & Archive</span>
           </div>
-          <div class="nav-item" data-route="archive" id="nav-archive">
-            <i data-lucide="archive"></i>
-            <span>Archive</span>
-          </div>
-          <div class="nav-item" data-route="legal-holds" id="nav-legal-holds">
-            <i data-lucide="gavel"></i>
-            <span>Legal Hold</span>
-          </div>
-          <div class="nav-item" data-route="privacy-requests" id="nav-privacy-requests">
-            <i data-lucide="eye-off"></i>
-            <span>Privacy Requests</span>
-          </div>
-        </div>
-
-        <!-- Support View -->
-        <div class="nav-group nav-group-primary">
           <div class="nav-item" data-route="support-access" id="nav-support-access">
             <i data-lucide="heart-handshake"></i>
-            <span>Support Access</span>
+            <span>Support Case Routing</span>
           </div>
         </div>
       </nav>
+
+      <nav class="sidebar-nav coo-sidebar-nav hidden" id="coo-nav"
 
       <nav class="sidebar-nav coo-sidebar-nav hidden" id="coo-nav" aria-label="COO navigation">
         <div class="nav-item active" data-route="dashboard" id="coo-nav-dashboard"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></div>
@@ -2559,6 +2498,7 @@
       </section>
 
       <!-- VIEW: LEARNER WORKSPACE -->
+      <section class="content-view hidden" id="view-admin-workspace"><div id="admin-workspace-content"></div></section>
       <section class="content-view hidden" id="view-learner-workspace">
         <div id="learner-workspace-content"></div>
       </section>

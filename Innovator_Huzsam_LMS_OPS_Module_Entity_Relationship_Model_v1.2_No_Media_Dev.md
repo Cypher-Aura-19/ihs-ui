@@ -1,6 +1,6 @@
 ---
 title: "Innovator Huzsam LMS & Operations System - Module, Entity and Relationship Model"
-version: "1.0"
+version: "1.2"
 date: "2026-08-10"
 format: "Markdown"
 scope: "LMS+OPS system only; public website and landing-page data model excluded"
@@ -10,19 +10,19 @@ scope: "LMS+OPS system only; public website and landing-page data model excluded
 
 _LMS+OPS System Only | Conceptual domain model and implementation planning reference_
 
-> This document lists the proposed modules, domain entities/classes, relationships, lifecycle states, constraints and end-to-end flows for the new Innovator Huzsam LMS & Operations System. It is designed to sit beside the LMS+OPS Functional Requirements Specification v2.0 and to guide schema design, Supabase RLS design, API/service boundaries, UI planning and test-case development.
+> This document lists the proposed modules, domain entities/classes, relationships, lifecycle states, constraints and end-to-end flows for the new Innovator Huzsam LMS & Operations System. It is designed to sit beside the LMS+OPS Functional Requirements Specification v2.2 and to guide schema design, Supabase RLS design, API/service boundaries, UI planning and test-case development.
 
 | Document field | Value |
 | --- | --- |
-| Version | 1.0 |
-| Date | 10 August 2026 |
+| Version | 1.2 |
+| Date | 17 August 2026 |
 | Output format | Markdown |
-| System scope | LMS portal, learning delivery, operations, finance, payroll, HR, Media Department, Development Department and administration |
+| System scope | LMS portal, learning delivery, operations, finance, payroll, HR, CSR/support and business administration |
 | Explicit exclusion | Public website, marketing pages, SEO, public website CMS and landing-page-only features |
 | Tech context | Next.js App Router + TypeScript, Supabase Auth/PostgreSQL/RLS/Storage/Realtime/Queues/Cron, Daily.co, Resend, manual payments at launch |
 | Model level | Conceptual/logical domain model, not a final physical database migration |
-| Entity count | 195 conceptual entities/classes |
-| Module count | 20 LMS+OPS modules |
+| Entity count | 179 conceptual entities/classes |
+| Module count | 18 LMS+OPS modules |
 
 ## 1. Purpose and Source Basis
 
@@ -40,7 +40,7 @@ The model is deliberately modular. A single deployable Next.js/Supabase product 
 
 ### 1.2 Source basis
 
-- LMS+OPS Functional Requirements Specification v2.0.
+- LMS+OPS Functional Requirements Specification v2.2.
 - Current LMS & Operations System Analysis and Next-System Direction.
 - IHS Portal - Next Development Requirements.
 - Confirmed stack and product decisions in this project: Next.js, Supabase, Daily.co, Resend and manual receipt-based payment approval at launch.
@@ -63,7 +63,7 @@ The model is deliberately modular. A single deployable Next.js/Supabase product 
 | Make multi-course learning foundational | A learner may hold many enrolments across live classes, milestone courses and K-12 subjects. Dashboards and permissions must assume many active learning contexts. |
 | Model group classes properly | A class occurrence has a participant list. Attendance, credit debit and notes are participant-specific. |
 | Keep external providers behind adapters | Daily.co, Resend and future payment processors create evidence/events, but internal domain records remain source of truth. |
-| Default to private storage and scoped access | Receipts, resources, submissions, HR documents, media files and exports are stored privately and served through authorized signed access. |
+| Default to private storage and scoped access | Receipts, resources, learner submissions, HR documents and exports are stored privately and served through authorized signed access. |
 | Prefer archive/retention to destructive delete | Learner history, financial records, payroll, grades, attendance and HR documents should be archived/retained, not silently deleted. |
 
 ## 3. High-Level Domain Map
@@ -89,15 +89,13 @@ flowchart LR
   PAY --> FIN
   MSG[Communication & Notifications] --> IAM
   MSG --> ENR
-  RES[Resources & Storage] --> CAT
+  RES[Resources & Learning Assets] --> CAT
   RES --> ASM
   RES --> COM
   RES --> HR[HR]
   CSR[CSR & Commissions] --> COM
   CSR --> PAY
-  MED[Media Operations] --> PAY
-  DEV[Development Operations] --> DSH
-  ADM[Administration & Platform Ops] --> IAM
+  ADM[Business Administration] --> IAM
   ADM --> FND[Foundation]
   FND --> ADM
 ```
@@ -106,7 +104,7 @@ flowchart LR
 
 | # | Code | Module | Purpose | Primary owned entities |
 | --- | --- | --- | --- | --- |
-| 01 | FND | Platform Foundation | Defines the technical and operational foundations that all LMS+OPS modules depend on: organization scope, audit, jobs, files, id generation, reference data, integration adapters, and platform-wide events. | Organization, Branch, ReferenceDataSet, ReferenceDataValue, SystemSetting, ... |
+| 01 | FND | Application Foundation | Defines the application and business foundations that all LMS+OPS modules depend on: organization scope, audit, files, id generation, reference data, domain events and business configuration boundaries. Low-level infrastructure and provider maintenance are implementation concerns outside Admin-facing scope. | Organization, Branch, ReferenceDataSet, ReferenceDataValue, SystemSetting, ... |
 | 02 | IAM | Identity, Authentication and Authorization | Separates account identity from learner, staff, guardian, payer and operational relationships. Supports public learner accounts, staff invitations, Google authentication, email/password authentication, scoped roles and future roles. | Person, Account, AuthenticationIdentity, ContactMethod, Role, ... |
 | 03 | PORT | Learner Portal Catalogue and Free Users | Allows registered free learners to explore approved portal catalogue entries, previews, free resources and trial requests before purchasing membership. This is inside the LMS portal, not a marketing website module. | PortalCatalogueEntry, PreviewAccessRule, FreeAccessGrant, TrialRequest, TrialPreference, ... |
 | 04 | CAT | Catalogue, Content Authoring, Products and Pricing | Defines the academic/course catalogue, course versions, content structure, reusable products, variants, bundles, pricing and publication lifecycle. | Course, CourseVersion, SyllabusNode, Lesson, LearningActivity, ... |
@@ -116,16 +114,14 @@ flowchart LR
 | 08 | MILE | Milestone-Based Self-Paced Learning | Supports fixed milestone training where learners progress through levels, milestones, lessons, activities, quizzes, assignments and voice tasks with automated and/or trainer-reviewed completion rules. | Level, Milestone, LearnerMilestoneState, LessonCompletion, ProgressEvent, ... |
 | 09 | K12 | K-12 Tuition | Supports grade/year-based subject tuition, subject products, bundles, syllabi, live sections, guardians, assessment categories, report cards and teacher grading. | AcademicYear, GradeLevel, SubjectCourse, K12Section, SyllabusOutline, ... |
 | 10 | ASM | Assessments, Submissions and Gradebook | Provides reusable quizzes, assignments, voice submissions, rubrics, grading, feedback and gradebooks across live classes, milestone learning and K-12 tuition. | QuestionBank, Question, QuestionVersion, Assessment, AssessmentItem, ... |
-| 11 | RES | Resources and Media Assets | Manages reliable private file/media storage for learning resources, receipts, submissions, HR documents, media department work and operational attachments. | ResourceAsset, ResourceVersion, StorageObjectMetadata, UploadIntent, FileAccessGrant, ... |
+| 11 | RES | Resources and Learning Assets | Manages reliable private file/media storage for learning resources, receipts, submissions, HR documents, operational attachments. | ResourceAsset, ResourceVersion, StorageObjectMetadata, UploadIntent, FileAccessGrant, ... |
 | 12 | MSG | Communication, Cases and Notifications | Provides course/context-aware chat, support cases, complaints, departmental communications, announcements, notification preferences and Resend-backed transactional email. | Conversation, ConversationParticipant, Message, MessageAttachment, Case, ... |
 | 13 | DSH | Role Dashboards and Analytics | Provides role-specific dashboards, operational drill-downs, analytics snapshots and exportable reports based on source domains, without becoming the source of truth. | DashboardDefinition, DashboardWidget, MetricSnapshot, AnalyticsView, ReportExport, ... |
 | 14 | FIN | Finance | Tracks approved learner payments, allocations, refunds, expenses, reconciliation, finance periods and accounting-style postings independently from enrolment, classes and payroll. | FinanceAccount, FinanceTransaction, FinanceLine, Expense, ExpenseReceiptFile, ... |
 | 15 | PAY | Payroll and Compensation | Generates payable earning items from approved delivery, commissions, media work and salary adjustments; manages payroll runs, approval, settlement and pay statements independently from class status and learner payments. | RateAgreement, RateRule, EarningItem, PayrollPeriod, PayrollRun, ... |
 | 16 | HR | HR Profiles, Documents and Letters | Manages staff profiles, onboarding/offboarding, verified employee information, relatives/emergency contacts, documents, letters/certificates and HR events. | Department, EmploymentRecord, EmployeeDetailEvent, EmergencyContact, StaffDocument, ... |
 | 17 | CSR | CSR Enrolments and Commission | Tracks leads, follow-ups, trial conversions, CSR-attributed enrolments, sales values, commissions, verification and payout eligibility. | Lead, LeadEvent, FollowUpTask, CSRAttribution, CommissionPlan, ... |
-| 18 | MED | Media Department Operations | Moves media team work from spreadsheets into the portal: assignments, editor submissions, reviews, revisions, quality ratings, video wages, analytics and payroll integration. | MediaProject, MediaTask, MediaSubmission, MediaReview, MediaRevisionRequest, ... |
-| 19 | DEV | Development Department Operations | Tracks development tasks, bugs, features, assignments, progress updates, testing status, deployment status and CTO/developer dashboards. | DevelopmentProject, DevelopmentItem, DevelopmentUpdate, BugReport, TestingRecord, ... |
-| 20 | ADM | Administration and Platform Operations | Provides administrative controls for configuration, permissions, integrations, imports/exports, audit review, retention, queues, support tooling and operational safety. | AdminAction, PermissionChangeRequest, IntegrationConfiguration, WebhookEndpoint, WebhookEvent, ... |
+| 18 | ADM | Business Administration and Operational Governance | Provides business-facing controls for reference data, safe business rules, approval thresholds, support ownership routing, staged business imports/exports and operational audit review. It excludes platform integrations, technical provider events, infrastructure/job maintenance, business release controls, secrets and deployment controls from the Admin role. | BusinessConfigChange, BusinessRuleVersion, ApprovalPolicy, BusinessAuditView, BusinessImportBatch, ... |
 
 ## 5. System-Wide Entity Registry
 
@@ -142,12 +138,12 @@ The following table is the consolidated conceptual entity/class inventory. Detai
 | 007 | FND | `AuditEvent` | Immutable record of sensitive actions and lifecycle transitions. |
 | 008 | FND | `DomainEvent` | Internal event emitted by domain workflows. |
 | 009 | FND | `OutboxJob` | Durable job generated from domain events. |
-| 010 | FND | `IntegrationLog` | Normalized record of external API request/response or webhook processing. |
+| 010 | FND | `ProviderEventRecord` | Normalized record of external API request/response or provider event processing. |
 | 011 | IAM | `Person` | Human identity independent from login method or business relationship. |
 | 012 | IAM | `Account` | Login-capable account linked to a person. |
 | 013 | IAM | `AuthenticationIdentity` | External or password identity used to authenticate. |
 | 014 | IAM | `ContactMethod` | Email, phone, WhatsApp or address/contact record. |
-| 015 | IAM | `Role` | Permission template such as COO, Operational Manager, CSR, Trainer, Student, Guardian, Finance, HR, Media Head, Editor, CTO or Developer. |
+| 015 | IAM | `Role` | Permission template such as COO, Operational Manager, CSR, Trainer, Student, Guardian, Finance, Payroll, HR, Course Creator or Admin. |
 | 016 | IAM | `Permission` | Atomic capability such as payment.review, grade.publish or payroll.settle. |
 | 017 | IAM | `RolePermission` | Join record between role and permission. |
 | 018 | IAM | `RoleAssignment` | Scoped assignment of a role to an account. |
@@ -203,7 +199,7 @@ The following table is the consolidated conceptual entity/class inventory. Detai
 | 068 | LIVE | `ClassParticipant` | Learner/staff participant in an occurrence. |
 | 069 | LIVE | `MeetingRoom` | Daily.co room or manual fallback meeting context. |
 | 070 | LIVE | `MeetingToken` | Short-lived participant token. |
-| 071 | LIVE | `MeetingProviderEvent` | Webhook or API event from Daily.co. |
+| 071 | LIVE | `MeetingProviderEvent` | Provider Event or API event from Daily.co. |
 | 072 | LIVE | `AttendanceRecord` | Reconciled attendance for participant. |
 | 073 | LIVE | `TrainerClassReport` | Educational report submitted after class. |
 | 074 | LIVE | `DeliveryReview` | Operations approval/rejection record for class delivery. |
@@ -303,31 +299,15 @@ The following table is the consolidated conceptual entity/class inventory. Detai
 | 168 | CSR | `CommissionPlan` | Rules for calculating CSR commission. |
 | 169 | CSR | `CommissionItem` | Potential/payable commission. |
 | 170 | CSR | `CommissionReview` | COO/authorized review of commission. |
-| 171 | MED | `MediaProject` | Campaign, channel or content project. |
-| 172 | MED | `MediaTask` | Assigned video/content editing task. |
-| 173 | MED | `MediaSubmission` | Editor submitted file/link/details. |
-| 174 | MED | `MediaReview` | Review decision/comment/rating. |
-| 175 | MED | `MediaRevisionRequest` | Requested changes after review. |
-| 176 | MED | `MediaWageRule` | Pay rule for media work/video. |
-| 177 | MED | `MediaEarningSource` | Approved media work prepared for payroll. |
-| 178 | MED | `MediaAnalyticsSnapshot` | Aggregated media counts/ratings/wages. |
-| 179 | DEV | `DevelopmentProject` | Product/engineering project area. |
-| 180 | DEV | `DevelopmentItem` | Task, bug or feature. |
-| 181 | DEV | `DevelopmentUpdate` | Progress note/update on item. |
-| 182 | DEV | `BugReport` | Detailed bug report. |
-| 183 | DEV | `TestingRecord` | QA/testing result. |
-| 184 | DEV | `DeploymentRecord` | Deployment/release evidence. |
-| 185 | DEV | `Blocker` | Blocked reason/dependency. |
-| 186 | ADM | `AdminAction` | High-risk administrative command record. |
-| 187 | ADM | `PermissionChangeRequest` | Request/approval for role or permission change. |
-| 188 | ADM | `IntegrationConfiguration` | Configured provider settings metadata. |
-| 189 | ADM | `WebhookEndpoint` | Registered webhook handler metadata. |
-| 190 | ADM | `WebhookEvent` | Inbound webhook record. |
-| 191 | ADM | `JobQueueItem` | Scheduled/retryable work item. |
-| 192 | ADM | `DataImportBatch` | Bulk import batch. |
-| 193 | ADM | `DataExportRequest` | Controlled export request. |
-| 194 | ADM | `RetentionPolicy` | Data retention/archive rule. |
-| 195 | ADM | `SupportImpersonationSession` | Temporary support access session. |
+| 171 | ADM | `BusinessConfigChange` | Proposed or approved business configuration change with reason and effective date. |
+| 172 | ADM | `BusinessRuleVersion` | Versioned business rule such as cancellation window, reminder timing, payment review threshold or support routing policy. |
+| 173 | ADM | `ApprovalPolicy` | Business approval rule for payment, schedule, payroll, HR, course or finance decisions. |
+| 174 | ADM | `BusinessAuditView` | Permissioned view into business audit events for source records. |
+| 175 | ADM | `BusinessImportBatch` | Staged import of approved business records. |
+| 176 | ADM | `BusinessExportRequest` | Controlled export of business data under minimization rules. |
+| 177 | ADM | `ArchiveRequest` | Business archive/retention request with policy check. |
+| 178 | ADM | `SupportRoutingPolicy` | Defines default owner/queue for learner, teacher and operational support cases. |
+| 179 | ADM | `AdminNote` | Scoped administrative note attached to a business record. |
 
 ## 6. Canonical Relationship Map
 
@@ -446,7 +426,7 @@ erDiagram
 | RLS and server authorization | Every exposed entity is protected by Supabase RLS plus server-side permission and scope checks. |
 | Private storage | Files are private by default, validated by metadata/checksum/scan status and served through short-lived signed access. |
 | Auditability | Role changes, approvals, financial actions, grade changes, payroll changes, HR events, file removal and data exports require immutable AuditEvent records. |
-| Idempotency | External webhooks, payment approval, entitlement debits, meeting events, email sending and payroll earning generation require idempotency keys/unique constraints. |
+| Idempotency | External provider events, payment approval, entitlement debits, meeting events, email sending and payroll earning generation require idempotency keys/unique constraints. |
 | No hidden coupling | A class status cannot be a payroll status; a payment label cannot be a credit ledger; a receipt cannot be a payment; a learner cannot be a single programme record. |
 
 ## 8. Lifecycle State Catalogue
@@ -472,14 +452,14 @@ erDiagram
 | `PayrollRun` | Draft -> Submitted -> Approved/Rejected -> Settled -> Posted -> Locked |
 | `MediaTask` | Assigned -> In Progress -> Submitted -> Under Review -> Revision Required/Approved -> Paid |
 | `DevelopmentItem` | Planned -> Assigned -> In Progress -> Testing -> Completed -> Deployed -> Closed |
-| `WebhookEvent` | Received -> Verified -> Processing -> Processed/Failed -> Retried/Dead Letter |
+| `ProviderEvent` | Received -> Verified -> Processing -> Processed/Failed -> Retried/Dead Letter |
 
 ## 9. Detailed Module Models
 
 
-### 9.1 FND - Platform Foundation
+### 9.1 FND - Application Foundation
 
-**Purpose:** Defines the technical and operational foundations that all LMS+OPS modules depend on: organization scope, audit, jobs, files, id generation, reference data, integration adapters, and platform-wide events.
+**Purpose:** Defines the application and business foundations that all LMS+OPS modules depend on: organization scope, audit, files, id generation, reference data, domain events and business configuration boundaries. Low-level infrastructure and provider maintenance are implementation concerns outside Admin-facing scope.
 
 #### Owned entities/classes
 
@@ -494,13 +474,13 @@ erDiagram
 | `AuditEvent` | Immutable record of sensitive actions and lifecycle transitions. | id, actor_account_id, action, entity_type, entity_id, before_json, after_json, source_ip, created_at | Referenced by approvals, payments, role changes, grades, payroll, files and exports. | Append-only; no update/delete except exceptional system retention policy. |
 | `DomainEvent` | Internal event emitted by domain workflows. | id, event_type, aggregate_type, aggregate_id, payload_json, idempotency_key, created_at | Feeds outbox, notifications, read models and integrations. | Idempotency key must be unique for externally repeated events. |
 | `OutboxJob` | Durable job generated from domain events. | id, domain_event_id, job_type, payload_json, status, attempts, next_run_at | Used for emails, meeting provisioning, dashboard rollups, file processing and exports. | Must be retryable and idempotent. |
-| `IntegrationLog` | Normalized record of external API request/response or webhook processing. | id, provider, direction, external_id, status, request_hash, response_code, processed_at | Used for Daily.co, Resend and future payment processors. | Never store raw secrets, tokens or excessive personal data. |
+| `ProviderEventRecord` | Normalized record of external API request/response or provider event processing. | id, provider, direction, external_id, status, request_hash, response_code, processed_at | Used for Daily.co, Resend and future payment processors. | Never store raw secrets, tokens or excessive personal data. |
 
 #### Relationships and cardinalities
 
 - Organization 1 -> many Branch, Account, Course, Product, Order, Enrolment, PayrollRun, AuditEvent.
 - DomainEvent 1 -> zero or many OutboxJob records.
-- IntegrationLog may reference any business entity through provider, aggregate_type and aggregate_id.
+- ProviderEventRecord may reference any business entity through provider, aggregate_type and aggregate_id.
 - FeatureFlag and SystemSetting are read by application services but must not replace domain records.
 
 #### Module constraints and invariants
@@ -514,7 +494,7 @@ erDiagram
 #### Main flows
 
 - Reference data change: Draft value -> Review if high impact -> Active -> Archived, preserving historical use.
-- Background processing: Domain event -> Outbox job -> Worker claim -> Provider/action -> Integration log -> Success/retry/dead-letter.
+- Background processing: Domain event -> Outbox job -> Worker claim -> Provider/action -> Provider event record -> Success/retry/dead-letter.
 
 ### 9.2 IAM - Identity, Authentication and Authorization
 
@@ -528,7 +508,7 @@ erDiagram
 | `Account` | Login-capable account linked to a person. | id, person_id, primary_email, auth_user_id, status, last_login_at | Has authentication identities, sessions and role assignments. | One active Supabase auth user maps to one Account; account may be disabled without deleting Person. |
 | `AuthenticationIdentity` | External or password identity used to authenticate. | id, account_id, provider, provider_subject, email, verified_at | Supports Supabase email/password, Google and future channels. | Unique per provider + provider_subject; merging identities requires controlled account-linking. |
 | `ContactMethod` | Email, phone, WhatsApp or address/contact record. | id, person_id, type, value, country_code, verified_at, is_primary | Used for notifications, recovery, guardians and HR emergency details. | Verification state is stored separately from raw contact value. |
-| `Role` | Permission template such as COO, Operational Manager, CSR, Trainer, Student, Guardian, Finance, HR, Media Head, Editor, CTO or Developer. | id, key, label, description, active | Assigned through RoleAssignment. | Roles are templates, not direct authorization by themselves. |
+| `Role` | Permission template such as COO, Operational Manager, CSR, Trainer, Student, Guardian, Finance, Payroll, HR, Course Creator or Admin. | id, key, label, description, active | Assigned through RoleAssignment. | Roles are templates, not direct authorization by themselves. |
 | `Permission` | Atomic capability such as payment.review, grade.publish or payroll.settle. | id, key, module, action, description | Linked to roles and direct exceptions. | Permission names are stable and never reused for different behavior. |
 | `RolePermission` | Join record between role and permission. | id, role_id, permission_id, condition_json | Determines default role capabilities. | High-risk permissions require explicit review even if role includes them. |
 | `RoleAssignment` | Scoped assignment of a role to an account. | id, account_id, role_id, scope_type, scope_id, effective_from, effective_to, status | Authorizes actions in organization, department, course, cohort or learner scope. | Expired/revoked assignments deny access immediately. |
@@ -733,7 +713,7 @@ erDiagram
 | `ClassParticipant` | Learner/staff participant in an occurrence. | id, occurrence_id, person_id, enrolment_id, membership_term_id, participant_role, status | Owns individual attendance and entitlement effects. | Required for true group classes. |
 | `MeetingRoom` | Daily.co room or manual fallback meeting context. | id, occurrence_id, provider, provider_room_id, room_url, status, expires_at | Created through provider adapter. | Provider details are not academic truth; they provide evidence. |
 | `MeetingToken` | Short-lived participant token. | id, meeting_room_id, person_id, role, token_hash, expires_at | Allows secure join. | Never expose reusable trainer/admin room links unnecessarily. |
-| `MeetingProviderEvent` | Webhook or API event from Daily.co. | id, provider, external_event_id, occurrence_id, person_id, event_type, event_at, payload_json | Feeds attendance reconciliation. | Idempotent by provider + external_event_id. |
+| `MeetingProviderEvent` | Provider Event or API event from Daily.co. | id, provider, external_event_id, occurrence_id, person_id, event_type, event_at, payload_json | Feeds attendance reconciliation. | Idempotent by provider + external_event_id. |
 | `AttendanceRecord` | Reconciled attendance for participant. | id, participant_id, joined_at, left_at, attended_minutes, status, evidence_source, correction_status | Used for approval, credit and payroll. | Manual corrections require reason and approver/reviewer. |
 | `TrainerClassReport` | Educational report submitted after class. | id, occurrence_id, trainer_staff_profile_id, topics_covered, progress_notes, homework, learner_feedback, status | Reviewed by Operations when required. | Trainer report is educational; not the payment/payroll record. |
 | `DeliveryReview` | Operations approval/rejection record for class delivery. | id, occurrence_id, reviewer_account_id, decision, reason, reviewed_at | On approval emits entitlement debit, progress and earning events. | Immutable decision history. |
@@ -763,14 +743,14 @@ erDiagram
 
 ### 9.8 MILE - Milestone-Based Self-Paced Learning
 
-**Purpose:** Supports fixed milestone training where learners progress through levels, milestones, lessons, activities, quizzes, assignments and voice tasks with automated and/or trainer-reviewed completion rules.
+**Purpose:** Supports fixed self-paced milestone courses created in a Course Creator dashboard. A milestone course is built as Course Version -> Level -> Milestone -> Lesson -> Activity. Built-in activities include video, audio, formatted text, downloadable resource, quiz, assignment/task, speaking/voice activity, reflection/checklist and approved external activity. The course is published as a fixed version and learners progress through the version by completion and unlock rules.
 
 #### Owned entities/classes
 
 | Entity/Class | Description | Key attributes | Main relationships | Important constraints |
 | --- | --- | --- | --- | --- |
 | `Level` | Top-level course progression level. | id, course_version_id, title, sequence, unlock_rule_json | Parent for milestones. | Sequence unique within course version. |
-| `Milestone` | Progress checkpoint inside a level. | id, level_id, title, sequence, completion_rule_json | Contains lessons/activities. | Cannot be marked complete unless rules pass. |
+| `Milestone` | Progress checkpoint inside a level. | id, level_id, title, learning_goal, sequence, completion_rule_json | Contains lessons and required/optional activities. | Cannot be marked complete unless published rules pass. |
 | `LearnerMilestoneState` | Learner-specific state for milestone. | id, enrolment_id, milestone_id, state, unlocked_at, completed_at | Feeds learner dashboard progress. | Derived from progress events but may be materialized for speed. |
 | `LessonCompletion` | Learner completion of a lesson/activity. | id, enrolment_id, lesson_id, activity_id_nullable, state, completed_at, evidence_json | Supports next-task logic. | Completion must reference course version used by enrolment. |
 | `ProgressEvent` | Append-only learning progress event. | id, enrolment_id, target_type, target_id, event_type, score_nullable, created_at | Source for progress summaries. | Never delete; corrections use reversal/correction events. |
@@ -798,7 +778,7 @@ erDiagram
 
 ### 9.9 K12 - K-12 Tuition
 
-**Purpose:** Supports grade/year-based subject tuition, subject products, bundles, syllabi, live sections, guardians, assessment categories, report cards and teacher grading.
+**Purpose:** Supports K-12 subject tuition as live teaching with an approved syllabus and fixed weekly schedule. Course Creator builds the subject course version, syllabus outline, units/chapters, lessons/topics, assessment categories and grading scheme. Operations assigns learners to live sections or one-to-one arrangements and sets the initial weekly schedule.
 
 #### Owned entities/classes
 
@@ -808,6 +788,7 @@ erDiagram
 | `GradeLevel` | K-12 grade/class level. | id, academic_year_id, label, sequence | Owns subjects/sections. | Grade labels controlled by reference data. |
 | `SubjectCourse` | Subject-specific course identity. | id, course_id, grade_level_id, subject, syllabus_standard | References Course/CourseVersion. | Subject is sold individually or through bundle. |
 | `K12Section` | Live group/section for subject tuition. | id, subject_course_id, course_run_id, teacher_assignment_id, status | Groups K-12 learners. | Uses live delivery participant model. |
+| `WeeklySchedulePattern` | Fixed weekly schedule for a K-12 subject/section. | id, section_id, day_of_week, start_time, duration_minutes, timezone, effective_from, effective_to, status | Generates or governs ClassOccurrence. | Required at course start; changes are versioned and preserve completed occurrences. |
 | `SyllabusOutline` | High-level K-12 syllabus/chapter plan. | id, subject_course_id, course_version_id, outline_json, approved_at | Used by teacher and student dashboards. | Versioned and tied to course version. |
 | `AssessmentCategory` | K-12 gradebook category such as homework, quiz, exam, participation. | id, subject_course_id, name, weight_percent, grading_scale_id | Feeds report card. | Total active weights must satisfy grading policy. |
 | `GradingScale` | Scale for marks/grades. | id, label, scale_json, passing_rule_json | Used by category/gradebook. | Versioned; historical report cards retain scale snapshot. |
@@ -881,9 +862,9 @@ erDiagram
 - Quiz: assignment -> attempt started -> responses saved -> auto/manual score -> grade draft -> publish feedback -> progress event.
 - Assignment/voice task: learner submits evidence -> trainer reviews with rubric -> grade/feedback -> revision or publish -> gradebook update.
 
-### 9.11 RES - Resources and Media Assets
+### 9.11 RES - Resources and Learning Assets
 
-**Purpose:** Manages reliable private file/media storage for learning resources, receipts, submissions, HR documents, media department work and operational attachments.
+**Purpose:** Manages reliable private file/media storage for learning resources, receipts, submissions, HR documents, operational attachments.
 
 #### Owned entities/classes
 
@@ -1123,7 +1104,7 @@ erDiagram
 | `Lead` | Prospect or sales opportunity. | id, name, contact_method, desired_course_id, source, status, assigned_csr_id | Can convert to learner/account or link to existing learner. | Lead is not a learner until profile/account exists. |
 | `LeadEvent` | Timeline event for lead. | id, lead_id, event_type, note, actor_account_id, created_at | Tracks contact, qualification and conversion. | Append-only. |
 | `FollowUpTask` | CSR follow-up task. | id, lead_id_nullable, learner_profile_id_nullable, assigned_csr_id, due_at, task_type, status | Created manually or from trial/renewal events. | Overdue tasks appear on dashboards. |
-| `CSRAttribution` | Attribution of enrolment/membership to CSR. | id, csr_staff_profile_id, enrolment_id, membership_request_id, attribution_type, status | Feeds commission. | Must be verified before commission payable. |
+| `CSRAttribution` | Attribution and responsible ownership of enrolment/membership/learner to CSR. | id, csr_staff_profile_id, learner_profile_id, enrolment_id, membership_request_id, attribution_type, ownership_type, status | Feeds commission and support routing. | Must be verified before commission payable; ownership changes preserve history. |
 | `CommissionPlan` | Rules for calculating CSR commission. | id, label, rule_json, effective_from, effective_to, status | Used to generate commission earnings. | Versioned; historical commissions retain plan snapshot. |
 | `CommissionItem` | Potential/payable commission. | id, csr_attribution_id, commission_plan_id, amount_minor, currency, status | Becomes EarningItem after verification. | Only payable after enrolment and payment are verified. |
 | `CommissionReview` | COO/authorized review of commission. | id, commission_item_id, reviewer_account_id, decision, reason, reviewed_at | Controls commission payable state. | Self-review blocked where applicable. |
@@ -1148,118 +1129,47 @@ erDiagram
 - Lead to enrolment: lead captured -> follow-ups -> trial/request -> payment approved -> enrolment active -> CSR attribution -> commission verification -> payroll earning.
 - Trial follow-up: class completed -> CSR task generated -> outcome recorded -> conversion/lost reason captured.
 
-### 9.18 MED - Media Department Operations
+### 9.18 ADM - Business Administration and Operational Governance
 
-**Purpose:** Moves media team work from spreadsheets into the portal: assignments, editor submissions, reviews, revisions, quality ratings, video wages, analytics and payroll integration.
-
-#### Owned entities/classes
-
-| Entity/Class | Description | Key attributes | Main relationships | Important constraints |
-| --- | --- | --- | --- | --- |
-| `MediaProject` | Campaign, channel or content project. | id, title, platform, owner_staff_profile_id, status | Groups media tasks. | Can be linked to course or marketing/internal context if needed. |
-| `MediaTask` | Assigned video/content editing task. | id, media_project_id, title, media_type, assigned_editor_id, due_at, status | Workflow: Assigned -> In Progress -> Submitted -> Under Review -> Revision Required/Approved -> Paid. | Task status is work status, not pay status. |
-| `MediaSubmission` | Editor submitted file/link/details. | id, media_task_id, submitted_by, submitted_at, file_or_link, remarks, status | Reviewed by Media Head/COO. | Multiple submissions support revisions. |
-| `MediaReview` | Review decision/comment/rating. | id, media_submission_id, reviewer_staff_profile_id, decision, rating, comments, reviewed_at | Approves or requests revision. | Approval can generate earning item. |
-| `MediaRevisionRequest` | Requested changes after review. | id, media_submission_id, requested_by, instructions, due_at, status | Returns task to revision loop. | Revision history preserved. |
-| `MediaWageRule` | Pay rule for media work/video. | id, media_type, platform, amount_minor, currency, effective_from, status | Used by Media Head/COO. | Versioned. |
-| `MediaEarningSource` | Approved media work prepared for payroll. | id, media_task_id, media_review_id, staff_profile_id, amount_minor, status | Creates EarningItem after approval. | Only approved media work becomes payable. |
-| `MediaAnalyticsSnapshot` | Aggregated media counts/ratings/wages. | id, period_start, period_end, editor_id_nullable, metrics_json | Feeds dashboards. | Read model only. |
-
-#### Relationships and cardinalities
-
-- MediaProject 1 -> many MediaTask.
-- MediaTask 1 -> many MediaSubmission -> many MediaReview/RevisionRequest.
-- Approved MediaReview -> MediaEarningSource -> Payroll EarningItem.
-- ResourceAsset may store uploaded edited files.
-
-#### Module constraints and invariants
-
-- Editor wage becomes payable only after Media Head/COO approval.
-- Ratings/comments are tied to the reviewed submission version.
-- Paid media tasks are not editable except correction/reversal workflow.
-- Media files use private storage and access grants.
-- Media analytics are derived from task/submission/review/payroll records.
-
-#### Main flows
-
-- Media task: assign -> in progress -> submit file/link -> review -> revision required or approved -> earning source -> payroll -> paid.
-- Media analytics: task/submission/review/payroll events -> snapshots -> dashboard metrics.
-
-### 9.19 DEV - Development Department Operations
-
-**Purpose:** Tracks development tasks, bugs, features, assignments, progress updates, testing status, deployment status and CTO/developer dashboards.
+**Purpose:** Provides business-facing administrative controls for reference data, safe policy configuration, approval thresholds, support routing, business imports/exports and operational audit review. It explicitly excludes platform integrations, provider setup, provider event consoles, infrastructure/job maintenance, feature flags, secrets and deployment controls from the Admin role.
 
 #### Owned entities/classes
 
 | Entity/Class | Description | Key attributes | Main relationships | Important constraints |
 | --- | --- | --- | --- | --- |
-| `DevelopmentProject` | Product/engineering project area. | id, title, owner_staff_profile_id, status | Groups development items. | May map to system module. |
-| `DevelopmentItem` | Task, bug or feature. | id, project_id, item_type, title, priority, assigned_developer_id, deadline, status | Workflow: Planned -> Assigned -> In Progress -> Testing -> Completed -> Deployed. | Status changes are timeline events. |
-| `DevelopmentUpdate` | Progress note/update on item. | id, development_item_id, author_staff_profile_id, update_text, progress_percent, created_at | Used for reporting. | Append-only except typo corrections by policy. |
-| `BugReport` | Detailed bug report. | id, development_item_id, severity, reproduction_steps, affected_area, status | Specializes DevelopmentItem. | Critical bugs can trigger alerts. |
-| `TestingRecord` | QA/testing result. | id, development_item_id, tester_staff_profile_id, result, notes, tested_at | Controls promotion to completed/deployed. | Failed testing returns to in progress. |
-| `DeploymentRecord` | Deployment/release evidence. | id, development_item_id, environment, deployed_by, deployed_at, version_label, status | Feeds recently deployed dashboard. | Production deployment requires authorization and audit. |
-| `Blocker` | Blocked reason/dependency. | id, development_item_id, blocker_type, description, owner_account_id, status | Shows blocked tasks. | Open blockers must be visible to CTO dashboard. |
+| `BusinessConfigChange` | Proposed or approved business configuration change. | id, actor_account_id, target_type, target_id, old_value_json, new_value_json, reason, effective_at, status | References affected business rule, reference data or domain record. | Requires permission, reason, effective date and audit. |
+| `BusinessRuleVersion` | Versioned business rule such as cancellation window, reminder timing, payment-review threshold or support routing policy. | id, rule_key, version, rule_json, effective_from, effective_to, status | Used by COM, LIVE, K12, PAY, CSR and MSG workflows. | Never edit historical active rule in place. |
+| `ApprovalPolicy` | Business approval rule. | id, policy_key, scope_type, scope_id, threshold_json, approver_role, status | Used by payments, payroll, HR, finance, course publication and schedule exceptions. | Must be deterministic and auditable. |
+| `BusinessAuditView` | Permissioned view into business audit events for source records. | id, entity_type, entity_id, action, actor, occurred_at, summary | Reads AuditEvent. | Does not expose low-level technical logs in Admin UI. |
+| `BusinessImportBatch` | Staged import of approved business records. | id, template_key, uploaded_by, checksum, status, error_count | Creates or updates allowed business records. | Cannot rewrite settled finance, grades, payroll or published course versions. |
+| `BusinessExportRequest` | Controlled export of business data under minimization rules. | id, requester_id, data_scope, filters_json, reason, status, file_ref | Uses source-domain permissions. | Data minimization, expiry and audit required. |
+| `ArchiveRequest` | Business archive/retention request. | id, target_type, target_id, reason, policy_result, status | References business record. | Hard delete blocked where legal/financial/academic obligations exist. |
+| `SupportRoutingPolicy` | Default owner/queue policy for support cases. | id, case_type, learner_owner_rule, department_queue, escalation_rule, status | Routes Case. | CSR-owned learner cases go to responsible CSR unless category/urgency routes elsewhere. |
+| `AdminNote` | Internal business note. | id, target_type, target_id, author_id, body, visibility_scope | Attaches to learner, membership, case, payment, staff or department record. | Cannot replace formal decisions or audit records. |
 
 #### Relationships and cardinalities
 
-- DevelopmentProject 1 -> many DevelopmentItem.
-- DevelopmentItem 1 -> many DevelopmentUpdate, TestingRecord, DeploymentRecord and Blocker.
-- BugReport is linked to a DevelopmentItem of type bug.
-- Development dashboards aggregate items by assignee, status, deadline and deployment.
+- BusinessRuleVersion may govern many future decisions; each decision stores the version that applied.
+- ApprovalPolicy controls which role/scope can approve a decision.
+- SupportRoutingPolicy assigns new Case records to responsible CSR, Operations, Finance or Academic Support.
+- BusinessImportBatch creates records only after validation and approval.
+- BusinessExportRequest references the user, filters, output file and expiry.
+- BusinessAuditView reads AuditEvent but does not expose technical provider logs.
 
 #### Module constraints and invariants
 
-- Development tracking is operational; it does not grant production-data access by itself.
-- Deployment records are immutable after release except correction note.
-- Completed items require testing status if policy requires it.
-- Overdue and blocked items appear on CTO dashboard.
-- Sensitive system/security tasks have restricted visibility.
+- Admin cannot manage Supabase, Daily.co, Resend, provider credentials, provider event replay, infrastructure status, background-worker maintenance, feature flags or deployment controls from the LMS+OPS Admin UI.
+- Business configuration must never bypass source-domain validation.
+- Business changes require actor, reason, scope, effective date and audit.
+- Used reference data is inactivated rather than hard-deleted.
+- Support routing must respect responsible CSR ownership while allowing escalation for finance, academic, urgent or safeguarding cases.
 
 #### Main flows
 
-- Development workflow: planned -> assigned -> in progress -> testing -> completed -> deployed.
-- Bug workflow: report -> triage priority/severity -> assign -> fix -> test -> deploy -> close.
-
-### 9.20 ADM - Administration and Platform Operations
-
-**Purpose:** Provides administrative controls for configuration, permissions, integrations, imports/exports, audit review, retention, queues, support tooling and operational safety.
-
-#### Owned entities/classes
-
-| Entity/Class | Description | Key attributes | Main relationships | Important constraints |
-| --- | --- | --- | --- | --- |
-| `AdminAction` | High-risk administrative command record. | id, actor_account_id, action_key, target_type, target_id, status, reason | Wraps sensitive admin changes. | Requires permission and audit. |
-| `PermissionChangeRequest` | Request/approval for role or permission change. | id, target_account_id, requested_by, requested_role_id, scope, status | Optional governance for privileged access. | Privileged changes require approval. |
-| `IntegrationConfiguration` | Configured provider settings metadata. | id, provider, environment, status, config_metadata_json | Daily.co, Resend, future payment processors. | Secrets stored outside plain database settings. |
-| `WebhookEndpoint` | Registered webhook handler metadata. | id, provider, endpoint_key, signing_secret_ref, status | Receives Daily/Resend/future provider events. | Signatures verified and events idempotent. |
-| `WebhookEvent` | Inbound webhook record. | id, provider, external_event_id, received_at, signature_valid, status, payload_hash | Feeds IntegrationLog/domain processors. | Unique provider + external_event_id. |
-| `JobQueueItem` | Scheduled/retryable work item. | id, queue_name, payload_json, status, attempts, locked_by, next_run_at | Processes emails, rooms, reports, rollups. | Atomic claim/retry/dead-letter behavior. |
-| `DataImportBatch` | Bulk import batch. | id, import_type, uploaded_file_id, status, created_by | Used for migration/imports. | Dry-run validation before commit. |
-| `DataExportRequest` | Controlled export request. | id, export_type, requested_by, filters_json, status, file_id | Audited report/data extracts. | Sensitive exports expire and require permissions. |
-| `RetentionPolicy` | Data retention/archive rule. | id, entity_type, retention_period, action, status | Controls archive/delete workflows. | Financial, grade, attendance and HR policies must match legal/business retention. |
-| `SupportImpersonationSession` | Temporary support access session. | id, support_account_id, target_account_id, reason, approved_by, started_at, ended_at | Allows debugging without credential sharing. | Visible audit banner and strict logging. |
-
-#### Relationships and cardinalities
-
-- IntegrationConfiguration 1 -> many WebhookEndpoint and IntegrationLog records.
-- WebhookEvent -> DomainEvent/IntegrationLog after processing.
-- JobQueueItem may originate from DomainEvent or scheduled job.
-- DataImportBatch creates records only after validation and approval.
-- SupportImpersonationSession references account and emits AuditEvent for every action.
-
-#### Module constraints and invariants
-
-- All admin operations require server-side permission checks and audit events.
-- Webhook processing verifies signature, source, idempotency and payload schema.
-- Imports run dry-run validation with error report before data mutation.
-- Exports of sensitive data are time-limited, access controlled and logged.
-- Support impersonation cannot access secrets and must be time-limited.
-
-#### Main flows
-
-- Webhook: receive -> verify signature -> store event -> idempotency check -> process -> domain event/log -> success or retry.
-- Import: upload file -> validate -> preview errors -> approve commit -> create batch audit -> results report.
+- Business rule change: propose -> validate impact -> approve -> schedule/effective -> audit.
+- Support routing change: create rule -> preview affected cases -> approve -> future cases use new version.
+- Business import: upload -> validate -> preview -> approve -> commit -> audit.
+- Business export: request -> approve -> generate -> expire -> audit.
 
 ## 10. End-to-End Business Flows
 
@@ -1281,7 +1191,7 @@ erDiagram
 2. CSR/Operations qualifies the request and assigns trainer/slot.
 3. System creates ClassOccurrence, ClassParticipant records and Daily.co MeetingRoom/tokens.
 4. Notifications/reminders are queued through in-app/Resend channels.
-5. Daily.co webhook events record join/leave evidence.
+5. Daily.co provider event events record join/leave evidence.
 6. AttendanceRecord is reconciled per participant.
 7. Trainer submits TrainerClassReport with educational details.
 8. DeliveryReview approves/rejects trial completion.
@@ -1383,9 +1293,7 @@ flowchart TD
 | Payable staff work | PAY | FIN, DSH, HR | EarningItem and PayrollRun/Settlement are payroll truth. |
 | Staff employment and documents | HR | IAM, PAY, DSH | StaffProfile/EmploymentRecord/StaffDocument are HR truth. |
 | CSR commissions | CSR | PAY, DSH | CommissionItem after verification creates EarningItem. |
-| Media work | MED | PAY, DSH | MediaTask/Submission/Review are media workflow truth. |
-| Development work | DEV | DSH, ADM | DevelopmentItem/Testing/Deployment records are development operations truth. |
-| Audit and jobs | FND/ADM | All modules | AuditEvent, DomainEvent, OutboxJob and WebhookEvent are system control truth. |
+| Media work | Development work | Audit and jobs | FND/ADM | All modules | AuditEvent, DomainEvent, OutboxJob and ProviderEvent are system control truth. |
 
 ## 12. Suggested Physical Implementation Notes for Supabase and Next.js
 
@@ -1409,7 +1317,7 @@ These notes are not final migrations, but they should guide engineering implemen
 | Layer | Responsibility | Example |
 | --- | --- | --- |
 | Route/UI layer | Render pages, collect input, show states and call server actions. | Learner renewal screen, COO approval queue, trainer report form. |
-| Server Action / Route Handler | Authenticate, validate request, call application service, return safe result. | `submitManualPaymentReceipt`, `dailyWebhookHandler`, `resendWebhookHandler`. |
+| Server Action / Route Handler | Authenticate, validate request, call application service, return safe result. | `submitManualPaymentReceipt`, `dailyProvider EventHandler`, `resendProvider EventHandler`. |
 | Application service | Orchestrate workflow and transaction boundaries. | Approve payment and activate membership; approve delivery and generate earning item. |
 | Domain service | Protect business invariants. | Calculate entitlement debit; evaluate milestone unlock; calculate rate rule. |
 | Repository/data access | Read/write PostgreSQL with scoped queries and transactions. | PaymentSubmissionRepository, EnrolmentRepository. |

@@ -1,7 +1,7 @@
 ---
 title: "Innovator Huzsam LMS & Operations System - Functional Requirements Specification"
-version: "2.0"
-date: "2026-08-10"
+version: "2.2"
+date: "2026-08-17"
 format: "Markdown"
 scope: "LMS+OPS system only; public website and landing-page requirements excluded"
 ---
@@ -12,18 +12,20 @@ scope: "LMS+OPS system only; public website and landing-page requirements exclud
 
 _LMS+OPS System Only | Public website requirements excluded_
 
-> System definition<br>A standalone, testable catalogue of every feature and functionality required for the new IHS platform. The specification covers LMS portal discovery, free learner access, multi-course learning, live and self-paced delivery, K-12, manual payment approval, finance, payroll, HR and departmental operations. Public website, landing page, marketing website, SEO, and website-CMS requirements are intentionally excluded from this version.
+> System definition<br>A standalone, testable catalogue of every feature and functionality required for the new IHS platform. The specification covers LMS portal discovery, free learner access, multi-course learning, live and self-paced delivery, K-12, manual payment approval, finance, payroll, HR and business operations. Public website, landing page, marketing website, SEO, and website-CMS requirements are intentionally excluded from this version.
 
 | Specification measure | Count |
 | --- | --- |
-| Feature areas | 20 |
-| Functional requirements | 273 |
-| Must requirements | 236 |
-| Should requirements | 37 |
+| Feature areas | 18 |
+| Functional requirements | 247 |
+| Must requirements | 216 |
+| Should requirements | 31 |
 
 > Confirmed implementation context<br>Next.js App Router + TypeScript (full stack) \| Supabase (Auth, PostgreSQL, RLS, Storage, Realtime, Queues and Cron) \| Daily.co (live meetings and attendance evidence) \| Resend (transactional email) \| Launch payments: manual payer details and private receipt upload, approved or rejected by permissioned COO/OM/CSR staff.
 
-Version 2.0  |  10 August 2026  |  LMS+OPS-only Markdown specification
+> Version 2.2 current-phase scope update<br>Admin is a business-operations role, not a platform-maintenance role. The Admin dashboard and Admin-accessible modules must focus on learners, guardians, trainers, trials, live classes, memberships, manual payment review, course progress, payroll/HR visibility, CSR ownership, support cases, complaints and operational reporting. Platform integration management, provider configuration, provider event consoles, infrastructure maintenance, technical job queues, feature flags, system-health tooling, Media Department workflows and Development Department workflows are excluded from the current-phase Admin-facing LMS+OPS scope. Daily.co, Resend and Supabase remain implementation services, but their low-level technical controls are handled outside the LMS+OPS Admin UI.
+
+Version 2.2  |  17 August 2026  |  LMS+OPS-only Markdown specification
 
 ## 1. Document Purpose and Control
 
@@ -32,15 +34,15 @@ Version 2.0  |  10 August 2026  |  LMS+OPS-only Markdown specification
 | Field | Value |
 | --- | --- |
 | Document owner | Innovator Huzsam leadership / Product & Technology |
-| Version / date | 2.0 / 10 August 2026 |
+| Version / date | 2.1 / 17 August 2026 |
 | Status | Draft for stakeholder and engineering validation |
 | Source baseline | Functional Requirements Specification v1.0, updated to remove public website scope and retain only LMS+OPS portal and operational requirements. |
-| Scope | LMS+OPS capability areas only: 20 feature areas and 273 functional requirements after removing public website, landing-page, SEO and website-CMS requirements. |
+| Scope | LMS+OPS capability areas only: 18 feature areas and 247 functional requirements after removing public website, landing-page, SEO and website-CMS requirements. |
 | Excluded detail | The 66 non-functional requirements remain governed by the PRD and engineering quality plan; they are referenced where they constrain behavior but are not duplicated as a second NFR catalogue here. |
 | Release model | Parallel clean rebuild with phased migration from the current portal |
 
 
-> Scope exclusion for v2.0<br>This document intentionally excludes public website, marketing landing pages, About/Founder/Team/Contact pages, SEO, website analytics, website navigation/footer, and website CMS requirements. Portal entry flows such as registration, login, trial request, free learner access, previews, membership renewal and receipt upload remain in scope because they are LMS+OPS product workflows.
+> Scope exclusion for v2.2<br>This document intentionally excludes public website, marketing landing pages, About/Founder/Team/Contact pages, SEO, website analytics, website navigation/footer, website CMS requirements, Media Department workflows and Development Department workflows. Portal entry flows such as registration, login, trial request, free learner access, previews, membership renewal and receipt upload remain in scope because they are LMS+OPS product workflows.
 
 ### 1.1 Source basis
 
@@ -61,7 +63,14 @@ Each testable requirement contains: an immutable requirement ID; a priority; a m
 | M - Must | Required for the defined product capability, security/control baseline or safe operation. | Cannot be knowingly omitted from the release that claims the capability. |
 | S - Should | High-value capability or extensibility/control expected unless explicitly deferred. | Deferral requires an owned decision, impact assessment and target phase. |
 
-### 1.3 Contents and navigation
+
+### 1.3 Admin business scope boundary
+
+Admin is responsible for complete LMS+OPS business oversight, not platform maintenance. Admin-facing functionality includes learner, guardian, trainer, staff and CSR oversight; course catalogue and publication status; free learner, trial, live class, K-12 and milestone/self-paced monitoring; membership requests, manual payment evidence review, approved payment visibility and renewal risk; attendance, delivery reports, pending approvals, resources, homework, assessments and progress risks; payroll/HR visibility, CSR ownership, support cases, complaints and operational reporting.
+
+Admin-facing functionality excludes provider setup for Supabase, Daily.co, Resend or future processors; technical provider event consoles; infrastructure/system-health dashboards; failed-job/dead-letter maintenance; feature flags; secrets; deployment controls; database/storage maintenance; and unrestricted platform-debugging tools.
+
+### 1.4 Contents and navigation
 
 | Section | Content |
 | --- | --- |
@@ -69,7 +78,7 @@ Each testable requirement contains: an immutable requirement ID; a priority; a m
 | 2 | System-Wide Functional Model |
 | 3 | End-to-End Functional Workflows |
 | 4 | Detailed Functional Requirements by Feature |
-| 4.1-4.20 | Platform Foundation through Administration and Platform Operations |
+| 4.1-4.18 | Application Foundation through Business Administration and Operational Governance |
 | 5 | Cross-Feature States, Notifications and Reporting Controls |
 | 6 | Requirement Coverage and Traceability |
 | Appendix A | Glossary |
@@ -77,13 +86,13 @@ Each testable requirement contains: an immutable requirement ID; a priority; a m
 
 ## 2. System-Wide Functional Model
 
-The new system separates identity, catalogue, commerce, enrolment, learning delivery, assessment, communication, finance, payroll, HR and departmental operations. These domains reference one another through explicit identifiers, events and allocations; no single learner, class or payment record is allowed to perform several unrelated jobs.
+The new system separates identity, catalogue, commerce, enrolment, learning delivery, assessment, communication, finance, payroll, HR and business operations. These domains reference one another through explicit identifiers, events and allocations; no single learner, class or payment record is allowed to perform several unrelated jobs.
 
 ### 2.1 User and role model
 
 | Role template | Primary scope | Important restriction |
 | --- | --- | --- |
-| Platform Admin | Identity, role/permission, reference-data, integration and audit administration. | Should not automatically receive payroll, disciplinary, private chat or all learner content access; those require explicit grants. |
+| Admin | Business operations command role focused on learners, staff, courses, trials, live classes, memberships, payment review, finance visibility, payroll visibility, HR, CSR, support cases and cross-operational reporting. | Does not manage platform integrations, provider events, background jobs, infrastructure health, system maintenance, deployment controls or developer operations. Sensitive finance, payroll, HR and private communication access still requires explicit permission grants. |
 | COO | Cross-functional operational oversight, approvals, catalogue/product governance, finance/payroll oversight and departmental dashboards. | Cannot bypass immutable audit, settlement controls or safeguarding policy; segregation of duties should still apply. |
 | Operational Manager | Scheduling, trials, enrolments, class review, trainer assignment, entitlements, resources, operational cases and manual payment receipt review/approval. | No unrestricted platform-security administration; refund, broad finance and payroll settlement actions require separate permission and policy. |
 | CSR | Prospects, leads, trial requests, follow-ups, assisted enrolment, permission-scoped manual payment receipt review and attributed commission visibility. | May approve or reject submitted receipt evidence within assigned scope and policy; cannot change protected price, membership terms, trainer wages, grades, payroll or broad finance/HR data. |
@@ -94,8 +103,6 @@ The new system separates identity, catalogue, commerce, enrolment, learning deli
 | Guardian / Payer | Authorized minor schedule/attendance/reports plus payer membership requests/renewals, payment submissions, invoices and receipts. | No private learner chat/notes or academic detail beyond relationship policy; no access after relationship revocation. |
 | Finance / Payroll | Orders, payments, reconciliation, expenses, earning items, payroll runs and settlement. | Academic notes, private chat and content authoring are outside scope except minimum source evidence. |
 | HR | Employment profiles, onboarding/offboarding, documents, letters, sensitive HR events and salary agreements. | No learner academic/financial data except where staff is also separately assigned another role. |
-| Media Head / Editor | Media work assignment, submission, review, ratings, assets and related earnings. | No learner/finance/HR access beyond own pay statement and explicitly shared media assets. |
-| CTO / Developer | Development work tracking, testing, deployment and technical platform operations as assigned. | Production personal data and business-admin access are not implied by developer role; support access must be controlled and audited. |
 | Investor / Executive Viewer | Read-only management analytics and approved reports. | No record mutation, unrestricted export or automatic access to personal/sensitive details. |
 
 > Authorization principle<br>Roles are reusable permission templates. One account may hold several effective, scoped role assignments. Every action also checks object relationship, record state and field sensitivity; missing scope defaults to deny.
@@ -122,7 +129,7 @@ The new system separates identity, catalogue, commerce, enrolment, learning deli
 | Learning & assessment | Progress events, quiz attempts, submissions, rubrics, grades, feedback and gradebook. | What the learner did and achieved. |
 | Communication | Conversation, message, notification, case, SLA and delivery attempts. | Who communicated about what and whether delivery/escalation succeeded. |
 | Finance & payroll | Finance transaction, expense, rate agreement, earning item, payroll run/line/settlement. | Money and staff pay, independently auditable. |
-| Operations extensions | HR documents/letters, Media work/review, Development items/releases, audit/jobs/configuration. | Cross-company operational workflows and governance. |
+| Business operations governance | HR documents/letters, business approvals, operational audit views, business imports/exports and policy configuration. | Cross-company LMS+OPS business operations and governance. |
 
 ### 2.4 Core business relationships
 
@@ -156,7 +163,7 @@ The new system separates identity, catalogue, commerce, enrolment, learning deli
 
 | # | Code | Feature area | Total | Must | Should |
 | --- | --- | --- | --- | --- | --- |
-| 01 | FND | Platform Foundation | 10 | 9 | 1 |
+| 01 | FND | Application Foundation | 10 | 9 | 1 |
 | 02 | IAM | Identity, Authentication and Authorization | 17 | 15 | 2 |
 | 03 | PORT | Learner Portal Catalogue and Free Users | 9 | 8 | 1 |
 | 04 | CAT | Catalogue, Content Authoring, Products and Pricing | 15 | 13 | 2 |
@@ -166,16 +173,14 @@ The new system separates identity, catalogue, commerce, enrolment, learning deli
 | 08 | MILE | Milestone-Based Self-Paced Learning | 15 | 12 | 3 |
 | 09 | K12 | K-12 Tuition | 14 | 12 | 2 |
 | 10 | ASM | Assessments, Submissions and Gradebook | 17 | 14 | 3 |
-| 11 | RES | Resources and Media Assets | 12 | 11 | 1 |
+| 11 | RES | Resources and Learning Assets | 12 | 11 | 1 |
 | 12 | MSG | Communication, Cases and Notifications | 15 | 12 | 3 |
 | 13 | DSH | Role Dashboards and Analytics | 15 | 13 | 2 |
 | 14 | FIN | Finance | 14 | 12 | 2 |
 | 15 | PAY | Payroll and Compensation | 16 | 15 | 1 |
 | 16 | HR | HR Profiles, Documents and Letters | 12 | 10 | 2 |
 | 17 | CSR | CSR Enrolments and Commission | 9 | 8 | 1 |
-| 18 | MED | Media Department Operations | 13 | 11 | 2 |
-| 19 | DEV | Development Department Operations | 11 | 8 | 3 |
-| 20 | ADM | Administration and Platform Operations | 12 | 10 | 2 |
+| 18 | ADM | Business Administration and Operational Governance | 10 | 9 | 1 |
 
 ## 3. End-to-End Functional Workflows
 
@@ -183,7 +188,7 @@ These workflows show how feature modules collaborate without collapsing their re
 
 ### 3.1 Learner-portal discovery, registration and free access
 
-Participating features: PUB - Learner Portal Catalogue and Free Users, IAM - Identity, Authentication and Authorization, CAT - Catalogue, Content Authoring, Products and Pricing, RES - Resources and Media Assets, MSG - Communication, Cases and Notifications
+Participating features: PUB - Learner Portal Catalogue and Free Users, IAM - Identity, Authentication and Authorization, CAT - Catalogue, Content Authoring, Products and Pricing, RES - Resources and Learning Assets, MSG - Communication, Cases and Notifications
 
 1. Prospect opens a published programme, course, service or free-resource page.
 
@@ -215,7 +220,7 @@ Participating features: PUB - Learner Portal Catalogue and Free Users, CSR - CSR
 
 ### 3.3 Course authoring, academic review and publication
 
-Participating features: CAT - Catalogue, Content Authoring, Products and Pricing, ASM - Assessments, Submissions and Gradebook, RES - Resources and Media Assets, MILE - Milestone-Based Self-Paced Learning, K12 - K-12 Tuition
+Participating features: CAT - Catalogue, Content Authoring, Products and Pricing, ASM - Assessments, Submissions and Gradebook, RES - Resources and Learning Assets, MILE - Milestone-Based Self-Paced Learning, K12 - K-12 Tuition
 
 1. Course Creator opens a draft version and selects live, milestone, K-12 or approved future delivery type.
 
@@ -231,7 +236,7 @@ Participating features: CAT - Catalogue, Content Authoring, Products and Pricing
 
 ### 3.4 Initial membership or renewal with manual payment
 
-Participating features: CAT - Catalogue, Content Authoring, Products and Pricing, COM - Commerce, Manual Payments and Memberships, FIN - Finance, ENR - Enrolment and Learner Relationships, RES - Resources and Media Assets, MSG - Communication, Cases and Notifications, DSH - Role Dashboards and Analytics
+Participating features: CAT - Catalogue, Content Authoring, Products and Pricing, COM - Commerce, Manual Payments and Memberships, FIN - Finance, ENR - Enrolment and Learner Relationships, RES - Resources and Learning Assets, MSG - Communication, Cases and Notifications, DSH - Role Dashboards and Analytics
 
 1. Learner/payer selects the product or eligible renewal and confirms beneficiary, term, price, currency and payment instructions.
 
@@ -265,7 +270,7 @@ Participating features: ENR - Enrolment and Learner Relationships, COM - Commerc
 
 ### 3.6 Live class from scheduling through approval
 
-Participating features: LIVE - Live Classes and Trial Delivery, ENR - Enrolment and Learner Relationships, COM - Commerce, Manual Payments and Memberships, PAY - Payroll and Compensation, ASM - Assessments, Submissions and Gradebook, RES - Resources and Media Assets, MSG - Communication, Cases and Notifications
+Participating features: LIVE - Live Classes and Trial Delivery, ENR - Enrolment and Learner Relationships, COM - Commerce, Manual Payments and Memberships, PAY - Payroll and Compensation, ASM - Assessments, Submissions and Gradebook, RES - Resources and Learning Assets, MSG - Communication, Cases and Notifications
 
 1. Occurrence and participant records are created after conflict and availability validation.
 
@@ -283,7 +288,7 @@ Participating features: LIVE - Live Classes and Trial Delivery, ENR - Enrolment 
 
 ### 3.7 Milestone learning, submissions and progress
 
-Participating features: MILE - Milestone-Based Self-Paced Learning, ASM - Assessments, Submissions and Gradebook, RES - Resources and Media Assets, ENR - Enrolment and Learner Relationships, DSH - Role Dashboards and Analytics, MSG - Communication, Cases and Notifications
+Participating features: MILE - Milestone-Based Self-Paced Learning, ASM - Assessments, Submissions and Gradebook, RES - Resources and Learning Assets, ENR - Enrolment and Learner Relationships, DSH - Role Dashboards and Analytics, MSG - Communication, Cases and Notifications
 
 1. The learner opens the next available activity after access, release and prerequisite evaluation.
 
@@ -315,7 +320,7 @@ Participating features: K12 - K-12 Tuition, CAT - Catalogue, Content Authoring, 
 
 ### 3.9 Case, conversation and notification lifecycle
 
-Participating features: MSG - Communication, Cases and Notifications, RES - Resources and Media Assets, IAM - Identity, Authentication and Authorization, DSH - Role Dashboards and Analytics
+Participating features: MSG - Communication, Cases and Notifications, RES - Resources and Learning Assets, IAM - Identity, Authentication and Authorization, DSH - Role Dashboards and Analytics
 
 1. A valid relationship exposes a contextual conversation or allows submission of a categorized case.
 
@@ -331,9 +336,9 @@ Participating features: MSG - Communication, Cases and Notifications, RES - Reso
 
 ### 3.10 Approved work to payroll settlement
 
-Participating features: LIVE - Live Classes and Trial Delivery, CSR - CSR Enrolments and Commission, MED - Media Department Operations, PAY - Payroll and Compensation, FIN - Finance, HR - HR Profiles, Documents and Letters
+Participating features: LIVE - Live Classes and Trial Delivery, CSR - CSR Enrolments and Commission, PAY - Payroll and Compensation, FIN - Finance, HR - HR Profiles, Documents and Letters
 
-1. Approved delivery, verified commission or approved Media work emits a globally unique earning source.
+1. Approved delivery or verified commission emits a globally unique earning source.
 
 2. The effective rate/salary/commission rule is snapshotted into one immutable earning item.
 
@@ -347,7 +352,7 @@ Participating features: LIVE - Live Classes and Trial Delivery, CSR - CSR Enrolm
 
 ### 3.11 HR document and offboarding lifecycle
 
-Participating features: HR - HR Profiles, Documents and Letters, IAM - Identity, Authentication and Authorization, RES - Resources and Media Assets, PAY - Payroll and Compensation, ADM - Administration and Platform Operations
+Participating features: HR - HR Profiles, Documents and Letters, IAM - Identity, Authentication and Authorization, RES - Resources and Learning Assets, PAY - Payroll and Compensation, ADM - Business Administration and Operational Governance
 
 1. HR maintains the employment profile and verified onboarding evidence separately from the login account.
 
@@ -359,21 +364,7 @@ Participating features: HR - HR Profiles, Documents and Letters, IAM - Identity,
 
 5. Offboarding revokes sessions/roles and surfaces open work/payroll exceptions while preserving lawful history.
 
-### 3.12 Media and Development departmental operations
-
-Participating features: MED - Media Department Operations, DEV - Development Department Operations, DSH - Role Dashboards and Analytics, PAY - Payroll and Compensation, RES - Resources and Media Assets
-
-1. Department leadership creates scoped assignments with owner, priority, deadline, brief and evidence expectations.
-
-2. Assignees update progress and submit versioned evidence or deliverables.
-
-3. Review/testing/revision outcomes are recorded with comments and decision history.
-
-4. Approved Media work creates an independent earning item; Development deployment records release/environment outcome.
-
-5. Department dashboards replace spreadsheet/verbal reporting with workload, quality, blockers and completion evidence.
-
-## 4.1 Platform Foundation
+## 4.1 Application Foundation
 
 > FEATURE 01  \|  FND  \|  10 FUNCTIONAL REQUIREMENTS
 
@@ -381,9 +372,9 @@ Provide the common functional foundations that keep identities, courses, commerc
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Platform Admin, CTO, authorized domain owners, background workers and integration operators. |
+| Primary actors | Admin, COO, authorized business domain owners and approved background services. |
 | Owned / primary records | Immutable entity identifiers, reference numbers, versions, snapshots, ledgers, workflow decisions, outbox jobs, provider references, archive records and optional organisation scope. |
-| Dependencies and confirmed technology | Next.js App Router, Supabase PostgreSQL/RLS/Queues/Cron, typed Daily.co and Resend adapters, and future provider adapters. |
+| Dependencies and confirmed technology | Next.js App Router, Supabase PostgreSQL/RLS/Queues/Cron, Daily.co class service adapter and Resend notification service adapter. |
 | Requirement count | 10 total: 9 Must and 1 Should |
 
 ### 4.1.1 Functional decomposition
@@ -440,7 +431,7 @@ Audit events, outbox jobs, exception queues, correlation identifiers, entity tim
 | FND-005 | Must | Sensitive state transitions shall be represented by explicit workflow records rather than overloaded status fields. | Approvals, manual payment review/settlement, entitlement changes, payroll settlement and grade publication store actor, time, decision, reason and prior/new state. |
 | FND-006 | Must | The platform shall support multiple active roles and scoped assignments for one account. | One person can be both staff and learner or hold several staff responsibilities; permissions can be scoped by organisation, department, course, cohort, enrolment or assigned record. |
 | FND-007 | Must | Daily.co, Resend, future payment processors and other third-party capabilities shall be accessed through typed provider adapters; Supabase access shall be centralized through approved browser, server and admin data modules. | Launch manual payments remain an internal Commerce workflow. Provider SDKs/API payloads do not appear in core course, finance or payroll entities; adapter contract tests demonstrate normalized identifiers, errors, retries and replacement boundaries. |
-| FND-008 | Must | All asynchronous side effects shall use a transactional outbox and durable Supabase Queue/Cron worker mechanism. | The source change and outbox commit together; Edge Function or approved worker consumes jobs idempotently; Daily synchronization, Resend email, reminders, media, exports and reconciliation expose retries, terminal failure and manual replay. |
+| FND-008 | Must | All asynchronous side effects shall use a transactional outbox and durable Supabase Queue/Cron worker mechanism. | The source change and outbox commit together; Edge Function or approved worker consumes jobs idempotently; Daily synchronization, Resend email, reminders, exports and reconciliation expose retries, terminal failure and manual replay. |
 | FND-009 | Must | Operational records shall use archive, suspend, cancel or reverse states instead of destructive deletion wherever legal or financial history exists. | Learners, enrolments, classes, graded work, transactions and payroll records remain auditable; deletion is restricted to eligible drafts or approved privacy workflows. |
 | FND-010 | Should | The data model shall be capable of adding an organisation or branch boundary without redesigning every entity. | A documented tenancy strategy exists. If multi-branch is approved for launch, every scoped table and authorization policy includes organisation_id from day one. |
 
@@ -452,7 +443,7 @@ Securely register, authenticate, provision and authorize free users, learners, g
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Prospect, learner, guardian/payer, trainer, staff invitee, Platform Admin, COO/Operations, security reviewer and support administrator. |
+| Primary actors | Prospect, learner, guardian/payer, trainer, staff invitee, Admin, COO/Operations, security reviewer and support administrator. |
 | Owned / primary records | Supabase Auth identity, IHS account, person profile, linked identity, role template, permission, scoped role assignment, MFA factor, session, invitation and security event. |
 | Dependencies and confirmed technology | Supabase Auth and RLS, @supabase/ssr, Next.js OAuth callback and protected actions, Resend authentication/security email. |
 | Requirement count | 17 total: 15 Must and 2 Should |
@@ -767,7 +758,7 @@ Payer confirmation, reviewer work queue, approval/rejection/correction notificat
 | COM-011 | Must | Every approved membership renewal shall create a new term/renewal record rather than overwrite the previous agreement. | Prior dates, allowance, schedule, trainer, class format, rates and price remain explainable; renewal can reuse configuration as a starting template but preserves its own approved request/payment allocation. |
 | COM-012 | Must | Live membership terms shall support class-count, time-period, schedule-based or hybrid entitlement rules. | The selected rule and expiry/carry-forward/freeze/cancellation behavior are stored on the term version and validated before activation. |
 | COM-013 | Must | The renewal flow shall show approved payment instructions and a complete confirmation summary before submission. | The user sees beneficiary, product/plan, amount, currency, due/expiry dates, configured bank/wallet/channel instructions, entitlement rules and support contact; submitted values are compared with this snapshot and instruction versions are retained. |
-| COM-014 | Should | The platform shall be ready to add online payment processors after launch through a typed payment-provider adapter. | Hosted/tokenized checkout, signed webhooks, processor IDs, refunds and disputes map into the same internal request/order, payment transaction, allocation and entitlement records; the manual flow remains available as an authorized fallback and no processor schema leaks into core membership tables. |
+| COM-014 | Should | The platform shall be ready to add online payment processors after launch through a typed payment-provider adapter. | Hosted/tokenized checkout, signed provider events, processor IDs, refunds and disputes map into the same internal request/order, payment transaction, allocation and entitlement records; the manual flow remains available as an authorized fallback and no processor schema leaks into core membership tables. |
 | COM-015 | Must | All finance-affecting manual actions and payment-review decisions shall require explicit permission, reason where applicable and immutable audit. | Price/term overrides, rejection, approval, refund/reversal, write-off, manual grant and evidence replacement are attributable and exportable; protected price, trainer wage or schedule fields cannot be silently edited during receipt review. |
 
 ## 4.6 Enrolment and Learner Relationships
@@ -850,7 +841,7 @@ All-courses learner view, course-specific workspace, enrolment rosters, assignme
 | ENR-009 | Must | An enrolment shall record source and attribution. | Source may include self-purchase, CSR conversion, staff grant, bundle allocation, scholarship or migration; campaign/referral and responsible CSR are stored where applicable. |
 | ENR-010 | Must | The system shall support a learner taking the same course more than once. | Separate enrolments/course runs preserve each attempt, trainer, term, version, grades and completion result without colliding. |
 | ENR-011 | Must | Staff shall be able to view a consolidated learner timeline across enrolments. | Timeline includes profile, trial, orders, memberships, access events, classes, submissions, grades, communications and authorized support/finance events with filters. |
-| ENR-012 | Must | Enrolment creation shall be idempotent and conflict-aware. | Repeated webhooks or staff actions do not create duplicate enrolments for the same allocation; intentional multiple enrolments require distinct source or explicit override. |
+| ENR-012 | Must | Enrolment creation shall be idempotent and conflict-aware. | Repeated provider events or staff actions do not create duplicate enrolments for the same allocation; intentional multiple enrolments require distinct source or explicit override. |
 
 ## 4.7 Live Classes and Trial Delivery
 
@@ -860,7 +851,7 @@ Schedule, conduct, evidence, review and approve true one-to-one, group and trial
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Learner, guardian where permitted, trainer/support trainer, CSR for trials, COO/Operations, Daily.co webhook worker and payroll/entitlement services. |
+| Primary actors | Learner, guardian where permitted, trainer/support trainer, CSR for trials, COO/Operations, Daily.co provider event worker and payroll/entitlement services. |
 | Owned / primary records | Course run/cohort, availability, recurring schedule rule, occurrence, participant, Daily room/token reference, provider event, attendance interval/outcome, trainer report, delivery review, credit event and earning source. |
 | Dependencies and confirmed technology | Catalogue class variants, enrolments/membership terms, Daily.co adapter, Supabase Queues/Cron/PostgreSQL, Resend/in-app notifications, assessment/resource services. |
 | Requirement count | 20 total: 18 Must and 2 Should |
@@ -895,7 +886,7 @@ Schedule, conduct, evidence, review and approve true one-to-one, group and trial
 
 2. A short-lived room-scoped Daily token is returned without exposing the provider API key.
 
-3. Signed Daily webhooks are ingested idempotently and reconciled into join/leave intervals and actual durations.
+3. Signed Daily provider events are ingested idempotently and reconciled into join/leave intervals and actual durations.
 
 4. The trainer submits topics, syllabus coverage, progress, homework, notes and justified attendance corrections.
 
@@ -936,10 +927,10 @@ Course calendars, trainer/learner join actions, attendance records, delivery rep
 | LIVE-005 | Must | All schedules shall store UTC timestamps plus the scheduling timezone and display in each viewer's selected IANA timezone. | The same class displays correctly for Pakistan, India and international users, including daylight-saving transitions where applicable. |
 | LIVE-006 | Must | The system shall integrate Daily.co through a dedicated meeting adapter and shall create a private room for each scheduled live occurrence by default. | Occurrence commit enqueues idempotent create/update/cancel synchronization; Daily room/configuration references and events are stored; provider failure enters an exception queue and authorized manual-link fallback is available. |
 | LIVE-007 | Must | Trainer and learner join actions shall issue short-lived, room-scoped Daily.co meeting tokens after server-side eligibility checks. | The Next.js join endpoint validates account, participant/assignment, occurrence state and join window, then creates a token with internal participant identity, room binding, not-before/expiry, permissions and trainer owner role as configured; API keys never reach the browser. |
-| LIVE-008 | Must | Daily.co meeting and participant telemetry shall be captured through signed webhooks and reconciled into per-participant attendance intervals. | Raw-body signature and unique event ID are verified; joined/left and meeting events are idempotent, support reconnect intervals and out-of-order delivery, and send unmatched or contradictory evidence to an exception queue. |
+| LIVE-008 | Must | Daily.co meeting and participant telemetry shall be captured through signed provider events and reconciled into per-participant attendance intervals. | Raw-body signature and unique event ID are verified; joined/left and meeting events are idempotent, support reconnect intervals and out-of-order delivery, and send unmatched or contradictory evidence to an exception queue. |
 | LIVE-009 | Must | Per-participant attendance shall support present, late, absent, excused, cancelled and technical-issue outcomes. | Attendance is not a single occurrence-level flag; each change records source, actor, time and correction reason. |
 | LIVE-010 | Must | Actual learner presence and trainer delivery duration shall be derived from reconciled Daily.co evidence with an authorized correction path. | Provider intervals are primary evidence; planned, room duration, trainer presence and each learner presence remain separate; correction requires actor/reason/approval and never silently changes an earning or credit. |
-| LIVE-011 | Must | Trainers shall submit a post-class delivery report. | Report captures syllabus/lesson covered, topic, progress, homework, resources, general notes and learner-specific notes allowed by policy; required fields depend on course type. |
+| LIVE-011 | Must | Trainers shall submit a post-class delivery report. | Report captures topic covered, progress, homework, optional basic quiz/homework reference, uploaded lecture/PDF resources, general notes and learner-specific notes allowed by policy. Live-only courses require lightweight lesson/resource tracking; K-12 syllabus alignment and milestone completion are handled in their own modules. |
 | LIVE-012 | Must | Delivery reports shall enter a review/approval workflow when configured. | Approval stores reviewer, timestamp, decision and reason; rejection returns a correctable version while preserving submitted and reviewed snapshots. |
 | LIVE-013 | Must | Approval of valid delivery shall emit independent entitlement, payroll, progress and notification events. | No single session status represents credits and compensation; each downstream event is idempotent and traceable to the approved occurrence/participant. |
 | LIVE-014 | Must | Class credits shall be debited per participant and per applicable membership term. | Rules account for attendance outcome, cancellation window, makeup policy and group delivery; reversals reference the original debit. |
@@ -948,166 +939,254 @@ Course calendars, trainer/learner join actions, attendance records, delivery rep
 | LIVE-017 | Must | Trial classes shall use the same occurrence and participant model with trial-specific rules. | Trial attendance and reporting are captured without creating a paid membership; conversion links the request/trial to resulting order and enrolment. |
 | LIVE-018 | Should | The scheduler shall support trainer availability, blackout periods and preferred working hours. | Authorized staff can view availability and propose slots; exceptions/overrides are recorded; availability does not reveal private calendar details to learners. |
 | LIVE-019 | Should | Daily.co recording and playback shall remain disabled by default and be enabled only for an approved course/policy with explicit consent and retention. | Recording events create private Supabase resource/file-version records; signed access, guardian rules, access logging, expiry/deletion and provider-storage reconciliation are tested. |
-| LIVE-020 | Must | Operations shall have a Daily.co live-delivery exception queue. | Queue includes failed room synchronization, missing/duplicate/out-of-order webhook, unknown participant, short/conflicting duration, absent trainer, recording issue, attendance dispute and overdue report; every item has owner, state and auditable resolution. |
+| LIVE-020 | Must | Operations shall have a Daily.co live-delivery exception queue. | Operations exception handling includes failed room creation, missing/contradictory attendance evidence, unknown participant, short/conflicting duration, absent trainer, learner no-show, attendance dispute and overdue report; every item has owner, state and auditable resolution. Low-level provider diagnostics are not exposed in the Admin dashboard. |
 
 ## 4.8 Milestone-Based Self-Paced Learning
 
-> FEATURE 08  \|  MILE  \|  15 FUNCTIONAL REQUIREMENTS
+> FEATURE 08  |  MILE  |  15 FUNCTIONAL REQUIREMENTS
 
-Deliver structured self-paced programmes through levels, milestones, lessons and typed activities with configurable unlock, assessment, progress and intervention rules.
+Create fixed, publishable self-paced courses through a Course Creator workspace. A milestone course is not a live-class membership and not a K-12 tuition section. It is a structured course version made of levels, milestones, lessons and typed activities. Learners progress through the published structure using automatic completion rules, quiz/assignment outcomes and optional reviewer feedback.
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Learner, Course Creator, Academic Reviewer, optional facilitator/trainer, Operations and assessment reviewer. |
-| Owned / primary records | Programme, level, milestone, lesson, activity, content release rule, prerequisite, completion rule, attempt policy, progress event/summary, review queue, intervention and certificate eligibility. |
-| Dependencies and confirmed technology | Catalogue course versions, resources, assessment/submission services, enrolments/access grants, Supabase Storage/PostgreSQL and dashboards. |
+| Primary actors | Course Creator, Academic Reviewer, learner, optional facilitator/reviewer, Operations and assessment reviewer. |
+| Owned / primary records | Self-paced course version, level, milestone, lesson, activity, activity type, activity configuration, completion rule, prerequisite rule, unlock rule, attempt policy, progress event, progress summary, review queue and certificate eligibility. |
+| Dependencies and confirmed technology | Course catalogue/versioning, reusable resources, assessment/submission services, enrolments/access grants, Supabase Storage/PostgreSQL and learner dashboards. |
 | Requirement count | 15 total: 12 Must and 3 Should |
 
-### 4.8.1 Functional decomposition
+### 4.8.1 Fixed course structure
+
+A self-paced milestone course uses this canonical structure:
+
+```text
+Course / Programme
+  -> Course Version
+      -> Level 1
+          -> Milestone 1
+              -> Lesson 1
+                  -> Activity A: Video
+                  -> Activity B: Text/reading
+                  -> Activity C: Quiz
+              -> Lesson 2
+                  -> Activity D: Audio
+                  -> Activity E: Speaking/voice task
+          -> Milestone 2
+              -> Lesson(s)
+      -> Level 2
+          -> Milestone(s)
+```
+
+The structure must be built in a Course Creator dashboard, reviewed, published and then frozen for enrolled learners. Later edits create a new draft/version or a controlled patch according to policy; they must not silently rewrite a learner's historical progress.
+
+### 4.8.2 Built-in activity types
+
+The Course Creator must be able to add these activity types without custom engineering work:
+
+| Activity type | Purpose | Typical completion evidence |
+| --- | --- | --- |
+| Video lesson | Learner watches an uploaded/embedded video. | Opened, watched threshold, completed. |
+| Audio lesson | Learner listens to an audio lesson or pronunciation model. | Opened, listened threshold, completed. |
+| Formatted text lesson | Learner reads structured content. | Opened, marked complete, optional time/read checkpoint. |
+| Downloadable resource | Learner accesses a PDF, worksheet or supporting file. | Viewed/downloaded according to policy. |
+| Quiz | Learner answers auto-gradable or partially manual questions. | Attempt, score, pass/fail, review state. |
+| Assignment/task | Learner submits text, file, link or other work. | Submitted, reviewed, returned or approved. |
+| Speaking/voice activity | Learner records or uploads voice evidence. | Submitted audio, reviewer feedback/grade, approval. |
+| Reflection/checklist activity | Learner confirms practice or completes a structured reflection. | Submitted response/checklist state. |
+| External/linked activity | Learner uses an approved external tool or activity. | Manual confirmation, link evidence or reviewer approval. |
+
+### 4.8.3 Functional decomposition
 
 | Subfeature | Requirement IDs | Functions included |
 | --- | --- | --- |
-| Hierarchy and learning activities | MILE-001 to MILE-003 | Build levels, milestones, lessons and text/media/quiz/assignment/voice activity types. |
-| Completion, unlock and progress engine | MILE-004 to MILE-008 | Configure completion/prerequisite/retry policies, capture granular progress and resume position. |
-| Review queues and learner experience | MILE-009 to MILE-011 | Route manual work, present current/next progress and optionally involve facilitators. |
+| Course Creator authoring | MILE-001 to MILE-003 | Create levels, milestones, lessons and built-in activities through an authoring dashboard. |
+| Completion, unlock and progress engine | MILE-004 to MILE-008 | Configure completion, prerequisite, retry and unlock rules; capture granular progress and resume state. |
+| Review queues and learner experience | MILE-009 to MILE-011 | Route manual work, present current/next progress and optionally involve facilitators or reviewers. |
 | Release, completion and interventions | MILE-012 to MILE-015 | Pace content, calculate completion separately from access, support intervention and represent Spoken English Level 1. |
 
-### 4.8.2 Principal workflows
+### 4.8.4 Principal workflows
 
-#### Learn and progress through milestones
+#### Course Creator builds and publishes a fixed milestone course
 
-1. The learner opens an active enrolment and the engine evaluates release, prerequisite and access rules.
+1. Course Creator creates a draft self-paced course version and defines the title, outcomes, access rules and target learner level.
+2. Course Creator adds one or more levels in sequence.
+3. Inside each level, Course Creator creates milestones with clear learning goals and completion rules.
+4. Inside each milestone, Course Creator creates lessons and adds built-in activity types such as video, audio, text, quiz, assignment, speaking/voice activity and downloadable resources.
+5. Course Creator configures prerequisites, required/optional activities, pass thresholds, retry rules, unlock rules and certificate rules.
+6. Academic Reviewer checks structure, content, assessment rules, accessibility and learner experience.
+7. Approved version is published and becomes available for product/access-grant configuration.
+8. Learners enrolled into that version keep the same version history even if the course is later improved.
 
-2. The dashboard identifies the current level, milestone and next required activity.
+#### Learner progresses through a milestone course
 
-3. Opening, completing, submitting, passing and grading events are stored against the enrolment and course version.
+1. Learner opens an active self-paced enrolment and the engine evaluates access, release and prerequisite rules.
+2. Dashboard shows current level, current milestone, current lesson, next required activity, completed work and remaining work.
+3. Learner completes activities. Video/audio/text/resource activities may complete automatically or by learner confirmation according to rules.
+4. Quizzes are attempted and scored according to assessment policy.
+5. Assignments and speaking/voice tasks enter a review queue when manual review is required.
+6. Completion events update lesson, milestone, level and course progress summaries.
+7. The next activity, milestone or level unlocks only when the configured rules are satisfied.
+8. Inactivity, repeated failure or overdue manual work can create intervention notifications or staff tasks.
 
-4. Auto-gradable work updates immediately; manual activities enter an assigned review queue.
+### 4.8.5 States and lifecycle
 
-5. Completion rules unlock the next item or explain the unmet requirement.
+> Required state behavior<br>Activity state: Locked -> Available -> In Progress -> Submitted/Awaiting Review -> Completed/Passed or Failed/Retry Available. Lesson, milestone, level and course states are derived from activity completion and published rules; they are not arbitrary manual totals.
 
-6. Intervention rules may notify the learner or assigned staff when progress stalls or performance falls below policy.
+Course version lifecycle: Draft -> In Review -> Approved -> Published -> Archived. Published learner progress remains tied to the version that learner started.
 
-### 4.8.3 States and lifecycle
+### 4.8.6 Business rules, permissions and validation
 
-> Required state behavior<br>Content is Locked, Available, In Progress, Submitted/Awaiting Review, Completed or Failed/Retry Available per activity. Milestone/level state is derived from published completion rules, not manually overwritten totals.
-
-### 4.8.4 Business rules, permissions and validation
-
-- Progress is scoped to enrolment and immutable course version.
-
+- Course Creator can author draft structures but cannot publish without required review if review policy is enabled.
+- A milestone course must have at least one level, one milestone, one lesson and one activity before publication.
+- Activity configuration is type-specific; unsupported file types or invalid activity configurations are rejected.
+- Progress is scoped to learner enrolment and course version.
 - Access expiry and academic completion/certificate eligibility are calculated separately.
-
-- Retry limits and resets are policy-driven and audited.
-
 - Manual review cannot be bypassed by a client-side completion event.
+- The IHS Comprehensive Spoken English Level 1 course must be buildable through this standard authoring model without custom code.
 
-- The IHS Comprehensive Spoken English Level 1 structure must be achievable using configuration rather than custom code.
+### 4.8.7 Outputs, notifications and reporting
 
-### 4.8.5 Outputs, notifications and reporting
+Course Creator draft workspace, published course outline, learner current-level/current-milestone dashboard, resume point, progress percentage, completed and remaining work, reviewer queues, intervention list, completion/certificate status and progress reports.
 
-Current-level/milestone view, resume location, progress percentage, remaining work, review queues, intervention lists, completion/certificate status and progress reports.
-
-### 4.8.6 Complete testable requirements
+### 4.8.8 Complete testable requirements
 
 | ID | Priority | Functional requirement | Required behavior / acceptance evidence |
 | --- | --- | --- | --- |
-| MILE-001 | Must | Self-paced milestone courses shall support the hierarchy Programme -> Level -> Milestone -> Lesson -> Activity. | Authors can create, reorder and validate the hierarchy in draft; published learners see the exact version and ordered next activity. |
-| MILE-002 | Must | Lessons shall support formatted text, video, audio, downloadable files, embedded media and linked live/support activities. | Each activity type has a specific configuration schema and accessible learner renderer; unsupported file or embed types are rejected. |
-| MILE-003 | Must | The platform shall support interactive quizzes, assignments/tasks and speaking/voice-recording activities. | Attempts/submissions are tied to learner, enrolment, activity version and time; upload/recording status and review requirements are visible. |
-| MILE-004 | Must | Course creators shall define completion rules for lessons, milestones, levels and the overall programme. | Rules may require viewing, minimum watch/listen percentage, quiz threshold, assignment approval, trainer sign-off or combinations; rules are versioned. |
+| MILE-001 | Must | Self-paced milestone courses shall support the hierarchy Course/Programme -> Course Version -> Level -> Milestone -> Lesson -> Activity. | Authors can create, reorder and validate the hierarchy in draft; published learners see the exact version and ordered next activity. |
+| MILE-002 | Must | The Course Creator dashboard shall provide built-in activity creation for video, audio, formatted text, downloadable resource, quiz, assignment/task, speaking/voice, reflection/checklist and approved external activities. | Each activity type has its own configuration fields, validation and learner renderer; Course Creator can build a fixed course without developer intervention. |
+| MILE-003 | Must | Activity records shall be versioned with type-specific configuration. | Attempts/submissions/progress point to the exact activity version; editing published content creates a new version or approved patch without corrupting historical progress. |
+| MILE-004 | Must | Course creators shall define completion rules for activities, lessons, milestones, levels and the overall course. | Rules may require viewing, watch/listen threshold, learner confirmation, quiz pass mark, assignment approval, voice review, facilitator sign-off or combinations; rules are versioned. |
 | MILE-005 | Must | Prerequisites and unlock rules shall be evaluated per enrolment. | Locked activities explain unmet conditions; completing or reversing a prerequisite recalculates downstream accessibility deterministically. |
 | MILE-006 | Must | Progress shall be captured as granular events and summarized for fast dashboards. | Opened, started, completed, passed, failed, submitted, graded and unlocked events are retained; derived percentages can be rebuilt and are version-aware. |
 | MILE-007 | Must | Learners shall be able to resume from their last meaningful position. | Course workspace opens the current/next activity and preserves media position where supported; completed work is not reset by an ordinary sign-out. |
 | MILE-008 | Must | Attempt and retry policies shall be configurable. | Authors set attempts, cooldowns, pass thresholds and whether latest, highest or first result counts; learners see remaining attempts before starting. |
 | MILE-009 | Must | Manual-review activities shall enter trainer/reviewer queues. | Assigned reviewers can open the exact submission, rubric and history; status moves through submitted, under review, returned, resubmitted and graded. |
-| MILE-010 | Must | The learner dashboard shall show current level, milestone, progress percentage, completed/remaining lessons and next required action. | Values reconcile to the progress event history and course completion rules; course switching does not mix progress between enrolments. |
+| MILE-010 | Must | The learner dashboard shall show current level, current milestone, progress percentage, completed/remaining lessons and next required activity. | Values reconcile to the progress event history and course completion rules; course switching does not mix progress between enrolments. |
 | MILE-011 | Should | Milestone courses shall support optional facilitator or trainer involvement. | An enrolment may be assigned a reviewer/coach with scoped access without converting the course into a live membership. |
 | MILE-012 | Should | Content release may be immediate, paced by enrolment date or scheduled by cohort. | Release calculations store the rule context and timezone; staff can preview learner access for a chosen date. |
 | MILE-013 | Must | Completion and certificate eligibility shall be calculated independently from access expiry. | A completed learner remains completed after access ends; certificate eligibility records rule version and evidence. |
 | MILE-014 | Should | The platform shall support progress interventions. | Configured inactivity, repeated failure or overdue submission conditions can create notifications, staff tasks or support cases without changing academic results. |
-| MILE-015 | Must | Level 1 of the IHS Comprehensive Spoken English Programme shall be representable without custom code. | All specified lessons, activities, quizzes, assignments and speaking tasks can be authored through standard content types and completion rules. |
+| MILE-015 | Must | Level 1 of the IHS Comprehensive Spoken English Programme shall be representable without custom code. | All specified levels, milestones, lessons, activities, quizzes, assignments and speaking tasks can be authored through standard content types and completion rules. |
 
 ## 4.9 K-12 Tuition
 
-> FEATURE 09  \|  K12  \|  14 FUNCTIONAL REQUIREMENTS
+> FEATURE 09  |  K12  |  14 FUNCTIONAL REQUIREMENTS
 
-Support K-12 subject tuition and bundles with curriculum structures, live delivery, guardians, grading periods, report cards and safeguarding.
+Support K-12 tuition as a live-teaching service with a formal academic syllabus, weekly schedule, assessment system, gradebook, guardians and reporting. K-12 is not the same as a simple live-class product: it uses Daily.co live classes for delivery, but it also requires a Course Creator-authored subject syllabus and course structure that teachers follow during the term.
 
 | Feature attribute | Specification |
 | --- | --- |
 | Primary actors | Minor learner, guardian/payer, K-12 teacher, Course Creator, Academic Reviewer, COO/Operations and safeguarding-authorized staff. |
-| Owned / primary records | Academic year, curriculum/board, grade, subject course, syllabus version, unit/chapter, lesson, subject product, bundle, section/cohort, term calendar, grading period/category/scheme, guardian relationship and report card. |
-| Dependencies and confirmed technology | Catalogue/products, commerce allocations, enrolments, live delivery, assessments/gradebook, communications and privacy/safeguarding controls. |
+| Owned / primary records | Academic year, curriculum/board, grade, subject course, syllabus version, unit/chapter, lesson, subject product, bundle, section/cohort, weekly schedule pattern, schedule change history, grading period/category/scheme, guardian relationship and report card. |
+| Dependencies and confirmed technology | Catalogue/products, manual payment approval, enrolments, Daily.co live delivery, assessments/gradebook, communications and privacy/safeguarding controls. |
 | Requirement count | 14 total: 12 Must and 2 Should |
 
-### 4.9.1 Functional decomposition
+### 4.9.1 K-12 course structure
+
+A K-12 subject uses this canonical structure:
+
+```text
+Academic Year / Term
+  -> Curriculum / Board
+      -> Grade / Class Level
+          -> Subject Course
+              -> Subject Course Version
+                  -> Syllabus Outline
+                      -> Unit / Chapter
+                          -> Lesson / Topic
+                              -> Resources
+                              -> Homework / Quiz / Assignment
+```
+
+The Course Creator creates and maintains the syllabus outline, units/chapters, lessons/topics, assessment categories and grading scheme. Teachers deliver live classes against this structure and may upload lecture materials, homework and feedback linked to the relevant syllabus item.
+
+### 4.9.2 Weekly schedule requirement
+
+Each K-12 subject enrolment or section must have a weekly schedule when the course starts. The schedule can be changed later, but all changes must preserve history.
+
+A weekly schedule includes:
+
+- days of week;
+- class start time and duration;
+- timezone;
+- assigned teacher;
+- section/cohort or one-to-one setting;
+- effective start date and optional end date;
+- holiday/exception handling;
+- change reason and actor for later modifications.
+
+When the weekly schedule is created, the system can generate upcoming class occurrences according to policy. Changes may apply to one class, future classes or the whole future pattern, but completed occurrences remain unchanged.
+
+### 4.9.3 Functional decomposition
 
 | Subfeature | Requirement IDs | Functions included |
 | --- | --- | --- |
-| Academic and commercial structure | K12-001 to K12-005 | Model curriculum/grade/subject content, sell individual subjects/bundles, reuse live delivery and publish syllabus outlines. |
-| Grading, guardians and minor onboarding | K12-006 to K12-009 | Configure grading periods and verified, permissioned guardian/minor relationships. |
-| Teaching, reporting, calendars and safeguarding | K12-010 to K12-013 | Assign syllabus-aligned work, produce report cards, schedule terms and enforce safeguarding. |
-| Promotion and version movement | K12-014 | Move learners to a new grade/subject version while preserving history. |
+| Academic and commercial structure | K12-001 to K12-005 | Model curriculum/grade/subject structure, sell individual subjects/bundles and publish the syllabus outline. |
+| Weekly live tuition scheduling | K12-004, K12-012 | Use Daily.co live class delivery with fixed weekly schedules, teacher assignment and schedule-change history. |
+| Assessments, grading and guardians | K12-006 to K12-009 | Configure quizzes, assignments, gradebook categories, grading periods, guardian visibility and minor consent. |
+| Teaching, reporting, safeguarding and promotion | K12-010 to K12-014 | Assign syllabus-aligned work, produce report cards, enforce safeguarding and preserve academic-year history. |
 
-### 4.9.2 Principal workflows
+### 4.9.4 Principal workflows
 
-#### Subject or bundle enrolment
+#### Course Creator prepares a K-12 subject
 
-1. A payer selects one subject product or a bundle for an identified learner.
+1. Course Creator selects academic year, curriculum/board, grade level and subject.
+2. Course Creator creates a subject course version and enters the full syllabus outline.
+3. Course Creator adds units/chapters, lesson/topic sequence, resources, homework templates, quizzes, assignments and assessment categories.
+4. Course Creator defines grading scheme, grading periods, report-card fields and publication policy.
+5. Academic Reviewer approves the subject version for use.
+6. Operations can then sell/enrol learners into the subject or include it in a bundle.
 
-2. After approved payment/allocation, a bundle creates separate child access grants and enrolments for each subject.
+#### K-12 subject or bundle enrolment
 
-3. Operations assigns the learner to eligible subject runs/sections and term schedules.
+1. Guardian/payer or staff selects one subject product or a bundle for a learner.
+2. Manual payment approval creates allocations and access rights.
+3. Bundle purchase creates separate child subject enrolments; it does not create one copied bundle course.
+4. Operations assigns learner to subject section/cohort or one-to-one teacher arrangement.
+5. Operations sets the initial weekly schedule and teacher assignment.
+6. Learner, guardian and teacher see scheduled live classes, syllabus progress, homework and gradebook according to permissions.
 
-4. The guardian relationship determines what schedule, attendance, payment, grade and report information is visible.
+#### K-12 teaching and reporting
 
-#### Academic term and report card
+1. Teacher conducts Daily.co live class according to the weekly schedule.
+2. Teacher records topic/lesson covered against the syllabus structure.
+3. Teacher uploads lecture/PDF/resource materials and assigns homework, quiz or assignment.
+4. Learner completes assessments/submissions.
+5. Teacher grades and publishes feedback according to grading policy.
+6. System produces progress reports/report cards using attendance, grades, homework, teacher comments and syllabus progress.
 
-1. Teachers deliver syllabus-linked live classes and assign categorized assessments/homework.
+### 4.9.5 States and lifecycle
 
-2. Published grades roll into the configured grading period and weighting scheme.
+> Required state behavior<br>Subject enrolments follow the enrolment lifecycle. Weekly schedules are Draft, Active, Changed, Paused, Ended or Superseded. Academic periods are Planned, Open, Grading/Review, Published and Closed. Guardian relationships are Pending Verification, Active, Limited, Revoked or Expired.
 
-3. Authorized staff review completeness and generate a report card/progress report.
+### 4.9.6 Business rules, permissions and validation
 
-4. Promotion or movement creates a new enrolment/version relationship; prior year results remain immutable.
-
-### 4.9.3 States and lifecycle
-
-> Required state behavior<br>Subject enrolments follow the enrolment lifecycle. Academic periods are Planned, Open, Grading/Review, Published and Closed. Guardian relationships are Pending Verification, Active, Limited, Revoked or Expired.
-
-### 4.9.4 Business rules, permissions and validation
-
+- A K-12 course must have a Course Creator-authored syllabus outline before normal teaching begins.
+- A K-12 live section must have an initial weekly schedule before recurring class generation.
 - A bundle grants independent subject enrolments rather than one combined course record.
-
+- Teachers deliver against the syllabus but do not rewrite the approved syllabus version unless granted course-creator permission.
 - Guardian access is explicit and does not automatically include private learner chat or notes.
+- Promotion never overwrites the syllabus/version, grades or report card used in a prior academic year.
 
-- Age-appropriate consent and safeguarding controls apply before communication or media participation.
+### 4.9.7 Outputs, notifications and reporting
 
-- Term calendars and section-wide exceptions must update schedules without losing occurrence history.
+Subject catalogue, bundle allocations, subject sections/rosters, weekly schedule calendar, schedule-change history, guardian dashboard, syllabus progress, homework/assessment queues, gradebook, report cards, attendance summaries and safeguarding alerts.
 
-- Promotion never overwrites the syllabus/version or report card used in a prior academic year.
-
-### 4.9.5 Outputs, notifications and reporting
-
-Subject catalogues, bundle allocations, sections/rosters, term calendars, guardian dashboard, syllabus progress, homework/assessment queues, report cards and safeguarding alerts.
-
-### 4.9.6 Complete testable requirements
+### 4.9.8 Complete testable requirements
 
 | ID | Priority | Functional requirement | Required behavior / acceptance evidence |
 | --- | --- | --- | --- |
-| K12-001 | Must | K-12 content shall support academic year, curriculum/board, grade, subject, syllabus version, unit/chapter and lesson structures. | Required dimensions are configurable; a subject course references a published syllabus version and can be offered in one or more live sections. |
+| K12-001 | Must | K-12 content shall support academic year, curriculum/board, grade, subject, subject course version, syllabus outline, unit/chapter and lesson/topic structures. | Required dimensions are configurable; a subject course references a published syllabus version and can be offered in one or more live sections. |
 | K12-002 | Must | Each subject shall be sellable independently. | Purchasing a subject product creates the subject entitlement and enrolment only for the selected learner, grade/syllabus and term. |
-| K12-003 | Must | A bundle product shall grant separate child subject entitlements/enrolments. | The bundle is not a copied course; each subject retains its trainer, schedule, gradebook, progress and renewal/refund allocation. |
-| K12-004 | Must | K-12 live tuition shall use the same course-run, occurrence, participant and attendance foundations as other live courses. | Sections support group and one-to-one delivery, per-learner attendance, trainer reporting, resources, homework and entitlement rules. |
-| K12-005 | Must | Course creators shall be able to publish the full syllabus outline before or during enrolment. | Learners/guardians see permitted outline detail; version changes do not rewrite past class or assessment references. |
-| K12-006 | Must | K-12 courses shall support grading periods, assessment categories and weighted grading schemes. | Scheme version defines categories, weights, scales, rounding and publication rules; calculations are reproducible from grade entries. |
+| K12-003 | Must | A bundle product shall grant separate child subject entitlements/enrolments. | The bundle is not a copied course; each subject retains its teacher, weekly schedule, gradebook, progress and renewal/refund allocation. |
+| K12-004 | Must | K-12 live tuition shall use Daily.co live class delivery with course-run, occurrence, participant and attendance foundations. | Sections support group and one-to-one delivery, per-learner attendance, teacher reporting, resources, homework and entitlement rules. |
+| K12-005 | Must | Course creators shall publish the full K-12 syllabus outline and course structure before normal teaching begins. | Learners/guardians see permitted outline detail; teachers can link classes, homework and assessments to syllabus items; version changes do not rewrite past references. |
+| K12-006 | Must | K-12 courses shall support grading periods, assessment categories, quizzes, assignments and weighted grading schemes. | Scheme version defines categories, weights, scales, rounding and publication rules; calculations are reproducible from grade entries. |
 | K12-007 | Must | The system shall support guardians and payer relationships for minors. | Guardian relationship, authority, verification, communication access and financial responsibility are explicit and revocable; one learner may have multiple guardians. |
 | K12-008 | Must | Guardian visibility shall be permission-based and configurable. | Attendance, schedules, invoices, reports and grades may be shared; private learner notes/chats are excluded unless policy and safeguarding rules authorize access. |
 | K12-009 | Must | Minor accounts shall use age-appropriate onboarding and consent. | Date/age rules determine guardian consent and contact requirements; service access is blocked until required consent is verified. |
-| K12-010 | Must | Teachers shall be able to assign syllabus-aligned homework and assessments. | Assignments link to subject, unit/lesson, due date and gradebook category; late and revision rules are enforced consistently. |
-| K12-011 | Must | The platform shall generate learner progress reports/report cards. | Reports combine attendance, assessment category results, teacher comments and progress for a selected period; publication and guardian access are logged. |
-| K12-012 | Should | K-12 schedules shall support term calendars, holidays and section-wide exceptions. | Recurring classes skip or reschedule configured holidays; changes notify affected learners, guardians and teachers. |
+| K12-010 | Must | Teachers shall be able to assign syllabus-aligned homework, quizzes and assignments. | Work links to subject, unit/chapter, lesson/topic, due date and gradebook category; late and revision rules are enforced consistently. |
+| K12-011 | Must | The platform shall generate learner progress reports/report cards. | Reports combine attendance, assessment category results, teacher comments and syllabus progress for a selected period; publication and guardian access are logged. |
+| K12-012 | Must | K-12 schedules shall support a fixed weekly schedule with change history. | Initial weekly schedule is required for live K-12 delivery; changes can apply to one or future occurrences, notify affected users and preserve completed history. |
 | K12-013 | Must | Safeguarding controls shall apply to communication, media, recordings and staff access. | Approved contact routes, moderation/escalation, restricted exports and retention rules are enforced for minors; violations generate auditable cases. |
 | K12-014 | Should | The platform shall support learner promotion or movement to a new grade/subject version. | Promotion creates new enrolments/version associations and preserves prior academic records; mapping of carried results is explicit. |
 
@@ -1121,7 +1200,7 @@ Provide one reusable assessment, submission, grading and gradebook capability fo
 | --- | --- |
 | Primary actors | Course Creator, Academic Reviewer, trainer/teacher, learner, guardian where permitted, accommodations administrator and authorized reporting staff. |
 | Owned / primary records | Question bank, versioned question/item, quiz, attempt, response, assignment/task, text/link/file/voice submission, rubric, criterion/level, grade, feedback, gradebook and grade correction. |
-| Dependencies and confirmed technology | Catalogue course versions, enrolments, Supabase Storage, resources/media, progress engine, dashboards and notifications. |
+| Dependencies and confirmed technology | Catalogue course versions, enrolments, Supabase Storage, resources and learning assets, progress engine, dashboards and notifications. |
 | Requirement count | 17 total: 14 Must and 3 Should |
 
 ### 4.10.1 Functional decomposition
@@ -1200,7 +1279,7 @@ Question banks, quiz attempts, submission inbox, grading queue, rubric feedback,
 | ASM-016 | Must | Grade changes after publication shall require a controlled correction workflow. | Original value remains in history; correction identifies requester/approver, reason and learner notification as policy requires. |
 | ASM-017 | Should | Staff shall be able to export gradebook results in controlled formats. | Exports apply filters, include scheme/version metadata, are permission-checked and create a sensitive-data audit event. |
 
-## 4.11 Resources and Media Assets
+## 4.11 Resources and Learning Assets
 
 > FEATURE 11  \|  RES  \|  12 FUNCTIONAL REQUIREMENTS
 
@@ -1208,7 +1287,7 @@ Store, version, assign, search, open and recover learning and operational files 
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Course Creator, trainer, learner, Operations, HR/Finance/Media staff within scope, Storage worker and authorized auditor. |
+| Primary actors | Course Creator, trainer, learner, Operations and HR/Finance staff within scope, Storage worker and authorized auditor. |
 | Owned / primary records | Resource record, file object, version, checksum, type/size/signature, scan/quarantine state, assignment/link, access event, archive state, backup and restore record. |
 | Dependencies and confirmed technology | Supabase private Storage and RLS, signed URLs/controlled streaming, Queues/Cron, scanning/media adapter, PostgreSQL metadata and external object backup. |
 | Requirement count | 12 total: 11 Must and 1 Should |
@@ -1361,16 +1440,16 @@ Conversation inboxes, unread counts, case queues and SLA alerts, in-app notifica
 | ID | Priority | Functional requirement | Required behavior / acceptance evidence |
 | --- | --- | --- | --- |
 | MSG-001 | Must | Communication shall be context-aware rather than unrestricted global direct messaging. | Conversations are linked to course/enrolment/class, support case or department context and include an explicit participant list and allowed roles. |
-| MSG-002 | Must | The system shall support learner-trainer, learner-support, trainer-operations and departmental conversations. | Conversation templates/policies define who may start, add participants, attach files and close/archive each conversation type. |
+| MSG-002 | Must | The system shall support assigned learner-teacher chat, learner-support cases, teacher-operations/support conversations and departmental conversations. | Conversation templates/policies define who may start, add participants, attach files and close/archive each conversation type. A teacher may chat only with learners currently assigned to that teacher by enrolment, course run or K-12 section. |
 | MSG-003 | Must | Messages shall support text and safe attachments. | Messages store author, time, edit/delete policy and delivery/read state; attachments inherit private-resource scanning and authorization. |
 | MSG-004 | Must | Minor learner communication shall follow safeguarding and guardian policies. | Approved contact routes, staff visibility/moderation, escalation and retention are enforced; prohibited private contact paths are unavailable. |
-| MSG-005 | Must | Users shall be able to submit complaints, suggestions, feedback, technical issues, payment issues and class-related problems as cases. | Case type, priority, owner, status, related records, messages, attachments and resolution are stored separately from casual chat. |
+| MSG-005 | Must | Users shall be able to submit complaints, suggestions, feedback, technical issues, payment issues and class-related problems as cases. | Case type, priority, owner, status, related records, messages, attachments and resolution are stored separately from casual chat. If the learner has an active responsible CSR, the case is assigned to that CSR by default unless category, urgency or policy routes it to Operations/Finance/Academic Support. |
 | MSG-006 | Must | Case workflow shall include Open, In Review, Waiting on User, Waiting Internally, Resolved and Closed. | State transitions, service target, reassignment, escalation and reopen history are visible and auditable. |
 | MSG-007 | Should | Cases shall support configurable service-level targets and escalation. | Overdue first response/resolution creates alerts and dashboard items; pausing rules are explicit. |
 | MSG-008 | Must | Notifications shall support durable in-app delivery and Resend transactional email at launch; Supabase Auth email shall also be delivered through Resend. | Verification, invitation, recovery, trial, class, resource, homework, feedback, manual payment submitted/approved/rejected/resubmission, membership activation/renewal, entitlement and payroll messages use approved templates and create internal notification/attempt records. |
 | MSG-009 | Should | WhatsApp/SMS shall be added through adapters after consent, template and cost policies are approved. | Phone verification, opt-in/opt-out, provider template ID, delivery status and cost are stored; failure falls back according to message policy. |
 | MSG-010 | Must | Users shall manage notification preferences without disabling legally or operationally essential service messages. | Preferences are channel- and category-specific; mandatory security/transactional messages are clearly identified; changes are audited. |
-| MSG-011 | Must | Resend email delivery shall be queued, idempotent and observable. | Each attempt stores notification source, recipient, template/version, deterministic idempotency key, Resend message ID, retry count and status; signed webhook events update delivery/bounce/complaint state and failures enter Operations. |
+| MSG-011 | Must | Resend email delivery shall be queued, idempotent and observable. | Each attempt stores notification source, recipient, template/version, deterministic idempotency key, Resend message ID, retry count and status; signed provider event events update delivery/bounce/complaint state and failures enter Operations. |
 | MSG-012 | Must | Transactional email templates shall be version-controlled React Email components with safe variables and preview/render tests. | Templates are accessible and localization-ready; missing/unsafe variables fail before send; notification records retain rendered content or immutable template/version and sanitized variable reference according to retention policy. |
 | MSG-013 | Must | Class and trial reminders shall be scheduled through Supabase Cron/Queues and delivered through in-app notification and Resend according to recipient timezone and occurrence state. | Schedule version/idempotency prevents duplicates; reschedule/cancellation invalidates stale jobs; retries never send an obsolete reminder and timing is configurable by offering. |
 | MSG-014 | Should | The system shall support announcements to scoped audiences. | Authorized staff target role, course, cohort, department or selected users; recipient count is previewed and delivery/read metrics are available. |
@@ -1380,11 +1459,11 @@ Conversation inboxes, unread counts, case queues and SLA alerts, in-app notifica
 
 > FEATURE 13  \|  DSH  \|  15 FUNCTIONAL REQUIREMENTS
 
-Give each role a permission-scoped, actionable view of work, learning, risk, finance and system health, with every metric traceable to the records that produced it.
+Give each role a permission-scoped, actionable view of work, learning, risk, finance and business operations health, with every metric traceable to the records that produced it.
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Learner, guardian, trainer, CSR, COO/Operations, Platform Admin, Finance/Payroll, HR, Media, CTO/Development and executive viewer. |
+| Primary actors | Learner, guardian, trainer, CSR, COO/Operations, Admin, Finance/Payroll, HR and executive viewer. |
 | Owned / primary records | Dashboard view, widget, filter, saved view, read model, KPI definition/version, drill-down query, export request, trend signal, exception and freshness marker. |
 | Dependencies and confirmed technology | All product domains, Next.js Server Components, Supabase read models/materialized summaries, RLS and background refresh jobs. |
 | Requirement count | 15 total: 13 Must and 2 Should |
@@ -1395,7 +1474,7 @@ Give each role a permission-scoped, actionable view of work, learning, risk, fin
 | --- | --- | --- |
 | Scoped metrics and learner experience | DSH-001 to DSH-004 | Make metrics drillable and provide multi-course learner summaries and delivery-specific workspaces. |
 | Trainer, CSR and Operations workspaces | DSH-005 to DSH-007 | Expose assigned teaching, sales/trial/payment-review and operational exception queues. |
-| Admin, Finance and department workspaces | DSH-008 to DSH-010 | Separate platform health, financial lifecycle and HR/Media/Development operational views. |
+| Admin, Finance and HR workspaces | DSH-008 to DSH-010 | Separate Admin business cockpit, financial lifecycle and HR operational views. |
 | Filters, saved views and KPI governance | DSH-011 to DSH-013 | Support timezone-aware filters, permitted exports and defined KPI source logic. |
 | Trends, exceptions and read models | DSH-014 to DSH-015 | Prioritize action signals and use performant summaries without replacing authoritative records. |
 
@@ -1431,7 +1510,7 @@ Give each role a permission-scoped, actionable view of work, learning, risk, fin
 
 ### 4.13.5 Outputs, notifications and reporting
 
-All Courses learner home, course workspace, trainer queue, CSR funnel/commission view, COO operational cockpit, Admin health view, Finance lifecycle view, department dashboards, drill-downs, trend signals and controlled exports.
+All Courses learner home, course workspace, trainer queue, CSR funnel/commission view, COO operational cockpit, Admin business operations cockpit, Finance lifecycle view, HR dashboards, drill-downs, trend signals and controlled exports.
 
 ### 4.13.6 Complete testable requirements
 
@@ -1444,9 +1523,9 @@ All Courses learner home, course workspace, trainer queue, CSR funnel/commission
 | DSH-005 | Must | The trainer dashboard shall show assigned course runs/enrolments, upcoming classes, reports due, grading queue and learner risks. | Data is limited to effective assignments; trainer can drill to roster, attendance, syllabus context, submissions and permitted communications. |
 | DSH-006 | Must | The CSR dashboard shall show leads, trial requests, follow-ups, attributed enrolments, conversions, commission status and any manual payment submissions the CSR is permitted to review. | Metrics filter by date, owner, source and programme; the payment queue shows age, expected/submitted amount, receipt state and exception flags without exposing broader finance data; conversion and commission figures reconcile to approved source records. |
 | DSH-007 | Must | The COO/Operations dashboard shall show today and upcoming classes, attendance exceptions, pending reports/approvals, absences, entitlement risks, renewals, payments, trials, cases and payroll. | Each number is drillable, has an as-of time and uses documented definitions; payment widgets distinguish Submitted, Under Review, Rejected/Resubmitted, Approved and Pending Activation; stale or failed aggregates are flagged. |
-| DSH-008 | Must | The Admin dashboard shall emphasize system health, access governance, integrations, jobs, audit alerts and configuration changes. | Operational business metrics remain available according to permission, but security and platform exceptions are not buried inside generic analytics. |
+| DSH-008 | Must | The Admin dashboard shall be a business-operations cockpit, not a platform-maintenance console. | It shows learners, active/free/trial users, today/upcoming classes, pending trainer reports, attendance exceptions, trial conversions, manual payment reviews, renewals, low/expiring memberships, open support cases, payroll/HR alerts, CSR performance and all drill-downs to source records. It excludes provider configuration, provider event consoles, background-job/dead-letter queues, infrastructure health, feature flags and system-maintenance controls. |
 | DSH-009 | Must | The Finance dashboard shall separate membership requests, submitted receipt evidence, approved payments, receivables, refunds/reversals, expenses, payroll liabilities and settlements. | Figures are not derived from class status; filters include entity, currency, period, payment channel, reviewer and decision; drill-down preserves source currency and links evidence to the approved transaction without making the file itself the financial truth. |
-| DSH-010 | Must | Department dashboards shall be role-specific for Media, Development and HR. | Media shows submissions/revisions/ratings/wages; Development shows tasks/bugs/testing/deployments; HR shows onboarding, documents, letters, payroll adjustments and expiring records. |
+| DSH-010 | Must | HR and business-administration dashboards shall be role-specific and permission-scoped. | HR shows onboarding, documents, letters, payroll adjustments and expiring records; business-administration views show policy, reference-data, approval and audit queues without exposing platform-maintenance tools. |
 | DSH-011 | Must | Dashboard filters shall include date range, timezone-aware period, programme/course, delivery model, status and responsible owner where relevant. | Filter state appears in URL or saved view, can be reset, and is applied consistently to totals and lists. |
 | DSH-012 | Should | Users shall be able to save personal dashboard views and export permitted summaries. | Saved views do not grant access beyond current permissions; exports are generated asynchronously for large datasets and are audited. |
 | DSH-013 | Must | Management analytics shall define each KPI and its source logic. | A data dictionary specifies numerator, denominator, exclusions, timezone and refresh cadence for revenue, conversion, attendance, completion, payroll and productivity metrics. |
@@ -1638,7 +1717,7 @@ Manage staff profiles, onboarding, verified employment documents, official lette
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | HR, COO, Platform Admin for access actions, manager, employee/staff invitee, authorized document issuer and disciplinary reviewer. |
+| Primary actors | HR, COO, Admin for access actions, manager, employee/staff invitee, authorized document issuer and disciplinary reviewer. |
 | Owned / primary records | Staff/employment profile, onboarding checklist, verified field, emergency contact, custom field, private employment document, template version, issued letter/certificate, timeline event, disciplinary case and offboarding action. |
 | Dependencies and confirmed technology | IAM invitation/role lifecycle, private Supabase Storage, Resend, payroll salary agreements and audit services. |
 | Requirement count | 12 total: 10 Must and 2 Should |
@@ -1730,7 +1809,7 @@ Manage prospects, trials, follow-ups, enrolment attribution and verified sales c
 | Feature attribute | Specification |
 | --- | --- |
 | Primary actors | CSR, CSR manager, COO/Operations, learner/prospect, trainer for trial outcome and payroll/finance for approved commission. |
-| Owned / primary records | Prospect/lead, stage/reason, contact attempt, follow-up task, trial request/outcome, source/campaign, CSR attribution, verified enrolment, commission rule, commission source/earning and review workload. |
+| Owned / primary records | Prospect/lead, stage/reason, contact attempt, follow-up task, trial request/outcome, source/campaign, responsible CSR assignment, CSR attribution, learner support ownership, verified enrolment, commission rule, commission source/earning and review workload. |
 | Dependencies and confirmed technology | Portal lead/trial capture, IAM account linking, commerce/manual payment review, enrolment, live trials, notifications and payroll. |
 | Requirement count | 9 total: 8 Must and 1 Should |
 
@@ -1738,9 +1817,9 @@ Manage prospects, trials, follow-ups, enrolment attribution and verified sales c
 
 | Subfeature | Requirement IDs | Functions included |
 | --- | --- | --- |
-| Prospects and attribution | CSR-001 to CSR-003 | Keep leads separate from accounts and carry CSR/source attribution through trial, order and verified enrolment. |
+| Prospects, ownership and attribution | CSR-001 to CSR-003 | Keep leads separate from accounts, assign a responsible CSR and carry CSR/source attribution through trial, order, verified enrolment and support ownership. |
 | Commission rules and payment eligibility | CSR-004 to CSR-006 | Version commission policy, release only after verification and use the shared earning/payroll framework. |
-| Follow-up, lead workflow and analytics | CSR-007 to CSR-009 | Create trial follow-up automatically, support configurable stages and report performance/review workload. |
+| Follow-up, support ownership and analytics | CSR-007 to CSR-009 | Create trial follow-up automatically, route owned learner support cases to the responsible CSR where policy allows, support configurable stages and report performance/review workload. |
 
 ### 4.17.2 Principal workflows
 
@@ -1754,7 +1833,7 @@ Manage prospects, trials, follow-ups, enrolment attribution and verified sales c
 
 4. Trial outcome creates or updates a follow-up and may link the prospect to an authenticated learner account.
 
-5. Approved payment/allocation and enrolment retain CSR attribution for commission evaluation.
+5. Approved payment/allocation and enrolment retain CSR attribution for commission evaluation and learner support ownership.
 
 #### Commission qualification
 
@@ -1774,271 +1853,102 @@ Manage prospects, trials, follow-ups, enrolment attribution and verified sales c
 
 - Creating an account does not delete or replace prospect history; records are linked explicitly.
 
-- CSR attribution and later reassignment retain history and effective dates.
+- CSR attribution, responsible CSR ownership and later reassignment retain history, effective dates and reason.
 
 - Commission becomes payable only from a verified source and is globally unique.
 
 - A CSR’s payment-review permission is separate from commission ownership and may require segregation controls.
 
-- CSR dashboards expose only assigned/scoped prospects and permitted payment-review evidence.
+- CSR dashboards expose assigned/scoped prospects, owned learners, support cases, follow-ups, commission status and permitted payment-review evidence.
 
 ### 4.17.5 Outputs, notifications and reporting
 
-Lead pipeline, follow-up queue, trial conversion funnel, attributed enrolment details, commission eligibility/pay status, CSR performance analytics and scoped manual-payment review workload.
+Lead pipeline, owned learner list, follow-up queue, trial conversion funnel, learner support-case workload, attributed enrolment details, commission eligibility/pay status, CSR performance analytics and scoped manual-payment review workload.
 
 ### 4.17.6 Complete testable requirements
 
 | ID | Priority | Functional requirement | Required behavior / acceptance evidence |
 | --- | --- | --- | --- |
 | CSR-001 | Must | The CRM shall maintain prospect/lead records separately from authenticated accounts and learner profiles. | A lead may later link to an account/person without duplicating history; anonymous inquiries remain usable until conversion or retention expiry. |
-| CSR-002 | Must | CSR attribution shall be recorded at lead, trial request, order/enrolment and commission source levels. | Attribution changes require reason and preserve prior owner; self-service acquisitions can be distinguished from CSR-assisted conversions. |
-| CSR-003 | Must | Each verified enrolment shall show learner, programme/course, membership/product, approved payment/allocation, assigned CSR and enrolment date. | The record links to the authoritative membership request, manual submission/review decision, approved transaction/allocation and enrolment rather than duplicating amount/status text. |
+| CSR-002 | Must | CSR attribution and responsible-CSR ownership shall be recorded at lead, trial request, learner, order/enrolment, membership and commission source levels where applicable. | Attribution and ownership changes require reason and preserve prior owner; self-service acquisitions can be distinguished from CSR-assisted conversions; the responsible CSR becomes the default support owner for that learner unless policy routes the case elsewhere. |
+| CSR-003 | Must | Each verified enrolment shall show learner, programme/course, membership/product, approved payment/allocation, assigned/responsible CSR and enrolment date. | The record links to the authoritative membership request, manual submission/review decision, approved transaction/allocation and enrolment rather than duplicating amount/status text; responsible CSR is visible for support ownership and commission traceability. |
 | CSR-004 | Must | Commission rules shall be effective-dated and versioned. | Rules may depend on product, sales value, received payment, renewal/new sale and staff role; historical commission is not recalculated by later rule edits. |
 | CSR-005 | Must | Commission shall become payable only after configured enrolment and payment verification conditions are met. | A unique commission earning item is generated only after the configured manual payment approval/allocation and enrolment conditions are met; rejection creates no commission and refunds/cancellations create linked reversal rules rather than editing the original. |
 | CSR-006 | Must | CSR commissions shall flow into the same payroll earning-item and settlement framework. | Commission source is identifiable; it cannot be paid twice in a separate manual spreadsheet and payroll run. |
 | CSR-007 | Must | Trial completion shall create or update follow-up work automatically. | Outcome, owner, due date and recommended next action are generated according to rule; duplicate follow-ups are prevented. |
 | CSR-008 | Should | Lead workflow shall support configurable stages and reasons. | Stage history, lost reason, next action and expected value are reportable; deleting a converted lead is prevented. |
-| CSR-009 | Must | CSR analytics shall show enrolments, sales value, verified conversions, pending/paid commission, conversion performance and permission-scoped payment-review workload. | Metrics use documented attribution windows and approved payment/enrolment definitions; review metrics distinguish queue age, approvals, rejections, resubmissions and exceptions and drill to source records. |
+| CSR-009 | Must | CSR analytics shall show owned learners, support-case workload, enrolments, sales value, verified conversions, pending/paid commission, conversion performance and permission-scoped payment-review workload. | Metrics use documented attribution windows and approved payment/enrolment definitions; support-case metrics distinguish open, waiting, escalated and resolved cases; review metrics distinguish queue age, approvals, rejections, resubmissions and exceptions and drill to source records. |
 
-## 4.18 Media Department Operations
+## 4.18 Business Administration and Operational Governance
 
-> FEATURE 18  \|  MED  \|  13 FUNCTIONAL REQUIREMENTS
+> FEATURE 20  |  ADM  |  10 FUNCTIONAL REQUIREMENTS
 
-Replace Media Department spreadsheets with an assignment, submission, revision, approval, quality-rating and compensation workflow.
+Give authorized business administrators controlled tools for business reference data, business policies, approval thresholds, operational audit review and safe business configuration. This module is not a platform-maintenance console. It must not expose provider setup, technical provider events, low-level background jobs, feature flags, infrastructure health, system-maintenance tools, secrets or deployment controls to the Admin role.
 
 | Feature attribute | Specification |
 | --- | --- |
-| Primary actors | Media Head, Editor, Social Media Manager, COO, payroll/finance staff and campaign stakeholder. |
-| Owned / primary records | Media project/campaign, work item, brief, source asset, assignee, deliverable/link, submission version, review comment, revision cycle, approval, quality rating, wage/rate and earning source. |
-| Dependencies and confirmed technology | Private resource Storage, communication/comments, dashboards, payroll earning items and publication metadata. |
-| Requirement count | 13 total: 11 Must and 2 Should |
+| Primary actors | Admin, COO, Operational Manager, HR/Finance/Academic domain owner, business auditor and authorized business configuration owner. |
+| Owned / primary records | Reference-data value, business rule version, approval policy, operational audit view, business configuration change, import batch for business records, export request, archive request and administrative note. |
+| Dependencies and confirmed technology | All business domains, IAM permissions, audit services, Supabase PostgreSQL/RLS and domain-specific approval workflows. |
+| Requirement count | 10 total: 9 Must and 1 Should |
 
 ### 4.18.1 Functional decomposition
 
 | Subfeature | Requirement IDs | Functions included |
 | --- | --- | --- |
-| Roles, work intake and lifecycle | MED-001 to MED-003 | Define scoped Media roles, complete work-item data and the end-to-end state model. |
-| Submission, review and compensation | MED-004 to MED-007 | Submit evidence, review/revise/approve/rate, establish wage and create independent payroll earning. |
-| Collaboration, grouping and analytics | MED-008 to MED-010 | Expose revision history, campaign grouping and performance/pay dashboards. |
-| Asset control and phase-one boundary | MED-011 to MED-013 | Restrict unpublished assets, store publishing metadata and replace spreadsheet status/wage records. |
+| Business reference data and policies | ADM-001 to ADM-003 | Manage class formats, durations, countries, currencies, reason codes, approval thresholds and safe business rules. |
+| Business imports, exports and audit review | ADM-004 to ADM-006 | Govern staged business data movement and searchable business audit without technical system maintenance controls. |
+| Business release, archive and support governance | ADM-007 to ADM-010 | Configure operational rollout states, archive/retention requests, support ownership and business-level configuration history. |
 
 ### 4.18.2 Principal workflows
 
-#### Media assignment to approval
+#### Business configuration change
 
-1. The Media Head creates a work item with title, type, channel, brief, due date, priority, source assets and expected deliverable.
+1. Authorized Admin or domain owner opens a permitted business configuration area.
+2. The system shows current value, owner, effective date and business impact.
+3. User proposes a change with reason and effective date.
+4. Validation prevents changes that would break active products, schedules, memberships, payroll rules, grading schemes or reports.
+5. Approval is requested when the policy requires it.
+6. Approved change becomes effective according to date/scope and is recorded in the business audit trail.
 
-2. The assigned editor accepts/starts work and updates progress within scope.
+#### Business import or export
 
-3. The editor submits a deliverable file/link, work notes and completion metadata as a versioned submission.
-
-4. The reviewer comments, requests revision or approves and records a quality rating.
-
-5. On approval, the configured wage/rate is snapshotted and one payroll earning item is emitted.
-
-6. The work item may later hold publishing metadata; payroll settlement remains independent from the Media state.
+1. Authorized user uploads business data under an approved template or requests an export.
+2. The system validates field formats, required references, permissions and immutable record restrictions.
+3. Preview shows creates/updates/errors before commit.
+4. Authorized approval commits valid rows or generates the permitted export.
+5. Batch ID, actor, source checksum, filters and result are stored for audit.
 
 ### 4.18.3 States and lifecycle
 
-> Required state behavior<br>Assigned -> In Progress -> Submitted -> Under Review -> Revision Required (then resubmission) or Approved -> Paid indicator, plus Cancelled. The Paid label is a derived/reconciled view and must not replace payroll state.
+> Required state behavior<br>Business configuration change: Draft -> Submitted -> Approved/Rejected -> Scheduled -> Active -> Superseded. Business import: Uploaded -> Validating -> Validation Failed/Ready -> Approved -> Processing -> Completed/Partially Completed. Business export: Requested -> Approved -> Generated -> Downloaded/Expired.
 
 ### 4.18.4 Business rules, permissions and validation
 
-- Every revision retains its submission and review history.
-
-- Only assigned/review-authorized roles can access unpublished assets and comments.
-
-- Approval and quality rating identify reviewer and time.
-
-- An approved Media source creates at most one original earning item.
-
-- Phase one tracks publishing metadata but does not attempt to replace a full social publishing suite.
+- Admin business configuration cannot bypass source-domain permission and RLS policies.
+- Used reference values become inactive rather than deleted.
+- Business-rule changes are versioned and effective-dated.
+- Bulk operations cannot rewrite financial history, grades, attendance, payroll, published course versions or approved payment decisions.
+- Platform integration setup, provider diagnostics, technical event replay, failed-job/dead-letter maintenance, feature flags, infrastructure health and secrets are explicitly outside the Admin business UI.
 
 ### 4.18.5 Outputs, notifications and reporting
 
-Editor dashboard, assignment queue, submission/revision history, approval/rating, campaign views, total/short/long/productivity analytics, approved wages, paid/unpaid reconciliation and Media exception list.
+Business reference-data screens, approval-policy screens, business-rule version history, staged import reports, controlled business exports, searchable business audit, archive requests and operational configuration change logs.
 
 ### 4.18.6 Complete testable requirements
 
 | ID | Priority | Functional requirement | Required behavior / acceptance evidence |
 | --- | --- | --- | --- |
-| MED-001 | Must | The system shall support Media Head, Editor and Social Media Manager role templates with scoped permissions. | Editors see assigned/submitted work and their pay; reviewers see designated queues; management permissions are separately assignable. |
-| MED-002 | Must | Media work items shall record title, content type, platform/channel, brief, assignee, due date, priority, source assets and expected deliverable. | Required metadata is validated before assignment; source and deliverable files use secure resource storage. |
-| MED-003 | Must | Media workflow shall include Assigned, In Progress, Submitted, Under Review, Revision Required, Approved, Paid and Cancelled. | Every transition records actor/time/comments; approval and payment are independent records despite linked states. |
-| MED-004 | Must | Editors shall submit a deliverable file/link, work notes and completion metadata. | Submission creates an immutable version; later revision creates a new version and retains review history. |
-| MED-005 | Must | Media Head/COO shall review, comment, request revision, approve and rate quality. | Review stores criteria/rating, decision and comments; only an approved submission can generate payable work. |
-| MED-006 | Must | Media wage/rate shall be defined before or at approval according to policy. | Rate may depend on short/long, platform, complexity or agreement; the approved work snapshot creates a unique earning item. |
-| MED-007 | Must | Approved media work shall integrate with payroll without using the media task status as payroll state. | A unique earning item is reserved/settled through payroll; Paid display is derived from settlement linkage. |
-| MED-008 | Must | Review comments and revision cycles shall be visible to assigned participants. | The editor sees actionable comments and version comparison; restricted management notes can be separately scoped. |
-| MED-009 | Should | Media tasks shall support campaign/project grouping. | Campaign aggregates platform, dates, objectives, assets, tasks and performance references without replacing individual accountability. |
-| MED-010 | Must | Media dashboards shall report total, short/long, submitted, approved, revision, productivity, ratings, wages and paid/unpaid amounts. | Metrics filter by period, editor, platform and status and reconcile to source work/review/earning records. |
-| MED-011 | Must | Access to unpublished media assets shall be restricted. | Signed links, role scope, download logs and archive/retention rules apply; public sharing requires an explicit publication action. |
-| MED-012 | Should | The workflow shall support scheduled publishing metadata without becoming a full social publishing platform in phase one. | Users can record target date, platform, URL and outcome; direct posting integrations remain adapter-based future scope. |
-| MED-013 | Must | Media work history shall replace spreadsheet-based wage and status records for in-scope work. | Migration/import produces traceable records; new work must be created in the system to qualify for approval and pay. |
-
-## 4.19 Development Department Operations
-
-> FEATURE 19  \|  DEV  \|  11 FUNCTIONAL REQUIREMENTS
-
-Give the Development Department a lightweight, auditable system for projects, tasks, bugs, testing, releases and deployments without recreating a complete specialist issue tracker.
-
-| Feature attribute | Specification |
-| --- | --- |
-| Primary actors | CTO, developer, tester/QA, product/department requester, deployment operator and executive viewer. |
-| Owned / primary records | Project, release, feature, task, bug, priority, assignment, dependency/blocker, comment, attachment, progress update, test evidence and deployment record. |
-| Dependencies and confirmed technology | IAM/scoped roles, Resources/attachments, notifications, dashboards and optional source-control/CI adapter. |
-| Requirement count | 11 total: 8 Must and 3 Should |
-
-### 4.19.1 Functional decomposition
-
-| Subfeature | Requirement IDs | Functions included |
-| --- | --- | --- |
-| Projects, work items and workflow | DEV-001 to DEV-003 | Track project/feature/task/bug objects with state, ownership, updates and history. |
-| Bug, testing and deployment evidence | DEV-004 to DEV-006 | Capture reproducibility, quality checks and environment/version deployment results. |
-| Dependencies, integrations and dashboard | DEV-007 to DEV-009 | Represent blockers, connect specialist tools through adapters and expose CTO operations. |
-| Release planning and scope control | DEV-010 to DEV-011 | Group work into releases while keeping the internal module deliberately lightweight. |
-
-### 4.19.2 Principal workflows
-
-#### Work item to deployment
-
-1. An authorized requester or CTO creates a feature/task/bug with priority, owner, deadline and release context.
-
-2. The developer records progress, comments, evidence and blockers; dependencies can block advancement.
-
-3. Completed implementation enters review/testing with explicit test status and evidence.
-
-4. Successful work is marked Completed and included in a release plan.
-
-5. Deployment records environment, release/version, date, actor and outcome; failures remain visible and can reopen work.
-
-### 4.19.3 States and lifecycle
-
-> Required state behavior<br>Planned -> Assigned -> In Progress, with Blocked and In Review -> Testing -> Completed -> Deployed; Cancelled is available with reason. Failed testing or deployment returns the item to an appropriate active state with history.
-
-### 4.19.4 Business rules, permissions and validation
-
-- Bug records include environment, severity, reproducibility, steps and expected/actual behavior.
-
-- Testing and deployment evidence is retained rather than represented only by a status label.
-
-- Dependencies and blockers prevent misleading completion where configured.
-
-- External source-control/CI data enters through an adapter and does not grant production business-data access.
-
-- Specialist tools may remain authoritative later; the IHS module documents operational visibility and decisions.
-
-### 4.19.5 Outputs, notifications and reporting
-
-Developer work queue, bug register, testing queue, blockers/dependencies, release plan, deployment history, CTO dashboard, overdue alerts and recently deployed updates.
-
-### 4.19.6 Complete testable requirements
-
-| ID | Priority | Functional requirement | Required behavior / acceptance evidence |
-| --- | --- | --- | --- |
-| DEV-001 | Must | The Development module shall track projects, features, tasks, bugs and technical work items. | Each item has type, title, description, owner, priority, status, deadline, progress and linked parent/project as applicable. |
-| DEV-002 | Must | Workflow shall support Planned, Assigned, In Progress, Blocked, In Review, Testing, Completed, Deployed and Cancelled. | Transition rules record actor/time; completion and deployment are separate; blocked items require blocker details. |
-| DEV-003 | Must | Work items shall support comments, attachments, progress updates and change history. | Updates are chronological and attributable; sensitive security bugs may use restricted visibility. |
-| DEV-004 | Must | Bugs shall record severity, environment, reproducibility, steps, expected/actual result and affected release. | Triage validates required fields; duplicate linkage and resolution code are supported. |
-| DEV-005 | Must | Testing status and evidence shall be recorded. | Test assignee, environment, result, notes and evidence are attached; failed testing returns work to an appropriate state. |
-| DEV-006 | Must | Deployment records shall identify environment, version/release, date, actor and outcome. | A completed item is not marked deployed without a deployment record or authorized manual evidence. |
-| DEV-007 | Should | Work items shall support dependencies and blockers. | A dependency graph prevents impossible closure where configured and surfaces blocked critical-path items. |
-| DEV-008 | Should | The module shall integrate with source control/CI tools through adapters. | External commit, pull request, build and deployment references can update status idempotently without storing source-control credentials in task records. |
-| DEV-009 | Must | CTO dashboard shall show active, overdue, completed, pending bugs, testing queue, recent deployments, assignments and blocked work. | All metrics drill to filtered work items and can be scoped by project/release/developer. |
-| DEV-010 | Must | Development work shall support release planning. | A release groups planned items, target date, status, deployment records and release notes; scope changes are tracked. |
-| DEV-011 | Should | The module shall remain deliberately lightweight. | It covers IHS reporting and traceability needs without duplicating every feature of a specialist engineering platform; external integration is preferred for advanced workflows. |
-
-
-## 4.20 Administration and Platform Operations
-
-> FEATURE 20  \|  ADM  \|  12 FUNCTIONAL REQUIREMENTS
-
-Give authorized administrators controlled tools for reference data, roles, provider configuration, background work, audit, bulk operations, release controls and data lifecycle administration.
-
-| Feature attribute | Specification |
-| --- | --- |
-| Primary actors | Platform Admin, CTO, security/audit reviewer, data steward, authorized domain administrator and support operator. |
-| Owned / primary records | Reference-data value, role/permission assignment, non-secret provider configuration, outbox/queue job, webhook/integration event, payment/Daily/Resend exception, import batch, export request, audit event, feature flag, business-rule configuration, retention policy, privacy request and support-view session. |
-| Dependencies and confirmed technology | All domains, Supabase PostgreSQL/RLS/Queues/Cron, Daily.co and Resend adapters, environment/secret management and audit services. |
-| Requirement count | 12 total: 10 Must and 2 Should |
-
-### 4.20.1 Functional decomposition
-
-| Subfeature | Requirement IDs | Functions included |
-| --- | --- | --- |
-| Reference data, roles and provider configuration | ADM-001 to ADM-003 | Manage controlled values, permission assignments and non-secret integration settings. |
-| Jobs, exceptions, import and export | ADM-004 to ADM-006 | Operate queue/webhook/payment exceptions and govern staged bulk movement of data. |
-| Audit, feature flags and configurable policy | ADM-007 to ADM-009 | Search immutable audit, phase releases safely and configure approved business thresholds. |
-| Status, retention and controlled support access | ADM-010 to ADM-012 | Expose freshness, administer lifecycle/privacy and tightly govern any impersonation/support view. |
-
-### 4.20.2 Principal workflows
-
-#### Reference/configuration change
-
-1. An administrator opens the permitted configuration area and sees current effective value, owner and impact.
-
-2. Validation prevents deletion/change of values still required by active products, schedules or records.
-
-3. High-risk changes require step-up authentication and, where configured, approval.
-
-4. The system records old/new value, actor, reason, scope and effective date and refreshes dependent views/jobs.
-
-#### Exception and job recovery
-
-1. The operations console groups failed/stale outbox, queue, Daily, Resend, Storage and payment-review exceptions.
-
-2. An authorized user inspects sanitized context, correlation ID, attempts and owning domain.
-
-3. The user resolves underlying data/configuration or performs a controlled replay/cancel action.
-
-4. The action and outcome are audited; replay remains idempotent.
-
-#### Bulk import/export
-
-1. The user uploads/selects data under an approved template and scope.
-
-2. The system stages, validates and previews proposed creates/updates with errors before commit.
-
-3. Authorized approval commits valid rows transactionally or as a traceable batch.
-
-4. Exports apply field minimization, approval, asynchronous generation, checksum and expiry.
-
-### 4.20.3 States and lifecycle
-
-> Required state behavior<br>Jobs/events: Pending, Processing, Succeeded, Retry Scheduled, Dead-letter, Cancelled or Replayed. Import: Uploaded, Validating, Validation Failed, Ready, Approved, Processing, Completed/Partially Completed. Feature flags: Draft, Enabled by environment/audience, Disabled, Retired.
-
-### 4.20.4 Business rules, permissions and validation
-
-- Secrets are never displayed or stored as ordinary configuration values.
-
-- Role and permission changes are audited and subject to default-deny semantics.
-
-- Bulk operations never bypass row-level authorization, validation or immutable financial/academic controls.
-
-- Support impersonation is disabled unless formally approved and then requires reason, duration, visible banner and full audit.
-
-- Retention, legal hold and privacy actions preserve records that cannot lawfully or operationally be deleted.
-
-### 4.20.5 Outputs, notifications and reporting
-
-Reference-data screens, role/permission administration, integration health, job and exception queues, staged import reports, controlled exports, searchable audit, feature flags, system freshness page, retention/privacy workflows and support-access logs.
-
-### 4.20.6 Complete testable requirements
-
-| ID | Priority | Functional requirement | Required behavior / acceptance evidence |
-| --- | --- | --- | --- |
-| ADM-001 | Must | Authorized administrators shall manage controlled reference data such as class formats, durations, delivery modes, countries, currencies, statuses and reason codes. | Reference values have active/inactive state, display order and impact validation; used values cannot be hard-deleted. |
-| ADM-002 | Must | Role templates and permission assignments shall be manageable through an audited interface. | Changes show affected users/scopes, require step-up authentication and cannot remove the last emergency administrator without safeguard. |
-| ADM-003 | Must | Administrators shall manage non-secret Supabase, Daily.co and Resend integration configuration without exposing credentials. | The UI displays environment, provider status, approved sender/domain, webhook health and non-secret identifiers; service-role, API and signing secrets remain in server/worker secret management and changes are audited/validated. |
-| ADM-004 | Must | The platform shall expose Supabase outbox/queue jobs, manual payment evidence/review exceptions and Daily.co/Resend webhook/integration health queues. | Authorized support can inspect sanitized metadata, receipt object/finalization state, correlation/provider IDs, attempt history and reconciliation status; eligible work can be replayed or resolved idempotently without editing source business records. |
-| ADM-005 | Must | Bulk imports shall use staged validation and preview. | Rows are validated before commit; errors are downloadable; committed imports have batch ID, actor, source checksum and rollback/correction strategy. |
-| ADM-006 | Must | Bulk exports shall enforce scope, approval and data minimization. | Sensitive exports require reason and may require approval; generated files expire and access is logged. |
-| ADM-007 | Must | Audit records shall be searchable by actor, entity, action, date, origin and correlation ID. | Audit access is restricted; records are tamper-evident/append-only and retained according to policy. |
-| ADM-008 | Must | Feature flags and phased release controls shall be supported. | Features can be enabled by environment, role, course or cohort; flag changes are audited and do not bypass authorization. |
-| ADM-009 | Should | Business rules such as cancellation windows, reminder timing and approval thresholds shall be configuration-driven where safe. | Changes are versioned, validated and previewable; code remains authoritative for security invariants. |
-| ADM-010 | Must | System status pages shall distinguish data, integration and job freshness. | Dashboards show last successful sync/aggregate and active incident; stale figures are not presented as current without warning. |
-| ADM-011 | Must | Data retention, legal hold, archive and privacy request workflows shall be administrable by authorized roles. | Policies identify entity/data class and action; execution is logged, reversible where required and blocked by legal/financial obligations. |
-| ADM-012 | Should | The system shall provide controlled impersonation or support-view capability only if formally approved. | Support view is time-limited, read-only by default, bannered, reason-based and fully audited; credentials are never shared. |
+| ADM-001 | Must | Authorized business administrators shall manage controlled reference data such as class formats, durations, delivery modes, countries, currencies, statuses, departments, case types and reason codes. | Reference values have active/inactive state, display order and impact validation; used values cannot be hard-deleted. |
+| ADM-002 | Must | Business rule configuration shall support effective-dated versions for safe operational policies. | Cancellation windows, reminder timing, payment-review thresholds, support routing, renewal rules, schedule-change policies and approval thresholds can be versioned, validated and previewed. |
+| ADM-003 | Must | Admin business configuration shall exclude platform integrations and system maintenance. | The Admin UI contains no provider setup, provider event console, failed-job/dead-letter queue, infrastructure status, feature-flag, secret-management, deployment or database/storage maintenance screens. |
+| ADM-004 | Must | Bulk business imports shall use staged validation and preview. | Rows are validated before commit; errors are downloadable; committed imports have batch ID, actor, source checksum and rollback/correction strategy. |
+| ADM-005 | Must | Bulk business exports shall enforce scope, approval and data minimization. | Sensitive exports require reason and may require approval; generated files expire and access is logged. |
+| ADM-006 | Must | Business audit records shall be searchable by actor, entity, action, date and business context. | Audit access is restricted; records are tamper-evident/append-only and retained according to policy; low-level technical logs are not exposed in Admin. |
+| ADM-007 | Should | Business release controls shall support publishing operational features by role/course/cohort when safe. | Release controls are business-facing and cannot bypass authorization, deployment controls or technical release controls handled outside the Admin role. |
+| ADM-008 | Must | Archive and retention requests for business records shall be governed by business policy. | Records with legal, financial, grade, attendance or payroll obligations cannot be hard-deleted; archive actions are auditable and reversible where required. |
+| ADM-009 | Must | Support routing policies shall define default owners for learner, teacher and operational cases. | CSR-owned learners route to the responsible CSR where policy allows; academic/finance/urgent cases can route to Operations, Finance or Academic Support. |
+| ADM-010 | Must | Business configuration changes shall be traceable to actor, reason, affected scope and effective date. | Users can view what changed, who approved it, when it becomes active and which records/products/schedules are affected. |
 
 ## 5. Cross-Feature States, Notifications and Reporting Controls
 
@@ -2089,8 +1999,6 @@ The following shared catalogues prevent modules from inventing incompatible stat
 
 | Workflow | State model | Pay/release rule |
 | --- | --- | --- |
-| Media | Assigned -> In Progress -> Submitted -> Under Review -> Revision Required/Approved -> Paid display | Approval creates earning; Paid is derived from payroll settlement, not an editable task status. |
-| Development | Planned -> Assigned -> In Progress/Blocked -> In Review -> Testing -> Completed -> Deployed | Completion and deployment evidence are separate; specialist CI/source-control can integrate later. |
 | HR letter | Draft -> Review/Approved -> Issued -> Delivered/Acknowledged -> Superseded/Revoked | Issued document and event are immutable; disciplinary/pay effects use separate records. |
 
 ### 5.6 Minimum notification event catalogue
@@ -2104,7 +2012,6 @@ The following shared catalogues prevent modules from inventing incompatible stat
 | Access/commerce | Membership request/renewal created, manual payment submitted/under review/approved/rejected, resubmission requested, official receipt issued, low entitlement, expiry, access activated/paused/resumed and refund/reversal. |
 | Support | Case created/assigned, response, waiting, escalation, resolved/closed. |
 | Payroll/HR | Pay statement, run status, settlement, invitation/onboarding task, document/letter issued or expiring. |
-| Departments | Media assignment/submission/revision/approval; Development assignment/blocker/testing/deployment. |
 | Platform | Integration/job/resource failure to authorized operations staff. |
 
 ### 5.7 KPI and reporting catalogue
@@ -2126,13 +2033,13 @@ The following shared catalogues prevent modules from inventing incompatible stat
 | Payroll | Payroll reconciliation difference | Settlement total - approved payroll total after authorized adjustments. | Per run; target zero. |
 | Support | Case first response / resolution | Median and percentile duration by case type/priority. | Weekly against SLA. |
 | Product | Multi-enrolment adoption | Active learners with 2+ enrolments / active learners. | Monthly. |
-| Platform | Core journey availability / p95 latency | Synthetic journey success and measured latency. | Continuous against SLO. |
+| Business operations | Core LMS journey completion rate / response risk | User journey success, unresolved business exceptions and page-response health for key workflows. | Daily/weekly management review. |
 
 ### 5.8 Functional audit minimum
 
 - Authentication, MFA, recovery, session revocation, identity link/unlink and account-state changes.
 
-- Role templates, permissions, scope assignments, sensitive exports and support/impersonation sessions.
+- Role templates, permissions, scope assignments, sensitive exports and support/controlled support view sessions.
 
 - Course version review/publication, price/term/rate changes and catalogue impact decisions.
 
@@ -2144,17 +2051,17 @@ The following shared catalogues prevent modules from inventing incompatible stat
 
 - Financial posting/reversal, earning generation/reservation, payroll approval/settlement and HR disciplinary/offboarding events.
 
-- Provider webhook/job processing, replay, configuration change, data import/export, retention and privacy actions.
+- Provider provider event/job processing, replay, configuration change, data import/export, retention and privacy actions.
 
 ## 6. Requirement Coverage and Traceability
 
-> Coverage result<br>This LMS+OPS-only v2.0 specification includes 273 functional requirements: 236 Must and 37 Should requirements across 20 feature areas. Public website, landing-page, SEO and website-CMS requirements have been removed from this FRS and should be governed by a separate Website PRD if needed.
+> Coverage result<br>This LMS+OPS-only v2.2 specification includes 247 functional requirements: 216 Must and 31 Should requirements across 18 feature areas. Public website, landing-page, SEO, website-CMS, Media Department and Development Department requirements have been removed from this current-phase FRS and should be governed by separate future PRDs if needed.
 
 ### 6.1 Requirement inventory
 
 | Code | Feature area | Total | Must | Should | ID range |
 | --- | --- | --- | --- | --- | --- |
-| FND | Platform Foundation | 10 | 9 | 1 | FND-001 - FND-010 |
+| FND | Application Foundation | 10 | 9 | 1 | FND-001 - FND-010 |
 | IAM | Identity, Authentication and Authorization | 17 | 15 | 2 | IAM-001 - IAM-017 |
 | PORT | Learner Portal Catalogue and Free Users | 9 | 8 | 1 | PORT-001 - PORT-009 |
 | CAT | Catalogue, Content Authoring, Products and Pricing | 15 | 13 | 2 | CAT-001 - CAT-015 |
@@ -2164,20 +2071,18 @@ The following shared catalogues prevent modules from inventing incompatible stat
 | MILE | Milestone-Based Self-Paced Learning | 15 | 12 | 3 | MILE-001 - MILE-015 |
 | K12 | K-12 Tuition | 14 | 12 | 2 | K12-001 - K12-014 |
 | ASM | Assessments, Submissions and Gradebook | 17 | 14 | 3 | ASM-001 - ASM-017 |
-| RES | Resources and Media Assets | 12 | 11 | 1 | RES-001 - RES-012 |
+| RES | Resources and Learning Assets | 12 | 11 | 1 | RES-001 - RES-012 |
 | MSG | Communication, Cases and Notifications | 15 | 12 | 3 | MSG-001 - MSG-015 |
 | DSH | Role Dashboards and Analytics | 15 | 13 | 2 | DSH-001 - DSH-015 |
 | FIN | Finance | 14 | 12 | 2 | FIN-001 - FIN-014 |
 | PAY | Payroll and Compensation | 16 | 15 | 1 | PAY-001 - PAY-016 |
 | HR | HR Profiles, Documents and Letters | 12 | 10 | 2 | HR-001 - HR-012 |
 | CSR | CSR Enrolments and Commission | 9 | 8 | 1 | CSR-001 - CSR-009 |
-| MED | Media Department Operations | 13 | 11 | 2 | MED-001 - MED-013 |
-| DEV | Development Department Operations | 11 | 8 | 3 | DEV-001 - DEV-011 |
-| ADM | Administration and Platform Operations | 12 | 10 | 2 | ADM-001 - ADM-012 |
+| ADM | Business Administration and Operational Governance | 10 | 9 | 1 | ADM-001 - ADM-010 |
 
 | Total functional requirements | Must | Should |
 | --- | --- | --- |
-| 273 | 236 | 37 |
+| 271 | 236 | 35 |
 
 ### 6.2 Requested-outcome traceability
 
@@ -2199,8 +2104,6 @@ The following shared catalogues prevent modules from inventing incompatible stat
 | Notifications and reminders | MSG-008 to MSG-014; notification catalogue | Durable in-app/email first; adapters for WhatsApp/SMS. |
 | Employee letters/certificates and salary adjustments | HR-006 to HR-010; PAY-007 to PAY-010 | Versioned document events and explicit payroll lines. |
 | CSR commissions | CSR-002 to CSR-009 | Verified source creates earning item and payroll settlement. |
-| Media Department | MED-001 to MED-013 | Assignment/review/version/earning workflow and analytics. |
-| Development Department | DEV-001 to DEV-011 | Lightweight task/bug/testing/release workflow. |
 | Manual membership payments now; processors later | COM-001 to COM-015; FIN; DSH; MSG; Section 14.5 | Learner/payer enters payment details and uploads a private receipt; COO/OM/permissioned CSR approves or rejects; only approval creates payment/allocation/access, and a future processor reuses the same internal model. |
 
 ### 6.3 Acceptance and change-control rule
@@ -2242,6 +2145,14 @@ The following shared catalogues prevent modules from inventing incompatible stat
 | Role assignment | A permission template granted to an account within a scope and effective period. |
 | Version | Immutable published definition or snapshot that preserves historical interpretation. |
 
+### Version 2.2 current-phase module removal
+
+| Change | Result |
+| --- | --- |
+| Removed Media Department scope | MED feature area, media work entities, media approval/wage flows, media dashboards and UI prompts are omitted from current phase. |
+| Removed Development Department scope | DEV feature area, task/bug/testing/deployment workflow, CTO/developer dashboards and related UI prompts are omitted from current phase. |
+| Reconfirmed Admin scope | Admin remains focused on LMS+OPS business operations only: learners, staff, courses, trials, live classes, memberships, payment review, HR/payroll visibility, CSR ownership, support cases and business reporting. |
+
 ## Appendix B - Review and Sign-off Checklist
 
 | Review area | Approval question | Status / owner |
@@ -2262,13 +2173,13 @@ The following shared catalogues prevent modules from inventing incompatible stat
 > Baseline completion statement<br>When approved, this document becomes the functional baseline for product design and implementation. Detailed screen designs, database schema, API contracts and test cases may add precision, but they may not reduce or change these requirements without controlled revision.
 
 
-## Appendix C - v2.0 Change Log
+## Appendix C - Change Log
 
 | Change | Result |
 | --- | --- |
 | Removed public website feature area | Removed WEB-001 through WEB-008 and all website/landing-page/SEO/CMS requirement rows. |
 | Converted Public Catalogue wording to learner-portal wording | Retained free learner registration, previews, trial requests and membership entry as LMS portal functions, not marketing website functions. |
 | Removed website-specific catalogue requirement | Removed the former SEO/shareable public-page requirement; the remaining free-access lifecycle requirement was renumbered so the PORT sequence is continuous. |
-| Updated requirement counts | 20 feature areas, 273 functional requirements, 236 Must requirements and 37 Should requirements. |
-| Renumbered Administration section | Administration and Platform Operations is now Section 4.20. |
+| Updated requirement counts | 18 feature areas, 247 functional requirements, 216 Must requirements and 31 Should requirements. |
+| Renumbered Administration section | Business Administration and Operational Governance is now Section 4.18 after removing Media and Development current-phase scope. |
 

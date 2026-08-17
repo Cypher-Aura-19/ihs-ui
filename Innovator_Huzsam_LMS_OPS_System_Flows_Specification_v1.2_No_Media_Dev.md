@@ -1,6 +1,6 @@
 # Innovator Huzsam LMS & Operations System - System Flows Specification
 
-**Version:** 1.0
+**Version:** 1.2
 
 **Format:** Markdown
 
@@ -14,7 +14,7 @@
 
 This document defines the main end-to-end system flows for the Innovator Huzsam LMS & Operations System. It is intended for product planning, UI/UX sequencing, backend service design, QA scenario writing, and implementation planning. Each flow shows the actors, modules, records, start trigger, success condition, alternate paths, state transitions, rules, outputs and acceptance checklist.
 
-The document should be read together with the Functional Requirements Specification and the Module/Entity Relationship Model. The flows below assume the approved domain separation: identity, catalogue, commerce, enrolment, live delivery, learning, communication, finance, payroll, HR, department operations, administration and audit.
+The document should be read together with the Functional Requirements Specification and the Module/Entity Relationship Model. The flows below assume the approved domain separation: identity, catalogue, commerce, enrolment, live delivery, learning, communication, finance, payroll, HR, business administration and audit.
 
 ## 2. Flow Principles
 - Identity, learner relationship, enrolment, membership, payment, delivery and payroll are separate records. They reference each other but do not overwrite each other.
@@ -30,7 +30,7 @@ The document should be read together with the Functional Requirements Specificat
 ## 3. Module Codes
 | Code | Module |
 | --- | --- |
-| FND | Platform Foundation |
+| FND | Application Foundation |
 | IAM | Identity, Authentication and Authorization |
 | PORT | Learner Portal Catalogue and Free Users |
 | CAT | Catalogue, Content Authoring, Products and Pricing |
@@ -40,16 +40,14 @@ The document should be read together with the Functional Requirements Specificat
 | MILE | Milestone-Based Self-Paced Learning |
 | K12 | K-12 Tuition |
 | ASM | Assessments, Submissions and Gradebook |
-| RES | Resources and Media Assets |
+| RES | Resources and Learning Assets |
 | MSG | Communication, Cases and Notifications |
 | DSH | Role Dashboards and Analytics |
 | FIN | Finance |
 | PAY | Payroll and Compensation |
 | HR | HR Profiles, Documents and Letters |
 | CSR | CSR Enrolments and Commission |
-| MED | Media Department Operations |
-| DEV | Development Department Operations |
-| ADM | Administration and Platform Operations |
+| ADM | Business Administration and Operational Governance |
 | AUD | Audit, Events and Compliance |
 
 
@@ -103,24 +101,22 @@ flowchart LR
 | FLOW-020 | Assignment, Homework, Voice Activity Submission and Rubric Grading | ASM, RES, MILE, K12, LIVE, MSG, AUD |
 | FLOW-021 | K-12 Subject, Bundle, Academic Term and Report Card Lifecycle | K12, CAT, COM, ENR, LIVE, ASM, MSG, AUD |
 | FLOW-022 | Resource Upload, Review, Assignment, Secure Delivery and Archive | RES, CAT, LIVE, MILE, K12, ASM, MSG, AUD |
-| FLOW-023 | Contextual Chat, Department Communication and Moderated Messaging | MSG, ENR, LIVE, CSR, HR, MED, DEV, AUD |
-| FLOW-024 | Support Case, Complaint, Suggestion and Technical Issue Resolution | MSG, CSR, LIVE, COM, FIN, HR, MED, DEV, AUD |
+| FLOW-023 | Contextual Chat, Teacher/Operations Communication and Moderated Messaging | MSG, ENR, LIVE, CSR, HR, AUD |
+| FLOW-024 | Support Case, Complaint, Suggestion and Technical Issue Resolution | MSG, CSR, LIVE, COM, FIN, HR, AUD |
 | FLOW-025 | Notification, Reminder and Transactional Email Processing | MSG, IAM, LIVE, COM, RES, ASM, PAY, ADM, AUD |
-| FLOW-026 | Dashboard Drilldown, Operational Analytics and Action Queues | DSH, LIVE, COM, ENR, CSR, FIN, PAY, HR, MED, DEV, MSG, AUD |
+| FLOW-026 | Dashboard Drilldown, Operational Analytics and Action Queues | DSH, LIVE, COM, ENR, CSR, FIN, PAY, HR, MSG, AUD |
 | FLOW-027 | Finance Reconciliation, Expense, Refund and Correction Lifecycle | FIN, COM, PAY, RES, MSG, AUD |
-| FLOW-028 | Payroll Earning Generation, Payroll Run Approval and Settlement | PAY, LIVE, MED, DEV, HR, FIN, MSG, AUD |
+| FLOW-028 | Payroll Earning Generation, Payroll Run Approval and Settlement | PAY, LIVE, HR, FIN, MSG, AUD |
 | FLOW-029 | HR Profile, Employee Detail, Official Letter and Certificate Lifecycle | HR, IAM, PAY, RES, MSG, AUD |
 | FLOW-030 | Staff Offboarding, Access Revocation and Final Settlement | HR, IAM, PAY, FIN, ADM, MSG, AUD |
 | FLOW-031 | Lead, CSR Enrolment Attribution and Commission Qualification | CSR, PORT, COM, ENR, PAY, MSG, AUD |
-| FLOW-032 | Media Assignment, Submission, Review, Approval and Wage Generation | MED, PAY, RES, MSG, DSH, AUD |
-| FLOW-033 | Development Task, Bug, Testing and Deployment Reporting | DEV, MSG, DSH, HR, AUD |
-| FLOW-034 | Platform Administration, Settings, Integrations, Jobs and Feature Flags | ADM, FND, IAM, MSG, LIVE, COM, AUD |
-| FLOW-035 | Audit Trail, Data Export, Archive and Retention Operations | AUD, ADM, IAM, COM, FIN, PAY, HR, RES, MSG |
-| FLOW-036 | Learner Profile Update, Verification and History Event Flow | IAM, ENR, CSR, MSG, AUD |
-| FLOW-037 | Guardian Relationship, Consent and Learner Oversight Flow | IAM, ENR, K12, COM, MSG, AUD |
-| FLOW-038 | Renewal Reminder, Low Entitlement and Expiry Prevention Flow | COM, ENR, LIVE, MSG, CSR, DSH |
-| FLOW-039 | Course Run, Cohort and Roster Management Flow | ENR, LIVE, K12, MSG, AUD |
-| FLOW-040 | Import, Migration, Reconciliation and Cutover Support Flow | ADM, FND, IAM, CAT, COM, ENR, FIN, PAY, AUD |
+| FLOW-032 | Business Administration, Reference Data and Operational Governance | ADM, IAM, COM, LIVE, CSR, MSG, AUD |
+| FLOW-033 | Audit Trail, Data Export, Archive and Retention Operations | AUD, ADM, IAM, COM, FIN, PAY, HR, RES, MSG |
+| FLOW-032 | Learner Profile Update, Verification and History Event Flow | IAM, ENR, CSR, MSG, AUD |
+| FLOW-033 | Guardian Relationship, Consent and Learner Oversight Flow | IAM, ENR, K12, COM, MSG, AUD |
+| FLOW-034 | Renewal Reminder, Low Entitlement and Expiry Prevention Flow | COM, ENR, LIVE, MSG, CSR, DSH |
+| FLOW-035 | Course Run, Cohort and Roster Management Flow | ENR, LIVE, K12, MSG, AUD |
+| FLOW-036 | Import, Migration, Reconciliation and Cutover Support Flow | ADM, FND, IAM, CAT, COM, ENR, FIN, PAY, AUD |
 
 
 # Part II - Detailed Flows
@@ -161,7 +157,7 @@ flowchart LR
 - **OAuth failure:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -176,9 +172,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
 ### Notifications, audit and outputs
@@ -235,7 +231,7 @@ flowchart LR
 - **permission missing:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -249,7 +245,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -307,7 +303,7 @@ flowchart LR
 - **invitation revoked or expired:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -321,7 +317,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -379,7 +375,7 @@ flowchart LR
 - **high-risk approval denied:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -393,7 +389,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -451,7 +447,7 @@ flowchart LR
 - **file delivery error:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -465,9 +461,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 
 ### Notifications, audit and outputs
 - In-app notifications are created for affected users when the result requires user awareness or action.
@@ -523,7 +519,7 @@ flowchart LR
 - **manual staff-created lead:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -537,7 +533,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
@@ -595,7 +591,7 @@ flowchart LR
 - **cancellation:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -609,7 +605,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
@@ -664,11 +660,11 @@ flowchart LR
 ### Alternate paths and exception handling
 - **Learner no-show:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **trainer no-show:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **webhook delay:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
+- **provider event delay:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **technical failure:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -682,9 +678,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
 ### Notifications, audit and outputs
@@ -741,7 +737,7 @@ flowchart LR
 - **missing resource:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -754,7 +750,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 
 ### Notifications, audit and outputs
@@ -811,7 +807,7 @@ flowchart LR
 - **product retired:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -825,9 +821,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
 ### Notifications, audit and outputs
@@ -884,7 +880,7 @@ flowchart LR
 - **staff-assisted submission:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -898,9 +894,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 
 ### Notifications, audit and outputs
 - In-app notifications are created for affected users when the result requires user awareness or action.
@@ -956,7 +952,7 @@ flowchart LR
 - **correction submitted:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -970,9 +966,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 
 ### Notifications, audit and outputs
 - In-app notifications are created for affected users when the result requires user awareness or action.
@@ -1028,7 +1024,7 @@ flowchart LR
 - **duplicate active enrolment:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1042,9 +1038,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
 ### Notifications, audit and outputs
@@ -1101,7 +1097,7 @@ flowchart LR
 - **Daily failure:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1115,9 +1111,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
@@ -1147,7 +1143,7 @@ flowchart LR
 | --- | --- |
 | Primary actors | Trainer, Learner, Guardian/Observer, Daily.co, System |
 | Modules involved | LIVE, MSG, AUD, ADM |
-| Trigger | Participant clicks Join or Daily webhook sends event |
+| Trigger | Participant clicks Join or Daily provider event sends event |
 | Completion condition | Attendance is reconciled and ready for trainer report and approval |
 | Principal records/entities | Join Action, Meeting Token, Meeting Provider Event, Attendance Event, Class Participant, Scheduled Occurrence, Integration Log |
 
@@ -1159,7 +1155,7 @@ flowchart LR
 - The system can write audit/domain events and create notification jobs where required.
 
 ### Main success flow
-1. Trainer initiates the flow by performing the trigger action: Participant clicks Join or Daily webhook sends event
+1. Trainer initiates the flow by performing the trigger action: Participant clicks Join or Daily provider event sends event
 2. The system loads the current actor, role assignments, permission scopes, related profile and relevant business context.
 3. The system validates required input, ownership, status, duplicate records, timing rules, file requirements, financial constraints and module-specific policies before making changes.
 4. The system creates or updates the principal records for this flow: Join Action, Meeting Token, Meeting Provider Event, Attendance Event, Class Participant, Scheduled Occurrence, Integration Log.
@@ -1171,11 +1167,11 @@ flowchart LR
 ### Alternate paths and exception handling
 - **Late join:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **reconnects:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **duplicate webhook:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
+- **duplicate provider event:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **manual fallback:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1189,7 +1185,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
@@ -1247,7 +1243,7 @@ flowchart LR
 - **post-approval correction:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1261,9 +1257,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
@@ -1321,7 +1317,7 @@ flowchart LR
 - **group class change:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1335,9 +1331,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
@@ -1395,7 +1391,7 @@ flowchart LR
 - **content version update:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1409,7 +1405,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 
 ### Notifications, audit and outputs
@@ -1466,7 +1462,7 @@ flowchart LR
 - **retake allowed:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1480,7 +1476,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 
 ### Notifications, audit and outputs
@@ -1537,7 +1533,7 @@ flowchart LR
 - **grade correction:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1551,7 +1547,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
@@ -1609,7 +1605,7 @@ flowchart LR
 - **academic year rollover:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1623,9 +1619,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
 ### Notifications, audit and outputs
@@ -1682,7 +1678,7 @@ flowchart LR
 - **malware/scan fail:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1696,7 +1692,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
@@ -1718,14 +1714,14 @@ flowchart LR
 
 ---
 
-## FLOW-023 - Contextual Chat, Department Communication and Moderated Messaging
+## FLOW-023 - Contextual Chat, Teacher/Operations Communication and Moderated Messaging
 
-**Purpose.** This flow describes the complete start-to-end behavior for **Contextual Chat, Department Communication and Moderated Messaging** across the MSG, ENR, LIVE, CSR, HR, MED, DEV, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
+**Purpose.** This flow describes the complete start-to-end behavior for **Contextual Chat, Teacher/Operations Communication and Moderated Messaging** across the MSG, ENR, LIVE, CSR, HR, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
 | Field | Details |
 | --- | --- |
 | Primary actors | Learner, Guardian, Trainer, CSR, Operations, Department Staff, System |
-| Modules involved | MSG, ENR, LIVE, CSR, HR, MED, DEV, AUD |
+| Modules involved | MSG, ENR, LIVE, CSR, HR, AUD |
 | Trigger | User starts permitted conversation or sends message |
 | Completion condition | Message is delivered, retained, moderated or blocked according to policy |
 | Principal records/entities | Conversation, Conversation Participant, Message, Message Attachment, Moderation Event, Notification Event |
@@ -1754,7 +1750,7 @@ flowchart LR
 - **moderation flag:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1768,7 +1764,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
@@ -1792,12 +1788,12 @@ flowchart LR
 
 ## FLOW-024 - Support Case, Complaint, Suggestion and Technical Issue Resolution
 
-**Purpose.** This flow describes the complete start-to-end behavior for **Support Case, Complaint, Suggestion and Technical Issue Resolution** across the MSG, CSR, LIVE, COM, FIN, HR, MED, DEV, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
+**Purpose.** This flow describes the complete start-to-end behavior for **Support Case, Complaint, Suggestion and Technical Issue Resolution** across the MSG, CSR, LIVE, COM, FIN, HR, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
 | Field | Details |
 | --- | --- |
 | Primary actors | Learner, Guardian, Trainer, CSR, Operations, Support Agent, Department Lead, System |
-| Modules involved | MSG, CSR, LIVE, COM, FIN, HR, MED, DEV, AUD |
+| Modules involved | MSG, CSR, LIVE, COM, FIN, HR, AUD |
 | Trigger | User submits case or staff converts incident/message into case |
 | Completion condition | Case is resolved/closed with outcome, owner and audit history |
 | Principal records/entities | Case, Case Category, Case Participant, Case Message, Case Attachment, Case Assignment, SLA Timer, Resolution Record |
@@ -1826,7 +1822,7 @@ flowchart LR
 - **user non-response:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1840,9 +1836,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
 ### Notifications, audit and outputs
@@ -1899,7 +1895,7 @@ flowchart LR
 - **preference opt-out:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1913,9 +1909,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
@@ -1940,12 +1936,12 @@ flowchart LR
 
 ## FLOW-026 - Dashboard Drilldown, Operational Analytics and Action Queues
 
-**Purpose.** This flow describes the complete start-to-end behavior for **Dashboard Drilldown, Operational Analytics and Action Queues** across the DSH, LIVE, COM, ENR, CSR, FIN, PAY, HR, MED, DEV, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
+**Purpose.** This flow describes the complete start-to-end behavior for **Dashboard Drilldown, Operational Analytics and Action Queues** across the DSH, LIVE, COM, ENR, CSR, FIN, PAY, HR, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
 | Field | Details |
 | --- | --- |
-| Primary actors | Admin, COO, Operations Manager, CSR, Trainer, Learner, Finance, HR, Media Head, CTO, System |
-| Modules involved | DSH, LIVE, COM, ENR, CSR, FIN, PAY, HR, MED, DEV, MSG, AUD |
+| Primary actors | Admin, COO, Operations Manager, CSR, Trainer, Learner, Finance, HR, System |
+| Modules involved | DSH, LIVE, COM, ENR, CSR, FIN, PAY, HR, MSG, AUD |
 | Trigger | User opens dashboard or clicks metric/widget |
 | Completion condition | User views summary, opens filtered records and performs allowed action |
 | Principal records/entities | Dashboard View, Dashboard Widget, Metric Snapshot, Analytics Event, Saved Filter, Task Queue Item |
@@ -1974,7 +1970,7 @@ flowchart LR
 - **large dataset/export:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -1988,9 +1984,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
@@ -2048,7 +2044,7 @@ flowchart LR
 - **currency mismatch:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2062,9 +2058,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
 ### Notifications, audit and outputs
@@ -2087,13 +2083,13 @@ flowchart LR
 
 ## FLOW-028 - Payroll Earning Generation, Payroll Run Approval and Settlement
 
-**Purpose.** This flow describes the complete start-to-end behavior for **Payroll Earning Generation, Payroll Run Approval and Settlement** across the PAY, LIVE, MED, DEV, HR, FIN, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
+**Purpose.** This flow describes the complete start-to-end behavior for **Payroll Earning Generation, Payroll Run Approval and Settlement** across the PAY, LIVE, HR, FIN, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
 | Field | Details |
 | --- | --- |
-| Primary actors | Trainer, Media Editor, Developer/Employee, COO, Finance Admin, HR, System |
-| Modules involved | PAY, LIVE, MED, DEV, HR, FIN, MSG, AUD |
-| Trigger | Approved work qualifies for compensation or payroll period is processed |
+| Primary actors | Trainer, CSR/employee, COO, Finance Admin, HR, System |
+| Modules involved | PAY, LIVE, HR, FIN, MSG, AUD |
+| Trigger | Approved teaching work, verified CSR commission, salary adjustment or payroll period is processed |
 | Completion condition | Payroll is settled and finance posting is created |
 | Principal records/entities | Pay Agreement, Rate Rule, Payable Earning Item, Payroll Period, Payroll Run, Payroll Line Item, Adjustment, Settlement, Finance Expense Posting |
 
@@ -2105,7 +2101,7 @@ flowchart LR
 - The system can write audit/domain events and create notification jobs where required.
 
 ### Main success flow
-1. Trainer initiates the flow by performing the trigger action: Approved work qualifies for compensation or payroll period is processed
+1. Trainer initiates the flow by performing the trigger action: Approved teaching work, verified CSR commission, salary adjustment or payroll period is processed
 2. The system loads the current actor, role assignments, permission scopes, related profile and relevant business context.
 3. The system validates required input, ownership, status, duplicate records, timing rules, file requirements, financial constraints and module-specific policies before making changes.
 4. The system creates or updates the principal records for this flow: Pay Agreement, Rate Rule, Payable Earning Item, Payroll Period, Payroll Run, Payroll Line Item, Adjustment, Settlement, Finance Expense Posting.
@@ -2121,7 +2117,7 @@ flowchart LR
 - **final settlement:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2135,9 +2131,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
@@ -2195,7 +2191,7 @@ flowchart LR
 - **template update:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2209,7 +2205,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
@@ -2268,7 +2264,7 @@ flowchart LR
 - **rehire later:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2282,9 +2278,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -2342,7 +2338,7 @@ flowchart LR
 - **no CSR attribution:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2356,9 +2352,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
 ### Notifications, audit and outputs
@@ -2379,222 +2375,61 @@ flowchart LR
 
 ---
 
-## FLOW-032 - Media Assignment, Submission, Review, Approval and Wage Generation
+## FLOW-032 - Business Administration, Reference Data and Operational Governance
 
-**Purpose.** This flow describes the complete start-to-end behavior for **Media Assignment, Submission, Review, Approval and Wage Generation** across the MED, PAY, RES, MSG, DSH, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
+**Purpose.** This flow describes the complete start-to-end behavior for business-facing administration. It allows Admin/COO/authorized domain owners to maintain reference data, business rules, approval policies, support-routing rules and controlled business imports/exports. It explicitly excludes platform integrations, provider setup, provider event consoles, infrastructure health, failed-job/dead-letter maintenance, feature flags, secrets and deployment controls from Admin-facing scope.
 
-| Field | Details |
+| Flow attribute | Specification |
 | --- | --- |
-| Primary actors | Media Head, COO, Editor, Social Media Manager, Finance/Payroll, System |
-| Modules involved | MED, PAY, RES, MSG, DSH, AUD |
-| Trigger | Media work is assigned or editor submits completed work |
-| Completion condition | Submission is approved/paid or revision required/rejected with history |
-| Principal records/entities | Media Project, Media Assignment, Media Submission, Media Review, Revision Request, Quality Rating, Media Wage Rule, Payable Earning Item |
+| Primary actors | Admin, COO, Operations Manager, HR/Finance/Academic domain owner, business auditor, System |
+| Modules involved | ADM, IAM, COM, LIVE, CSR, MSG, AUD |
+| Trigger | Business reference data, approval policy, support routing rule or safe business configuration is created or changed |
+| Entry conditions | Actor has the required business administration permission and scope. |
+| Principal records/entities | Reference Data, Business Rule Version, Approval Policy, Support Routing Policy, Business Config Change, Business Audit Event |
+| Completion outputs | Approved business configuration is active or scheduled, audit record exists, affected workflows use the correct effective version. |
 
-### Preconditions
-- The initiating actor has an authenticated session or is using an allowed unauthenticated entry point for registration/trial intake.
-- The actor has the required permission, ownership relationship, or invitation context for the requested action.
-- Required configuration, templates, states, and validation rules for the involved modules are active.
-- Any external integration used by the flow has an enabled configuration or a controlled fallback state.
-- The system can write audit/domain events and create notification jobs where required.
+### End-to-end flow
 
-### Main success flow
-1. Media Head initiates the flow by performing the trigger action: Media work is assigned or editor submits completed work
-2. The system loads the current actor, role assignments, permission scopes, related profile and relevant business context.
-3. The system validates required input, ownership, status, duplicate records, timing rules, file requirements, financial constraints and module-specific policies before making changes.
-4. The system creates or updates the principal records for this flow: Media Project, Media Assignment, Media Submission, Media Review, Revision Request, Quality Rating, Media Wage Rule, Payable Earning Item.
-5. If the flow crosses module boundaries, the initiating module stores the authoritative command result and emits domain events or queued jobs for downstream side effects.
-6. The system transitions the primary object through the allowed lifecycle states and records actor, timestamp, source and reason where applicable.
-7. The system updates dashboards, task queues, summaries, read models, notifications and integration logs as required by the flow.
-8. The flow completes when: Submission is approved/paid or revision required/rejected with history
+1. Admin or authorized domain owner opens the business configuration area.
+2. The system displays the current active value, owner, affected modules and effective date.
+3. User proposes a change with reason, scope and effective date.
+4. The system validates impact against active products, schedules, memberships, payment approvals, grading schemes, payroll rules and support routing.
+5. If policy requires approval, the change enters an approval queue.
+6. Approver reviews old/new values, impact and reason.
+7. Approved change becomes scheduled or active according to effective date.
+8. The system records actor, approver, reason, scope, affected records and effective version.
+9. Dependent business workflows use the new version only for future decisions unless policy explicitly allows recalculation.
 
-### Alternate paths and exception handling
-- **Late submission:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **rejected work:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **external file link:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **reassignment:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
-- **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+### Alternate paths and exceptions
 
-### State transitions
-| Object | Allowed transition |
-| --- | --- |
-| Media Assignment | Assigned -> In Progress -> Submitted -> Under Review -> Revision Required/Approved -> Paid |
+- **Value is in use:** existing value is deactivated for future use rather than deleted.
+- **Change affects active memberships/payroll/grades:** change is blocked or requires future-effective version only.
+- **Support routing conflict:** learner cases remain with current owner until a controlled reassignment is approved.
+- **Unauthorized platform-maintenance request:** the Admin UI does not show provider setup, provider event replay, job maintenance, feature flags, secrets or infrastructure controls.
 
 ### Business rules and constraints
-- The flow must preserve domain separation: identity, enrolment, membership, payment, class delivery, learning progress and payroll are linked but not merged into one mutable record.
-- All sensitive changes must be auditable with actor, timestamp, old/new state or domain event reference, and reason when required.
-- State transitions must be validated against the current state, not just requested by the UI.
-- Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
-- Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
-- Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 
-### Notifications, audit and outputs
-- In-app notifications are created for affected users when the result requires user awareness or action.
-- Operational dashboards and action queues are updated or queued for recalculation.
-- Audit events are written for approvals, rejections, permission changes, financial changes, grade changes, HR changes, exports and sensitive record access.
-- If external services are involved, integration request/response identifiers and retry status are retained.
-- If a user action is required next, the system creates a visible task, CTA, queue item or correction route.
+- Business configuration changes cannot bypass source-domain validation.
+- Every change requires actor, reason, scope, effective date and audit.
+- Business imports cannot rewrite settled finance, grades, payroll, published course versions or approved payment decisions.
+- Admin-facing tools must remain business-focused.
 
-### QA / acceptance checklist
-- [ ] Happy-path completion creates/updates exactly the expected records.
-- [ ] Every listed alternate path is testable and leaves the system in a safe state.
-- [ ] Unauthorized actors cannot perform the action through UI, API route, server action or direct database policy.
-- [ ] The primary state transition cannot be skipped or repeated incorrectly.
-- [ ] Notifications and background jobs are not duplicated on retry.
-- [ ] Audit trail is sufficient to reconstruct who did what, when, why and to which record.
-- [ ] Dashboard/read-model data matches source records after the flow completes.
+### Notifications and outputs
 
----
+- Approval request to authorized approver when required.
+- Change-result notification to requester.
+- Business audit event.
+- Effective configuration version available to source workflows.
 
-## FLOW-033 - Development Task, Bug, Testing and Deployment Reporting
+### QA checklist
 
-**Purpose.** This flow describes the complete start-to-end behavior for **Development Task, Bug, Testing and Deployment Reporting** across the DEV, MSG, DSH, HR, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
+- [ ] Admin can create and approve a business rule version with effective date.
+- [ ] Used reference values cannot be hard-deleted.
+- [ ] Admin UI contains no provider setup, provider event console, failed-job/dead-letter queue, feature flag, secret or infrastructure screen.
+- [ ] Support routing can assign learner cases to responsible CSR by default.
+- [ ] All business configuration changes are audit-visible.
 
-| Field | Details |
-| --- | --- |
-| Primary actors | CTO, Developer, Tester/Reviewer, Operations, System |
-| Modules involved | DEV, MSG, DSH, HR, AUD |
-| Trigger | CTO or authorized user creates development task/bug/feature |
-| Completion condition | Item is deployed/closed or cancelled with history |
-| Principal records/entities | Development Work Item, Assignment, Progress Update, Bug Report, Test Result, Deployment Record, Release Note |
-
-### Preconditions
-- The initiating actor has an authenticated session or is using an allowed unauthenticated entry point for registration/trial intake.
-- The actor has the required permission, ownership relationship, or invitation context for the requested action.
-- Required configuration, templates, states, and validation rules for the involved modules are active.
-- Any external integration used by the flow has an enabled configuration or a controlled fallback state.
-- The system can write audit/domain events and create notification jobs where required.
-
-### Main success flow
-1. CTO initiates the flow by performing the trigger action: CTO or authorized user creates development task/bug/feature
-2. The system loads the current actor, role assignments, permission scopes, related profile and relevant business context.
-3. The system validates required input, ownership, status, duplicate records, timing rules, file requirements, financial constraints and module-specific policies before making changes.
-4. The system creates or updates the principal records for this flow: Development Work Item, Assignment, Progress Update, Bug Report, Test Result, Deployment Record, Release Note.
-5. If the flow crosses module boundaries, the initiating module stores the authoritative command result and emits domain events or queued jobs for downstream side effects.
-6. The system transitions the primary object through the allowed lifecycle states and records actor, timestamp, source and reason where applicable.
-7. The system updates dashboards, task queues, summaries, read models, notifications and integration logs as required by the flow.
-8. The flow completes when: Item is deployed/closed or cancelled with history
-
-### Alternate paths and exception handling
-- **Failed testing:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **blocked task:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **urgent bug:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **cancelled/deferred:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
-- **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
-
-### State transitions
-| Object | Allowed transition |
-| --- | --- |
-| Development Work Item | Planned -> Assigned -> In Progress -> Testing -> Completed -> Deployed |
-
-### Business rules and constraints
-- The flow must preserve domain separation: identity, enrolment, membership, payment, class delivery, learning progress and payroll are linked but not merged into one mutable record.
-- All sensitive changes must be auditable with actor, timestamp, old/new state or domain event reference, and reason when required.
-- State transitions must be validated against the current state, not just requested by the UI.
-- Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
-- Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
-- Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-
-### Notifications, audit and outputs
-- In-app notifications are created for affected users when the result requires user awareness or action.
-- Operational dashboards and action queues are updated or queued for recalculation.
-- Audit events are written for approvals, rejections, permission changes, financial changes, grade changes, HR changes, exports and sensitive record access.
-- If external services are involved, integration request/response identifiers and retry status are retained.
-- If a user action is required next, the system creates a visible task, CTA, queue item or correction route.
-
-### QA / acceptance checklist
-- [ ] Happy-path completion creates/updates exactly the expected records.
-- [ ] Every listed alternate path is testable and leaves the system in a safe state.
-- [ ] Unauthorized actors cannot perform the action through UI, API route, server action or direct database policy.
-- [ ] The primary state transition cannot be skipped or repeated incorrectly.
-- [ ] Notifications and background jobs are not duplicated on retry.
-- [ ] Audit trail is sufficient to reconstruct who did what, when, why and to which record.
-- [ ] Dashboard/read-model data matches source records after the flow completes.
-
----
-
-## FLOW-034 - Platform Administration, Settings, Integrations, Jobs and Feature Flags
-
-**Purpose.** This flow describes the complete start-to-end behavior for **Platform Administration, Settings, Integrations, Jobs and Feature Flags** across the ADM, FND, IAM, MSG, LIVE, COM, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
-
-| Field | Details |
-| --- | --- |
-| Primary actors | Admin, COO, Technical Admin, System |
-| Modules involved | ADM, FND, IAM, MSG, LIVE, COM, AUD |
-| Trigger | Platform setting, integration, job, feature flag or policy is configured/inspected |
-| Completion condition | Configuration is saved, tested, activated, rolled back or pending approval |
-| Principal records/entities | System Setting, Feature Flag, Integration Configuration, Health Check, Background Job, Queue Item, Cron Schedule, Webhook Event |
-
-### Preconditions
-- The initiating actor has an authenticated session or is using an allowed unauthenticated entry point for registration/trial intake.
-- The actor has the required permission, ownership relationship, or invitation context for the requested action.
-- Required configuration, templates, states, and validation rules for the involved modules are active.
-- Any external integration used by the flow has an enabled configuration or a controlled fallback state.
-- The system can write audit/domain events and create notification jobs where required.
-
-### Main success flow
-1. Admin initiates the flow by performing the trigger action: Platform setting, integration, job, feature flag or policy is configured/inspected
-2. The system loads the current actor, role assignments, permission scopes, related profile and relevant business context.
-3. The system validates required input, ownership, status, duplicate records, timing rules, file requirements, financial constraints and module-specific policies before making changes.
-4. The system creates or updates the principal records for this flow: System Setting, Feature Flag, Integration Configuration, Health Check, Background Job, Queue Item, Cron Schedule, Webhook Event.
-5. If the flow crosses module boundaries, the initiating module stores the authoritative command result and emits domain events or queued jobs for downstream side effects.
-6. The system transitions the primary object through the allowed lifecycle states and records actor, timestamp, source and reason where applicable.
-7. The system updates dashboards, task queues, summaries, read models, notifications and integration logs as required by the flow.
-8. The flow completes when: Configuration is saved, tested, activated, rolled back or pending approval
-
-### Alternate paths and exception handling
-- **Health check fails:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **feature rollback:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **dead-letter job:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **unauthorized attempt:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
-- **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
-- **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
-
-### State transitions
-| Object | Allowed transition |
-| --- | --- |
-| System Setting | Draft -> Active -> Superseded/Archived |
-| Queue Item | Ready -> Processing -> Completed/Retry/Dead Letter |
-
-### Business rules and constraints
-- The flow must preserve domain separation: identity, enrolment, membership, payment, class delivery, learning progress and payroll are linked but not merged into one mutable record.
-- All sensitive changes must be auditable with actor, timestamp, old/new state or domain event reference, and reason when required.
-- State transitions must be validated against the current state, not just requested by the UI.
-- Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
-- Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
-- Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
-- Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
-- Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
-
-### Notifications, audit and outputs
-- In-app notifications are created for affected users when the result requires user awareness or action.
-- Operational dashboards and action queues are updated or queued for recalculation.
-- Audit events are written for approvals, rejections, permission changes, financial changes, grade changes, HR changes, exports and sensitive record access.
-- If external services are involved, integration request/response identifiers and retry status are retained.
-- If a user action is required next, the system creates a visible task, CTA, queue item or correction route.
-
-### QA / acceptance checklist
-- [ ] Happy-path completion creates/updates exactly the expected records.
-- [ ] Every listed alternate path is testable and leaves the system in a safe state.
-- [ ] Unauthorized actors cannot perform the action through UI, API route, server action or direct database policy.
-- [ ] The primary state transition cannot be skipped or repeated incorrectly.
-- [ ] Notifications and background jobs are not duplicated on retry.
-- [ ] Audit trail is sufficient to reconstruct who did what, when, why and to which record.
-- [ ] Dashboard/read-model data matches source records after the flow completes.
-
----
-
-## FLOW-035 - Audit Trail, Data Export, Archive and Retention Operations
+## FLOW-033 - Audit Trail, Data Export, Archive and Retention Operations
 
 **Purpose.** This flow describes the complete start-to-end behavior for **Audit Trail, Data Export, Archive and Retention Operations** across the AUD, ADM, IAM, COM, FIN, PAY, HR, RES, MSG modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
@@ -2630,7 +2465,7 @@ flowchart LR
 - **large export:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2644,9 +2479,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -2668,7 +2503,7 @@ flowchart LR
 
 ---
 
-## FLOW-036 - Learner Profile Update, Verification and History Event Flow
+## FLOW-034 - Learner Profile Update, Verification and History Event Flow
 
 **Purpose.** This flow describes the complete start-to-end behavior for **Learner Profile Update, Verification and History Event Flow** across the IAM, ENR, CSR, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
@@ -2704,7 +2539,7 @@ flowchart LR
 - **photo validation failure:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2718,7 +2553,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -2740,7 +2575,7 @@ flowchart LR
 
 ---
 
-## FLOW-037 - Guardian Relationship, Consent and Learner Oversight Flow
+## FLOW-035 - Guardian Relationship, Consent and Learner Oversight Flow
 
 **Purpose.** This flow describes the complete start-to-end behavior for **Guardian Relationship, Consent and Learner Oversight Flow** across the IAM, ENR, K12, COM, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
@@ -2776,7 +2611,7 @@ flowchart LR
 - **payer-only guardian:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2790,9 +2625,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
 ### Notifications, audit and outputs
@@ -2813,7 +2648,7 @@ flowchart LR
 
 ---
 
-## FLOW-038 - Renewal Reminder, Low Entitlement and Expiry Prevention Flow
+## FLOW-036 - Renewal Reminder, Low Entitlement and Expiry Prevention Flow
 
 **Purpose.** This flow describes the complete start-to-end behavior for **Renewal Reminder, Low Entitlement and Expiry Prevention Flow** across the COM, ENR, LIVE, MSG, CSR, DSH modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
@@ -2849,7 +2684,7 @@ flowchart LR
 - **CSR follow-up no response:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2863,9 +2698,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
 ### Notifications, audit and outputs
@@ -2886,7 +2721,7 @@ flowchart LR
 
 ---
 
-## FLOW-039 - Course Run, Cohort and Roster Management Flow
+## FLOW-037 - Course Run, Cohort and Roster Management Flow
 
 **Purpose.** This flow describes the complete start-to-end behavior for **Course Run, Cohort and Roster Management Flow** across the ENR, LIVE, K12, MSG, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
@@ -2922,7 +2757,7 @@ flowchart LR
 - **roster removal:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -2936,7 +2771,7 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
 - Scheduled class occurrence, participant attendance, trainer report, delivery approval, entitlement debit and payroll earning are separate but linked records.
 
@@ -2958,13 +2793,13 @@ flowchart LR
 
 ---
 
-## FLOW-040 - Import, Migration, Reconciliation and Cutover Support Flow
+## FLOW-038 - Import, Migration, Reconciliation and Cutover Support Flow
 
 **Purpose.** This flow describes the complete start-to-end behavior for **Import, Migration, Reconciliation and Cutover Support Flow** across the ADM, FND, IAM, CAT, COM, ENR, FIN, PAY, AUD modules. It must be implemented as a controlled workflow with server-side authorization, explicit state transitions, clear user feedback, reliable side effects, and an audit trail for sensitive actions.
 
 | Field | Details |
 | --- | --- |
-| Primary actors | Admin, COO, Technical Admin, Data Reviewer, System |
+| Primary actors | Admin, COO, Data Reviewer, System |
 | Modules involved | ADM, FND, IAM, CAT, COM, ENR, FIN, PAY, AUD |
 | Trigger | Legacy clients, payments, classes, resources, staff or department records must be imported |
 | Completion condition | Import is completed, partially completed with exceptions, or staged for correction |
@@ -2994,7 +2829,7 @@ flowchart LR
 - **rollback:** The system must show a clear state-specific message, avoid partial unsafe completion, retain evidence where relevant, and create a task, correction route, retry, rejection, or escalation path.
 - **Permission denied:** The system blocks the operation server-side, does not reveal unauthorized data, and records a security/audit event where the action is sensitive.
 - **Concurrent update:** The system uses locking, unique constraints, optimistic concurrency, or idempotency keys so that duplicate approvals, double payments, duplicate earning items, duplicate reminders and stale overwrites cannot occur.
-- **Integration failure:** The system stores the local state safely, marks the integration exception, and allows retry or controlled manual fallback where the business policy permits it.
+- **Provider or service failure:** The system stores the local state safely, marks the business exception, and allows retry or controlled manual fallback where the business policy permits it.
 
 ### State transitions
 | Object | Allowed transition |
@@ -3008,9 +2843,9 @@ flowchart LR
 - State transitions must be validated against the current state, not just requested by the UI.
 - Historic records should be archived, superseded, reversed or adjusted rather than destructively edited or deleted.
 - Every file or evidence item must use private storage, ownership metadata, validation and signed access where applicable.
-- Every notification, webhook and background job must be idempotent and retry-safe.
+- Every notification, provider event and background job must be idempotent and retry-safe.
 - Dashboards and read models must be derived from source records and must allow authorized drilldown to underlying records.
-- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor webhook.
+- Receipts and payment submissions are evidence only; confirmed payment, allocation and entitlement are created only by authorized approval or future processor event.
 - Payable earnings must have a globally unique source reference and must be reserved into payroll atomically before settlement.
 - Route visibility is not authorization; server-side permission checks and Supabase RLS/service checks remain mandatory.
 
@@ -3069,7 +2904,7 @@ sequenceDiagram
   Live->>D: Provision room
   T->>Live: Join with trainer token
   L->>Live: Join with learner token
-  D-->>Live: Join/leave webhooks
+  D-->>Live: Join/leave provider events
   Live->>Live: Reconcile attendance
   T->>Live: Submit trainer report
   O->>Live: Approve delivery
@@ -3096,7 +2931,7 @@ sequenceDiagram
 - [ ] Every high-value command has idempotency keys and uniqueness constraints where needed.
 - [ ] Every flow has authorization tests for allowed and denied roles.
 - [ ] Every state transition is server-validated and audited.
-- [ ] Every external webhook validates provider signature and is retry-safe.
+- [ ] Internal provider event processing is retry-safe, but provider event consoles are not exposed to Admin users.
 - [ ] Every file upload uses private storage, ownership metadata, validation and signed access.
 - [ ] Every dashboard metric has an authorized drilldown query.
 - [ ] Every correction preserves the original record and creates reversal/adjustment/version history.
@@ -3106,13 +2941,13 @@ sequenceDiagram
 ## E. Suggested Engineering Sequence
 | Phase | Flows | Reason |
 | --- | --- | --- |
-| Foundation | FLOW-001 to FLOW-005, FLOW-034, FLOW-035 | Identity, permissions, audit, configuration and free learner entry must exist first. |
-| Commercial and trial core | FLOW-006 to FLOW-013, FLOW-038 | Trial, payment, membership and enrolment unlock acquisition-to-active-learner flow. |
-| Live delivery core | FLOW-014 to FLOW-017, FLOW-039 | Daily classes, attendance, reports, approvals and group/cohort model solve major operations problems. |
+| Foundation | FLOW-001 to FLOW-005, FLOW-032, FLOW-033 | Identity, permissions, audit, configuration and free learner entry must exist first. |
+| Commercial and trial core | FLOW-006 to FLOW-013, FLOW-036 | Trial, payment, membership and enrolment unlock acquisition-to-active-learner flow. |
+| Live delivery core | FLOW-014 to FLOW-017, FLOW-037 | Daily classes, attendance, reports, approvals and group/cohort model solve major operations problems. |
 | Learning core | FLOW-018 to FLOW-022 | Milestones, assessments, K-12 and resources create the LMS capability. |
 | Operations and communication | FLOW-023 to FLOW-027 | Chats, cases, notifications, dashboards and finance make work traceable. |
 | Compensation and departments | FLOW-028 to FLOW-033 | Payroll, HR, CSR commissions, Media and Development complete OPS scope. |
-| Migration and hardening | FLOW-036, FLOW-037, FLOW-040 plus audit/export checks | Profile verification, guardians, imports, retention and edge cases prepare for scale. |
+| Migration and hardening | FLOW-034, FLOW-035, FLOW-038 plus audit/export checks | Profile verification, guardians, imports, retention and edge cases prepare for scale. |
 
 
 ## F. Final Notes
