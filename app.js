@@ -3756,7 +3756,7 @@ const Router = {
     if (activeView) {
       activeView.classList.remove("hidden");
       activeView.classList.add("active");
-      if (!isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace && !isReviewerWorkspace && !isTrainerWorkspace) prepareModuleView(route, activeView);
+      if (!isAdminWorkspace && !isCooWorkspace && !isOmWorkspace && !isCsrWorkspace && !isCreatorWorkspace && !isReviewerWorkspace && !isTrainerWorkspace && !isLearnerWorkspace) prepareModuleView(route, activeView);
     }
 
     // Update Header title
@@ -4229,6 +4229,10 @@ const RenderEngine = {
   // ============================================================================
   // PLATFORM ADMIN UNIVERSAL WORKSPACE - ALL 16 SUB-SCREENS
   // ============================================================================
+  
+  // ============================================================================
+  // PLATFORM ADMIN UNIVERSAL WORKSPACE - 100% DISTINCT BESPOKE SUB-PAGES
+  // ============================================================================
   adminWorkspace(route) {
     const container = document.getElementById("admin-workspace-content");
     if (!container) return;
@@ -4248,7 +4252,9 @@ const RenderEngine = {
     const data = db.adminData;
     let viewContent = "";
 
-    // 1. CSR & SALES
+    // --------------------------------------------------------------------------
+    // 1. CSR & SALES PIPELINE (FLOW-006 / FLOW-031)
+    // --------------------------------------------------------------------------
     if (route === "admin-csr-sales") {
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
@@ -4256,183 +4262,295 @@ const RenderEngine = {
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Trial Intake Pipeline</span>
               <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">14 Pending Trials</h3>
+              <small style="color:#166534; font-size:11px; font-weight:600;">FLOW-006 Placement Assessments</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Prospects</span>
               <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">142 Leads</h3>
+              <small style="color:var(--primary); font-size:11px; font-weight:600;">38.4% Conversion Rate</small>
             </div>
             <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
               <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">CSR Commissions Due</span>
               <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">PKR 142,500</h3>
+              <small style="color:var(--slate); font-size:11px;">FLOW-031 Attributed Accruals</small>
             </div>
           </div>
 
-          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
-            <table class="data-table">
-              <thead>
-                <tr><th>Trial ID</th><th>Prospect Name</th><th>Course Requested</th><th>Preferred Slot</th><th>Assigned CSR</th><th>Status</th><th>Actions</th></tr>
-              </thead>
-              <tbody>
-                ${data.csrSales.map(t => `
-                  <tr>
-                    <td><code>${t.id}</code></td>
-                    <td><strong>${t.prospect}</strong></td>
-                    <td>${t.course}</td>
-                    <td>${t.preferredSlot}</td>
-                    <td>${t.assignedCsr}</td>
-                    <td><span class="badge badge-warning">${t.status}</span></td>
-                    <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('CSR Match', 'Matching trainer for ${t.prospect}...', 'info')">Match Slot</button></td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Trial Ingestion & CSR Allocation Queue (FLOW-006)</h3>
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Lead Ingestion', 'Opening lead intake modal...', 'info')"><i data-lucide="plus"></i> Add Inbound Lead</button>
+            </div>
+
+            <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Trial ID</th><th>Prospect Name</th><th>Course Requested</th><th>Preferred Slot</th><th>Assigned CSR</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                  ${data.csrSales.map(t => `
+                    <tr>
+                      <td><code>${t.id}</code></td>
+                      <td><strong>${t.prospect}</strong></td>
+                      <td>${t.course}</td>
+                      <td>${t.preferredSlot}</td>
+                      <td>${t.assignedCsr}</td>
+                      <td><span class="badge badge-warning">${t.status}</span></td>
+                      <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Trainer Matched', 'Matching trainer for ${t.prospect}...', 'success')">Match Trainer</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       `;
     }
 
-    // 2. FINANCE & PAYMENTS
+    // --------------------------------------------------------------------------
+    // 2. FINANCE & MANUAL PAYMENTS (FLOW-013 / FIN)
+    // --------------------------------------------------------------------------
     else if (route === "admin-finance-payments") {
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
-            <table class="data-table">
-              <thead>
-                <tr><th>Payment ID</th><th>Learner</th><th>Payer</th><th>Course</th><th>Amount</th><th>Method & Ref</th><th>Status</th><th>Actions</th></tr>
-              </thead>
-              <tbody>
-                ${data.financePayments.map(p => `
-                  <tr>
-                    <td><code>${p.id}</code></td>
-                    <td><strong>${p.learner}</strong></td>
-                    <td>${p.payer}</td>
-                    <td>${p.course}</td>
-                    <td><strong style="color:#166534;">${p.amount}</strong></td>
-                    <td>${p.method} (<code>${p.ref}</code>)</td>
-                    <td><span class="badge badge-warning">${p.status}</span></td>
-                    <td>
-                      <div style="display:flex; gap:4px;">
-                        <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Notifications.push('Payment Approved', 'Payment ${p.id} approved. Access term granted.', 'success')">Approve</button>
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Evidence View', 'Opening ${p.receipt}...', 'info')">Evidence</button>
-                      </div>
-                    </td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Manual Review Queue</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">7 Pending (PKR 115,000)</h3>
+              <small style="color:var(--slate); font-size:11px;">SLA: Review within 2 hours</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Verified Bank Deposits</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">PKR 1,890,000</h3>
+              <small style="color:#166534; font-size:11px; font-weight:600;">Reconciled in General Ledger</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Payout Batches</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">2 Batches Ready</h3>
+              <small style="color:var(--slate); font-size:11px;">Trainer & CSR Settlements</small>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 16px 0;">Manual Payment Review Queue (FLOW-013)</h3>
+            <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Payment ID</th><th>Learner</th><th>Payer</th><th>Course</th><th>Amount</th><th>Method & Ref</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                  ${data.financePayments.map(p => `
+                    <tr>
+                      <td><code>${p.id}</code></td>
+                      <td><strong>${p.learner}</strong></td>
+                      <td>${p.payer}</td>
+                      <td>${p.course}</td>
+                      <td><strong style="color:#166534;">${p.amount}</strong></td>
+                      <td>${p.method} (<code>${p.ref}</code>)</td>
+                      <td><span class="badge badge-warning">${p.status}</span></td>
+                      <td>
+                        <div style="display:flex; gap:6px;">
+                          <button class="btn btn-primary btn-xs" style="background:#22c55e; border:none;" onclick="Notifications.push('Payment Approved', 'Approved payment ${p.id} for ${p.learner}. Access grant created.', 'success')">Approve</button>
+                          <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Evidence Lightbox', 'Opening ${p.receipt}...', 'info')">Evidence</button>
+                        </div>
+                      </td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       `;
     }
 
-    // 3. MEMBERSHIPS & RENEWALS
+    // --------------------------------------------------------------------------
+    // 3. MEMBERSHIPS & RENEWALS (FLOW-038 / ENR)
+    // --------------------------------------------------------------------------
     else if (route === "admin-memberships-renewals") {
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
-            <table class="data-table">
-              <thead>
-                <tr><th>Enrolment ID</th><th>Learner</th><th>Course</th><th>Term Expiry</th><th>Credits Remaining</th><th>Renewal Risk Status</th><th>Payer Contact</th><th>Action</th></tr>
-              </thead>
-              <tbody>
-                ${data.membershipsRenewals.map(m => `
-                  <tr>
-                    <td><code>${m.id}</code></td>
-                    <td><strong>${m.learner}</strong></td>
-                    <td>${m.course}</td>
-                    <td>${m.termExpiry}</td>
-                    <td><strong>${m.creditsRemaining} Credits</strong></td>
-                    <td><span class="badge ${m.renewalStatus.includes('Urgent') ? 'badge-error' : 'badge-warning'}">${m.renewalStatus}</span></td>
-                    <td>${m.payerContact}</td>
-                    <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Reminder Sent', 'Renewal invoice sent to ${m.learner}...', 'success')">Send Reminder</button></td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Enrolments</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">342 Accounts</h3>
+              <small style="color:var(--slate); font-size:11px;">186 Live · 112 Milestone · 44 K-12</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Renewal Risk</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">18 Expiring Soon</h3>
+              <small style="color:#e11d48; font-size:11px; font-weight:600;">FLOW-038 Automated Reminders</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Low Entitlements</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">9 Accounts</h3>
+              <small style="color:var(--slate); font-size:11px;">< 2 Class Credits Remaining</small>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 16px 0;">Membership Terms & Renewal Radar</h3>
+            <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Enrolment ID</th><th>Learner</th><th>Course</th><th>Term Expiry</th><th>Credits Remaining</th><th>Renewal Risk Status</th><th>Payer Contact</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                  ${data.membershipsRenewals.map(m => `
+                    <tr>
+                      <td><code>${m.id}</code></td>
+                      <td><strong>${m.learner}</strong></td>
+                      <td>${m.course}</td>
+                      <td>${m.termExpiry}</td>
+                      <td><strong>${m.creditsRemaining} Credits</strong></td>
+                      <td><span class="badge ${m.renewalStatus.includes('Urgent') ? 'badge-error' : 'badge-warning'}">${m.renewalStatus}</span></td>
+                      <td>${m.payerContact}</td>
+                      <td><button class="btn btn-primary btn-xs" onclick="Notifications.push('Renewal Triggered', 'Dispatched renewal invoice to ${m.learner}...', 'success')">Send Reminder</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       `;
     }
 
-    // 4. ACADEMIC DELIVERY
+    // --------------------------------------------------------------------------
+    // 4. ACADEMIC DELIVERY (FLOW-015 / FLOW-016)
+    // --------------------------------------------------------------------------
     else if (route === "admin-academic-delivery") {
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
-            <table class="data-table">
-              <thead>
-                <tr><th>Class ID</th><th>Title</th><th>Trainer</th><th>Time</th><th>Participants</th><th>Room Telemetry</th><th>Report Status</th><th>Actions</th></tr>
-              </thead>
-              <tbody>
-                ${data.academicDelivery.map(c => `
-                  <tr>
-                    <td><code>${c.id}</code></td>
-                    <td><strong>${c.title}</strong></td>
-                    <td>${c.trainer}</td>
-                    <td>${c.time}</td>
-                    <td>${c.participants} Learners</td>
-                    <td><span class="badge badge-success">${c.roomStatus}</span></td>
-                    <td><span class="badge ${c.reportStatus.includes('Due') ? 'badge-error' : 'badge-primary'}">${c.reportStatus}</span></td>
-                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Room Telemetry', 'Inspecting Daily.co room ${c.id}...', 'info')">Inspect</button></td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Live Classes Today</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">16 Classes</h3>
+              <small style="color:#166534; font-size:11px; font-weight:600;">Daily.co WebRTC Provisioned</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Post-Class Reports</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#d97706; margin:4px 0 0 0;">4 Reports Due</h3>
+              <small style="color:var(--slate); font-size:11px;">FLOW-016 Educational Notes</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Academic Risks Flagged</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#e11d48; margin:4px 0 0 0;">6 Learners</h3>
+              <small style="color:#e11d48; font-size:11px; font-weight:600;">< 75% Attendance / Stalled</small>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 16px 0;">Live Occurrence Telemetry & Delivery Reports</h3>
+            <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Class ID</th><th>Title</th><th>Trainer</th><th>Time</th><th>Participants</th><th>Room Telemetry</th><th>Report Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                  ${data.academicDelivery.map(c => `
+                    <tr>
+                      <td><code>${c.id}</code></td>
+                      <td><strong>${c.title}</strong></td>
+                      <td>${c.trainer}</td>
+                      <td>${c.time}</td>
+                      <td>${c.participants} Learners</td>
+                      <td><span class="badge badge-success">${c.roomStatus}</span></td>
+                      <td><span class="badge ${c.reportStatus.includes('Due') ? 'badge-error' : 'badge-primary'}">${c.reportStatus}</span></td>
+                      <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Monitored', 'Live stream healthy for ${c.id}...', 'info')">Inspect</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       `;
     }
 
-    // 5. HR & STAFF
+    // --------------------------------------------------------------------------
+    // 5. HR & STAFF ROSTERS (PAY-013 / HR)
+    // --------------------------------------------------------------------------
     else if (route === "admin-hr-staff") {
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
-            <table class="data-table">
-              <thead>
-                <tr><th>Staff ID</th><th>Name</th><th>Role</th><th>Department</th><th>Compensation Model</th><th>Hours / Output</th><th>Compliance</th><th>Action</th></tr>
-              </thead>
-              <tbody>
-                ${data.hrStaff.map(s => `
-                  <tr>
-                    <td><code>${s.id}</code></td>
-                    <td><strong>${s.name}</strong></td>
-                    <td>${s.role}</td>
-                    <td>${s.dept}</td>
-                    <td>${s.hourlyRate || s.baseSalary}</td>
-                    <td><strong>${s.hoursLogged ? `${s.hoursLogged} Hours` : s.commissionDue}</strong></td>
-                    <td><span class="badge badge-success">${s.complianceStatus}</span></td>
-                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Staff Record', 'Opening ${s.name} HR record...', 'info')">Profile</button></td>
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Active Staff Roster</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">62 Staff Members</h3>
+              <small style="color:var(--slate); font-size:11px;">48 Trainers · 8 CSRs · 4 Reviewers · 2 OMs</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Approved Delivery Hours</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">184 Hours Logged</h3>
+              <small style="color:#166534; font-size:11px; font-weight:600;">Est. Payroll: PKR 404,800</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Compliance & Contracts</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">100% Verified</h3>
+              <small style="color:var(--slate); font-size:11px;">Signed Agreements & NDA</small>
+            </div>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 16px 0;">Faculty & Staff Directory</h3>
+            <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Staff ID</th><th>Name</th><th>Role</th><th>Department</th><th>Compensation Model</th><th>Hours / Output</th><th>Compliance</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                  ${data.hrStaff.map(s => `
+                    <tr>
+                      <td><code>${s.id}</code></td>
+                      <td><strong>${s.name}</strong></td>
+                      <td>${s.role}</td>
+                      <td>${s.dept}</td>
+                      <td>${s.hourlyRate || s.baseSalary}</td>
+                      <td><strong>${s.hoursLogged ? `${s.hoursLogged} Hours` : s.commissionDue}</strong></td>
+                      <td><span class="badge badge-success">${s.complianceStatus}</span></td>
+                      <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('HR Record', 'Viewing contract for ${s.name}...', 'info')">Profile</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       `;
     }
 
-    // 6. BUSINESS GOVERNANCE & OTHERS
-    else if (route === "reference-data" || route === "business-rules") {
+    // --------------------------------------------------------------------------
+    // 6. USERS DIRECTORY
+    // --------------------------------------------------------------------------
+    else if (route === "users") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Controlled Business Rules & Policies (ADM-002)</h3>
-              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Versioned, effective-dated operational policies.</p>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">User Account Directory & Identity Bindings</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Unified accounts across Admins, OMs, Trainers, Learners and Guardians.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Rule Proposed', 'New rule change proposal opened...', 'info')"><i data-lucide="plus"></i> Propose Rule Change</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('invitations')"><i data-lucide="user-plus"></i> Invite User</button>
           </div>
 
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
             <table class="data-table">
               <thead>
-                <tr><th>Rule ID</th><th>Policy Name</th><th>Current Enforced Value</th><th>Effective Date</th><th>Status</th><th>Actions</th></tr>
+                <tr><th>User ID</th><th>Full Name</th><th>Primary Email</th><th>Assigned Roles</th><th>Identity Auth</th><th>Status</th><th>Actions</th></tr>
               </thead>
               <tbody>
-                <tr><td><code>RULE-01</code></td><td>FLOW-017 Reschedule Notice Window</td><td>Minimum 4 Hours Before Occurrence</td><td>01 Aug 2026</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><code>RULE-02</code></td><td>FLOW-013 Manual Payment Review SLA</td><td>Review Within 2 Business Hours</td><td>15 Jul 2026</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
-                <tr><td><code>RULE-03</code></td><td>FLOW-038 Renewal Reminder Schedule</td><td>14 Days, 7 Days, and 2 Days Before Expiry</td><td>01 Jul 2026</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                ${db.users.slice(0, 6).map(u => `
+                  <tr>
+                    <td><code>${u.id}</code></td>
+                    <td><strong>${u.name}</strong></td>
+                    <td>${u.email}</td>
+                    <td><span class="badge badge-primary">${u.role}</span></td>
+                    <td>${u.authProvider || 'Email/Password'}</td>
+                    <td><span class="badge badge-success">${u.status}</span></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('User Profile', 'Opening ${u.name} identity detail...', 'info')">Manage</button></td>
+                  </tr>
+                `).join("")}
               </tbody>
             </table>
           </div>
@@ -4440,28 +4558,233 @@ const RenderEngine = {
       `;
     }
 
-    else if (route === "imports" || route === "exports") {
+    // --------------------------------------------------------------------------
+    // 7. STAFF INVITATIONS (FLOW-003)
+    // --------------------------------------------------------------------------
+    else if (route === "invitations") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Outbound Staff Invitations (FLOW-003)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Pre-provisioned scoped role invitations with token expiration.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Invite Sent', 'Dispatched invitation email with secure token.', 'success')"><i data-lucide="mail"></i> Send Invitation</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Invite ID</th><th>Recipient Email</th><th>Target Role Scope</th><th>Invited By</th><th>Expires At</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>INV-301</code></td><td>tariq.reviewer@innovatorhuzsam.com</td><td>Academic Reviewer (Computer Science)</td><td>Admin User</td><td>In 3 Days</td><td><span class="badge badge-warning">Pending Acceptance</span></td><td><button class="btn btn-secondary btn-xs">Resend</button></td></tr>
+                <tr><td><code>INV-302</code></td><td>mariam.csr@innovatorhuzsam.com</td><td>CSR / Admissions Specialist</td><td>Admin User</td><td>In 5 Days</td><td><span class="badge badge-warning">Pending Acceptance</span></td><td><button class="btn btn-secondary btn-xs">Resend</button></td></tr>
+                <tr><td><code>INV-299</code></td><td>sara.trainer@innovatorhuzsam.com</td><td>Senior Trainer & Teacher</td><td>COO</td><td>01 Aug 2026</td><td><span class="badge badge-success">Accepted & Active</span></td><td><span style="font-size:12px; color:var(--slate);">Joined</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 8. SECURITY & SESSIONS (MFA)
+    // --------------------------------------------------------------------------
+    else if (route === "security-sessions") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Active Sessions & MFA Management</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">112 Active Authenticated Sessions · 0 Compromised Tokens.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Session Revocation', 'All expired tokens purged.', 'success')"><i data-lucide="shield-alert"></i> Purge Stale Sessions</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Session ID</th><th>User</th><th>IP & Location</th><th>Device / Browser</th><th>MFA Factor</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>SES-901</code></td><td>Admin User</td><td>182.185.12.4 · Islamabad, PK</td><td>Chrome 128 / Windows</td><td><span class="badge badge-success">TOTP MFA Verified</span></td><td><span class="badge badge-success">Active Now</span></td><td><button class="btn btn-secondary btn-xs" disabled>Current</button></td></tr>
+                <tr><td><code>SES-884</code></td><td>Zainab Malik</td><td>39.42.18.91 · Lahore, PK</td><td>Safari 17.5 / macOS</td><td><span class="badge badge-primary">SMS OTP</span></td><td><span class="badge badge-success">Active (12m ago)</span></td><td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Terminated', 'Session revoked.', 'info')">Revoke</button></td></tr>
+                <tr><td><code>SES-872</code></td><td>Sara Javed</td><td>111.119.187.5 · Karachi, PK</td><td>Firefox 130 / Windows</td><td><span class="badge badge-success">TOTP MFA Verified</span></td><td><span class="badge badge-success">Active (1h ago)</span></td><td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Terminated', 'Session revoked.', 'info')">Revoke</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 9. ROLES & PERMISSIONS (FLOW-004)
+    // --------------------------------------------------------------------------
+    else if (route === "roles-permissions") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Role Scopes & Permission Matrix (FLOW-004)</h3>
+          <p style="font-size:13px; color:var(--slate); margin:0 0 10px 0;">Granular RBAC templates and scoping boundaries across the platform.</p>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Role Template</th><th>Scope Type</th><th>Commercial Review</th><th>Academic Publication</th><th>Payroll Settlement</th><th>Safeguarding Rules</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Platform Admin</strong></td><td>System Wide</td><td><span class="badge badge-success">Full Access</span></td><td><span class="badge badge-success">Full Access</span></td><td><span class="badge badge-success">Full Access</span></td><td><span class="badge badge-success">Enforced</span></td></tr>
+                <tr><td><strong>COO</strong></td><td>Operational</td><td><span class="badge badge-success">Approve / Reject</span></td><td><span class="badge badge-success">Approve</span></td><td><span class="badge badge-success">Approve</span></td><td><span class="badge badge-success">Enforced</span></td></tr>
+                <tr><td><strong>Operations Manager</strong></td><td>Operational</td><td><span class="badge badge-success">Approve / Reject</span></td><td><span class="badge badge-secondary">Read Only</span></td><td><span class="badge badge-secondary">Hours Only</span></td><td><span class="badge badge-success">Enforced</span></td></tr>
+                <tr><td><strong>CSR / Admissions</strong></td><td>Assigned Leads</td><td><span class="badge badge-warning">Scoped Receipt Review</span></td><td><span class="badge badge-secondary">Denied</span></td><td><span class="badge badge-secondary">Denied</span></td><td><span class="badge badge-success">Enforced</span></td></tr>
+                <tr><td><strong>Trainer / Teacher</strong></td><td>Assigned Cohorts</td><td><span class="badge badge-secondary">Denied</span></td><td><span class="badge badge-secondary">Denied</span></td><td><span class="badge badge-secondary">Denied</span></td><td><span class="badge badge-success">Strict Minor Policy</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 10. CONTROLLED REFERENCE DATA (ADM-001)
+    // --------------------------------------------------------------------------
+    else if (route === "reference-data") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Controlled Reference Data (ADM-001)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Class formats, durations, currencies, delivery modes, and reason codes. Used values cannot be deleted.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Reference Added', 'Opening reference value creator...', 'info')"><i data-lucide="plus"></i> Add Value</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Domain Category</th><th>Controlled Allowed Values</th><th>Active Count</th><th>Usage Impact</th><th>Status</th><th>Action</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Class Formats</strong></td><td>1-on-1, Small Cohort (4-8), Masterclass (20+)</td><td>3 Values</td><td>Used in 24 Active Courses</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
+                <tr><td><strong>Class Durations</strong></td><td>30 Mins, 45 Mins, 60 Mins, 90 Mins</td><td>4 Values</td><td>Used in 186 Cohorts</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
+                <tr><td><strong>Supported Currencies</strong></td><td>PKR (Pakistani Rupee), USD (US Dollar), AED (UAE Dirham)</td><td>3 Currencies</td><td>Used in All Pricing Rules</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
+                <tr><td><strong>Reschedule Reasons</strong></td><td>Student Medical, Technical Disconnect, School Exam, Trainer Emergency</td><td>4 Reason Codes</td><td>Mandatory for FLOW-017</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Manage</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 11. VERSIONED BUSINESS RULES (ADM-002)
+    // --------------------------------------------------------------------------
+    else if (route === "business-rules") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Versioned Business Rules & Policies (ADM-002)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Effective-dated operational thresholds and policy engines.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Rule Proposal', 'Opening policy revision draft...', 'info')"><i data-lucide="plus"></i> Propose Rule Revision</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Rule ID</th><th>Policy Domain</th><th>Enforced Rule Threshold</th><th>Effective Since</th><th>Version</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>RULE-01</code></td><td>FLOW-017 Reschedule Notice Window</td><td>Minimum 4 Hours Before Occurrence</td><td>01 Aug 2026</td><td>v2.1</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><code>RULE-02</code></td><td>FLOW-013 Manual Payment SLA</td><td>Review within 2 Business Hours</td><td>15 Jul 2026</td><td>v1.4</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><code>RULE-03</code></td><td>FLOW-038 Renewal Reminder Schedule</td><td>14 Days, 7 Days, and 2 Days Before Expiry</td><td>01 Jul 2026</td><td>v2.0</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><code>RULE-04</code></td><td>FLOW-006 Max Active Trial Requests</td><td>1 Active Trial Request per Prospect</td><td>01 Jun 2026</td><td>v1.0</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 12. STAGED BUSINESS IMPORTS (ADM-004)
+    // --------------------------------------------------------------------------
+    else if (route === "imports") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
               <span class="badge badge-success" style="margin-bottom:6px;">STAGED INTAKE BATCH</span>
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Fall 2026 K-12 Student Intake Batch (ADM-004)</h3>
-              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">120 Rows Validated · 0 Errors · Source Checksum: <code>sha256-8a901</code></p>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">120 Rows Validated · 0 Errors · Source Checksum: <code>sha256-8a901ff82</code></p>
             </div>
-            <button class="btn btn-primary" onclick="Notifications.push('Import Committed', '120 student records committed to database.', 'success')">Commit Batch</button>
+            <button class="btn btn-primary" onclick="Notifications.push('Import Committed', '120 student records committed to database with audit log.', 'success')">Commit Batch to Database</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Row #</th><th>Student Name</th><th>Guardian Contact</th><th>Assigned Grade</th><th>Validation Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Ali Raza</td><td>+92 300 1122334 (Verified)</td><td>Grade 8 Math (FBISE)</td><td><span class="badge badge-success">✓ Ready</span></td></tr>
+                <tr><td>2</td><td>Fatima Sheikh</td><td>+92 321 4455667 (Verified)</td><td>Grade 8 English & Science</td><td><span class="badge badge-success">✓ Ready</span></td></tr>
+                <tr><td>3</td><td>Hamza Tariq</td><td>+92 333 8899001 (Verified)</td><td>Grade 8 Mathematics</td><td><span class="badge badge-success">✓ Ready</span></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       `;
     }
 
-    else {
+    // --------------------------------------------------------------------------
+    // 13. CONTROLLED DATA EXPORTS (ADM-005)
+    // --------------------------------------------------------------------------
+    else if (route === "exports") {
       viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Controlled Data Exports (ADM-005)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Compliance data exports with mandatory business reason and expiring access links.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Export Generated', 'Audit export generated. Link expires in 2 hours.', 'success')"><i data-lucide="download"></i> Generate New Export</button>
+          </div>
+
           <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
             <table class="data-table">
               <thead>
-                <tr><th>Audit ID</th><th>Timestamp</th><th>Actor</th><th>Action Event</th><th>Target Entity</th><th>Severity</th></tr>
+                <tr><th>Export ID</th><th>Dataset Scope</th><th>Reason / Purpose</th><th>Requested By</th><th>Generated Timestamp</th><th>Status</th><th>Download</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>EXP-401</code></td><td>Financial Transactions (Q2 2026)</td><td>Statutory Tax Audit</td><td>Admin User</td><td>Today 08:30 PKT</td><td><span class="badge badge-success">Available</span></td><td><button class="btn btn-primary btn-xs">Download CSV</button></td></tr>
+                <tr><td><code>EXP-398</code></td><td>K-12 Board Enrolments 2026</td><td>FBISE Board Registration</td><td>COO</td><td>Yesterday</td><td><span class="badge badge-secondary">Expired</span></td><td><span style="font-size:12px; color:var(--slate);">Expired</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 14. SEARCHABLE BUSINESS AUDIT (ADM-006)
+    // --------------------------------------------------------------------------
+    else if (route === "audit-logs") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Searchable Business Audit Trail (ADM-006)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Immutable, tamper-evident log of all commercial, academic, HR and security events.</p>
+            </div>
+            <span class="badge badge-success">1,480 Audited Records</span>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Audit ID</th><th>Timestamp</th><th>Actor</th><th>Action Event</th><th>Entity Target</th><th>Severity</th><th>Payload</th></tr>
               </thead>
               <tbody>
                 ${db.auditLogs.map(a => `
@@ -4471,7 +4794,8 @@ const RenderEngine = {
                     <td><strong>${a.actorName}</strong></td>
                     <td>${a.action}</td>
                     <td><code>${a.entityId || 'SYS'}</code></td>
-                    <td><span class="badge ${a.severity === 'High' ? 'badge-error' : 'badge-secondary'}">${a.severity}</span></td>
+                    <td><span class="badge ${a.severity === 'High' ? 'badge-error' : a.severity === 'Medium' ? 'badge-warning' : 'badge-secondary'}">${a.severity}</span></td>
+                    <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audit Payload', 'Viewing cryptographic signature...', 'info')">JSON</button></td>
                   </tr>
                 `).join("")}
               </tbody>
@@ -4481,7 +4805,80 @@ const RenderEngine = {
       `;
     }
 
-    // Render Workspace Wrapper
+    // --------------------------------------------------------------------------
+    // 15. DATA RETENTION & ARCHIVE (ADM-008)
+    // --------------------------------------------------------------------------
+    else if (route === "retention-policies") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Data Retention Policies & Legal Holds (ADM-008)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Governs legal preservation of grades, payroll, financial ledger, and student records.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm"><i data-lucide="gavel"></i> Add Legal Hold</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Data Category</th><th>Statutory Retention Rule</th><th>Hard Deletion Policy</th><th>Active Legal Holds</th><th>Compliance</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Financial & Invoices</strong></td><td>7 Years (Statutory Tax Compliance)</td><td><span class="badge badge-error">Strictly Prohibited</span></td><td>0 Holds</td><td><span class="badge badge-success">✓ Compliant</span></td></tr>
+                <tr><td><strong>Academic Transcripts & Grades</strong></td><td>Permanent Immutable Retention</td><td><span class="badge badge-error">Strictly Prohibited</span></td><td>0 Holds</td><td><span class="badge badge-success">✓ Compliant</span></td></tr>
+                <tr><td><strong>Staff Payroll & Contracts</strong></td><td>10 Years Post-Termination</td><td><span class="badge badge-error">Strictly Prohibited</span></td><td>0 Holds</td><td><span class="badge badge-success">✓ Compliant</span></td></tr>
+                <tr><td><strong>Support Chat & Transcripts</strong></td><td>2 Years Post-Resolution</td><td>Anonymized after 2 Years</td><td>1 Active Hold (Case #412)</td><td><span class="badge badge-warning">Preserved</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 16. SUPPORT CASE ROUTING (ADM-009)
+    // --------------------------------------------------------------------------
+    else if (route === "support-access") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Support Case Routing Policies (ADM-009)</h3>
+              <p style="font-size:13px; color:var(--slate); margin:2px 0 0 0;">Defines automated ownership routing for learner, trainer, billing and academic inquiries.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Routing Rule', 'Opening routing policy creator...', 'info')"><i data-lucide="plus"></i> Add Routing Rule</button>
+          </div>
+
+          <div class="table-container" style="border:1px solid var(--outline); border-radius:8px; overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr><th>Inquiry Category</th><th>Originating Actor</th><th>Default Assigned Department</th><th>Escalation SLA</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Trial Class Questions</strong></td><td>Prospect / Free Learner</td><td>CSR / Admissions Specialist</td><td>2 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><strong>Billing & Bank Proofs</strong></td><td>Learner / Guardian Payer</td><td>Finance & Manual Payment Desk</td><td>2 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><strong>Academic Feedback / Homework</strong></td><td>Enrolled Learner</td><td>Assigned Course Trainer</td><td>24 Hours</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+                <tr><td><strong>Safeguarding & Minor Protection</strong></td><td>Any User</td><td>COO & Legal Compliance Officer</td><td>Immediate (30m)</td><td><span class="badge badge-success">Active</span></td><td><button class="btn btn-secondary btn-xs">Edit</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // FALLBACK
+    // --------------------------------------------------------------------------
+    else {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <p style="color:var(--slate); font-size:13px;">Selected administrative route is active under governance policy.</p>
+        </div>
+      `;
+    }
+
+    // Render Master Workspace Wrapper
     container.innerHTML = `
       <div class="creator-workspace-deck" style="padding: 24px 32px;">
         
@@ -4519,7 +4916,7 @@ const RenderEngine = {
           </div>
         </div>
 
-        <!-- VIEW CONTENT -->
+        <!-- BESPOKE VIEW CONTENT -->
         ${viewContent}
 
       </div>
@@ -4527,72 +4924,6 @@ const RenderEngine = {
 
     if (window.lucide) window.lucide.createIcons();
   },
-
-
-  dashboard() {
-    // If active role has a dedicated dashboard, route to it
-    if (Simulator.activeRole === "platform_admin") {
-      this.adminDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "learner") {
-      this.learnerDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "trainer") {
-      this.trainerDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "academic_reviewer") {
-      this.reviewerDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "course_creator") {
-      this.creatorDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "csr") {
-      this.csrDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "coo") {
-      this.cooDashboard();
-      return;
-    }
-    if (Simulator.activeRole === "operational_manager") {
-      this.omDashboard();
-      return;
-    }
-
-    // Platform Admin Dashboard Telemetry
-    const el = (id, text) => {
-      const e = document.getElementById(id);
-      if (e) e.textContent = String(text);
-    };
-
-    el("metric-users-count", db.users.length);
-    el("metric-active-sessions", db.sessions.filter(s => s.status === 'Active').length);
-    el("metric-failed-jobs-count", db.jobs.filter(j => j.status === 'Failed').length);
-    el("metric-dead-letters-count", db.jobs.filter(j => j.status === 'Dead-letter').length);
-    el("metric-webhooks-failed", db.webhooks.filter(w => w.status === 'FAILED').length);
-
-    // Populate audits widget
-    const auditsList = document.getElementById("widget-recent-audits-list");
-    if (auditsList) {
-      auditsList.innerHTML = db.auditLogs.slice(0, 5).map(a => `
-        <div class="audit-widget-item">
-          <div>
-            <strong>${a.action}</strong>
-            <small style="display:block; color:var(--slate);">${a.actorName} · ${a.timestamp}</small>
-          </div>
-          <span class="badge ${a.severity === 'High' ? 'badge-error' : a.severity === 'Medium' ? 'badge-warning' : 'badge-secondary'}">${a.severity}</span>
-        </div>
-      `).join("");
-    }
-
-    window.lucide?.createIcons();
-  },
-
 
   // ============================================================================
   // ACADEMIC REVIEWER RENDERING ENGINE
