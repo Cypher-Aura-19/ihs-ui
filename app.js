@@ -6119,10 +6119,20 @@ const RenderEngine = {
     let viewContent = "";
 
     // ==========================================================================
-    // 1. EXPLORE GROUP
+    // 1. EXPLORE & ADMISSIONS
     // ==========================================================================
     if (route === "learner-explore-catalogue") {
       viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <strong style="font-size:15px; color:var(--navy-dark);">Official Course & Program Catalogue (PORT-001 / CAT-001)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Browse accredited live cohorts, milestone self-paced tracks, and K-12 tuition curricula.</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerTrialRequestModal()"><i data-lucide="sparkles"></i> Request Free Trial</button>
+          </div>
+        </div>
+
         <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
           <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:var(--shadow-subtle);">
             <div>
@@ -6130,7 +6140,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Spoken English Fluency & Accent Reduction</h3>
               <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Interactive 60-minute live drills with acoustic speech analysis and intonation feedback.</p>
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
-                <span>Price: <strong>PKR 15,000 / Term</strong></span>
+                <span>Fee: <strong>PKR 15,000 / Term</strong></span>
                 <span>Duration: <strong>12 Weeks (24 Live Classes)</strong></span>
                 <span>Level: <strong>Intermediate (B1 - B2)</strong></span>
               </div>
@@ -6147,7 +6157,7 @@ const RenderEngine = {
               <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Modern Full-Stack Web Development</h3>
               <p style="font-size:13px; color:var(--slate); margin:0 0 12px 0;">Master React 19, TypeScript, state machines, and Next.js with 1:1 facilitator code reviews.</p>
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
-                <span>Price: <strong>PKR 25,000 / Program</strong></span>
+                <span>Fee: <strong>PKR 25,000 / Program</strong></span>
                 <span>Structure: <strong>3 Levels (12 Lessons + 3 Capstones)</strong></span>
                 <span>Certification: <strong>Included</strong></span>
               </div>
@@ -6180,6 +6190,11 @@ const RenderEngine = {
 
     else if (route === "learner-explore-free") {
       viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Open Learning Assets & Free Diagnostic Tools (PORT-002)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Download free sample phonics drills, starter coding blueprints, and diagnostic placement tests.</p>
+        </div>
+
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
           <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
             <span class="badge badge-primary" style="margin-bottom:8px;">AUDIO WORKBOOK</span>
@@ -6275,20 +6290,13 @@ const RenderEngine = {
     // ==========================================================================
     // 2. MY COURSES (ENROLMENTS)
     // ==========================================================================
-    else if (route === "learner-courses-active" || route === "learner-courses-pending" || route === "learner-courses-paused" || route === "learner-courses-completed" || route === "learner-courses-history") {
-      const filterStatus = route === "learner-courses-pending" ? "Pending" : 
-                           (route === "learner-courses-paused" ? "Paused" : 
-                           (route === "learner-courses-completed" ? "Completed" : 
-                           (route === "learner-courses-history" ? "All" : "Active")));
-      
-      const filtered = filterStatus === "All" ? data.enrolments : data.enrolments.filter(e => e.status === filterStatus);
-
+    else if (route === "learner-courses-active") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
           <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <strong style="font-size:15px; color:var(--navy-dark);">Independent Course Enrolments (ENR-001)</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Each course maintains independent version, progress, schedule, grades, and access state.</p>
+              <strong style="font-size:15px; color:var(--navy-dark);">Active Independent Enrolments (ENR-001)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Currently active courses with dedicated faculty, schedules, and credit balances.</p>
             </div>
             <button class="btn btn-primary btn-sm" onclick="Router.navigate('learner-explore-catalogue')"><i data-lucide="plus"></i> Enrol in New Course</button>
           </div>
@@ -6300,16 +6308,14 @@ const RenderEngine = {
                   <th style="padding:12px 16px;">ENROLMENT ID</th>
                   <th style="padding:12px 16px;">COURSE TITLE & VERSION</th>
                   <th style="padding:12px 16px;">DELIVERY MODEL</th>
-                  <th style="padding:12px 16px;">TRAINER / FACULTY</th>
+                  <th style="padding:12px 16px;">FACULTY</th>
                   <th style="padding:12px 16px;">PROGRESS / ATTENDANCE</th>
                   <th style="padding:12px 16px;">MEMBERSHIP STATUS</th>
                   <th style="padding:12px 16px;">ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
-                ${filtered.length === 0 ? `
-                  <tr><td colspan="7" style="padding:24px; text-align:center; color:var(--slate);">No enrolments matching ${filterStatus} status.</td></tr>
-                ` : filtered.map(e => `
+                ${data.enrolments.filter(e => e.status === "Active").map(e => `
                   <tr style="border-bottom:1px solid #f1f5f9;">
                     <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${e.id}</td>
                     <td style="padding:14px 16px;">
@@ -6325,7 +6331,7 @@ const RenderEngine = {
                       </div>
                     </td>
                     <td style="padding:14px 16px;">
-                      <span class="badge ${e.status === 'Active' ? 'badge-success' : (e.status === 'Completed' ? 'badge-primary' : 'badge-warning')}">${e.membershipStatus}</span>
+                      <span class="badge ${e.membershipStatus.includes('Renewal') ? 'badge-warning' : 'badge-success'}">${e.membershipStatus}</span>
                     </td>
                     <td style="padding:14px 16px;">
                       <div style="display:flex; gap:6px;">
@@ -6344,146 +6350,404 @@ const RenderEngine = {
       `;
     }
 
+    else if (route === "learner-courses-pending") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Pending Activation Enrolments (COM-008 / ENR-004)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Applications awaiting payment verification or faculty batch allocation.</p>
+            </div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-warning" style="margin-bottom:6px;">AWAITING FACULTY BATCH ALLOCATION</span>
+              <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:16px;">Advanced Data Structures & Algorithms v1.0</h4>
+              <span style="font-size:12px; color:var(--slate);">Submitted: 16 Aug 2026 · Assigned CSR: Hamza Khan · Target Batch: September Cohort</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Enrolment Status', 'Admissions desk is finalizing trainer schedule.', 'info')">Check Status</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-paused") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Paused & Frozen Enrolments (ENR-007)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Courses temporarily frozen under policy-controlled leave with preserved class credits.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-secondary" style="margin-bottom:6px;">TEMPORARILY FROZEN</span>
+              <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:16px;">Executive Business Communication v1.0</h4>
+              <span style="font-size:12px; color:var(--slate);">Paused on: 01 Aug 2026 · Scheduled Resume: 01 Oct 2026 · Preserved Credits: 8 Classes</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Resume Request', 'Early resume request logged for Operations review.', 'success')"><i data-lucide="play"></i> Request Early Resume</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-completed") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Completed Courses & Official Credentials (ENR-003)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Graduated programs with verified cryptographic certificate downloads.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-success" style="margin-bottom:6px;">✓ GRADUATED (HONOR ROLL)</span>
+              <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:16px;">Classical Arabic Grammar & Syntax (ARB-201)</h4>
+              <span style="font-size:12px; color:var(--slate);">Graduated: 30 Apr 2026 · Final Grade: <strong>A+ (97%)</strong> · Credential ID: <code>CERT-IHS-8821</code></span>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Transcript', 'Opening official transcript...', 'info')"><i data-lucide="file-text"></i> Transcript</button>
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Certificate', 'Downloading cryptographic PDF certificate...', 'success')"><i data-lucide="download"></i> Download Certificate</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-courses-history") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Consolidated Enrolment & Academic History Timeline (ENR-010)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Immutable chronological record of all course registrations and version migrations.</p>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            ${data.enrolments.map(e => `
+              <div style="background:#f8fafc; border-left:4px solid var(--primary); border-radius:4px 8px 8px 4px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <strong style="font-size:14px; color:var(--navy-dark);">${e.title} (${e.courseCode})</strong>
+                    <span class="badge ${e.status === 'Active' ? 'badge-success' : 'badge-primary'}">${e.status}</span>
+                  </div>
+                  <span style="font-size:12px; color:var(--slate);">Enrolled: ${e.enrolledDate} · Trainer: ${e.trainer} · Version: ${e.version}</span>
+                </div>
+                <span style="font-size:12px; font-weight:700; color:var(--navy-dark);">Progress: ${e.progressPercent}%</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
     // ==========================================================================
     // 3. SCHEDULE & CLASSES
     // ==========================================================================
-    else if (route === "learner-schedule-upcoming" || route === "learner-schedule-calendar" || route === "learner-schedule-attendance" || route === "learner-schedule-reschedule" || route === "learner-schedule-cancellations") {
-      if (route === "learner-schedule-attendance") {
-        viewContent = `
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
-            <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
-              <strong style="font-size:15px; color:var(--navy-dark);">Reconciled Daily.co Attendance Telemetry (LIVE-008 / LIVE-009)</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Cryptographic join/leave intervals and actual presence duration.</p>
+    else if (route === "learner-schedule-upcoming") {
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Upcoming Live Class Occurrences (LIVE-007)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Next classes scheduled in your timezone: <strong>${profile.timezone}</strong></p>
             </div>
-            <div class="table-responsive">
-              <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
-                <thead>
-                  <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
-                    <th style="padding:12px 16px;">ATTENDANCE ID</th>
-                    <th style="padding:12px 16px;">DATE & CLASS</th>
-                    <th style="padding:12px 16px;">TRAINER</th>
-                    <th style="padding:12px 16px;">TELEMETRY INTERVAL</th>
-                    <th style="padding:12px 16px;">STATUS</th>
-                    <th style="padding:12px 16px;">SOURCE EVIDENCE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${data.attendanceHistory.map(a => `
-                    <tr style="border-bottom:1px solid #f1f5f9;">
-                      <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${a.id}</td>
-                      <td style="padding:14px 16px;"><strong>${a.course}</strong><br><span style="font-size:11px; color:var(--slate);">${a.date} (${a.classId})</span></td>
-                      <td style="padding:14px 16px;">${a.trainer}</td>
-                      <td style="padding:14px 16px;"><code>${a.telemetry}</code></td>
-                      <td style="padding:14px 16px;"><span class="badge ${a.status.includes('Present') ? 'badge-success' : 'badge-warning'}">${a.status}</span></td>
-                      <td style="padding:14px 16px; font-size:11px; color:var(--slate);">${a.source}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Calendar Sync', 'Exporting iCal schedule file...', 'success')"><i data-lucide="calendar"></i> Sync to Calendar</button>
           </div>
-        `;
-      } else {
-        viewContent = `
-          <div style="display:flex; flex-direction:column; gap:20px;">
-            <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <strong style="font-size:15px; color:var(--navy-dark);">Scheduled Live Occurrences & WebRTC Telemetry (LIVE-005)</strong>
-                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Times automatically localized to: <strong>${profile.timezone}</strong></p>
-              </div>
-              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Timezone', 'Switching display timezone...', 'info')"><i data-lucide="globe"></i> Switch Timezone</button>
-            </div>
 
-            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
-              ${data.schedule.map(s => `
-                <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow-subtle);">
-                  <div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                      <span class="badge ${s.joinable ? 'badge-primary' : 'badge-secondary'}">${s.status}</span>
-                      <span style="font-size:12px; color:var(--slate);">${s.duration}</span>
-                    </div>
-                    <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${s.title}</h3>
-                    <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;"><i data-lucide="clock" style="width:13px; height:13px; vertical-align:middle;"></i> ${s.date} · <strong>${s.time}</strong></p>
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px; display:flex; flex-direction:column; gap:4px; margin-bottom:14px;">
-                      <div><span style="color:var(--slate);">Faculty:</span> <strong>${s.trainer}</strong></div>
-                      <div><span style="color:var(--slate);">Room:</span> ${s.room}</div>
-                      <div><span style="color:var(--slate);">Topics:</span> ${s.topics}</div>
-                    </div>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;">
+            ${data.schedule.map(s => `
+              <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow-subtle);">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span class="badge ${s.joinable ? 'badge-primary' : 'badge-secondary'}">${s.status}</span>
+                    <span style="font-size:12px; color:var(--slate);">${s.duration}</span>
                   </div>
-                  <div style="display:flex; gap:8px;">
-                    ${s.joinable ? `
-                      <button class="btn btn-primary" style="flex:1;" onclick="Actions.openLearnerJoinClassModal('${s.id}')"><i data-lucide="video"></i> Join Live Class</button>
-                    ` : `
-                      <button class="btn btn-secondary" style="flex:1;" onclick="Actions.openLearnerRescheduleModal('${s.id}')">Reschedule</button>
-                    `}
+                  <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${s.title}</h3>
+                  <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;"><i data-lucide="clock" style="width:13px; height:13px; vertical-align:middle;"></i> ${s.date} · <strong>${s.time}</strong></p>
+                  <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px; font-size:12px; display:flex; flex-direction:column; gap:4px; margin-bottom:14px;">
+                    <div><span style="color:var(--slate);">Faculty:</span> <strong>${s.trainer}</strong></div>
+                    <div><span style="color:var(--slate);">Room:</span> ${s.room}</div>
+                    <div><span style="color:var(--slate);">Topics:</span> ${s.topics}</div>
                   </div>
                 </div>
-              `).join('')}
+                <div>
+                  ${s.joinable ? `
+                    <button class="btn btn-primary" style="width:100%;" onclick="Actions.openLearnerJoinClassModal('${s.id}')"><i data-lucide="video"></i> Join Live Class</button>
+                  ` : `
+                    <button class="btn btn-secondary" style="width:100%;" onclick="Actions.openLearnerRescheduleModal('${s.id}')">Reschedule</button>
+                  `}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-schedule-calendar") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Timetable Calendar Grid (LIVE-005)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">August 2026 Master Class Schedule</p>
+            </div>
+            <select class="form-control" style="padding:6px 12px; border-radius:6px; border:1px solid var(--outline-variant);">
+              <option>Asia/Karachi (PKT - UTC+5)</option>
+              <option>Europe/London (BST - UTC+1)</option>
+              <option>America/New_York (EDT - UTC-4)</option>
+              <option>Asia/Dubai (GST - UTC+4)</option>
+            </select>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:12px; text-align:center;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">Monday</strong>
+              <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:6px; padding:8px; font-size:11px; text-align:left;">
+                <strong>10:00 AM PKT</strong><br>ENG-103 Live Drill (Sara Javed)
+              </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">Tuesday</strong>
+              <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:11px; text-align:left;">
+                <strong>04:00 PM PKT</strong><br>K12 Math (Prof. Tariq)
+              </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">Wednesday</strong>
+              <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:6px; padding:8px; font-size:11px; text-align:left;">
+                <strong>10:00 AM PKT</strong><br>ENG-103 Live Drill (Sara Javed)
+              </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">Thursday</strong>
+              <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:6px; padding:8px; font-size:11px; text-align:left;">
+                <strong>04:00 PM PKT</strong><br>K12 Math (Prof. Tariq)
+              </div>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">Friday</strong>
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:6px; padding:8px; font-size:11px; text-align:left;">
+                <strong>04:00 PM PKT</strong><br>DEV-101 1:1 Review (Alex Rivera)
+              </div>
             </div>
           </div>
-        `;
-      }
+        </div>
+      `;
+    }
+
+    else if (route === "learner-schedule-attendance") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Reconciled Daily.co Attendance Telemetry (LIVE-008 / LIVE-009)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Cryptographic join/leave intervals and actual presence duration.</p>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:12px 16px;">ATTENDANCE ID</th>
+                  <th style="padding:12px 16px;">DATE & CLASS</th>
+                  <th style="padding:12px 16px;">TRAINER</th>
+                  <th style="padding:12px 16px;">TELEMETRY INTERVAL</th>
+                  <th style="padding:12px 16px;">STATUS</th>
+                  <th style="padding:12px 16px;">SOURCE EVIDENCE</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.attendanceHistory.map(a => `
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${a.id}</td>
+                    <td style="padding:14px 16px;"><strong>${a.course}</strong><br><span style="font-size:11px; color:var(--slate);">${a.date} (${a.classId})</span></td>
+                    <td style="padding:14px 16px;">${a.trainer}</td>
+                    <td style="padding:14px 16px;"><code>${a.telemetry}</code></td>
+                    <td style="padding:14px 16px;"><span class="badge ${a.status.includes('Present') ? 'badge-success' : 'badge-warning'}">${a.status}</span></td>
+                    <td style="padding:14px 16px; font-size:11px; color:var(--slate);">${a.source}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-schedule-reschedule") {
+      viewContent = `
+        <div style="max-width:720px; background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); margin:0 auto;">
+          <span class="badge badge-primary" style="margin-bottom:8px;">CLASS RESCHEDULE STUDIO (FLOW-017)</span>
+          <h3 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 8px 0;">Request Class Occurrence Reschedule</h3>
+          <p style="font-size:13px; color:var(--slate); margin:0 0 20px 0;">
+            Policy Rule: Requests submitted at least 4 hours in advance retain full class credit entitlement.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div>
+              <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:6px; font-size:13px;">Select Class Occurrence</label>
+              <select class="form-control" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid var(--outline-variant);">
+                <option>ENG-103: Spoken English (Today, 10:00 AM PKT with Sara Javed)</option>
+                <option>K12-801: Mathematics (Tomorrow, 04:00 PM PKT with Prof. Tariq)</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:6px; font-size:13px;">Proposed Alternate Time Slot</label>
+              <input type="text" class="form-control" value="Thursday 10:00 AM PKT" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
+            </div>
+
+            <div>
+              <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:6px; font-size:13px;">Reason for Rescheduling</label>
+              <textarea class="form-control" placeholder="Brief reason for schedule adjustment..." style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid var(--outline-variant); height:80px;"></textarea>
+            </div>
+
+            <div style="padding-top:12px; border-top:1px solid #f1f5f9; display:flex; justify-content:flex-end; gap:12px;">
+              <button class="btn btn-secondary" onclick="Router.navigate('learner-schedule-upcoming')">Cancel</button>
+              <button class="btn btn-primary" onclick="Notifications.push('Reschedule Logged', 'Request submitted for faculty confirmation.', 'success'); Router.navigate('learner-schedule-upcoming');"><i data-lucide="send"></i> Submit Reschedule Request</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-schedule-cancellations") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Cancelled Classes & Makeup Credits (LIVE-015)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Teacher emergency cancellations and automatic credit compensation log.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-primary" style="margin-bottom:6px;">AUTOMATIC CREDIT RESTORED</span>
+              <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:16px;">Spoken English Fluency (03 Aug 2026)</h4>
+              <span style="font-size:12px; color:var(--slate);">Cancelled by Faculty (Sara Javed - Health Emergency) · 1 Makeup Credit Added</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerRescheduleModal('MAKEUP-01')">Book Makeup Slot</button>
+          </div>
+        </div>
+      `;
     }
 
     // ==========================================================================
     // 4. MY LEARNING (MILESTONES & SELF-PACED)
     // ==========================================================================
-    else if (route.startsWith("learner-learning-")) {
+    else if (route === "learner-learning-continue") {
       viewContent = `
-        <div style="display:grid; grid-template-columns: 1fr 1.6fr; gap:20px;">
-          <!-- LEFT: MILESTONE PROGRESSION TREE (MILE-006) -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${currentCourse.title}</h3>
-              <span class="badge badge-primary">${currentCourse.progressPercent}% DONE</span>
-            </div>
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto; text-align:center;">
+          <span class="badge badge-primary" style="margin-bottom:12px;">RESUME NEXT UNLOCKED LESSON (MILE-001)</span>
+          <h2 style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 8px 0;">Lesson 2.3: State Machine Architecture with XState</h2>
+          <p style="font-size:13px; color:var(--slate); margin:0 0 20px 0;">Modern Full-Stack Web Development · Level 2 Core Practical Drills</p>
 
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <div style="background:#f8fafc; border:1px solid var(--primary); border-radius:8px; padding:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                  <strong style="font-size:13px; color:var(--navy-dark);">Level 1: Foundation Concepts</strong>
-                  <span class="badge badge-success">✓ Completed</span>
-                </div>
-                <span style="font-size:11px; color:var(--slate);">4 Lessons · 100% Passed</span>
-              </div>
-
-              <div style="background:#ffffff; border:2px solid var(--secondary); border-radius:8px; padding:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                  <strong style="font-size:13px; color:var(--navy-dark);">Level 2: Core Practical Drills</strong>
-                  <span class="badge badge-warning">In Progress (75%)</span>
-                </div>
-                <div style="font-size:12px; color:var(--slate); margin-top:6px; display:flex; flex-direction:column; gap:4px;">
-                  <div>✓ Lesson 2.1: Syntax & Core Semantics</div>
-                  <div>✓ Lesson 2.2: Event Handlers & Hooks</div>
-                  <div>&rarr; <strong>Lesson 2.3: State Machine Architecture</strong> (Active)</div>
-                  <div style="color:#94a3b8;">🔒 Lesson 2.4: Capstone Evaluation</div>
-                </div>
-              </div>
-
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; opacity:0.6;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <strong style="font-size:13px; color:var(--slate);">Level 3: Advanced Mastery</strong>
-                  <span class="badge badge-secondary">Locked</span>
-                </div>
-              </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:20px; text-align:left; margin-bottom:20px;">
+            <strong style="font-size:14px; color:var(--navy-dark); display:block; margin-bottom:6px;">Learning Objectives for this Lesson:</strong>
+            <div style="font-size:13px; color:var(--slate); display:flex; flex-direction:column; gap:6px;">
+              <div>• Eliminate invalid UI state combinations using finite state machines.</div>
+              <div>• Model transitions with strict TypeScript payload definitions.</div>
+              <div>• Pass the embedded 3-question state machine knowledge check.</div>
             </div>
           </div>
 
-          <!-- RIGHT: TYPED ACTIVITY PLAYER (FRS 4.8.2) -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between;">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <span class="badge badge-primary">ACTIVE ACTIVITY PLAYER</span>
-                <span style="font-size:12px; color:var(--slate);">Lesson 2.3 · Estimated: 20 mins</span>
-              </div>
-              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 10px 0;">State Machine Modeling with Custom Reducers</h3>
-              <p style="font-size:13px; color:var(--slate); line-height:1.6; margin:0 0 16px 0;">
-                Learn how deterministic state machines eliminate illegal UI states. Complete the embedded interactive drill and review the source blueprint below.
-              </p>
+          <button class="btn btn-primary" style="padding:12px 28px; font-size:14px;" onclick="Router.navigate('learner-learning-activities')"><i data-lucide="play"></i> Launch Activity Player</button>
+        </div>
+      `;
+    }
 
-              <div style="border:1px solid #cbd5e1; border-radius:8px; padding:16px; background:#f8fafc; margin-bottom:16px;">
-                <h4 style="margin:0 0 8px 0; font-size:13px; color:var(--navy-dark);"><i data-lucide="file-code" style="vertical-align:middle; width:16px; height:16px; color:var(--primary);"></i> Interactive Reducer Exercise</h4>
-                <pre style="background:#0f172a; color:#38bdf8; padding:12px; border-radius:6px; font-size:12px; margin:0; overflow:auto;">
+    else if (route === "learner-learning-milestones") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Levels & Milestone Progression Hierarchy (MILE-006)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">${currentCourse.title} · Overall Completion: <strong>${currentCourse.progressPercent}%</strong></p>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="background:#f8fafc; border:1px solid var(--primary); border-radius:10px; padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="font-size:15px; color:var(--navy-dark);">Level 1: Fundamentals & Environment Setup</strong>
+                <span class="badge badge-success">✓ 100% Completed</span>
+              </div>
+              <span style="font-size:12px; color:var(--slate);">4 Lessons · 1 Practical Lab · Completed on 05 Jul 2026</span>
+            </div>
+
+            <div style="background:#ffffff; border:2px solid var(--secondary); border-radius:10px; padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="font-size:15px; color:var(--navy-dark);">Level 2: Backend Architecture & APIs</strong>
+                <span class="badge badge-warning">Active Progress (75%)</span>
+              </div>
+              <span style="font-size:12px; color:var(--slate);">4 Lessons · Active Lesson 2.3 · 1 Capstone Review Remaining</span>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; opacity:0.6;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font-size:15px; color:var(--slate);">Level 3: Production Deployment & Scale</strong>
+                <span class="badge badge-secondary">🔒 Locked</span>
+              </div>
+              <span style="font-size:12px; color:var(--slate);">Unlocks upon passing Level 2 Capstone Review.</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-learning-lessons") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Modular Syllabus Lessons (CAT-006)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Structured lesson list with duration, status, and learning activities.</p>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:12px 16px;">LESSON</th>
+                  <th style="padding:12px 16px;">TITLE</th>
+                  <th style="padding:12px 16px;">DURATION</th>
+                  <th style="padding:12px 16px;">STATUS</th>
+                  <th style="padding:12px 16px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #f1f5f9;">
+                  <td style="padding:14px 16px; font-weight:700;">Lesson 1.1</td>
+                  <td style="padding:14px 16px;">Architecture Fundamentals</td>
+                  <td style="padding:14px 16px;">30 mins</td>
+                  <td style="padding:14px 16px;"><span class="badge badge-success">✓ Completed</span></td>
+                  <td style="padding:14px 16px;"><button class="btn btn-secondary btn-xs" onclick="Router.navigate('learner-learning-activities')">Review</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f5f9;">
+                  <td style="padding:14px 16px; font-weight:700;">Lesson 2.3</td>
+                  <td style="padding:14px 16px;">State Machine Modeling</td>
+                  <td style="padding:14px 16px;">45 mins</td>
+                  <td style="padding:14px 16px;"><span class="badge badge-warning">In Progress</span></td>
+                  <td style="padding:14px 16px;"><button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-activities')">Start Activity</button></td>
+                </tr>
+                <tr style="border-bottom:1px solid #f1f5f9;">
+                  <td style="padding:14px 16px; font-weight:700;">Lesson 2.4</td>
+                  <td style="padding:14px 16px;">Level 2 Capstone Review</td>
+                  <td style="padding:14px 16px;">60 mins</td>
+                  <td style="padding:14px 16px;"><span class="badge badge-secondary">Locked</span></td>
+                  <td style="padding:14px 16px;"><button class="btn btn-secondary btn-xs" disabled>Locked</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-learning-activities") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <span class="badge badge-primary">TYPED ACTIVITY PLAYER (FRS 4.8.2)</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">State Machine Modeling with Custom Reducers</h3>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Lesson 2.3 · 20 mins</span>
+          </div>
+
+          <div style="border:1px solid #cbd5e1; border-radius:8px; padding:16px; background:#f8fafc; margin-bottom:16px;">
+            <h4 style="margin:0 0 8px 0; font-size:13px; color:var(--navy-dark);"><i data-lucide="file-code" style="vertical-align:middle; width:16px; height:16px; color:var(--primary);"></i> Interactive Reducer Exercise</h4>
+            <pre style="background:#0f172a; color:#38bdf8; padding:12px; border-radius:6px; font-size:12px; margin:0; overflow:auto;">
 function authReducer(state, action) {
   switch (action.type) {
     case 'LOGIN_START': return { ...state, status: 'loading' };
@@ -6491,30 +6755,78 @@ function authReducer(state, action) {
     default: return state;
   }
 }
-                </pre>
+            </pre>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #f1f5f9;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-learning-lessons')">&larr; Back to Lessons</button>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Activity Complete', 'Activity marked complete! Moving to next milestone.', 'success'); Router.navigate('learner-learning-milestones');">Mark Complete & Next &rarr;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-learning-progress") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Mastery & Completion Rule Progress Matrix (MILE-007)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Detailed checklist of mandatory prerequisites required for program completion.</p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <strong style="font-size:14px; color:var(--navy-dark); display:block; margin-bottom:8px;">Core Curriculum Gates</strong>
+              <div style="font-size:12px; color:var(--slate); display:flex; flex-direction:column; gap:6px;">
+                <div>✓ Level 1 Quizzes: 100% Passed</div>
+                <div>✓ Level 1 Practical Lab: Approved by Alex Rivera</div>
+                <div>&rarr; Level 2 Quizzes: In Progress (1/2 Passed)</div>
+                <div>🔒 Level 2 Capstone: Pending Submission</div>
               </div>
             </div>
 
-            <div style="padding-top:16px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
-              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Previous', 'Opening Lesson 2.2...', 'info')">&larr; Previous Lesson</button>
-              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Progress Saved', 'Lesson 2.3 marked complete! Unlocking next activity.', 'success'); Router.navigate('learner-learning-continue');">Mark Complete & Next &rarr;</button>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <strong style="font-size:14px; color:var(--navy-dark); display:block; margin-bottom:8px;">Attendance & Facilitator Sign-offs</strong>
+              <div style="font-size:12px; color:var(--slate); display:flex; flex-direction:column; gap:6px;">
+                <div>✓ 1:1 Code Reviews: 8 of 8 Completed</div>
+                <div>✓ Minimum Attendance Threshold: 100% (Required: 80%)</div>
+                <div>✓ Zero Academic Integrity Violations</div>
+              </div>
             </div>
           </div>
         </div>
       `;
     }
 
+    else if (route === "learner-learning-completion") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); text-align:center; max-width:700px; margin:0 auto;">
+          <span class="badge badge-primary" style="margin-bottom:10px;">CERTIFICATE ELIGIBILITY AUDIT (MILE-015)</span>
+          <h3 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 8px 0;">Official Graduation Status</h3>
+          <p style="font-size:13px; color:var(--slate); margin:0 0 20px 0;">Track your graduation criteria to generate your cryptographic IHS certificate.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; text-align:left; margin-bottom:20px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Completed Modules:</span> <strong>8 / 12 Lessons</strong></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Required Capstones:</span> <strong>1 / 3 Passed</strong></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Minimum Grade:</span> <strong>88% (Threshold: 75%)</strong></div>
+            <div style="display:flex; justify-content:space-between;"><span>Estimated Completion:</span> <strong>15 Dec 2026</strong></div>
+          </div>
+
+          <button class="btn btn-secondary" onclick="Notifications.push('Audit', 'Your curriculum audit is in good standing.', 'info')">Run Compliance Audit</button>
+        </div>
+      `;
+    }
+
     // ==========================================================================
-    // 5. MY WORK (SUBMISSIONS & TASKS)
+    // 5. MY WORK (SUBMISSIONS)
     // ==========================================================================
-    else if (route.startsWith("learner-work-")) {
+    else if (route === "learner-work-due") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
           <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <strong style="font-size:15px; color:var(--navy-dark);">My Submissions, Quizzes & Homework (ASM-001 / FLOW-020)</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Direct access to active tasks, rubric evaluations, and returned revisions.</p>
+              <strong style="font-size:15px; color:var(--navy-dark);">Active Due Work & Urgent Tasks (ASM-001)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Assignments, quizzes, and voice drills requiring learner submission.</p>
             </div>
+            <span class="badge badge-warning">${data.myWork.filter(w => w.status === 'Due').length} Due</span>
           </div>
 
           <div class="table-responsive">
@@ -6522,35 +6834,28 @@ function authReducer(state, action) {
               <thead>
                 <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
                   <th style="padding:12px 16px;">TASK ID</th>
-                  <th style="padding:12px 16px;">TITLE & COURSE</th>
+                  <th style="padding:12px 16px;">TASK TITLE</th>
                   <th style="padding:12px 16px;">TYPE</th>
                   <th style="padding:12px 16px;">DUE DATE</th>
-                  <th style="padding:12px 16px;">STATUS</th>
-                  <th style="padding:12px 16px;">POINTS / SCORE</th>
+                  <th style="padding:12px 16px;">POINTS</th>
                   <th style="padding:12px 16px;">ACTION</th>
                 </tr>
               </thead>
               <tbody>
-                ${data.myWork.map(w => `
+                ${data.myWork.filter(w => w.status === "Due").map(w => `
                   <tr style="border-bottom:1px solid #f1f5f9;">
                     <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${w.id}</td>
-                    <td style="padding:14px 16px;">
-                      <strong>${w.title}</strong>
-                      <span style="display:block; font-size:11px; color:var(--slate);">${w.course}</span>
-                    </td>
+                    <td style="padding:14px 16px;"><strong>${w.title}</strong><br><span style="font-size:11px; color:var(--slate);">${w.course}</span></td>
                     <td style="padding:14px 16px;"><span class="badge badge-secondary">${w.type}</span></td>
-                    <td style="padding:14px 16px;">${w.dueDate}</td>
-                    <td style="padding:14px 16px;">
-                      <span class="badge ${w.status === 'Graded' ? 'badge-success' : (w.status.includes('Revision') ? 'badge-error' : 'badge-warning')}">${w.status}</span>
-                    </td>
-                    <td style="padding:14px 16px;"><strong>${w.score || w.points}</strong></td>
+                    <td style="padding:14px 16px;"><span class="badge badge-warning">${w.dueDate}</span></td>
+                    <td style="padding:14px 16px;"><strong>${w.points}</strong></td>
                     <td style="padding:14px 16px;">
                       ${w.type.includes('Quiz') ? `
-                        <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerQuizModal('${w.id}')">Take Quiz</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerQuizModal('${w.id}')">Start Quiz</button>
                       ` : (w.type.includes('Voice') ? `
                         <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerVoiceStudioModal('${w.id}')">Voice Studio</button>
                       ` : `
-                        <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerSubmissionModal('${w.id}')">${w.status.includes('Revision') ? 'Revise' : 'Submit'}</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerSubmissionModal('${w.id}')">Submit File</button>
                       `)}
                     </td>
                   </tr>
@@ -6562,71 +6867,257 @@ function authReducer(state, action) {
       `;
     }
 
+    else if (route === "learner-work-quizzes") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Interactive Knowledge Quizzes (FLOW-019 / ASM-002)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Auto-graded diagnostic assessments with immediate rubric scoring.</p>
+          </div>
+
+          <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="font-size:14px; color:var(--navy-dark);">React 19 State & Effects Quiz (DEV-101)</strong>
+                <span style="font-size:12px; color:var(--slate); display:block;">10 Questions · 80% Passing Threshold · Due: 20 Aug 2026</span>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerQuizModal('WRK-302')"><i data-lucide="play"></i> Start Quiz</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-assignments") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Capstone & Coding Assignments (ASM-004)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Repository links and project file submissions reviewed by assigned faculty.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-304')"><i data-lucide="upload"></i> Upload Assignment</button>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Capstone #1: Full-Stack Microservices Schema</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">Modern Full-Stack Web Development · Reviewed by Alex Rivera</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-304')">View Details</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-homework") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Post-Class Homework Worksheets (LIVE-011)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Weekly subject practice sheets assigned following live class drills.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Simultaneous Equations Worksheet #2 (K12-801)</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">Assigned by Prof. Tariq Hassan · Due 21 Aug 2026</span>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Download', 'Downloading homework PDF...', 'info')"><i data-lucide="download"></i> Download PDF</button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-303')"><i data-lucide="upload"></i> Upload Solution</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-voice") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Voice & Speech Recording Studio (FLOW-020)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Record audio responses for acoustic pronunciation and CEFR intonation scoring.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerVoiceStudioModal('WRK-301')"><i data-lucide="mic"></i> Open Voice Studio</button>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Voice Studio Drill #4: 2-Minute Professional Pitch</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">Spoken English Fluency · Assigned by Sara Javed · Due Today</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerVoiceStudioModal('WRK-301')"><i data-lucide="mic"></i> Record Speech</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-revisions") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Work Returned for Revision (ASM-009)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Faculty feedback requiring edits before final gradebook publication.</p>
+
+          <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:8px; padding:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-error" style="margin-bottom:6px;">REVISION REQUIRED</span>
+              <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:15px;">Capstone #1: Full-Stack Microservices Schema</h4>
+              <p style="font-size:12px; color:var(--slate); margin:0 0 6px 0;"><strong>Alex Rivera:</strong> "Add composite index on tenant_id + created_at to avoid sequential table scans."</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-304')"><i data-lucide="upload"></i> Upload Revised File</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-submitted") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Historical Submitted Work Archive (ASM-012)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Archived submissions with verified scores and faculty feedback.</p>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:12px 16px;">TASK</th>
+                  <th style="padding:12px 16px;">COURSE</th>
+                  <th style="padding:12px 16px;">SUBMISSION DATE</th>
+                  <th style="padding:12px 16px;">FINAL SCORE</th>
+                  <th style="padding:12px 16px;">STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.myWork.filter(w => w.status === "Graded").map(w => `
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:14px 16px;"><strong>${w.title}</strong></td>
+                    <td style="padding:14px 16px;">${w.course}</td>
+                    <td style="padding:14px 16px;">${w.dueDate}</td>
+                    <td style="padding:14px 16px;"><strong>${w.score}</strong></td>
+                    <td style="padding:14px 16px;"><span class="badge badge-success">✓ Graded</span></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-work-overdue") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Overdue Work & Late Submission Policies (ASM-010)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Late assignments subject to standard policy penalty rules.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; text-align:center; color:var(--slate); font-size:13px;">
+            ✓ Great job! You have no overdue assignments across your active courses.
+          </div>
+        </div>
+      `;
+    }
+
     // ==========================================================================
     // 6. GRADES & FEEDBACK
     // ==========================================================================
-    else if (route.startsWith("learner-grades-")) {
+    else if (route === "learner-grades-gradebook") {
       viewContent = `
-        <div style="display:grid; grid-template-columns: 1.5fr 1fr; gap:20px;">
-          <!-- MULTI-COURSE GRADEBOOK (ASM-014) -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
-            <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
-              <strong style="font-size:15px; color:var(--navy-dark);">Official Multi-Course Gradebook & Cumulative GPA</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Cumulative GPA: <strong>${profile.gpa}</strong> · Standing: <strong>${profile.academicStanding}</strong></p>
-            </div>
-            
-            <div style="padding:20px; display:flex; flex-direction:column; gap:16px;">
-              ${data.grades.map(g => `
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <div>
-                      <strong style="font-size:14px; color:var(--navy-dark);">${g.courseTitle} (${g.courseCode})</strong>
-                      <span style="display:block; font-size:11px; color:var(--slate);">${g.completedItems}</span>
-                    </div>
-                    <div style="text-align:right;">
-                      <span class="badge badge-success" style="font-size:14px; padding:4px 10px;">Grade ${g.overallGrade} (${g.scorePercent})</span>
-                    </div>
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Official Multi-Course Gradebook (ASM-014)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Cumulative GPA: <strong>${profile.gpa}</strong> · Standing: <strong>${profile.academicStanding}</strong></p>
+          </div>
+          
+          <div style="padding:20px; display:flex; flex-direction:column; gap:16px;">
+            ${data.grades.map(g => `
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <div>
+                    <strong style="font-size:14px; color:var(--navy-dark);">${g.courseTitle} (${g.courseCode})</strong>
+                    <span style="display:block; font-size:11px; color:var(--slate);">${g.completedItems}</span>
                   </div>
-
-                  <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; border-top:1px solid #e2e8f0; padding-top:8px;">
-                    ${g.categories.map(c => `
-                      <div style="display:flex; justify-content:space-between; color:var(--slate);">
-                        <span>${c.name} (Weight: ${c.weight})</span>
-                        <strong style="color:var(--navy-dark);">${c.score}</strong>
-                      </div>
-                    `).join('')}
-                  </div>
+                  <span class="badge badge-success" style="font-size:14px; padding:4px 10px;">Grade ${g.overallGrade} (${g.scorePercent})</span>
                 </div>
-              `).join('')}
+
+                <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; border-top:1px solid #e2e8f0; padding-top:8px;">
+                  ${g.categories.map(c => `
+                    <div style="display:flex; justify-content:space-between; color:var(--slate);">
+                      <span>${c.name} (Weight: ${c.weight})</span>
+                      <strong style="color:var(--navy-dark);">${c.score}</strong>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-grades-results") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Granular Assessment Rubric Breakdown (ASM-007)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Criterion marks and evaluation sliders from graded submissions.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <strong style="font-size:14px; color:var(--navy-dark);">Mid-Term Oral Presentation (ENG-103)</strong>
+              <span class="badge badge-success">94 / 100 Points</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+              <div>• Intonation & Pitch Variance (30%): <strong>28 / 30</strong></div>
+              <div>• Pronunciation & Phoneme Accuracy (40%): <strong>38 / 40</strong></div>
+              <div>• Cadence & Fluency Rate (30%): <strong>28 / 30</strong></div>
             </div>
           </div>
+        </div>
+      `;
+    }
 
-          <!-- TEACHER QUALITATIVE REVIEWS & AUDIO Waveform (ASM-008) -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 14px 0;">Teacher Feedback & Voice Annotations</h3>
-            
-            <div style="display:flex; flex-direction:column; gap:14px;">
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                  <strong style="font-size:13px; color:var(--navy-dark);">Sara Javed (Spoken English)</strong>
-                  <span class="badge badge-primary">Speech Review</span>
-                </div>
-                <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0; line-height:1.5;">
-                  "Cadence on professional pitch drill is excellent. Work on lowering intonation at full-stops."
-                </p>
-                <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audio Feedback', 'Playing teacher audio note...', 'info')"><i data-lucide="play"></i> Play Voice Note (0:42s)</button>
-              </div>
+    else if (route === "learner-grades-feedback") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Faculty Qualitative Reviews & Voice Notes (ASM-008)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Teacher comments and timestamped speech feedback annotations.</p>
 
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                  <strong style="font-size:13px; color:var(--navy-dark);">Alex Rivera (Full-Stack)</strong>
-                  <span class="badge badge-secondary">Code Review</span>
-                </div>
-                <p style="font-size:12px; color:var(--slate); margin:0; line-height:1.5;">
-                  "Database schema is clean and normalized. Excellent use of Postgres compound indexes for multi-tenant query performance."
-                </p>
+          <div style="display:flex; flex-direction:column; gap:14px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <strong style="font-size:13px; color:var(--navy-dark);">Sara Javed (Spoken English Lead)</strong>
+                <span class="badge badge-primary">Mid-Term Oral Speech</span>
               </div>
+              <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0; line-height:1.5;">
+                "Outstanding cadence and professional register. Alveolar stop consonants are crisp. Keep practicing final thought-group terminal pauses!"
+              </p>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audio Note', 'Playing 0:42s teacher feedback...', 'info')"><i data-lucide="play"></i> Play Voice Note (0:42s)</button>
             </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <strong style="font-size:13px; color:var(--navy-dark);">Alex Rivera (Full-Stack Facilitator)</strong>
+                <span class="badge badge-secondary">Capstone Draft Review</span>
+              </div>
+              <p style="font-size:12px; color:var(--slate); margin:0; line-height:1.5;">
+                "Database schema is clean and normalized. Excellent use of Postgres compound indexes for multi-tenant query performance."
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-grades-history") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Versioned Grade History & Regrade Log (ASM-015)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Historical record of score revisions and regrade inquiries.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; font-size:12px; color:var(--slate);">
+            <div>• <strong>05 Aug 2026</strong>: Mid-Term Oral Presentation scored 94/100 by Sara Javed. (Published)</div>
+            <div>• <strong>15 Jun 2026</strong>: Unit 1 Diagnostic Quiz re-evaluated: Score updated from 45/50 to 50/50.</div>
           </div>
         </div>
       `;
@@ -6635,92 +7126,132 @@ function authReducer(state, action) {
     // ==========================================================================
     // 7. RESOURCES & NOTES
     // ==========================================================================
-    else if (route.startsWith("learner-resources-") || route === "learner-notes-all") {
-      if (route === "learner-notes-all") {
-        viewContent = `
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-              <div>
-                <strong style="font-size:15px; color:var(--navy-dark);">Private Timed Lesson Notes & Bookmarks</strong>
-                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Searchable personal learning notes across all enrolled programs.</p>
-              </div>
-              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerNoteModal()"><i data-lucide="plus"></i> Add Note</button>
-            </div>
-
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-              ${data.myNotes.map(n => `
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span class="badge badge-secondary" style="font-size:10px;">${n.course}</span>
-                    <span style="font-size:11px; color:var(--slate);">${n.date}</span>
-                  </div>
-                  <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:4px;">${n.topic}</strong>
-                  <p style="font-size:12px; color:var(--slate); margin:0; line-height:1.5;">${n.content}</p>
-                </div>
-              `).join('')}
-            </div>
+    else if (route === "learner-resources-course") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Course Curriculum Textbooks & Syllabi (RES-001)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Official textbooks, curriculum handbooks, and reference guides.</p>
           </div>
-        `;
-      } else {
-        viewContent = `
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
-            <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <strong style="font-size:15px; color:var(--navy-dark);">Curriculum Learning Assets & Lesson Handouts (RES-001)</strong>
-                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Official textbooks, slide decks, audio models, and worksheets.</p>
-              </div>
-            </div>
-
-            <div class="table-responsive">
-              <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
-                <thead>
-                  <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
-                    <th style="padding:12px 16px;">RESOURCE ID</th>
-                    <th style="padding:12px 16px;">TITLE & COURSE</th>
-                    <th style="padding:12px 16px;">TYPE</th>
-                    <th style="padding:12px 16px;">FILE SIZE</th>
-                    <th style="padding:12px 16px;">FACULTY</th>
-                    <th style="padding:12px 16px;">DATE</th>
-                    <th style="padding:12px 16px;">ACTION</th>
+          <div class="table-responsive">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:12px 16px;">TITLE</th>
+                  <th style="padding:12px 16px;">COURSE</th>
+                  <th style="padding:12px 16px;">SIZE</th>
+                  <th style="padding:12px 16px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.resources.map(r => `
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:14px 16px;"><strong>${r.title}</strong></td>
+                    <td style="padding:14px 16px;">${r.course}</td>
+                    <td style="padding:14px 16px;">${r.size}</td>
+                    <td style="padding:14px 16px;"><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Download', 'Downloading ${r.title}...', 'success')"><i data-lucide="download"></i> Download</button></td>
                   </tr>
-                </thead>
-                <tbody>
-                  ${data.resources.map(r => `
-                    <tr style="border-bottom:1px solid #f1f5f9;">
-                      <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${r.id}</td>
-                      <td style="padding:14px 16px;"><strong>${r.title}</strong><br><span style="font-size:11px; color:var(--slate);">${r.course}</span></td>
-                      <td style="padding:14px 16px;"><span class="badge badge-secondary">${r.type}</span></td>
-                      <td style="padding:14px 16px;">${r.size}</td>
-                      <td style="padding:14px 16px;">${r.uploadedBy}</td>
-                      <td style="padding:14px 16px;">${r.date}</td>
-                      <td style="padding:14px 16px;">
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Download', 'Downloading ${r.title}...', 'success')"><i data-lucide="download"></i> Download</button>
-                      </td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
+                `).join('')}
+              </tbody>
+            </table>
           </div>
-        `;
-      }
+        </div>
+      `;
+    }
+
+    else if (route === "learner-resources-class") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Post-Class Handouts & Whiteboards (LIVE-011)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Teacher slide decks and Daily.co class recording archives.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Class #12 Slides: Intonation & Rhythm Drills</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">Uploaded by Sara Javed · 14 Aug 2026 · PDF Slide Deck (3.2 MB)</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Download', 'Downloading class slides...', 'success')"><i data-lucide="download"></i> Download</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-resources-lesson") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Supplementary Lesson Practice Assets (RES-004)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Audio model files and lesson reading guides.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Audio Practice Model: Module 3 Vowel Formants</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">MP3 Audio Stream (12.4 MB) · Sara Javed</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Audio Model', 'Playing sample audio model...', 'info')"><i data-lucide="play"></i> Listen</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-resources-assigned") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Assigned Exercise Files & Downloads (RES-006)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Exercise packs assigned for self-paced milestone completion.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Level 2 Starter Code Pack (ZIP)</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">Next.js + Postgres Starter Boilerplate (8.1 MB)</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Download', 'Downloading starter pack ZIP...', 'success')"><i data-lucide="download"></i> Download Pack</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-notes-all") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Private Timed Lesson Notes & Bookmarks</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Searchable personal study notes across all enrolled programs.</p>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerNoteModal()"><i data-lucide="plus"></i> Add Note</button>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            ${data.myNotes.map(n => `
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span class="badge badge-secondary" style="font-size:10px;">${n.course}</span>
+                  <span style="font-size:11px; color:var(--slate);">${n.date}</span>
+                </div>
+                <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:4px;">${n.topic}</strong>
+                <p style="font-size:12px; color:var(--slate); margin:0; line-height:1.5;">${n.content}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     }
 
     // ==========================================================================
-    // 8. K-12 TEACHING & REPORT CARDS
+    // 8. K-12 TEACHING
     // ==========================================================================
-    else if (route.startsWith("learner-k12-")) {
+    else if (route === "learner-k12-subjects") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
             <div>
               <span class="badge badge-primary">K-12 TUITION · FBISE GRADE 8</span>
-              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">Term 1 Academic Performance & Syllabus Checklist</h3>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">Enrolled School Subjects & Performance (K12-001)</h3>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerReportCardModal('TERM-1')"><i data-lucide="file-text"></i> View Official Report Card</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerReportCardModal('TERM-1')"><i data-lucide="file-text"></i> View Report Card</button>
           </div>
 
-          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; margin-bottom:20px;">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px;">
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
               <span style="font-size:11px; color:var(--slate); display:block;">MATHEMATICS</span>
               <strong style="font-size:16px; color:var(--navy-dark);">Grade A+ (95%)</strong>
@@ -6742,13 +7273,102 @@ function authReducer(state, action) {
               <span style="font-size:11px; color:#166534; display:block;">11/12 Classes Attended</span>
             </div>
           </div>
+        </div>
+      `;
+    }
 
-          <div style="border:1px solid #e2e8f0; border-radius:8px; padding:16px; background:#f8fafc;">
-            <h4 style="margin:0 0 10px 0; font-size:14px; color:var(--navy-dark);">Upcoming Term 1 Final Examinations</h4>
-            <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--slate);">
-              <div>• <strong>Mathematics Final Paper</strong>: 28 Sep 2026 (Chapters 1 to 6)</div>
-              <div>• <strong>Science Practical Assessment</strong>: 30 Sep 2026 (Physics & Chemistry Modules)</div>
+    else if (route === "learner-k12-syllabus") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">FBISE Grade 8 Curriculum Unit Outline (K12-004)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">National curriculum standards and exam syllabus breakdown.</p>
+
+          <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; justify-content:space-between;">
+              <span>Unit 1: Real Numbers & Sets</span>
+              <span class="badge badge-success">✓ Completed</span>
             </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; justify-content:space-between;">
+              <span>Unit 2: Linear Equations & Inequalities</span>
+              <span class="badge badge-success">✓ Completed</span>
+            </div>
+            <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:6px; padding:12px; display:flex; justify-content:space-between;">
+              <span>Unit 3: Simultaneous Linear Equations (Active)</span>
+              <span class="badge badge-warning">In Progress</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-k12-schedule") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">K-12 Term Timetable & Section Timing (K12-006)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Section A Class Timetable · Prof. Tariq Hassan</p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; font-size:13px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+              <strong>Tuesday Schedule</strong><br>
+              <span style="color:var(--slate);">04:00 PM – 05:15 PM PKT · Mathematics Section A</span>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
+              <strong>Thursday Schedule</strong><br>
+              <span style="color:var(--slate);">04:00 PM – 05:15 PM PKT · General Science Section A</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-k12-homework") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">K-12 Weekly Subject Worksheets (K12-008)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Weekly curriculum homework sheets aligned with FBISE syllabus.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:14px; color:var(--navy-dark);">Week 6 Math: Graphing Linear Systems</strong>
+              <span style="font-size:12px; color:var(--slate); display:block;">Assigned by Prof. Tariq · Due Friday</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-303')">Submit Worksheet</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-k12-grades") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">K-12 Continuous Assessment Marks (K12-010)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Term continuous assessment breakdown across homework, quizzes, and classwork.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Mathematics Term 1 Continuous Score:</span> <strong>95 / 100 (A+)</strong></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Science Term 1 Continuous Score:</span> <strong>91 / 100 (A)</strong></div>
+            <div style="display:flex; justify-content:space-between;"><span>English Language Term 1 Continuous Score:</span> <strong>96 / 100 (A+)</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-k12-reportcards") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); max-width:750px; margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div>
+              <span class="badge badge-primary">OFFICIAL REPORT CARD (FLOW-021)</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">Term 1 Progress Report Card</h3>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerReportCardModal('TERM-1')"><i data-lucide="printer"></i> View Full Report</button>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Student Name:</span> <strong>Zainab Malik</strong></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Guardian Name:</span> <strong>Farooq Malik</strong></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Cumulative GPA:</span> <strong>3.92 / 4.0 (A+)</strong></div>
+            <div style="display:flex; justify-content:space-between;"><span>Academic Standing:</span> <span class="badge badge-success">Honor Roll</span></div>
           </div>
         </div>
       `;
@@ -6757,74 +7377,173 @@ function authReducer(state, action) {
     // ==========================================================================
     // 9. MEMBERSHIP & PAYMENTS
     // ==========================================================================
-    else if (route.startsWith("learner-payments-")) {
+    else if (route === "learner-payments-memberships") {
       viewContent = `
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <!-- ACTIVE MEMBERSHIP ENTITLEMENTS (COM-012) -->
-          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
-            ${data.memberships.map(m => `
-              <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                  <span class="badge ${m.status === 'Active' ? 'badge-success' : 'badge-warning'}">${m.status}</span>
-                  <span style="font-size:11px; color:var(--slate);">${m.id}</span>
-                </div>
-                <h4 style="font:700 15px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${m.course}</h4>
-                <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">${m.plan}</p>
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:12px; display:flex; flex-direction:column; gap:3px; margin-bottom:12px;">
-                  <div><span style="color:var(--slate);">Entitlement:</span> <strong>${m.creditsRemaining} / ${m.totalCredits}</strong></div>
-                  <div><span style="color:var(--slate);">Expires:</span> <strong>${m.expiryDate}</strong></div>
-                  <div><span style="color:var(--slate);">Payer:</span> ${m.payer}</div>
-                </div>
-                <button class="btn btn-primary btn-xs" style="width:100%;" onclick="Actions.openLearnerPaymentUploadModal('${m.id}')">Purchase / Renew</button>
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; margin-bottom:20px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong style="font-size:15px; color:var(--navy-dark);">Active Membership Entitlements & Credit Balances (COM-012)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Remaining class credits, valid membership terms, and renewal dates.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('CRS-103')"><i data-lucide="refresh-cw"></i> Renew Membership</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+          ${data.memberships.map(m => `
+            <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; box-shadow:var(--shadow-subtle);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span class="badge ${m.status === 'Active' ? 'badge-success' : 'badge-warning'}">${m.status}</span>
+                <span style="font-size:11px; color:var(--slate);">${m.id}</span>
               </div>
-            `).join('')}
+              <h4 style="font:700 15px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${m.course}</h4>
+              <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">${m.plan}</p>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:12px; display:flex; flex-direction:column; gap:3px; margin-bottom:12px;">
+                <div><span style="color:var(--slate);">Entitlement:</span> <strong>${m.creditsRemaining} / ${m.totalCredits}</strong></div>
+                <div><span style="color:var(--slate);">Expires:</span> <strong>${m.expiryDate}</strong></div>
+                <div><span style="color:var(--slate);">Payer:</span> ${m.payer}</div>
+              </div>
+              <button class="btn btn-primary btn-xs" style="width:100%;" onclick="Actions.openLearnerPaymentUploadModal('${m.id}')">Purchase / Renew</button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    else if (route === "learner-payments-renew") {
+      viewContent = `
+        <div style="max-width:720px; background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); margin:0 auto;">
+          <span class="badge badge-warning" style="margin-bottom:8px;">MEMBERSHIP RENEWAL CHECKOUT (FLOW-038)</span>
+          <h3 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 8px 0;">Renew Spoken English Fluency Membership</h3>
+          <p style="font-size:13px; color:var(--slate); margin:0 0 20px 0;">
+            Your membership expires in 13 days (2 class credits remaining). Extend your access for the upcoming term.
+          </p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; margin-bottom:18px; font-size:13px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Selected Package:</span> <strong>Quarterly Term (24 Live Classes)</strong></div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Renewal Fee:</span> <strong>PKR 15,000</strong></div>
+            <div style="display:flex; justify-content:space-between;"><span>New Expiration Date:</span> <strong>30 Nov 2026</strong></div>
           </div>
 
-          <!-- PAYMENT SUBMISSIONS QUEUE & STATUS (FLOW-011 / COM-006) -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
-            <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <strong style="font-size:15px; color:var(--navy-dark);">Manual Bank Deposit Submissions (FLOW-011 / FLOW-013)</strong>
-                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Review status of uploaded bank transfer receipts awaiting Finance desk verification.</p>
-              </div>
-              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('NEW')"><i data-lucide="upload-cloud"></i> Upload New Deposit Slip</button>
-            </div>
+          <div style="display:flex; justify-content:flex-end; gap:12px;">
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-payments-memberships')">Cancel</button>
+            <button class="btn btn-primary" onclick="Actions.openLearnerPaymentUploadModal('CRS-103')"><i data-lucide="upload-cloud"></i> Proceed to Deposit Slip Upload</button>
+          </div>
+        </div>
+      `;
+    }
 
-            <div class="table-responsive">
-              <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
-                <thead>
-                  <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
-                    <th style="padding:12px 16px;">SUBMISSION ID</th>
-                    <th style="padding:12px 16px;">PURCHASE TERM</th>
-                    <th style="padding:12px 16px;">AMOUNT & METHOD</th>
-                    <th style="padding:12px 16px;">BANK REF</th>
-                    <th style="padding:12px 16px;">SUBMITTED AT</th>
-                    <th style="padding:12px 16px;">VERIFICATION STATUS</th>
-                    <th style="padding:12px 16px;">EVIDENCE RECEIPT</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${data.paymentSubmissions.map(p => `
-                    <tr style="border-bottom:1px solid #f1f5f9;">
-                      <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${p.id}</td>
-                      <td style="padding:14px 16px;"><strong>${p.term}</strong></td>
-                      <td style="padding:14px 16px;">
-                        <strong style="color:var(--secondary);">${p.amount}</strong>
-                        <span style="display:block; font-size:11px; color:var(--slate);">${p.method}</span>
-                      </td>
-                      <td style="padding:14px 16px;"><code>${p.bankRef}</code></td>
-                      <td style="padding:14px 16px;">${p.submittedDate}</td>
-                      <td style="padding:14px 16px;">
-                        <span class="badge ${p.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${p.status}</span>
-                      </td>
-                      <td style="padding:14px 16px;">
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Receipt', 'Viewing attached receipt ${p.receiptFile}...', 'info')"><i data-lucide="file-check"></i> ${p.receiptFile}</button>
-                      </td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
+    else if (route === "learner-payments-submissions") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong style="font-size:15px; color:var(--navy-dark);">Manual Bank Deposit Submissions (FLOW-011 / FLOW-013)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Review status of uploaded bank transfer receipts awaiting Finance desk verification.</p>
             </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('NEW')"><i data-lucide="upload-cloud"></i> Upload New Deposit Slip</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:12px 16px;">SUBMISSION ID</th>
+                  <th style="padding:12px 16px;">PURCHASE TERM</th>
+                  <th style="padding:12px 16px;">AMOUNT & METHOD</th>
+                  <th style="padding:12px 16px;">BANK REF</th>
+                  <th style="padding:12px 16px;">SUBMITTED AT</th>
+                  <th style="padding:12px 16px;">STATUS</th>
+                  <th style="padding:12px 16px;">RECEIPT</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.paymentSubmissions.map(p => `
+                  <tr style="border-bottom:1px solid #f1f5f9;">
+                    <td style="padding:14px 16px; font-family:monospace; font-weight:700;">${p.id}</td>
+                    <td style="padding:14px 16px;"><strong>${p.term}</strong></td>
+                    <td style="padding:14px 16px;">
+                      <strong style="color:var(--secondary);">${p.amount}</strong>
+                      <span style="display:block; font-size:11px; color:var(--slate);">${p.method}</span>
+                    </td>
+                    <td style="padding:14px 16px;"><code>${p.bankRef}</code></td>
+                    <td style="padding:14px 16px;">${p.submittedDate}</td>
+                    <td style="padding:14px 16px;">
+                      <span class="badge ${p.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${p.status}</span>
+                    </td>
+                    <td style="padding:14px 16px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Receipt', 'Viewing attached receipt ${p.receiptFile}...', 'info')"><i data-lucide="file-check"></i> ${p.receiptFile}</button>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-payments-status") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Payment Verification Lifecycle Tracker (COM-006)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Live audit states: Draft &rarr; Under Review &rarr; Finance Verified &rarr; Access Activated.</p>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <strong style="font-size:14px; color:var(--navy-dark);">SUB-901: Spoken English Term 2 Renewal</strong>
+                <span class="badge badge-warning">Under Review</span>
+              </div>
+              <span style="font-size:12px; color:var(--slate);">Assigned to Finance Desk for watermark verification. Estimated activation: 2 hours.</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-payments-corrections") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Payment Evidence Correction Requests (COM-010)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Submissions flagged by Finance requiring replacement deposit slips.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; text-align:center; color:var(--slate); font-size:13px;">
+            ✓ No active correction requests. All payment submissions are clear.
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-payments-receipts") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Official Payment Invoices & Authorized Receipts (FIN-003)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Authorized financial receipts accessible to registered learner and payer (${profile.payer}).</p>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:12px 16px;">RECEIPT NO</th>
+                  <th style="padding:12px 16px;">DESCRIPTION</th>
+                  <th style="padding:12px 16px;">AMOUNT</th>
+                  <th style="padding:12px 16px;">PAYER</th>
+                  <th style="padding:12px 16px;">DATE</th>
+                  <th style="padding:12px 16px;">ACTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #f1f5f9;">
+                  <td style="padding:14px 16px; font-family:monospace; font-weight:700;">RCP-2026-8812</td>
+                  <td style="padding:14px 16px;">Full-Stack Web Dev Enrollment Fee</td>
+                  <td style="padding:14px 16px;"><strong>PKR 25,000</strong></td>
+                  <td style="padding:14px 16px;">Farooq Malik</td>
+                  <td style="padding:14px 16px;">15 May 2026</td>
+                  <td style="padding:14px 16px;"><button class="btn btn-secondary btn-xs" onclick="Notifications.push('PDF', 'Downloading official tax receipt...', 'success')"><i data-lucide="download"></i> PDF</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       `;
@@ -6833,46 +7552,69 @@ function authReducer(state, action) {
     // ==========================================================================
     // 10. MESSAGES & SUPPORT
     // ==========================================================================
-    else if (route.startsWith("learner-messages-")) {
+    else if (route === "learner-messages-trainer") {
       viewContent = `
-        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:20px;">
-          <!-- MESSAGES LIST -->
+        <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:20px;">
           <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 14px 0;">Contextual Conversations & Support (MSG-001)</h3>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              ${data.messages.map(m => `
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <div>
-                      <strong style="font-size:13px; color:var(--navy-dark);">${m.sender}</strong>
-                      <span class="badge badge-secondary" style="font-size:10px; margin-left:6px;">${m.role}</span>
-                    </div>
-                    <span style="font-size:11px; color:var(--slate);">${m.time}</span>
-                  </div>
-                  <p style="font-size:12px; color:var(--slate); margin:0 0 8px 0; line-height:1.5;">${m.text}</p>
-                  <span style="font-size:11px; color:var(--primary); font-weight:600;">${m.course}</span>
-                </div>
-              `).join('')}
+            <strong style="font-size:15px; color:var(--navy-dark); display:block; margin-bottom:12px;">Trainer Conversation Thread (Sara Javed)</strong>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+                <span style="font-size:11px; color:var(--slate);">Sara Javed · Yesterday 06:30 PM PKT</span>
+                <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">Hi Zainab! Great work on your speech timing in class. Remember to record Voice Task #4 before midnight.</p>
+              </div>
             </div>
           </div>
-
-          <!-- SEND NEW INQUIRY -->
           <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 14px 0;">Send Direct Message</h3>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <div>
-                <label style="font-size:12px; font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Recipient Context</label>
-                <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);">
-                  <option value="Sara Javed">Sara Javed (Spoken English Trainer)</option>
-                  <option value="Alex Rivera">Alex Rivera (Full-Stack Facilitator)</option>
-                  <option value="Support Desk">Admissions & Support Helpdesk</option>
-                </select>
-              </div>
-              <div>
-                <label style="font-size:12px; font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Message</label>
-                <textarea id="learner-msg-input" class="form-control" placeholder="Type your academic or scheduling question..." style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid var(--outline-variant); height:100px;"></textarea>
-              </div>
-              <button class="btn btn-primary" onclick="const txt = document.getElementById('learner-msg-input'); if (txt) { Notifications.push('Message Dispatched', 'Message sent to faculty. Expect reply within 2 hours.', 'success'); txt.value = ''; }"><i data-lucide="send"></i> Send Message</button>
+            <strong style="font-size:15px; color:var(--navy-dark); display:block; margin-bottom:12px;">Reply to Faculty</strong>
+            <textarea id="trainer-reply-input" class="form-control" placeholder="Type your message to Sara Javed..." style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--outline-variant); height:100px; margin-bottom:12px;"></textarea>
+            <button class="btn btn-primary" onclick="const t = document.getElementById('trainer-reply-input'); if(t){ Notifications.push('Message Sent', 'Reply sent to Sara Javed.', 'success'); t.value = ''; }"><i data-lucide="send"></i> Send</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-messages-support") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); max-width:700px; margin:0 auto;">
+          <strong style="font-size:15px; color:var(--navy-dark);">Admissions & Helpdesk Support Chat (MSG-004)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Live agent assistance for fee inquiries, billing, and system access.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:14px; font-size:12px;">
+            <strong>CSR Desk:</strong> "Your deposit slip for Spoken English Term Renewal has been received and is currently under review by the finance desk."
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Notifications.push('Support Desk', 'Connecting to live CSR agent...', 'info')">Start Live Chat</button>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-messages-cases") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Formal Support Cases & SLAs (FLOW-024)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Track formal support tickets and SLA resolution status.</p>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span class="badge badge-success" style="margin-bottom:4px;">RESOLVED</span>
+              <strong style="display:block; font-size:14px; color:var(--navy-dark);">CASE-401: Daily.co Microphone Telemetry Diagnostic</strong>
+              <span style="font-size:12px; color:var(--slate);">Resolved on 10 Aug 2026 by Tech Support Team</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Case Log', 'Opening case resolution transcript...', 'info')">View Case</button>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-messages-announcements") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+          <strong style="font-size:15px; color:var(--navy-dark);">Course & Platform Announcements (MSG-014)</strong>
+          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Important system updates and academic calendar notices.</p>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div style="background:#f8fafc; border-left:4px solid var(--primary); padding:14px; border-radius:4px 8px 8px 4px;">
+              <strong style="font-size:14px; color:var(--navy-dark); display:block; margin-bottom:4px;">Independence Day Holiday Schedule (14 August 2026)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:0;">Classes scheduled on Friday 14 August have been rescheduled. Check your timetable for makeup slots.</p>
             </div>
           </div>
         </div>
@@ -6908,7 +7650,7 @@ function authReducer(state, action) {
     // ==========================================================================
     // 12. ACCOUNT & PROFILE
     // ==========================================================================
-    else if (route.startsWith("learner-profile-")) {
+    else if (route === "learner-profile-personal") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto;">
           <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid #f1f5f9;">
@@ -6921,26 +7663,89 @@ function authReducer(state, action) {
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; font-size:13px;">
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <span style="font-size:11px; color:var(--slate); display:block;">LEGAL NAME</span>
+              <strong>${profile.name}</strong>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
+              <span style="font-size:11px; color:var(--slate); display:block;">CEFR TARGET LEVEL</span>
+              <strong>B2 / C1 Advanced Fluency</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-profile-contact") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto;">
+          <strong style="font-size:16px; color:var(--navy-dark); display:block; margin-bottom:16px;">Contact Information & Timezone Preferences (IAM-004)</strong>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; font-size:13px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
               <span style="font-size:11px; color:var(--slate); display:block;">EMAIL ADDRESS</span>
-              <strong>${profile.email}</strong> <span class="badge badge-success" style="margin-left:6px;">✓ Verified</span>
+              <strong>${profile.email}</strong> <span class="badge badge-success" style="margin-left:4px;">✓ Verified</span>
             </div>
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-              <span style="font-size:11px; color:var(--slate); display:block;">CONTACT PHONE</span>
-              <strong>${profile.phone}</strong>
+              <span style="font-size:11px; color:var(--slate); display:block;">WHATSAPP PHONE</span>
+              <strong>${profile.phone}</strong> <span class="badge badge-success" style="margin-left:4px;">✓ Verified</span>
             </div>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-              <span style="font-size:11px; color:var(--slate); display:block;">AUTHORIZED GUARDIAN / PAYER</span>
-              <strong>${profile.guardian}</strong> (${profile.consentStatus})
-            </div>
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-              <span style="font-size:11px; color:var(--slate); display:block;">SYSTEM TIMEZONE</span>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; grid-column:span 2;">
+              <span style="font-size:11px; color:var(--slate); display:block;">CURRENT TIMEZONE</span>
               <strong>${profile.timezone}</strong>
             </div>
           </div>
+        </div>
+      `;
+    }
 
-          <div style="margin-top:20px; padding-top:16px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
-            <span class="badge badge-success">✓ Cryptographic MFA & SSO Enabled</span>
-            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Profile', 'Profile update requested.', 'info')">Edit Details</button>
+    else if (route === "learner-profile-verification") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto;">
+          <strong style="font-size:16px; color:var(--navy-dark); display:block; margin-bottom:16px;">Identity & MFA Verification Status (IAM-006)</strong>
+          <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong>Two-Factor Authentication (MFA)</strong>
+                <span style="display:block; font-size:12px; color:var(--slate);">Cryptographic TOTP Authenticator App Active</span>
+              </div>
+              <span class="badge badge-success">✓ Enabled</span>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong>National Identity Verification</strong>
+                <span style="display:block; font-size:12px; color:var(--slate);">Verified via Guardian CNIC Record</span>
+              </div>
+              <span class="badge badge-success">✓ Verified</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-profile-guardian") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto;">
+          <strong style="font-size:16px; color:var(--navy-dark); display:block; margin-bottom:16px;">Authorized Guardian & Safeguarding Consent (IAM-010 / FLOW-033)</strong>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; font-size:13px; display:flex; flex-direction:column; gap:10px;">
+            <div><span>Authorized Guardian:</span> <strong>${profile.guardian}</strong></div>
+            <div><span>Relationship:</span> <strong>Father / Primary Payer</strong></div>
+            <div><span>Safeguarding Consent:</span> <span class="badge badge-success">✓ Granted & Verified</span></div>
+            <div><span>Emergency Contact Phone:</span> <strong>+92 300 9876543</strong></div>
+          </div>
+        </div>
+      `;
+    }
+
+    else if (route === "learner-profile-history") {
+      viewContent = `
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto;">
+          <strong style="font-size:16px; color:var(--navy-dark); display:block; margin-bottom:16px;">Security Sign-in History & Audit Logs (IAM-014)</strong>
+          <div style="display:flex; flex-direction:column; gap:10px; font-size:12px; color:var(--slate);">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+              <strong>Today, 10:14 AM PKT</strong> · Chrome 124 (Windows 11) · IP: <code>182.180.44.12</code> (Lahore, PK) · <span class="badge badge-success">Success</span>
+            </div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+              <strong>Yesterday, 06:22 PM PKT</strong> · Chrome 124 (Windows 11) · IP: <code>182.180.44.12</code> (Lahore, PK) · <span class="badge badge-success">Success</span>
+            </div>
           </div>
         </div>
       `;
