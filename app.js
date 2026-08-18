@@ -96,6 +96,131 @@ const db = {
       academicStanding: "Excellent (Honor Roll)"
     },
 
+    
+    milestoneHierarchy: [
+      {
+        levelId: "LVL-01",
+        levelNumber: 1,
+        title: "Level 1: Foundations & Runtime Architecture",
+        status: "Completed",
+        progressPercent: 100,
+        milestones: [
+          {
+            milestoneId: "MLS-101",
+            title: "Milestone 1.1: Core TypeScript & Event Loops",
+            status: "Completed",
+            lessons: [
+              {
+                lessonId: "LSN-101",
+                title: "Lesson 1.1: Type Systems & Generics",
+                duration: "30 mins",
+                status: "Completed",
+                activities: [
+                  { id: "ACT-101-A", type: "Video", title: "TypeScript 5.x Deep Dive", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-101-B", type: "Text", title: "Generic Constraints & Narrowing", duration: "10 mins", status: "Completed" },
+                  { id: "ACT-101-C", type: "Quiz", title: "Diagnostic Quiz #1", questions: 5, score: "100%", status: "Passed" }
+                ]
+              }
+            ]
+          },
+          {
+            milestoneId: "MLS-102",
+            title: "Milestone 1.2: Asynchronous State & Promises",
+            status: "Completed",
+            lessons: [
+              {
+                lessonId: "LSN-102",
+                title: "Lesson 1.2: Microtasks & Promise Combinators",
+                duration: "40 mins",
+                status: "Completed",
+                activities: [
+                  { id: "ACT-102-A", type: "Lab", title: "Promise.allSettled Concurrency Lab", duration: "25 mins", status: "Approved by Alex Rivera" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        levelId: "LVL-02",
+        levelNumber: 2,
+        title: "Level 2: Backend Architecture & State Machines",
+        status: "In Progress",
+        progressPercent: 75,
+        milestones: [
+          {
+            milestoneId: "MLS-201",
+            title: "Milestone 2.1: Deterministic State Modeling",
+            status: "Active",
+            lessons: [
+              {
+                lessonId: "LSN-201",
+                title: "Lesson 2.1: State Machine Modeling with Custom Reducers",
+                duration: "45 mins",
+                status: "Active",
+                activities: [
+                  { id: "ACT-201-A", type: "Video", title: "Statecharts in React 19", duration: "18 mins", status: "Completed" },
+                  { id: "ACT-201-B", type: "Interactive Code", title: "Interactive Reducer State Machine Lab", duration: "15 mins", status: "Available", active: true },
+                  { id: "ACT-201-C", type: "Quiz", title: "State Machine Knowledge Quiz (FLOW-019)", questions: 3, passScore: 80, status: "Available" }
+                ]
+              },
+              {
+                lessonId: "LSN-202",
+                title: "Lesson 2.2: Supabase Row-Level Security & Postgres RPC",
+                duration: "60 mins",
+                status: "Locked",
+                prerequisite: "Complete Lesson 2.1",
+                activities: [
+                  { id: "ACT-202-A", type: "Video", title: "RLS Multi-Tenant Policies", duration: "25 mins", status: "Locked" },
+                  { id: "ACT-202-B", type: "Assignment", title: "RLS Schema Definition Submission", status: "Locked" }
+                ]
+              }
+            ]
+          },
+          {
+            milestoneId: "MLS-202",
+            title: "Milestone 2.2: Facilitator Capstone Evaluation",
+            status: "Locked",
+            lessons: [
+              {
+                lessonId: "LSN-203",
+                title: "Lesson 2.3: 1:1 Code Architecture Review with Alex Rivera",
+                duration: "60 mins",
+                status: "Locked",
+                prerequisite: "Complete Milestone 2.1",
+                activities: [
+                  { id: "ACT-203-A", type: "Capstone", title: "Full-Stack Microservices Architecture PR", status: "Locked" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        levelId: "LVL-03",
+        levelNumber: 3,
+        title: "Level 3: Production Deployment & Distributed Systems",
+        status: "Locked",
+        progressPercent: 0,
+        milestones: [
+          {
+            milestoneId: "MLS-301",
+            title: "Milestone 3.1: Microservices, Caching & Performance Gates",
+            status: "Locked",
+            lessons: [
+              {
+                lessonId: "LSN-301",
+                title: "Lesson 3.1: Redis Cache Invalidation & Distributed Tracing",
+                duration: "60 mins",
+                status: "Locked",
+                activities: []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+
     activeCourses: [
       {
         id: "CRS-103",
@@ -7759,18 +7884,26 @@ function authReducer(state, action) {
       viewContent = `
         <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:20px;">
           <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <strong style="font-size:15px; color:var(--navy-dark); display:block; margin-bottom:12px;">Trainer Conversation Thread (Sara Javed)</strong>
-            <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9;">
+              <div>
+                <strong style="font-size:15px; color:var(--navy-dark);">Trainer Conversation Thread (FLOW-023)</strong>
+                <span style="font-size:12px; color:var(--slate); display:block;">Sara Javed · Faculty Lead / Voice Specialist</span>
+              </div>
+              <span class="badge badge-success">● Online</span>
+            </div>
+            
+            <div id="trainer-chat-thread" style="display:flex; flex-direction:column; gap:10px; max-height:300px; overflow-y:auto; padding-right:4px;">
               <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
                 <span style="font-size:11px; color:var(--slate);">Sara Javed · Yesterday 06:30 PM PKT</span>
                 <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">Hi Zainab! Great work on your speech timing in class. Remember to record Voice Task #4 before midnight.</p>
               </div>
             </div>
           </div>
+
           <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <strong style="font-size:15px; color:var(--navy-dark); display:block; margin-bottom:12px;">Reply to Faculty</strong>
+            <strong style="font-size:15px; color:var(--navy-dark); display:block; margin-bottom:12px;">Send Message to Faculty</strong>
             <textarea id="trainer-reply-input" class="form-control" placeholder="Type your message to Sara Javed..." style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--outline-variant); height:100px; margin-bottom:12px;"></textarea>
-            <button class="btn btn-primary" onclick="const t = document.getElementById('trainer-reply-input'); if(t){ Notifications.push('Message Sent', 'Reply sent to Sara Javed.', 'success'); t.value = ''; }"><i data-lucide="send"></i> Send</button>
+            <button class="btn btn-primary" onclick="Actions.sendTrainerMessage()"><i data-lucide="send"></i> Send Message</button>
           </div>
         </div>
       `;
@@ -11407,8 +11540,266 @@ function authReducer(state, action) {
 
 window.Actions = Actions = {
 
+  audit(type, details, severity, transition) {
+    if (db.adminData && db.adminData.auditLogs) {
+      db.adminData.auditLogs.unshift({
+        id: "AUD-" + Math.floor(1000 + Math.random() * 9000),
+        timestamp: new Date().toISOString(),
+        actor: "Zainab Malik (LNR-501)",
+        role: "Learner",
+        action: type,
+        details: details,
+        severity: severity || "Low"
+      });
+    }
+  },
+
+
+  // --------------------------------------------------------------------------
+  // FLOW-001 / DSH-002: Dynamic Multi-Course Context Switching
+  // --------------------------------------------------------------------------
+  switchLearnerCourse(courseId) {
+    db.learnerData.profile.activeCourseId = courseId;
+    const c = db.learnerData.activeCourses.find(x => x.id === courseId) || db.learnerData.activeCourses[0];
+    Notifications.push("Course Switched", "Active workspace context set to: " + (c ? c.title : courseId), "info");
+    if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
+      RenderEngine.learnerDashboard();
+    } else {
+      RenderEngine.learnerWorkspace(Router.currentRoute);
+    }
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-006: Diagnostic Trial Intake & Scheduling
+  // --------------------------------------------------------------------------
+  submitLearnerTrialRequest() {
+    const program = document.getElementById("trial-program-select")?.value || "Spoken English Fluency";
+    const slot = document.getElementById("trial-slot-input")?.value || "Mon / Wed 10:00 AM PKT";
+    const phone = document.getElementById("trial-phone-input")?.value || db.learnerData.profile.phone;
+    const notes = document.getElementById("trial-notes-input")?.value || "Diagnostic evaluation requested.";
+
+    // Push into CSR lead intake
+    const newLeadId = "TRL-" + Math.floor(200 + Math.random() * 800);
+    if (db.adminData && db.adminData.csrSales) {
+      db.adminData.csrSales.unshift({
+        id: newLeadId,
+        prospect: db.learnerData.profile.name,
+        course: program,
+        stage: "Trial Requested",
+        preferredSlot: slot,
+        assignedCsr: "Hamza Khan",
+        status: "Pending Trainer Assignment"
+      });
+    }
+
+    // Add confirmed diagnostic slot to learner schedule
+    db.learnerData.schedule.unshift({
+      id: "TRIAL-LIVE-" + newLeadId,
+      course: program,
+      title: "1:1 Diagnostic Trial Class – " + program,
+      date: "Tomorrow, 19 Aug 2026",
+      time: "10:00 AM – 10:45 AM PKT",
+      trainer: "Sara Javed (Faculty Evaluator)",
+      room: "ihs-trial-room-" + newLeadId.toLowerCase(),
+      token: "jwt_trial_tok_" + Math.floor(10000 + Math.random() * 90000),
+      status: "Confirmed (Diagnostic)",
+      duration: "45 mins",
+      topics: "CEFR fluency assessment, diagnostic placement interview",
+      joinable: true
+    });
+
+    db.learnerData.notifications.unshift({
+      id: "NTF-" + Date.now(),
+      title: "Diagnostic Trial Booked",
+      desc: "Your 1:1 trial for " + program + " is scheduled for Tomorrow 10:00 AM PKT.",
+      time: "Just now"
+    });
+
+    Notifications.push("Trial Confirmed (FLOW-006)", "Diagnostic placement trial booked. Room token generated in your schedule.", "success");
+    Router.navigate("learner-schedule-upcoming");
+  },
+
+  openLearnerTrialRequestModal() {
+    Router.navigate("learner-explore-trial");
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-011 / FLOW-013: Payment Deposit Evidence & Verification Lifecycle
+  // --------------------------------------------------------------------------
+  submitLearnerPaymentSlip(courseId) {
+    const ref = document.getElementById("pay-bank-ref-input")?.value || "TXN-" + Math.floor(10000 + Math.random() * 90000);
+    const amount = document.getElementById("pay-amount-input")?.value || "PKR 15,000";
+    const subId = "SUB-" + Math.floor(900 + Math.random() * 100);
+
+    // 1. Add to Learner Submissions
+    db.learnerData.paymentSubmissions.unshift({
+      id: subId,
+      term: "Spoken English Term 2 Renewal",
+      amount: amount,
+      method: "Meezan Bank Direct Transfer",
+      bankRef: ref,
+      submittedDate: "Just now",
+      status: "Under Review (Finance Desk)",
+      receiptFile: "deposit_slip_" + ref.toLowerCase() + ".png"
+    });
+
+    // 2. Cross-link to Admin / OM Payment Review Queue
+    if (db.adminData && db.adminData.financePayments) {
+      db.adminData.financePayments.unshift({
+        id: "PAY-" + subId.split("-")[1],
+        learner: db.learnerData.profile.name,
+        payer: db.learnerData.profile.payer,
+        course: "Spoken English Term 2",
+        amount: amount,
+        method: "Meezan Bank Transfer",
+        ref: ref,
+        status: "Pending Review"
+      });
+      if (db.adminData.kpis) {
+        db.adminData.kpis.pendingPaymentReviews = (db.adminData.kpis.pendingPaymentReviews || 7) + 1;
+      }
+    }
+
+    Notifications.push("Payment Evidence Uploaded (FLOW-011)", "Deposit slip " + ref + " submitted. Queued for Finance verification.", "success");
+    Router.navigate("learner-payments-submissions");
+  },
+
+  openLearnerPaymentUploadModal(courseId) {
+    Router.navigate("learner-payments-submissions");
+  },
+
+  // Cross-Role Payment Approval (When Admin/OM approves)
+  approvePaymentRecord(paymentId) {
+    // Update Admin record
+    if (db.adminData && db.adminData.financePayments) {
+      const p = db.adminData.financePayments.find(x => x.id === paymentId || x.ref === paymentId);
+      if (p) p.status = "Verified & Approved";
+    }
+
+    // Update Learner state: recharge 24 class credits, extend term expiry
+    if (db.learnerData) {
+      const sub = db.learnerData.paymentSubmissions[0];
+      if (sub) sub.status = "Approved (Verified by Finance)";
+
+      const engCourse = db.learnerData.activeCourses.find(c => c.id === "CRS-103");
+      if (engCourse) {
+        engCourse.creditsRemaining = 24;
+        engCourse.membershipStatus = "Active (24 Class Credits Available)";
+        engCourse.expiryDate = "30 Nov 2026";
+      }
+
+      if (db.learnerData.memberships && db.learnerData.memberships[0]) {
+        db.learnerData.memberships[0].creditsRemaining = 24;
+        db.learnerData.memberships[0].status = "Active";
+        db.learnerData.memberships[0].expiryDate = "30 Nov 2026";
+      }
+
+      db.learnerData.notifications.unshift({
+        id: "NTF-" + Date.now(),
+        title: "Payment Approved & Credits Activated (FLOW-013)",
+        desc: "Finance approved your Meezan deposit slip. 24 live class credits added.",
+        time: "Just now"
+      });
+    }
+
+    Notifications.push("Payment Verified", "Deposit verified by Finance. Membership renewed and 24 credits activated!", "success");
+    if (Router.currentRoute === "learner-payments-submissions" || Router.currentRoute === "learner-payments-memberships") {
+      RenderEngine.learnerWorkspace(Router.currentRoute);
+    }
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-015: Live Daily.co Classroom Join & Telemetry Reconciliation
+  // --------------------------------------------------------------------------
+  openLearnerJoinClassModal(classId) {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) return;
+
+    if (title) title.innerHTML = '<i data-lucide="video" style="vertical-align:middle; margin-right:6px;"></i> Daily.co Live WebRTC Classroom (FLOW-015)';
+    body.innerHTML = `
+      <div style="background:#0f172a; border-radius:10px; padding:20px; color:#ffffff; text-align:center; margin-bottom:16px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(239, 68, 68, 0.2); border:1px solid #ef4444; border-radius:20px; padding:4px 12px; margin-bottom:14px; font-size:12px;">
+          <span style="width:8px; height:8px; border-radius:50%; background:#ef4444; animation:pulse 1s infinite;"></span> LIVE CLASSROOM ACTIVE
+        </div>
+        <h3 style="font:800 18px 'Manrope', sans-serif; margin:0 0 6px 0;">Spoken English Fluency – Acoustic Intonation Drill</h3>
+        <p style="font-size:12px; color:#94a3b8; margin:0 0 16px 0;">Faculty Lead: Sara Javed · Room: ihs-spoken-eng-live-007 · Daily.co WebRTC</p>
+        
+        <div style="background:#1e293b; border-radius:8px; padding:24px; display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:16px;">
+          <div style="text-align:center;">
+            <div style="width:80px; height:80px; border-radius:50%; background:#334155; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
+              <i data-lucide="mic" style="width:32px; height:32px; color:#38bdf8;"></i>
+            </div>
+            <span style="font-size:12px; color:#cbd5e1;">Microphone: OK</span>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:80px; height:80px; border-radius:50%; background:#334155; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
+              <i data-lucide="video" style="width:32px; height:32px; color:#4ade80;"></i>
+            </div>
+            <span style="font-size:12px; color:#cbd5e1;">HD Video: Ready</span>
+          </div>
+        </div>
+
+        <div style="font-size:11px; color:#64748b;">Daily.co WebRTC Token: <code>jwt_daily_tok_99182</code> (Signed JWT Token)</div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" onclick="Actions.confirmJoinClassRoom('${classId}')"><i data-lucide="log-in"></i> Enter Classroom & Start Telemetry</button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  confirmJoinClassRoom(classId) {
+    document.getElementById("generic-modal")?.classList.add("hidden");
+
+    // Add telemetry attendance record
+    const attId = "ATT-" + Math.floor(700 + Math.random() * 200);
+    db.learnerData.attendanceHistory.unshift({
+      id: attId,
+      course: "Spoken English Fluency",
+      date: "Today, 18 Aug 2026",
+      classId: "CLS-103-12",
+      trainer: "Sara Javed",
+      telemetry: "10:00:00 - 10:58:30 (58m 30s)",
+      status: "Present (97%)",
+      source: "Daily.co Webhook Telemetry"
+    });
+
+    // Deduct 1 credit from live cohort entitlement
+    const engCourse = db.learnerData.activeCourses.find(c => c.id === "CRS-103");
+    if (engCourse && typeof engCourse.creditsRemaining === "number" && engCourse.creditsRemaining > 0) {
+      engCourse.creditsRemaining -= 1;
+      engCourse.entitlement = engCourse.creditsRemaining + " class credits remaining";
+    }
+
+    Notifications.push("Attendance Telemetry Recorded (FLOW-015)", "Presence interval reconciled (58m 30s / 97%). 1 Class credit consumed.", "success");
+    Router.navigate("learner-schedule-attendance");
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-017: Reschedule Request & Makeup Booking
+  // --------------------------------------------------------------------------
+  openLearnerRescheduleModal(classId) {
+    Router.navigate("learner-schedule-reschedule");
+  },
+
+  submitRescheduleRequest() {
+    Notifications.push("Reschedule Logged (FLOW-017)", "Reschedule request submitted (>4 hrs notice). Policy retains full credit entitlement.", "success");
+    Router.navigate("learner-schedule-upcoming");
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-018: Milestone 5-Tier Hierarchy & Dynamic Unlocking Engine
+  // --------------------------------------------------------------------------
   runCodeLabTests() {
-    const codeArea = document.getElementById("codelab-editor");
     const consoleOutput = document.getElementById("codelab-console");
     if (!consoleOutput) return;
 
@@ -11435,8 +11826,24 @@ window.Actions = Actions = {
     if (devCourse) {
       devCourse.progressPercent = Math.min(100, devCourse.progressPercent + 10);
     }
-    Notifications.push("Milestone Progression", "Activity completed! Level 2 progress updated to " + (devCourse ? devCourse.progressPercent : 85) + "%. Next lesson unlocked.", "success");
+
+    // Unlock subsequent Lesson 2.2 in Level 2
+    if (data.milestoneHierarchy && data.milestoneHierarchy[1]) {
+      const lvl2 = data.milestoneHierarchy[1];
+      if (lvl2.milestones && lvl2.milestones[0] && lvl2.milestones[0].lessons[1]) {
+        lvl2.milestones[0].lessons[1].status = "Available (Unlocked)";
+      }
+    }
+
+    Notifications.push("Milestone Progression (FLOW-018)", "Activity completed! Level 2 progress updated to 85%. Lesson 2.2 unlocked.", "success");
     Router.navigate("learner-learning-milestones");
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-019: Interactive Quiz Runner & Auto-Grading Engine
+  // --------------------------------------------------------------------------
+  openLearnerQuizModal(quizId) {
+    Router.navigate("learner-work-quizzes");
   },
 
   submitLearnerQuiz(quizId) {
@@ -11452,14 +11859,19 @@ window.Actions = Actions = {
       devCourse.progressPercent = Math.min(100, devCourse.progressPercent + 5);
     }
 
-    Notifications.push("Quiz Passed", "Score: 100% (50/50). Auto-marked and published to Gradebook.", "success");
+    // Update DEV-101 Knowledge Quiz Category Score in Gradebook
+    const devGrade = data.grades.find(g => g.courseCode === "DEV-101");
+    if (devGrade && devGrade.categories && devGrade.categories[0]) {
+      devGrade.categories[0].score = "100%";
+    }
+
+    Notifications.push("Quiz Auto-Graded (FLOW-019)", "Score: 100% (50/50). Gradebook updated and Milestone 2.1 completed!", "success");
     Router.navigate("learner-grades-gradebook");
   },
 
-  openLearnerQuizModal(quizId) {
-    Router.navigate("learner-work-quizzes");
-  },
-
+  // --------------------------------------------------------------------------
+  // FLOW-020: Voice Studio & Assignment Submissions Loop
+  // --------------------------------------------------------------------------
   openLearnerVoiceStudioModal(taskId) {
     Router.navigate("learner-work-voice");
   },
@@ -11487,7 +11899,7 @@ window.Actions = Actions = {
     setTimeout(() => {
       if (statusText) statusText.innerHTML = '<span style="color:#166534; font-weight:700;">✓ Speech Recording Captured (1:45s · High-Fidelity Audio)</span>';
       if (submitBtn) submitBtn.disabled = false;
-      Notifications.push("Voice Captured", "1:45s audio recording captured. Ready for submission.", "info");
+      Notifications.push("Voice Captured", "1:45s audio recording captured. Ready for rubric evaluation.", "info");
       if (window.lucide) window.lucide.createIcons();
     }, 1000);
   },
@@ -11498,2858 +11910,56 @@ window.Actions = Actions = {
     if (item) {
       item.status = "Submitted (Awaiting Review)";
     }
-    Notifications.push("Voice Submitted", "Speech recording uploaded to private storage and routed to Sara Javed for rubric scoring.", "success");
+    Notifications.push("Voice Submitted (FLOW-020)", "Audio file uploaded to private storage. Routed to Sara Javed for CEFR rubric grading.", "success");
     Router.navigate("learner-work-submitted");
-  },
-
-  submitLearnerPaymentSlip(courseId) {
-    const ref = document.getElementById("pay-bank-ref-input")?.value || "TXN-" + Math.floor(10000 + Math.random() * 90000);
-    const amount = document.getElementById("pay-amount-input")?.value || "PKR 15,000";
-
-    db.learnerData.paymentSubmissions.unshift({
-      id: "SUB-" + Math.floor(900 + Math.random() * 100),
-      term: "Spoken English Term 2 Renewal",
-      amount: amount,
-      method: "Meezan Bank Direct Transfer",
-      bankRef: ref,
-      submittedDate: "Just now",
-      status: "Under Review (Finance Desk)",
-      receiptFile: "deposit_slip_" + ref.toLowerCase() + ".png"
-    });
-
-    Notifications.push("Payment Evidence Logged", "Deposit slip submitted with reference " + ref + ". Routed to Finance for verification.", "success");
-    Router.navigate("learner-payments-submissions");
-  },
-
-  openLearnerPaymentUploadModal(courseId) {
-    Router.navigate("learner-payments-submissions");
-  },
-
-  openLearnerReportCardModal(termId) {
-    Router.navigate("learner-k12-reportcards");
-  },
-
-  openLearnerRescheduleModal(classId) {
-    Router.navigate("learner-schedule-reschedule");
-  },
-
-  openLearnerNoteModal() {
-    Router.navigate("learner-notes-all");
   },
 
   openLearnerSubmissionModal(workId) {
     Router.navigate("learner-work-assignments");
   },
 
-  submitLearnerTrialRequest() {
-    Notifications.push("Trial Confirmed", "Diagnostic trial booked. Confirmation email & WhatsApp details sent.", "success");
-    Router.navigate("learner-schedule-upcoming");
+  // --------------------------------------------------------------------------
+  // FLOW-021: K-12 Report Card
+  // --------------------------------------------------------------------------
+  openLearnerReportCardModal(termId) {
+    Router.navigate("learner-k12-reportcards");
   },
 
-  openLearnerJoinClassModal(classId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-    if (!modal || !body) return;
+  // --------------------------------------------------------------------------
+  // FLOW-023: Contextual Faculty Chat
+  // --------------------------------------------------------------------------
+  sendTrainerMessage() {
+    const input = document.getElementById("trainer-reply-input");
+    const thread = document.getElementById("trainer-chat-thread");
+    if (!input || !input.value.trim()) return;
 
-    if (title) title.innerHTML = '<i data-lucide="video" style="vertical-align:middle; margin-right:6px;"></i> Daily.co Live WebRTC Classroom';
-    body.innerHTML = `
-      <div style="background:#0f172a; border-radius:10px; padding:20px; color:#ffffff; text-align:center; margin-bottom:16px;">
-        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(239, 68, 68, 0.2); border:1px solid #ef4444; border-radius:20px; padding:4px 12px; margin-bottom:14px; font-size:12px;">
-          <span style="width:8px; height:8px; border-radius:50%; background:#ef4444; animation:pulse 1s infinite;"></span> LIVE CLASSROOM ACTIVE
-        </div>
-        <h3 style="font:800 18px 'Manrope', sans-serif; margin:0 0 6px 0;">Spoken English Fluency – Acoustic Intonation Drill</h3>
-        <p style="font-size:12px; color:#94a3b8; margin:0 0 16px 0;">Faculty Lead: Sara Javed · Room: ihs-spoken-eng-live-007 · Telemetry: Active</p>
-        
-        <div style="background:#1e293b; border-radius:8px; padding:24px; display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:16px;">
-          <div style="text-align:center;">
-            <div style="width:80px; height:80px; border-radius:50%; background:#334155; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
-              <i data-lucide="mic" style="width:32px; height:32px; color:#38bdf8;"></i>
-            </div>
-            <span style="font-size:12px; color:#cbd5e1;">Microphone: OK</span>
-          </div>
-          <div style="text-align:center;">
-            <div style="width:80px; height:80px; border-radius:50%; background:#334155; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
-              <i data-lucide="video" style="width:32px; height:32px; color:#4ade80;"></i>
-            </div>
-            <span style="font-size:12px; color:#cbd5e1;">HD Video: Ready</span>
-          </div>
-        </div>
+    const msgText = input.value.trim();
+    input.value = "";
 
-        <div style="font-size:11px; color:#64748b;">Daily.co WebRTC Token: <code>jwt_daily_tok_99182</code> (Cryptographically Signed)</div>
-      </div>
-    `;
-
-    if (footer) {
-      footer.innerHTML = `
-        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Leave Room</button>
-        <button class="btn btn-primary" onclick="Notifications.push('Presence Recorded', 'Joined Daily.co WebRTC room. Presence telemetry interval started.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="log-in"></i> Enter Classroom</button>
+    if (thread) {
+      const newMsg = document.createElement("div");
+      newMsg.style.cssText = "background:#fff9ee; border:1px solid #f0d97a; border-radius:8px; padding:12px; align-self:flex-end; margin-top:8px;";
+      newMsg.innerHTML = `
+        <span style="font-size:11px; color:var(--slate);">Zainab Malik · Just now</span>
+        <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">${msgText}</p>
       `;
+      thread.appendChild(newMsg);
+
+      setTimeout(() => {
+        const reply = document.createElement("div");
+        reply.style.cssText = "background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; align-self:flex-start; margin-top:8px;";
+        reply.innerHTML = `
+          <span style="font-size:11px; color:var(--slate);">Sara Javed · Just now</span>
+          <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">Received! I have queued your pitch recording for detailed acoustic evaluation.</p>
+        `;
+        thread.appendChild(reply);
+        Notifications.push("Faculty Reply", "Sara Javed replied to your message.", "info");
+      }, 1200);
     }
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-
-  switchLearnerCourse(courseId) {
-    db.learnerData.profile.activeCourseId = courseId;
-    const c = db.learnerData.activeCourses.find(x => x.id === courseId);
-    Notifications.push("Course Switched", `Active workspace context set to: ${c ? c.title : courseId}`, "info");
-    if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
-      RenderEngine.learnerDashboard();
-    } else {
-      RenderEngine.learnerWorkspace(Router.currentRoute);
-    }
-  },
-
-  openLearnerJoinClassModal(classId) {
-    const s = db.learnerData.schedule.find(x => x.id === classId) || db.learnerData.schedule[0];
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="video" style="color:var(--primary);"></i> Daily.co WebRTC Class Room (LIVE-007)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:16px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-          <div><span style="color:var(--slate); font-size:11px;">CLASS OCCURRENCE</span><strong>${s.title}</strong></div>
-          <div><span style="color:var(--slate); font-size:11px;">FACULTY TRAINER</span><strong>${s.trainer}</strong></div>
-          <div><span style="color:var(--slate); font-size:11px;">SCHEDULED TIME</span>${s.date} · ${s.time}</div>
-          <div><span style="color:var(--slate); font-size:11px;">ROOM PROTOCOL</span><code>Daily.co Private WebRTC</code></div>
-        </div>
-
-        <div style="border:2px solid #0f172a; border-radius:10px; padding:32px; text-align:center; background:#0f172a; color:#ffffff;">
-          <i data-lucide="video" style="width:48px; height:48px; color:var(--primary); margin-bottom:12px;"></i>
-          <h4 style="margin:0 0 6px 0; font-size:16px;">Live Classroom Stream Provisioned</h4>
-          <span style="font-size:12px; color:#94a3b8;">Meeting Token: <code>${s.webrtcToken || 'dly-tok-active'}</code> · Audio/Video Ready</span>
-          <div style="margin-top:14px;">
-            <span class="badge badge-success">✓ Cryptographic Attendance Telemetry Active</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Leave Room</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Class Session', 'Connected to Daily.co live stream with Sara Javed.', 'success');">Enter Fullscreen Studio</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openLearnerQuizModal(quizId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="help-circle" style="color:var(--primary);"></i> Interactive Knowledge Quiz (FLOW-019)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:16px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <strong style="color:var(--navy-dark);">Question 1 of 3: State Machine Modeling</strong>
-          <p style="margin:4px 0 0 0; color:var(--slate);">Which architectural principle ensures illegal state transitions cannot occur in complex frontend components?</p>
-        </div>
-
-        <div style="display:flex; flex-direction:column; gap:8px;">
-          <label style="display:flex; align-items:center; gap:10px; padding:10px; border:1px solid #cbd5e1; border-radius:6px; background:#ffffff; cursor:pointer;">
-            <input type="radio" name="quiz-opt" checked />
-            <span><strong>Deterministic State Machines & Explicit Transition Events</strong></span>
-          </label>
-          <label style="display:flex; align-items:center; gap:10px; padding:10px; border:1px solid #cbd5e1; border-radius:6px; background:#ffffff; cursor:pointer;">
-            <input type="radio" name="quiz-opt" />
-            <span>Multiple independent boolean flags scattered in component state</span>
-          </label>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.submitLearnerQuiz('${quizId}')">Submit & Auto-Grade</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  submitLearnerQuiz(quizId) {
-    const q = db.learnerData.myWork.find(x => x.id === quizId);
-    if (q) {
-      q.status = "Graded";
-      q.score = "50 / 50 (100%)";
-    }
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Quiz Passed!", "Scored 100% (50/50 Points). Results saved to official gradebook.", "success");
-    if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
-      RenderEngine.learnerDashboard();
-    } else {
-      RenderEngine.learnerWorkspace(Router.currentRoute);
-    }
-  },
-
-  openLearnerVoiceStudioModal(taskId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="mic" style="color:var(--primary);"></i> Voice Recording Studio (FLOW-020)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:16px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <strong style="color:var(--navy-dark);">Task: 2-Minute Professional Pitch</strong>
-          <p style="margin:4px 0 0 0; color:var(--slate);">Speak clearly into your microphone. Emphasize pauses at thought groups and lower intonation on terminal sentences.</p>
-        </div>
-
-        <div style="border:2px dashed #cbd5e1; border-radius:10px; padding:28px; text-align:center; background:#ffffff;">
-          <button id="voice-record-btn" class="btn btn-primary" style="width:64px; height:64px; border-radius:50%; margin-bottom:12px;" onclick="Actions.recordLearnerVoice('${taskId}')">
-            <i data-lucide="mic" style="width:28px; height:28px;"></i>
-          </button>
-          <strong id="voice-status-text" style="display:block; font-size:14px; color:var(--navy-dark);">Click Microphone to Start Recording</strong>
-          <span style="font-size:12px; color:var(--slate);">Maximum duration: 2 minutes · HD WAV capture</span>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.submitLearnerVoiceWork('${taskId}')">Submit Voice Recording</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  recordLearnerVoice(taskId) {
-    const btn = document.getElementById("voice-record-btn");
-    const status = document.getElementById("voice-status-text");
-    if (btn && status) {
-      status.innerHTML = "<span style='color:#ba1a1a;'>● Recording Audio Stream (0:14s)...</span>";
-      Notifications.push("Microphone Active", "Recording speech waveform for CEFR evaluation...", "info");
-    }
-  },
-
-  submitLearnerVoiceWork(taskId) {
-    const w = db.learnerData.myWork.find(x => x.id === taskId);
-    if (w) {
-      w.status = "Submitted (Awaiting Review)";
-    }
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Voice Task Submitted", "Audio recording uploaded to private Supabase Storage and routed to Sara Javed.", "success");
-    if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
-      RenderEngine.learnerDashboard();
-    } else {
-      RenderEngine.learnerWorkspace(Router.currentRoute);
-    }
-  },
-
-  openLearnerPaymentUploadModal(termId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="upload-cloud" style="color:var(--primary);"></i> Manual Bank Deposit Receipt Upload (FLOW-011)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <strong style="color:var(--navy-dark);">Official Bank Account Details (IHS Operations)</strong>
-          <div style="margin-top:6px; font-size:12px; color:var(--slate); display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-            <div>Bank: <strong>Meezan Bank Ltd</strong></div>
-            <div>Account Title: <strong>Innovator Huzsam LMS</strong></div>
-            <div>IBAN: <code>PK36MEZN00012345678901</code></div>
-            <div>JazzCash / EasyPaisa: <strong>0300-1234567</strong></div>
-          </div>
-        </div>
-
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Payer / Sender Full Name</label>
-          <input type="text" id="payer-name-input" class="form-control" value="Farooq Malik" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-          <div>
-            <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Transferred Amount (PKR)</label>
-            <input type="text" id="payer-amount-input" class="form-control" value="15,000" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
-          </div>
-          <div>
-            <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Bank Transaction Reference / ID</label>
-            <input type="text" id="payer-ref-input" class="form-control" value="TXN-90214" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
-          </div>
-        </div>
-
-        <div style="border:2px dashed #cbd5e1; border-radius:8px; padding:18px; text-align:center; background:#ffffff;">
-          <i data-lucide="file-up" style="width:32px; height:32px; color:var(--primary); margin-bottom:6px;"></i>
-          <strong style="display:block; font-size:13px; color:var(--navy-dark);">Attach Bank Transfer Deposit Slip (PDF / JPEG)</strong>
-          <span style="font-size:11px; color:var(--slate);">Uploaded to Private Supabase Storage with SHA-256 Checksum</span>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.submitLearnerPaymentSlip('${termId}')">Submit for Verification</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  submitLearnerPaymentSlip(termId) {
-    const ref = document.getElementById("payer-ref-input")?.value || "TXN-90214";
-    const amount = document.getElementById("payer-amount-input")?.value || "15,000";
-    
-    db.learnerData.paymentSubmissions.unshift({
-      id: "SUB-" + Math.floor(900 + Math.random() * 100),
-      term: "Spoken English Term Renewal",
-      amount: "PKR " + amount,
-      method: "Meezan Bank Online Transfer",
-      bankRef: ref,
-      submittedDate: "Just now",
-      status: "Under Review",
-      receiptFile: "receipt_deposit_" + ref + ".pdf"
-    });
-
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Deposit Slip Submitted", `Payment ${ref} (PKR ${amount}) submitted for verification. Access will be activated upon approval.`, "success");
-    if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
-      RenderEngine.learnerDashboard();
-    } else {
-      RenderEngine.learnerWorkspace(Router.currentRoute);
-    }
-  },
-
-  openLearnerTrialRequestModal() {
-    Router.navigate('learner-explore-trial');
-  },
-
-  submitLearnerTrialRequest() {
-    const program = document.getElementById("trial-program-select")?.value || "Spoken English Fluency";
-    const slot = document.getElementById("trial-slot-input")?.value || "Mon / Wed 10:00 AM PKT";
-    
-    Notifications.push("Trial Requested (FLOW-006)", `Your diagnostic trial request for ${program} (${slot}) has been routed to Admissions.`, "success");
-    Router.navigate('learner-dashboard');
-  },
-
-  openLearnerRescheduleModal(classId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="calendar" style="color:var(--primary);"></i> Request Class Reschedule (FLOW-017)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <strong style="color:var(--navy-dark);">Policy Rule: Minimum 4 Hours Notice</strong>
-          <p style="margin:2px 0 0 0; color:var(--slate);">Rescheduling preserves your membership credit allowance without penalty.</p>
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Proposed Alternate Slot</label>
-          <input type="text" class="form-control" value="Thursday, 20 Aug 2026, 10:00 AM PKT" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Reason for Reschedule</label>
-          <textarea class="form-control" placeholder="Brief reason for rescheduling..." style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);"></textarea>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Reschedule Requested', 'Request routed to Sara Javed and Operations desk.', 'success');">Submit Request</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
   },
 
   openLearnerNoteModal() {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="edit-3" style="color:var(--primary);"></i> Add Timed Lesson Note</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Topic / Heading</label>
-          <input type="text" id="note-topic-input" placeholder="e.g. Alveolar Stop Consonant Practice" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Personal Note Content</label>
-          <textarea id="note-content-input" placeholder="Write key insights or study reminders..." style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant); height:100px;"></textarea>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveLearnerNote()">Save Note</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  saveLearnerNote() {
-    const topic = document.getElementById("note-topic-input")?.value || "Lesson Note";
-    const content = document.getElementById("note-content-input")?.value || "Note content...";
-    
-    db.learnerData.myNotes.unshift({
-      id: "NOTE-" + Math.floor(100 + Math.random() * 900),
-      course: "Spoken English Fluency",
-      topic: topic,
-      date: "Today",
-      content: content
-    });
-
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Note Saved", "Lesson note saved to your private learning notebook.", "success");
-    if (Router.currentRoute === "learner-notes-all") {
-      RenderEngine.learnerWorkspace("learner-notes-all");
-    }
-  },
-
-  openLearnerReportCardModal(termId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="award" style="color:var(--primary);"></i> Official Term Progress Report Card (FLOW-021)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:16px; font-size:13px;">
-        <div style="text-align:center; padding-bottom:12px; border-bottom:1px solid #e2e8f0;">
-          <h3 style="margin:0 0 4px 0; color:var(--navy-dark); font:800 18px 'Manrope', sans-serif;">INNOVATOR HUZSAM ACADEMIC TRANSCRIPT</h3>
-          <span style="font-size:12px; color:var(--slate);">Federal Board of Intermediate & Secondary Education (Grade 8) · Term 1</span>
-        </div>
-
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-          <div>Learner: <strong>Zainab Malik</strong> (ID: LNR-501)</div>
-          <div>Guardian: <strong>Farooq Malik</strong></div>
-          <div>Term Attendance: <strong>95% (53 / 56 Sessions)</strong></div>
-          <div>Term Cumulative GPA: <strong>3.92 / 4.0 (A+)</strong></div>
-        </div>
-
-        <div style="border:1px solid #e2e8f0; border-radius:8px; overflow:hidden;">
-          <table style="width:100%; border-collapse:collapse; font-size:12px;">
-            <tr style="background:#f3ede2; text-align:left;">
-              <th style="padding:8px 12px;">Subject</th>
-              <th style="padding:8px 12px;">Marks</th>
-              <th style="padding:8px 12px;">Grade</th>
-              <th style="padding:8px 12px;">Teacher Remark</th>
-            </tr>
-            <tr style="border-bottom:1px solid #f1f5f9;">
-              <td style="padding:8px 12px;"><strong>Mathematics</strong></td>
-              <td style="padding:8px 12px;">95 / 100</td>
-              <td style="padding:8px 12px;"><span class="badge badge-success">A+</span></td>
-              <td style="padding:8px 12px;">Exceptional problem solving</td>
-            </tr>
-            <tr style="border-bottom:1px solid #f1f5f9;">
-              <td style="padding:8px 12px;"><strong>General Science</strong></td>
-              <td style="padding:8px 12px;">91 / 100</td>
-              <td style="padding:8px 12px;"><span class="badge badge-success">A</span></td>
-              <td style="padding:8px 12px;">Strong laboratory conceptualization</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-      <button class="btn btn-primary" onclick="Notifications.push('PDF Generated', 'Downloading official cryptographic report card PDF...', 'success')"><i data-lucide="download"></i> Download Official PDF</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openLearnerSubmissionModal(workId) {
-    const w = db.learnerData.myWork.find(x => x.id === workId) || db.learnerData.myWork[0];
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="upload" style="color:var(--primary);"></i> Assignment Submission Workspace (ASM-004)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <strong style="color:var(--navy-dark);">${w.title}</strong>
-          <p style="margin:2px 0 0 0; color:var(--slate);">Course: ${w.course} · Due: ${w.dueDate}</p>
-        </div>
-
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Git Repository / Cloud Project Link</label>
-          <input type="text" placeholder="https://github.com/username/project-repo" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
-        </div>
-
-        <div style="border:2px dashed #cbd5e1; border-radius:8px; padding:20px; text-align:center; background:#ffffff;">
-          <i data-lucide="file-up" style="width:32px; height:32px; color:var(--primary); margin-bottom:6px;"></i>
-          <strong style="display:block; font-size:13px; color:var(--navy-dark);">Upload Project Archive / PDF Document</strong>
-          <span style="font-size:11px; color:var(--slate);">Supported formats: ZIP, TAR.GZ, PDF (Max 25MB)</span>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.submitLearnerWork('${w.id}')">Submit for Evaluation</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  submitLearnerWork(workId) {
-    const w = db.learnerData.myWork.find(x => x.id === workId);
-    if (w) {
-      w.status = "Submitted";
-    }
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Assignment Submitted", "Project archive uploaded and placed in faculty grading queue.", "success");
-    if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
-      RenderEngine.learnerDashboard();
-    } else {
-      RenderEngine.learnerWorkspace(Router.currentRoute);
-    }
-  },
-
-
-  openAdminPaymentEvidence(paymentId) {
-    const p = db.adminData.financePayments.find(x => x.id === paymentId);
-    if (!p) return;
-
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="receipt" style="color:var(--primary);"></i> Manual Payment Verification (FLOW-013)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:16px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:13px;">
-          <div><span style="color:var(--slate); display:block; font-size:11px;">LEARNER / COURSE</span><strong>${p.learner}</strong><br><span style="color:var(--slate);">${p.course}</span></div>
-          <div><span style="color:var(--slate); display:block; font-size:11px;">PAYER & AMOUNT</span><strong>${p.payer}</strong><br><strong style="color:var(--secondary); font-size:15px;">${p.amount}</strong></div>
-          <div><span style="color:var(--slate); display:block; font-size:11px;">PAYMENT CHANNEL</span>${p.method}</div>
-          <div><span style="color:var(--slate); display:block; font-size:11px;">BANK TRANSACTION REF</span><code>${p.ref}</code></div>
-        </div>
-
-        <div style="border:2px dashed #cbd5e1; border-radius:10px; padding:24px; text-align:center; background:#ffffff;">
-          <i data-lucide="file-check-2" style="width:48px; height:48px; color:var(--primary); margin-bottom:8px;"></i>
-          <strong style="display:block; font-size:14px; color:var(--navy-dark);">Official Bank Transfer Deposit Slip Attached</strong>
-          <span style="font-size:12px; color:var(--slate);">Filename: ${p.receipt} · Uploaded Today 11:42 PKT</span>
-          <div style="margin-top:12px;">
-            <span class="badge badge-success">✓ Cryptographic Image Watermark Verified</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-      <button class="btn btn-danger" onclick="Actions.rejectAdminPayment('${p.id}')">Reject Deposit</button>
-      <button class="btn btn-primary" class="btn btn-primary" onclick="Actions.approveAdminPayment('${p.id}')">Approve & Grant Term Access</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  approveAdminPayment(paymentId) {
-    const p = db.adminData.financePayments.find(x => x.id === paymentId);
-    if (!p) return;
-
-    p.status = "Approved";
-    if (db.adminData.kpis.pendingPaymentReviews > 0) {
-      db.adminData.kpis.pendingPaymentReviews--;
-    }
-
-    db.auditLogs.unshift({
-      id: "AUD-PAY-" + Math.floor(1000 + Math.random() * 9000),
-      timestamp: new Date().toLocaleTimeString(),
-      actorName: "Platform Admin",
-      action: "FLOW-013 Manual Payment Approved",
-      entityId: paymentId,
-      severity: "High"
-    });
-
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Manual Payment Approved", `Payment ${paymentId} for ${p.learner} has been verified. Access term provisioned.`, "success");
-
-    if (Router.currentRoute === "dashboard") {
-      RenderEngine.adminDashboard();
-    } else {
-      RenderEngine.adminWorkspace(Router.currentRoute);
-    }
-  },
-
-  rejectAdminPayment(paymentId) {
-    const p = db.adminData.financePayments.find(x => x.id === paymentId);
-    if (!p) return;
-
-    p.status = "Rejected (Insufficient Proof)";
-    if (db.adminData.kpis.pendingPaymentReviews > 0) {
-      db.adminData.kpis.pendingPaymentReviews--;
-    }
-
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Payment Rejected", `Payment ${paymentId} marked as invalid. CSR notified to follow up with payer.`, "warning");
-
-    if (Router.currentRoute === "dashboard") {
-      RenderEngine.adminDashboard();
-    } else {
-      RenderEngine.adminWorkspace(Router.currentRoute);
-    }
-  },
-
-  openAdminMatchTrainerModal(trialId) {
-    const t = db.adminData.csrSales.find(x => x.id === trialId);
-    if (!t) return;
-
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="user-check" style="color:var(--primary);"></i> Trainer Placement Diagnostic Match (FLOW-006)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <strong style="color:var(--navy-dark);">Prospect: ${t.prospect}</strong>
-          <p style="margin:2px 0 0 0; color:var(--slate);">Course: ${t.course} · Preferred: ${t.preferredSlot}</p>
-        </div>
-
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Select Qualified Faculty Trainer</label>
-          <select id="admin-trainer-select" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="Sara Javed">Sara Javed (Spoken English & Communication Specialist - Rating 4.9/5.0)</option>
-            <option value="Alex Rivera">Alex Rivera (Lead Full-Stack Web Development Facilitator)</option>
-            <option value="Prof. Tariq Hassan">Prof. Tariq Hassan (Senior Mathematics & Science Lead)</option>
-          </select>
-        </div>
-
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Diagnostic Assessment Level</label>
-          <select id="admin-diag-level" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="Beginner Placement">Beginner / Foundation Diagnostic (CEFR A1-A2)</option>
-            <option value="Intermediate Assessment">Intermediate Practical Assessment (CEFR B1-B2)</option>
-            <option value="Advanced Capstone">Advanced Fluency / Code Diagnostic (CEFR C1)</option>
-          </select>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmAdminTrainerMatch('${t.id}')">Confirm Match & Schedule Trial</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  confirmAdminTrainerMatch(trialId) {
-    const t = db.adminData.csrSales.find(x => x.id === trialId);
-    const trainerSelect = document.getElementById("admin-trainer-select");
-    const assignedTrainer = trainerSelect ? trainerSelect.value : "Sara Javed";
-
-    if (t) {
-      t.status = "Trainer Matched";
-      t.assignedTrainer = assignedTrainer;
-      if (db.adminData.kpis.pendingTrials > 0) {
-        db.adminData.kpis.pendingTrials--;
-      }
-    }
-
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Trainer Matched (FLOW-006)", `Assigned ${assignedTrainer} to trial session for ${t ? t.prospect : 'prospect'}. WebRTC room scheduled.`, "success");
-
-    if (Router.currentRoute === "dashboard") {
-      RenderEngine.adminDashboard();
-    } else {
-      RenderEngine.adminWorkspace(Router.currentRoute);
-    }
-  },
-
-  openAdminAddLeadModal() {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="user-plus" style="color:var(--primary);"></i> Inbound Prospect Intake (FLOW-006)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Prospect Full Name</label>
-          <input type="text" id="admin-new-lead-name" class="form-control" placeholder="e.g. Daniyal Qureshi" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Course of Interest</label>
-          <select id="admin-new-lead-course" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="Spoken English Fluency">Spoken English Fluency</option>
-            <option value="Full-Stack Web Dev">Full-Stack Web Dev</option>
-            <option value="Grade 8 Mathematics (FBISE)">Grade 8 Mathematics (FBISE)</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Preferred Time Slot</label>
-          <input type="text" id="admin-new-lead-slot" class="form-control" placeholder="e.g. Tue/Thu 04:00 PM PKT" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveAdminNewLead()">Ingest Lead</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  saveAdminNewLead() {
-    const name = document.getElementById("admin-new-lead-name")?.value || "New Prospect";
-    const course = document.getElementById("admin-new-lead-course")?.value || "Spoken English Fluency";
-    const slot = document.getElementById("admin-new-lead-slot")?.value || "Mon/Wed 11:00 AM";
-
-    const newId = "TRL-" + Math.floor(200 + Math.random() * 800);
-    db.adminData.csrSales.unshift({
-      id: newId,
-      prospect: name,
-      course: course,
-      stage: "Trial Requested",
-      preferredSlot: slot,
-      assignedCsr: "Hamza Khan",
-      status: "Pending Trainer Assignment"
-    });
-    db.adminData.kpis.activeLeads++;
-    db.adminData.kpis.pendingTrials++;
-
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Lead Ingested", `Lead ${name} added to CSR pipeline.`, "success");
-
-    if (Router.currentRoute === "dashboard") {
-      RenderEngine.adminDashboard();
-    } else {
-      RenderEngine.adminWorkspace(Router.currentRoute);
-    }
-  },
-
-  sendAdminRenewalReminder(enrolmentId) {
-    const m = db.adminData.membershipsRenewals.find(x => x.id === enrolmentId);
-    if (m) {
-      m.renewalStatus = "Reminder Dispatched (FLOW-038)";
-    }
-    Notifications.push("Renewal Invoice Sent", `Renewal notice and payment link dispatched to ${m ? m.learner : 'learner'} via SMS & Email.`, "success");
-    
-    if (Router.currentRoute === "dashboard") {
-      RenderEngine.adminDashboard();
-    } else {
-      RenderEngine.adminWorkspace(Router.currentRoute);
-    }
-  },
-
-  openAdminClassInspectorModal(classId) {
-    const c = db.adminData.academicDelivery.find(x => x.id === classId);
-    if (!c) return;
-
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="presentation" style="color:var(--primary);"></i> Live Class & Delivery Report Inspector (FLOW-015/016)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:14px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-          <div><span style="color:var(--slate); font-size:11px;">CLASS OCCURRENCE</span><strong>${c.title}</strong></div>
-          <div><span style="color:var(--slate); font-size:11px;">FACULTY TRAINER</span><strong>${c.trainer}</strong></div>
-          <div><span style="color:var(--slate); font-size:11px;">OCCURRENCE TIME</span>${c.time}</div>
-          <div><span style="color:var(--slate); font-size:11px;">ATTENDEE PARTICIPATION</span><strong>${c.participants} Enrolled Learners</strong></div>
-        </div>
-
-        <div style="border:1px solid #e2e8f0; border-radius:8px; padding:14px;">
-          <h4 style="margin:0 0 6px 0; font-size:13px; color:var(--navy-dark);">Teacher Educational Delivery Notes</h4>
-          <p style="color:var(--slate); font-size:12px; line-height:1.5; margin:0;">
-            All learners completed the interactive vocabulary drill with 92% comprehension. Oral fluency checks recorded for 6 learners. Homework assignment #4 distributed.
-          </p>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-      <button class="btn btn-primary" onclick="Actions.approveAdminClassReport('${c.id}')">Approve Educational Report</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  approveAdminClassReport(classId) {
-    const c = db.adminData.academicDelivery.find(x => x.id === classId);
-    if (c) {
-      c.reportStatus = "Report Approved";
-      if (db.adminData.kpis.reportsDue > 0) db.adminData.kpis.reportsDue--;
-    }
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Delivery Report Approved", `Teacher delivery notes approved and archived for class ${classId}.`, "success");
-
-    if (Router.currentRoute === "dashboard") {
-      RenderEngine.adminDashboard();
-    } else {
-      RenderEngine.adminWorkspace(Router.currentRoute);
-    }
-  },
-
-  openAdminStaffProfileModal(staffId) {
-    const s = db.adminData.hrStaff.find(x => x.id === staffId);
-    if (!s) return;
-
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="users-round" style="color:var(--primary);"></i> Staff Profile & HR Agreement (PAY-013)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-          <div><span style="color:var(--slate); font-size:11px;">FULL NAME</span><strong>${s.name}</strong></div>
-          <div><span style="color:var(--slate); font-size:11px;">DEPARTMENT</span><strong>${s.dept}</strong></div>
-          <div><span style="color:var(--slate); font-size:11px;">ROLE SCOPE</span>${s.role}</div>
-          <div><span style="color:var(--slate); font-size:11px;">COMPENSATION RATE</span><strong style="color:var(--primary);">${s.hourlyRate || s.baseSalary}</strong></div>
-        </div>
-        <div style="border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-          <span class="badge badge-success">✓ Verified CNIC & Degree Credentials</span>
-          <span class="badge badge-success" style="margin-left:6px;">✓ Active Safeguarding Background Check</span>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openAdminInviteModal() {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="mail-plus" style="color:var(--primary);"></i> Outbound Staff Invitation (FLOW-003)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Recipient Email Address</label>
-          <input type="email" id="admin-invite-email" class="form-control" placeholder="staff.member@innovatorhuzsam.com" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Target Role Scope</label>
-          <select id="admin-invite-role" class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="Trainer / Teacher">Trainer / Teacher</option>
-            <option value="Academic Reviewer">Academic Reviewer</option>
-            <option value="CSR / Admissions Specialist">CSR / Admissions Specialist</option>
-            <option value="Course Creator">Course Creator</option>
-            <option value="Operations Manager">Operations Manager</option>
-          </select>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.sendAdminInvite()">Send Secure Invite</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  sendAdminInvite() {
-    const email = document.getElementById("admin-invite-email")?.value || "staff@innovatorhuzsam.com";
-    document.getElementById("generic-modal")?.classList.add("hidden");
-    Notifications.push("Invitation Dispatched", `Cryptographic onboarding invitation sent to ${email}.`, "success");
-  },
-
-  resendAdminInvite(inviteId) {
-    Notifications.push("Invitation Re-dispatched", `Fresh token generated and sent for invite ${inviteId}.`, "success");
-  },
-
-  revokeAdminSession(sessionId) {
-    Notifications.push("Session Terminated", `Session ${sessionId} terminated and auth tokens revoked.`, "warning");
-  },
-
-  openAdminReferenceModal(category = "Class Formats") {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="database" style="color:var(--primary);"></i> Controlled Reference Data (ADM-001)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Domain Category</label>
-          <input type="text" value="${category}" disabled style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline); background:#f1f5f9;" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">New Controlled Value</label>
-          <input type="text" placeholder="e.g. 120 Mins Intensive" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Value Added', 'New reference code registered.', 'success');">Save Value</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openAdminRuleModal(ruleId = "RULE-01") {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="scale" style="color:var(--primary);"></i> Propose Policy Revision (ADM-002)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Rule ID & Scope</label>
-          <input type="text" value="${ruleId}" disabled style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline); background:#f1f5f9;" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Updated Parameter Threshold</label>
-          <input type="text" value="Minimum 4 Hours Before Occurrence" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Effective Date</label>
-          <input type="date" value="2026-09-01" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Policy Revision Enforced', 'Rule updated with version bump and audit record.', 'success');">Enforce Policy</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  commitAdminImportBatch() {
-    Notifications.push("Staged Import Committed (ADM-004)", "120 student records ingested and committed to database. Audit transaction signed.", "success");
-  },
-
-  openAdminExportModal() {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-output" style="color:var(--primary);"></i> Generate Controlled Data Export (ADM-005)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Export Dataset Scope</label>
-          <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="Financial Ledger & Invoices">Financial Ledger & Invoices (Q2-Q3 2026)</option>
-            <option value="Academic Attendance & Reports">Academic Attendance & Reports</option>
-            <option value="Staff Payroll & Teaching Deliveries">Staff Payroll & Teaching Deliveries</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Mandatory Business Justification</label>
-          <textarea class="form-control" placeholder="Reason for compliance export..." style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);"></textarea>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Export Generated', 'Export package created. Secure link active for 2 hours.', 'success');">Generate Export</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openAdminAuditPayloadModal(auditId) {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-spreadsheet" style="color:var(--primary);"></i> Immutable Audit Event Payload (ADM-006)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:10px; font-size:13px;">
-        <div><span style="color:var(--slate); font-size:11px;">EVENT TRANSACTION HASH</span><code>sha256-8a901ff82acb9802441de01</code></div>
-        <div style="background:#0f172a; color:#38bdf8; padding:14px; border-radius:8px; font-family:monospace; font-size:12px; max-height:220px; overflow:auto;">
-{
-  "auditId": "${auditId}",
-  "timestamp": "2026-08-17T11:42:00.000Z",
-  "actor": "Admin User (IAM-901)",
-  "action": "FLOW-013_MANUAL_PAYMENT_VERIFIED",
-  "entityTarget": "PAY-801",
-  "verifiedBankRef": "TXN-90214",
-  "grantedEnrolmentTerm": "TERM-2026-Q3",
-  "signature": "RSA-PSS-SHA256-VALID"
-}
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openAdminLegalHoldModal() {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="gavel" style="color:var(--primary);"></i> Add Statutory Legal Hold (ADM-008)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Legal Case Identifier</label>
-          <input type="text" placeholder="e.g. Case #509 (Tax Assessment)" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Protected Dataset</label>
-          <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="Financial & Payment Records">Financial & Payment Records</option>
-            <option value="Academic Records & Transcripts">Academic Records & Transcripts</option>
-          </select>
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Legal Hold Applied', 'Target dataset locked against hard deletion.', 'success');">Apply Legal Hold</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-  openAdminRoutingRuleModal(category = "General Inquiry") {
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="heart-handshake" style="color:var(--primary);"></i> Support Case Routing Policy (ADM-009)</div>`;
-    body.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Inquiry Category</label>
-          <input type="text" value="${category}" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Assigned Department</label>
-          <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);">
-            <option value="CSR / Admissions Specialist">CSR / Admissions Specialist</option>
-            <option value="Finance & Manual Payment Desk">Finance & Manual Payment Desk</option>
-            <option value="Assigned Course Trainer">Assigned Course Trainer</option>
-            <option value="COO & Legal Safeguarding">COO & Legal Safeguarding</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-weight:700; color:var(--navy-dark); display:block; margin-bottom:4px;">Resolution SLA (Hours)</label>
-          <input type="number" value="2" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline);" />
-        </div>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Notifications.push('Routing Policy Saved', 'Automated support case routing updated.', 'success');">Save Policy</button>
-    `;
-
-    modal.classList.remove("hidden");
-    if (window.lucide) window.lucide.createIcons();
-  },
-
-    switchPreviewFormat(format) {
-      const canvas = document.getElementById("creator-dynamic-view-canvas");
-      if (canvas) {
-        canvas.innerHTML = RenderEngine.renderCreatorLmsPreview(format);
-        window.lucide?.createIcons();
-        Notifications.push("Preview Format Switched", "Switched simulator view to " + format.toUpperCase() + " mode.", "info");
-      }
-    },
-  
-  // Audits governance actions in real-time
-  audit(actionCode, details, level = "Low", changes = "N/A") {
-    const timestamp = new Date().toISOString().replace("T", " ").slice(0, 19);
-    const newLog = {
-      timestamp,
-      actor: db.currentUser.name,
-      module: Simulator.activeRole === "coo" ? "COO" : "ADM",
-      actionCode,
-      details,
-      level,
-      changes,
-      origin: "Admin console",
-      correlationId: `corr_${Date.now().toString(36)}`
-    };
-    db.auditLogs.unshift(newLog); // prepend to logs
-    
-    // Auto-create notification for dashboard
-    if (level === "High" || level === "Medium") {
-      Notifications.push(`Action Audited: ${actionCode}`, `${details} by ${db.currentUser.name}`, "info");
-    }
-  },
-
-  
-  // ============================================================================
-  // OPERATIONAL MANAGER (OM) - DOMAIN-SPECIFIC WORKFLOW MODALS & ACTIONS
-  // ============================================================================
-
-  // FLOW-007: Trial Scheduling
-  openOmTrialSchedule(trialId) {
-    const trial = db.omData.trials.find(t => t.id === trialId);
-    if (!trial) return;
-
-    const modal = document.getElementById("generic-modal");
-    const dialog = modal.querySelector(".modal");
-    dialog.className = "modal om-flow-dialog";
-    document.getElementById("modal-title").textContent = `Schedule Trial Class: ${trial.learner}`;
-    
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="calendar-plus"></i></span>
-        <div><span>Trial Scheduling (FLOW-007)</span><strong>Assign verified trial prospect to trainer & provision Daily.co room</strong></div>
-        <span class="badge badge-warning">${trial.status}</span>
-      </div>
-      <div class="account-summary-bar">
-        <div><span>Prospect</span><strong>${trial.learner} (${trial.age})</strong></div>
-        <div><span>Course</span><strong>${trial.course}</strong></div>
-        <div><span>Placement Score</span><strong>${trial.placementScore}</strong></div>
-        <div><span>Guardian Consent</span><strong>${trial.consent}</strong></div>
-      </div>
-      <div class="form-group">
-        <label for="trial-trainer-select">Select Trainer</label>
-        <select id="trial-trainer-select" class="form-control">
-          ${db.omData.trainers.map(trn => `<option value="${trn.name}">${trn.name} (${trn.programmes}) - Load: ${trn.weeklyLoad}</option>`).join("")}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="trial-slot-select">Schedule Time Slot</label>
-        <select id="trial-slot-select" class="form-control">
-          <option value="Today 16:00 - 16:45 PKT">Today 16:00 - 16:45 PKT (Recommended)</option>
-          <option value="Tomorrow 11:00 - 11:45 PKT">Tomorrow 11:00 - 11:45 PKT</option>
-          <option value="Tomorrow 15:00 - 15:45 PKT">Tomorrow 15:00 - 15:45 PKT</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="trial-daily-room">Daily.co Video Room Endpoint</label>
-        <input id="trial-daily-room" class="form-control" value="https://ihs.daily.co/trial-${trial.learner.toLowerCase().replace(/\s+/g, '-')}-${trial.id.toLowerCase()}" readonly>
-      </div>
-      <label class="confirmation-check">
-        <input id="trial-conflict-check" type="checkbox" checked>
-        <span>Validated trainer schedule conflict & learner availability.</span>
-      </label>
-      <div id="trial-schedule-error" class="form-error hidden">Trainer conflict validation is required.</div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmTrialSchedule('${trial.id}')">Confirm & Provision Room</button>
-    `;
-
-    modal.classList.remove("hidden");
-    window.lucide?.createIcons();
-  },
-
-  confirmOmTrialSchedule(trialId) {
-    const trial = db.omData.trials.find(t => t.id === trialId);
-    const trainer = document.getElementById("trial-trainer-select")?.value;
-    const time = document.getElementById("trial-slot-select")?.value;
-    const room = document.getElementById("trial-daily-room")?.value;
-    const conflictChecked = document.getElementById("trial-conflict-check")?.checked;
-
-    if (!trial || !trainer || !time || !conflictChecked) {
-      document.getElementById("trial-schedule-error")?.classList.remove("hidden");
-      return;
-    }
-
-    trial.status = "Scheduled";
-    trial.trainer = trainer;
-    trial.time = time;
-    trial.room = room;
-    trial.reminder = "Delivered";
-    trial.signal = "Room provisioned; reminder sent";
-
-    // Add to classes table
-    const newClass = {
-      id: "CLS-" + Math.floor(Math.random() * 900 + 9100),
-      title: `${trial.course} Trial Consultation`,
-      type: "Trial",
-      trainer,
-      learner: trial.learner,
-      timing: time,
-      participants: 1,
-      roomState: "Provisioned",
-      liveState: "Upcoming",
-      attendanceStatus: "Pending Join",
-      reportStatus: "Pending",
-      technicalStatus: "Normal",
-      roomUrl: room,
-      owner: trainer,
-      status: "Upcoming"
-    };
-    db.omData.classes.unshift(newClass);
-
-    this.audit("OM_TRIAL_SCHEDULED", `Scheduled trial ${trial.id} for ${trial.learner} with trainer ${trainer} at ${time}`, "Medium", "Ready for Scheduling -> Scheduled");
-    Notifications.push("Trial Scheduled", `Trial for ${trial.learner} scheduled. Daily.co room provisioned.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // FLOW-008: Trial Outcomes
-  openOmTrialOutcome(trialId) {
-    const trial = db.omData.trials.find(t => t.id === trialId);
-    if (!trial) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Record Trial Outcome: ${trial.learner}`;
-    
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="calendar-check-2"></i></span>
-        <div><span>Trial Completion & Outcome (FLOW-008)</span><strong>Record attendance, trainer report notes, and CSR follow-up</strong></div>
-      </div>
-      <div class="form-group">
-        <label for="trial-outcome-status">Trial Outcome</label>
-        <select id="trial-outcome-status" class="form-control">
-          <option value="Completed">Completed (Attended & Assessed)</option>
-          <option value="No-Show">No-Show (Learner did not connect)</option>
-          <option value="Technical Exception">Technical Exception (Room failure / Disconnect)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="trial-trainer-feedback">Trainer Assessment & Recommendations</label>
-        <textarea id="trial-trainer-feedback" class="form-control" rows="3" placeholder="Enter syllabus covered, student engagement, and recommended enrolment tier..."></textarea>
-      </div>
-      <div class="form-group">
-        <label for="trial-csr-action">CSR Follow-up Task</label>
-        <select id="trial-csr-action" class="form-control">
-          <option value="Offer Membership Purchase">Contact Payer: Offer Monthly/Quarterly Plan</option>
-          <option value="Offer Reschedule">Offer Replacement Trial Slot</option>
-          <option value="Close Lead">Close Lead (Not Interested)</option>
-        </select>
-      </div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmTrialOutcome('${trial.id}')">Save Outcome & Trigger CSR Task</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  confirmOmTrialOutcome(trialId) {
-    const trial = db.omData.trials.find(t => t.id === trialId);
-    const outcome = document.getElementById("trial-outcome-status")?.value;
-    const feedback = document.getElementById("trial-trainer-feedback")?.value.trim() || "Completed satisfactorily";
-    const csrAction = document.getElementById("trial-csr-action")?.value;
-
-    if (!trial) return;
-
-    trial.status = outcome;
-    trial.outcome = feedback;
-    trial.followUp = csrAction;
-    trial.signal = `Outcome recorded: ${outcome}`;
-
-    this.audit("OM_TRIAL_OUTCOME_RECORDED", `Recorded outcome ${outcome} for trial ${trial.id}. CSR task: ${csrAction}`, "Medium", `Scheduled -> ${outcome}`);
-    Notifications.push("Trial Outcome Recorded", `Trial ${trial.id} updated to ${outcome}.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // FLOW-013: Enrolment Activation & Setup
-  openOmEnrolmentSetup(enrolmentId) {
-    const enr = db.omData.enrolments.find(e => e.id === enrolmentId);
-    if (!enr) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Configure Enrolment: ${enr.learner}`;
-    
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="user-plus"></i></span>
-        <div><span>Enrolment Setup (FLOW-013)</span><strong>Verified payment exists. Assign course version, trainer, cohort, & schedule.</strong></div>
-      </div>
-      <div class="account-summary-bar">
-        <div><span>Learner</span><strong>${enr.learner}</strong></div>
-        <div><span>Course Track</span><strong>${enr.course}</strong></div>
-        <div><span>Payment Reference</span><strong>${enr.paymentRef}</strong></div>
-        <div><span>Access Grant</span><strong>${enr.grantRef}</strong></div>
-      </div>
-      <div class="form-group">
-        <label for="enr-version-select">Curriculum Version</label>
-        <select id="enr-version-select" class="form-control">
-          <option value="${enr.version}">${enr.version} (Active Production Standard)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="enr-trainer-select">Assign Trainer</label>
-        <select id="enr-trainer-select" class="form-control">
-          ${db.omData.trainers.map(trn => `<option value="${trn.name}">${trn.name} (${trn.programmes})</option>`).join("")}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="enr-cohort-select">Assign Course Run / Cohort</label>
-        <select id="enr-cohort-select" class="form-control">
-          ${db.omData.cohorts.map(coh => `<option value="${coh.name}">${coh.name} (${coh.enrolled}/${coh.capacity} seats)</option>`).join("")}
-          <option value="N/A (1:1 Delivery)">N/A (Dedicated 1:1 Delivery)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="enr-schedule-input">Schedule Plan Cadence</label>
-        <input id="enr-schedule-input" class="form-control" value="Mon / Wed 13:30 PKT">
-      </div>
-      <label class="confirmation-check">
-        <input id="enr-entitlement-check" type="checkbox" checked>
-        <span>Initialize entitlement ledger (16 lesson credits) & allocate membership.</span>
-      </label>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmEnrolmentSetup('${enr.id}')">Activate Enrolment & Grant Access</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  confirmOmEnrolmentSetup(enrolmentId) {
-    const enr = db.omData.enrolments.find(e => e.id === enrolmentId);
-    const trainer = document.getElementById("enr-trainer-select")?.value;
-    const cohort = document.getElementById("enr-cohort-select")?.value;
-    const schedule = document.getElementById("enr-schedule-input")?.value;
-
-    if (!enr) return;
-
-    enr.status = "Active";
-    enr.trainer = trainer;
-    enr.cohort = cohort;
-    enr.schedule = schedule;
-    enr.credits = "16 / 16";
-    enr.signal = "Active learning access";
-
-    // Add to entitlements
-    db.omData.entitlements.push({
-      id: "ENT-" + Math.floor(Math.random() * 900 + 100),
-      learner: enr.learner,
-      course: `${enr.course} ${enr.version}`,
-      totalGranted: 16,
-      debited: 0,
-      reserved: 0,
-      balance: 16,
-      status: "Active",
-      expiry: "2026-11-30",
-      riskLevel: "Normal",
-      lastDebit: "None",
-      renewalNotice: "Not Due",
-      owner: "Sarah Connor",
-      signal: "16 credits active"
-    });
-
-    this.audit("OM_ENROLMENT_ACTIVATED", `Activated enrolment ${enr.id} for ${enr.learner}. Trainer: ${trainer}, Cohort: ${cohort}`, "High", "Pending Setup -> Active");
-    Notifications.push("Enrolment Activated", `${enr.learner} is now active in ${enr.course}. Access grant allocated.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // FLOW-016: Class Delivery Review & Approval
-  openOmClassReview(reviewId) {
-    const rev = db.omData.classReviews.find(r => r.id === reviewId);
-    if (!rev) return;
-
-    const modal = document.getElementById("generic-modal");
-    const dialog = modal.querySelector(".modal");
-    dialog.className = "modal om-flow-dialog";
-    document.getElementById("modal-title").textContent = `Class Delivery Approval: ${rev.id}`;
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="check-circle-2"></i></span>
-        <div><span>Class Delivery Review (FLOW-016)</span><strong>Review attendance evidence, duration, and trainer report before delivery sign-off</strong></div>
-        <span class="badge badge-warning">${rev.status}</span>
-      </div>
-      <div class="account-summary-bar">
-        <div><span>Class Occurrence</span><strong>${rev.classId}</strong></div>
-        <div><span>Trainer</span><strong>${rev.trainer}</strong></div>
-        <div><span>Learner / Cohort</span><strong>${rev.learner}</strong></div>
-        <div><span>Delivered Duration</span><strong>${rev.duration}</strong></div>
-      </div>
-      <div class="om-flow-evidence-box">
-        <h4>1. Syllabus & Progress Evidence</h4>
-        <p><strong>Covered Syllabus:</strong> ${rev.syllabus}</p>
-        <p><strong>Learning Progress:</strong> ${rev.progress}</p>
-        <p><strong>Assigned Homework:</strong> ${rev.homework}</p>
-        <p><strong>Trainer Notes:</strong> ${rev.notes}</p>
-      </div>
-      <div class="om-flow-evidence-box">
-        <h4>2. Daily.co Reconciled Attendance Evidence</h4>
-        <p>${rev.reconciledAttendance}</p>
-      </div>
-      <div class="form-group">
-        <label for="review-decision-outcome">Delivery Decision</label>
-        <select id="review-decision-outcome" class="form-control">
-          <option value="Approved">Approve Delivery (Debits 1 credit, records progress, creates payable earning source)</option>
-          <option value="Correction Requested">Return for Correction (Request trainer edit)</option>
-          <option value="Rejected">Reject Delivery (No entitlement debit, no earning created)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="review-decision-notes">Decision / Correction Note</label>
-        <textarea id="review-decision-notes" class="form-control" rows="3" placeholder="Explain the decision basis. Required for approvals and corrections..."></textarea>
-      </div>
-      <div class="om-downstream-notice">
-        <i data-lucide="info"></i>
-        <span><strong>Segregation of Duties:</strong> Delivery approval creates a payable earning record ('ERN-xxx'), but <strong>does not settle or pay payroll</strong>. Payroll settlement is an independent financial control.</span>
-      </div>
-      <label class="confirmation-check">
-        <input id="review-mfa-check" type="checkbox" checked>
-        <span>I confirmed delivery evidence against Daily.co telemetry and curriculum progress standard.</span>
-      </label>
-      <div id="review-decision-error" class="form-error hidden">A decision note and verification confirmation are required.</div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmClassReview('${rev.id}')">Submit Decision</button>
-    `;
-
-    modal.classList.remove("hidden");
-    window.lucide?.createIcons();
-  },
-
-  confirmOmClassReview(reviewId) {
-    const rev = db.omData.classReviews.find(r => r.id === reviewId);
-    const outcome = document.getElementById("review-decision-outcome")?.value;
-    const notes = document.getElementById("review-decision-notes")?.value.trim();
-    const verified = document.getElementById("review-mfa-check")?.checked;
-
-    if (!rev || !outcome || !verified) {
-      document.getElementById("review-decision-error")?.classList.remove("hidden");
-      return;
-    }
-
-    const prevStatus = rev.status;
-    rev.status = outcome;
-    rev.decidedBy = "Sarah Connor (OM)";
-    rev.decidedAt = new Date().toISOString();
-    rev.notes = notes || rev.notes;
-
-    // If approved, debit credit and create earning
-    if (outcome === "Approved") {
-      rev.downstream = "Entitlement debited; progress event created; payable earning ERN-" + Math.floor(Math.random() * 9000 + 1000) + " generated.";
-      rev.signal = "Approved & debited";
-      
-      const targetClass = db.omData.classes.find(c => c.id === rev.classId);
-      if (targetClass) {
-        targetClass.status = "Completed";
-        targetClass.reportStatus = "Approved";
-      }
-    } else if (outcome === "Correction Requested") {
-      rev.returnReason = notes;
-      rev.signal = "Awaiting trainer correction";
-    }
-
-    this.audit("OM_CLASS_DELIVERY_DECISION", `Delivery review ${rev.id} marked ${outcome}. Class: ${rev.classId}. Note: ${notes}`, "High", `${prevStatus} -> ${outcome}`);
-    Notifications.push("Delivery Decision Recorded", `${rev.id} is now ${outcome}.`, outcome === "Approved" ? "success" : "warning");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // FLOW-011 / FLOW-012: Manual Payment Review & Approval
-  openOmPaymentReview(paymentId) {
-    const pay = db.omData.payments.find(p => p.id === paymentId);
-    if (!pay) return;
-
-    pay.status = "Under Review";
-    pay.reviewer = "Sarah Connor";
-
-    const modal = document.getElementById("generic-modal");
-    const dialog = modal.querySelector(".modal");
-    dialog.className = "modal om-flow-dialog";
-    document.getElementById("modal-title").textContent = `Manual Payment Review: ${pay.id}`;
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="receipt"></i></span>
-        <div><span>Manual Payment Verification (FLOW-012)</span><strong>Private evidence review: Receipt is only evidence until explicit OM approval</strong></div>
-        <span class="badge badge-warning">${pay.status}</span>
-      </div>
-      <div class="account-summary-bar">
-        <div><span>Learner</span><strong>${pay.learner}</strong></div>
-        <div><span>Payer</span><strong>${pay.payer}</strong></div>
-        <div><span>Submitted Amount</span><strong>${pay.submittedAmount} (${pay.currency})</strong></div>
-        <div><span>Expected Amount</span><strong>${pay.expectedAmount}</strong></div>
-      </div>
-      <div class="om-flow-evidence-box">
-        <h4>Payment Receipt & Transmission Details</h4>
-        <p><strong>Payment Channel:</strong> ${pay.channel}</p>
-        <p><strong>Bank / Transfer Reference:</strong> ${pay.reference}</p>
-        <p><strong>Receipt File:</strong> ${pay.receiptFile}</p>
-        <p><strong>Receipt Checksum:</strong> <span class="om-checksum-tag">${pay.receiptChecksum}</span></p>
-        <p><strong>Duplicate Detection Check:</strong> <span class="success-text">${pay.duplicateFlag}</span></p>
-      </div>
-      <div class="form-group">
-        <label for="pay-decision-outcome">Verification Decision</label>
-        <select id="pay-decision-outcome" class="form-control">
-          <option value="Approved">Approve Payment (Creates payment transaction, allocation, official receipt, & access grant)</option>
-          <option value="Correction Requested">Request Payer Correction (Legibility or reference missing)</option>
-          <option value="Rejected">Reject Submission (Invalid transaction / no funds received)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="pay-decision-notes">Verification Notes</label>
-        <textarea id="pay-decision-notes" class="form-control" rows="3" placeholder="Enter bank verification reference or correction details..."></textarea>
-      </div>
-      <label class="confirmation-check">
-        <input id="pay-mfa-check" type="checkbox" checked>
-        <span>I verified the private transfer evidence against the bank settlement snapshot.</span>
-      </label>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmPaymentReview('${pay.id}')">Submit Payment Decision</button>
-    `;
-
-    modal.classList.remove("hidden");
-    window.lucide?.createIcons();
-  },
-
-  confirmOmPaymentReview(paymentId) {
-    const pay = db.omData.payments.find(p => p.id === paymentId);
-    const outcome = document.getElementById("pay-decision-outcome")?.value;
-    const notes = document.getElementById("pay-decision-notes")?.value.trim();
-    const verified = document.getElementById("pay-mfa-check")?.checked;
-
-    if (!pay || !outcome || !verified) return;
-
-    const prevStatus = pay.status;
-    pay.status = outcome;
-    pay.notes = notes || pay.notes;
-
-    if (outcome === "Approved") {
-      pay.txId = "TX-" + Math.floor(Math.random() * 9000 + 1000);
-      pay.receiptId = "RCP-" + Math.floor(Math.random() * 9000 + 1000);
-      pay.accessGrant = "AG-" + Math.floor(Math.random() * 900 + 100);
-      pay.signal = "Payment approved & access granted";
-
-      // If pending enrolment exists, link it
-      const enr = db.omData.enrolments.find(e => e.learner === pay.learner);
-      if (enr) {
-        enr.paymentRef = `${pay.id} (Approved)`;
-        enr.grantRef = pay.accessGrant;
-      }
-    } else if (outcome === "Correction Requested") {
-      pay.returnReason = notes;
-      pay.signal = "Awaiting payer correction";
-    }
-
-    this.audit("OM_PAYMENT_DECISION", `Payment ${pay.id} marked ${outcome}. Amount: ${pay.submittedAmount}. Note: ${notes}`, "High", `${prevStatus} -> ${outcome}`);
-    Notifications.push("Payment Decision Recorded", `Payment ${pay.id} is now ${outcome}.`, outcome === "Approved" ? "success" : "warning");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // FLOW-017: Cancel / Reschedule / Makeup Class
-  openOmClassCancelReschedule(classId) {
-    const cls = db.omData.classes.find(c => c.id === classId);
-    if (!cls) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Modify Class Occurrence: ${cls.id}`;
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="calendar-x"></i></span>
-        <div><span>Class Modification & Makeup (FLOW-017)</span><strong>Cancel, reschedule, or generate replacement makeup occurrence</strong></div>
-      </div>
-      <div class="account-summary-bar">
-        <div><span>Occurrence</span><strong>${cls.id}</strong></div>
-        <div><span>Title</span><strong>${cls.title}</strong></div>
-        <div><span>Trainer</span><strong>${cls.trainer}</strong></div>
-        <div><span>Timing</span><strong>${cls.timing}</strong></div>
-      </div>
-      <div class="form-group">
-        <label for="class-action-type">Operational Action</label>
-        <select id="class-action-type" class="form-control">
-          <option value="Reschedule">Reschedule Occurrence (Keep same entitlement)</option>
-          <option value="Cancel & Release Credit">Cancel Class & Release Entitlement Credit</option>
-          <option value="Schedule Makeup">Create Linked Makeup Class Occurrence</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="class-action-reason">Reason for Modification</label>
-        <textarea id="class-action-reason" class="form-control" rows="3" placeholder="Enter reason (e.g. Trainer emergency, learner illness, technical disruption)..."></textarea>
-      </div>
-      <label class="confirmation-check">
-        <input id="class-notify-check" type="checkbox" checked>
-        <span>Send automated reschedule / cancellation notice to learner and trainer.</span>
-      </label>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmClassCancelReschedule('${cls.id}')">Apply Changes</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  confirmOmClassCancelReschedule(classId) {
-    const cls = db.omData.classes.find(c => c.id === classId);
-    const action = document.getElementById("class-action-type")?.value;
-    const reason = document.getElementById("class-action-reason")?.value.trim() || "Operational modification";
-
-    if (!cls) return;
-
-    cls.status = action.includes("Cancel") ? "Cancelled" : "Rescheduled";
-    cls.technicalStatus = `${action}: ${reason}`;
-
-    if (action === "Schedule Makeup") {
-      db.omData.classes.push({
-        id: "CLS-" + Math.floor(Math.random() * 900 + 9200),
-        title: cls.title + " (Makeup)",
-        type: "Makeup (1:1)",
-        trainer: cls.trainer,
-        learner: cls.learner,
-        timing: "Tomorrow 17:00 - 17:45 PKT",
-        participants: 1,
-        roomState: "Provisioned",
-        liveState: "Scheduled",
-        attendanceStatus: "Eligible (1)",
-        reportStatus: "Pending",
-        technicalStatus: `Linked to original occurrence ${cls.id}`,
-        roomUrl: "https://ihs.daily.co/makeup-" + cls.id.toLowerCase(),
-        owner: cls.trainer,
-        status: "Upcoming"
-      });
-    }
-
-    this.audit("OM_CLASS_MODIFIED", `Class ${cls.id} updated: ${action}. Reason: ${reason}`, "High", `Scheduled -> ${cls.status}`);
-    Notifications.push("Class Modified", `Class ${cls.id} has been ${cls.status.toLowerCase()}.`, "warning");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // FLOW-039: Create Cohort Run & Learner Transfer
-  openOmCohortCreate() {
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = "Create New Course Run / Cohort (FLOW-039)";
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="form-group">
-        <label for="new-cohort-name">Cohort / Run Name</label>
-        <input id="new-cohort-name" class="form-control" placeholder="e.g. Literacy Foundations 2026-Q4">
-      </div>
-      <div class="form-group">
-        <label for="new-cohort-course">Course & Version</label>
-        <select id="new-cohort-course" class="form-control">
-          <option value="Basic Literacy (v7.0)">Basic Literacy (v7.0)</option>
-          <option value="Applied Numeracy (v4.2)">Applied Numeracy (v4.2)</option>
-          <option value="Vocational Technology (v3.1)">Vocational Technology (v3.1)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="new-cohort-capacity">Max Student Capacity</label>
-        <input id="new-cohort-capacity" type="number" class="form-control" value="15" min="1" max="50">
-      </div>
-      <div class="form-group">
-        <label for="new-cohort-trainer">Assigned Trainer</label>
-        <select id="new-cohort-trainer" class="form-control">
-          ${db.omData.trainers.map(trn => `<option value="${trn.name}">${trn.name} (${trn.programmes})</option>`).join("")}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="new-cohort-schedule">Weekly Schedule Cadence</label>
-        <input id="new-cohort-schedule" class="form-control" value="Tue / Thu 15:00 PKT">
-      </div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveOmCohort()">Create Course Run</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  saveOmCohort() {
-    const name = document.getElementById("new-cohort-name")?.value.trim();
-    const course = document.getElementById("new-cohort-course")?.value;
-    const capacity = Number(document.getElementById("new-cohort-capacity")?.value) || 15;
-    const trainer = document.getElementById("new-cohort-trainer")?.value;
-    const schedule = document.getElementById("new-cohort-schedule")?.value;
-
-    if (!name) return;
-
-    const newCrun = {
-      id: "CRUN-" + Math.floor(Math.random() * 900 + 100),
-      name,
-      course: course.split(" (")[0],
-      version: course.split(" (")[1]?.replace(")", "") || "v1.0",
-      mode: "Group",
-      enrolled: 0,
-      capacity,
-      trainer,
-      schedule,
-      room: "https://ihs.daily.co/crun-" + Math.floor(Math.random() * 900 + 100),
-      status: "Active",
-      startDate: "2026-09-01",
-      endDate: "2026-11-30",
-      owner: trainer,
-      signal: `${capacity} seats available`
-    };
-
-    db.omData.cohorts.unshift(newCrun);
-
-    this.audit("OM_COHORT_CREATED", `Created new course run ${newCrun.id}: ${name} with capacity ${capacity}`, "Medium", "Draft -> Active");
-    Notifications.push("Cohort Created", `${name} is now active.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    RenderEngine.omWorkspace("om-course-runs");
-  },
-
-  openOmLearnerTransfer(rosterId) {
-    const rost = db.omData.rosters.find(r => r.id === rosterId);
-    if (!rost) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Transfer Learner: ${rost.learner}`;
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="account-summary-bar">
-        <div><span>Learner</span><strong>${rost.learner}</strong></div>
-        <div><span>Current Cohort</span><strong>${rost.cohortId}</strong></div>
-        <div><span>Attendance Rate</span><strong>${rost.attendanceRate}</strong></div>
-      </div>
-      <div class="form-group">
-        <label for="transfer-target-cohort">Select Destination Cohort</label>
-        <select id="transfer-target-cohort" class="form-control">
-          ${db.omData.cohorts.filter(c => c.id !== rost.cohortId).map(c => `<option value="${c.id}">${c.name} (${c.enrolled}/${c.capacity} seats)</option>`).join("")}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="transfer-reason">Reason for Transfer</label>
-        <textarea id="transfer-reason" class="form-control" rows="2" placeholder="e.g. Learner schedule clash, level adjustment"></textarea>
-      </div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmLearnerTransfer('${rost.id}')">Confirm Transfer</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  confirmOmLearnerTransfer(rosterId) {
-    const rost = db.omData.rosters.find(r => r.id === rosterId);
-    const target = document.getElementById("transfer-target-cohort")?.value;
-    const reason = document.getElementById("transfer-reason")?.value.trim() || "Operational transfer";
-
-    if (!rost || !target) return;
-
-    rost.status = "Transferred";
-    rost.transferTo = target;
-
-    // Add new active roster record for target
-    db.omData.rosters.push({
-      id: "ROST-" + Math.floor(Math.random() * 900 + 100),
-      cohortId: target,
-      learner: rost.learner,
-      status: "Active",
-      joined: new Date().toISOString().slice(0, 10),
-      attendanceRate: "100%",
-      owner: "Sarah Connor"
-    });
-
-    this.audit("OM_LEARNER_TRANSFERRED", `Transferred ${rost.learner} from ${rost.cohortId} to ${target}. Reason: ${reason}`, "Medium", `${rost.cohortId} -> ${target}`);
-    Notifications.push("Learner Transferred", `${rost.learner} transferred to ${target}.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    RenderEngine.omWorkspace("om-capacity-transfers");
-  },
-
-  // Trainer Reassignment
-  openOmTrainerReassign(trnId) {
-    const trn = db.omData.trainers.find(t => t.id === trnId);
-    if (!trn) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Reassign / Manage Trainer: ${trn.name}`;
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="account-summary-bar">
-        <div><span>Trainer</span><strong>${trn.name}</strong></div>
-        <div><span>Programmes</span><strong>${trn.programmes}</strong></div>
-        <div><span>Weekly Load</span><strong>${trn.weeklyLoad}</strong></div>
-        <div><span>Conflict Status</span><strong>${trn.conflictStatus}</strong></div>
-      </div>
-      <div class="form-group">
-        <label for="trn-new-cohort">Assign to Cohort Run</label>
-        <select id="trn-new-cohort" class="form-control">
-          ${db.omData.cohorts.map(c => `<option value="${c.id}">${c.name} (${c.schedule})</option>`).join("")}
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="trn-effective-date">Effective Date</label>
-        <input id="trn-effective-date" type="date" class="form-control" value="2026-08-16">
-      </div>
-      <div class="form-group">
-        <label for="trn-reassign-reason">Reassignment Justification</label>
-        <textarea id="trn-reassign-reason" class="form-control" rows="2" placeholder="Operational rationale for schedule or cohort change"></textarea>
-      </div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmTrainerReassign('${trn.id}')">Save Assignment</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  confirmOmTrainerReassign(trnId) {
-    const trn = db.omData.trainers.find(t => t.id === trnId);
-    const cohortId = document.getElementById("trn-new-cohort")?.value;
-    const effectiveDate = document.getElementById("trn-effective-date")?.value;
-    const reason = document.getElementById("trn-reassign-reason")?.value.trim() || "Standard operational allocation";
-
-    if (!trn) return;
-
-    trn.conflictStatus = "Clear";
-    trn.status = "Active";
-
-    this.audit("OM_TRAINER_REASSIGNED", `Reassigned trainer ${trn.name} to cohort ${cohortId} effective ${effectiveDate}. Reason: ${reason}`, "Medium", "Conflict Alert -> Active");
-    Notifications.push("Trainer Reassigned", `Updated assignments for ${trn.name}.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    RenderEngine.omWorkspace("om-trainer-assignments");
-  },
-
-  // Resource Quarantine
-  openOmResourceQuarantine(resId) {
-    const res = db.omData.resources.find(r => r.id === resId);
-    if (!res) return;
-
-    res.status = "Quarantined";
-    res.quarantineReason = "Administrative override: unverified macro scripts";
-    this.audit("OM_RESOURCE_QUARANTINED", `Quarantined resource ${res.id} (${res.title}) for security validation.`, "High", "Active -> Quarantined");
-    Notifications.push("Resource Quarantined", `Resource ${res.title} is now quarantined and inaccessible to learners.`, "warning");
-    RenderEngine.omWorkspace("om-resources");
-  },
-
-  openOmResourceAssign() {
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = "Upload & Assign Course Resource";
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="form-group">
-        <label for="new-res-title">Resource Title</label>
-        <input id="new-res-title" class="form-control" placeholder="e.g. Basic Literacy Supplementary Reader">
-      </div>
-      <div class="form-group">
-        <label for="new-res-course">Target Course / Cohort</label>
-        <select id="new-res-course" class="form-control">
-          <option value="Basic Literacy v7.0">Basic Literacy v7.0 (Cohort LIT-C1)</option>
-          <option value="Applied Numeracy v4.2">Applied Numeracy v4.2 (Cohort N4)</option>
-          <option value="Vocational Technology v3.1">Vocational Technology v3.1</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="new-res-file">Select File</label>
-        <input type="file" id="new-res-file" class="form-control">
-      </div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveOmResource()">Upload & Publish</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  saveOmResource() {
-    const title = document.getElementById("new-res-title")?.value.trim();
-    const course = document.getElementById("new-res-course")?.value;
-    if (!title) return;
-
-    db.omData.resources.unshift({
-      id: "RES-" + Math.floor(Math.random() * 900 + 100),
-      title,
-      version: "v1.0",
-      format: "PDF",
-      size: "2.4 MB",
-      course,
-      cohort: "All Active",
-      status: "Active",
-      downloads: 0,
-      checksum: "sha256:" + Math.random().toString(16).slice(2, 10) + "…",
-      uploadedBy: "Sarah Connor (OM)",
-      date: new Date().toISOString().slice(0, 10),
-      owner: "Sarah Connor",
-      signal: "Published"
-    });
-
-    this.audit("OM_RESOURCE_UPLOADED", `Uploaded and published resource: ${title} to ${course}`, "Medium", "Draft -> Published");
-    Notifications.push("Resource Published", `Resource ${title} is now available.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    RenderEngine.omWorkspace("om-resources");
-  },
-
-  // Case Investigation & Resolution
-  openOmCaseInvestigate(caseId) {
-    const c = db.omData.cases.find(item => item.id === caseId);
-    if (!c) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Investigate Case: ${c.id}`;
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="account-summary-bar">
-        <div><span>Subject</span><strong>${c.subject}</strong></div>
-        <div><span>Category</span><strong>${c.category}</strong></div>
-        <div><span>Priority</span><strong>${c.priority}</strong></div>
-        <div><span>SLA Status</span><strong>${c.sla}</strong></div>
-      </div>
-      <div class="om-flow-evidence-box">
-        <h4>Case Investigation Notes</h4>
-        <p>${c.notes}</p>
-      </div>
-      <div class="form-group">
-        <label for="case-resolution-action">Resolution Action</label>
-        <select id="case-resolution-action" class="form-control">
-          <option value="Resolved">Resolve Case (Action taken & learner notified)</option>
-          <option value="In Review">Keep In Review (Investigation underway)</option>
-          <option value="Escalated">Escalate to Head of Operations</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="case-resolution-note">Resolution Note</label>
-        <textarea id="case-resolution-note" class="form-control" rows="3" placeholder="Enter findings and action taken..."></textarea>
-      </div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.confirmOmCaseResolution('${c.id}')">Submit Resolution</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  confirmOmCaseResolution(caseId) {
-    const c = db.omData.cases.find(item => item.id === caseId);
-    const action = document.getElementById("case-resolution-action")?.value;
-    const note = document.getElementById("case-resolution-note")?.value.trim() || "Resolution recorded";
-
-    if (!c) return;
-
-    c.status = action;
-    c.notes += " | " + note;
-    c.signal = `Status: ${action}`;
-
-    this.audit("OM_CASE_RESOLVED", `Case ${c.id} updated to ${action}. Note: ${note}`, "Medium", `Status -> ${action}`);
-    Notifications.push("Case Updated", `Case ${c.id} is now ${action}.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "dashboard") RenderEngine.omDashboard();
-    else RenderEngine.omWorkspace(Router.currentRoute);
-  },
-
-  // Generic Source Record Inspector for OM
-  openOmRecord(ref) {
-    let target = null;
-    let category = "Operational Record";
-
-    if (db.omData) {
-      for (const [cat, list] of Object.entries(db.omData)) {
-        if (Array.isArray(list)) {
-          const found = list.find(item => item.id === ref || item.code === ref || item.ref === ref);
-          if (found) {
-            target = found;
-            category = cat;
-            break;
-          }
-        }
-      }
-    }
-
-    if (!target) return;
-
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Record Inspection: ${ref}`;
-
-    const entries = Object.entries(target).filter(([k]) => k !== "notes" && k !== "syllabus" && k !== "downstream");
-
-    document.getElementById("modal-body").innerHTML = `
-      <div class="om-flow-banner">
-        <span class="om-flow-icon"><i data-lucide="file-search"></i></span>
-        <div><span>Authoritative Source Record</span><strong>Category: ${category.toUpperCase()} · ${ref}</strong></div>
-        <span class="badge badge-success">${target.status || 'Active'}</span>
-      </div>
-      <div class="account-summary-bar">
-        ${entries.slice(0, 4).map(([k, v]) => `<div><span>${k.toUpperCase()}</span><strong>${v}</strong></div>`).join("")}
-      </div>
-      <div class="om-flow-evidence-box">
-        <h4>Detailed Field Metadata</h4>
-        <dl class="om-record-dl">
-          ${Object.entries(target).map(([k, v]) => `<div><dt>${k}</dt><dd>${typeof v === 'object' ? JSON.stringify(v) : v}</dd></div>`).join("")}
-        </dl>
-      </div>
-      <div class="om-authority-note"><i data-lucide="shield-check"></i><span>All decisions and modifications must be executed through governed operational workflows. No silent database overwrites.</span></div>
-    `;
-
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Inspector</button>
-    `;
-
-    modal.classList.remove("hidden");
-    window.lucide?.createIcons();
-  },
-
-  openCooDecision(approvalId) {
-    const item = db.cooApprovals.find(approval => approval.id === approvalId);
-    if (!item) return;
-    const flow = cooDecisionFlows[item.type];
-    if (!flow) return;
-    if (item.claimedBy && item.claimedBy !== db.currentUser.name) {
-      Notifications.push("Decision already claimed", `${item.source} is being reviewed by ${item.claimedBy}.`, "warning");
-      return;
-    }
-    item.claimedBy = db.currentUser.name;
-    const modal = document.getElementById("generic-modal");
-    const dialog = modal.querySelector(".modal");
-    dialog.className = `modal coo-flow-dialog coo-flow-${flow.slug}`;
-    document.getElementById("modal-title").textContent = flow.title;
-    const evidenceMarkup = flow.fields(item).map(([label, value, note]) => `
-      <section class="coo-flow-evidence-item"><span>${label}</span><strong>${value}</strong><small>${note}</small></section>
-    `).join("");
-    const checkMarkup = flow.checks.map((check, index) => `
-      <label class="coo-flow-check"><input class="coo-review-check" type="checkbox" value="${index}"><span>${check}</span></label>
-    `).join("");
-    const outcomeMarkup = flow.outcomes.map(([value, label]) => `<option value="${value}">${label}</option>`).join("");
-    document.getElementById("modal-body").innerHTML = `
-      <div class="coo-flow-banner">
-        <span class="coo-flow-icon"><i data-lucide="${flow.icon}"></i></span>
-        <div><span>${item.type} workflow</span><strong>${flow.principle}</strong></div>
-        <span class="badge badge-warning">${item.status}</span>
-      </div>
-      <div class="coo-flow-sourcebar">
-        <div><span>Decision</span><strong>${item.id}</strong></div>
-        <div><span>Source</span><strong>${item.source}</strong></div>
-        <div><span>Requester</span><strong>${item.requester}</strong></div>
-        <div><span>Queue age</span><strong>${item.age}</strong></div>
-      </div>
-      <div class="coo-flow-layout">
-        <div class="coo-flow-main">
-          <section class="coo-flow-section"><div class="coo-flow-section-head"><h4>Source evidence</h4><span>Read-only snapshot</span></div><div class="coo-flow-evidence">${evidenceMarkup}</div></section>
-          <section class="coo-flow-section coo-flow-decision-panel">
-            <div class="coo-flow-section-head"><h4>${flow.decisionLabel}</h4><span>Reason required</span></div>
-            <div class="form-group"><label for="coo-decision-outcome">Outcome</label><select id="coo-decision-outcome" class="form-control" onchange="Actions.updateCooDecisionImpact('${approvalId}')">${outcomeMarkup}</select><small class="form-help">Only outcomes valid for this workflow are available.</small></div>
-            <div class="form-group"><label for="coo-decision-reason">${flow.reasonLabel}</label><textarea id="coo-decision-reason" class="form-control" rows="4" placeholder="Reference the evidence and explain the decision"></textarea><small class="form-help">This note becomes part of the immutable decision event.</small></div>
-            <div class="coo-flow-impact"><span>Downstream effect</span><strong id="coo-decision-impact">${flow.impacts[flow.outcomes[0][0]]}</strong></div>
-          </section>
-        </div>
-        <aside class="coo-flow-aside">
-          <div class="coo-flow-section-head"><h4>Required checks</h4><span>${flow.checks.length} controls</span></div>
-          <div class="coo-flow-checks">${checkMarkup}</div>
-          <div class="coo-flow-separation"><i data-lucide="shield-check"></i><div><strong>Separation preserved</strong><span>Approval does not silently complete settlement, access, or downstream work.</span></div></div>
-        </aside>
-      </div>
-      <label class="confirmation-check coo-mfa-check"><input id="coo-decision-mfa" type="checkbox"><span>Recent MFA authentication confirmed for this high-impact decision.</span></label>
-      <div id="coo-decision-error" class="form-error hidden" role="alert">Complete every control, confirm MFA, and record a reason.</div>`;
-    document.getElementById("modal-footer").innerHTML = `<span class="coo-modal-claim"><i data-lucide="lock-keyhole"></i> Claimed by ${db.currentUser.name}</span><div><button class="btn btn-secondary" onclick="Actions.closeCooDecision('${approvalId}')">Cancel</button><button class="btn btn-primary" onclick="Actions.confirmCooDecision('${approvalId}')">${flow.submitLabel}</button></div>`;
-    modal.classList.remove("hidden");
-    window.lucide?.createIcons();
-  },
-
-  updateCooDecisionImpact(approvalId) {
-    const item = db.cooApprovals.find(approval => approval.id === approvalId);
-    const flow = item && cooDecisionFlows[item.type];
-    const outcome = document.getElementById("coo-decision-outcome")?.value;
-    const impact = document.getElementById("coo-decision-impact");
-    if (flow && outcome && impact) impact.textContent = flow.impacts[outcome];
-  },
-
-  closeCooDecision(approvalId) {
-    const item = db.cooApprovals.find(approval => approval.id === approvalId);
-    if (item?.claimedBy === db.currentUser.name) delete item.claimedBy;
-    document.getElementById("generic-modal").classList.add("hidden");
-  },
-
-  confirmCooDecision(approvalId) {
-    const item = db.cooApprovals.find(approval => approval.id === approvalId);
-    const flow = item && cooDecisionFlows[item.type];
-    const outcome = document.getElementById("coo-decision-outcome")?.value;
-    const reason = document.getElementById("coo-decision-reason")?.value.trim();
-    const mfa = document.getElementById("coo-decision-mfa")?.checked;
-    const completedChecks = [...document.querySelectorAll(".coo-review-check")].filter(check => check.checked).length;
-    if (!item || !flow || !reason || !mfa || completedChecks !== flow.checks.length) {
-      document.getElementById("coo-decision-error")?.classList.remove("hidden");
-      return;
-    }
-    if (item.proposer === db.currentUser.name) {
-      document.getElementById("coo-decision-error").textContent = "Segregation of duty blocks the proposer from approving this record.";
-      document.getElementById("coo-decision-error").classList.remove("hidden");
-      return;
-    }
-    const previous = item.status;
-    item.status = outcome;
-    item.decisionReason = reason;
-    item.decidedBy = db.currentUser.name;
-    item.decidedAt = new Date().toISOString();
-    item.downstreamEffect = flow.impacts[outcome];
-    delete item.claimedBy;
-    const sourceRecord = db.cooRecords.find(record => record.ref === item.source);
-    if (sourceRecord) {
-      sourceRecord.status = outcome;
-      sourceRecord.signal = "Decision recorded";
-    }
-    this.audit(`COO_${flow.slug.toUpperCase()}_DECISION`, `${outcome} ${item.type} source ${item.source}. Reason: ${reason}. Effect: ${flow.impacts[outcome]}`, "High", `${previous} -> ${outcome}`);
-    Notifications.push("Decision recorded", `${item.source} is now ${outcome}. ${flow.impacts[outcome]}`, outcome === "Approved" ? "success" : "warning");
-    document.getElementById("generic-modal").classList.add("hidden");
-    RenderEngine.cooWorkspace(Router.currentRoute);
-    RenderEngine.dashboard();
-  },
-
-  openCooRecord(reference) {
-    const record = db.cooRecords.find(item => item.ref === reference);
-    if (!record) return;
-    document.querySelector("#generic-modal .modal").className = "modal";
-    document.getElementById("modal-title").textContent = `Source record: ${record.ref}`;
-    document.getElementById("modal-body").innerHTML = `
-      <div class="account-summary-bar"><div><span>State</span><strong>${record.status}</strong></div><div><span>Owner</span><strong>${record.owner}</strong></div><div><span>Age / timing</span><strong>${record.age}</strong></div></div>
-      <section class="detail-panel"><h4>${record.title}</h4><p>${record.detail}</p><dl><div><dt>Attention signal</dt><dd>${record.signal}</dd></div><div><dt>Authority</dt><dd>Permission-scoped source view</dd></div><div><dt>Correction policy</dt><dd>Use the source workflow</dd></div></dl></section>
-      <div class="step-up-notice"><strong>Record integrity</strong><span>COO oversight does not permit silent edits. Approvals, reversals, and corrections create new auditable events.</span></div>`;
-    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Done</button>`;
-    document.getElementById("generic-modal").classList.remove("hidden");
-  },
-
-  requestCooReportExport() {
-    this.audit("COO_REPORT_EXPORT_REQUESTED", "Requested a permission-scoped management report export.", "Medium", "Draft -> Pending Approval");
-    Notifications.push("Export Requested", "The report will be generated asynchronously after scope validation.", "success");
-  },
-
-  // Webhook Delivery Retry
-  retryWebhook(whId) {
-    const webhook = db.webhooks.find(w => w.id === whId);
-    if (!webhook) return;
-    
-    webhook.attempts++;
-    
-    // Simulate API return success on retry
-    webhook.status = "SUCCESS";
-    webhook.httpCode = 200;
-    
-    this.audit("WEBHOOK_RETRY", `Manual retry of webhook event ${webhook.event} to ${webhook.target}`, "Low", "Attempts -> " + webhook.attempts);
-    
-    // Show user notification toast
-    Notifications.push("Webhook Retry Triggered", `Event ${webhook.event} successfully delivered. Response 200 OK.`, "success");
-    
-    // Reload active view
-    Router.renderView("webhooks");
-    RenderEngine.dashboard();
-  },
-
-  // Background Job Retry
-  retryJob(jobId) {
-    const job = db.jobs.find(j => j.id === jobId);
-    if (!job) return;
-
-    job.status = "Queued";
-    job.attempts = 0;
-    job.errorMsg = null;
-
-    this.audit("JOB_QUEUED_RETRY", `Background job ${job.taskName} re-inserted in active task runner queue.`, "Medium", "Status -> Queued");
-    Notifications.push("Background Job Requeued", `Job ${job.taskName} is queued.`, "success");
-
-    // Reload failed/dead-letter views if active
-    Router.renderView(Router.currentRoute);
-    RenderEngine.dashboard();
-  },
-
-  // Discard dead letter job
-  discardJob(jobId) {
-    const index = db.jobs.findIndex(j => j.id === jobId);
-    if (index !== -1) {
-      const job = db.jobs[index];
-      db.jobs.splice(index, 1);
-      
-      this.audit("JOB_DISCARDED", `Permanently dropped dead-letter job: ${job.taskName}`, "High", "Deleted from Database");
-      Notifications.push("Job Discarded", `Job ${job.taskName} removed.`, "warning");
-      
-      Router.renderView("dead-letters");
-      RenderEngine.dashboard();
-    }
-  },
-
-  // Dismiss exception log
-  dismissException(exId) {
-    const index = db.integrationExceptions.findIndex(e => e.id === exId);
-    if (index !== -1) {
-      db.integrationExceptions.splice(index, 1);
-      Router.renderView("integration-exceptions");
-      RenderEngine.dashboard();
-    }
-  },
-
-  // Flush Dead Letters (Quick Action / Bulk Action)
-  flushDeadLetters() {
-    const deadJobs = db.jobs.filter(j => j.status === "Dead-letter");
-    if (deadJobs.length === 0) {
-      Notifications.push("Dead Letter Clean", "No dead letters found to flush.", "warning");
-      return;
-    }
-
-    deadJobs.forEach(j => {
-      j.status = "Queued";
-      j.attempts = 0;
-      j.errorMsg = null;
-    });
-
-    this.audit("DEAD_LETTERS_FLUSHED", `Flushed ${deadJobs.length} dead-letter jobs to the queue.`, "High", "Dead-letter -> Queued");
-    Notifications.push("Dead Letters Flushed", `Successfully re-queued ${deadJobs.length} jobs.`, "success");
-
-    Router.renderView(Router.currentRoute);
-    RenderEngine.dashboard();
-  },
-
-  // Export Request Approval
-  approveExport(reqId) {
-    const exp = db.exports.find(e => e.requestId === reqId);
-    if (!exp) return;
-    this.openExportDecision(reqId, "approve");
-  },
-
-  // Export Request Rejection
-  rejectExport(reqId) {
-    const exp = db.exports.find(e => e.requestId === reqId);
-    if (!exp) return;
-    this.openExportDecision(reqId, "reject");
-  },
-
-  openExportDecision(reqId, decision) {
-    const exp = db.exports.find(e => e.requestId === reqId);
-    if (!exp) return;
-    const approving = decision === "approve";
-    document.getElementById("modal-title").textContent = `${approving ? "Approve" : "Reject"} export request`;
-    document.getElementById("modal-body").innerHTML = `
-      <div class="step-up-notice"><strong>Sensitive export control</strong><span>${exp.scope}; ${exp.format}. Every decision is independently audited.</span></div>
-      <div class="form-group"><label for="export-decision-reason">Decision reason</label><textarea id="export-decision-reason" class="form-control" rows="3" placeholder="Reference the approved operational need or rejection basis"></textarea></div>
-      <label class="confirmation-check"><input id="export-decision-mfa" type="checkbox"> Recent MFA authentication confirmed.</label>
-      <div id="export-decision-error" class="form-error hidden">A reason and MFA confirmation are required.</div>`;
-    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button><button class="btn ${approving ? 'btn-primary' : 'btn-error'}" onclick="Actions.confirmExportDecision('${reqId}', '${decision}')">${approving ? 'Approve & issue link' : 'Reject request'}</button>`;
-    document.getElementById("generic-modal").classList.remove("hidden");
-  },
-
-  confirmExportDecision(reqId, decision) {
-    const exp = db.exports.find(e => e.requestId === reqId);
-    const reason = document.getElementById("export-decision-reason")?.value.trim();
-    const mfa = document.getElementById("export-decision-mfa")?.checked;
-    if (!exp || !reason || !mfa) {
-      document.getElementById("export-decision-error")?.classList.remove("hidden");
-      return;
-    }
-
-    const approved = decision === "approve";
-    exp.status = approved ? "Ready" : "Revoked";
-    exp.expiresAt = approved ? "2026-08-16 14:30:00" : null;
-    this.audit(approved ? "EXPORT_APPROVED" : "EXPORT_REJECTED", `${approved ? "Approved" : "Rejected"} export ${exp.requestId}. Reason: ${reason}`, "High", `Pending Approval -> ${exp.status}`);
-    Notifications.push(approved ? "Export Approved" : "Export Rejected", approved ? `A time-limited link was issued for ${exp.scope}.` : `Rejected download for ${exp.scope}.`, approved ? "success" : "warning");
-    document.getElementById("generic-modal").classList.add("hidden");
-    Router.renderView("exports");
-    RenderEngine.dashboard();
-  },
-
-  // Simulate file download
-  downloadExportFile(reqId) {
-    const exp = db.exports.find(e => e.requestId === reqId);
-    if (!exp) return;
-
-    Notifications.push("Download Started", `Using the expiring approved link for ${exp.scope}.${exp.format.toLowerCase()}`, "success");
-    this.audit("EXPORT_DOWNLOADED", `Downloaded approved export ${exp.requestId}; link expires ${exp.expiresAt || "after use"}.`, "Medium");
-  },
-
-  // Feature Flag Toggle
-  toggleFeatureFlag(key, isChecked) {
-    const flag = db.featureFlags.find(f => f.key === key);
-    if (!flag) return;
-
-    const oldState = flag.globalStatus;
-    flag.globalStatus = isChecked;
-    flag.lifecycle = isChecked ? "Enabled" : "Disabled";
-
-    this.audit("FLAG_TOGGLED", `Feature Flag '${flag.key}' toggled to ${isChecked ? 'ENABLED' : 'DISABLED'}`, "Medium", `${flag.key}: ${oldState} -> ${isChecked}`);
-    Notifications.push("Feature Flag Updated", `${flag.key} is now ${isChecked ? 'Enabled' : 'Disabled'}`, "info");
-
-    RenderEngine.dashboard();
-  },
-
-  // Retire Feature Flag; history remains available for governance review.
-  deleteFeatureFlag(key) {
-    const flag = db.featureFlags.find(f => f.key === key);
-    if (flag) {
-      flag.lifecycle = "Retired";
-      flag.globalStatus = false;
-      this.audit("FLAG_RETIRED", `Retired feature flag key: ${key}`, "High", "Lifecycle -> Retired");
-      Router.renderView("feature-flags");
-      RenderEngine.dashboard();
-    }
-  },
-
-  // Edit User Account Role mapping
-  createRoleTemplate() {
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = "Create role template";
-    document.getElementById("modal-body").innerHTML = `
-      <div class="step-up-notice"><strong>New roles begin as Draft</strong><span>Permissions remain unenforced until the template is reviewed and activated.</span></div>
-      <div class="form-group"><label for="new-role-name">Role name</label><input id="new-role-name" class="form-control" placeholder="Example: Course Coordinator"></div>
-      <div class="form-group"><label for="new-role-description">Description</label><textarea id="new-role-description" class="form-control" rows="2" placeholder="Intended responsibilities and boundaries"></textarea></div>
-      <div class="form-group"><label for="new-role-scope">Intended scope</label><select id="new-role-scope" class="form-control"><option>Organization</option><option>Department</option><option>Course</option><option>Cohort</option><option>Assigned record</option></select></div>
-      <label class="confirmation-check"><input id="new-role-mfa" type="checkbox"> Recent MFA authentication confirmed.</label>
-      <div id="new-role-error" class="form-error hidden">A unique name, description, and MFA confirmation are required.</div>
-    `;
-    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button><button class="btn btn-primary" onclick="Actions.saveRoleTemplate()">Create Draft</button>`;
-    modal.classList.remove("hidden");
-  },
-
-  saveRoleTemplate() {
-    const name = document.getElementById("new-role-name")?.value.trim();
-    const description = document.getElementById("new-role-description")?.value.trim();
-    const scope = document.getElementById("new-role-scope")?.value;
-    const mfa = document.getElementById("new-role-mfa")?.checked;
-    if (!name || !description || !mfa || db.rolesPermissions[name]) {
-      document.getElementById("new-role-error")?.classList.remove("hidden");
-      return;
-    }
-    db.rolesPermissions[name] = [];
-    db.roleMetadata[name] = { status: "Draft", scope, protected: false, description };
-    RenderEngine.activeRoleMatrix = name;
-    this.audit("ROLE_TEMPLATE_CREATED", `Draft role template created: ${name}`, "High", `Scope: ${scope}; permissions: 0`);
-    document.getElementById("generic-modal").classList.add("hidden");
-    Router.renderView("roles-permissions");
-  },
-
-  openRoleAssignment() {
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = "Assign scoped role";
-    document.getElementById("modal-body").innerHTML = `
-      <div class="form-group"><label for="assignment-user">Target account</label><select id="assignment-user" class="form-control">${db.users.map(user => `<option value="${user.id}">${user.name} / ${user.email}</option>`).join("")}</select></div>
-      <p class="text-sm">The assignment will begin as Pending until scope, conflict, and step-up checks are completed.</p>
-    `;
-    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button><button class="btn btn-primary" onclick="Actions.continueRoleAssignment()">Continue</button>`;
-    modal.classList.remove("hidden");
-  },
-
-  continueRoleAssignment() {
-    const userId = document.getElementById("assignment-user")?.value;
-    document.getElementById("generic-modal").classList.add("hidden");
-    this.editUserRole(userId);
-  },
-
-  viewUserAccount(userId) {
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return;
-
-    const userSessions = db.sessions.filter(session => session.userEmail === user.email);
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Account security: ${user.name}`;
-    document.getElementById("modal-body").innerHTML = `
-      <div class="account-summary-bar">
-        <div><span>Person</span><strong>${user.personId}</strong></div>
-        <div><span>Account</span><strong>${user.id}</strong></div>
-        <div><span>Status</span><strong>${user.status}</strong></div>
-      </div>
-      <div class="account-detail-grid">
-        <section class="detail-panel">
-          <h4>Identity and relationships</h4>
-          <dl>
-            <div><dt>User type</dt><dd>${user.userType}</dd></div>
-            <div><dt>Email</dt><dd>${user.email}</dd></div>
-            <div><dt>Authentication</dt><dd>${user.identities.join(", ")}</dd></div>
-          </dl>
-        </section>
-        <section class="detail-panel">
-          <h4>Authorization</h4>
-          <dl>
-            <div><dt>Active role</dt><dd>${user.role}</dd></div>
-            <div><dt>Permission scope</dt><dd>${user.scope}</dd></div>
-            <div><dt>Policy</dt><dd>Default deny</dd></div>
-          </dl>
-        </section>
-        <section class="detail-panel">
-          <h4>Security posture</h4>
-          <dl>
-            <div><dt>MFA</dt><dd>${user.mfa}</dd></div>
-            <div><dt>Sessions</dt><dd>${userSessions.filter(s => s.status === "Active").length} active</dd></div>
-            <div><dt>Security history</dt><dd>${user.securityEvents} recorded events</dd></div>
-          </dl>
-        </section>
-        <section class="detail-panel boundary-panel">
-          <h4>Administrative boundary</h4>
-          <p>Platform Admin access does not grant payroll, disciplinary, private-chat, or unrestricted learner-content access.</p>
-        </section>
-      </div>
-    `;
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-      <button class="btn btn-primary" onclick="Actions.editUserRole('${user.id}')">Manage scoped role</button>
-    `;
-    modal.classList.remove("hidden");
-  },
-
-  requestUserStatusChange(userId, status) {
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return;
-    const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `${status === "Active" ? "Reactivate" : "Suspend"} ${user.name}`;
-    document.getElementById("modal-body").innerHTML = `
-      <div class="step-up-notice"><strong>Step-up authorization required</strong><span>This sensitive account action is independently audited.</span></div>
-      <div class="form-group">
-        <label for="account-action-reason">Administrative reason</label>
-        <textarea id="account-action-reason" class="form-control" rows="3" placeholder="Enter the support, security, or policy reason"></textarea>
-      </div>
-      <label class="confirmation-check"><input id="account-action-mfa" type="checkbox"> I confirmed this action using recent MFA authentication.</label>
-      <div id="account-action-error" class="form-error hidden">A reason and MFA confirmation are required.</div>
-    `;
-    document.getElementById("modal-footer").innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn ${status === 'Active' ? 'btn-primary' : 'btn-error'}" onclick="Actions.confirmUserStatusChange('${user.id}', '${status}')">Confirm ${status === 'Active' ? 'reactivation' : 'suspension'}</button>
-    `;
-    modal.classList.remove("hidden");
-  },
-
-  confirmUserStatusChange(userId, status) {
-    const reason = document.getElementById("account-action-reason")?.value.trim();
-    const mfaConfirmed = document.getElementById("account-action-mfa")?.checked;
-    if (!reason || !mfaConfirmed) {
-      document.getElementById("account-action-error")?.classList.remove("hidden");
-      return;
-    }
-    this.toggleUserStatus(userId, status, reason);
-    document.getElementById("generic-modal").classList.add("hidden");
-  },
-
-  editUserRole(userId) {
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return;
-
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.textContent = `Manage Role: ${user.name}`;
-    body.innerHTML = `
-      <div class="form-group">
-        <label for="modal-role-select">Select New Role Target</label>
-        <select id="modal-role-select" class="form-control">
-          <option value="Trainer" ${user.role === 'Trainer' ? 'selected' : ''}>Trainer</option>
-          <option value="Learner" ${user.role === 'Learner' ? 'selected' : ''}>Learner</option>
-          <option value="Operations" ${user.role === 'Operations' ? 'selected' : ''}>Operations</option>
-          <option value="Platform Admin" ${user.role === 'Platform Admin' ? 'selected' : ''}>Platform Admin</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="modal-role-scope">Assignment Scope</label>
-        <select id="modal-role-scope" class="form-control">
-          <option value="Organization">Organization</option>
-          <option value="Department">Department</option>
-          <option value="Course assignments">Course</option>
-          <option value="Cohort">Cohort</option>
-          <option value="Own enrolments">Assigned record</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="modal-role-reason">Assignment reason</label>
-        <textarea id="modal-role-reason" class="form-control" rows="2" placeholder="Why is this scoped access required?"></textarea>
-      </div>
-      <label class="confirmation-check"><input id="modal-role-mfa" type="checkbox"> Recent MFA authentication confirmed.</label>
-      <div id="role-change-error" class="form-error hidden">Scope, reason, and MFA confirmation are required.</div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveUserRole('${user.id}')">Save Changes</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  saveUserRole(userId) {
-    const user = db.users.find(u => u.id === userId);
-    const select = document.getElementById("modal-role-select");
-    const scope = document.getElementById("modal-role-scope")?.value;
-    const reason = document.getElementById("modal-role-reason")?.value.trim();
-    const mfaConfirmed = document.getElementById("modal-role-mfa")?.checked;
-    if (!user || !select) return;
-    if (!scope || !reason || !mfaConfirmed) {
-      document.getElementById("role-change-error")?.classList.remove("hidden");
-      return;
-    }
-
-    const oldRole = user.role;
-    const oldScope = user.scope;
-    user.role = select.value;
-    user.scope = scope;
-
-    this.audit("USER_ROLE_CHANGED", `Changed scoped role for ${user.email}. Reason: ${reason}`, "High", `${oldRole} (${oldScope}) -> ${user.role} (${user.scope})`);
-    Notifications.push("Scoped Role Updated", `Role for ${user.name} is now ${user.role} within ${user.scope}.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    Router.renderView("users");
-  },
-
-  // Toggle user account status
-  toggleUserStatus(userId, status, reason = "Administrative account state change") {
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return;
-
-    const oldStatus = user.status;
-    user.status = status;
-
-    this.audit("USER_STATUS_TOGGLED", `User status changed for ${user.email}. Reason: ${reason}`, "High", `Status: ${oldStatus} -> ${status}`);
-    Notifications.push("User Account Updated", `${user.name} status is now ${status}.`, "warning");
-
-    Router.renderView("users");
-  },
-
-  // Terminate compromise security session
-  terminateSession(sessId) {
-    const session = db.sessions.find(s => s.id === sessId);
-    if (!session) return;
-
-    session.status = "Revoked";
-    this.audit("SECURITY_SESSION_REVOKED", `Forced revocation of active login session for ${session.userName} at IP ${session.ipAddress}`, "High", "Session status -> Revoked");
-    Notifications.push("Session Terminated", `Revoked login for ${session.userName}.`, "warning");
-
-    Router.renderView("security-sessions");
-    RenderEngine.dashboard();
-  },
-
-  // Start Impersonation Support Session
-  startImpersonation() {
-    const select = document.getElementById("impersonate-user-select");
-    const reasonInput = document.getElementById("impersonate-reason");
-    const durationInput = document.getElementById("impersonate-duration");
-    const approvalInput = document.getElementById("impersonate-approval");
-    if (!select) return;
-
-    const userId = select.value;
-    const reason = reasonInput.value.trim();
-    const approval = approvalInput.value.trim();
-    const duration = Number(durationInput.value);
-    if (!reason || !approval) {
-      Notifications.push("Support Access Blocked", "A reason and approval reference are required.", "error");
-      return;
-    }
-    
-    const user = db.users.find(u => u.id === userId);
-    if (!user) return;
-
-    // Trigger state
-    db.impersonationSession.active = true;
-    db.impersonationSession.user = user;
-    db.impersonationSession.reason = reason;
-    db.impersonationSession.approval = approval;
-    db.impersonationSession.mode = "Read-only";
-    db.impersonationSession.expiresAt = new Date(Date.now() + duration * 60 * 1000).toISOString().replace("T", " ").slice(0, 19);
-    
-    // Add Impersonation log
-    const timestamp = new Date().toISOString().replace("T", " ").slice(0, 19);
-    db.supportAuditLogs.unshift({
-      timestamp,
-      operator: db.currentUser.name,
-      impersonatedUser: `${user.name} (${user.role})`,
-      reason,
-      guardrails: `Read-only / ${duration} min / ${approval}`,
-      status: "Active"
-    });
-
-    this.audit("SUPPORT_IMPERSONATION_STARTED", `Began approved read-only support view session for ${user.name}. Reason: ${reason}`, "High", `Operator: ${db.currentUser.name}; approval: ${approval}; duration: ${duration} minutes`);
-    Notifications.push("Impersonation Active", `Viewing system as ${user.name}.`, "success");
-
-    // Toggle banners in UI
-    const banner = document.getElementById("impersonation-sidebar-banner");
-    const sidebarUser = document.getElementById("impersonated-user-sidebar");
-    banner.classList.remove("hidden");
-    sidebarUser.textContent = user.name;
-
-    // Re-route/refresh
-    Router.renderView("support-access");
-    RenderEngine.dashboard();
-  },
-
-  stopImpersonation() {
-    if (!db.impersonationSession.active) return;
-
-    const user = db.impersonationSession.user;
-    
-    db.impersonationSession.active = false;
-    db.impersonationSession.user = null;
-
-    // Close in log
-    if (db.supportAuditLogs.length > 0 && db.supportAuditLogs[0].status === "Active") {
-      db.supportAuditLogs[0].status = "Completed";
-    }
-
-    this.audit("SUPPORT_IMPERSONATION_ENDED", `Terminated support impersonation view of user ${user.name}`, "Medium");
-    Notifications.push("Impersonation Terminated", `Returned to Platform Admin standard dashboard view.`, "info");
-
-    const banner = document.getElementById("impersonation-sidebar-banner");
-    banner.classList.add("hidden");
-
-    Router.renderView("support-access");
-    RenderEngine.dashboard();
-  },
-
-  // Save specific System Setting
-  saveSetting(key) {
-    const input = document.getElementById(`settings-${key}`);
-    if (!input) return;
-
-    const setting = db.systemSettings.find(s => s.key === key);
-    if (!setting) return;
-
-    const proposedValue = input.value.trim();
-    if (!proposedValue || proposedValue === setting.value) {
-      Notifications.push("No Change", `Enter a new value for ${key}.`, "warning");
-      return;
-    }
-
-    document.getElementById("modal-title").textContent = `Review setting change: ${key}`;
-    document.getElementById("modal-body").innerHTML = `
-      <div class="step-up-notice"><strong>Versioned configuration change</strong><span>Current v${setting.version} remains active until this proposal is authorized.</span></div>
-      <div class="account-summary-bar"><div><span>Owner</span><strong>${setting.owner}</strong></div><div><span>Scope</span><strong>${setting.scope}</strong></div><div><span>Impact</span><strong>${setting.category}</strong></div></div>
-      <div class="form-group"><label>Current value</label><input class="form-control" value="${setting.value}" readonly></div>
-      <div class="form-group"><label>Proposed value</label><input id="setting-proposed-value" class="form-control" value="${proposedValue}" readonly></div>
-      <div class="form-group"><label for="setting-change-reason">Change reason</label><textarea id="setting-change-reason" class="form-control" rows="3" placeholder="Explain the operational need and expected impact"></textarea></div>
-      <label class="confirmation-check"><input id="setting-change-mfa" type="checkbox"> Recent MFA authentication confirmed.</label>
-      <div id="setting-change-error" class="form-error hidden">A reason and MFA confirmation are required.</div>`;
-    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button><button class="btn btn-primary" onclick="Actions.confirmSettingChange('${key}')">Approve new version</button>`;
-    document.getElementById("generic-modal").classList.remove("hidden");
-  },
-
-  confirmSettingChange(key) {
-    const setting = db.systemSettings.find(s => s.key === key);
-    const proposedValue = document.getElementById("setting-proposed-value")?.value.trim();
-    const reason = document.getElementById("setting-change-reason")?.value.trim();
-    const mfa = document.getElementById("setting-change-mfa")?.checked;
-    if (!setting || !proposedValue || !reason || !mfa) {
-      document.getElementById("setting-change-error")?.classList.remove("hidden");
-      return;
-    }
-    const oldVal = setting.value;
-    const oldVersion = setting.version;
-    setting.value = proposedValue;
-    setting.version += 1;
-    this.audit("SYSTEM_SETTING_VERSION_ACTIVATED", `Activated ${key} v${setting.version}. Reason: ${reason}`, "High", `v${oldVersion} ${oldVal} -> v${setting.version} ${setting.value}`);
-    Notifications.push("Setting Activated", `${key} v${setting.version} is now active.`, "success");
-    document.getElementById("generic-modal").classList.add("hidden");
-    Router.renderView("system-settings");
-  },
-
-  // Ping connection verification for Integrations
-  pingProvider(key) {
-    const prov = db.providers.find(p => p.key === key);
-    if (!prov) return;
-
-    prov.status = "Connected";
-    prov.lastChecked = new Date().toISOString().replace("T", " ").slice(0, 19);
-
-    // If Resend was degraded and got connected, maybe clear active incident!
-    if (key === "resend") {
-      const banner = document.getElementById("active-incident-banner");
-      if (banner && !banner.classList.contains("hidden")) {
-        // Incident resolved!
-        banner.classList.add("hidden");
-        this.audit("INCIDENT_RESOLVED", "Incident with Resend mailer latency marked as Resolved via API ping loop.", "Medium");
-      }
-    }
-
-    this.audit("PROVIDER_HEALTH_PING", `Triggered automated integration health connection request to ${prov.name}.`, "Low");
-    Notifications.push("Integration Check Passed", `Successfully connected to endpoint: ${prov.url}`, "success");
-
-    Router.renderView("providers");
-  },
-
-  // Run data retention checks (Simulates database records cleanup!)
-  runRetentionChecks() {
-    Notifications.push("Retention Run Started", "Scanning system partitions for expired records...", "info");
-    
-    setTimeout(() => {
-      // Simulate archiving database rows
-      const targetRows = 2309;
-      
-      // Append row to Archive DB
-      const timestamp = new Date().toISOString().replace("T", " ").slice(0, 19);
-      const purgeDate = new Date(Date.now() + 7 * 365 * 24 * 60 * 60 * 1000).toISOString().replace("T", " ").slice(0, 10) + " 00:00:00";
-      
-      const newArchive = {
-        id: "arc_" + Math.floor(Math.random() * 9000 + 1000),
-        sourceTable: "Security Logs Partition_" + new Date().toISOString().slice(2, 7).replace("-", ""),
-        rows: targetRows,
-        size: "244 KB",
-        archivedDate: timestamp,
-        purgeDate: purgeDate
-      };
-      
-      db.archive.unshift(newArchive);
-      
-      this.audit("RETENTION_CLEANUP_RUN", `Retention daemon cleaned up ${targetRows} expired rows. Archived database partition created.`, "High", `Expired rows purged: ${targetRows}`);
-      Notifications.push("Retention Check Completed", `Purged & archived ${targetRows} records successfully.`, "success");
-      
-      if (Router.currentRoute === "archive" || Router.currentRoute === "retention-policies") {
-        Router.renderView(Router.currentRoute);
-      }
-      RenderEngine.dashboard();
-    }, 1000);
-  },
-
-  // Correct Import Data (simulates validating file upload errors)
-  correctImportData(batchId) {
-    const imp = db.imports.find(i => i.batchId === batchId);
-    if (!imp) return;
-
-    const modal = document.getElementById("generic-modal");
-    const title = document.getElementById("modal-title");
-    const body = document.getElementById("modal-body");
-    const footer = document.getElementById("modal-footer");
-
-    title.textContent = `Review import mapping: ${batchId}`;
-    body.innerHTML = `
-      <div style="background:var(--error-container); color:var(--on-error-container); padding:12px; border-radius:6px; margin-bottom:16px; font-size:12px;">
-        <strong>Validation Error:</strong> ${imp.errors}
-      </div>
-      <div class="form-group">
-        <label for="import-data-payload">Field mapping correction</label>
-        <textarea id="import-data-payload" class="form-control" rows="6" style="font-family:'Fira Code', monospace; font-size:11px;">source.region -> region_code
-source.location_name -> display_name
-source.external_id -> external_reference</textarea>
-      </div>
-    `;
-
-    footer.innerHTML = `
-      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveImportCorrection('${batchId}')">Save & Re-run Dry-run</button>
-    `;
-
-    modal.classList.remove("hidden");
-  },
-
-  saveImportCorrection(batchId) {
-    const imp = db.imports.find(i => i.batchId === batchId);
-    if (!imp) return;
-
-    imp.status = "Dry-run Passed";
-    imp.mode = "Dry-run only";
-    imp.errors = "Schema, duplicate, and reference checks passed";
-
-    this.audit("IMPORT_DRY_RUN_PASSED", `Mapping corrected and dry-run passed for ${batchId}.`, "Medium", "Dry-run Failed -> Dry-run Passed");
-    Notifications.push("Dry-run Passed", `Batch ${batchId} is ready for approval; no records were written.`, "success");
-
-    document.getElementById("generic-modal").classList.add("hidden");
-    Router.renderView("imports");
-    RenderEngine.dashboard();
-  },
-
-  retryImport(batchId) {
-    Notifications.push("Dry-run Started", `Re-running non-writing validation for staged batch ${batchId}.`, "info");
-  },
-
-  approveImport(batchId) {
-    const imp = db.imports.find(i => i.batchId === batchId);
-    if (!imp || imp.status !== "Dry-run Passed") return;
-    imp.status = "Completed";
-    imp.mode = "Approved run";
-    this.audit("IMPORT_APPROVED_AND_RUN", `Approved validated import batch ${batchId}.`, "High", "Dry-run Passed -> Completed");
-    Notifications.push("Import Completed", `Approved batch ${batchId} was applied and audited.`, "success");
-    Router.renderView("imports");
-  },
-
-  // Save custom role matrix permissions checklist
-  saveRolePermissions() {
-    const currentRole = RenderEngine.activeRoleMatrix;
-    if (currentRole === "Platform Admin") return;
-
-    const checkedScopes = [];
-    document.querySelectorAll("#role-panel-permissions-grid input[type='checkbox']:checked").forEach(checkbox => {
-      checkedScopes.push(checkbox.getAttribute("data-scope"));
-    });
-
-    const oldMapping = db.rolesPermissions[currentRole] || [];
-    db.rolesPermissions[currentRole] = checkedScopes;
-    const roleMeta = db.roleMetadata[currentRole];
-    const activatedDraft = roleMeta?.status === "Draft" && checkedScopes.length > 0;
-    if (activatedDraft) roleMeta.status = "Active";
-
-    this.audit(activatedDraft ? "ROLE_TEMPLATE_ACTIVATED" : "ROLE_PERMISSIONS_UPDATED", `Modified permission mappings for role profile: ${currentRole}`, "High", `Permissions: ${oldMapping.length} -> ${checkedScopes.length}; state: ${activatedDraft ? 'Draft -> Active' : roleMeta?.status || 'Active'}`);
-    Notifications.push(activatedDraft ? "Role Activated" : "Permissions Saved", `Role matrix for ${currentRole} successfully updated.`, "success");
-
-    Router.renderView("roles-permissions");
-  },
-
-  // Resolve incident banner
-  resolveIncident() {
-    const banner = document.getElementById("active-incident-banner");
-    if (banner) {
-      banner.classList.add("hidden");
-      this.audit("INCIDENT_RESOLVED", "Platform Admin marked Resend API latency incident resolved manually.", "Medium");
-      Notifications.push("Incident Resolved", "Systems marked operational.", "success");
-    }
+    Router.navigate("learner-notes-all");
   }
 };
 
@@ -14426,56 +12036,9 @@ Actions.completeLearnerClassJoin = function(classId) {
   this.audit("LEARNER_CLASS_JOINED", `Learner Zainab Malik joined occurrence ${classId}.`, "Low", "Join Window Active");
 };
 
-Actions.openLearnerTrialRequestModal = function() {
-  const modal = document.getElementById("generic-modal");
-  const title = document.getElementById("modal-title");
-  const body = document.getElementById("modal-body");
-  const footer = document.getElementById("modal-footer");
 
-  title.textContent = "Request a Free Trial Class (FLOW-006)";
-  body.innerHTML = `
-    <div class="form-group">
-      <label for="trial-course">Course of Interest</label>
-      <select id="trial-course" class="form-control">
-        <option value="Spoken English">Spoken English Fluency & Accent Reduction</option>
-        <option value="Full-Stack Web Dev">Modern Full-Stack Web Development</option>
-        <option value="Grade 8 Math">Grade 8 Mathematics (FBISE Aligned)</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="trial-level">Current Self-Assessed Level</label>
-      <select id="trial-level" class="form-control">
-        <option value="Beginner">Beginner</option>
-        <option value="Intermediate" selected>Intermediate</option>
-        <option value="Advanced">Advanced</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="trial-days">Preferred Available Days</label>
-      <input type="text" id="trial-days" class="form-control" value="Monday, Wednesday, Friday">
-    </div>
-    <div class="form-group">
-      <label for="trial-time">Preferred Time Slot (PKT)</label>
-      <select id="trial-time" class="form-control">
-        <option value="Evening (5 PM - 8 PM)">Evening (5:00 PM – 8:00 PM PKT)</option>
-        <option value="Morning (10 AM - 1 PM)">Morning (10:00 AM – 1:00 PM PKT)</option>
-      </select>
-    </div>
-  `;
 
-  footer.innerHTML = `
-    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-    <button class="btn btn-primary" onclick="Actions.submitLearnerTrialRequest()">Submit Trial Request</button>
-  `;
 
-  modal.classList.remove("hidden");
-};
-
-Actions.submitLearnerTrialRequest = function() {
-  document.getElementById("generic-modal").classList.add("hidden");
-  Notifications.push("Trial Request Submitted", "Trial request submitted to Operations & CSR for scheduling.", "success");
-  this.audit("TRIAL_REQUEST_SUBMITTED", "Learner Zainab Malik submitted trial request (FLOW-006).", "Medium", "Draft -> Submitted");
-};
 
 Actions.openLearnerAssignmentModal = function(workId) {
   const w = db.learnerData.myWork.find(item => item.id === workId) || db.learnerData.myWork[0];
