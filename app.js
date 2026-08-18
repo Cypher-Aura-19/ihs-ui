@@ -5882,7 +5882,7 @@ const RenderEngine = {
   // STUDENT / LEARNER DASHBOARD (DSH-002 / DSH-003) - ALL COURSES PORTAL
   // ============================================================================
   learnerDashboard() {
-    const shell = document.getElementById("learner-dashboard-shell");
+    const shell = document.getElementById("view-dashboard");
     if (!shell) return;
 
     const data = db.learnerData;
