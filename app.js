@@ -6231,7 +6231,7 @@ const RenderEngine = {
           </div>
 
           <div style="border:2px dashed #cbd5e1; border-radius:10px; padding:32px; text-align:center; background:#f8fafc; margin-bottom:16px;">
-            <i data-lucide="play-circle" style="width:56px; height:56px; color:var(--primary); margin-bottom:10px; cursor:pointer;" onclick="Notifications.push('Preview Player', 'Playing 3-minute sample lesson video...', 'info')"></i>
+            <i data-lucide="play-circle" style="width:56px; height:56px; color:var(--primary); margin-bottom:10px; cursor:pointer;" onclick="Notifications.push('Preview Player', 'Playing sample lesson video (3 mins)...', 'info')"></i>
             <h4 style="margin:0 0 4px 0; color:var(--navy-dark);">Sample Lesson: Stress Timing vs Syllable Timing</h4>
             <span style="font-size:12px; color:var(--slate);">Duration: 3 mins · Instructor: Sara Javed</span>
           </div>
@@ -6467,9 +6467,9 @@ const RenderEngine = {
                 </div>
                 <div>
                   ${s.joinable ? `
-                    <button class="btn btn-primary" style="width:100%;" onclick="Actions.openLearnerJoinClassModal('${s.id}')"><i data-lucide="video"></i> Join Live Class</button>
+                    <button class="btn btn-primary" style="width:100%;" onclick="Actions.openLearnerJoinClassModal('${s.id}')"><i data-lucide="video"></i> Join Live Class (Daily.co)</button>
                   ` : `
-                    <button class="btn btn-secondary" style="width:100%;" onclick="Actions.openLearnerRescheduleModal('${s.id}')">Reschedule</button>
+                    <button class="btn btn-secondary" style="width:100%;" onclick="Actions.openLearnerRescheduleModal('${s.id}')">Reschedule Slot</button>
                   `}
                 </div>
               </div>
@@ -6630,19 +6630,19 @@ const RenderEngine = {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto; text-align:center;">
           <span class="badge badge-primary" style="margin-bottom:12px;">RESUME NEXT UNLOCKED LESSON (MILE-001)</span>
-          <h2 style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 8px 0;">Lesson 2.3: State Machine Architecture with XState</h2>
+          <h2 style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 8px 0;">Lesson 2.1: State Machine Modeling with Custom Reducers</h2>
           <p style="font-size:13px; color:var(--slate); margin:0 0 20px 0;">Modern Full-Stack Web Development · Level 2 Core Practical Drills</p>
 
           <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:20px; text-align:left; margin-bottom:20px;">
             <strong style="font-size:14px; color:var(--navy-dark); display:block; margin-bottom:6px;">Learning Objectives for this Lesson:</strong>
             <div style="font-size:13px; color:var(--slate); display:flex; flex-direction:column; gap:6px;">
-              <div>• Eliminate invalid UI state combinations using finite state machines.</div>
+              <div>• Eliminate invalid UI state combinations using deterministic state machines.</div>
               <div>• Model transitions with strict TypeScript payload definitions.</div>
-              <div>• Pass the embedded 3-question state machine knowledge check.</div>
+              <div>• Pass the embedded interactive code lab and knowledge check.</div>
             </div>
           </div>
 
-          <button class="btn btn-primary" style="padding:12px 28px; font-size:14px;" onclick="Router.navigate('learner-learning-activities')"><i data-lucide="play"></i> Launch Activity Player</button>
+          <button class="btn btn-primary" style="padding:12px 28px; font-size:14px;" onclick="Router.navigate('learner-learning-activities')"><i data-lucide="play"></i> Launch Interactive Activity Player</button>
         </div>
       `;
     }
@@ -6652,34 +6652,75 @@ const RenderEngine = {
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
             <div>
-              <strong style="font-size:15px; color:var(--navy-dark);">Levels & Milestone Progression Hierarchy (MILE-006)</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">${currentCourse.title} · Overall Completion: <strong>${currentCourse.progressPercent}%</strong></p>
+              <strong style="font-size:15px; color:var(--navy-dark);">5-Tier Levels & Milestone Progression Hierarchy (FRS 4.8.1 / MILE-006)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Modern Full-Stack Web Development · Level 2 Active · Overall Progress: <strong>75%</strong></p>
             </div>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('learner-learning-activities')"><i data-lucide="play"></i> Resume Active Lesson</button>
           </div>
 
           <div style="display:flex; flex-direction:column; gap:16px;">
-            <div style="background:#f8fafc; border:1px solid var(--primary); border-radius:10px; padding:18px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <strong style="font-size:15px; color:var(--navy-dark);">Level 1: Fundamentals & Environment Setup</strong>
-                <span class="badge badge-success">✓ 100% Completed</span>
+            <!-- LEVEL 1 -->
+            <div style="background:#f8fafc; border:1px solid #86efac; border-radius:10px; padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div>
+                  <span class="badge badge-success" style="margin-bottom:4px;">LEVEL 1 · COMPLETED</span>
+                  <h4 style="margin:0; font-size:16px; color:var(--navy-dark);">Foundations & Runtime Architecture</h4>
+                </div>
+                <strong style="color:#166534; font-size:14px;">100% Passed</strong>
               </div>
-              <span style="font-size:12px; color:var(--slate);">4 Lessons · 1 Practical Lab · Completed on 05 Jul 2026</span>
+              <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px; font-size:12px; color:var(--slate);">
+                <div>✓ <strong>Milestone 1.1: Core TypeScript & Event Loops</strong> (Lesson 1.1: Type Systems & Generics · Quiz #1 Passed 100%)</div>
+                <div style="margin-top:4px;">✓ <strong>Milestone 1.2: Asynchronous State & Promises</strong> (Lesson 1.2: Microtasks Lab Approved by Alex Rivera)</div>
+              </div>
             </div>
 
-            <div style="background:#ffffff; border:2px solid var(--secondary); border-radius:10px; padding:18px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <strong style="font-size:15px; color:var(--navy-dark);">Level 2: Backend Architecture & APIs</strong>
-                <span class="badge badge-warning">Active Progress (75%)</span>
+            <!-- LEVEL 2 -->
+            <div style="background:#ffffff; border:2px solid var(--secondary); border-radius:10px; padding:18px; box-shadow:0 4px 12px rgba(110, 94, 6, 0.08);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div>
+                  <span class="badge badge-warning" style="margin-bottom:4px;">LEVEL 2 · ACTIVE (IN PROGRESS)</span>
+                  <h4 style="margin:0; font-size:16px; color:var(--navy-dark);">Backend Architecture & State Machines</h4>
+                </div>
+                <strong style="color:var(--secondary); font-size:14px;">75% Progress</strong>
               </div>
-              <span style="font-size:12px; color:var(--slate);">4 Lessons · Active Lesson 2.3 · 1 Capstone Review Remaining</span>
+              
+              <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+                <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:6px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <strong style="color:var(--navy-dark);">Milestone 2.1: Deterministic State Modeling (Active)</strong>
+                    <div style="color:var(--slate); margin-top:2px;">Lesson 2.1: State Machine Modeling with Custom Reducers (Video Done · Lab Available)</div>
+                  </div>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-activities')">Start Lab</button>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; justify-content:space-between; align-items:center; opacity:0.7;">
+                  <div>
+                    <strong style="color:var(--slate);">Lesson 2.2: Supabase Row-Level Security & Postgres RPC</strong>
+                    <div style="color:var(--slate); margin-top:2px;">🔒 Locked · Prerequisite: Complete Lesson 2.1 Code Lab & Quiz</div>
+                  </div>
+                  <span class="badge badge-secondary">Locked</span>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; justify-content:space-between; align-items:center; opacity:0.7;">
+                  <div>
+                    <strong style="color:var(--slate);">Milestone 2.2: Facilitator Capstone Evaluation</strong>
+                    <div style="color:var(--slate); margin-top:2px;">🔒 Locked · 1:1 Architecture Review with Alex Rivera</div>
+                  </div>
+                  <span class="badge badge-secondary">Locked</span>
+                </div>
+              </div>
             </div>
 
+            <!-- LEVEL 3 -->
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; opacity:0.6;">
               <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="font-size:15px; color:var(--slate);">Level 3: Production Deployment & Scale</strong>
-                <span class="badge badge-secondary">🔒 Locked</span>
+                <div>
+                  <span class="badge badge-secondary" style="margin-bottom:4px;">LEVEL 3 · LOCKED</span>
+                  <h4 style="margin:0; font-size:16px; color:var(--slate);">Production Deployment & Distributed Systems</h4>
+                </div>
+                <span class="badge badge-secondary">🔒 Prerequisite: Pass Level 2 Capstone</span>
               </div>
-              <span style="font-size:12px; color:var(--slate);">Unlocks upon passing Level 2 Capstone Review.</span>
+              <p style="font-size:12px; color:var(--slate); margin:8px 0 0 0;">Covers Redis cache invalidation, distributed tracing, and multi-region egress.</p>
             </div>
           </div>
         </div>
@@ -6691,7 +6732,7 @@ const RenderEngine = {
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
           <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
             <strong style="font-size:15px; color:var(--navy-dark);">Modular Syllabus Lessons (CAT-006)</strong>
-            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Structured lesson list with duration, status, and learning activities.</p>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Structured lesson list with duration, prerequisite status, and learning activities.</p>
           </div>
 
           <div class="table-responsive">
@@ -6700,6 +6741,7 @@ const RenderEngine = {
                 <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
                   <th style="padding:12px 16px;">LESSON</th>
                   <th style="padding:12px 16px;">TITLE</th>
+                  <th style="padding:12px 16px;">LEVEL & MILESTONE</th>
                   <th style="padding:12px 16px;">DURATION</th>
                   <th style="padding:12px 16px;">STATUS</th>
                   <th style="padding:12px 16px;">ACTION</th>
@@ -6708,23 +6750,26 @@ const RenderEngine = {
               <tbody>
                 <tr style="border-bottom:1px solid #f1f5f9;">
                   <td style="padding:14px 16px; font-weight:700;">Lesson 1.1</td>
-                  <td style="padding:14px 16px;">Architecture Fundamentals</td>
+                  <td style="padding:14px 16px;">Type Systems & Generics</td>
+                  <td style="padding:14px 16px;">Level 1 · Milestone 1.1</td>
                   <td style="padding:14px 16px;">30 mins</td>
                   <td style="padding:14px 16px;"><span class="badge badge-success">✓ Completed</span></td>
                   <td style="padding:14px 16px;"><button class="btn btn-secondary btn-xs" onclick="Router.navigate('learner-learning-activities')">Review</button></td>
                 </tr>
                 <tr style="border-bottom:1px solid #f1f5f9;">
-                  <td style="padding:14px 16px; font-weight:700;">Lesson 2.3</td>
-                  <td style="padding:14px 16px;">State Machine Modeling</td>
+                  <td style="padding:14px 16px; font-weight:700;">Lesson 2.1</td>
+                  <td style="padding:14px 16px;">State Machine Modeling with Custom Reducers</td>
+                  <td style="padding:14px 16px;">Level 2 · Milestone 2.1</td>
                   <td style="padding:14px 16px;">45 mins</td>
-                  <td style="padding:14px 16px;"><span class="badge badge-warning">In Progress</span></td>
+                  <td style="padding:14px 16px;"><span class="badge badge-warning">Active Activity</span></td>
                   <td style="padding:14px 16px;"><button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-activities')">Start Activity</button></td>
                 </tr>
                 <tr style="border-bottom:1px solid #f1f5f9;">
-                  <td style="padding:14px 16px; font-weight:700;">Lesson 2.4</td>
-                  <td style="padding:14px 16px;">Level 2 Capstone Review</td>
+                  <td style="padding:14px 16px; font-weight:700;">Lesson 2.2</td>
+                  <td style="padding:14px 16px;">Supabase Row-Level Security & Postgres RPC</td>
+                  <td style="padding:14px 16px;">Level 2 · Milestone 2.1</td>
                   <td style="padding:14px 16px;">60 mins</td>
-                  <td style="padding:14px 16px;"><span class="badge badge-secondary">Locked</span></td>
+                  <td style="padding:14px 16px;"><span class="badge badge-secondary">🔒 Locked</span></td>
                   <td style="padding:14px 16px;"><button class="btn btn-secondary btn-xs" disabled>Locked</button></td>
                 </tr>
               </tbody>
@@ -6737,30 +6782,61 @@ const RenderEngine = {
     else if (route === "learner-learning-activities") {
       viewContent = `
         <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-            <div>
-              <span class="badge badge-primary">TYPED ACTIVITY PLAYER (FRS 4.8.2)</span>
-              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">State Machine Modeling with Custom Reducers</h3>
+          <!-- BREADCRUMB -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+            <div style="font-size:12px; color:var(--slate);">
+              <span>Level 2</span> &rarr; <span>Milestone 2.1</span> &rarr; <span>Lesson 2.1</span> &rarr; <strong style="color:var(--navy-dark);">Activity B: Interactive Code Reducer Lab (FRS 4.8.2)</strong>
             </div>
-            <span style="font-size:12px; color:var(--slate);">Lesson 2.3 · 20 mins</span>
+            <span class="badge badge-warning">15 mins · Interactive Code Lab</span>
           </div>
 
-          <div style="border:1px solid #cbd5e1; border-radius:8px; padding:16px; background:#f8fafc; margin-bottom:16px;">
-            <h4 style="margin:0 0 8px 0; font-size:13px; color:var(--navy-dark);"><i data-lucide="file-code" style="vertical-align:middle; width:16px; height:16px; color:var(--primary);"></i> Interactive Reducer Exercise</h4>
-            <pre style="background:#0f172a; color:#38bdf8; padding:12px; border-radius:6px; font-size:12px; margin:0; overflow:auto;">
+          <!-- ACTIVITY TABS -->
+          <div style="display:flex; gap:8px; margin-bottom:16px;">
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Video', 'Switching to Video Lecture player...', 'info')"><i data-lucide="play-circle"></i> 1. Video Lecture (Watched ✓)</button>
+            <button class="btn btn-primary btn-xs" style="background:var(--primary);"><i data-lucide="code"></i> 2. Interactive Reducer Lab (Active)</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerQuizModal('WRK-302')"><i data-lucide="help-circle"></i> 3. Knowledge Quiz #2</button>
+          </div>
+
+          <!-- INTERACTIVE CODE LAB PLAYER -->
+          <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:16px; margin-bottom:16px;">
+            <div>
+              <div style="background:#1e293b; color:#cbd5e1; border-radius:8px 8px 0 0; padding:8px 12px; font-size:12px; display:flex; justify-content:space-between; align-items:center;">
+                <span><i data-lucide="file-code" style="width:13px; height:13px; vertical-align:middle;"></i> authReducer.ts (Editable Playground)</span>
+                <button class="btn btn-primary btn-xs" onclick="Actions.runCodeLabTests()"><i data-lucide="play"></i> Run Tests</button>
+              </div>
+              <textarea id="codelab-editor" class="form-control" style="width:100%; height:220px; font-family:monospace; font-size:12px; background:#0f172a; color:#38bdf8; border:none; border-radius:0 0 8px 8px; padding:12px; line-height:1.5;">
 function authReducer(state, action) {
   switch (action.type) {
-    case 'LOGIN_START': return { ...state, status: 'loading' };
-    case 'LOGIN_SUCCESS': return { ...state, status: 'authenticated', user: action.payload };
-    default: return state;
+    case 'LOGIN_START':
+      return { ...state, status: 'loading', error: null };
+    case 'LOGIN_SUCCESS':
+      return { ...state, status: 'authenticated', user: action.payload, error: null };
+    case 'LOGIN_FAILURE':
+      return { ...state, status: 'error', error: action.payload };
+    default:
+      return state;
   }
 }
-            </pre>
+              </textarea>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:6px;">Lab Instructions & Assertions:</strong>
+                <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0; line-height:1.4;">
+                  Modify the reducer above to handle 'LOGIN_FAILURE' by storing the error message. Click <strong>Run Tests</strong> to evaluate your state machine against automated test suites.
+                </p>
+                <div id="codelab-console" style="background:#0f172a; border-radius:6px; padding:10px; font-family:monospace; font-size:11px; min-height:80px;">
+                  <div style="color:#94a3b8;">Click "Run Tests" to execute unit assertions...</div>
+                </div>
+              </div>
+            </div>
           </div>
 
+          <!-- FOOTER NAVIGATION -->
           <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #f1f5f9;">
             <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-learning-lessons')">&larr; Back to Lessons</button>
-            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Activity Complete', 'Activity marked complete! Moving to next milestone.', 'success'); Router.navigate('learner-learning-milestones');">Mark Complete & Next &rarr;</button>
+            <button id="act-complete-btn" class="btn btn-secondary btn-sm" onclick="Actions.completeLearnerActivity('ACT-201-B')"><i data-lucide="check-circle"></i> Mark Complete & Unlock Next Lesson &rarr;</button>
           </div>
         </div>
       `;
@@ -6869,20 +6945,44 @@ function authReducer(state, action) {
 
     else if (route === "learner-work-quizzes") {
       viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
-          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
-            <strong style="font-size:15px; color:var(--navy-dark);">Interactive Knowledge Quizzes (FLOW-019 / ASM-002)</strong>
-            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Auto-graded diagnostic assessments with immediate rubric scoring.</p>
+        <div style="max-width:750px; background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
+            <div>
+              <span class="badge badge-primary">INTERACTIVE QUIZ RUNNER (FLOW-019)</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">State Machine Knowledge Check (DEV-101)</h3>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">3 Questions · Pass Threshold: 80%</span>
           </div>
 
-          <div style="padding:20px; display:flex; flex-direction:column; gap:12px;">
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <strong style="font-size:14px; color:var(--navy-dark);">React 19 State & Effects Quiz (DEV-101)</strong>
-                <span style="font-size:12px; color:var(--slate); display:block;">10 Questions · 80% Passing Threshold · Due: 20 Aug 2026</span>
+          <div style="display:flex; flex-direction:column; gap:18px; margin-bottom:24px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">1. What is the primary purpose of a deterministic state machine in UI modeling?</strong>
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="q1" value="A" checked /> To make invalid UI state transitions impossible.</label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="q1" value="B" /> To replace CSS transitions with JavaScript.</label>
               </div>
-              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerQuizModal('WRK-302')"><i data-lucide="play"></i> Start Quiz</button>
             </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">2. Where should asynchronous side effects be placed in state machine architectures?</strong>
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="q2" value="A" checked /> In dedicated action listeners or middleware, outside pure reducers.</label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="q2" value="B" /> Directly inside the synchronous reducer function.</label>
+              </div>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <strong style="font-size:13px; color:var(--navy-dark); display:block; margin-bottom:8px;">3. How does TypeScript ensure exhaustive state matching?</strong>
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="q3" value="A" checked /> Via discriminated unions and strict default case narrowing.</label>
+                <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="q3" value="B" /> By casting all states to any.</label>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #f1f5f9;">
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-work-due')">Cancel</button>
+            <button class="btn btn-primary" onclick="Actions.submitLearnerQuiz('WRK-302')"><i data-lucide="check"></i> Submit Quiz for Auto-Grading</button>
           </div>
         </div>
       `;
@@ -6896,15 +6996,27 @@ function authReducer(state, action) {
               <strong style="font-size:15px; color:var(--navy-dark);">Capstone & Coding Assignments (ASM-004)</strong>
               <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Repository links and project file submissions reviewed by assigned faculty.</p>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-304')"><i data-lucide="upload"></i> Upload Assignment</button>
           </div>
 
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="font-size:14px; color:var(--navy-dark);">Capstone #1: Full-Stack Microservices Schema</strong>
-              <span style="font-size:12px; color:var(--slate); display:block;">Modern Full-Stack Web Development · Reviewed by Alex Rivera</span>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:20px; margin-bottom:16px;">
+            <h4 style="margin:0 0 6px 0; color:var(--navy-dark); font-size:15px;">Capstone #1: Full-Stack Microservices Architecture</h4>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 14px 0;">Submit your GitHub pull request link or ZIP archive for 1:1 review with Alex Rivera.</p>
+            
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <div>
+                <label style="font-weight:700; font-size:12px; color:var(--navy-dark); display:block; margin-bottom:4px;">GitHub Repository PR Link</label>
+                <input type="text" class="form-control" value="https://github.com/zainab-malik/microservices-capstone/pull/1" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
+              </div>
+              <div style="border:2px dashed #cbd5e1; border-radius:8px; padding:20px; text-align:center; background:#ffffff;">
+                <i data-lucide="upload-cloud" style="width:32px; height:32px; color:var(--primary); margin-bottom:6px;"></i>
+                <div style="font-size:12px; color:var(--slate);">Drag and drop optional architectural diagrams or schema dumps (Max 25MB)</div>
+              </div>
             </div>
-            <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-304')">View Details</button>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; gap:12px;">
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-work-due')">Cancel</button>
+            <button class="btn btn-primary" onclick="Notifications.push('Submission Received', 'Capstone PR submitted. Alex Rivera notified for 1:1 code review.', 'success'); Router.navigate('learner-work-submitted');"><i data-lucide="send"></i> Submit Capstone Work</button>
           </div>
         </div>
       `;
@@ -6932,21 +7044,31 @@ function authReducer(state, action) {
 
     else if (route === "learner-work-voice") {
       viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div style="max-width:720px; background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #f1f5f9;">
             <div>
-              <strong style="font-size:15px; color:var(--navy-dark);">Voice & Speech Recording Studio (FLOW-020)</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Record audio responses for acoustic pronunciation and CEFR intonation scoring.</p>
+              <span class="badge badge-primary">VOICE STUDIO (FLOW-020)</span>
+              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">Voice Drill #4: 2-Minute Professional Pitch</h3>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerVoiceStudioModal('WRK-301')"><i data-lucide="mic"></i> Open Voice Studio</button>
+            <span style="font-size:12px; color:var(--slate);">Due Today · 100 Points</span>
           </div>
 
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="font-size:14px; color:var(--navy-dark);">Voice Studio Drill #4: 2-Minute Professional Pitch</strong>
-              <span style="font-size:12px; color:var(--slate); display:block;">Spoken English Fluency · Assigned by Sara Javed · Due Today</span>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; text-align:center; margin-bottom:18px;">
+            <p style="font-size:13px; color:var(--slate); margin:0 0 14px 0;">
+              Record a 2-minute elevator pitch demonstrating rhythmic thought groups and intonation variance.
+            </p>
+
+            <div id="voice-waveform-box" style="background:#0f172a; border-radius:8px; padding:24px; margin-bottom:14px;">
+              <i data-lucide="mic" style="width:40px; height:40px; color:#38bdf8; margin-bottom:8px;"></i>
+              <div id="voice-recording-status" style="font-size:12px; color:#94a3b8;">Click "Start Recording" to capture your speech drill.</div>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerVoiceStudioModal('WRK-301')"><i data-lucide="mic"></i> Record Speech</button>
+
+            <button class="btn btn-secondary" onclick="Actions.recordLearnerVoice('WRK-301')"><i data-lucide="mic"></i> Start Recording</button>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #f1f5f9;">
+            <button class="btn btn-secondary" onclick="Router.navigate('learner-work-due')">Cancel</button>
+            <button id="voice-submit-btn" class="btn btn-primary" onclick="Actions.submitLearnerVoiceWork('WRK-301')"><i data-lucide="send"></i> Submit to Sara Javed for Rubric Scoring</button>
           </div>
         </div>
       `;
@@ -6962,7 +7084,7 @@ function authReducer(state, action) {
             <div>
               <span class="badge badge-error" style="margin-bottom:6px;">REVISION REQUIRED</span>
               <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:15px;">Capstone #1: Full-Stack Microservices Schema</h4>
-              <p style="font-size:12px; color:var(--slate); margin:0 0 6px 0;"><strong>Alex Rivera:</strong> "Add composite index on tenant_id + created_at to avoid sequential table scans."</p>
+              <p style="font-size:12px; color:var(--slate); margin:0 0 6px 0;"><strong>Alex Rivera:</strong> "Add compound index on tenant_id + created_at to avoid sequential table scans."</p>
             </div>
             <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerSubmissionModal('WRK-304')"><i data-lucide="upload"></i> Upload Revised File</button>
           </div>
@@ -7355,20 +7477,45 @@ function authReducer(state, action) {
 
     else if (route === "learner-k12-reportcards") {
       viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); max-width:750px; margin:0 auto;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-            <div>
-              <span class="badge badge-primary">OFFICIAL REPORT CARD (FLOW-021)</span>
-              <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">Term 1 Progress Report Card</h3>
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerReportCardModal('TERM-1')"><i data-lucide="printer"></i> View Full Report</button>
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:28px; box-shadow:var(--shadow-subtle); max-width:800px; margin:0 auto;">
+          <div style="text-align:center; padding-bottom:18px; border-bottom:2px solid var(--outline-variant); margin-bottom:20px;">
+            <span style="font-size:12px; font-weight:800; color:var(--primary); letter-spacing:0.1em; text-transform:uppercase;">FEDERAL BOARD OF INTERMEDIATE & SECONDARY EDUCATION</span>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0;">Official Institutional Term Progress Report Card (FLOW-021)</h2>
+            <span style="font-size:12px; color:var(--slate);">Academic Session 2026 · Term 1 Examination Summary</span>
           </div>
 
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; font-size:13px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Student Name:</span> <strong>Zainab Malik</strong></div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Guardian Name:</span> <strong>Farooq Malik</strong></div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Cumulative GPA:</span> <strong>3.92 / 4.0 (A+)</strong></div>
-            <div style="display:flex; justify-content:space-between;"><span>Academic Standing:</span> <span class="badge badge-success">Honor Roll</span></div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:20px; font-size:13px; background:#f8fafc; padding:16px; border-radius:8px;">
+            <div><span>Student Name:</span> <strong>Zainab Malik</strong></div>
+            <div><span>Roll Number:</span> <strong>FBISE-2026-8812</strong></div>
+            <div><span>Authorized Guardian:</span> <strong>Farooq Malik</strong></div>
+            <div><span>Overall Attendance:</span> <strong>95% (53/56 Sessions)</strong></div>
+          </div>
+
+          <div class="table-responsive" style="margin-bottom:20px;">
+            <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
+              <thead>
+                <tr style="background:#f3ede2; text-align:left; border-bottom:2px solid var(--outline-variant);">
+                  <th style="padding:10px 14px;">SUBJECT</th>
+                  <th style="padding:10px 14px;">CONTINUOUS (40)</th>
+                  <th style="padding:10px 14px;">MID-TERM (60)</th>
+                  <th style="padding:10px 14px;">TOTAL (100)</th>
+                  <th style="padding:10px 14px;">GRADE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:10px 14px;">Mathematics</td><td style="padding:10px 14px;">38 / 40</td><td style="padding:10px 14px;">57 / 60</td><td style="padding:10px 14px;"><strong>95 / 100</strong></td><td style="padding:10px 14px;"><span class="badge badge-success">A+</span></td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:10px 14px;">General Science</td><td style="padding:10px 14px;">36 / 40</td><td style="padding:10px 14px;">55 / 60</td><td style="padding:10px 14px;"><strong>91 / 100</strong></td><td style="padding:10px 14px;"><span class="badge badge-success">A</span></td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:10px 14px;">English Language</td><td style="padding:10px 14px;">39 / 40</td><td style="padding:10px 14px;">57 / 60</td><td style="padding:10px 14px;"><strong>96 / 100</strong></td><td style="padding:10px 14px;"><span class="badge badge-success">A+</span></td></tr>
+                <tr style="border-bottom:1px solid #f1f5f9;"><td style="padding:10px 14px;">Urdu Literature</td><td style="padding:10px 14px;">35 / 40</td><td style="padding:10px 14px;">54 / 60</td><td style="padding:10px 14px;"><strong>89 / 100</strong></td><td style="padding:10px 14px;"><span class="badge badge-success">A</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #e2e8f0;">
+            <div>
+              <span style="font-size:12px; color:var(--slate);">Cumulative Term GPA:</span> <strong style="font-size:16px; color:var(--navy-dark);">3.92 / 4.0</strong> · <span class="badge badge-success">Honor Roll</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="window.print()"><i data-lucide="printer"></i> Print Official Transcript</button>
           </div>
         </div>
       `;
@@ -7433,15 +7580,71 @@ function authReducer(state, action) {
 
     else if (route === "learner-payments-submissions") {
       viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
-          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <strong style="font-size:15px; color:var(--navy-dark);">Manual Bank Deposit Submissions (FLOW-011 / FLOW-013)</strong>
-              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Review status of uploaded bank transfer receipts awaiting Finance desk verification.</p>
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('NEW')"><i data-lucide="upload-cloud"></i> Upload New Deposit Slip</button>
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle); margin-bottom:24px;">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Official Bank Transfer Accounts & Payment Instructions (FLOW-011)</strong>
+            <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Transfer fees to our authorized institutional accounts and upload the deposit evidence below.</p>
           </div>
 
+          <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <span class="badge badge-primary" style="margin-bottom:6px;">PRIMARY CORPORATE ACCOUNT</span>
+              <strong style="display:block; font-size:14px; color:var(--navy-dark);">Meezan Bank Limited</strong>
+              <div style="font-size:12px; color:var(--slate); margin-top:4px; display:flex; flex-direction:column; gap:2px;">
+                <div>Account Title: <strong>Innovator Huzsam Learning (Pvt) Ltd</strong></div>
+                <div>IBAN: <code>PK44MEZN0001020304050607</code></div>
+                <div>Branch: Main Civic Centre Branch, Lahore</div>
+              </div>
+            </div>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px;">
+              <span class="badge badge-secondary" style="margin-bottom:6px;">INSTANT MOBILE WALLET</span>
+              <strong style="display:block; font-size:14px; color:var(--navy-dark);">JazzCash Merchant Direct</strong>
+              <div style="font-size:12px; color:var(--slate); margin-top:4px; display:flex; flex-direction:column; gap:2px;">
+                <div>Merchant Till ID: <strong>0098412</strong></div>
+                <div>Account Title: <strong>IHS Online Admissions</strong></div>
+                <div>Accepted: JazzCash App, 1Link Transfer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPLOAD STUDIO FORM -->
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); margin-bottom:24px;">
+          <span class="badge badge-primary" style="margin-bottom:8px;">MANUAL PAYMENT DEPOSIT SLIP UPLOADER (FLOW-013)</span>
+          <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 16px 0;">Upload Payment Evidence</h3>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+            <div>
+              <label style="font-weight:700; font-size:12px; color:var(--navy-dark); display:block; margin-bottom:4px;">Select Enrolment / Term</label>
+              <select class="form-control" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);">
+                <option>Spoken English Fluency – Term 2 Renewal (PKR 15,000)</option>
+                <option>Modern Full-Stack Web Development – Full Grant (PKR 25,000)</option>
+                <option>Grade 8 Mathematics – Term 2 Monthly (PKR 12,000)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-weight:700; font-size:12px; color:var(--navy-dark); display:block; margin-bottom:4px;">Bank Reference / Transaction ID</label>
+              <input type="text" id="pay-bank-ref-input" class="form-control" value="TXN-90214" style="width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--outline-variant);" />
+            </div>
+          </div>
+
+          <div style="border:2px dashed #cbd5e1; border-radius:8px; padding:24px; text-align:center; background:#f8fafc; margin-bottom:16px;">
+            <i data-lucide="upload-cloud" style="width:36px; height:36px; color:var(--primary); margin-bottom:8px;"></i>
+            <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:14px;">Upload Bank Deposit Slip / Transfer Screenshot</h4>
+            <span style="font-size:12px; color:var(--slate);">Supported formats: PNG, JPG, PDF (Max 10MB) · Private Supabase Storage</span>
+          </div>
+
+          <div style="display:flex; justify-content:flex-end;">
+            <button class="btn btn-primary" onclick="Actions.submitLearnerPaymentSlip('CRS-103')"><i data-lucide="send"></i> Submit Deposit Slip for Finance Review</button>
+          </div>
+        </div>
+
+        <!-- SUBMISSIONS HISTORY -->
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-subtle);">
+          <div style="padding:18px 24px; background:#f8fafc; border-bottom:1px solid #e2e8f0;">
+            <strong style="font-size:15px; color:var(--navy-dark);">Recent Payment Submissions Log</strong>
+          </div>
           <div class="table-responsive">
             <table class="data-table" style="width:100%; border-collapse:collapse; font-size:13px;">
               <thead>
@@ -7467,7 +7670,7 @@ function authReducer(state, action) {
                     <td style="padding:14px 16px;"><code>${p.bankRef}</code></td>
                     <td style="padding:14px 16px;">${p.submittedDate}</td>
                     <td style="padding:14px 16px;">
-                      <span class="badge ${p.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${p.status}</span>
+                      <span class="badge ${p.status.includes('Approved') ? 'badge-success' : 'badge-warning'}">${p.status}</span>
                     </td>
                     <td style="padding:14px 16px;">
                       <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Receipt', 'Viewing attached receipt ${p.receiptFile}...', 'info')"><i data-lucide="file-check"></i> ${p.receiptFile}</button>
@@ -11203,6 +11406,192 @@ function authReducer(state, action) {
 // ============================================================================
 
 window.Actions = Actions = {
+
+  runCodeLabTests() {
+    const codeArea = document.getElementById("codelab-editor");
+    const consoleOutput = document.getElementById("codelab-console");
+    if (!consoleOutput) return;
+
+    consoleOutput.innerHTML = `
+      <div style="color:#38bdf8;">[10:14:02] Initializing test suite: Auth State Machine Reducer...</div>
+      <div style="color:#4ade80;">✓ Test 1: state transitions to 'loading' on LOGIN_START</div>
+      <div style="color:#4ade80;">✓ Test 2: state transitions to 'authenticated' with user payload on LOGIN_SUCCESS</div>
+      <div style="color:#4ade80;">✓ Test 3: state transitions to 'error' with message on LOGIN_FAILURE</div>
+      <div style="color:#facc15; font-weight:700; margin-top:4px;">Result: 3 of 3 Tests Passed (100% Assertion Coverage)!</div>
+    `;
+
+    const nextBtn = document.getElementById("act-complete-btn");
+    if (nextBtn) {
+      nextBtn.disabled = false;
+      nextBtn.classList.remove("btn-secondary");
+      nextBtn.classList.add("btn-primary");
+    }
+    Notifications.push("Tests Passed", "All reducer test assertions passed! You can now mark this activity complete.", "success");
+  },
+
+  completeLearnerActivity(actId) {
+    const data = db.learnerData;
+    const devCourse = data.activeCourses.find(c => c.id === "CRS-101");
+    if (devCourse) {
+      devCourse.progressPercent = Math.min(100, devCourse.progressPercent + 10);
+    }
+    Notifications.push("Milestone Progression", "Activity completed! Level 2 progress updated to " + (devCourse ? devCourse.progressPercent : 85) + "%. Next lesson unlocked.", "success");
+    Router.navigate("learner-learning-milestones");
+  },
+
+  submitLearnerQuiz(quizId) {
+    const data = db.learnerData;
+    const workItem = data.myWork.find(w => w.id === quizId || w.id === "WRK-302");
+    if (workItem) {
+      workItem.status = "Graded";
+      workItem.score = "50 / 50 (100%)";
+    }
+
+    const devCourse = data.activeCourses.find(c => c.id === "CRS-101");
+    if (devCourse) {
+      devCourse.progressPercent = Math.min(100, devCourse.progressPercent + 5);
+    }
+
+    Notifications.push("Quiz Passed", "Score: 100% (50/50). Auto-marked and published to Gradebook.", "success");
+    Router.navigate("learner-grades-gradebook");
+  },
+
+  openLearnerQuizModal(quizId) {
+    Router.navigate("learner-work-quizzes");
+  },
+
+  openLearnerVoiceStudioModal(taskId) {
+    Router.navigate("learner-work-voice");
+  },
+
+  recordLearnerVoice(taskId) {
+    const statusText = document.getElementById("voice-recording-status");
+    const waveBox = document.getElementById("voice-waveform-box");
+    const submitBtn = document.getElementById("voice-submit-btn");
+
+    if (statusText) statusText.innerHTML = '<span style="color:#ef4444; font-weight:700;"><i data-lucide="mic" style="vertical-align:middle;"></i> Recording speech in progress (0:14s)...</span>';
+    if (waveBox) {
+      waveBox.innerHTML = `
+        <div style="display:flex; align-items:center; justify-content:center; gap:4px; height:40px;">
+          <div style="width:4px; height:24px; background:var(--primary); animation:pulse 0.4s infinite alternate;"></div>
+          <div style="width:4px; height:36px; background:var(--secondary); animation:pulse 0.6s infinite alternate;"></div>
+          <div style="width:4px; height:18px; background:var(--primary); animation:pulse 0.3s infinite alternate;"></div>
+          <div style="width:4px; height:32px; background:var(--secondary); animation:pulse 0.5s infinite alternate;"></div>
+          <div style="width:4px; height:40px; background:var(--primary); animation:pulse 0.7s infinite alternate;"></div>
+          <div style="width:4px; height:20px; background:var(--secondary); animation:pulse 0.4s infinite alternate;"></div>
+          <div style="width:4px; height:28px; background:var(--primary); animation:pulse 0.5s infinite alternate;"></div>
+        </div>
+      `;
+    }
+
+    setTimeout(() => {
+      if (statusText) statusText.innerHTML = '<span style="color:#166534; font-weight:700;">✓ Speech Recording Captured (1:45s · High-Fidelity Audio)</span>';
+      if (submitBtn) submitBtn.disabled = false;
+      Notifications.push("Voice Captured", "1:45s audio recording captured. Ready for submission.", "info");
+      if (window.lucide) window.lucide.createIcons();
+    }, 1000);
+  },
+
+  submitLearnerVoiceWork(taskId) {
+    const data = db.learnerData;
+    const item = data.myWork.find(w => w.id === taskId || w.id === "WRK-301");
+    if (item) {
+      item.status = "Submitted (Awaiting Review)";
+    }
+    Notifications.push("Voice Submitted", "Speech recording uploaded to private storage and routed to Sara Javed for rubric scoring.", "success");
+    Router.navigate("learner-work-submitted");
+  },
+
+  submitLearnerPaymentSlip(courseId) {
+    const ref = document.getElementById("pay-bank-ref-input")?.value || "TXN-" + Math.floor(10000 + Math.random() * 90000);
+    const amount = document.getElementById("pay-amount-input")?.value || "PKR 15,000";
+
+    db.learnerData.paymentSubmissions.unshift({
+      id: "SUB-" + Math.floor(900 + Math.random() * 100),
+      term: "Spoken English Term 2 Renewal",
+      amount: amount,
+      method: "Meezan Bank Direct Transfer",
+      bankRef: ref,
+      submittedDate: "Just now",
+      status: "Under Review (Finance Desk)",
+      receiptFile: "deposit_slip_" + ref.toLowerCase() + ".png"
+    });
+
+    Notifications.push("Payment Evidence Logged", "Deposit slip submitted with reference " + ref + ". Routed to Finance for verification.", "success");
+    Router.navigate("learner-payments-submissions");
+  },
+
+  openLearnerPaymentUploadModal(courseId) {
+    Router.navigate("learner-payments-submissions");
+  },
+
+  openLearnerReportCardModal(termId) {
+    Router.navigate("learner-k12-reportcards");
+  },
+
+  openLearnerRescheduleModal(classId) {
+    Router.navigate("learner-schedule-reschedule");
+  },
+
+  openLearnerNoteModal() {
+    Router.navigate("learner-notes-all");
+  },
+
+  openLearnerSubmissionModal(workId) {
+    Router.navigate("learner-work-assignments");
+  },
+
+  submitLearnerTrialRequest() {
+    Notifications.push("Trial Confirmed", "Diagnostic trial booked. Confirmation email & WhatsApp details sent.", "success");
+    Router.navigate("learner-schedule-upcoming");
+  },
+
+  openLearnerJoinClassModal(classId) {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) return;
+
+    if (title) title.innerHTML = '<i data-lucide="video" style="vertical-align:middle; margin-right:6px;"></i> Daily.co Live WebRTC Classroom';
+    body.innerHTML = `
+      <div style="background:#0f172a; border-radius:10px; padding:20px; color:#ffffff; text-align:center; margin-bottom:16px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(239, 68, 68, 0.2); border:1px solid #ef4444; border-radius:20px; padding:4px 12px; margin-bottom:14px; font-size:12px;">
+          <span style="width:8px; height:8px; border-radius:50%; background:#ef4444; animation:pulse 1s infinite;"></span> LIVE CLASSROOM ACTIVE
+        </div>
+        <h3 style="font:800 18px 'Manrope', sans-serif; margin:0 0 6px 0;">Spoken English Fluency – Acoustic Intonation Drill</h3>
+        <p style="font-size:12px; color:#94a3b8; margin:0 0 16px 0;">Faculty Lead: Sara Javed · Room: ihs-spoken-eng-live-007 · Telemetry: Active</p>
+        
+        <div style="background:#1e293b; border-radius:8px; padding:24px; display:flex; justify-content:center; align-items:center; gap:20px; margin-bottom:16px;">
+          <div style="text-align:center;">
+            <div style="width:80px; height:80px; border-radius:50%; background:#334155; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
+              <i data-lucide="mic" style="width:32px; height:32px; color:#38bdf8;"></i>
+            </div>
+            <span style="font-size:12px; color:#cbd5e1;">Microphone: OK</span>
+          </div>
+          <div style="text-align:center;">
+            <div style="width:80px; height:80px; border-radius:50%; background:#334155; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
+              <i data-lucide="video" style="width:32px; height:32px; color:#4ade80;"></i>
+            </div>
+            <span style="font-size:12px; color:#cbd5e1;">HD Video: Ready</span>
+          </div>
+        </div>
+
+        <div style="font-size:11px; color:#64748b;">Daily.co WebRTC Token: <code>jwt_daily_tok_99182</code> (Cryptographically Signed)</div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Leave Room</button>
+        <button class="btn btn-primary" onclick="Notifications.push('Presence Recorded', 'Joined Daily.co WebRTC room. Presence telemetry interval started.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="log-in"></i> Enter Classroom</button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
 
   switchLearnerCourse(courseId) {
     db.learnerData.profile.activeCourseId = courseId;
