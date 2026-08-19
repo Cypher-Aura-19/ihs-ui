@@ -88,7 +88,7 @@ const db = {
       guardian: "Farooq Malik",
       consentStatus: "Verified & Granted (FLOW-033)",
       timezone: "Asia/Karachi (PKT - UTC+5)",
-      activeCourseId: "CRS-103",
+      activeCourseId: "CRS-101",
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80",
       enrolmentCount: 3,
       completedCredits: 14,
@@ -96,45 +96,173 @@ const db = {
       academicStanding: "Excellent (Honor Roll)"
     },
 
-    
+    // ------------------------------------------------------------------------
+    // CONTEXTUAL FACULTY CHAT (MSG-001 - MSG-004 / FLOW-023)
+    // ------------------------------------------------------------------------
+    activeFacultyChatId: "TRN-101",
+    facultyChats: {
+      "TRN-101": {
+        id: "TRN-101",
+        name: "Sara Javed",
+        role: "Senior Oral Cadence Specialist & Lead Trainer",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        avatar: "SJ",
+        online: true,
+        officeHours: "Mon & Wed 2:00 PM – 4:00 PM PKT",
+        messages: [
+          { id: "MSG-101", sender: "trainer", name: "Sara Javed", text: "Hi Zainab! Excellent progress in our live seminar yesterday. Your consonant cluster flow was much smoother.", time: "Yesterday, 04:30 PM", type: "text" },
+          { id: "MSG-102", sender: "student", name: "Zainab Malik", text: "Thank you Sara! I recorded the 90-second voice drill. Could you check if my pitch modulation sounds natural?", time: "Yesterday, 05:15 PM", type: "text" },
+          { id: "MSG-103", sender: "trainer", name: "Sara Javed", text: "Just listened to your audio file! Your CEFR rubric score is 92/100 (C1 Proficient). Keep emphasizing the plosives in 'architect' and 'aspect'.", time: "Today, 09:10 AM", type: "voice_feedback", audioLength: "0:45" }
+        ]
+      },
+      "TRN-102": {
+        id: "TRN-102",
+        name: "Prof. Alex Rivera",
+        role: "Lead Software Architect & Faculty Lead",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        avatar: "AR",
+        online: true,
+        officeHours: "Tue & Thu 3:00 PM – 6:00 PM PKT",
+        messages: [
+          { id: "MSG-201", sender: "trainer", name: "Prof. Alex Rivera", text: "Welcome to Level 2! In Lesson 2.1.2 (Auth Reducer), make sure you return exhaustive discriminated unions so TypeScript can infer state narrows automatically.", time: "2 days ago, 11:00 AM", type: "text" },
+          { id: "MSG-202", sender: "student", name: "Zainab Malik", text: "Hi Prof. Alex, should I handle refresh token failures in the same reducer or delegate it to a saga middleware?", time: "Yesterday, 02:20 PM", type: "text" },
+          { id: "MSG-203", sender: "trainer", name: "Prof. Alex Rivera", text: "Keep the reducer pure for state transitions only. Side effects and token refreshes should run in the middleware saga pipeline. Check the architecture diagram in the lesson!", time: "Yesterday, 03:45 PM", type: "text" }
+        ]
+      },
+      "TRN-103": {
+        id: "TRN-103",
+        name: "Prof. Tariq Mahmood",
+        role: "Head of Mathematics & Cambridge/FBISE Chair",
+        courseCode: "K12-801",
+        courseTitle: "Grade 8 Mathematics & Science (FBISE)",
+        avatar: "TM",
+        online: false,
+        officeHours: "Mon & Thu 10:00 AM – 1:00 PM PKT",
+        messages: [
+          { id: "MSG-301", sender: "trainer", name: "Prof. Tariq Mahmood", text: "Assalam-o-Alaikum Zainab. Your Unit 2 Algebraic Identities test score was 39/40 (Grade A+). For Unit 3 Linear Equations, pay close attention to simultaneous substitution steps.", time: "3 days ago, 10:00 AM", type: "text" },
+          { id: "MSG-302", sender: "student", name: "Zainab Malik", text: "Walaikum Assalam Sir, I am practicing Past Paper #3 today. Will submit the worked step sheet by tonight.", time: "Today, 08:30 AM", type: "text" }
+        ]
+      }
+    },
+
+    // ------------------------------------------------------------------------
+    // SUPPORT DESK & ISSUE SUBMISSION SUITE (MSG-005 - MSG-007 / FLOW-024)
+    // ------------------------------------------------------------------------
+    supportDesk: {
+      activeAgent: "Bilal CSR (Admissions & Finance Desk)",
+      liveChatMessages: [
+        { id: "SUP-1", sender: "csr", name: "Bilal CSR (Support Lead)", text: "Hello Zainab! Welcome to IHS Student Support. How can we assist you today?", time: "Today, 10:00 AM" },
+        { id: "SUP-2", sender: "student", name: "Zainab Malik", text: "Hi Bilal! I wanted to confirm if my recent bank deposit receipt for the Spring term was reconciled.", time: "Today, 10:05 AM" },
+        { id: "SUP-3", sender: "csr", name: "Bilal CSR (Support Lead)", text: "Yes! Deposit slip #DEP-8841 was verified by Finance and your active enrollment entitlement is fully active until 15 Dec 2026.", time: "Today, 10:07 AM" }
+      ],
+      cases: [
+        {
+          id: "CASE-9042",
+          category: "Technical / WebRTC Issue",
+          priority: "High",
+          title: "Daily.co Microphone Telemetry & Latency Diagnostic",
+          status: "In Review",
+          assignedTo: "Hassan (Tech Support)",
+          created: "18 Aug 2026, 11:30 PKT",
+          slaTarget: "4h 00m",
+          slaRemaining: "3h 15m remaining",
+          description: "Learner experienced occasional microphone echo during the live seminar. Audio stream diagnostic initiated.",
+          messages: [
+            { sender: "student", text: "Microphone had a 2-second feedback loop during Session 16.", time: "18 Aug 11:30" },
+            { sender: "support", text: "We checked the Daily.co logs. Your echo cancellation was disabled in the browser settings. Enabling WebRTC noise suppression resolves this.", time: "18 Aug 12:15" }
+          ]
+        },
+        {
+          id: "CASE-9021",
+          category: "Payment & Billing",
+          priority: "Normal",
+          title: "Term 2 Meezan Bank Deposit Slip Confirmation",
+          status: "Resolved",
+          assignedTo: "Bilal CSR",
+          created: "15 Aug 2026, 09:15 PKT",
+          slaTarget: "24h 00m",
+          slaRemaining: "Resolved in 1h 45m",
+          description: "Manual bank deposit receipt verification for Spring 2026 Spoken English course.",
+          messages: [
+            { sender: "student", text: "Uploaded slip ref #TRX-99823.", time: "15 Aug 09:15" },
+            { sender: "support", text: "Confirmed with Meezan Bank. Entitlement credits applied.", time: "15 Aug 11:00" }
+          ]
+        },
+        {
+          id: "CASE-8940",
+          category: "Class Reschedule / Attendance",
+          priority: "Low",
+          title: "Make-up Class Credit Request for Eid Holiday",
+          status: "Closed",
+          assignedTo: "Academic Ops",
+          created: "08 Aug 2026, 14:00 PKT",
+          slaTarget: "48h 00m",
+          slaRemaining: "Resolved in 3h 10m",
+          description: "Requesting additional class credit due to public holiday cancellation.",
+          messages: [
+            { sender: "student", text: "Class on 14 Aug rescheduled.", time: "08 Aug 14:00" },
+            { sender: "support", text: "1 makeup class credit has been credited to your active wallet.", time: "08 Aug 17:10" }
+          ]
+        }
+      ]
+    },
+
+    // ------------------------------------------------------------------------
+    // CANONICAL 5-TIER ODIN-STYLE MILESTONE CURRICULUM (MILE-001 - MILE-015)
+    // ------------------------------------------------------------------------
     milestoneHierarchy: [
       {
         levelId: "LVL-01",
         levelNumber: 1,
-        title: "Level 1: Foundations & Runtime Architecture",
+        title: "Level 1: Web Foundations & Core DOM Architecture",
         status: "Completed",
         progressPercent: 100,
         milestones: [
           {
             milestoneId: "MLS-101",
-            title: "Milestone 1.1: Core TypeScript & Event Loops",
+            title: "Milestone 1.1: Web Protocols & Semantic HTML5",
             status: "Completed",
+            goal: "Master HTTP/3, DNS resolution, and accessible semantic structures.",
             lessons: [
               {
                 lessonId: "LSN-101",
-                title: "Lesson 1.1: Type Systems & Generics",
+                title: "Lesson 1.1.1: How the Web Works (HTTP/3, DNS & DOM Tree)",
                 duration: "30 mins",
                 status: "Completed",
                 activities: [
-                  { id: "ACT-101-A", type: "Video", title: "TypeScript 5.x Deep Dive", duration: "15 mins", status: "Completed" },
-                  { id: "ACT-101-B", type: "Text", title: "Generic Constraints & Narrowing", duration: "10 mins", status: "Completed" },
-                  { id: "ACT-101-C", type: "Quiz", title: "Diagnostic Quiz #1", questions: 5, score: "100%", status: "Passed" }
+                  { id: "ACT-101-A", type: "Text", title: "HTTP/3 & DOM Architecture Reading", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-101-B", type: "Video", title: "Browser Rendering Pipeline (1080p)", duration: "10 mins", status: "Completed" },
+                  { id: "ACT-101-C", type: "Quiz", title: "Web Foundations Diagnostic Quiz", questions: 5, score: "100%", status: "Passed" }
+                ]
+              },
+              {
+                lessonId: "LSN-102",
+                title: "Lesson 1.1.2: Semantic HTML5 & WCAG AAA Accessibility",
+                duration: "35 mins",
+                status: "Completed",
+                activities: [
+                  { id: "ACT-102-A", type: "Text", title: "Accessible Semantic Markup Guide", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-102-B", type: "Lab", title: "Screen Reader Audit Lab", duration: "20 mins", status: "Completed" }
                 ]
               }
             ]
           },
           {
             milestoneId: "MLS-102",
-            title: "Milestone 1.2: Asynchronous State & Promises",
+            title: "Milestone 1.2: Modern CSS Grid & Responsive Architecture",
             status: "Completed",
+            goal: "Build fluid, tokenized interfaces with CSS Grid & Subgrid.",
             lessons: [
               {
-                lessonId: "LSN-102",
-                title: "Lesson 1.2: Microtasks & Promise Combinators",
+                lessonId: "LSN-103",
+                title: "Lesson 1.2.1: CSS Grid & Subgrid Deep Dive",
                 duration: "40 mins",
                 status: "Completed",
                 activities: [
-                  { id: "ACT-102-A", type: "Lab", title: "Promise.allSettled Concurrency Lab", duration: "25 mins", status: "Approved by Alex Rivera" }
+                  { id: "ACT-103-A", type: "Text", title: "Subgrid & Flexbox Comparison", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-103-B", type: "Lab", title: "Interactive Dashboard Layout Lab", duration: "25 mins", status: "Approved by Alex Rivera" }
                 ]
               }
             ]
@@ -144,52 +272,70 @@ const db = {
       {
         levelId: "LVL-02",
         levelNumber: 2,
-        title: "Level 2: Backend Architecture & State Machines",
+        title: "Level 2: Scalable Reducer & Architecture Pipelines",
         status: "In Progress",
         progressPercent: 75,
         milestones: [
           {
             milestoneId: "MLS-201",
-            title: "Milestone 2.1: Deterministic State Modeling",
+            title: "Milestone 2.1: Deterministic State Modeling & Statecharts",
             status: "Active",
+            goal: "Model complex front-end state machines with immutable reducers and Jest assertions.",
             lessons: [
               {
                 lessonId: "LSN-201",
-                title: "Lesson 2.1: State Machine Modeling with Custom Reducers",
-                duration: "45 mins",
-                status: "Active",
+                title: "Lesson 2.1.1: Statechart Modeling & Pure Functions",
+                duration: "40 mins",
+                status: "Completed",
                 activities: [
-                  { id: "ACT-201-A", type: "Video", title: "Statecharts in React 19", duration: "18 mins", status: "Completed" },
-                  { id: "ACT-201-B", type: "Interactive Code", title: "Interactive Reducer State Machine Lab", duration: "15 mins", status: "Available", active: true },
-                  { id: "ACT-201-C", type: "Quiz", title: "State Machine Knowledge Quiz (FLOW-019)", questions: 3, passScore: 80, status: "Available" }
+                  { id: "ACT-201-1", type: "Text", title: "Finite State Machine Theory", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-201-2", type: "Video", title: "Eliminating Impossible States (1080p)", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-201-3", type: "Quiz", title: "FSM Knowledge Check", score: "100%", status: "Passed" }
                 ]
               },
               {
                 lessonId: "LSN-202",
-                title: "Lesson 2.2: Supabase Row-Level Security & Postgres RPC",
-                duration: "60 mins",
-                status: "Locked",
-                prerequisite: "Complete Lesson 2.1",
+                title: "Lesson 2.1.2: Auth Reducer State Machine in TypeScript",
+                duration: "45 mins",
+                status: "Active",
+                current: true,
                 activities: [
-                  { id: "ACT-202-A", type: "Video", title: "RLS Multi-Tenant Policies", duration: "25 mins", status: "Locked" },
-                  { id: "ACT-202-B", type: "Assignment", title: "RLS Schema Definition Submission", status: "Locked" }
+                  { id: "ACT-202-TEXT", type: "Text", title: "Architectural Guide: Discriminative State Unions", duration: "10 mins", status: "Completed" },
+                  { id: "ACT-202-VIDEO", type: "Video", title: "Video Masterclass: Writing Auth Reducers in React 19", duration: "15 mins", status: "Completed" },
+                  { id: "ACT-202-VOICE", type: "Voice", title: "Spoken Voice Defense: Explaining State Machines (FLOW-020)", duration: "10 mins", status: "Available" },
+                  { id: "ACT-202-CODELAB", type: "Interactive Code", title: "Monaco Codelab: authReducer.ts & Jest Suite", duration: "15 mins", status: "Active", active: true },
+                  { id: "ACT-202-QUIZ", type: "Quiz", title: "Gatekeeper Quiz: State Transitions & Invariants (FLOW-019)", questions: 3, passScore: 80, status: "Available" },
+                  { id: "ACT-202-PROJECT", type: "Assignment", title: "Project Task: Full Auth Machine with Session Recovery (FLOW-020)", status: "Available" }
+                ]
+              },
+              {
+                lessonId: "LSN-203",
+                title: "Lesson 2.1.3: Asynchronous Middleware & Saga Pipelines",
+                duration: "50 mins",
+                status: "Locked",
+                prerequisite: "Complete Lesson 2.1.2 (Auth Reducer State Machine)",
+                activities: [
+                  { id: "ACT-203-A", type: "Text", title: "Side-Effect Isolation with Generator Functions", status: "Locked" },
+                  { id: "ACT-203-B", type: "Lab", title: "Async Saga Concurrency Pipeline", status: "Locked" }
                 ]
               }
             ]
           },
           {
             milestoneId: "MLS-202",
-            title: "Milestone 2.2: Facilitator Capstone Evaluation",
+            title: "Milestone 2.2: Immutable Data Stores & Event Sourcing",
             status: "Locked",
+            goal: "Design event-sourced audit ledgers with real-time WebSocket reconciliation.",
             lessons: [
               {
-                lessonId: "LSN-203",
-                title: "Lesson 2.3: 1:1 Code Architecture Review with Alex Rivera",
+                lessonId: "LSN-204",
+                title: "Lesson 2.2.1: Event Bus Architecture & CQRS",
                 duration: "60 mins",
                 status: "Locked",
                 prerequisite: "Complete Milestone 2.1",
                 activities: [
-                  { id: "ACT-203-A", type: "Capstone", title: "Full-Stack Microservices Architecture PR", status: "Locked" }
+                  { id: "ACT-204-A", type: "Text", title: "CQRS Pattern & Optimistic UI Updates", status: "Locked" },
+                  { id: "ACT-204-B", type: "Capstone", title: "1:1 Architecture Review Defense with Alex Rivera", status: "Locked" }
                 ]
               }
             ]
@@ -205,8 +351,9 @@ const db = {
         milestones: [
           {
             milestoneId: "MLS-301",
-            title: "Milestone 3.1: Microservices, Caching & Performance Gates",
+            title: "Milestone 3.1: Microservices, Redis Caching & Tracing",
             status: "Locked",
+            goal: "Deploy multi-tenant systems with Redis cache invalidation and OpenTelemetry.",
             lessons: [
               {
                 lessonId: "LSN-301",
@@ -216,10 +363,45 @@ const db = {
                 activities: []
               }
             ]
+          },
+          {
+            milestoneId: "MLS-302",
+            title: "Milestone 3.2: Capstone Project Defense & Oral Defense",
+            status: "Locked",
+            goal: "Deliver production-grade full-stack LMS system in public defense.",
+            lessons: [
+              {
+                lessonId: "LSN-302",
+                title: "Lesson 3.2: Final Capstone Oral Examination",
+                duration: "90 mins",
+                status: "Locked",
+                activities: []
+              }
+            ]
           }
         ]
       }
     ],
+
+    learningState: {
+      courseId: "CRS-101",
+      courseVersionId: "CRS-101-V2",
+      courseVersion: "v2.0 (Published)",
+      selectedLevelId: "LVL-02",
+      selectedMilestoneId: "MLS-201",
+      selectedLessonId: "LSN-202",
+      selectedActivityFormat: "codelab", // 'text' | 'video' | 'voice' | 'codelab' | 'quiz' | 'project'
+      selectedActivityId: "ACT-202-CODELAB",
+      lastMeaningfulActivityId: "ACT-202-CODELAB",
+      releaseRule: "Immediate after prerequisite completion",
+      accessStatus: "Active until 15 Dec 2026",
+      updatedAt: "18 Aug 2026, 10:12 PKT",
+      progressEvents: [
+        { id: "PRG-401", targetId: "ACT-201-1", event: "Completed", at: "18 Aug 2026, 09:45 PKT", evidence: "Read article & verified takeaways", hash: "0x4a9b1c" },
+        { id: "PRG-402", targetId: "ACT-201-2", event: "Completed", at: "18 Aug 2026, 10:05 PKT", evidence: "Video watch threshold 100%", hash: "0x7e1c94" },
+        { id: "PRG-403", targetId: "ACT-202-CODELAB", event: "Started", at: "18 Aug 2026, 10:12 PKT", evidence: "Monaco sandbox autosave checkpoint", hash: "0x9a8f1b" }
+      ]
+    },
 
     activeCourses: [
       {
@@ -2828,6 +3010,2280 @@ function ensureTableEmptyStates(view, route) {
 
 
 
+const LearnerCurriculum = {
+  syncSidebarCounts() {
+    const data = db.learnerData;
+    const counts = {
+      ".count-learner-courses-active": data.enrolments.filter(item => item.status === "Active").length,
+      ".count-learner-schedule-upcoming": data.schedule.filter(item => !/cancelled|completed/i.test(item.status || "")).length,
+      ".count-learner-work-due": data.myWork.filter(item => item.status === "Due").length,
+      ".count-learner-work-revision": data.myWork.filter(item => /revision/i.test(item.status || "")).length
+    };
+    Object.entries(counts).forEach(([selector, count]) => {
+      document.querySelectorAll(selector).forEach(element => {
+        element.textContent = count;
+        element.classList.toggle("hidden", count === 0);
+      });
+    });
+  },
+
+  isComplete(status = "") {
+    return /completed|passed|approved|graded|attended/i.test(status);
+  },
+
+  statusTone(status = "") {
+    if (this.isComplete(status)) return "success";
+    if (/submitted|awaiting review|under review/i.test(status)) return "warning";
+    if (/active|available|in progress|retry|ready/i.test(status)) return "primary";
+    return "secondary";
+  },
+
+  flatten() {
+    const rows = [];
+    const levels = db.learnerData?.milestoneHierarchy || [];
+    levels.forEach(level => {
+      (level.milestones || []).forEach(milestone => {
+        (milestone.lessons || []).forEach(lesson => {
+          (lesson.activities || []).forEach(activity => {
+            rows.push({ level, milestone, lesson, activity });
+          });
+        });
+      });
+    });
+    return rows;
+  },
+
+  findActivity(activityId) {
+    const rows = this.flatten();
+    return rows.find(r => r.activity.id === activityId) || rows[0] || null;
+  },
+
+  current() {
+    const rows = this.flatten();
+    return rows.find(r => /available|active|in progress|retry/i.test(r.activity.status || "") && !this.isComplete(r.activity.status)) || rows[0] || null;
+  },
+
+  summary() {
+    const rows = this.flatten();
+    const total = rows.length;
+    const completed = rows.filter(r => this.isComplete(r.activity.status)).length;
+    const percent = total ? Math.round((completed / total) * 100) : 0;
+    return { total, completed, percent };
+  },
+
+  getActiveCourse() {
+    const activeCourseId = db.learnerData?.profile?.activeCourseId || "CRS-103";
+    return db.learnerData?.activeCourses?.find(c => c.id === activeCourseId) || db.learnerData?.activeCourses?.[0] || {};
+  },
+
+  renderCourseSwitcher() {
+    const activeCourse = this.getActiveCourse();
+    return `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:11px; font-weight:800; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px;">Active Course Workspace:</span>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          ${db.learnerData.activeCourses.map(c => {
+            const isSelected = c.id === activeCourse.id;
+            const icon = c.deliveryModel.includes('Live') ? 'presentation' : (c.deliveryModel.includes('Milestone') ? 'milestone' : 'school');
+            return `
+              <button 
+                class="btn ${isSelected ? 'btn-primary' : 'btn-secondary'} btn-xs" 
+                style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; font-size:12px; font-weight:700; border-radius:6px;"
+                onclick="Actions.switchLearnerCourse('${c.id}')"
+              >
+                <i data-lucide="${icon}" style="width:13px; height:13px;"></i>
+                <span>${c.code} (${c.deliveryModel.includes('Live') ? 'Live Cohort' : (c.deliveryModel.includes('Milestone') ? 'Milestone' : 'K-12')})</span>
+                <span class="badge" style="background:${isSelected ? 'rgba(255,255,255,0.25)' : 'var(--surface-container-high)'}; color:${isSelected ? '#ffffff' : 'var(--on-surface)'}; font-size:9.5px;">${c.progressPercent}%</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // 1. THE ODIN PROJECT-STYLE MILESTONE COURSE WORKSPACE (CRS-101 / DEV-101)
+  // --------------------------------------------------------------------------
+  renderMilestoneWorkspace(route, currentCourse) {
+    const state = db.learnerData.learningState;
+    const isPath = route === "learner-learning-milestones" || route === "learner-learning-lessons";
+    const isProgress = route === "learner-learning-progress" || route === "learner-learning-completion";
+    
+    return `
+      ${this.renderCourseSwitcher()}
+      
+      <!-- MILESTONE ACADEMIC HEADER (MILE-001 - MILE-015) -->
+      <section class="learner-course-header" style="background:#ffffff; border:1px solid var(--outline-variant); border-top:3px solid var(--primary); border-radius:12px; padding:22px 26px; margin-bottom:20px; box-shadow:var(--shadow-subtle);">
+        <div class="learner-course-heading" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+              <span class="badge badge-primary" style="font-size:10.5px; font-weight:800;">MILESTONE SELF-PACED TRACK</span>
+              <span class="badge badge-secondary" style="font-size:10px;">${state.courseVersion}</span>
+              <span style="font-size:12px; color:var(--slate);">Lead Architect: <strong style="color:var(--on-surface);">Prof. Alex Rivera</strong></span>
+              <span style="font-size:12px; color:var(--slate);">·</span>
+              <span style="font-size:12px; color:var(--slate);">Enrolment ID: <strong>${currentCourse.enrolmentId || 'ENR-109'}</strong></span>
+            </div>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">${currentCourse.title}</h2>
+            <p style="font-size:12.5px; color:var(--slate); margin:0;">
+              Level 2: Scalable Reducer & Architecture Pipelines &rarr; Milestone 2.1: Deterministic State Modeling & Statecharts
+            </p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font:800 24px 'Manrope', sans-serif; color:var(--primary);">${currentCourse.progressPercent}% Completed</div>
+            <span style="font-size:11.5px; color:var(--slate); font-weight:600;">Level 1: 100% Passed · Level 2: Active (75%)</span>
+          </div>
+        </div>
+
+        <nav class="learner-course-tabs" style="display:flex; gap:10px; border-top:1px solid var(--outline-variant); padding-top:14px; flex-wrap:wrap;">
+          <button class="btn ${!isPath && !isProgress ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-continue')">
+            <i data-lucide="play-circle"></i> The Odin Project Lesson Runner
+          </button>
+          <button class="btn ${isPath ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-milestones')">
+            <i data-lucide="workflow"></i> Full Curriculum Path (3 Levels · 6 Milestones)
+          </button>
+          <button class="btn ${isProgress ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-progress')">
+            <i data-lucide="award"></i> Verifiable Credential & Event Ledger
+          </button>
+        </nav>
+      </section>
+
+      <!-- CONTENT SWITCHER FOR MILESTONE -->
+      ${isProgress ? this.renderMilestoneProgress(currentCourse) : (isPath ? this.renderMilestonePath(currentCourse) : this.renderOdinLessonRunner(currentCourse))}
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // THE ODIN PROJECT COMPREHENSIVE CURRICULUM LESSON REGISTRY
+  // --------------------------------------------------------------------------
+  lessonRegistry: {
+    "LSN-101": {
+      id: "LSN-101",
+      title: "1.1.1 How the Web Works (HTTP/3, DNS & DOM Tree)",
+      levelTitle: "Level 1: Web Foundations",
+      milestoneTitle: "Milestone 1.1: Web Protocols",
+      duration: "30 mins",
+      faculty: "Prof. Alex Rivera",
+      status: "Completed",
+      outcomes: [
+        { checked: true, text: "Trace an HTTP/3 QUIC request lifecycle from client socket to server origin." },
+        { checked: true, text: "Understand DNS hierarchical name resolution and recursive resolver caches." },
+        { checked: true, text: "Describe how browser engines parse HTML into the live Document Object Model (DOM)." }
+      ],
+      reading: {
+        title: "HTTP/3, QUIC Multiplexing and the DOM Pipeline",
+        content: `
+          <h3>1. From Socket to Pixels: The Modern Web Pipeline</h3>
+          <p>HTTP/3 represents the largest architectural evolution in web protocols since HTTP 1.1, replacing TCP with UDP-based QUIC. This eliminates head-of-line blocking on packet loss and provides 0-RTT connection resumption.</p>
+          <div class="top-callout tip"><strong>Key Invariant:</strong> In HTTP/3, streams are multiplexed independently at the transport layer, preventing packet loss on one asset from delaying others.</div>
+        `,
+        code: `// HTTP/3 Connection Handshake (QUIC Transport)
+const quicSocket = createQuicSocket({ endpoint: 'api.innovatorhuzsam.edu' });
+quicSocket.on('stream', (stream) => {
+  stream.write(Buffer.from('GET /v2/curriculum/manifest HTTP/3\\r\\n'));
+});`
+      },
+      flashcards: [
+        { id: "FC-101-1", category: "Network Architecture", front: "What is Head-of-Line (HoL) Blocking and how does HTTP/3 solve it?", back: "In TCP, a single lost packet blocks all subsequent packets. HTTP/3 runs over UDP-based QUIC, allowing individual streams to advance independently even if another stream experiences packet loss." },
+        { id: "FC-101-2", category: "Browser Internals", front: "What is the critical rendering path sequence?", back: "HTML $\\to$ DOM $\\to$ CSSOM $\\to$ Render Tree $\\to$ Layout (Reflow) $\\to$ Paint $\\to$ Composite." },
+        { id: "FC-101-3", category: "DNS Resolution", front: "What is the difference between Recursive and Iterative DNS queries?", back: "A recursive query asks the DNS server to return the complete resolved IP. An iterative query returns the best referral to the next authoritative nameserver." }
+      ],
+      video: {
+        title: "HTTP/3 Protocol Architecture & Browser Render Pipeline",
+        duration: "14:20",
+        chapters: [
+          { time: "00:00", sec: 0, title: "Introduction to QUIC Transport" },
+          { time: "03:45", sec: 225, title: "0-RTT Handshake & TLS 1.3" },
+          { time: "08:15", sec: 495, title: "DOM Tokenizer & Parser Yielding" },
+          { time: "12:00", sec: 720, title: "Compositor Layers & GPU Acceleration" }
+        ]
+      },
+      codelab: {
+        starter: `export function parseUrlProtocol(rawUrl: string): { protocol: string; host: string } {
+  const url = new URL(rawUrl);
+  return { protocol: url.protocol.replace(':', ''), host: url.host };
+}`,
+        tests: [
+          "✓ should extract https protocol from secure origin",
+          "✓ should identify HTTP/3 QUIC socket endpoints",
+          "✓ should normalize punycode hostnames"
+        ]
+      },
+      quiz: [
+        { q: "What transport protocol does HTTP/3 utilize?", options: ["TCP with TLS 1.2", "UDP with QUIC", "Raw IP Datagrams", "SCTP"], correct: 1, explanation: "HTTP/3 replaces TCP with QUIC over UDP for independent multiplexing." },
+        { q: "Which phase of the browser pipeline calculates geometry coordinates?", options: ["CSSOM Parsing", "Layout (Reflow)", "Paint", "Compositing"], correct: 1, explanation: "The Layout phase computes the exact physical bounding box coordinates of each box in the viewport." }
+      ]
+    },
+
+    "LSN-202": {
+      id: "LSN-202",
+      title: "2.1.2 Auth Reducer State Machine in TypeScript",
+      levelTitle: "Level 2: Scalable Reducers",
+      milestoneTitle: "Milestone 2.1: Deterministic State Modeling",
+      duration: "45 mins",
+      faculty: "Prof. Alex Rivera",
+      status: "Active",
+      outcomes: [
+        { checked: true, text: "Explain how finite state machines prevent impossible UI states (e.g. concurrent loading and error)." },
+        { checked: true, text: "Model AuthState using strict TypeScript 5.4 discriminated union types." },
+        { checked: false, text: "Implement pure transition handlers for LOGIN_START, LOGIN_SUCCESS, and LOGIN_FAILURE." },
+        { checked: false, text: "Verify state transition invariants by running 100% of the Jest test suite assertions." }
+      ],
+      reading: {
+        title: "Architecting Deterministic Reducer State Machines in TypeScript 5.4",
+        content: `
+          <h3>1. Why Deterministic State Machines?</h3>
+          <p>In modern frontend architecture, state is often scattered across multiple loose booleans: <code>isLoading</code>, <code>isError</code>, <code>isAuthenticated</code>, and <code>user</code>. This anti-pattern leads to <strong>impossible states</strong> where both <code>isLoading === true</code> and <code>isError === true</code> can accidentally exist simultaneously.</p>
+
+          <div class="top-callout warning">
+            <strong>The Problem with Loose Booleans:</strong> If a network request fails while a user retries, your UI might show both a loading spinner and an error banner simultaneously, confusing the user and breaking accessibility.
+          </div>
+
+          <h3>2. Modeling State with Discriminated Unions</h3>
+          <p>By using TypeScript's discriminated unions, we ensure that every valid state of our authentication subsystem is explicitly enumerated with strict compile-time boundaries:</p>
+
+          <div class="top-callout tip">
+            <strong>Pro Tip from Prof. Alex Rivera:</strong> Always ensure your reducer is a pure function. It must NEVER trigger side effects, write to localStorage, or dispatch async network requests directly. Keep side-effects isolated in middleware.
+          </div>
+
+          <h3>3. Invariants & Exhaustiveness Checking</h3>
+          <ul>
+            <li><strong>Exhaustiveness:</strong> Use a TypeScript <code>never</code> assertion in your default case to catch unhandled actions at compile time.</li>
+            <li><strong>Immutability:</strong> Always return a new state object using spread operators or immutable record helpers.</li>
+            <li><strong>Auditability:</strong> Every transition emitted by this reducer can be logged directly into our cryptographic audit ledger.</li>
+          </ul>
+        `,
+        code: `export type AuthState =
+  | { status: 'idle'; token: null; error: null }
+  | { status: 'loading'; token: null; error: null }
+  | { status: 'authenticated'; token: string; user: { id: string; email: string }; error: null }
+  | { status: 'error'; token: null; error: string };
+
+export type AuthAction =
+  | { type: 'LOGIN_START' }
+  | { type: 'LOGIN_SUCCESS'; payload: { token: string; user: { id: string; email: string } } }
+  | { type: 'LOGIN_FAILURE'; payload: { error: string } }
+  | { type: 'LOGOUT' };`
+      },
+      flashcards: [
+        { id: "FC-202-1", category: "TypeScript Type System", front: "What is a Discriminated Union in TypeScript and why is it essential for state reducers?", back: "A Discriminated Union is a union of object types where each variant shares a common literal discriminator property (e.g. `status: 'idle' | 'loading' | 'authenticated'`). TypeScript uses this discriminator to narrow the type and guarantee that invalid property combinations cannot exist." },
+        { id: "FC-202-2", category: "State Machine Invariants", front: "What is an 'Impossible State' in UI frontend architecture?", back: "An impossible state occurs when independent booleans create contradictory UI flags, such as `{ isLoading: true, isError: true, isAuthenticated: true }`. A Finite State Machine guarantees that the system is in exactly ONE valid status at any given time." },
+        { id: "FC-202-3", category: "Functional Purity", front: "What 3 rules make a Reducer function strictly pure?", back: "1. Given the same inputs, it ALWAYS returns the same output.\n2. It NEVER mutates its arguments (mutations are forbidden).\n3. It produces NO side effects (no API requests, no localStorage access, no timers)." },
+        { id: "FC-202-4", category: "Compile-Time Safety", front: "How do you implement an exhaustive default check in a TypeScript reducer switch statement?", back: "Assign the action to a variable of type `never`: `const _exhaustiveCheck: never = action; return state;`. If a new action type is added to the union without a matching case, TypeScript raises a compile error." }
+      ],
+      video: {
+        title: "Architecting React 19 State Machines with TypeScript 5.4",
+        duration: "18:42",
+        chapters: [
+          { time: "00:00", sec: 0, title: "Introduction to State Machine Determinism" },
+          { time: "04:30", sec: 270, title: "Defining Exhaustive AuthState Union Types" },
+          { time: "11:15", sec: 675, title: "Writing Pure Reducer Transition Logic" },
+          { time: "15:40", sec: 940, title: "Running Vitest & Jest Assertion Suites" }
+        ]
+      },
+      codelab: {
+        starter: `export interface AuthState {
+  status: 'idle' | 'loading' | 'authenticated' | 'error';
+  token: string | null;
+  error: string | null;
+}
+
+export function authReducer(state: AuthState, action: { type: string; payload?: any }): AuthState {
+  switch (action.type) {
+    case 'LOGIN_START':
+      return { ...state, status: 'loading', error: null };
+    case 'LOGIN_SUCCESS':
+      return { ...state, status: 'authenticated', token: action.payload.token, error: null };
+    case 'LOGIN_FAILURE':
+      return { ...state, status: 'error', error: action.payload.error };
+    case 'LOGOUT':
+      return { status: 'idle', token: null, error: null };
+    default:
+      return state;
+  }
+}`,
+        tests: [
+          "✓ should return initial idle state on undefined action (2 ms)",
+          "✓ should transition status to 'loading' on LOGIN_START (1 ms)",
+          "✓ should transition status to 'authenticated' and store token on LOGIN_SUCCESS (3 ms)",
+          "✓ should transition status to 'error' and capture error payload on LOGIN_FAILURE (2 ms)"
+        ]
+      },
+      quiz: [
+        {
+          q: "What is the primary architectural danger of using separate boolean flags (isLoading, isError) for network requests?",
+          options: [
+            "It creates unreachable impossible states where isLoading and isError are both true simultaneously.",
+            "It increases TypeScript compilation time by over 50%.",
+            "It triggers memory leaks in React 19 Fiber reconciliation."
+          ],
+          correct: 0,
+          explanation: "Finite State Machines guarantee that only ONE status (idle, loading, authenticated, error) can exist at any single instant."
+        },
+        {
+          q: "Where should asynchronous side effects (like fetching tokens or writing to localStorage) be executed?",
+          options: [
+            "Directly inside the reducer transition switch statement.",
+            "In an external middleware pipeline (e.g. Saga, Thunk, or Effect) while keeping the reducer 100% pure.",
+            "Inside the TypeScript interface definition file."
+          ],
+          correct: 1,
+          explanation: "Reducers must remain 100% pure and deterministic. Side effects belong exclusively in isolated middleware."
+        },
+        {
+          q: "How does TypeScript enforce exhaustiveness in a reducer switch case?",
+          options: [
+            "By setting strictNullChecks: false in tsconfig.json.",
+            "By assigning the unhandled action to a variable of type 'never' in the default case.",
+            "By using the 'any' type on all action payloads."
+          ],
+          correct: 1,
+          explanation: "Assigning to 'never' causes the TypeScript compiler to fail if any member of a discriminated union is missing a case statement."
+        }
+      ],
+      voice: {
+        prompt: "Record a 60-second verbal architecture defense answering: 'Why should an enterprise frontend application replace boolean flags with a single discriminated state machine reducer?'",
+        sampleAudio: "0:48"
+      },
+      project: {
+        title: "Capstone Task: Production Auth State Machine with Token Lifecycle",
+        spec: "Implement a complete, production-ready Auth State Machine supporting Token Rotation, Session Recovery from SessionStorage, and 100% Jest test coverage.",
+        requirements: [
+          "100% pure reducer with zero side-effects",
+          "Discriminated union type definitions in src/types.ts",
+          "Comprehensive Jest / Vitest test suite with 100% branch coverage",
+          "Session recovery mechanism with refresh token rotation saga"
+        ]
+      }
+    },
+
+    "LSN-203": {
+      id: "LSN-203",
+      title: "2.1.3 Asynchronous Middleware & Saga Pipelines",
+      levelTitle: "Level 2: Scalable Reducers",
+      milestoneTitle: "Milestone 2.1: Deterministic State Modeling",
+      duration: "50 mins",
+      faculty: "Prof. Alex Rivera",
+      status: "Available",
+      outcomes: [
+        { checked: false, text: "Isolate async side effects from state reducers using generator functions." },
+        { checked: false, text: "Handle debouncing, cancellation, and retry policies with takeLatest and race operators." },
+        { checked: false, text: "Write unit test suites for generator saga pipelines without mocking fetch." }
+      ],
+      reading: {
+        title: "Side-Effect Isolation with Generator Functions & Saga Pipelines",
+        content: `
+          <h3>1. Why Generator Functions for Side-Effects?</h3>
+          <p>Traditional async/await functions are eager and non-cancellable. Generator functions (<code>function*</code>) yield declarative effect descriptions that the runtime executes, enabling seamless testability and non-blocking concurrency.</p>
+        `,
+        code: `export function* loginSaga(action: LoginAction) {
+  try {
+    yield put({ type: 'LOGIN_START' });
+    const response = yield call(apiClient.authenticate, action.payload);
+    yield put({ type: 'LOGIN_SUCCESS', payload: response.data });
+  } catch (err: any) {
+    yield put({ type: 'LOGIN_FAILURE', payload: { error: err.message } });
+  }
+}`
+      },
+      flashcards: [
+        { id: "FC-203-1", category: "Async Architecture", front: "Why are Generator Functions preferred over Promises for complex async workflows?", back: "Generators yield plain JavaScript objects describing effects rather than executing them directly. This makes sagas 100% testable without mocking network sockets, and enables cancellation via `takeLatest`." },
+        { id: "FC-203-2", category: "Concurrency", front: "What is the difference between `takeEvery` and `takeLatest`?", back: "`takeEvery` runs a new worker saga for every dispatched action concurrently. `takeLatest` automatically cancels any prior running saga if a new action arrives." }
+      ],
+      video: {
+        title: "Building Resilient Saga Pipelines with TypeScript",
+        duration: "16:10",
+        chapters: [
+          { time: "00:00", sec: 0, title: "Async Concurrency Anti-Patterns" },
+          { time: "05:20", sec: 320, title: "Generator Functions & Yield Operators" },
+          { time: "11:00", sec: 660, title: "Race Conditions & Cancellation" }
+        ]
+      },
+      codelab: {
+        starter: `export function* authFlowSaga() {
+  // Implement declarative saga listener
+}`,
+        tests: [
+          "✓ should intercept LOGIN_REQUEST and yield LOGIN_START",
+          "✓ should catch network timeouts and dispatch LOGIN_FAILURE"
+        ]
+      },
+      quiz: [
+        { q: "What does the redux-saga `call` effect return?", options: ["A resolved Promise payload", "A plain object describing the function and arguments to execute", "A WebSocket stream"], correct: 1, explanation: "The `call` effect returns a declarative object `{ type: 'CALL', fn, args }` that the saga middleware executes." }
+      ]
+    }
+  },
+
+  getLesson(lessonId) {
+    return this.lessonRegistry[lessonId] || this.lessonRegistry["LSN-202"];
+  },
+
+  // --------------------------------------------------------------------------
+  // THE ODIN PROJECT-STYLE COMPREHENSIVE LESSON & MULTI-ACTIVITY RUNNER
+  // --------------------------------------------------------------------------
+  renderOdinLessonRunner(currentCourse) {
+    const state = db.learnerData.learningState || {};
+    const selectedLessonId = state.selectedLessonId || "LSN-202";
+    const selectedFormat = state.selectedActivityFormat || "codelab";
+    const activeAccordionLevel = state.activeAccordionLevel !== undefined ? state.activeAccordionLevel : (selectedLessonId.startsWith('LSN-1') ? 'level-1' : (selectedLessonId.startsWith('LSN-2') ? 'level-2' : 'level-3'));
+    const lesson = this.getLesson(selectedLessonId);
+    const hierarchy = db.learnerData.milestoneHierarchy || [];
+
+    return `
+      <div class="top-runner-layout">
+        
+        <!-- LEFT: THE ODIN PROJECT STICKY CURRICULUM TREE -->
+        <aside class="top-sidebar-card">
+          <div class="top-sidebar-header">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <strong style="font-size:12px; text-transform:uppercase; color:var(--on-surface); font-weight:800; letter-spacing:0.5px;">Curriculum Outline</strong>
+              <span class="badge badge-primary" style="font-size:10px; font-weight:700; padding:2px 8px;">3 Levels · 9 Lessons</span>
+            </div>
+            <div style="width:100%; height:6px; background:var(--surface-container-high); border-radius:3px; overflow:hidden;">
+              <div style="width:${currentCourse.progressPercent}%; height:100%; background:linear-gradient(90deg, var(--primary), var(--secondary)); border-radius:3px;"></div>
+            </div>
+          </div>
+
+          <div class="top-sidebar-scroll">
+            
+            <!-- LEVEL 1 ACCORDION (100% PASSED) -->
+            <div class="top-level-accordion ${activeAccordionLevel === 'level-1' ? 'open' : ''}">
+              <div class="top-level-header ${activeAccordionLevel === 'level-1' ? 'active-header' : ''}" onclick="Actions.toggleOdinAccordion('level-1')">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="check-circle-2" style="width:15px; height:15px; color:#16a34a; flex-shrink:0;"></i>
+                  <span style="font-weight:700;">Level 1: Web Foundations</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="badge badge-success" style="font-size:9px; padding:2px 6px;">100% Passed</span>
+                  <i data-lucide="chevron-down" style="width:14px; height:14px; transition:transform 0.2s ease; transform:rotate(${activeAccordionLevel === 'level-1' ? '180deg' : '0deg'}); color:var(--slate);"></i>
+                </div>
+              </div>
+              
+              ${activeAccordionLevel === 'level-1' ? `
+                <div class="top-level-content">
+                  <div class="top-milestone-box">
+                    <span class="top-milestone-title">Milestone 1.1: Web Protocols</span>
+                    <div class="top-lesson-link ${selectedLessonId === 'LSN-101' ? 'active' : ''}" onclick="Actions.switchOdinLesson('LSN-101')">
+                      <span>1.1.1 How the Web Works</span>
+                      <i data-lucide="check" style="width:13px; height:13px; color:#16a34a;"></i>
+                    </div>
+                    <div class="top-lesson-link ${selectedLessonId === 'LSN-102' ? 'active' : ''}" onclick="Actions.switchOdinLesson('LSN-102')">
+                      <span>1.1.2 Semantic HTML5 & WCAG</span>
+                      <i data-lucide="check" style="width:13px; height:13px; color:#16a34a;"></i>
+                    </div>
+                  </div>
+                  <div class="top-milestone-box">
+                    <span class="top-milestone-title">Milestone 1.2: Modern CSS Layouts</span>
+                    <div class="top-lesson-link ${selectedLessonId === 'LSN-103' ? 'active' : ''}" onclick="Actions.switchOdinLesson('LSN-103')">
+                      <span>1.2.1 CSS Grid & Subgrid</span>
+                      <i data-lucide="check" style="width:13px; height:13px; color:#16a34a;"></i>
+                    </div>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- LEVEL 2 ACCORDION (ACTIVE IN-PROGRESS) -->
+            <div class="top-level-accordion ${activeAccordionLevel === 'level-2' ? 'open' : ''}">
+              <div class="top-level-header ${activeAccordionLevel === 'level-2' ? 'active-header' : ''}" onclick="Actions.toggleOdinAccordion('level-2')">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="play-circle" style="width:15px; height:15px; color:var(--primary); flex-shrink:0;"></i>
+                  <span style="font-weight:700;">Level 2: Scalable Reducers</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="badge badge-primary" style="font-size:9px; padding:2px 6px;">75% Active</span>
+                  <i data-lucide="chevron-down" style="width:14px; height:14px; transition:transform 0.2s ease; transform:rotate(${activeAccordionLevel === 'level-2' ? '180deg' : '0deg'}); color:var(--slate);"></i>
+                </div>
+              </div>
+              
+              ${activeAccordionLevel === 'level-2' ? `
+                <div class="top-level-content">
+                  <div class="top-milestone-box">
+                    <span class="top-milestone-title">Milestone 2.1: Deterministic State</span>
+                    <div class="top-lesson-link ${selectedLessonId === 'LSN-201' ? 'active' : ''}" onclick="Actions.switchOdinLesson('LSN-201')">
+                      <span>2.1.1 Statechart Modeling</span>
+                      <i data-lucide="check" style="width:13px; height:13px; color:#16a34a;"></i>
+                    </div>
+                    <div class="top-lesson-link ${selectedLessonId === 'LSN-202' ? 'active' : ''}" onclick="Actions.switchOdinLesson('LSN-202')">
+                      <span>2.1.2 Auth Reducer in TypeScript</span>
+                      <span class="badge badge-primary" style="font-size:9px;">Current</span>
+                    </div>
+                    <div class="top-lesson-link ${selectedLessonId === 'LSN-203' ? 'active' : ''}" onclick="Actions.switchOdinLesson('LSN-203')">
+                      <span>2.1.3 Async Middleware & Sagas</span>
+                      <span class="badge badge-secondary" style="font-size:9px;">Next</span>
+                    </div>
+                  </div>
+                  <div class="top-milestone-box">
+                    <span class="top-milestone-title">Milestone 2.2: Event Sourcing</span>
+                    <div class="top-lesson-link locked" onclick="Notifications.push('Prerequisite Required', 'Complete Milestone 2.1 to unlock Event Bus Architecture.', 'warning')">
+                      <span>2.2.1 Event Bus Architecture</span>
+                      <i data-lucide="lock" style="width:12px; height:12px; color:var(--slate);"></i>
+                    </div>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- LEVEL 3 ACCORDION (LOCKED) -->
+            <div class="top-level-accordion locked ${activeAccordionLevel === 'level-3' ? 'open' : ''}">
+              <div class="top-level-header" onclick="Notifications.push('Level Locked', 'Pass Level 2 Capstone to unlock Distributed Systems.', 'warning')">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="lock" style="width:14px; height:14px; color:var(--slate); flex-shrink:0;"></i>
+                  <span style="font-weight:700; color:var(--slate);">Level 3: Distributed Systems</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="badge badge-secondary" style="font-size:9px; padding:2px 6px;">Locked</span>
+                  <i data-lucide="chevron-down" style="width:14px; height:14px; color:var(--slate);"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+        <!-- RIGHT: THE ODIN PROJECT COMPREHENSIVE LESSON CONTAINER -->
+        <main class="top-lesson-main">
+          
+          <!-- BREADCRUMBS & LESSON HEADER -->
+          <div class="top-lesson-header">
+            <div class="top-breadcrumbs">
+              <span>Modern Full-Stack Web Development</span>
+              <i data-lucide="chevron-right" style="width:12px; height:12px;"></i>
+              <span>${lesson.levelTitle}</span>
+              <i data-lucide="chevron-right" style="width:12px; height:12px;"></i>
+              <span>${lesson.milestoneTitle}</span>
+              <i data-lucide="chevron-right" style="width:12px; height:12px;"></i>
+              <span class="active">${lesson.title}</span>
+            </div>
+
+            <h1 class="top-lesson-title">${lesson.title}</h1>
+            
+            <div class="top-lesson-meta">
+              <span><i data-lucide="clock" style="width:15px; height:15px; vertical-align:middle;"></i> Est. Time: <strong style="color:var(--on-surface);">${lesson.duration}</strong></span>
+              <span><i data-lucide="layers" style="width:15px; height:15px; vertical-align:middle;"></i> <strong>7 Interactive Activity Types</strong></span>
+              <span><i data-lucide="user-check" style="width:15px; height:15px; vertical-align:middle;"></i> Faculty Lead: <strong style="color:var(--on-surface);">${lesson.faculty}</strong></span>
+              <span class="badge badge-primary" style="font-size:10px; font-weight:800; padding:4px 10px;">${lesson.status.toUpperCase()}</span>
+            </div>
+          </div>
+
+          <!-- THE ODIN PROJECT LEARNING OUTCOMES CHECKLIST -->
+          <div class="top-outcomes-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <h4 style="margin:0; font:800 14px 'Manrope', sans-serif; color:var(--on-surface); text-transform:uppercase; letter-spacing:0.5px;">Lesson Learning Outcomes (Self-Assessment Checklist)</h4>
+              <span style="font-size:11.5px; color:var(--slate); font-weight:600;">Check off items as you achieve mastery</span>
+            </div>
+            <div class="top-outcomes-list">
+              ${lesson.outcomes.map((outcome, idx) => `
+                <label class="top-outcome-item">
+                  <input type="checkbox" ${outcome.checked ? 'checked' : ''} onchange="Actions.toggleOdinOutcome('${lesson.id}', ${idx})">
+                  <span>${outcome.text}</span>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- MULTI-ACTIVITY FORMAT NAVIGATION BAR (FRS MILE-002) -->
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--outline-variant); padding-bottom:16px; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button 
+                class="btn ${selectedFormat === 'text' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('text')"
+              >
+                <i data-lucide="book-open"></i> 1. Textbook Guide
+              </button>
+              <button 
+                class="btn ${selectedFormat === 'video' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('video')"
+              >
+                <i data-lucide="play"></i> 2. 1080p Video Masterclass
+              </button>
+              <button 
+                class="btn ${selectedFormat === 'flashcards' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('flashcards')"
+              >
+                <i data-lucide="layers"></i> 3. 3D Flashcards & Recall
+              </button>
+              <button 
+                class="btn ${selectedFormat === 'codelab' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('codelab')"
+              >
+                <i data-lucide="code-2"></i> 4. TypeScript Codelab & Jest
+              </button>
+              <button 
+                class="btn ${selectedFormat === 'quiz' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('quiz')"
+              >
+                <i data-lucide="help-circle"></i> 5. Gatekeeper Quiz (FLOW-019)
+              </button>
+              <button 
+                class="btn ${selectedFormat === 'voice' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('voice')"
+              >
+                <i data-lucide="mic"></i> 6. Spoken Defense (FLOW-020)
+              </button>
+              <button 
+                class="btn ${selectedFormat === 'project' ? 'btn-primary' : 'btn-secondary'} btn-sm" 
+                style="border-radius:8px; font-size:12px; font-weight:700; padding:8px 14px;"
+                onclick="Actions.switchOdinActivityFormat('project')"
+              >
+                <i data-lucide="upload-cloud"></i> 7. Capstone Task (FLOW-020)
+              </button>
+            </div>
+            <span class="badge badge-success" style="font-size:10.5px; font-weight:800; padding:4px 10px;">● FORMAT ACTIVE</span>
+          </div>
+
+          <!-- DYNAMIC ACTIVITY STAGE -->
+          ${this.renderActiveOdinActivity(lesson, selectedFormat)}
+
+          <!-- THE ODIN PROJECT COMPLETION & NAVIGATION DOCK -->
+          <div class="top-navigation-dock">
+            <button class="btn btn-secondary" style="border-radius:8px; font-size:13px;" onclick="Actions.switchOdinLesson('${selectedLessonId === 'LSN-202' ? 'LSN-201' : 'LSN-101'}')">
+              <i data-lucide="arrow-left"></i> Previous Lesson
+            </button>
+            <div style="display:flex; gap:12px; align-items:center;">
+              <button class="btn btn-primary" style="border-radius:8px; font-size:13.5px; padding:10px 22px;" onclick="Actions.completeOdinActivity('${lesson.id}')">
+                <i data-lucide="check-circle-2"></i> Mark as Complete & Next Lesson &rarr;
+              </button>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // RENDER DYNAMIC ACTIVITY SUITE (TEXT / VIDEO / FLASHCARDS / CODELAB / QUIZ / VOICE / PROJECT)
+  // --------------------------------------------------------------------------
+  renderActiveOdinActivity(lesson, format) {
+    if (format === "text") {
+      return this.renderReadingFormat(lesson);
+    }
+    if (format === "video") {
+      return this.renderVideoFormat(lesson);
+    }
+    if (format === "flashcards") {
+      return this.renderFlashcardsFormat(lesson);
+    }
+    if (format === "quiz") {
+      return this.renderQuizFormat(lesson);
+    }
+    if (format === "voice") {
+      return this.renderVoiceFormat(lesson);
+    }
+    if (format === "project") {
+      return this.renderProjectFormat(lesson);
+    }
+    // DEFAULT: CODELAB SANDBOX
+    return this.renderCodelabFormat(lesson);
+  },
+
+  // 1. TEXTBOOK READING FORMAT
+  renderReadingFormat(lesson) {
+    const reading = lesson.reading || {};
+    return `
+      <article class="top-article-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid var(--outline-variant); flex-wrap:wrap; gap:12px;">
+          <h2 style="margin:0; font:800 22px 'Manrope', sans-serif; color:var(--on-surface); border:none; padding:0;">${reading.title || lesson.title}</h2>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-xs" onclick="Actions.toggleReadingTheme()"><i data-lucide="sun"></i> Reading Theme</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.copyReadingCode('reading-code-block')"><i data-lucide="copy"></i> Copy Code</button>
+          </div>
+        </div>
+
+        ${reading.content || ''}
+
+        ${reading.code ? `
+          <div style="position:relative; margin:22px 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#18181b; padding:10px 16px; border-top-left-radius:8px; border-top-right-radius:8px; font-size:11.5px; color:#a1a1aa; font-family:'Fira Code', monospace;">
+              <span>TypeScript 5.4 Implementation</span>
+              <button class="btn btn-primary btn-xs" style="padding:3px 10px; font-size:11px;" onclick="Actions.switchOdinActivityFormat('codelab')">
+                <i data-lucide="play" style="width:11px; height:11px;"></i> Open in Codelab Sandbox
+              </button>
+            </div>
+            <pre class="top-code-block" id="reading-code-block" style="margin-top:0; border-top-left-radius:0; border-top-right-radius:0;"><code>${reading.code}</code></pre>
+          </div>
+        ` : ''}
+      </article>
+    `;
+  },
+
+  // 2. VIDEO MASTERCLASS FORMAT
+  renderVideoFormat(lesson) {
+    const video = lesson.video || {};
+    const chapters = video.chapters || [];
+    const videoState = db.learnerData.videoState || { isPlaying: false, currentTime: 374, speed: '1.0x', notes: [] };
+
+    return `
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        
+        <!-- VIDEO PLAYER VIEWPORT -->
+        <div class="video-player-container">
+          <div class="video-screen-stage">
+            <div style="display:flex; justify-content:space-between; align-items:center; z-index:2;">
+              <span class="badge badge-primary" style="background:#dc2626; color:#ffffff; font-weight:800; font-size:11px; padding:4px 10px;">1080P MASTERCLASS</span>
+              <span style="font-size:12.5px; color:#cbd5e1; background:rgba(0,0,0,0.6); padding:4px 12px; border-radius:6px; font-family:monospace;">
+                ${video.title || lesson.title} · ${video.duration || '18:42'}
+              </span>
+            </div>
+
+            <!-- Big Play / Pause Overlay -->
+            <div style="text-align:center; padding:36px 0; z-index:2;">
+              <div 
+                style="width:76px; height:76px; border-radius:50%; background:var(--primary); color:#ffffff; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 30px rgba(110,94,6,0.6); transition:transform 0.15s ease;"
+                onclick="Actions.toggleVideoPlay()"
+              >
+                <i data-lucide="${videoState.isPlaying ? 'pause' : 'play'}" style="width:36px; height:36px; margin-left:${videoState.isPlaying ? '0' : '4px'};"></i>
+              </div>
+              <h3 style="font:800 20px 'Manrope', sans-serif; color:#f8fafc; margin:16px 0 6px 0;">${video.title || lesson.title}</h3>
+              <p style="font-size:13px; color:#94a3b8; margin:0;">Lead Instructor: ${lesson.faculty} · Status: ${videoState.isPlaying ? '▶ Playing (1080p HD)' : '⏸ Paused'}</p>
+            </div>
+
+            <!-- Bottom Progress & Time Scrub Bar -->
+            <div style="z-index:2;">
+              <div class="video-timeline-track" onclick="Actions.seekVideoTrack(event)">
+                <div class="video-timeline-fill" style="width: 35%;">
+                  <div class="video-timeline-handle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Control Bar -->
+          <div class="video-ctrl-bar">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <button class="btn btn-secondary btn-xs" style="padding:6px 12px; font-size:12px;" onclick="Actions.toggleVideoPlay()">
+                <i data-lucide="${videoState.isPlaying ? 'pause' : 'play'}"></i> ${videoState.isPlaying ? 'Pause' : 'Play'}
+              </button>
+              <span style="font-size:12.5px; color:#cbd5e1; font-family:monospace;">06:14 / ${video.duration || '18:42'}</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:11.5px; color:#94a3b8; font-weight:600;">Speed:</span>
+              ${['0.75x', '1.0x', '1.25x', '1.5x', '2.0x'].map(spd => `
+                <button 
+                  class="btn ${videoState.speed === spd ? 'btn-primary' : 'btn-secondary'} btn-xs" 
+                  style="padding:3px 8px; font-size:11px;"
+                  onclick="Actions.setVideoSpeed('${spd}')"
+                >${spd}</button>
+              `).join('')}
+              <button class="btn btn-secondary btn-xs" style="padding:4px 10px; font-size:11.5px; margin-left:6px;" onclick="Notifications.push('Slides', 'Downloading PDF Lecture Slides...', 'info')">
+                <i data-lucide="download"></i> Slides (PDF)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TWO-COLUMN CHAPTERS & IN-VIDEO NOTES -->
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:20px;">
+          <!-- CHAPTERS TRANSCRIPT -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:12px; padding:20px;">
+            <strong style="font-size:13.5px; color:var(--on-surface); display:block; margin-bottom:12px;">Interactive Chapters (Click to Seek Video):</strong>
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
+              ${chapters.map((ch, idx) => `
+                <div 
+                  style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#ffffff; border:1px solid var(--outline-variant); border-radius:8px; cursor:pointer; transition:all 0.15s ease;"
+                  onclick="Actions.seekVideo(${ch.sec}, '${ch.title}')"
+                >
+                  <span style="font-weight:600; color:var(--on-surface);">${ch.title}</span>
+                  <span class="badge badge-primary" style="font-family:monospace; font-size:10.5px;">⏱️ ${ch.time}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- BOOKMARKS & NOTES -->
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:20px; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <strong style="font-size:13.5px; color:var(--on-surface); display:block; margin-bottom:8px;">Timestamped Video Notes:</strong>
+              <div style="display:flex; gap:8px; margin-bottom:12px;">
+                <input type="text" id="video-note-input" class="form-control" placeholder="Add study note at 06:14..." style="flex:1; font-size:12.5px; padding:8px 12px; border-radius:6px;">
+                <button class="btn btn-primary btn-sm" onclick="Actions.addVideoNote()">+ Note</button>
+              </div>
+              <div id="video-notes-list" style="display:flex; flex-direction:column; gap:8px; max-height:160px; overflow-y:auto; font-size:12.5px;">
+                <div style="background:var(--surface-container-low); padding:8px 12px; border-radius:6px; display:flex; justify-content:space-between;">
+                  <span>Discriminated unions ensure state isolation.</span>
+                  <span style="color:var(--primary); font-weight:700;">⏱️ 04:30</span>
+                </div>
+              </div>
+            </div>
+            <span style="font-size:11.5px; color:var(--slate); margin-top:10px;">Notes are saved automatically to your Personal Resource Vault.</span>
+          </div>
+        </div>
+
+      </div>
+    `;
+  },
+
+  // 3. 3D FLASHCARDS & SPACED REPETITION FORMAT
+  renderFlashcardsFormat(lesson) {
+    const flashcards = lesson.flashcards || [
+      { id: "FC-1", category: "Core Invariant", front: "What is a Finite State Machine (FSM)?", back: "An abstract machine that can be in exactly one of a finite number of states at any given time, transitioning in response to external events." }
+    ];
+    const fcState = db.learnerData.flashcardState || { currentIndex: 0, isFlipped: false, mastered: {} };
+    const currentCard = flashcards[fcState.currentIndex] || flashcards[0];
+    const total = flashcards.length;
+    const masteredCount = Object.keys(fcState.mastered || {}).length;
+    const percent = Math.round((masteredCount / total) * 100);
+
+    return `
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        
+        <!-- HEADER METRICS BAR -->
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:12px; padding:16px 22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <strong style="font-size:14.5px; color:var(--on-surface);">Spaced Repetition Flashcards Deck (Active Recall)</strong>
+            <span style="font-size:12.5px; color:var(--slate); display:block; margin-top:2px;">Card ${fcState.currentIndex + 1} of ${total} · Mastered: <strong>${masteredCount}/${total} (${percent}%)</strong></span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-xs" onclick="Actions.shuffleFlashcards()"><i data-lucide="shuffle"></i> Shuffle</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.resetFlashcards()"><i data-lucide="rotate-ccw"></i> Reset Deck</button>
+          </div>
+        </div>
+
+        <!-- 3D INTERACTIVE FLIP CARD CONTAINER -->
+        <div class="flashcard-stage" onclick="Actions.flipFlashcard()">
+          <div class="flashcard-card ${fcState.isFlipped ? 'flipped' : ''}" id="active-flashcard-card">
+            
+            <!-- FRONT FACE -->
+            <div class="flashcard-front">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="badge badge-primary" style="font-size:11px; padding:4px 10px;">${currentCard.category}</span>
+                <span style="font-size:11.5px; color:var(--slate); font-weight:800; letter-spacing:0.5px;">CARD ${fcState.currentIndex + 1}/${total}</span>
+              </div>
+              <div style="text-align:center; padding:30px 10px;">
+                <h3 style="font:800 22px/1.35 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 12px 0;">
+                  ${currentCard.front}
+                </h3>
+              </div>
+              <div style="text-align:center; font-size:12px; color:var(--primary); font-weight:700;">
+                <i data-lucide="refresh-cw" style="width:13px; height:13px; vertical-align:middle;"></i> Click card or press Space to reveal answer
+              </div>
+            </div>
+
+            <!-- BACK FACE (REVEALED IN 3D) -->
+            <div class="flashcard-back">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="badge" style="background:#22c55e; color:#ffffff; font-size:11px; padding:4px 10px; font-weight:800;">EXPLANATION & ARCHITECTURAL INVARIANT</span>
+                <span style="font-size:11.5px; color:#94a3b8; font-weight:800; letter-spacing:0.5px;">REVEALED</span>
+              </div>
+              <div style="padding:20px 0; font-size:14.5px; line-height:1.65; color:#f8fafc;">
+                ${currentCard.back.replace(/\\n/g, '<br>')}
+              </div>
+              <div style="text-align:center; font-size:12px; color:#94a3b8;">
+                Rate your recall below to adjust spaced repetition schedule
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CARD NAVIGATION & EVALUATION ACTION DOCK -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:4px;">
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary btn-sm" style="border-radius:8px;" onclick="Actions.prevFlashcard()">
+              <i data-lucide="chevron-left"></i> Previous
+            </button>
+            <button class="btn btn-primary btn-sm" style="border-radius:8px;" onclick="Actions.flipFlashcard()">
+              <i data-lucide="repeat"></i> Flip Card (Space)
+            </button>
+            <button class="btn btn-secondary btn-sm" style="border-radius:8px;" onclick="Actions.nextFlashcard()">
+              Next <i data-lucide="chevron-right"></i>
+            </button>
+          </div>
+
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-danger btn-sm" style="border-radius:8px;" onclick="Actions.markFlashcardNeedReview('${currentCard.id}')">
+              <i data-lucide="x"></i> Need Review
+            </button>
+            <button class="btn btn-success btn-sm" style="border-radius:8px;" onclick="Actions.markFlashcardMastered('${currentCard.id}')">
+              <i data-lucide="check"></i> Mastered / Got It!
+            </button>
+          </div>
+        </div>
+
+      </div>
+    `;
+  },
+
+  // 4. CODELAB & JEST RUNNER FORMAT
+  renderCodelabFormat(lesson) {
+    const codelab = lesson.codelab || {};
+    const codelabState = db.learnerData.codelabState || { activeTab: 'reducer', code: codelab.starter || '', testsPassed: false };
+
+    return `
+      <article style="display:flex; flex-direction:column; gap:18px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px 20px; font-size:13px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <strong style="color:var(--on-surface); display:block; margin-bottom:3px;">Interactive TypeScript Codelab & Jest Runner:</strong>
+            <span style="color:var(--slate);">Implement the immutable state reducer in <code>src/authReducer.ts</code>. Handle actions and verify Jest test assertions.</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-xs" onclick="Actions.resetCodelabCode()"><i data-lucide="rotate-ccw"></i> Reset Starter</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.loadModelCodelabSolution()"><i data-lucide="sparkles"></i> Model Solution</button>
+          </div>
+        </div>
+
+        <!-- MULTI-TAB CODE EDITOR -->
+        <div>
+          <div class="codelab-tabs-header">
+            <button class="codelab-tab-btn ${codelabState.activeTab === 'reducer' ? 'active' : ''}" onclick="Actions.switchCodelabTab('reducer')">
+              <i data-lucide="file-code"></i> src/authReducer.ts
+            </button>
+            <button class="codelab-tab-btn ${codelabState.activeTab === 'types' ? 'active' : ''}" onclick="Actions.switchCodelabTab('types')">
+              <i data-lucide="file-type"></i> src/types.ts
+            </button>
+            <button class="codelab-tab-btn ${codelabState.activeTab === 'tests' ? 'active' : ''}" onclick="Actions.switchCodelabTab('tests')">
+              <i data-lucide="check-square"></i> src/__tests__/authReducer.test.ts
+            </button>
+          </div>
+
+          <textarea id="preview-codelab-editor" class="form-control" style="width:100%; height:190px; font-family:'Fira Code', 'Courier New', monospace; font-size:13px; background:#18181b; color:#f4f4f5; border-radius:0 0 10px 10px; border:1px solid #27272a; padding:16px 18px; line-height:1.5; resize:vertical;">${codelabState.code || codelab.starter}</textarea>
+        </div>
+
+        <!-- JEST CONSOLE OUTPUT -->
+        <div id="preview-codelab-console" class="jest-console-box">
+          ${codelabState.testsPassed ? `
+            <div style="color:#4ade80; font-weight:700; margin-bottom:8px; font-size:13px;">PASS src/__tests__/authReducer.test.ts (100% Assertions Passed)</div>
+            ${(codelab.tests || []).map(t => `<div style="color:#86efac; margin-left:10px; margin-bottom:4px;">${t}</div>`).join('')}
+            <div style="color:#facc15; font-weight:700; margin-top:10px; border-top:1px dashed #27272a; padding-top:8px;">
+              Test Suites: 1 passed, 1 total · Tests: 4 passed, 4 total · Snapshots: 0 total · Time: 1.042s
+            </div>
+          ` : `
+            <span style="color:#71717a;">// Click 'Run Required Jest Test Suite' to execute test assertions against your reducer solution...</span>
+          `}
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid var(--outline-variant); flex-wrap:wrap; gap:12px;">
+          <button class="btn btn-primary" style="border-radius:8px; font-size:13px; padding:10px 20px;" onclick="Actions.runOdinJestTests()">
+            <i data-lucide="play"></i> Run Required Jest Test Suite
+          </button>
+          <span style="font-size:12.5px; color:${codelabState.testsPassed ? '#16a34a' : 'var(--slate)'}; font-weight:700;">
+            ${codelabState.testsPassed ? '✓ 4 of 4 Tests Passing (100% Assertions Verified)' : '4 Required Assertions Pending'}
+          </span>
+        </div>
+      </article>
+    `;
+  },
+
+  // 5. DIAGNOSTIC QUIZ FORMAT (FLOW-019)
+  renderQuizFormat(lesson) {
+    const quiz = lesson.quiz || [];
+    const quizState = db.learnerData.quizState || { selectedAnswers: {}, submitted: false };
+
+    return `
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:18px 22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <strong style="font-size:14.5px; color:var(--on-surface);">Gatekeeper Diagnostic Knowledge Check (FLOW-019)</strong>
+            <span style="font-size:12.5px; color:var(--slate); display:block; margin-top:2px;">Pass Mark: <strong>80% Required</strong> · Questions: <strong>${quiz.length}</strong></span>
+          </div>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.resetOdinQuiz('${lesson.id}')"><i data-lucide="rotate-ccw"></i> Reset Answers</button>
+        </div>
+
+        ${quiz.map((item, qIdx) => {
+          const selected = quizState.selectedAnswers[qIdx];
+          const isAnswered = typeof selected === 'number';
+          const isCorrect = isAnswered && selected === item.correct;
+
+          return `
+            <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:0 2px 10px rgba(110,94,6,0.03);">
+              <strong style="font:700 14.5px 'Manrope', sans-serif; color:var(--on-surface); display:block; margin-bottom:12px; line-height:1.4;">
+                ${qIdx + 1}. ${item.q}
+              </strong>
+              
+              <div style="display:flex; flex-direction:column; gap:10px; font-size:13.5px;">
+                ${item.options.map((opt, optIdx) => {
+                  const isSelected = selected === optIdx;
+                  let bg = 'var(--surface-container-lowest)';
+                  let border = 'var(--outline-variant)';
+                  if (isSelected) {
+                    if (optIdx === item.correct) {
+                      bg = '#f0fdf4';
+                      border = '#22c55e';
+                    } else {
+                      bg = '#fef2f2';
+                      border = '#ef4444';
+                    }
+                  }
+                  return `
+                    <label 
+                      style="display:flex; align-items:center; gap:12px; cursor:pointer; padding:12px 16px; border-radius:8px; background:${bg}; border:1px solid ${border}; transition:all 0.15s ease;"
+                      onclick="Actions.selectQuizAnswer(${qIdx}, ${optIdx})"
+                    >
+                      <input type="radio" name="odin-quiz-q${qIdx}" ${isSelected ? 'checked' : ''} style="width:16px; height:16px; accent-color:var(--primary);">
+                      <span style="line-height:1.4;">${opt}</span>
+                    </label>
+                  `;
+                }).join('')}
+              </div>
+
+              ${isAnswered ? `
+                <div style="margin-top:12px; padding:12px 16px; background:${isCorrect ? '#f0fdf4' : '#fff1f2'}; border:1px solid ${isCorrect ? '#bbf7d0' : '#fecdd3'}; border-radius:8px; font-size:12.5px; color:${isCorrect ? '#166534' : '#9f1239'}; line-height:1.5;">
+                  <strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect:'}</strong> ${item.explanation}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('')}
+
+        <button class="btn btn-primary" style="border-radius:8px; font-size:13.5px; padding:12px 24px; width:fit-content;" onclick="Actions.submitOdinQuiz('${lesson.id}')">
+          <i data-lucide="check-circle-2"></i> Submit Quiz & Publish Grade (FLOW-019)
+        </button>
+      </div>
+    `;
+  },
+
+  // 6. SPOKEN VOICE DEFENSE STUDIO FORMAT (FLOW-020)
+  renderVoiceFormat(lesson) {
+    const voice = lesson.voice || {};
+    const voiceState = db.learnerData.voiceState || { isRecording: false, hasRecorded: true, evaluated: true, score: 96 };
+
+    return `
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-left:4px solid var(--secondary); border-radius:10px; padding:20px 24px;">
+          <strong style="font-size:14.5px; color:var(--on-surface); display:block; margin-bottom:8px;">Technical Architecture Oral Defense Drill (FLOW-020)</strong>
+          <p style="font-size:13.5px; color:var(--slate); margin:0; line-height:1.55;">
+            <strong>Prompt:</strong> ${voice.prompt || "Explain why discriminated union state machines prevent impossible UI states in production applications."}
+          </p>
+        </div>
+
+        <!-- AUDIO RECORDER & WAVEFORM STAGE -->
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:26px; text-align:center; box-shadow:0 2px 10px rgba(110,94,6,0.03);">
+          <div class="waveform-bars-live" style="margin-bottom:16px;">
+            <span class="waveform-bar-pill" style="height:12px;"></span>
+            <span class="waveform-bar-pill" style="height:28px;"></span>
+            <span class="waveform-bar-pill" style="height:36px;"></span>
+            <span class="waveform-bar-pill" style="height:44px;"></span>
+            <span class="waveform-bar-pill" style="height:22px;"></span>
+            <span class="waveform-bar-pill" style="height:32px;"></span>
+            <span class="waveform-bar-pill" style="height:16px;"></span>
+          </div>
+
+          <div style="font:800 24px monospace; color:var(--primary); margin-bottom:16px;">00:54 / 01:00</div>
+          
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-secondary" style="border-radius:8px;" onclick="Actions.startOdinVoiceRecording()">
+              <i data-lucide="mic"></i> Re-Record Voice Defense
+            </button>
+            <button class="btn btn-secondary" style="border-radius:8px;" onclick="Actions.playOdinVoiceRecording()">
+              <i data-lucide="play"></i> Play Back (0:54s)
+            </button>
+            <button class="btn btn-primary" style="border-radius:8px;" onclick="Actions.submitOdinVoiceDefense('${lesson.id}')">
+              <i data-lucide="send"></i> Submit Voice Recording for Evaluation
+            </button>
+          </div>
+        </div>
+
+        <!-- RUBRIC SCORECARD -->
+        <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:10px; padding:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <strong style="font-size:13.5px; color:var(--on-surface);">Evaluation Rubric Criteria:</strong>
+            <span class="badge badge-success" style="font-size:11px; font-weight:800; padding:4px 10px;">Overall: 96 / 100 (C1 Proficient)</span>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; font-size:12.5px;">
+            <div style="background:var(--surface-container-low); padding:12px 14px; border-radius:8px;">
+              <span style="color:var(--slate);">Technical Precision</span>
+              <strong style="display:block; color:var(--on-surface); font-size:15px; margin-top:2px;">30 / 30 (100%)</strong>
+            </div>
+            <div style="background:var(--surface-container-low); padding:12px 14px; border-radius:8px;">
+              <span style="color:var(--slate);">Clarity & Cadence</span>
+              <strong style="display:block; color:var(--on-surface); font-size:15px; margin-top:2px;">28 / 30 (93%)</strong>
+            </div>
+            <div style="background:var(--surface-container-low); padding:12px 14px; border-radius:8px;">
+              <span style="color:var(--slate);">Architectural Defense</span>
+              <strong style="display:block; color:#16a34a; font-size:15px; margin-top:2px;">38 / 40 (95%)</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  // 7. CAPSTONE PROJECT SUBMISSION FORMAT (FLOW-020)
+  renderProjectFormat(lesson) {
+    const project = lesson.project || {};
+    return `
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-left:4px solid var(--primary); border-radius:10px; padding:20px 24px;">
+          <strong style="font-size:14.5px; color:var(--on-surface); display:block; margin-bottom:8px;">${project.title || "Milestone Capstone Task Submission (FLOW-020)"}</strong>
+          <p style="font-size:13.5px; color:var(--slate); margin:0; line-height:1.55;">
+            ${project.spec || "Build a complete Authentication State Machine with Session Token Recovery and Jest coverage. Submit your GitHub repository URL and live preview link below."}
+          </p>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; display:flex; flex-direction:column; gap:16px; box-shadow:0 2px 10px rgba(110,94,6,0.03);">
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:6px; letter-spacing:0.5px;">GitHub Repository Link:</label>
+            <input type="url" id="odin-project-repo" class="form-control" value="https://github.com/zainab-malik/react-auth-state-machine" style="width:100%; padding:11px 14px; border-radius:8px; border:1px solid var(--outline-variant); font-size:13px;">
+          </div>
+
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:6px; letter-spacing:0.5px;">Live Demo URL (Vercel / Netlify):</label>
+            <input type="url" id="odin-project-demo" class="form-control" value="https://auth-statemachine-demo.vercel.app" style="width:100%; padding:11px 14px; border-radius:8px; border:1px solid var(--outline-variant); font-size:13px;">
+          </div>
+
+          <div>
+            <label style="font-size:12px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:6px; letter-spacing:0.5px;">Learner Reflection & Architecture Notes:</label>
+            <textarea class="form-control" style="width:100%; height:90px; padding:12px 14px; border-radius:8px; border:1px solid var(--outline-variant); font-size:13px; line-height:1.45;">Implemented auth state machine with 100% Jest test coverage and refresh token rotation in separate saga middleware.</textarea>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid var(--outline-variant); flex-wrap:wrap; gap:12px;">
+            <span style="font-size:12.5px; color:var(--slate);">Reviewed by: <strong>Prof. Alex Rivera (Review SLA: 24h)</strong></span>
+            <button class="btn btn-primary" style="border-radius:8px; font-size:13px; padding:10px 22px;" onclick="Actions.submitOdinProject('${lesson.id}')">
+              <i data-lucide="send"></i> Submit Task for Faculty Grading
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderMilestonePath(currentCourse) {
+    return `
+      <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--outline-variant);">
+          <div>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 2px 0;">The Odin Project 5-Tier Curriculum Roadmap</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0;">Level (1..3) &rarr; Milestone &rarr; Lesson &rarr; Multi-Activity</p>
+          </div>
+          <span class="badge badge-secondary">Strict Sequential Unlocking</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <!-- Level 1 -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div>
+                <span class="badge badge-success" style="font-size:9.5px; margin-bottom:4px;">LEVEL 1 · PASSED (100%)</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Web Foundations & Core DOM Architecture</h4>
+              </div>
+              <span style="font-size:12px; color:#16a34a; font-weight:700;">✓ 4 of 4 Lessons Passed</span>
+            </div>
+            <div style="font-size:12px; color:var(--slate);">Includes: HTTP/3 & DOM Trees, Semantic HTML5, CSS Grid & Subgrid, WCAG AAA Screen Reader Audit.</div>
+          </div>
+
+          <!-- Level 2 -->
+          <div style="background:#ffffff; border:2px solid var(--primary); border-radius:10px; padding:16px; box-shadow:0 2px 10px rgba(110,94,6,0.08);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div>
+                <span class="badge badge-primary" style="font-size:9.5px; margin-bottom:4px;">LEVEL 2 · ACTIVE IN PROGRESS (75%)</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--primary); margin:0;">Scalable Reducer & Architecture Pipelines</h4>
+              </div>
+              <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-continue')">Resume Current Lesson (2.1.2) &rarr;</button>
+            </div>
+            <div style="font-size:12px; color:var(--slate);">Includes: Auth State Machines (Active), Async Middleware Pipelines (Next), Event Sourcing & CQRS.</div>
+          </div>
+
+          <!-- Level 3 -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px; opacity:0.7;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div>
+                <span class="badge badge-secondary" style="font-size:9.5px; margin-bottom:4px;">LEVEL 3 · LOCKED (GATED)</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--slate); margin:0;">Distributed Systems & Capstone Defense</h4>
+              </div>
+              <span class="badge badge-secondary" style="font-size:9.5px;"><i data-lucide="lock" style="width:10px; height:10px; vertical-align:middle;"></i> Complete Level 2 First</span>
+            </div>
+            <div style="font-size:12px; color:var(--slate);">Includes: Redis Caching & Invalidation, Distributed Tracing, Capstone Oral Defense.</div>
+          </div>
+        </div>
+      </section>
+    `;
+  },
+
+  renderMilestoneProgress(currentCourse) {
+    return `
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:20px;">
+        <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Source-Backed Activity Event Ledger</h3>
+            <span class="badge badge-secondary">Cryptographic Audit</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:10px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="font-size:12px; color:var(--on-surface);">ACTIVITY_PASSED: L1-ACT-04 (Pure Reducers)</strong>
+                <span style="font-size:10.5px; color:var(--slate); display:block;">Evidence: Jest Suite Passed · 100% Assertions (Hash: 0x9a8f1b)</span>
+              </div>
+              <span class="badge badge-success" style="font-size:9px;">✓ Recorded</span>
+            </div>
+            <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:10px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="font-size:12px; color:var(--on-surface);">MILESTONE_UNLOCKED: Level 2 Scalable Reducers</strong>
+                <span style="font-size:10.5px; color:var(--slate); display:block;">Rule: Level 1 100% Passed · Faculty Audit: Prof. Alex Rivera</span>
+              </div>
+              <span class="badge badge-primary" style="font-size:9px;">Unlocked</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- CERTIFICATE READINESS -->
+        <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span class="badge badge-primary">DIGITAL CREDENTIAL ELIGIBILITY</span>
+              <i data-lucide="award" style="color:var(--primary);"></i>
+            </div>
+            <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 6px 0;">Level 1 Certified · Level 2 In Progress</h4>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 14px 0;">
+              Completion certificate will automatically generate upon passing all 3 levels and capstone defense.
+            </p>
+            <div style="background:var(--surface-container); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; font-size:11.5px;">
+              <div>Certificate ID: <strong>IHS-CERT-2026-9041</strong></div>
+              <div>Faculty Lead: <strong>Prof. Alex Rivera</strong></div>
+              <div>Verification: <strong>Publicly Audited on Ledger</strong></div>
+            </div>
+          </div>
+
+          <button class="btn btn-secondary" style="width:100%; margin-top:14px;" onclick="Notifications.push('Certificate Audit', 'Downloading verified certificate PDF...', 'info')">
+            <i data-lucide="download"></i> Download Level 1 Certificate (PDF)
+          </button>
+        </section>
+      </div>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // 2. LIVE SCHEDULED COHORT WORKSPACE (CRS-103 / ENG-103)
+  // --------------------------------------------------------------------------
+  renderLiveCohortWorkspace(route, currentCourse) {
+    const isTimeline = route === "learner-learning-milestones" || route === "learner-learning-lessons";
+    const isProgress = route === "learner-learning-progress" || route === "learner-learning-completion";
+
+    return `
+      ${this.renderCourseSwitcher()}
+      
+      <!-- LIVE COHORT HERO BANNER -->
+      <section class="learner-course-header" style="background:#ffffff; border:1px solid var(--outline-variant); border-top:3px solid var(--primary); border-radius:12px; padding:22px 26px; margin-bottom:20px; box-shadow:var(--shadow-subtle);">
+        <div class="learner-course-heading" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+              <span class="badge badge-primary" style="font-size:10.5px; font-weight:800;">LIVE SCHEDULED COHORT</span>
+              <span class="badge badge-success" style="font-size:10px;">● ACTIVE TERM 2 (24 SESSIONS)</span>
+              <span class="badge badge-secondary" style="font-size:10px;">Daily.co WebRTC TLS 1.3</span>
+              <span style="font-size:12px; color:var(--slate);">Lead Trainer: <strong style="color:var(--on-surface);">Sara Javed</strong> (Senior Oral Cadence Specialist)</span>
+            </div>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">${currentCourse.title}</h2>
+            <p style="font-size:12.5px; color:var(--slate); margin:0;">
+              Recurring Timetable: <strong>Mon & Wed 10:00 AM PKT</strong> · Next Occurrence: <strong>Session #17 (Starts in 45m)</strong>
+            </p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font:800 24px 'Manrope', sans-serif; color:var(--primary);">94.2% Attendance</div>
+            <span style="font-size:11.5px; color:var(--slate); font-weight:600;">16 of 17 Sessions Verified · 2 Credits Left</span>
+          </div>
+        </div>
+
+        <nav class="learner-course-tabs" style="display:flex; gap:10px; border-top:1px solid var(--outline-variant); padding-top:14px; flex-wrap:wrap;">
+          <button class="btn ${!isTimeline && !isProgress ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-continue')">
+            <i data-lucide="video"></i> Live WebRTC Classroom & Voice Studio
+          </button>
+          <button class="btn ${isTimeline ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-milestones')">
+            <i data-lucide="calendar"></i> 24-Session Cohort Timeline & Recordings
+          </button>
+          <button class="btn ${isProgress ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-progress')">
+            <i data-lucide="award"></i> CEFR Oral Rubrics & Attendance Ledger
+          </button>
+        </nav>
+      </section>
+
+      <!-- LIVE COHORT CONTENT DECK -->
+      ${isProgress ? this.renderLiveCohortProgress(currentCourse) : (isTimeline ? this.renderLiveCohortTimeline(currentCourse) : this.renderLiveCohortContinue(currentCourse))}
+    `;
+  },
+
+  renderLiveCohortContinue(currentCourse) {
+    return `
+      <div style="display:grid; grid-template-columns: 1.35fr 1fr; gap:20px;">
+        
+        <!-- LEFT: BESPOKE WEBRTC LIVE CLASSROOM STAGE -->
+        <article style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
+          <!-- Top Room Header -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span class="badge badge-primary" style="font-size:10px; font-weight:800;">
+                <span class="pulse-dot" style="display:inline-block; width:6px; height:6px; background:#22c55e; border-radius:50%; margin-right:4px;"></span>
+                LIVE SEMINAR #17 READY
+              </span>
+              <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--on-surface); margin:4px 0 0 0;">
+                Consonant Cluster Simplification & Cadence
+              </h3>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:11px; color:#16a34a; font-weight:700;">● Daily.co WebRTC (24ms Latency)</span>
+              <div style="font-size:11px; color:var(--slate);">Room: <code>IHS-LIVE-ENG103</code></div>
+            </div>
+          </div>
+
+          <!-- Video Classroom Screen Viewport -->
+          <div style="background:#0f172a; border-radius:10px; padding:16px; color:#ffffff; position:relative; min-height:220px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid #1e293b; overflow:hidden;">
+            <!-- Presenter Slide & Overlay -->
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <div style="background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); padding:4px 10px; border-radius:6px; font-size:11px; display:inline-flex; align-items:center; gap:6px;">
+                <span style="width:8px; height:8px; background:#22c55e; border-radius:50%;"></span>
+                <span>Sara Javed (Presenter Stream)</span>
+              </div>
+              <div style="background:rgba(0,0,0,0.6); padding:4px 10px; border-radius:6px; font-size:11px; color:#94a3b8;">
+                <i data-lucide="users" style="width:12px; height:12px; vertical-align:middle;"></i> 9 Participants
+              </div>
+            </div>
+
+            <!-- Main Slide Content Simulation -->
+            <div style="text-align:center; padding:16px 0;">
+              <div style="display:inline-block; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:12px 20px;">
+                <div style="font-size:13px; color:#38bdf8; font-weight:700; margin-bottom:4px;">CEFR C1 Oral Cadence Drill</div>
+                <div style="font-size:15px; font-family:serif; color:#f8fafc; font-weight:600;">"Strength / Strengths / Strictness — Thought-Group Cadence"</div>
+                <span style="font-size:10.5px; color:#94a3b8;">Slide 14 of 28 · Live Screen Share Active</span>
+              </div>
+            </div>
+
+            <!-- In-Call Floating Participant Grid & Dock -->
+            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); border-radius:8px; padding:8px 12px; margin-top:10px;">
+              <!-- Peer Avatars -->
+              <div style="display:flex; align-items:center; gap:6px;">
+                <div style="width:26px; height:26px; border-radius:50%; background:var(--primary); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; border:1px solid #ffffff;">YOU</div>
+                <div style="width:26px; height:26px; border-radius:50%; background:#475569; display:flex; align-items:center; justify-content:center; font-size:10px;">ZK</div>
+                <div style="width:26px; height:26px; border-radius:50%; background:#475569; display:flex; align-items:center; justify-content:center; font-size:10px;">UM</div>
+                <span style="font-size:10.5px; color:#cbd5e1; margin-left:4px;">+6 others</span>
+              </div>
+
+              <!-- Tool Tray -->
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-secondary btn-xs" style="background:#1e293b; color:#ffffff; border:none; padding:4px 8px;" onclick="Notifications.push('Mic Toggled', 'Microphone muted/unmuted.', 'info')"><i data-lucide="mic" style="width:11px; height:11px;"></i></button>
+                <button class="btn btn-secondary btn-xs" style="background:#1e293b; color:#ffffff; border:none; padding:4px 8px;" onclick="Notifications.push('Camera Toggled', 'Video camera stream on.', 'info')"><i data-lucide="video" style="width:11px; height:11px;"></i></button>
+                <button class="btn btn-secondary btn-xs" style="background:#1e293b; color:#ffffff; border:none; padding:4px 8px;" onclick="Notifications.push('Hand Raised', 'Trainer notified of hand raise.', 'info')"><i data-lucide="hand" style="width:11px; height:11px;"></i></button>
+                <button class="btn btn-secondary btn-xs" style="background:#1e293b; color:#ffffff; border:none; padding:4px 8px;" onclick="Notifications.push('Chat Drawer', 'Opening in-call discussion stream...', 'info')"><i data-lucide="message-square" style="width:11px; height:11px;"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Classroom Action Triggers -->
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button class="btn btn-primary" style="width:100%; padding:11px 16px; font-weight:800; font-size:13.5px;" onclick="Actions.openLearnerJoinClassModal('LIVE-ENG-04')">
+              <i data-lucide="video"></i> Launch Daily.co Live Classroom &rarr;
+            </button>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <button class="link-btn" style="font-size:12px;" onclick="Actions.openLearnerRescheduleModal('LIVE-ENG-04')">
+                <i data-lucide="calendar" style="width:12px; height:12px; vertical-align:middle;"></i> Request Class Reschedule (FLOW-017)
+              </button>
+              <button class="link-btn" style="font-size:12px;" onclick="Notifications.push('Class Blueprint', 'Downloading Session #17 Blueprint PDF...', 'info')">
+                <i data-lucide="download" style="width:12px; height:12px; vertical-align:middle;"></i> Pre-Class Blueprint (PDF)
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- RIGHT: BESPOKE SPOKEN ENGLISH ACOUSTIC RECORDING STUDIO (FLOW-020) -->
+        <article style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="badge badge-secondary" style="font-weight:800;">ACOUSTIC VOICE STUDIO (FLOW-020)</span>
+              <span class="badge badge-warning">Due Tomorrow</span>
+            </div>
+            <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">
+              Alveolar Pitch & Intonation Cadence Drill
+            </h4>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
+              Record a 90-second spoken sample. AI acoustic engine evaluates rhythm, syllable stress, and thought-group pauses.
+            </p>
+
+            <!-- Animated Acoustic Waveform -->
+            <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:16px; text-align:center;">
+              <div style="display:flex; align-items:center; justify-content:center; gap:5px; height:45px; margin-bottom:10px;">
+                <div style="width:4px; height:22px; background:var(--primary); border-radius:2px; animation: pulse 1s infinite alternate;"></div>
+                <div style="width:4px; height:36px; background:var(--primary); border-radius:2px; animation: pulse 0.8s infinite alternate;"></div>
+                <div style="width:4px; height:18px; background:var(--primary); border-radius:2px; animation: pulse 1.2s infinite alternate;"></div>
+                <div style="width:4px; height:42px; background:var(--secondary); border-radius:2px; animation: pulse 0.7s infinite alternate;"></div>
+                <div style="width:4px; height:28px; background:var(--primary); border-radius:2px; animation: pulse 1.1s infinite alternate;"></div>
+                <div style="width:4px; height:20px; background:var(--primary); border-radius:2px; animation: pulse 0.9s infinite alternate;"></div>
+                <div style="width:4px; height:34px; background:var(--primary); border-radius:2px; animation: pulse 1.3s infinite alternate;"></div>
+              </div>
+              <span style="font-size:11.5px; color:var(--slate); font-weight:600;">Acoustic Audio Buffer Ready · Max 1:30</span>
+            </div>
+
+            <!-- CEFR Rubric Scorecard Table -->
+            <div style="margin-top:12px; display:flex; flex-direction:column; gap:6px; font-size:11.5px;">
+              <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:6px;">
+                <span>Phonetic Pronunciation:</span>
+                <strong style="color:var(--primary);">36 / 40 (90%)</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:6px;">
+                <span>Pitch Variation & Intonation:</span>
+                <strong style="color:var(--primary);">28 / 30 (93%)</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:6px;">
+                <span>Cadence & Thought-Group Flow:</span>
+                <strong style="color:#16a34a;">28 / 30 (93%)</strong>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary" style="flex:1;" onclick="Actions.openLearnerVoiceStudioModal('WRK-301')">
+              <i data-lucide="mic"></i> Voice Studio
+            </button>
+            <button class="btn btn-primary" style="flex:1;" onclick="Notifications.push('Voice Submission', 'Drill submitted to Sara Javed. Acoustic CEFR Score: 92/100 (C1 Proficient).', 'success')">
+              <i data-lucide="send"></i> Submit Drill
+            </button>
+          </div>
+        </article>
+
+      </div>
+    `;
+  },
+
+  renderLiveCohortTimeline(currentCourse) {
+    return `
+      <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--outline-variant);">
+          <div>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 2px 0;">24-Session Cohort Timetable & Delivery Timeline</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0;">Live interactive seminar sequence with Sara Javed</p>
+          </div>
+          <span class="badge badge-primary">Term 2 Active (16 / 24 Complete)</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <!-- Session 16 (Attended) -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:14px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+                <span class="badge badge-success" style="font-size:9px;">✓ ATTENDED (98% Presence)</span>
+                <span style="font-size:11.5px; color:var(--slate);">Mon, 17 Aug 2026</span>
+              </div>
+              <strong style="font-size:13px; color:var(--on-surface);">Session #16: Acoustic Intonation Patterns & Pitch Variance</strong>
+              <span style="font-size:11.5px; color:var(--slate); display:block; margin-top:2px;">Recorded Duration: 59 mins · Breakout: Alveolar cadence</span>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Class Recording', 'Loading secure cloud recording for Session #16...', 'info')">
+              <i data-lucide="play"></i> Watch Recording
+            </button>
+          </div>
+
+          <!-- Session 17 (Active / Next) -->
+          <div style="background:#ffffff; border:2px solid var(--primary); border-radius:10px; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; box-shadow:0 2px 10px rgba(110,94,6,0.08);">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+                <span class="badge badge-primary" style="font-size:9px; font-weight:800;">● TODAY'S LIVE CLASS</span>
+                <span style="font-size:11.5px; color:var(--primary); font-weight:700;">Starts 10:00 AM PKT</span>
+              </div>
+              <strong style="font-size:14px; color:var(--on-surface);">Session #17: Consonant Cluster Simplification & Standup Cadence</strong>
+              <span style="font-size:12px; color:var(--slate); display:block; margin-top:2px;">Daily.co WebRTC Room: <code>IHS-LIVE-ENG103</code> · Room Token Authenticated</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerJoinClassModal('CLS-101')">
+              <i data-lucide="video"></i> Join Live Room
+            </button>
+          </div>
+
+          <!-- Session 18 (Upcoming) -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:14px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; opacity:0.85;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+                <span class="badge badge-secondary" style="font-size:9px;">SCHEDULED</span>
+                <span style="font-size:11.5px; color:var(--slate);">Friday, 21 Aug 2026 · 10:00 AM PKT</span>
+              </div>
+              <strong style="font-size:13px; color:var(--on-surface);">Session #18: Executive Thought-Group Pauses & Pitch Control</strong>
+              <span style="font-size:11.5px; color:var(--slate); display:block; margin-top:2px;">Pre-class Blueprint: <code>BP-ENG-18.pdf</code></span>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerRescheduleModal('CLS-103')">
+              <i data-lucide="calendar"></i> Reschedule
+            </button>
+          </div>
+        </div>
+      </section>
+    `;
+  },
+
+  renderLiveCohortProgress(currentCourse) {
+    return `
+      <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:20px;">
+        <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Attendance & CEFR Telemetry Ledger</h3>
+            <span class="badge badge-success">94.2% Present</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <strong>Session #16 Telemetry</strong>
+                <span style="color:#16a34a; font-weight:700;">58m 30s (97.5%)</span>
+              </div>
+              <span style="font-size:11px; color:var(--slate);">Join: 10:00:02 PKT · Leave: 10:58:32 PKT · WebRTC PKT Latency: 22ms</span>
+            </div>
+
+            <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px;">
+              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                <strong>CEFR Oral Fluency Score</strong>
+                <span style="color:var(--primary); font-weight:700;">Level C1 Proficient (92/100)</span>
+              </div>
+              <span style="font-size:11px; color:var(--slate);">Intonation: 28/30 · Pronunciation: 36/40 · Cadence: 28/30</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- CERTIFICATE READINESS -->
+        <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span class="badge badge-primary">CEFR CERTIFICATION ELIGIBILITY</span>
+              <i data-lucide="award" style="color:var(--primary);"></i>
+            </div>
+            <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 6px 0;">Spoken English Fluency & Professional Voice</h4>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 14px 0;">
+              Full CEFR Executive Certificate unlocked upon completion of 24 live occurrences and capstone pitch defense.
+            </p>
+            <div style="background:var(--surface-container); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; font-size:11.5px;">
+              <div>Course Enrolment: <strong>ENG-103 (Term 2)</strong></div>
+              <div>Faculty Lead: <strong>Sara Javed (Senior Trainer)</strong></div>
+              <div>Remaining Credits: <strong>2 Live Sessions Remaining</strong></div>
+            </div>
+          </div>
+
+          <button class="btn btn-secondary" style="width:100%; margin-top:14px;" onclick="Notifications.push('Progress Report', 'Generating Term 2 Oral Telemetry Summary PDF...', 'info')">
+            <i data-lucide="download"></i> Download Oral Progress Audit (PDF)
+          </button>
+        </section>
+      </div>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // 3. K-12 BOARD TUITION WORKSPACE (CRS-105 / K12-801)
+  // --------------------------------------------------------------------------
+  renderK12Workspace(route, currentCourse) {
+    const isSyllabus = route === "learner-learning-milestones" || route === "learner-learning-lessons";
+    const isProgress = route === "learner-learning-progress" || route === "learner-learning-completion";
+
+    return `
+      ${this.renderCourseSwitcher()}
+      
+      <!-- K-12 BOARD HEADER WITH DUAL ACCREDITATION (K12-001) -->
+      <section class="learner-course-header" style="background:#ffffff; border:1px solid var(--outline-variant); border-top:3px solid #0284c7; border-radius:12px; padding:22px 26px; margin-bottom:20px; box-shadow:var(--shadow-subtle);">
+        <div class="learner-course-heading" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+              <span class="badge" style="background:#0284c7; color:#ffffff; font-size:10.5px; font-weight:800;">FEDERAL BOARD (FBISE) ACCREDITED</span>
+              <span class="badge badge-secondary" style="font-size:10px;">CAMBRIDGE IGCSE ALIGNED</span>
+              <span style="font-size:12px; color:var(--slate);">Student Roll: <strong>FBISE-2026-9042</strong> (Grade 8-A)</span>
+            </div>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">${currentCourse.title}</h2>
+            <p style="font-size:12.5px; color:var(--slate); margin:0;">
+              Lead Faculty: <strong>Prof. Tariq Mahmood</strong> (Head of Math) · Guardian Sync: <strong>Farooq Malik (+92 300 5541982)</strong>
+            </p>
+          </div>
+          <div style="text-align:right;">
+            <div style="font:800 24px 'Manrope', sans-serif; color:#0284c7;">Grade A+ (95.5%)</div>
+            <span style="font-size:11.5px; color:var(--slate); font-weight:600;">GPA 4.0 / 4.0 · Board Readiness: 92%</span>
+          </div>
+        </div>
+
+        <!-- 4-Unit Syllabus Progress Pills -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-bottom:14px; padding:10px 0; border-top:1px solid var(--outline-variant); border-bottom:1px solid var(--outline-variant);">
+          <div style="background:var(--surface-container-low); padding:6px 10px; border-radius:6px; font-size:11px;">
+            <span style="color:#16a34a; font-weight:700;">✓ Unit 1: Real Numbers</span>
+            <div style="color:var(--slate); font-size:10px;">38/40 (Passed)</div>
+          </div>
+          <div style="background:var(--surface-container-low); padding:6px 10px; border-radius:6px; font-size:11px;">
+            <span style="color:#16a34a; font-weight:700;">✓ Unit 2: Algebraic Identities</span>
+            <div style="color:var(--slate); font-size:10px;">39/40 (Passed)</div>
+          </div>
+          <div style="background:#e0f2fe; border:1px solid #0284c7; padding:6px 10px; border-radius:6px; font-size:11px;">
+            <span style="color:#0284c7; font-weight:700;">● Unit 3: Linear Equations</span>
+            <div style="color:#0284c7; font-size:10px;">Active Mid-Term Unit</div>
+          </div>
+          <div style="background:var(--surface-container-low); padding:6px 10px; border-radius:6px; font-size:11px; opacity:0.7;">
+            <span style="color:var(--slate); font-weight:600;">Unit 4: Geometry</span>
+            <div style="color:var(--slate); font-size:10px;">Term 3 Upcoming</div>
+          </div>
+        </div>
+
+        <nav class="learner-course-tabs" style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn ${!isSyllabus && !isProgress ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-continue')">
+            <i data-lucide="file-edit"></i> Homework Desk & Step Math Solver
+          </button>
+          <button class="btn ${isSyllabus ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-milestones')">
+            <i data-lucide="book-open"></i> 4-Unit FBISE Board Syllabus Matrix
+          </button>
+          <button class="btn ${isProgress ? "btn-primary" : "btn-secondary"} btn-sm" onclick="Router.navigate('learner-learning-progress')">
+            <i data-lucide="shield-check"></i> Guardian SMS Telemetry & Term Report Card
+          </button>
+        </nav>
+      </section>
+
+      <!-- K-12 CONTENT DECK -->
+      ${isProgress ? this.renderK12Progress(currentCourse) : (isSyllabus ? this.renderK12Syllabus(currentCourse) : this.renderK12Continue(currentCourse))}
+    `;
+  },
+
+  renderK12Continue(currentCourse) {
+    return `
+      <div style="display:grid; grid-template-columns: 1.35fr 1fr; gap:20px;">
+        
+        <!-- LEFT: INTERACTIVE STEP-BY-STEP PROBLEM SOLVER (FBISE PAST PAPERS) -->
+        <article style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="badge" style="background:#0284c7; color:#ffffff; font-weight:800;">FBISE PAST PAPER PROBLEM SET #3</span>
+              <span class="badge badge-secondary">40 Marks · Due Friday</span>
+            </div>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 6px 0;">
+              Simultaneous Linear Equations by Elimination
+            </h3>
+            <p style="font-size:12.5px; color:var(--slate); margin:0 0 14px 0;">
+              Standard FBISE algebraic substitution & elimination format. Solve step by step to earn full methodology marks.
+            </p>
+
+            <!-- Problem Box -->
+            <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:16px; font-size:13px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:var(--on-surface);">Practice Problem #1:</strong>
+                <span class="badge badge-primary" style="font-size:9.5px;">Algebraic Elimination Method</span>
+              </div>
+              
+              <div style="font-family:serif; font-size:15px; color:var(--on-surface); background:#ffffff; border:1px solid var(--outline-variant); border-radius:6px; padding:10px 14px; margin-bottom:12px; line-height:1.6;">
+                <strong>Equation (1):</strong> 2x + 3y = 13<br>
+                <strong>Equation (2):</strong> 5x - 2y = 4
+              </div>
+
+              <!-- Multi-Step Solver Instructions -->
+              <div style="font-size:11.5px; color:var(--slate); margin-bottom:10px; line-height:1.5;">
+                <strong>Methodology Guide:</strong><br>
+                1. Multiply Eq (1) by 2 $\implies$ 4x + 6y = 26.<br>
+                2. Multiply Eq (2) by 3 $\implies$ 15x - 6y = 12.<br>
+                3. Add equations to eliminate y $\implies$ 19x = 38 $\implies$ x = 2.<br>
+                4. Substitute x = 2 into Eq (1) $\implies$ 2(2) + 3y = 13 $\implies$ 3y = 9 $\implies$ y = 3.
+              </div>
+
+              <!-- Interactive Step Input -->
+              <div style="display:flex; gap:10px; align-items:center;">
+                <input type="text" id="k12-math-answer" class="form-control" placeholder="Enter solution (e.g. x = 2, y = 3)" value="x = 2, y = 3" style="flex:1; font-size:12px; padding:8px 12px; border-radius:6px;">
+                <button class="btn btn-primary btn-sm" onclick="Notifications.push('Methodology Verified', '✓ Correct! x = 2, y = 3. All elimination and substitution steps verified against FBISE scoring key (Full 10/10 marks).', 'success')">
+                  <i data-lucide="check-circle"></i> Verify Steps
+                </button>
+              </div>
+            </div>
+
+            <!-- Formula Drawer Pill -->
+            <div style="margin-top:12px; padding:8px 12px; background:var(--surface-container-lowest); border:1px dashed var(--outline-variant); border-radius:6px; font-size:11px; color:var(--slate);">
+              <strong>FBISE Formula Cheatsheet:</strong> $(a+b)^2 = a^2 + 2ab + b^2$ · $(a-b)^2 = a^2 - 2ab + b^2$ · $a^2 - b^2 = (a-b)(a+b)$
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid var(--outline-variant); flex-wrap:wrap; gap:10px;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Worksheet', 'Downloading FBISE Chapter 3 Past Papers Worksheet (PDF)...', 'info')">
+              <i data-lucide="download"></i> Download Past Papers (PDF)
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Notifications.push('Homework Submission', 'Submitted Homework Problem Set 3 for Prof. Tariq Mahmood marking.', 'success')">
+              <i data-lucide="upload"></i> Submit Homework PDF
+            </button>
+          </div>
+        </article>
+
+        <!-- RIGHT: GUARDIAN LIVE SYNC & FBISE MARKSHEET CARD (K12-007 / K12-008) -->
+        <article style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span class="badge badge-success" style="font-weight:800;">GUARDIAN SMS SYNC ACTIVE</span>
+              <span style="font-size:11px; color:var(--slate);"><i data-lucide="shield-check" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> K12-013 Verified</span>
+            </div>
+            
+            <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">
+              Parent & Guardian Telemetry Link
+            </h4>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
+              Guardian <strong>Farooq Malik</strong> receives automated weekly SMS markbook and attendance digests at <code>+92 300 5541982</code>.
+            </p>
+
+            <!-- Term Markbook Breakdown Table -->
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:6px; padding:10px; display:flex; justify-content:space-between;">
+                <span>Unit 1: Number Systems & Sets</span>
+                <strong style="color:#16a34a;">38 / 40 (Grade A+)</strong>
+              </div>
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:6px; padding:10px; display:flex; justify-content:space-between;">
+                <span>Unit 2: Algebraic Manipulation</span>
+                <strong style="color:#16a34a;">39 / 40 (Grade A+)</strong>
+              </div>
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:6px; padding:10px; display:flex; justify-content:space-between;">
+                <span>Unit 3: Linear Equations (Mid-Term)</span>
+                <strong style="color:#0284c7;">57 / 60 (Grade A+)</strong>
+              </div>
+              <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:6px; padding:10px; display:flex; justify-content:space-between;">
+                <span>Overall Term Aggregate:</span>
+                <strong style="color:#166534;">95.5% · Grade A+ (GPA 4.0)</strong>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px; padding-top:10px; border-top:1px solid var(--outline-variant);">
+            <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="Notifications.push('Report Card', 'Generating Official Signed FBISE Term Marksheet PDF...', 'info')">
+              <i data-lucide="download"></i> Download Official FBISE Report Card (PDF)
+            </button>
+            <div style="font-size:10.5px; color:var(--slate); text-align:center;">
+              Dispatched via registered SMS channel Sundays 8:00 PM PKT
+            </div>
+          </div>
+        </article>
+
+      </div>
+    `;
+  },
+
+  renderK12Syllabus(currentCourse) {
+    return `
+      <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--outline-variant);">
+          <div>
+            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 2px 0;">FBISE Grade 8 Mathematics Official Curriculum Board Syllabus</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0;">Federal Board of Intermediate and Secondary Education (Islamabad)</p>
+          </div>
+          <span class="badge badge-secondary">National Curriculum 2026</span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <!-- Unit 1 -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div>
+                <span class="badge badge-success" style="font-size:9px;">✓ UNIT 1 · PASSED (38/40)</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--on-surface); margin:4px 0 0 0;">Real Numbers, Sets & Venn Diagrams</h4>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Past Papers', 'Downloading Unit 1 FBISE Solved Past Papers...', 'info')">Unit 1 Past Papers</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Operations on rational and irrational numbers, union and intersection laws, De Morgan's theorems.</span>
+          </div>
+
+          <!-- Unit 2 -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div>
+                <span class="badge badge-success" style="font-size:9px;">✓ UNIT 2 · PASSED (39/40)</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--on-surface); margin:4px 0 0 0;">Algebraic Expressions & Factorization Formulas</h4>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Formula Sheet', 'Downloading Algebraic Identities Cheat Sheet...', 'info')">Formulas PDF</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Standard algebraic identities $(a+b)^2$, $(a-b)^2$, $a^2-b^2$, algebraic fractions and factorization techniques.</span>
+          </div>
+
+          <!-- Unit 3 -->
+          <div style="background:#ffffff; border:2px solid var(--primary); border-radius:10px; padding:16px; box-shadow:0 2px 10px rgba(110,94,6,0.08);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div>
+                <span class="badge badge-primary" style="font-size:9px; font-weight:800;">● UNIT 3 · CURRENT ACTIVE UNIT</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">Simultaneous Linear Equations & Coordinate Geometry</h4>
+              </div>
+              <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-continue')">Solve Chapter 3 &rarr;</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Elimination method, substitution method, graphical intersection of linear equations. FBISE Mid-Term exam topic.</span>
+          </div>
+
+          <!-- Unit 4 -->
+          <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px; opacity:0.75;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div>
+                <span class="badge badge-secondary" style="font-size:9px;">UPCOMING (TERM 3)</span>
+                <h4 style="font:800 15px 'Manrope', sans-serif; color:var(--slate); margin:4px 0 0 0;">Practical Geometry & Pythagoras Theorem</h4>
+              </div>
+              <span class="badge badge-secondary" style="font-size:9px;">Locked until Mid-Term</span>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Construction of quadrilaterals, right-angled triangle theorems, surface area & volume of cylinders.</span>
+          </div>
+        </div>
+      </section>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // 4. STUDENT - TEACHER CHAT & MESSAGING SUITE (MSG-001 - MSG-004 / FLOW-023)
+  // --------------------------------------------------------------------------
+  renderTeacherChatSuite() {
+    const data = db.learnerData || {};
+    const activeId = data.activeFacultyChatId || "TRN-101";
+    const facultyList = Object.values(data.facultyChats || {});
+    const activeFaculty = data.facultyChats?.[activeId] || facultyList[0] || {};
+    const messages = activeFaculty.messages || [];
+
+    return `
+      <div class="learner-chat-layout">
+        
+        <!-- LEFT: FACULTY LIST -->
+        <div class="learner-chat-faculty-list">
+          <div style="padding:16px; border-bottom:1px solid var(--outline-variant); background:#ffffff;">
+            <strong style="font-size:12px; text-transform:uppercase; color:var(--on-surface); font-weight:800; letter-spacing:0.5px; display:block;">
+              Assigned Course Faculty
+            </strong>
+            <span style="font-size:11px; color:var(--slate);">Context-Aware Safe Messaging (MSG-001)</span>
+          </div>
+
+          <div style="overflow-y:auto; flex:1;">
+            ${facultyList.map(f => {
+              const isSelected = f.id === activeFaculty.id;
+              return `
+                <div 
+                  class="learner-faculty-item ${isSelected ? 'active' : ''}" 
+                  onclick="Actions.switchFacultyChat('${f.id}')"
+                >
+                  <div style="position:relative; width:40px; height:40px; border-radius:50%; background:var(--primary-container); border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--primary); font-size:13px; flex-shrink:0;">
+                    ${f.avatar}
+                    <span style="position:absolute; bottom:0; right:0; width:10px; height:10px; border-radius:50%; background:${f.online ? '#22c55e' : '#94a3b8'}; border:2px solid #ffffff;"></span>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <strong style="font-size:12.5px; color:var(--on-surface); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.name}</strong>
+                    </div>
+                    <span style="display:block; font-size:10.5px; color:var(--primary); font-weight:700;">${f.courseCode}</span>
+                    <span style="display:block; font-size:11px; color:var(--slate); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.role}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- RIGHT: CONVERSATION MAIN PANE -->
+        <div class="learner-chat-main-pane">
+          
+          <!-- TOP HEADER -->
+          <div class="learner-chat-top-bar">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:42px; height:42px; border-radius:50%; background:var(--primary-container); border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; font-weight:800; color:var(--primary);">
+                ${activeFaculty.avatar}
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">${activeFaculty.name}</h3>
+                  <span class="badge ${activeFaculty.online ? 'badge-success' : 'badge-secondary'}" style="font-size:9.5px;">
+                    ${activeFaculty.online ? '● Online' : 'Offline'}
+                  </span>
+                  <span class="badge badge-primary" style="font-size:9.5px;">${activeFaculty.courseCode}</span>
+                </div>
+                <span style="font-size:11.5px; color:var(--slate);">
+                  ${activeFaculty.role} · Office Hours: <strong>${activeFaculty.officeHours}</strong>
+                </span>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Office Hours', 'Requesting 1:1 consultation slot with ${activeFaculty.name}...', 'info')">
+                <i data-lucide="calendar"></i> Book Office Hours
+              </button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerCourseWorkspace('${activeFaculty.courseCode === 'ENG-103' ? 'CRS-103' : (activeFaculty.courseCode === 'DEV-101' ? 'CRS-101' : 'CRS-105')}')">
+                <i data-lucide="external-link"></i> Course Desk
+              </button>
+            </div>
+          </div>
+
+          <!-- MESSAGE STREAM -->
+          <div class="learner-chat-messages-scroll" id="faculty-chat-scroll">
+            <div style="text-align:center; margin-bottom:10px;">
+              <span style="font-size:11px; background:var(--surface-container-high); color:var(--slate); padding:4px 12px; border-radius:12px;">
+                End-to-End Audited Academic Conversation · Minor Safeguarding Compliant (MSG-004)
+              </span>
+            </div>
+
+            ${messages.map(m => {
+              const isStudent = m.sender === "student";
+              return `
+                <div class="chat-bubble ${isStudent ? 'student' : 'trainer'}">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; gap:8px;">
+                    <strong style="font-size:11px; color:${isStudent ? '#f0d97a' : 'var(--primary)'};">${m.name}</strong>
+                    <span style="font-size:10px; color:${isStudent ? 'rgba(255,255,255,0.8)' : 'var(--slate)'};">${m.time}</span>
+                  </div>
+                  <div style="font-size:13px; line-height:1.45;">${m.text}</div>
+                  ${m.type === 'voice_feedback' ? `
+                    <div style="margin-top:8px; padding:8px 12px; background:rgba(0,0,0,0.06); border-radius:6px; display:flex; align-items:center; gap:8px; font-size:12px;">
+                      <button class="btn btn-primary btn-xs" style="padding:3px 8px;" onclick="Notifications.push('Voice Memo', 'Playing audio feedback from ${m.name}...', 'info')">
+                        <i data-lucide="play" style="width:11px; height:11px;"></i> Play (${m.audioLength})
+                      </button>
+                      <span>Acoustic Cadence Review Clip</span>
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- COMPOSE BOX -->
+          <div class="learner-chat-compose-box">
+            <!-- Quick Presets -->
+            <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px;">
+              <button class="btn btn-secondary btn-xs" style="font-size:10.5px;" onclick="document.getElementById('faculty-chat-input').value = 'Hi, I have a quick question about the latest lesson homework assignment.'; document.getElementById('faculty-chat-input').focus();">
+                📝 Homework Question
+              </button>
+              <button class="btn btn-secondary btn-xs" style="font-size:10.5px;" onclick="document.getElementById('faculty-chat-input').value = 'Could you please review my recent state machine submission when you have a moment?'; document.getElementById('faculty-chat-input').focus();">
+                💻 Review My Code
+              </button>
+              <button class="btn btn-secondary btn-xs" style="font-size:10.5px;" onclick="document.getElementById('faculty-chat-input').value = 'Could we schedule a 15-minute 1:1 session during your office hours?'; document.getElementById('faculty-chat-input').focus();">
+                📅 Request 1:1 Slot
+              </button>
+            </div>
+
+            <div style="display:flex; gap:8px; align-items:flex-end;">
+              <textarea 
+                id="faculty-chat-input" 
+                class="form-control" 
+                placeholder="Message ${activeFaculty.name}... (Press Enter to send)" 
+                style="flex:1; height:60px; padding:10px 12px; border-radius:8px; resize:none; font-size:13px;"
+                onkeydown="if(event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); Actions.sendTrainerChatMessage(); }"
+              ></textarea>
+              
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <button class="btn btn-secondary btn-xs" title="Record Voice Note" onclick="Actions.recordVoiceNoteToTrainer()">
+                  <i data-lucide="mic"></i> Voice
+                </button>
+                <button class="btn btn-primary" style="height:36px; padding:0 16px;" onclick="Actions.sendTrainerChatMessage()">
+                  <i data-lucide="send"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // 5. STUDENT SUPPORT DESK & CSR CHAT (MSG-004 / FLOW-024)
+  // --------------------------------------------------------------------------
+  renderSupportChatSuite() {
+    const data = db.learnerData || {};
+    const support = data.supportDesk || {};
+    const messages = support.liveChatMessages || [];
+
+    return `
+      <div style="display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start;">
+        
+        <!-- LEFT: LIVE CSR CHAT VIEWPORT -->
+        <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; height:620px; overflow:hidden;">
+          <div style="padding:16px 20px; border-bottom:1px solid var(--outline-variant); background:var(--surface-container-lowest); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="badge badge-primary">LIVE STUDENT HELPDESK</span>
+                <span class="badge badge-success">● Agents Online</span>
+              </div>
+              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:4px 0 0 0;">Customer Success & Operations Support</h3>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openSubmitSupportCaseModal()">
+              <i data-lucide="plus-circle"></i> Submit Formal Ticket
+            </button>
+          </div>
+
+          <!-- Messages Stream -->
+          <div style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px; background:var(--surface-container-lowest);" id="support-chat-scroll">
+            <div style="text-align:center;">
+              <span style="font-size:11px; background:var(--surface-container-high); color:var(--slate); padding:4px 12px; border-radius:12px;">
+                Connected to IHS Student Operations Desk · First Response SLA: &lt; 5 mins
+              </span>
+            </div>
+
+            ${messages.map(m => {
+              const isStudent = m.sender === "student";
+              return `
+                <div class="chat-bubble ${isStudent ? 'student' : 'trainer'}">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; gap:8px;">
+                    <strong style="font-size:11px; color:${isStudent ? '#f0d97a' : '#0284c7'};">${m.name}</strong>
+                    <span style="font-size:10px; color:${isStudent ? 'rgba(255,255,255,0.8)' : 'var(--slate)'};">${m.time}</span>
+                  </div>
+                  <div style="font-size:13px; line-height:1.45;">${m.text}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Compose Bar -->
+          <div style="padding:14px 20px; border-top:1px solid var(--outline-variant); background:#ffffff;">
+            <div style="display:flex; gap:8px;">
+              <input 
+                type="text" 
+                id="support-chat-input" 
+                class="form-control" 
+                placeholder="Ask CSR agent about fee receipts, portal login, or class issues..." 
+                style="flex:1; padding:10px 14px; border-radius:8px; font-size:13px;"
+                onkeydown="if(event.key === 'Enter') { Actions.sendSupportChatMessage(); }"
+              >
+              <button class="btn btn-primary" onclick="Actions.sendSupportChatMessage()">
+                <i data-lucide="send"></i> Send
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT: HELPDESK AGENTS & QUICK ACTION CARDS -->
+        <aside style="display:flex; flex-direction:column; gap:16px;">
+          <!-- Active Agents Box -->
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <strong style="font-size:13px; color:var(--on-surface); display:block; margin-bottom:12px;">Active Specialized Desks</strong>
+            
+            <div style="display:flex; flex-direction:column; gap:10px; font-size:12px;">
+              <div style="background:var(--surface-container-low); padding:10px 12px; border-radius:8px; border:1px solid var(--outline-variant);">
+                <div style="display:flex; justify-content:space-between;">
+                  <strong>Bilal CSR</strong>
+                  <span style="color:#16a34a; font-weight:700;">● Online</span>
+                </div>
+                <span style="color:var(--slate); font-size:11px;">Admissions & Bank Deposit Slip Verification</span>
+              </div>
+
+              <div style="background:var(--surface-container-low); padding:10px 12px; border-radius:8px; border:1px solid var(--outline-variant);">
+                <div style="display:flex; justify-content:space-between;">
+                  <strong>Hassan Tech</strong>
+                  <span style="color:#16a34a; font-weight:700;">● Online</span>
+                </div>
+                <span style="color:var(--slate); font-size:11px;">Daily.co WebRTC & Browser Telemetry Desk</span>
+              </div>
+
+              <div style="background:var(--surface-container-low); padding:10px 12px; border-radius:8px; border:1px solid var(--outline-variant);">
+                <div style="display:flex; justify-content:space-between;">
+                  <strong>Amina Safe</strong>
+                  <span style="color:#16a34a; font-weight:700;">● Online</span>
+                </div>
+                <span style="color:var(--slate); font-size:11px;">Minor Safeguarding & Guardian Sync (K12-013)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct Links -->
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <strong style="font-size:13px; color:var(--on-surface); display:block; margin-bottom:10px;">Self-Service Actions</strong>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <button class="btn btn-secondary btn-sm" style="width:100%; text-align:left; justify-content:flex-start;" onclick="Router.navigate('learner-messages-cases')">
+                <i data-lucide="life-buoy"></i> Track My Support Cases (FLOW-024)
+              </button>
+              <button class="btn btn-secondary btn-sm" style="width:100%; text-align:left; justify-content:flex-start;" onclick="Actions.openLearnerPaymentUploadModal('CRS-103')">
+                <i data-lucide="upload-cloud"></i> Upload Bank Deposit Slip
+              </button>
+              <button class="btn btn-secondary btn-sm" style="width:100%; text-align:left; justify-content:flex-start;" onclick="Router.navigate('learner-schedule-reschedule')">
+                <i data-lucide="repeat"></i> Request Class Reschedule
+              </button>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    `;
+  },
+
+  // --------------------------------------------------------------------------
+  // 6. FORMAL SUPPORT CASES & ISSUE SUBMISSION DESK (MSG-005 - MSG-007 / FLOW-024)
+  // --------------------------------------------------------------------------
+  renderSupportCasesDesk() {
+    const data = db.learnerData || {};
+    const cases = data.supportDesk?.cases || [];
+
+    return `
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        
+        <!-- HEADER WITH NEW CASE CTA -->
+        <section style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px 26px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary">SUPPORT CASE WORKFLOW (FLOW-024)</span>
+              <span class="badge badge-secondary">Strict SLA Monitoring</span>
+            </div>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">Reported Issues & Support Cases</h2>
+            <p style="font-size:12.5px; color:var(--slate); margin:0;">
+              Submit technical complaints, fee disputes, attendance queries, or safeguarding issues with visible SLA tracking.
+            </p>
+          </div>
+
+          <button class="btn btn-primary" onclick="Actions.openSubmitSupportCaseModal()">
+            <i data-lucide="plus-circle"></i> Report New Issue / Create Ticket
+          </button>
+        </section>
+
+        <!-- KPI SUMMARY BAR -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;">
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Total Tickets</span>
+            <strong style="display:block; font-size:20px; color:var(--on-surface); margin-top:2px;">${cases.length}</strong>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:#0284c7; text-transform:uppercase;">Under Investigation</span>
+            <strong style="display:block; font-size:20px; color:#0284c7; margin-top:2px;">${cases.filter(c => c.status === 'In Review' || c.status === 'Open').length}</strong>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:#16a34a; text-transform:uppercase;">Resolved Tickets</span>
+            <strong style="display:block; font-size:20px; color:#16a34a; margin-top:2px;">${cases.filter(c => c.status === 'Resolved').length}</strong>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Closed / Archived</span>
+            <strong style="display:block; font-size:20px; color:var(--slate); margin-top:2px;">${cases.filter(c => c.status === 'Closed').length}</strong>
+          </div>
+        </div>
+
+        <!-- TICKETS GRID -->
+        <div class="support-cases-grid">
+          ${cases.map(c => {
+            const isResolved = c.status === "Resolved";
+            const isInReview = c.status === "In Review";
+            return `
+              <div class="support-case-card">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <span class="badge ${c.priority === 'High' ? 'badge-danger' : (c.priority === 'Urgent' ? 'badge-danger' : 'badge-primary')}" style="font-size:9.5px; font-weight:800;">
+                      ${c.priority.toUpperCase()} PRIORITY
+                    </span>
+                    <span class="badge ${isResolved ? 'badge-success' : (isInReview ? 'badge-warning' : 'badge-secondary')}" style="font-size:9.5px;">
+                      ${c.status.toUpperCase()}
+                    </span>
+                  </div>
+
+                  <strong style="font-size:14.5px; color:var(--on-surface); display:block; margin-bottom:4px;">${c.id}: ${c.title}</strong>
+                  <span style="font-size:11.5px; color:var(--primary); font-weight:700; display:block; margin-bottom:8px;">${c.category}</span>
+                  <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0; line-height:1.45;">${c.description}</p>
+                </div>
+
+                <div>
+                  <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:6px; padding:8px 10px; font-size:11px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+                      <span>Assigned Agent:</span>
+                      <strong>${c.assignedTo}</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; color:${isInReview ? '#b45309' : 'var(--slate)'};">
+                      <span>SLA Status:</span>
+                      <strong>${c.slaRemaining}</strong>
+                    </div>
+                  </div>
+
+                  <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="Actions.openSupportCaseDetailModal('${c.id}')">
+                    <i data-lucide="message-square"></i> View Case Log & Replies (${c.messages?.length || 0})
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+      </div>
+    `;
+  },
+
+  render(route) {
+    const activeCourse = this.getActiveCourse();
+    if (activeCourse.deliveryModel && activeCourse.deliveryModel.includes("Live")) {
+      return this.renderLiveCohortWorkspace(route, activeCourse);
+    } else if (activeCourse.deliveryModel && activeCourse.deliveryModel.includes("K-12")) {
+      return this.renderK12Workspace(route, activeCourse);
+    } else {
+      return this.renderMilestoneWorkspace(route, activeCourse);
+    }
+  }
+};
+
+window.LearnerPreviewEngine = {
+  previewState: {
+    selectedCourseId: "CRS-101",
+    activeFormat: "guide",
+    calcA: 1,
+    calcB: -5,
+    calcC: 6,
+    calcResult: null
+  },
+
+  renderFullCoursePreviewSuite(courseId) {
+    if (courseId) this.previewState.selectedCourseId = courseId;
+    const activeCourseId = this.previewState.selectedCourseId || "CRS-101";
+
+    if (db.learnerData && db.learnerData.profile) {
+      db.learnerData.profile.activeCourseId = activeCourseId;
+    }
+
+    const courses = db.learnerData?.activeCourses || [
+      { id: "CRS-101", code: "DEV-101", title: "Modern Full-Stack Web Development", deliveryModel: "Milestone Self-Paced", progressPercent: 75, grade: "A (92%)", badge: "Milestone Track", faculty: "Prof. Alex Rivera" },
+      { id: "CRS-103", code: "ENG-103", title: "Spoken English Fluency & Executive Cadence", deliveryModel: "Live Cohort", progressPercent: 78, grade: "A (94%)", badge: "Live Cohort", faculty: "Sara Javed" },
+      { id: "CRS-105", code: "K12-801", title: "Grade 8 Mathematics & Board Exam Mastery", deliveryModel: "K-12 Board Tuition", progressPercent: 95, grade: "A+ (98%)", badge: "K-12 Board Tuition", faculty: "Prof. Tariq Hassan" }
+    ];
+
+    const currentCourse = courses.find(c => c.id === activeCourseId) || courses[0];
+
+    return `
+      <div class="learner-preview-suite-wrap">
+        
+        <!-- 1. ACADEMIC PRESTIGE PREVIEW HERO BANNER -->
+        <header class="learner-course-header" style="background:#ffffff; border:1px solid var(--outline-variant); border-top:3px solid var(--primary); border-radius:12px; padding:22px 26px; margin-bottom:20px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
+            <div style="flex:1; min-width:300px;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap;">
+                <span class="badge badge-primary" style="font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">
+                  INTERACTIVE FREE COURSE PREVIEW
+                </span>
+                <span class="badge badge-secondary" style="font-size:10.5px; font-weight:700;">
+                  ${(currentCourse.deliveryModel || 'MILESTONE').toUpperCase()}
+                </span>
+                <span class="badge badge-success" style="font-size:10.5px;">
+                  ● FULL WORKING WORKSPACE
+                </span>
+              </div>
+              <h2 style="font:800 22px/1.25 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">
+                ${currentCourse.title}
+              </h2>
+              <p style="font-size:12.5px; color:var(--slate); margin:0;">
+                Explore complete milestone lessons, live WebRTC simulations, interactive past papers, and formula solvers in full preview mode.
+              </p>
+            </div>
+
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerTrialRequestModal()">
+                <i data-lucide="sparkles"></i> Request Free Trial (FLOW-006)
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('${currentCourse.id}')">
+                <i data-lucide="upload-cloud"></i> Enrol / Deposit Slip
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. COURSE TYPE SELECTION TAB BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--outline-variant); padding-top:14px; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:11.5px; font-weight:800; color:var(--secondary); text-transform:uppercase; letter-spacing:0.5px;">
+                Select Course Preview:
+              </span>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              ${courses.map(c => {
+                const isSelected = c.id === activeCourseId;
+                const icon = c.deliveryModel.includes("Live") ? "presentation" : (c.deliveryModel.includes("K-12") ? "school" : "milestone");
+                return `
+                  <button 
+                    class="btn ${isSelected ? 'btn-primary' : 'btn-secondary'} btn-sm"
+                    style="display:inline-flex; align-items:center; gap:8px; padding:8px 14px; font-size:12.5px; font-weight:700; border-radius:8px;"
+                    onclick="Actions.switchPreviewCourse('${c.id}')"
+                  >
+                    <i data-lucide="${icon}" style="width:14px; height:14px;"></i>
+                    <span>${c.code || c.id}: ${c.title.split(' ')[0]} ${c.title.split(' ')[1] || ''}</span>
+                    <span class="badge" style="background:${isSelected ? 'rgba(255,255,255,0.25)' : 'var(--surface-container-high)'}; color:${isSelected ? '#ffffff' : 'var(--on-surface)'}; font-size:9.5px; padding:2px 6px;">
+                      ${c.deliveryModel}
+                    </span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </header>
+
+        <!-- 3. FULL BESPOKE WORKSPACE EMBEDDED IN PREVIEW -->
+        ${
+          activeCourseId === "CRS-101"
+            ? LearnerCurriculum.renderMilestoneWorkspace("learner-learning-continue", currentCourse)
+            : (activeCourseId === "CRS-103"
+                ? LearnerCurriculum.renderLiveCohortWorkspace("learner-learning-continue", currentCourse)
+                : LearnerCurriculum.renderK12Workspace("learner-k12-subjects", currentCourse))
+        }
+
+      </div>
+    `;
+  }
+};
+
 const learnerRouteDefinitions = {
   "learner-dashboard": { title: "Learner Home", scope: "All Courses Overview · Multi-Course Personal Portal (DSH-002/DSH-003)", section: "LEARNER HOME", icon: "layout-dashboard" },
   
@@ -2848,12 +5304,12 @@ const learnerRouteDefinitions = {
   "learner-schedule-reschedule": { title: "Reschedule Requests (FLOW-017)", scope: "Submit & Track Class Reschedule Requests", section: "SCHEDULE", icon: "repeat", dataType: "schedule" },
   "learner-schedule-cancellations": { title: "Cancelled & Makeup Occurrences", scope: "Linked Makeup Class Sessions & Entitlement Credits", section: "SCHEDULE", icon: "x-circle", dataType: "schedule" },
 
-  "learner-learning-continue": { title: "Continue Learning", scope: "Resume Next Active Lesson & Activity", section: "MY LEARNING", icon: "play", dataType: "milestones" },
-  "learner-learning-milestones": { title: "Levels & Milestones Roadmap", scope: "Milestone Trajectory with Prerequisite & Unlock Rules", section: "MY LEARNING", icon: "milestone", dataType: "milestones" },
-  "learner-learning-lessons": { title: "Course Lessons", scope: "Interactive Lesson Units & Theoretical Modules", section: "MY LEARNING", icon: "book-open", dataType: "milestones" },
-  "learner-learning-activities": { title: "Learning Activities", scope: "Coding Sandboxes, Audio Speech Drills & Practice Problems", section: "MY LEARNING", icon: "layers", dataType: "milestones" },
-  "learner-learning-progress": { title: "Academic Progress Matrix", scope: "Module Progression & Milestone Velocity", section: "MY LEARNING", icon: "trending-up", dataType: "milestones" },
-  "learner-learning-completion": { title: "Certificate Eligibility", scope: "Verified Course Completion Criteria & Credential Status", section: "MY LEARNING", icon: "award", dataType: "enrolments" },
+  "learner-learning-continue": { title: "Continue Learning", scope: "Resume the next required activity in your published course version", section: "MY LEARNING", icon: "play", dataType: "milestones" },
+  "learner-learning-milestones": { title: "Learning Path", scope: "Course Version > Level > Milestone > Lesson > Activity", section: "MY LEARNING", icon: "workflow", dataType: "milestones" },
+  "learner-learning-lessons": { title: "Learning Path", scope: "Lessons are shown inside their milestone and level context", section: "MY LEARNING", icon: "workflow", dataType: "milestones" },
+  "learner-learning-activities": { title: "Course Activity", scope: "Complete the selected activity inside its full curriculum context", section: "MY LEARNING", icon: "panel-right-open", dataType: "milestones" },
+  "learner-learning-progress": { title: "Progress & Completion", scope: "Source-backed progress events, remaining work and certificate rules", section: "MY LEARNING", icon: "trending-up", dataType: "milestones" },
+  "learner-learning-completion": { title: "Progress & Completion", scope: "Certificate eligibility remains separate from access expiry", section: "MY LEARNING", icon: "award", dataType: "milestones" },
 
   "learner-work-due": { title: "Due Work & Tasks", scope: "Upcoming Homework, Quizzes & Assignments Requiring Submission", section: "MY WORK", icon: "alert-circle", filter: w => w.status === "Due", dataType: "myWork" },
   "learner-work-quizzes": { title: "Interactive Quizzes (FLOW-019)", scope: "Formative Quizzes with Auto-Scoring & Manual Item Reviews", section: "MY WORK", icon: "help-circle", filter: w => w.type.includes("Quiz"), dataType: "myWork" },
@@ -2901,7 +5357,47 @@ const learnerRouteDefinitions = {
   "learner-profile-contact": { title: "Contact & Notification Preferences", scope: "Verified Email, Phone & Notification Channels", section: "PROFILE", icon: "mail", dataType: "profile" },
   "learner-profile-verification": { title: "Account Verification Status", scope: "Identity & Academic Verification Credentials", section: "PROFILE", icon: "shield-check", dataType: "profile" },
   "learner-profile-guardian": { title: "Guardian Relationship & Consent", scope: "Authorized Payer & Minor Safeguarding Verification", section: "PROFILE", icon: "users", dataType: "profile" },
-  "learner-profile-history": { title: "Profile Audit History", scope: "Immutable Log of Profile Updates & Verifications", section: "PROFILE", icon: "scroll", dataType: "profile" }
+};
+
+const learnerRouteParentMap = {
+  "learner-explore-free": "nav-learner-explore-catalogue",
+  "learner-explore-trial": "nav-learner-explore-catalogue",
+  "learner-courses-pending": "nav-learner-courses-active",
+  "learner-courses-paused": "nav-learner-courses-active",
+  "learner-courses-completed": "nav-learner-courses-active",
+  "learner-courses-history": "nav-learner-courses-active",
+  "learner-learning-milestones": "nav-learner-learning-continue",
+  "learner-learning-lessons": "nav-learner-learning-continue",
+  "learner-learning-activities": "nav-learner-learning-continue",
+  "learner-learning-progress": "nav-learner-learning-continue",
+  "learner-learning-completion": "nav-learner-learning-continue",
+  "learner-schedule-reschedule": "nav-learner-schedule-upcoming",
+  "learner-schedule-cancellations": "nav-learner-schedule-upcoming",
+  "learner-work-assignments": "nav-learner-work-due",
+  "learner-work-homework": "nav-learner-work-due",
+  "learner-work-voice": "nav-learner-work-quizzes",
+  "learner-work-revisions": "nav-learner-work-due",
+  "learner-work-overdue": "nav-learner-work-due",
+  "learner-grades-results": "nav-learner-grades-gradebook",
+  "learner-grades-history": "nav-learner-grades-gradebook",
+  "learner-k12-syllabus": "nav-learner-k12-subjects",
+  "learner-k12-schedule": "nav-learner-k12-subjects",
+  "learner-k12-homework": "nav-learner-k12-subjects",
+  "learner-k12-grades": "nav-learner-k12-subjects",
+  "learner-k12-reportcards": "nav-learner-k12-subjects",
+  "learner-resources-class": "nav-learner-resources-course",
+  "learner-resources-lesson": "nav-learner-resources-course",
+  "learner-resources-assigned": "nav-learner-resources-course",
+  "learner-notes-all": "nav-learner-resources-course",
+  "learner-payments-renew": "nav-learner-payments-memberships",
+  "learner-payments-submissions": "nav-learner-payments-memberships",
+  "learner-payments-status": "nav-learner-payments-memberships",
+  "learner-payments-corrections": "nav-learner-payments-memberships",
+  "learner-payments-receipts": "nav-learner-payments-memberships",
+  "learner-messages-support": "nav-learner-messages-support",
+  "learner-messages-cases": "nav-learner-messages-cases",
+  "learner-messages-announcements": "nav-learner-messages-announcements",
+  "learner-notifications": "nav-learner-dashboard"
 };
 
 const trainerRouteDefinitions = {
@@ -4065,6 +6561,10 @@ const Router = {
       else activeNavItem = document.getElementById("nav-dashboard");
     } else {
       activeNavItem = document.getElementById(`nav-${route}`);
+      if (!activeNavItem && Simulator.activeRole === "learner" && typeof learnerRouteParentMap !== "undefined") {
+        const parentNavId = learnerRouteParentMap[route];
+        if (parentNavId) activeNavItem = document.getElementById(parentNavId);
+      }
     }
     if (activeNavItem) {
       activeNavItem.classList.add("active");
@@ -4187,6 +6687,13 @@ const Router = {
     
     switch (route) {
       case "dashboard":
+      case "learner-dashboard":
+      case "trainer-dashboard":
+      case "reviewer-dashboard":
+      case "creator-dashboard":
+      case "csr-dashboard":
+      case "coo-dashboard":
+      case "om-dashboard":
         RenderEngine.dashboard();
         break;
       case "users":
@@ -4312,8 +6819,28 @@ const RenderEngine = {
   // PLATFORM ADMIN BUSINESS DASHBOARD (ENTERPRISE COMMAND GRID)
   // ============================================================================
   adminDashboard() {
-    const viewDashboard = document.getElementById("view-dashboard");
-    if (!viewDashboard) return;
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["learner-dashboard-shell", "coo-dashboard-shell", "csr-dashboard-shell", "om-dashboard-shell", "creator-dashboard-shell", "reviewer-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let platformShell = document.getElementById("platform-dashboard-shell");
+    if (!platformShell && viewDashboard) {
+      platformShell = document.createElement("div");
+      platformShell.id = "platform-dashboard-shell";
+      viewDashboard.prepend(platformShell);
+    }
+    if (!platformShell) platformShell = viewDashboard;
+    if (!platformShell) return;
+    platformShell.classList.remove("hidden");
+    platformShell.style.display = "block";
 
     const data = db.adminData || {
       kpis: {
@@ -4369,7 +6896,7 @@ const RenderEngine = {
 
     const k = data.kpis;
 
-    viewDashboard.innerHTML = `
+    platformShell.innerHTML = `
       <div class="creator-workspace-deck" style="padding: 24px 32px; display:flex; flex-direction:column; gap:24px;">
         
         <!-- HEADER ROW -->
@@ -5287,10 +7814,6 @@ const RenderEngine = {
 
   
   dashboard() {
-    if (Simulator.activeRole === "platform_admin") {
-      this.adminDashboard();
-      return;
-    }
     if (Simulator.activeRole === "learner") {
       this.learnerDashboard();
       return;
@@ -5319,11 +7842,76 @@ const RenderEngine = {
       this.omDashboard();
       return;
     }
+    this.adminDashboard();
+  },
+
+  cooDashboard() {
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "learner-dashboard-shell", "csr-dashboard-shell", "om-dashboard-shell", "creator-dashboard-shell", "reviewer-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let shell = document.getElementById("coo-dashboard-shell");
+    if (shell) {
+      shell.classList.remove("hidden");
+      shell.style.display = "block";
+    }
+    if (typeof updateCooDashboardCounts === "function") updateCooDashboardCounts();
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  omDashboard() {
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "coo-dashboard-shell", "csr-dashboard-shell", "learner-dashboard-shell", "creator-dashboard-shell", "reviewer-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let shell = document.getElementById("om-dashboard-shell");
+    if (shell) {
+      shell.classList.remove("hidden");
+      shell.style.display = "block";
+    }
+    if (typeof updateOmBadges === "function") updateOmBadges();
+    if (window.lucide) window.lucide.createIcons();
   },
 
   reviewerDashboard() {
-    const container = document.getElementById("reviewer-dashboard-shell");
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "coo-dashboard-shell", "csr-dashboard-shell", "om-dashboard-shell", "creator-dashboard-shell", "learner-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let container = document.getElementById("reviewer-dashboard-shell");
+    if (!container && viewDashboard) {
+      container = document.createElement("div");
+      container.id = "reviewer-dashboard-shell";
+      viewDashboard.appendChild(container);
+    }
+    if (!container) container = viewDashboard;
     if (!container) return;
+    container.classList.remove("hidden");
+    container.style.display = "block";
 
     const pipelineStages = [
       { code: "01. INTAKE", title: "Awaiting Review", desc: "Submitted course versions requiring initial academic evaluation.", count: "1 Version", statusText: "1 Awaiting Audit", icon: "inbox", route: "reviewer-courses-awaiting", badgeClass: "badge-warning" },
@@ -5996,209 +8584,662 @@ const RenderEngine = {
   },
 
   // ============================================================================
-  // TRAINER / TEACHER DASHBOARD (DSH-005)
+  // TRAINER / TEACHER DASHBOARD (DSH-005) - ACADEMIC PRESTIGE DELIVERY COMMAND
   // ============================================================================
-  
-  // ============================================================================
-  // TRAINER / TEACHER DASHBOARD (DSH-005) - PREMIUM SPACIOUS DESIGN
-  // ============================================================================
+  trainerDashboard() {
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "coo-dashboard-shell", "csr-dashboard-shell", "om-dashboard-shell", "creator-dashboard-shell", "reviewer-dashboard-shell", "learner-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let shell = document.getElementById("trainer-dashboard-shell");
+    if (!shell && viewDashboard) {
+      shell = document.createElement("div");
+      shell.id = "trainer-dashboard-shell";
+      viewDashboard.appendChild(shell);
+    }
+    if (!shell) shell = viewDashboard;
+    if (!shell) return;
+    shell.classList.remove("hidden");
+    shell.style.display = "block";
+
+    const data = db.trainerData;
+    const todayClasses = data.classes.filter(c => c.status === "Today");
+    const reportsDue = (data.reports || []).filter(r => r.status === "Draft" || r.status === "Pending Delivery");
+    const urgentGrading = (data.gradingQueue || []).filter(g => g.status === "Pending Grading");
+    const riskLearners = (data.learners || []).filter(l => l.riskFlag);
+
+    shell.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
+        <!-- HERO BANNER -->
+        <div class="creator-flight-strip" style="background:#ffffff; border:1px solid var(--outline-variant); border-top:3px solid var(--primary); border-radius:12px; padding:22px 26px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary" style="font-size:10.5px; font-weight:800;">TEACHING & LEARNING DELIVERY</span>
+              <span class="badge badge-success">● LIVE SESSION WINDOW ACTIVE</span>
+            </div>
+            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">Teaching Command Center — Sara Javed</h2>
+            <p style="font-size:12.5px; color:var(--slate); margin:0;">
+              Manage today's live class schedules, launch Daily.co video rooms, record post-class educational notes, and grade student submissions.
+            </p>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('trainer-reports-due')">
+              <i data-lucide="file-text"></i> Post-Class Reports (${reportsDue.length})
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('trainer-grading-queue')">
+              <i data-lucide="check-square"></i> Grading Queue (${urgentGrading.length})
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerJoinClassModal('CLS-101')">
+              <i data-lucide="video"></i> Enter Live Room (Daily.co) &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 KPIS -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;">
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Classes Today</div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:var(--on-surface); margin:4px 0 0 0;">${todayClasses.length} Sessions</h3>
+            <small style="font-size:11px; color:var(--primary); font-weight:600;">Daily.co WebRTC Ready</small>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Post-Class Reports</div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:#b45309; margin:4px 0 0 0;">${reportsDue.length} Due</h3>
+            <small style="font-size:11px; color:var(--slate);">FLOW-016 Educational Notes</small>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Pending Grading</div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">${urgentGrading.length} Submissions</h3>
+            <small style="font-size:11px; color:var(--slate);">Rubric Evaluation (FLOW-020)</small>
+          </div>
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
+            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner Risks</div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:#dc2626; margin:4px 0 0 0;">${riskLearners.length} Flagged</h3>
+            <small style="font-size:11px; color:#dc2626; font-weight:600;">Low Attendance / Tech Triage</small>
+          </div>
+        </div>
+
+        <!-- TODAY'S SCHEDULE & TRIAGE DECK -->
+        <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:20px;">
+          <!-- CLASSES LIST -->
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Today's Live Delivery Schedule</h3>
+              <button class="link-btn" style="font-size:12px;" onclick="Router.navigate('trainer-classes-today')">View Full Schedule &rarr;</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              ${data.classes.slice(0, 3).map(cls => `
+                <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                      <span class="badge ${cls.joinable ? 'badge-success' : 'badge-secondary'}" style="font-size:9.5px;">${cls.joinable ? '● READY TO LAUNCH' : cls.status}</span>
+                      <strong style="font-size:13px; color:var(--on-surface);">${cls.courseTitle}</strong>
+                    </div>
+                    <span style="font-size:11.5px; color:var(--slate);">${cls.date} · ${cls.slotTime} · <strong>${cls.learnersCount} Learners</strong></span>
+                  </div>
+                  <div style="display:flex; gap:8px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerReportModal('${cls.id}')">Report</button>
+                    <button class="btn ${cls.joinable ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')">
+                      <i data-lucide="video"></i> Launch
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- URGENT SUBMISSIONS -->
+          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Urgent Grading Triage</h3>
+              <button class="link-btn" style="font-size:12px;" onclick="Router.navigate('trainer-grading-queue')">View All (${(data.gradingQueue || []).length}) &rarr;</button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${(data.gradingQueue || []).slice(0, 3).map(g => `
+                <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <strong style="font-size:12px; color:var(--on-surface); display:block;">${g.learnerName}</strong>
+                    <span style="font-size:11px; color:var(--slate);">${g.assignmentTitle} · Due ${g.submittedAt}</span>
+                  </div>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerGradingModal('${g.id}')">Grade &rarr;</button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+  },
   
   // ============================================================================
   // STUDENT / LEARNER DASHBOARD (DSH-002 / DSH-003) - ALL COURSES PORTAL
   // ============================================================================
   learnerDashboard() {
-    const shell = document.getElementById("view-dashboard");
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "coo-dashboard-shell", "csr-dashboard-shell", "om-dashboard-shell", "creator-dashboard-shell", "reviewer-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let shell = document.getElementById("learner-dashboard-shell");
+    if (!shell && viewDashboard) {
+      shell = document.createElement("div");
+      shell.id = "learner-dashboard-shell";
+      viewDashboard.appendChild(shell);
+    }
+    if (!shell) shell = viewDashboard;
     if (!shell) return;
+    shell.classList.remove("hidden");
+    shell.style.display = "block";
 
-    const data = db.learnerData;
-    const profile = data.profile;
+    try {
+      if (window.Actions?.recalculateLearnerCurriculum) Actions.recalculateLearnerCurriculum();
+    } catch (e) {
+      console.warn("recalculateLearnerCurriculum failed:", e);
+    }
+    try {
+      LearnerCurriculum.syncSidebarCounts();
+    } catch (e) {
+      console.warn("syncSidebarCounts failed:", e);
+    }
+
+    const data = db.learnerData || {};
+    const profile = data.profile || { id: "LNR-501", name: "Zainab Malik", timezone: "Asia/Karachi (PKT - UTC+5)" };
     const activeCourseId = profile.activeCourseId || "CRS-103";
-    const currentCourse = data.activeCourses.find(c => c.id === activeCourseId) || data.activeCourses[0];
-    const nextClass = data.schedule.find(s => s.courseCode === currentCourse.code) || data.schedule[0];
-    const dueWork = data.myWork.filter(w => w.status === "Due" || w.status.includes("Revision"));
+    const activeCourses = data.activeCourses || [];
+    const currentCourse = activeCourses.find(c => c.id === activeCourseId) || activeCourses[0] || {
+      id: "CRS-103", code: "ENG-103", title: "Spoken English Fluency", deliveryModel: "Live Cohort",
+      progressPercent: 78, grade: "A (92%)", trainer: "Sara Javed", trainerRole: "Senior Trainer",
+      entitlement: "2 class credits remaining", currentMilestone: "Milestone 3: Advanced Conversational Fluency",
+      currentLesson: "Lesson 3.2: Workplace Pitch & Tone Control", badge: "Live Cohort"
+    };
+    const schedule = data.schedule || [];
+    const nextClass = schedule.find(s => s.courseCode === currentCourse.code) || schedule[0] || {
+      id: "CLS-101", title: "Spoken English Fluency – Acoustic Intonation Drill",
+      date: "Today, 18 Aug 2026", time: "10:00 AM – 11:00 AM PKT", duration: "60 mins",
+      trainer: "Sara Javed", topics: "Intonation patterns, pitch variance, oral reading practice",
+      participants: "8 Learners Enrolled", joinable: true
+    };
+    const dueWork = (data.myWork || []).filter(w => w.status === "Due" || (w.status && w.status.includes("Revision")));
 
     shell.innerHTML = `
-      <!-- LEARNER MULTI-COURSE DASHBOARD HERO (DSH-002 / DSH-003) -->
-      <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px 28px; margin-bottom:24px; box-shadow:var(--shadow-subtle);">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
-          <div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-              <span class="badge badge-primary">ACTIVE LEARNER PORTAL</span>
-              <span style="font-size:12px; color:var(--slate);">ID: <strong>${profile.id}</strong> · ${profile.timezone}</span>
+      <div class="learner-dashboard-wrap">
+        <!-- 1. ACADEMIC PRESTIGE MASTER HERO BANNER (DSH-002 / DSH-003) -->
+        <div class="learner-hero-card">
+          <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+            <div style="width:54px; height:54px; border-radius:50%; background:var(--primary-container); border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; color:var(--primary); font:800 20px 'Manrope', sans-serif; box-shadow:0 2px 8px rgba(110,94,6,0.15);">
+              ZM
             </div>
-            <h2 style="font:800 24px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">Welcome back, ${profile.name}!</h2>
-            <p style="font-size:13px; color:var(--slate); margin:0;">
-              Enrolled in <strong>${data.activeCourses.length} Active Courses</strong> across Live Cohorts, Milestone Self-Paced, and K-12 Tuition.
-            </p>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+                <span class="badge badge-primary" style="font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px;">ACTIVE LEARNER PORTAL</span>
+                <span style="font-size:12px; color:var(--slate); font-weight:600;">ID: <strong style="color:var(--on-surface);">${profile.id}</strong></span>
+                <span style="font-size:12px; color:var(--slate);">·</span>
+                <span style="font-size:12px; color:var(--slate);"><i data-lucide="globe" style="width:12px; height:12px; vertical-align:middle;"></i> ${profile.timezone}</span>
+                <span style="font-size:12px; color:var(--slate);">·</span>
+                <span class="badge badge-secondary" style="font-size:10px;">Spring Term 2026</span>
+              </div>
+              <h2 style="font:800 24px/1.2 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">Welcome back, ${profile.name}!</h2>
+              <p style="font-size:13px; color:var(--slate); margin:0;">
+                You are enrolled in <strong>${data.activeCourses.length} Academic Tracks</strong> across Live Cohort, Milestone Self-Paced, and K-12 Board Tuition.
+              </p>
+            </div>
           </div>
 
           <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerNoteModal()"><i data-lucide="edit-3"></i> Quick Note</button>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('${currentCourse.id}')"><i data-lucide="upload-cloud"></i> Upload Deposit Slip</button>
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-explore-catalogue')">
+              <i data-lucide="compass"></i> Explore Catalogue
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openLearnerPaymentUploadModal('${currentCourse.id}')">
+              <i data-lucide="upload-cloud"></i> Deposit Slip
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.resumeLearnerCurriculum()">
+              <i data-lucide="play"></i> Resume Lesson
+            </button>
           </div>
         </div>
 
-        <!-- MULTI-COURSE SWITCHER PILLS (ENR-001 / DSH-002) -->
-        <div style="margin-top:20px; padding-top:16px; border-top:1px solid #f1f5f9;">
-          <span style="font-size:11px; font-weight:800; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:10px;">Select Active Course Context:</span>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            ${data.activeCourses.map(c => `
-              <button 
-                class="btn ${c.id === activeCourseId ? 'btn-primary' : 'btn-secondary'}" 
-                style="display:flex; align-items:center; gap:8px; padding:8px 14px; font-size:12px; border-radius:8px;"
-                onclick="Actions.switchLearnerCourse('${c.id}')"
-              >
-                <i data-lucide="${c.deliveryModel.includes('Live') ? 'presentation' : (c.deliveryModel.includes('Milestone') ? 'milestone' : 'school')}"></i>
-                <span><strong>${c.code}</strong>: ${c.title}</span>
-                <span class="badge" style="background:${c.id === activeCourseId ? 'rgba(255,255,255,0.25)' : '#eee7dd'}; color:${c.id === activeCourseId ? '#ffffff' : 'var(--navy-dark)'};">${c.badge}</span>
-              </button>
-            `).join('')}
-          </div>
-        </div>
-      </div>
-
-      <!-- ACTIVE COURSE HERO & NEXT LIVE OCCURRENCE GRID -->
-      <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:20px; margin-bottom:24px;">
-        
-        <!-- LEFT: ACTIVE COURSE PROGRESS & NEXT LESSON (MILE-001 / CAT-006) -->
-        <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow-subtle);">
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span class="badge badge-primary">${currentCourse.deliveryModel.toUpperCase()}</span>
-              <span style="font-size:12px; font-weight:700; color:var(--secondary);">Current Grade: ${currentCourse.grade}</span>
+        <!-- 2. TOP 4 KEY ACADEMIC KPI METRICS -->
+        <div class="learner-kpi-grid">
+          <div class="learner-kpi-card">
+            <div class="learner-kpi-top">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px;">Active Tracks</span>
+              <div class="learner-kpi-icon-box"><i data-lucide="graduation-cap" style="width:18px; height:18px;"></i></div>
             </div>
-            <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${currentCourse.title}</h3>
-            <p style="font-size:13px; color:var(--slate); margin:0 0 14px 0;">Assigned Faculty: <strong>${currentCourse.trainer}</strong> (${currentCourse.trainerRole})</p>
-            
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:14px;">
-              <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
-                <span style="color:var(--slate);">Curriculum Completion</span>
-                <strong style="color:var(--navy-dark);">${currentCourse.progressPercent}% Completed</strong>
-              </div>
-              <div style="width:100%; height:8px; background:#e2e8f0; border-radius:4px; overflow:hidden;">
-                <div style="width:${currentCourse.progressPercent}%; height:100%; background:linear-gradient(90deg, var(--primary), var(--secondary)); border-radius:4px;"></div>
-              </div>
-              <div style="margin-top:10px; font-size:12px; color:var(--navy-dark);">
-                <span style="color:var(--slate); display:block; font-size:11px;">CURRENT MILESTONE & TOPIC</span>
-                <strong>${currentCourse.currentMilestone}</strong> &rarr; ${currentCourse.currentLesson}
-              </div>
-            </div>
+            <div class="learner-kpi-val">${data.activeCourses.length} Programs</div>
+            <div class="learner-kpi-desc">1 Live · 1 Milestone · 1 K-12</div>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-            <span style="font-size:12px; color:var(--slate);"><i data-lucide="ticket-check" style="width:14px; height:14px; vertical-align:middle;"></i> Entitlement: <strong>${currentCourse.entitlement}</strong></span>
-            <button class="btn btn-primary btn-sm" onclick="Router.navigate('learner-learning-continue')"><i data-lucide="play"></i> Resume Activity</button>
+          <div class="learner-kpi-card">
+            <div class="learner-kpi-top">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px;">Live Attendance</span>
+              <div class="learner-kpi-icon-box"><i data-lucide="user-check" style="width:18px; height:18px;"></i></div>
+            </div>
+            <div class="learner-kpi-val">94.2% Verified</div>
+            <div class="learner-kpi-desc">16 of 17 Sessions · 0 Unexcused</div>
+          </div>
+
+          <div class="learner-kpi-card">
+            <div class="learner-kpi-top">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px;">Cumulative Grade</span>
+              <div class="learner-kpi-icon-box"><i data-lucide="award" style="width:18px; height:18px;"></i></div>
+            </div>
+            <div class="learner-kpi-val">3.88 / 4.00 (A+)</div>
+            <div class="learner-kpi-desc">Top 5% Cohort Percentile</div>
+          </div>
+
+          <div class="learner-kpi-card">
+            <div class="learner-kpi-top">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase; letter-spacing:0.5px;">Action Items</span>
+              <div class="learner-kpi-icon-box" style="color:#b45309;"><i data-lucide="clipboard-list" style="width:18px; height:18px;"></i></div>
+            </div>
+            <div class="learner-kpi-val">${dueWork.length} Tasks Due</div>
+            <div class="learner-kpi-desc">Voice Drill (Tomorrow) · Lab (Fri)</div>
           </div>
         </div>
 
-        <!-- RIGHT: NEXT LIVE CLASS & WEBRTC LAUNCHER (LIVE-006 / LIVE-007) -->
-        <div class="stat-card" style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow-subtle);">
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-              <span class="badge ${nextClass.joinable ? 'badge-primary' : 'badge-secondary'}">${nextClass.joinable ? 'READY TO JOIN' : 'SCHEDULED OCCURRENCE'}</span>
-              <span style="font-size:12px; color:var(--slate);">${nextClass.duration}</span>
-            </div>
-            <h4 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 6px 0;">${nextClass.title}</h4>
-            <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;"><i data-lucide="clock" style="width:13px; height:13px; vertical-align:middle;"></i> ${nextClass.date} · <strong>${nextClass.time}</strong></p>
-            
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:4px; margin-bottom:12px;">
-              <div><span style="color:var(--slate);">Trainer:</span> <strong>${nextClass.trainer}</strong></div>
-              <div><span style="color:var(--slate);">Topics:</span> ${nextClass.topics}</div>
-              <div><span style="color:var(--slate);">Roster:</span> ${nextClass.participants}</div>
-            </div>
+        <!-- 3. MULTI-COURSE CONTEXT SELECTOR (ENR-001 / DSH-002) -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-size:12px; font-weight:800; color:var(--on-surface); text-transform:uppercase; letter-spacing:0.5px;">
+              Active Enrolment Context (Select to Switch Study Track):
+            </span>
+            <span style="font-size:12px; color:var(--slate);">
+              Currently focused on: <strong style="color:var(--primary);">${currentCourse.code}</strong>
+            </span>
           </div>
-
-          <div style="padding-top:12px; border-top:1px solid #f1f5f9; display:flex; gap:10px;">
-            ${nextClass.joinable ? `
-              <button class="btn btn-primary" style="flex:1;" onclick="Actions.openLearnerJoinClassModal('${nextClass.id}')">
-                <i data-lucide="video"></i> Join Live Class (Daily.co)
-              </button>
-            ` : `
-              <button class="btn btn-secondary" style="flex:1;" onclick="Actions.openLearnerRescheduleModal('${nextClass.id}')">
-                <i data-lucide="calendar"></i> Request Reschedule
-              </button>
-            `}
-            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-schedule-upcoming')">View All</button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- BOTTOM 2-COLUMN SECTION: DUE TASKS & RECENT FEEDBACK -->
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:24px;">
-        
-        <!-- DUE SUBMISSIONS & HOMEWORK QUEUE (ASM-001 / FLOW-020) -->
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <i data-lucide="clipboard-list" style="color:var(--primary);"></i>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Action Required: Due Work & Tasks</h3>
-            </div>
-            <span class="badge badge-warning">${dueWork.length} Pending</span>
-          </div>
-
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            ${dueWork.map(w => `
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                    <span class="badge badge-secondary" style="font-size:10px;">${w.courseCode}</span>
-                    <span class="badge ${w.status.includes('Revision') ? 'badge-error' : 'badge-warning'}" style="font-size:10px;">${w.status}</span>
+          <div class="learner-course-switcher-bar">
+            ${data.activeCourses.map(c => {
+              const isSelected = c.id === activeCourseId;
+              const icon = c.deliveryModel.includes('Live') ? 'presentation' : (c.deliveryModel.includes('Milestone') ? 'milestone' : 'school');
+              return `
+                <div 
+                  class="learner-course-chip ${isSelected ? 'active' : ''}" 
+                  onclick="Actions.switchLearnerCourse('${c.id}')"
+                >
+                  <div style="width:36px; height:36px; border-radius:8px; background:${isSelected ? 'var(--primary)' : 'var(--surface-container-high)'}; color:${isSelected ? '#ffffff' : 'var(--primary)'}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <i data-lucide="${icon}" style="width:18px; height:18px;"></i>
                   </div>
-                  <strong style="font-size:13px; color:var(--navy-dark); display:block;">${w.title}</strong>
-                  <span style="font-size:11px; color:var(--slate);">Due: ${w.dueDate} · ${w.points}</span>
+                  <div style="flex:1; min-width:0;">
+                    <strong>${c.code}: ${c.title}</strong>
+                    <span>${c.deliveryModel} · ${c.progressPercent}% · ${c.grade}</span>
+                  </div>
+                  <span class="badge ${isSelected ? 'badge-primary' : 'badge-secondary'}" style="font-size:10px; font-weight:800;">
+                    ${c.badge}
+                  </span>
                 </div>
-                <div>
-                  ${w.type.includes('Quiz') ? `
-                    <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerQuizModal('${w.id}')">Start Quiz</button>
-                  ` : (w.type.includes('Voice') ? `
-                    <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerVoiceStudioModal('${w.id}')">Voice Studio</button>
-                  ` : `
-                    <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerSubmissionModal('${w.id}')">Submit File</button>
-                  `)}
-                </div>
-              </div>
-            `).join('')}
+              `;
+            }).join('')}
           </div>
         </div>
 
-        <!-- RECENT TEACHER FEEDBACK & AUDIO ANNOTATIONS (ASM-008) -->
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <i data-lucide="message-square-quote" style="color:var(--primary);"></i>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">Recent Faculty Feedback & Audio Notes</h3>
-            </div>
-            <button class="link-btn" onclick="Router.navigate('learner-grades-feedback')">All Feedback &rarr;</button>
-          </div>
-
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <strong style="font-size:13px; color:var(--navy-dark);">Sara Javed (Spoken English)</strong>
-                <span class="badge badge-success">Grade A (94%)</span>
-              </div>
-              <span style="font-size:11px; color:var(--slate);">Mid-Term Speech Evaluation</span>
-            </div>
-            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0; line-height:1.5;">
-              "Outstanding cadence and professional register. Pronunciation on alveolar consonants is crisp. Keep practicing final thought-group pauses!"
-            </p>
-            <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px; padding:8px 12px; display:flex; align-items:center; gap:10px;">
-              <button class="icon-btn" style="width:28px; height:28px;" onclick="Notifications.push('Audio Feedback', 'Playing Sara Javed audio annotation (0:42s)...', 'info')"><i data-lucide="play" style="width:14px; height:14px;"></i></button>
-              <div style="flex:1; height:6px; background:#e2e8f0; border-radius:3px; overflow:hidden;">
-                <div style="width:45%; height:100%; background:var(--primary);"></div>
-              </div>
-              <span style="font-size:11px; color:var(--slate);">0:42s MP3</span>
-            </div>
-          </div>
-
-          <!-- RENEWAL & ENTITLEMENT ALERT NOTICE (FLOW-038) -->
-          <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+        <!-- 4. PRIMARY DUAL-COMMAND STAGE (MILE-001 & LIVE-006) -->
+        <div class="learner-main-deck-grid">
+          
+          <!-- LEFT: ACTIVE COURSE PROGRESS & FAST RESUME -->
+          <div class="learner-deck-card">
             <div>
-              <strong style="font-size:12px; color:var(--navy-dark); display:block;">Spoken English Membership Notice</strong>
-              <span style="font-size:11px; color:var(--secondary);">2 class credits remaining · Expires 31 Aug 2026</span>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="badge badge-primary" style="font-size:11px; font-weight:800;">${currentCourse.deliveryModel.toUpperCase()}</span>
+                  <span class="badge badge-secondary" style="font-size:11px;">TERM ENROLMENT ACTIVE</span>
+                </div>
+                <span style="font-size:12.5px; font-weight:800; color:var(--secondary);"><i data-lucide="award" style="width:14px; height:14px; vertical-align:middle;"></i> Current Grade: ${currentCourse.grade}</span>
+              </div>
+
+              <h3 style="font:800 20px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 6px 0;">${currentCourse.title}</h3>
+              <p style="font-size:13px; color:var(--slate); margin:0 0 16px 0;">
+                Assigned Faculty: <strong style="color:var(--on-surface);">${currentCourse.trainer}</strong> (${currentCourse.trainerRole})
+              </p>
+
+              <!-- Progress Bar Breakdown -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:8px;">
+                  <span style="color:var(--slate); font-weight:600;">Overall Track Completion</span>
+                  <strong style="color:var(--on-surface);">${currentCourse.progressPercent}% Completed</strong>
+                </div>
+                <div style="width:100%; height:10px; background:var(--surface-container-high); border-radius:5px; overflow:hidden;">
+                  <div style="width:${currentCourse.progressPercent}%; height:100%; background:var(--primary); border-radius:5px; transition:width 0.3s ease;"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:10px; border-top:1px dashed var(--outline-variant); font-size:11.5px; color:var(--slate);">
+                  <span>Level 1: <strong style="color:var(--primary);">100% Passed</strong></span>
+                  <span>Level 2: <strong style="color:var(--secondary);">75% Active</strong></span>
+                  <span>Level 3: <strong>Locked</strong></span>
+                </div>
+              </div>
+
+              <!-- Next Action Step Box -->
+              <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-left:4px solid var(--primary); border-radius:8px; padding:14px; font-size:12.5px;">
+                <span style="font-size:11px; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px; display:block; margin-bottom:2px;">
+                  NEXT REQUIRED STEP (MILE-001)
+                </span>
+                <strong style="color:var(--on-surface); font-size:13.5px;">${currentCourse.currentMilestone}</strong>
+                <div style="color:var(--slate); margin-top:3px;">
+                  &rarr; ${currentCourse.currentLesson} <span style="font-size:11px; color:var(--secondary); font-weight:600;">(Est. 45 Mins · Interactive)</span>
+                </div>
+              </div>
             </div>
-            <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerPaymentUploadModal('CRS-103')">Renew Term</button>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:14px; border-top:1px solid var(--outline-variant); flex-wrap:wrap; gap:10px;">
+              <span style="font-size:12px; color:var(--slate);">
+                <i data-lucide="ticket" style="width:14px; height:14px; vertical-align:middle;"></i> Entitlement: <strong style="color:var(--on-surface);">${currentCourse.entitlement}</strong>
+              </span>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-learning-milestones')">
+                  <i data-lucide="workflow"></i> View Learning Path
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="Actions.resumeLearnerCurriculum()">
+                  <i data-lucide="play"></i> Continue Learning
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: NEXT LIVE CLASS & WEBRTC LAUNCHER (LIVE-006 / FLOW-015) -->
+          <div class="learner-deck-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                <span class="badge ${nextClass.joinable ? 'badge-primary' : 'badge-secondary'}" style="font-size:11px; font-weight:800;">
+                  ${nextClass.joinable ? '● LIVE OCCURRENCE ACTIVE' : 'SCHEDULED OCCURRENCE'}
+                </span>
+                <span class="badge badge-secondary" style="font-size:11px;"><i data-lucide="clock" style="width:12px; height:12px; vertical-align:middle;"></i> ${nextClass.duration}</span>
+              </div>
+
+              <h4 style="font:800 17px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 6px 0;">${nextClass.title}</h4>
+              <p style="font-size:12.5px; color:var(--slate); margin:0 0 14px 0;">
+                <i data-lucide="calendar" style="width:13px; height:13px; vertical-align:middle;"></i> ${nextClass.date} · <strong style="color:var(--primary);">${nextClass.time}</strong>
+              </p>
+              
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:10px; padding:14px; font-size:12px; display:flex; flex-direction:column; gap:6px; margin-bottom:14px;">
+                <div><span style="color:var(--slate); font-weight:600;">Faculty Trainer:</span> <strong style="color:var(--on-surface);">${nextClass.trainer}</strong></div>
+                <div><span style="color:var(--slate); font-weight:600;">Class Blueprint:</span> <span style="color:var(--on-surface);">${nextClass.topics}</span></div>
+                <div><span style="color:var(--slate); font-weight:600;">Cohort Roster:</span> <span style="color:var(--secondary); font-weight:700;">${nextClass.participants}</span></div>
+                <div style="margin-top:4px; padding-top:6px; border-top:1px dashed var(--outline-variant); font-size:11px; color:var(--slate);">
+                  <i data-lucide="shield-check" style="width:12px; height:12px; vertical-align:middle; color:var(--primary);"></i> Daily.co Token Authenticated · 24ms PKT Latency · 1080p HD
+                </div>
+              </div>
+            </div>
+
+            <div style="padding-top:14px; border-top:1px solid var(--outline-variant); display:flex; flex-direction:column; gap:8px;">
+              ${nextClass.joinable ? `
+                <button class="btn btn-primary" style="width:100%; padding:10px 16px; font-weight:800;" onclick="Actions.openLearnerJoinClassModal('${nextClass.id}')">
+                  <i data-lucide="video"></i> Join Live Classroom (Daily.co)
+                </button>
+              ` : `
+                <button class="btn btn-secondary" style="width:100%;" onclick="Actions.openLearnerRescheduleModal('${nextClass.id}')">
+                  <i data-lucide="calendar"></i> Request Reschedule (FLOW-017)
+                </button>
+              `}
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <button class="link-btn" style="font-size:12px;" onclick="Router.navigate('learner-schedule-upcoming')">
+                  View Full Schedule &rarr;
+                </button>
+                <button class="link-btn" style="font-size:12px;" onclick="Notifications.push('Class Materials', 'Downloading Pre-Class Blueprint PDF for ${nextClass.title}...', 'info')">
+                  <i data-lucide="download" style="width:12px; height:12px; vertical-align:middle;"></i> Pre-Class PDF
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 5. THREE-COLUMN OPERATIONAL GRID (TASKS, FEEDBACK, ENTITLEMENT) -->
+        <div class="learner-ops-grid">
+          
+          <!-- COLUMN 1: DUE WORK & FORMATIVE SUBMISSIONS (ASM-001 / FLOW-019 / FLOW-020) -->
+          <div class="learner-ops-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="clipboard-list" style="color:var(--primary); width:18px; height:18px;"></i>
+                <h3 style="font:800 15px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Action Required: Due Work</h3>
+              </div>
+              <span class="badge badge-warning" style="font-size:10px;">${dueWork.length} Pending</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${dueWork.map(w => `
+                <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                      <span class="badge badge-secondary" style="font-size:9.5px;">${w.courseCode}</span>
+                      <span class="badge ${w.status.includes('Revision') ? 'badge-error' : 'badge-warning'}" style="font-size:9.5px;">${w.status}</span>
+                    </div>
+                    <strong style="font-size:12.5px; color:var(--on-surface); display:block;">${w.title}</strong>
+                    <span style="font-size:11px; color:var(--slate);">Due: ${w.dueDate} · ${w.points}</span>
+                  </div>
+                  <div>
+                    ${w.type.includes('Quiz') ? `
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerQuizModal('${w.id}')">Start Quiz</button>
+                    ` : (w.type.includes('Voice') ? `
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerVoiceStudioModal('${w.id}')">Voice Studio</button>
+                    ` : `
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openLearnerSubmissionModal('${w.id}')">Submit</button>
+                    `)}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <button class="link-btn" style="font-size:12px; text-align:left; margin-top:auto;" onclick="Router.navigate('learner-work-due')">
+              View All Submitted Evidence & Tasks &rarr;
+            </button>
+          </div>
+
+          <!-- COLUMN 2: RECENT FACULTY AUDIO ANNOTATIONS & RUBRICS (ASM-008) -->
+          <div class="learner-ops-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="message-square-quote" style="color:var(--primary); width:18px; height:18px;"></i>
+                <h3 style="font:800 15px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Faculty Academic Feedback</h3>
+              </div>
+              <button class="link-btn" style="font-size:11.5px;" onclick="Router.navigate('learner-grades-feedback')">All Feedback &rarr;</button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <!-- Feedback 1: Spoken English Voice Note -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <strong style="font-size:12.5px; color:var(--on-surface);">Sara Javed (ENG-103)</strong>
+                    <span class="badge badge-success" style="font-size:9.5px;">Grade A (94%)</span>
+                  </div>
+                  <span style="font-size:10.5px; color:var(--slate);">Voice Standup #3</span>
+                </div>
+                <p style="font-size:11.5px; color:var(--slate); margin:0; line-height:1.4;">
+                  "Outstanding cadence in standup defense! Pronunciation on alveolar consonants is crisp. Keep practicing final thought-group pauses."
+                </p>
+                <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:6px; padding:6px 10px; display:flex; align-items:center; gap:10px; margin-top:2px;">
+                  <button class="icon-btn" style="width:26px; height:26px;" onclick="Notifications.push('Audio Feedback', 'Playing Sara Javed audio annotation (0:42s)...', 'info')">
+                    <i data-lucide="play" style="width:12px; height:12px;"></i>
+                  </button>
+                  <div style="flex:1; height:5px; background:var(--surface-container-high); border-radius:3px; overflow:hidden;">
+                    <div style="width:45%; height:100%; background:var(--primary);"></div>
+                  </div>
+                  <span style="font-size:10.5px; color:var(--slate); font-weight:600;">0:42s MP3</span>
+                </div>
+              </div>
+
+              <!-- Feedback 2: Full-Stack Code Review -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <strong style="font-size:12.5px; color:var(--on-surface);">Prof. Alex Rivera (DEV-101)</strong>
+                    <span class="badge badge-success" style="font-size:9.5px;">Grade A (92%)</span>
+                  </div>
+                  <span style="font-size:10.5px; color:var(--slate);">Jest Reducer Lab</span>
+                </div>
+                <p style="font-size:11.5px; color:var(--slate); margin:0; line-height:1.4;">
+                  "Clean state immutability in TypeScript. Excellent error branch coverage. Verified against automated CI tests."
+                </p>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="badge badge-secondary" style="font-size:9.5px;"><i data-lucide="check" style="width:10px; height:10px; vertical-align:middle;"></i> Code Review Approved</span>
+                  <span style="font-size:10.5px; color:var(--slate);">0 Critical Lints</span>
+                </div>
+              </div>
+
+              <!-- Feedback 3: K-12 Math Homework -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <strong style="font-size:12.5px; color:var(--on-surface);">Prof. Tariq (K12-801)</strong>
+                    <span class="badge badge-success" style="font-size:9.5px;">Grade A+ (98%)</span>
+                  </div>
+                  <span style="font-size:10.5px; color:var(--slate);">Linear Equations</span>
+                </div>
+                <p style="font-size:11.5px; color:var(--slate); margin:0; line-height:1.4;">
+                  "Exceptional clarity in algebraic substitution. Ready for Unit 3 quadratic functions."
+                </p>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--slate); margin-top:auto; padding-top:8px; border-top:1px dashed var(--outline-variant);">
+              <span><i data-lucide="check-circle-2" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> 100% assessments graded</span>
+              <button class="link-btn" style="font-size:11px;" onclick="Router.navigate('learner-grades-gradebook')">Gradebook &rarr;</button>
+            </div>
+          </div>
+
+          <!-- COLUMN 3: GUARDIAN SYNC & ENTITLEMENT LEDGER (K12-005 / FLOW-038) -->
+          <div class="learner-ops-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <i data-lucide="shield-check" style="color:var(--primary); width:18px; height:18px;"></i>
+                <h3 style="font:800 15px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Guardian & Entitlements</h3>
+              </div>
+              <span class="badge badge-success" style="font-size:10px;">Synced</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <!-- Guardian Info Card -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; font-size:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <strong style="color:var(--on-surface);">Guardian: Farooq Malik</strong>
+                  <span class="badge badge-primary" style="font-size:9px;">FBISE Live Sync</span>
+                </div>
+                <p style="color:var(--slate); font-size:11px; margin:0 0 6px 0;">
+                  Automated SMS & weekly markbook digests active for <strong>+92 300 5541982</strong>.
+                </p>
+                <div style="display:flex; gap:6px; font-size:10.5px; color:var(--primary); font-weight:700;">
+                  <span>✓ 94.2% Attendance</span> · <span>✓ 0 Unexcused</span>
+                </div>
+              </div>
+
+              <!-- Membership Renewal Alert -->
+              <div style="background:var(--surface-container); border:1px solid var(--outline-variant); border-radius:8px; padding:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <strong style="font-size:12px; color:var(--on-surface);">Spoken English Membership</strong>
+                  <span class="badge badge-warning" style="font-size:9px;">2 Credits Left</span>
+                </div>
+                <p style="font-size:11px; color:var(--slate); margin:0 0 8px 0;">
+                  Term access active through <strong>31 Aug 2026</strong>.
+                </p>
+                <button class="btn btn-primary btn-xs" style="width:100%; font-weight:700;" onclick="Actions.openLearnerPaymentUploadModal('CRS-103')">
+                  <i data-lucide="refresh-cw"></i> Renew Enrolment Term
+                </button>
+              </div>
+
+              <!-- Digital Certificate Readiness -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <strong style="font-size:11.5px; color:var(--on-surface); display:block;">Full-Stack Cert (DEV-101)</strong>
+                  <span style="font-size:10.5px; color:var(--slate);">Level 1 Verified (ID: IHS-2026-9041)</span>
+                </div>
+                <span class="badge badge-success" style="font-size:9px;">Eligible</span>
+              </div>
+
+              <!-- Payment Verification Ledger -->
+              <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <strong style="font-size:11.5px; color:var(--on-surface); display:block;">Deposit Slip Status</strong>
+                  <span style="font-size:10.5px; color:var(--slate);">PKR 14,500 · Meezan Bank Verified</span>
+                </div>
+                <span class="badge badge-secondary" style="font-size:9px;">Settled</span>
+              </div>
+            </div>
+
+            <button class="link-btn" style="font-size:11.5px; text-align:left; margin-top:auto; padding-top:8px; border-top:1px dashed var(--outline-variant);" onclick="Notifications.push('Report Card', 'Generating Official Term Transcript & Attendance Audit PDF...', 'info')">
+              <i data-lucide="download" style="width:12px; height:12px; vertical-align:middle;"></i> Download Official Transcript (PDF)
+            </button>
+          </div>
+
+        </div>
+
+        <!-- 6. WEEKLY TIMETABLE AGENDA STRIP (LIVE-005 / FLOW-015) -->
+        <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:var(--rounded-container); padding:20px 24px; box-shadow:var(--shadow-subtle);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+            <div>
+              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 2px 0;">
+                Weekly Schedule & Live Occurrence Timetable
+              </h3>
+              <p style="font-size:12px; color:var(--slate); margin:0;">
+                All times displayed in local timezone: <strong>Asia/Karachi (PKT UTC+5)</strong>
+              </p>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Router.navigate('learner-schedule-calendar')">
+              <i data-lucide="calendar"></i> Full Calendar View
+            </button>
+          </div>
+
+          <div class="learner-schedule-strip">
+            <div class="learner-schedule-day-card">
+              <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--slate);">
+                <span>MON · 17 AUG</span>
+                <span class="badge badge-success" style="font-size:9px;">Attended</span>
+              </div>
+              <strong style="font-size:12px; color:var(--on-surface);">Spoken English (CRS-103)</strong>
+              <span style="font-size:11px; color:var(--slate);">10:00 AM · Sara Javed</span>
+            </div>
+
+            <div class="learner-schedule-day-card">
+              <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--slate);">
+                <span>TUE · 18 AUG</span>
+                <span class="badge badge-success" style="font-size:9px;">Attended</span>
+              </div>
+              <strong style="font-size:12px; color:var(--on-surface);">Grade 8 Math (CRS-105)</strong>
+              <span style="font-size:11px; color:var(--slate);">04:00 PM · Prof. Tariq</span>
+            </div>
+
+            <div class="learner-schedule-day-card active">
+              <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--primary);">
+                <span>WED · 19 AUG (TODAY)</span>
+                <span class="badge badge-primary" style="font-size:9px;">45m Left</span>
+              </div>
+              <strong style="font-size:12px; color:var(--on-surface);">Spoken English (CRS-103)</strong>
+              <span style="font-size:11px; color:var(--primary); font-weight:700;">10:00 AM · Live Class</span>
+            </div>
+
+            <div class="learner-schedule-day-card">
+              <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--slate);">
+                <span>THU · 20 AUG</span>
+                <span class="badge badge-secondary" style="font-size:9px;">Upcoming</span>
+              </div>
+              <strong style="font-size:12px; color:var(--on-surface);">Grade 8 Math (CRS-105)</strong>
+              <span style="font-size:11px; color:var(--slate);">04:00 PM · Problem Solving</span>
+            </div>
+
+            <div class="learner-schedule-day-card">
+              <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:800; color:var(--slate);">
+                <span>FRI · 21 AUG</span>
+                <span class="badge badge-warning" style="font-size:9px;">Deadline</span>
+              </div>
+              <strong style="font-size:12px; color:var(--on-surface);">TypeScript Codelab (CRS-101)</strong>
+              <span style="font-size:11px; color:var(--secondary); font-weight:700;">11:59 PM · Lab Submission</span>
+            </div>
           </div>
         </div>
 
@@ -6217,12 +9258,18 @@ const RenderEngine = {
   // ============================================================================
   
   // ============================================================================
-  // STUDENT / LEARNER UNIVERSAL WORKSPACE - 100% DISTINCT BESPOKE SUB-PAGES
+  // ELITE LEARNER COURSE PREVIEW SUITE & HIERARCHY ENGINE (FRS v2.2)
   // ============================================================================
+  
   learnerWorkspace(route) {
+    if (route === "learner-dashboard") {
+      this.learnerDashboard();
+      return;
+    }
     const container = document.getElementById("learner-workspace-content");
     if (!container) return;
 
+    LearnerCurriculum.syncSidebarCounts();
     const config = learnerRouteDefinitions[route] || {
       title: "Learner Workspace",
       scope: "Personal Learning Context",
@@ -6348,114 +9395,8 @@ const RenderEngine = {
     }
 
     else if (route === "learner-explore-previews") {
-      const selectedPreviewId = window.selectedPreviewCourseId || "CRS-103";
-      const previewCourses = [
-        {
-          id: "CRS-103",
-          title: "Spoken English Fluency & Accent Reduction",
-          deliveryModel: "Live Cohort",
-          lessonTitle: "Sample Lesson: Stress Timing vs Syllable Timing in English",
-          instructor: "Sara Javed (Voice Specialist)",
-          duration: "3 mins",
-          syllabus: [
-            { module: "Module 1", title: "Acoustic Intonation & Rhythm Drills", preview: true },
-            { module: "Module 2", title: "Consonant Cluster Simplification & Linking", preview: true },
-            { module: "Module 3", title: "Professional C-Suite Pitch Delivery", preview: false },
-            { module: "Module 4", title: "CEFR Final Acoustic Assessment & Certification", preview: false }
-          ]
-        },
-        {
-          id: "CRS-101",
-          title: "Modern Full-Stack Web Development",
-          deliveryModel: "Milestone Self-Paced",
-          lessonTitle: "Sample Lesson: Deterministic State Machine Architecture",
-          instructor: "Alex Rivera (Principal Architect)",
-          duration: "5 mins",
-          syllabus: [
-            { module: "Level 1", title: "Foundations & TypeScript 5 Runtime Architecture", preview: true },
-            { module: "Level 2", title: "Backend Architecture, Reducers & Supabase RLS", preview: true },
-            { module: "Level 3", title: "Production Deployment, Redis & Distributed Systems", preview: false }
-          ]
-        },
-        {
-          id: "CRS-105",
-          title: "Grade 8 Mathematics & Science (FBISE)",
-          deliveryModel: "K-12 Tuition",
-          lessonTitle: "Sample Lesson: Linear Equations & Coordinate Geometry",
-          instructor: "Prof. Tariq Hassan (Senior Faculty)",
-          duration: "4 mins",
-          syllabus: [
-            { module: "Unit 1", title: "Real Numbers & Sets Theory", preview: true },
-            { module: "Unit 2", title: "Algebraic Expressions & Factorization", preview: true },
-            { module: "Unit 3", title: "Cell Structure & Plant Physiology (Science)", preview: true },
-            { module: "Unit 4", title: "Term 1 Examination Prep & Past Papers", preview: false }
-          ]
-        }
-      ];
-
-      const pCourse = previewCourses.find(c => c.id === selectedPreviewId) || previewCourses[0];
-
-      viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
-          <!-- COURSE PREVIEW SELECTOR TABS -->
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #f1f5f9; flex-wrap:wrap; gap:12px;">
-            <div>
-              <span class="badge badge-primary">COURSE PREVIEW SUITE (PORT-004)</span>
-              <h3 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-dark); margin:4px 0 0 0;">${pCourse.title}</h3>
-            </div>
-            
-            <div style="display:flex; gap:8px;">
-              ${previewCourses.map(pc => `
-                <button 
-                  class="btn ${pc.id === pCourse.id ? 'btn-primary' : 'btn-secondary'} btn-xs"
-                  onclick="window.selectedPreviewCourseId = '${pc.id}'; Router.navigate('learner-explore-previews');"
-                >
-                  ${pc.deliveryModel.split(' ')[0]}: ${pc.title.split(' ')[0]}
-                </button>
-              `).join('')}
-            </div>
-          </div>
-
-          <!-- PREVIEW VIDEO & SYLLABUS GRID -->
-          <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:20px; margin-bottom:20px;">
-            <div>
-              <div style="border:2px dashed #cbd5e1; border-radius:10px; padding:32px; text-align:center; background:#f8fafc; margin-bottom:14px;">
-                <i data-lucide="play-circle" style="width:56px; height:56px; color:var(--primary); margin-bottom:10px; cursor:pointer;" onclick="Notifications.push('Preview Player', 'Playing sample lesson video: ${pCourse.lessonTitle} (${pCourse.duration})...', 'info')"></i>
-                <h4 style="margin:0 0 4px 0; color:var(--navy-dark); font-size:16px;">${pCourse.lessonTitle}</h4>
-                <span style="font-size:12px; color:var(--slate);">Duration: ${pCourse.duration} · Faculty: ${pCourse.instructor}</span>
-              </div>
-              <p style="font-size:13px; color:var(--slate); line-height:1.5; margin:0;">
-                Experience the authentic curriculum and pedagogical methodology. In full membership, learners receive personalized feedback, live WebRTC classes, and 1:1 faculty review.
-              </p>
-            </div>
-
-            <!-- SYLLABUS OUTLINE -->
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
-              <strong style="font-size:14px; color:var(--navy-dark); display:block; margin-bottom:12px;">Curriculum Outline & Preview Badges</strong>
-              <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
-                ${pCourse.syllabus.map(s => `
-                  <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:10px; display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                      <strong style="color:var(--navy-dark); display:block;">${s.module}: ${s.title}</strong>
-                    </div>
-                    ${s.preview ? `
-                      <span class="badge badge-success" style="font-size:10px; cursor:pointer;" onclick="Notifications.push('Sample Lesson', 'Opening sample lesson preview for ${s.title}...', 'info')">Previewable</span>
-                    ` : `
-                      <span class="badge badge-secondary" style="font-size:10px;">Enrolment Req.</span>
-                    `}
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-
-          <!-- BOTTOM ACTION BAR -->
-          <div style="display:flex; justify-content:space-between; align-items:center; padding-top:16px; border-top:1px solid #f1f5f9;">
-            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('learner-explore-catalogue')">&larr; Return to Catalogue</button>
-            <button class="btn btn-primary" onclick="Actions.bookCourseTrial('${pCourse.title}')"><i data-lucide="sparkles"></i> Request 1:1 Diagnostic Trial for this Course &rarr;</button>
-          </div>
-        </div>
-      `;
+      const selectedPreviewId = window.selectedPreviewCourseId || "CRS-101";
+      viewContent = window.LearnerPreviewEngine.renderFullCoursePreviewSuite(selectedPreviewId);
     }
 
     else if (route === "learner-explore-trial") {
@@ -6550,7 +9491,7 @@ const RenderEngine = {
                     </td>
                     <td style="padding:14px 16px;"><span class="badge badge-success">● ${e.status}</span></td>
                     <td style="padding:14px 16px;">
-                      <button class="btn btn-primary btn-xs" onclick="Actions.switchLearnerCourse('${e.courseCode === 'ENG-103' ? 'CRS-103' : (e.courseCode === 'DEV-101' ? 'CRS-101' : 'CRS-105')}'); Router.navigate('learner-learning-continue');">Resume</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openLearnerCourseWorkspace('${e.courseCode === 'ENG-103' ? 'CRS-103' : (e.courseCode === 'DEV-101' ? 'CRS-101' : 'CRS-105')}')">Open course</button>
                     </td>
                   </tr>
                 `).join('')}
@@ -6822,10 +9763,16 @@ const RenderEngine = {
     }
 
     // ==========================================================================
-    // 4. MY LEARNING - UNIFIED 5-TIER HIERARCHY & CONNECTED ACTIVITY PLAYER
-    // (FRS 4.8 / MILE-001 / MILE-006 / MILE-007 / MILE-015 / FLOW-018 / FLOW-019)
+    // 4. MY LEARNING - SOURCE-BACKED COURSE VERSION HIERARCHY
+    // Course Version -> Level -> Milestone -> Lesson -> Activity (MILE-001)
     // ==========================================================================
     else if (route.startsWith("learner-learning-")) {
+      viewContent = LearnerCurriculum.render(route);
+    }
+
+    // Retained temporarily as unreachable migration reference while all legacy
+    // deep links are rendered by the connected curriculum workspace above.
+    else if (false && route.startsWith("learner-learning-")) {
       const devCourse = data.activeCourses.find(c => c.id === "CRS-101") || data.activeCourses[0];
       const activeTab = route.replace("learner-learning-", "");
 
@@ -7001,73 +9948,200 @@ const RenderEngine = {
         `;
       }
 
-      // VIEW B: ROADMAP OVERVIEW
+      // VIEW B: ROADMAP OVERVIEW (CANONICAL 5-TIER HIERARCHY)
       else if (activeTab === "milestones") {
         viewContent += `
           <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
-            <div style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid #f1f5f9; flex-wrap:wrap; gap:12px;">
+              <div>
+                <strong style="font-size:16px; color:var(--navy-dark); display:block;">Canonical 5-Tier Learning Roadmap (MILE-001 / MILE-006)</strong>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Course Version &rarr; Levels &rarr; Milestones &rarr; Modular Lessons &rarr; Interactive Activities</p>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCoursePreviewModal('CRS-101')"><i data-lucide="eye"></i> Fullscreen Preview</button>
+                <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-activities')"><i data-lucide="play"></i> Resume Active Code Lab &rarr;</button>
+              </div>
+            </div>
+
+            <div class="milestone-hierarchy-tree">
               <!-- LEVEL 1 -->
-              <div style="background:#f8fafc; border:1px solid #86efac; border-radius:10px; padding:18px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                  <div>
-                    <span class="badge badge-success" style="margin-bottom:4px;">LEVEL 1 · COMPLETED</span>
-                    <h4 style="margin:0; font-size:16px; color:var(--navy-dark);">Foundations & Runtime Architecture</h4>
+              <div class="tree-level-block">
+                <div class="tree-level-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <i data-lucide="folder-check" style="width:16px; height:16px; color:#16a34a;"></i>
+                    <div>
+                      <strong style="font-size:13.5px; color:var(--navy-dark);">Level 1: Foundations & Runtime Architecture</strong>
+                      <span style="display:block; font-size:11px; color:var(--slate);">2 Milestones · 3 Lessons · 7 Activities · 100% Completed</span>
+                    </div>
                   </div>
-                  <strong style="color:#166534; font-size:14px;">100% Passed</strong>
+                  <span class="badge badge-success">✓ 100% PASSED</span>
                 </div>
-                <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px; font-size:12px; color:var(--slate);">
-                  <div>✓ <strong>Milestone 1.1: Core TypeScript & Event Loops</strong> (Lesson 1.1: Type Systems & Generics · Quiz #1 Passed 100%)</div>
-                  <div style="margin-top:4px;">✓ <strong>Milestone 1.2: Asynchronous State & Promises</strong> (Lesson 1.2: Microtasks Lab Approved by Alex Rivera)</div>
+
+                <div class="tree-level-content">
+                  <!-- Milestone 1.1 -->
+                  <div class="tree-milestone-block">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                      <div>
+                        <strong style="font-size:12.5px; color:var(--navy-dark);">Milestone 1.1: Web Architecture & DOM Fundamentals</strong>
+                        <span style="display:block; font-size:11px; color:var(--slate); margin-top:2px;">Goal: Master semantic HTML5, WCAG AAA accessibility, and CSS Grid layout algorithms.</span>
+                      </div>
+                      <span class="badge badge-success" style="font-size:9px;">Rule: 100% Passed</span>
+                    </div>
+
+                    <!-- Lesson 1.1 -->
+                    <div class="tree-lesson-row">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong style="font-size:12px; color:var(--navy-medium);">Lesson 1.1: Semantic Structure & Accessibility (A11y)</strong>
+                        <span style="font-size:11px; color:var(--slate);">45 Mins · Completed</span>
+                      </div>
+                      <div class="tree-activity-pill-list">
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="play-circle" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 1.1.A: Semantic HTML5 & Accessibility Principles (15m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Watched</span>
+                        </div>
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="file-text" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 1.1.B: WCAG AAA Color Contrast & Modern Tokens (10m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Completed</span>
+                        </div>
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="help-circle" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 1.1.C: DOM Fundamentals & Protocol Diagnostic Quiz (10m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Passed 100%</span>
+                        </div>
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="code" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 1.1.D: CSS Grid Responsive Architecture Lab (10m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Passed</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Lesson 1.2 -->
+                    <div class="tree-lesson-row">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong style="font-size:12px; color:var(--navy-medium);">Lesson 1.2: Asynchronous State & Event Loop Scheduling</strong>
+                        <span style="font-size:11px; color:var(--slate);">40 Mins · Completed</span>
+                      </div>
+                      <div class="tree-activity-pill-list">
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="play-circle" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 1.2.A: Promises, Microtasks & Event Loop Internals (20m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Watched</span>
+                        </div>
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="code" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 1.2.B: Promise.allSettled Concurrency Playground (20m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Approved by Alex Rivera</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Milestone 1.2 -->
+                  <div class="tree-milestone-block">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div>
+                        <strong style="font-size:12.5px; color:var(--navy-dark);">Milestone 1.2: Foundations Milestone Gateway & Sign-off</strong>
+                        <span style="display:block; font-size:11px; color:var(--slate); margin-top:2px;">Digital Certificate of Achievement issued.</span>
+                      </div>
+                      <span class="badge badge-success" style="font-size:9px;">✓ UNLOCKED</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <!-- LEVEL 2 -->
-              <div style="background:#ffffff; border:2px solid var(--secondary); border-radius:10px; padding:18px; box-shadow:0 4px 12px rgba(110, 94, 6, 0.08);">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                  <div>
-                    <span class="badge badge-warning" style="margin-bottom:4px;">LEVEL 2 · ACTIVE (IN PROGRESS)</span>
-                    <h4 style="margin:0; font-size:16px; color:var(--navy-dark);">Backend Architecture & State Machines</h4>
+              <div class="tree-level-block" style="border:2px solid var(--secondary); box-shadow:0 4px 14px rgba(110, 94, 6, 0.08);">
+                <div class="tree-level-header" style="background:#fffdf9;" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <i data-lucide="folder-open" style="width:16px; height:16px; color:var(--secondary);"></i>
+                    <div>
+                      <strong style="font-size:13.5px; color:var(--navy-dark);">Level 2: Backend Architecture & Deterministic State</strong>
+                      <span style="display:block; font-size:11px; color:var(--slate);">2 Milestones · 3 Lessons · 6 Activities · 75% Progress</span>
+                    </div>
                   </div>
-                  <strong style="color:var(--secondary); font-size:14px;">${devCourse.progressPercent}% Progress</strong>
+                  <span class="badge badge-warning">${devCourse.progressPercent}% ACTIVE</span>
                 </div>
-                
-                <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
-                  <div style="background:#fff9ee; border:1px solid #f0d97a; border-radius:6px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                      <strong style="color:var(--navy-dark);">Milestone 2.1: Deterministic State Modeling (Active)</strong>
-                      <div style="color:var(--slate); margin-top:2px;">Lesson 2.1: State Machine Modeling with Custom Reducers (Video Done · Lab Available)</div>
+
+                <div class="tree-level-content">
+                  <!-- Milestone 2.1 -->
+                  <div class="tree-milestone-block" style="background:#fffdf6; border-color:#f0d97a;">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                      <div>
+                        <strong style="font-size:12.5px; color:var(--navy-dark);">Milestone 2.1: Deterministic State Modeling (Active)</strong>
+                        <span style="display:block; font-size:11px; color:var(--slate); margin-top:2px;">Goal: Eliminate invalid UI states with strict state machines and custom reducer functions.</span>
+                      </div>
+                      <span class="badge badge-warning" style="font-size:9px;">Rule: Test Suite + Quiz >= 80%</span>
                     </div>
-                    <button class="btn btn-primary btn-xs" onclick="Router.navigate('learner-learning-activities')">Start Lab</button>
+
+                    <!-- Lesson 2.1 -->
+                    <div class="tree-lesson-row">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong style="font-size:12px; color:var(--navy-medium);">▶ Lesson 2.1: State Machine Modeling with Custom Reducers</strong>
+                        <span style="font-size:11px; color:var(--secondary); font-weight:700;">45 Mins · Active Lesson</span>
+                      </div>
+                      <div class="tree-activity-pill-list">
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="play-circle" style="width:12px; height:12px; vertical-align:middle; color:#16a34a;"></i> Act 2.1.A: Statecharts & Reducer Modeling in React 19 (18m)</span>
+                          <span class="badge badge-success" style="font-size:9px;">✓ Watched</span>
+                        </div>
+                        <div class="tree-activity-row active">
+                          <span><i data-lucide="code" style="width:12px; height:12px; vertical-align:middle; color:var(--primary);"></i> Act 2.1.B: Interactive Reducer State Machine Lab (15m)</span>
+                          <button class="btn btn-primary btn-xs" style="padding:2px 8px; font-size:10px;" onclick="Router.navigate('learner-learning-activities')">Resume Lab &rarr;</button>
+                        </div>
+                        <div class="tree-activity-row">
+                          <span><i data-lucide="help-circle" style="width:12px; height:12px; vertical-align:middle; color:var(--slate);"></i> Act 2.1.C: Gatekeeper Quiz: Reducer Architecture (FLOW-019) (12m)</span>
+                          <span class="badge badge-secondary" style="font-size:9px;">Pass >= 80% Req.</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Lesson 2.2 -->
+                    <div class="tree-lesson-row" style="opacity:0.8;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong style="font-size:12px; color:var(--slate);">Lesson 2.2: Supabase Row-Level Security & Postgres RPC</strong>
+                        <span class="badge badge-secondary" style="font-size:9px;"><i data-lucide="lock" style="width:9px; height:9px;"></i> Locked</span>
+                      </div>
+                      <div class="tree-activity-pill-list">
+                        <div class="tree-activity-row">
+                          <span style="color:var(--slate);"><i data-lucide="video" style="width:12px; height:12px; vertical-align:middle;"></i> Act 2.2.A: Multi-tenant RLS Policies & Roles (25m)</span>
+                          <span class="badge badge-secondary" style="font-size:9px;">Prerequisite: Complete Lesson 2.1</span>
+                        </div>
+                        <div class="tree-activity-row">
+                          <span style="color:var(--slate);"><i data-lucide="file-text" style="width:12px; height:12px; vertical-align:middle;"></i> Act 2.2.B: Production Schema Definition Submission</span>
+                          <span class="badge badge-secondary" style="font-size:9px;">Locked</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; justify-content:space-between; align-items:center; opacity:0.7;">
-                    <div>
-                      <strong style="color:var(--slate);">Lesson 2.2: Supabase Row-Level Security & Postgres RPC</strong>
-                      <div style="color:var(--slate); margin-top:2px;">🔒 Locked · Prerequisite: Complete Lesson 2.1 Code Lab & Quiz</div>
+                  <!-- Milestone 2.2 -->
+                  <div class="tree-milestone-block" style="opacity:0.75;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <div>
+                        <strong style="font-size:12.5px; color:var(--slate);">Milestone 2.2: Facilitator Capstone Evaluation</strong>
+                        <span style="display:block; font-size:11px; color:var(--slate); margin-top:2px;">1:1 Architecture Review with Alex Rivera.</span>
+                      </div>
+                      <span class="badge badge-secondary" style="font-size:9px;"><i data-lucide="lock" style="width:9px; height:9px;"></i> Gated</span>
                     </div>
-                    <span class="badge badge-secondary">Locked</span>
-                  </div>
-
-                  <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; display:flex; justify-content:space-between; align-items:center; opacity:0.7;">
-                    <div>
-                      <strong style="color:var(--slate);">Milestone 2.2: Facilitator Capstone Evaluation</strong>
-                      <div style="color:var(--slate); margin-top:2px;">🔒 Locked · 1:1 Architecture Review with Alex Rivera</div>
-                    </div>
-                    <span class="badge badge-secondary">Locked</span>
                   </div>
                 </div>
               </div>
 
               <!-- LEVEL 3 -->
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:18px; opacity:0.6;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <div>
-                    <span class="badge badge-secondary" style="margin-bottom:4px;">LEVEL 3 · LOCKED</span>
-                    <h4 style="margin:0; font-size:16px; color:var(--slate);">Production Deployment & Distributed Systems</h4>
+              <div class="tree-level-block" style="opacity:0.7;">
+                <div class="tree-level-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <i data-lucide="folder" style="width:16px; height:16px; color:var(--slate);"></i>
+                    <div>
+                      <strong style="font-size:13.5px; color:var(--slate);">Level 3: Production Deployment & Distributed Systems</strong>
+                      <span style="display:block; font-size:11px; color:var(--slate);">1 Milestone · 1 Lesson · 2 Activities · Prerequisite: Pass Level 2 Capstone</span>
+                    </div>
                   </div>
-                  <span class="badge badge-secondary">🔒 Prerequisite: Pass Level 2 Capstone</span>
+                  <span class="badge badge-secondary"><i data-lucide="lock" style="width:10px; height:10px;"></i> LOCKED</span>
                 </div>
-                <p style="font-size:12px; color:var(--slate); margin:8px 0 0 0;">Covers Redis cache invalidation, distributed tracing, and multi-region egress.</p>
+                <div class="tree-level-content hidden">
+                  <div class="tree-milestone-block">
+                    <strong style="font-size:12px; color:var(--slate);">Milestone 3.1: Microservices, Redis Caching & Performance Gates</strong>
+                    <div style="font-size:11px; color:var(--slate); margin-top:4px;">Covers Redis cache invalidation, distributed tracing, and multi-region egress.</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -7924,67 +10998,18 @@ const RenderEngine = {
     }
 
     // ==========================================================================
-    // 10. MESSAGES & SUPPORT (MSG-004 / MSG-014 / FLOW-023 / FLOW-024)
+    // 10. MESSAGES & SUPPORT (MSG-001 - MSG-015 / FLOW-023 / FLOW-024)
     // ==========================================================================
     else if (route === "learner-messages-trainer") {
-      viewContent = `
-        <div style="display:grid; grid-template-columns: 1.3fr 1fr; gap:20px;">
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9;">
-              <div>
-                <strong style="font-size:15px; color:var(--navy-dark);">Trainer Conversation Thread (FLOW-023)</strong>
-                <span style="font-size:12px; color:var(--slate); display:block;">Sara Javed · Faculty Lead / Voice Specialist</span>
-              </div>
-              <span class="badge badge-success">● Online</span>
-            </div>
-            
-            <div id="trainer-chat-thread" style="display:flex; flex-direction:column; gap:10px; max-height:300px; overflow-y:auto; padding-right:4px;">
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px;">
-                <span style="font-size:11px; color:var(--slate);">Sara Javed · Yesterday 06:30 PM PKT</span>
-                <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">Hi Zainab! Great work on your speech timing in class. Remember to record Voice Task #4 before midnight.</p>
-              </div>
-            </div>
-          </div>
-
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <strong style="font-size:15px; color:var(--navy-dark); display:block; margin-bottom:12px;">Send Message to Faculty</strong>
-            <textarea id="trainer-reply-input" class="form-control" placeholder="Type your message to Sara Javed..." style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--outline-variant); height:100px; margin-bottom:12px;"></textarea>
-            <button class="btn btn-primary" onclick="Actions.sendTrainerMessage()"><i data-lucide="send"></i> Send Message</button>
-          </div>
-        </div>
-      `;
+      viewContent = LearnerCurriculum.renderTeacherChatSuite();
     }
 
     else if (route === "learner-messages-support") {
-      viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); max-width:700px; margin:0 auto;">
-          <strong style="font-size:15px; color:var(--navy-dark);">Admissions & Helpdesk Support Chat (MSG-004)</strong>
-          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Live agent assistance for fee inquiries, billing, and system access.</p>
-
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:14px; font-size:12px;">
-            <strong>CSR Desk:</strong> "Your deposit slip for Spoken English Term Renewal has been received and is currently under review by the finance desk."
-          </div>
-          <button class="btn btn-primary btn-sm" onclick="Notifications.push('Support Desk', 'Connecting to live CSR agent...', 'info')">Start Live Chat</button>
-        </div>
-      `;
+      viewContent = LearnerCurriculum.renderSupportChatSuite();
     }
 
     else if (route === "learner-messages-cases") {
-      viewContent = `
-        <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle);">
-          <strong style="font-size:15px; color:var(--navy-dark);">Formal Support Cases & SLAs (FLOW-024)</strong>
-          <p style="font-size:12px; color:var(--slate); margin:2px 0 16px 0;">Track formal support tickets and SLA resolution status.</p>
-
-          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <span class="badge badge-success" style="margin-bottom:4px;">RESOLVED</span>
-              <strong style="display:block; font-size:14px; color:var(--navy-dark);">CASE-401: Daily.co Microphone Telemetry Diagnostic</strong>
-              <span style="font-size:12px; color:var(--slate);">Resolved on 10 Aug 2026 by Tech Support Team</span>
-            </div>
-            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Case Log', 'Opening case resolution transcript...', 'info')">View Case</button>
-          </div>
-        </div>
-      `;
+      viewContent = LearnerCurriculum.renderSupportCasesDesk();
     }
 
     else if (route === "learner-messages-announcements") {
@@ -9046,8 +12071,29 @@ const RenderEngine = {
 
   
   creatorDashboard() {
-    const container = document.getElementById("creator-dashboard-shell");
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "coo-dashboard-shell", "csr-dashboard-shell", "om-dashboard-shell", "learner-dashboard-shell", "reviewer-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    let container = document.getElementById("creator-dashboard-shell");
+    if (!container && viewDashboard) {
+      container = document.createElement("div");
+      container.id = "creator-dashboard-shell";
+      container.className = "creator-command-deck";
+      viewDashboard.appendChild(container);
+    }
+    if (!container) container = viewDashboard;
     if (!container) return;
+    container.classList.remove("hidden");
+    container.style.display = "flex";
 
     const pipelineStages = [
       { code: "01. DRAFT", title: "Syllabus Authoring", desc: "Construct levels, milestones, lessons, activities, and link assessment items.", count: "2 Versions", statusText: "2 in Progress", icon: "edit-3", route: "creator-courses-draft", badgeClass: "badge-warning" },
@@ -10497,6 +13543,24 @@ const RenderEngine = {
 
   // CSR Dashboard Renderer
   csrDashboard() {
+    let viewDashboard = document.getElementById("view-dashboard");
+    if (viewDashboard) {
+      viewDashboard.classList.remove("hidden");
+      viewDashboard.classList.add("active");
+      ["platform-dashboard-shell", "coo-dashboard-shell", "learner-dashboard-shell", "om-dashboard-shell", "creator-dashboard-shell", "reviewer-dashboard-shell", "trainer-dashboard-shell"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.add("hidden");
+          el.style.display = "none";
+        }
+      });
+    }
+    const shell = document.getElementById("csr-dashboard-shell");
+    if (shell) {
+      shell.classList.remove("hidden");
+      shell.style.display = "flex";
+    }
+
     const el = (id, text) => {
       const e = document.getElementById(id);
       if (e) e.textContent = String(text);
@@ -11818,6 +14882,158 @@ window.Actions = Actions = {
     Router.navigate("learner-explore-previews");
   },
 
+  switchPreviewCourse(courseId) {
+    window.selectedPreviewCourseId = courseId;
+    window.LearnerPreviewEngine.selectedCourseId = courseId;
+    const c = window.LearnerPreviewEngine.getCourse(courseId);
+    if (c.deliveryModel === "live") window.selectedPreviewFormat = "live_room";
+    else if (c.deliveryModel === "k12") window.selectedPreviewFormat = "k12_syllabus";
+    else window.selectedPreviewFormat = "video";
+    Notifications.push("Course Track Switched", `Switched preview suite to ${c.title} (${c.deliveryModelLabel}).`, "info");
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  switchPreviewFormat(format) {
+    window.selectedPreviewFormat = format;
+    window.LearnerPreviewEngine.selectedFormat = format;
+    Notifications.push("Preview Format Changed", `Activated ${format.toUpperCase()} interactive preview player.`, "info");
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  switchPreviewViewportMode(mode) {
+    window.selectedPreviewMode = mode;
+    window.LearnerPreviewEngine.selectedMode = mode;
+    const label = mode === "guest" ? "Guest Visitor (Public Gating)" : (mode === "free" ? "Registered Free Learner" : "Enrolled Member (Full Access)");
+    Notifications.push("Viewport Simulation (CAT-009)", `Auditing viewport mode: ${label}.`, "info");
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  switchPreviewTimezone(tz) {
+    window.selectedPreviewTimezone = tz;
+    Notifications.push("Timezone Converted", `Class schedules converted to ${tz}.`, "info");
+  },
+
+  runPreviewCodeTests() {
+    const consoleEl = document.getElementById("preview-codelab-console");
+    if (consoleEl) {
+      consoleEl.innerHTML = `
+        <div style="color:#4ade80; font-weight:700;">✓ PASS src/authReducer.test.ts</div>
+        <div style="color:#cbd5e1; font-size:10.5px; margin-top:2px;">
+          ✓ should handle LOGIN_START (loading state) (2ms)<br>
+          ✓ should transition to authenticated on LOGIN_SUCCESS (1ms)<br>
+          ✓ should handle LOGIN_FAILURE with error payload (1ms)<br>
+          ✓ should enforce state immutability (1ms)
+        </div>
+        <div style="color:#4ade80; font-weight:700; margin-top:4px;">Tests: 4 passed, 4 total · Time: 0.84s (100% PASS)</div>
+      `;
+    }
+    Notifications.push("Tests Passed", "All deterministic reducer test assertions passed (100%).", "success");
+  },
+
+  recordPreviewVoice() {
+    Notifications.push("Voice Recording Started", "Recording 90s acoustic sample for phonetic evaluation...", "info");
+  },
+
+  evaluatePreviewVoice() {
+    Notifications.push("Acoustic Evaluation", "Pronunciation: 94% · Intonation Cadence: 91% · CEFR B2+ Met", "success");
+  },
+
+  submitPreviewQuizAnswer(optionIdx) {
+    const labels = document.querySelectorAll(".creator-quiz-option-label");
+    labels.forEach((l, idx) => {
+      if (idx === optionIdx) {
+        l.classList.add("selected");
+        l.style.borderColor = "var(--primary)";
+        l.style.background = "#fffdf5";
+      } else {
+        l.classList.remove("selected");
+        l.style.borderColor = "rgba(124, 119, 102, 0.2)";
+        l.style.background = "#ffffff";
+      }
+    });
+    if (optionIdx === 1) {
+      Notifications.push("Quiz Answer Checked", "Correct! Strict Finite State Machine eliminates impossible UI states.", "success");
+    } else {
+      Notifications.push("Quiz Answer Checked", "Incorrect. FSM Reducers ensure strict valid state transitions.", "warning");
+    }
+  },
+
+  testDailyRoomJoin(roomName) {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.textContent = `Daily.co Live WebRTC Join Simulator (FLOW-015)`;
+    body.innerHTML = `
+      <div style="background:#0f172a; color:#ffffff; padding:20px; border-radius:10px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-weight:700; color:#4ade80; font-size:12px;"><span class="pulse-dot"></span> DAILY.CO SHORT-LIVED TOKEN VALIDATED</span>
+          <span style="font-size:11px; color:#94a3b8;">Latency: 22ms · Bitrate: 2.4 Mbps</span>
+        </div>
+        <h4 style="font:800 17px 'Manrope', sans-serif; color:#f8fafc; margin:0 0 4px 0;">Spoken English Live Interactive Classroom</h4>
+        <p style="font-size:12px; color:#cbd5e1; margin:0;">Faculty: <strong>Sara Javed (Voice Specialist)</strong> · Room: <code>${roomName || 'room-eng-spk-live-103'}</code></p>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--outline); padding:14px; border-radius:8px; margin-bottom:16px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
+        <div>✓ Authenticated Participant: <strong>Zainab Malik (LNR-501)</strong></div>
+        <div>✓ Active Enrolment Check: <strong>Active (2 class credits remaining)</strong></div>
+        <div>✓ WebRTC Telemetry: <strong>Presence recording active for automated reconciliation</strong></div>
+      </div>
+
+      <div style="background:#1e293b; height:180px; border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#94a3b8; gap:10px;">
+        <i data-lucide="video" style="width:40px; height:40px; color:#4ade80;"></i>
+        <span style="font-size:13px; color:#ffffff; font-weight:600;">Encrypted HD Video & Acoustic Audio Stream Ready</span>
+        <span style="font-size:11px; color:#94a3b8;">Screen sharing, interactive whiteboard, and recording telemetry enabled</span>
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Simulator</button>
+      <button class="btn btn-primary" onclick="Actions.completeLearnerClassJoin('${roomName}')"><i data-lucide="video"></i> Launch Daily Video Room</button>
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  openCoursePreviewModal(courseId) {
+    const course = window.LearnerPreviewEngine.getCourse(courseId);
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    title.textContent = `Course Preview: ${course.title} (${course.deliveryModelLabel})`;
+    body.innerHTML = `
+      <div style="max-height:75vh; overflow-y:auto; padding-right:6px;">
+        ${window.LearnerPreviewEngine.renderFullCoursePreviewSuite(course.id)}
+      </div>
+    `;
+
+    footer.innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Preview</button>
+      ${course.deliveryModel === 'live' || course.deliveryModel === 'k12' ? `
+        <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.bookCourseTrial('${course.title}')">
+          <i data-lucide="sparkles"></i> Request 1:1 Diagnostic Trial
+        </button>
+      ` : `
+        <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openLearnerPaymentUploadModal('${course.id}')">
+          <i data-lucide="credit-card"></i> Enrol Now
+        </button>
+      `}
+    `;
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
   bookCourseTrial(courseName) {
     window.trialPrefillCourse = courseName;
     Router.navigate("learner-explore-trial");
@@ -11949,7 +15165,134 @@ window.Actions = Actions = {
   },
 
   openLearnerPaymentUploadModal(courseId) {
-    Router.navigate("learner-payments-submissions");
+    const course = (db.learnerData?.activeCourses || []).find(c => c.id === courseId) || db.learnerData?.activeCourses?.[0] || {
+      id: "CRS-103", title: "Spoken English Fluency & Professional Voice"
+    };
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) {
+      Router.navigate("learner-payments-submissions");
+      return;
+    }
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="upload-cloud" style="color:var(--primary);"></i> Bank Transfer & Deposit Slip Verification (FLOW-011)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-left:4px solid var(--primary); border-radius:8px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:8px;">
+            <strong style="color:var(--on-surface); font-size:13.5px;">${course.title}</strong>
+            <span class="badge badge-primary" style="font-size:10px; font-weight:800;">PKR 15,000 / TERM</span>
+          </div>
+          <p style="font-size:12px; color:var(--slate); margin:0;">
+            Bank: <strong>Meezan Bank Ltd</strong> · Title: <strong>Innovator Huzsam LMS Pvt Ltd</strong> · IBAN: <code>PK44MEZN00992810029102</code>
+          </p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Payer / Guardian Name</label>
+            <input type="text" id="pay-payer-name" class="form-control" value="${db.learnerData?.profile?.guardian || 'Farooq Malik'}">
+          </div>
+          <div>
+            <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Remitting Bank</label>
+            <select id="pay-bank-select" class="form-control">
+              <option value="Meezan Bank">Meezan Bank</option>
+              <option value="Standard Chartered">Standard Chartered</option>
+              <option value="HBL / HBL Mobile">HBL / HBL Mobile</option>
+              <option value="JazzCash / EasyPaisa">JazzCash / EasyPaisa Direct</option>
+              <option value="Direct OTC Cash Deposit">Direct Bank OTC Slip</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div>
+            <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Transaction Reference / Slip ID</label>
+            <input type="text" id="pay-txn-ref" class="form-control" value="TXN-${Math.floor(100000 + Math.random() * 900000)}" placeholder="e.g. TXN-902148">
+          </div>
+          <div>
+            <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Amount Transferred</label>
+            <input type="text" id="pay-amount" class="form-control" value="PKR 15,000">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Attach Deposit Receipt / Screenshot (FLOW-011)</label>
+          <div id="deposit-dropzone" style="border:2px dashed var(--outline); border-radius:8px; padding:20px; text-align:center; background:var(--surface-container-lowest); cursor:pointer;" onclick="document.getElementById('deposit-file-input').click()">
+            <input type="file" id="deposit-file-input" style="display:none;" onchange="Actions.handleSlipFileSelect(this)">
+            <i data-lucide="file-up" style="width:28px; height:28px; color:var(--primary); margin:0 auto 6px auto;"></i>
+            <div style="font-size:12.5px; font-weight:700; color:var(--on-surface);" id="deposit-file-name">Click to choose slip or drop file here</div>
+            <span style="font-size:11px; color:var(--slate);">Supports PNG, JPG, PDF (Max 10MB) · SHA-256 Verified Storage</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" onclick="Actions.submitLearnerDepositSlip('${course.id}')">
+          <i data-lucide="check-circle"></i> Submit for Finance Verification
+        </button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  handleSlipFileSelect(input) {
+    if (input.files && input.files[0]) {
+      const fileName = input.files[0].name;
+      const el = document.getElementById("deposit-file-name");
+      if (el) el.innerHTML = `✓ Attached: <strong style="color:var(--primary);">${fileName}</strong> (${(input.files[0].size/1024).toFixed(1)} KB)`;
+    }
+  },
+
+  submitLearnerDepositSlip(courseId) {
+    const ref = document.getElementById("pay-txn-ref")?.value || ("TXN-" + Math.floor(100000 + Math.random() * 900000));
+    const bank = document.getElementById("pay-bank-select")?.value || "Meezan Bank";
+    const amount = document.getElementById("pay-amount")?.value || "PKR 15,000";
+    const payer = document.getElementById("pay-payer-name")?.value || "Farooq Malik";
+
+    const newPayment = {
+      id: "PAY-" + Math.floor(800 + Math.random() * 200),
+      learner: db.learnerData?.profile?.name || "Zainab Malik",
+      payer: payer,
+      course: "Spoken English Fluency & Professional Voice",
+      amount: amount,
+      method: bank,
+      ref: ref,
+      receipt: "deposit_slip_" + ref + ".pdf",
+      status: "Pending Review",
+      timestamp: "Just now"
+    };
+
+    if (db.adminData && db.adminData.financePayments) {
+      db.adminData.financePayments.unshift(newPayment);
+    }
+    if (db.learnerData && db.learnerData.paymentSubmissions) {
+      db.learnerData.paymentSubmissions.unshift({
+        id: newPayment.id,
+        course: newPayment.course,
+        amount: newPayment.amount,
+        bank: bank,
+        ref: ref,
+        date: "Today, 18 Aug 2026",
+        status: "Under Review by Finance (FLOW-011)",
+        receipt: newPayment.receipt
+      });
+    }
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Deposit Slip Submitted (FLOW-011)", `Slip reference ${ref} logged. Finance team notified for verification.`, "success");
+    if (Router.currentRoute === "learner-payments-submissions" || Router.currentRoute === "learner-payments-memberships") {
+      RenderEngine.learnerWorkspace(Router.currentRoute);
+    } else if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
+      RenderEngine.learnerDashboard();
+    }
   },
 
   // Cross-Role Payment Approval (When Admin/OM approves)
@@ -12072,7 +15415,97 @@ window.Actions = Actions = {
   // FLOW-017: Reschedule Request & Makeup Booking
   // --------------------------------------------------------------------------
   openLearnerRescheduleModal(classId) {
-    Router.navigate("learner-schedule-reschedule");
+    const cls = (db.learnerData?.schedule || []).find(s => s.id === classId) || db.learnerData?.schedule?.[0] || {
+      id: "CLS-101", title: "Spoken English Fluency – Acoustic Intonation Drill",
+      courseCode: "ENG-103", date: "Today, 18 Aug 2026", time: "10:00 AM – 11:00 AM PKT", trainer: "Sara Javed"
+    };
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) {
+      Router.navigate("learner-schedule-reschedule");
+      return;
+    }
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="repeat" style="color:var(--primary);"></i> Request Live Class Reschedule (FLOW-017)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+            <strong style="color:var(--on-surface); font-size:13px;">${cls.title}</strong>
+            <span class="badge badge-secondary">${cls.courseCode}</span>
+          </div>
+          <p style="font-size:12px; color:var(--slate); margin:0;">
+            Scheduled: <strong>${cls.date} · ${cls.time}</strong> · Faculty: <strong>${cls.trainer}</strong>
+          </p>
+        </div>
+
+        <div style="background:rgba(22, 163, 74, 0.1); border:1px solid rgba(22, 163, 74, 0.3); border-radius:8px; padding:10px 14px; display:flex; align-items:center; gap:10px; font-size:12px; color:#15803d;">
+          <i data-lucide="check-circle-2" style="width:16px; height:16px; flex-shrink:0;"></i>
+          <span><strong>Notice Policy Check:</strong> 6 hours advance notice provided. Full class credit will be preserved (FLOW-017).</span>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Reason for Reschedule</label>
+          <select id="reschedule-reason-select" class="form-control">
+            <option value="Academic Conflict / School Exam">Academic Conflict / School Exam</option>
+            <option value="Medical Emergency / Illness">Medical Emergency / Illness</option>
+            <option value="Work / Travel Conflict">Work / Travel Conflict</option>
+            <option value="Technical / Power Outage">Technical / Power Outage</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:6px;">Select New Preferred Occurrence Slot</label>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <label style="display:flex; align-items:center; gap:10px; background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:10px 14px; cursor:pointer;">
+              <input type="radio" name="reschedule-slot" value="Tomorrow, 19 Aug · 04:00 PM – 05:15 PM PKT" checked>
+              <div>
+                <strong style="font-size:12px; color:var(--on-surface); display:block;">Tomorrow, 19 Aug 2026 · 04:00 PM – 05:15 PM PKT</strong>
+                <span style="font-size:11px; color:var(--slate);">Available Makeup Group · Faculty: Sara Javed</span>
+              </div>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:10px 14px; cursor:pointer;">
+              <input type="radio" name="reschedule-slot" value="Friday, 21 Aug · 10:00 AM – 11:00 AM PKT">
+              <div>
+                <strong style="font-size:12px; color:var(--on-surface); display:block;">Friday, 21 Aug 2026 · 10:00 AM – 11:00 AM PKT</strong>
+                <span style="font-size:11px; color:var(--slate);">1:1 Facilitator Slot · Faculty: Sara Javed</span>
+              </div>
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:10px 14px; cursor:pointer;">
+              <input type="radio" name="reschedule-slot" value="Monday, 24 Aug · 10:00 AM – 11:00 AM PKT">
+              <div>
+                <strong style="font-size:12px; color:var(--on-surface); display:block;">Monday, 24 Aug 2026 · 10:00 AM – 11:00 AM PKT</strong>
+                <span style="font-size:11px; color:var(--slate);">Next Standard Cohort Session</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" onclick="Actions.confirmLearnerReschedule('${cls.id}')">
+          <i data-lucide="check"></i> Submit Reschedule Request
+        </button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  confirmLearnerReschedule(classId) {
+    const slot = document.querySelector('input[name="reschedule-slot"]:checked')?.value || "Tomorrow, 19 Aug 2026 · 04:00 PM PKT";
+    const reason = document.getElementById("reschedule-reason-select")?.value || "Academic Conflict";
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Reschedule Confirmed (FLOW-017)", `Class rescheduled to ${slot}. Retained 100% entitlement credit.`, "success");
+    this.audit("CLASS_RESCHEDULED", `Learner Zainab Malik rescheduled ${classId} to ${slot} (${reason}).`, "Medium");
+    Router.navigate("learner-schedule-upcoming");
   },
 
   submitRescheduleRequest() {
@@ -12081,8 +15514,110 @@ window.Actions = Actions = {
   },
 
   // --------------------------------------------------------------------------
-  // FLOW-018: Milestone 5-Tier Hierarchy & Dynamic Unlocking Engine
+  // FLOW-018: Course Version -> Level -> Milestone -> Lesson -> Activity
   // --------------------------------------------------------------------------
+  resumeLearnerCurriculum() {
+    const current = LearnerCurriculum.current();
+    if (!current) {
+      Notifications.push("No activity available", "The published course version has no available activity.", "warning");
+      return;
+    }
+    if (/available/i.test(current.activity.status || "")) {
+      current.activity.status = "In Progress";
+      this.addLearnerProgressEvent(current.activity.id, "Started", "Learner resumed the next required activity");
+    }
+    db.learnerData.learningState.selectedActivityId = current.activity.id;
+    Router.navigate("learner-learning-activities");
+  },
+
+  selectLearnerActivity(activityId) {
+    const row = LearnerCurriculum.findActivity(activityId);
+    if (!row) {
+      Notifications.push("Activity unavailable", "This activity is not part of your enrolled course version.", "error");
+      return;
+    }
+    if (/locked/i.test(row.activity.status || "")) {
+      Notifications.push("Activity locked", row.lesson.prerequisite || "Complete the prior required activities to unlock this activity.", "warning");
+      return;
+    }
+    if (/available/i.test(row.activity.status || "")) row.activity.status = "In Progress";
+    db.learnerData.learningState.selectedActivityId = activityId;
+    db.learnerData.learningState.lastMeaningfulActivityId = activityId;
+    Router.navigate("learner-learning-activities");
+  },
+
+  addLearnerProgressEvent(targetId, event, evidence) {
+    const state = db.learnerData.learningState;
+    const sequence = state.progressEvents.length + 403;
+    state.progressEvents.push({
+      id: `PRG-${sequence}`,
+      targetId,
+      event,
+      at: "18 Aug 2026, just now",
+      evidence
+    });
+    state.updatedAt = "18 Aug 2026, just now";
+  },
+
+  recalculateLearnerCurriculum() {
+    const levels = db.learnerData.milestoneHierarchy || [];
+    const unlockFirstActivity = lesson => {
+      if (!lesson?.activities?.length) return;
+      lesson.status = "Active";
+      const firstLocked = lesson.activities.find(activity => /locked/i.test(activity.status || ""));
+      if (firstLocked) firstLocked.status = "Available";
+    };
+
+    levels.forEach((level, levelIndex) => {
+      (level.milestones || []).forEach((milestone, milestoneIndex) => {
+        (milestone.lessons || []).forEach((lesson, lessonIndex) => {
+          if (!lesson.activities?.length) return;
+          const lessonComplete = lesson.activities.every(activity => LearnerCurriculum.isComplete(activity.status));
+          if (lessonComplete) {
+            lesson.status = "Completed";
+            const nextLesson = milestone.lessons[lessonIndex + 1];
+            if (nextLesson && /locked/i.test(nextLesson.status || "")) unlockFirstActivity(nextLesson);
+          } else if (lesson.activities.some(activity => !/locked/i.test(activity.status || ""))) {
+            lesson.status = "Active";
+          }
+        });
+        const milestoneComplete = milestone.lessons?.length && milestone.lessons.every(lesson => lesson.status === "Completed");
+        if (milestoneComplete) {
+          milestone.status = "Completed";
+          const nextMilestone = level.milestones[milestoneIndex + 1];
+          if (nextMilestone && /locked/i.test(nextMilestone.status || "")) {
+            nextMilestone.status = "Active";
+            unlockFirstActivity(nextMilestone.lessons?.[0]);
+          }
+        } else if (milestone.lessons?.some(lesson => lesson.status === "Active")) milestone.status = "Active";
+      });
+      const levelComplete = level.milestones?.length && level.milestones.every(milestone => milestone.status === "Completed");
+      if (levelComplete) {
+        level.status = "Completed";
+        const nextLevel = levels[levelIndex + 1];
+        if (nextLevel && /locked/i.test(nextLevel.status || "")) {
+          nextLevel.status = "In Progress";
+          const firstMilestone = nextLevel.milestones?.[0];
+          if (firstMilestone) firstMilestone.status = "Active";
+          unlockFirstActivity(firstMilestone?.lessons?.[0]);
+        }
+      } else if (level.milestones?.some(milestone => milestone.status === "Active")) level.status = "In Progress";
+      const levelRows = LearnerCurriculum.flatten().filter(row => row.level.levelId === level.levelId);
+      level.progressPercent = levelRows.length ? Math.round(levelRows.filter(row => LearnerCurriculum.isComplete(row.activity.status)).length / levelRows.length * 100) : 0;
+    });
+
+    const summary = LearnerCurriculum.summary();
+    const course = db.learnerData.activeCourses.find(item => item.id === "CRS-101");
+    const current = LearnerCurriculum.current();
+    if (course) {
+      course.progressPercent = summary.percent;
+      if (current) {
+        course.currentMilestone = current.milestone.title;
+        course.currentLesson = current.lesson.title;
+      }
+    }
+  },
+
   runCodeLabTests() {
     const consoleOutput = document.getElementById("codelab-console");
     if (!consoleOutput) return;
@@ -12098,66 +15633,310 @@ window.Actions = Actions = {
     const nextBtn = document.getElementById("act-complete-btn");
     if (nextBtn) {
       nextBtn.disabled = false;
-      nextBtn.classList.remove("btn-secondary");
-      nextBtn.classList.add("btn-primary");
     }
+    const current = LearnerCurriculum.current();
+    if (current) current.activity.testsPassed = true;
     Notifications.push("Tests Passed", "All reducer test assertions passed! You can now mark this activity complete.", "success");
   },
 
   completeLearnerActivity(actId) {
-    const data = db.learnerData;
-    const devCourse = data.activeCourses.find(c => c.id === "CRS-101");
-    if (devCourse) {
-      devCourse.progressPercent = Math.min(100, devCourse.progressPercent + 10);
+    const row = LearnerCurriculum.findActivity(actId);
+    if (!row || /locked/i.test(row.activity.status || "")) {
+      Notifications.push("Completion blocked", "This activity is locked or unavailable in your course version.", "error");
+      return;
     }
-
-    // Unlock subsequent Lesson 2.2 in Level 2
-    if (data.milestoneHierarchy && data.milestoneHierarchy[1]) {
-      const lvl2 = data.milestoneHierarchy[1];
-      if (lvl2.milestones && lvl2.milestones[0] && lvl2.milestones[0].lessons[1]) {
-        lvl2.milestones[0].lessons[1].status = "Available (Unlocked)";
-      }
+    if (/interactive code|lab/i.test(row.activity.type) && !row.activity.testsPassed) {
+      Notifications.push("Run the required tests", "All lab assertions must pass before this activity can be completed.", "warning");
+      return;
     }
-
-    Notifications.push("Milestone Progression (FLOW-018)", "Activity completed! Level 2 progress updated to 85%. Lesson 2.2 unlocked.", "success");
+    row.activity.status = /quiz/i.test(row.activity.type) ? "Passed" : "Completed";
+    this.addLearnerProgressEvent(actId, row.activity.status, /lab/i.test(row.activity.type) ? "Required assertions passed" : "Learner completion confirmation");
+    this.recalculateLearnerCurriculum();
+    const next = LearnerCurriculum.flatten().find(candidate => /available|active|in progress|retry/i.test(candidate.activity.status || "") && !LearnerCurriculum.isComplete(candidate.activity.status));
+    if (next) db.learnerData.learningState.selectedActivityId = next.activity.id;
+    Notifications.push("Activity completed", next ? `Progress saved. Next required activity: ${next.activity.title}.` : "Progress saved. All currently published activities are complete.", "success");
     Router.navigate("learner-learning-milestones");
+  },
+
+  reviewLearnerActivity(actId) {
+    const row = LearnerCurriculum.findActivity(actId);
+    const evidence = db.learnerData.learningState.progressEvents.slice().reverse().find(event => event.targetId === actId);
+    if (!row) return;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Completion evidence";
+    document.getElementById("modal-body").innerHTML = `<div class="workflow-source"><strong>${row.activity.title}</strong><span>${actId} | ${row.activity.status}</span></div><dl class="evidence-list"><div><dt>Course version</dt><dd>${db.learnerData.learningState.courseVersion}</dd></div><div><dt>Recorded event</dt><dd>${evidence?.event || row.activity.status}</dd></div><div><dt>Evidence</dt><dd>${evidence?.evidence || "Historical completion record"}</dd></div><div><dt>Recorded at</dt><dd>${evidence?.at || "Before current session"}</dd></div></dl>`;
+    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close evidence</button>`;
+    modal.classList.remove("hidden");
+  },
+
+  openCurriculumQuiz(actId) {
+    const row = LearnerCurriculum.findActivity(actId);
+    if (!row) return;
+    db.learnerData.learningState.selectedActivityId = actId;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Quiz attempt: ${row.activity.title}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="workflow-source"><strong>Attempt policy</strong><span>${row.activity.passScore || 80}% pass mark | 2 attempts remaining | Highest score counts</span></div>
+      <fieldset class="quiz-question"><legend>1. What makes a reducer transition deterministic?</legend><label><input type="radio" name="curriculum-q1" value="correct"> The same state and action always produce the same next state</label><label><input type="radio" name="curriculum-q1" value="wrong"> It reads the current browser time</label></fieldset>
+      <fieldset class="quiz-question"><legend>2. Where should invalid state combinations be prevented?</legend><label><input type="radio" name="curriculum-q2" value="correct"> In the transition model and reducer rules</label><label><input type="radio" name="curriculum-q2" value="wrong"> Only in visual CSS states</label></fieldset>
+      <fieldset class="quiz-question"><legend>3. What should an unknown action return?</legend><label><input type="radio" name="curriculum-q3" value="correct"> The existing state</label><label><input type="radio" name="curriculum-q3" value="wrong"> An empty object</label></fieldset>
+      <div id="curriculum-quiz-error" class="field-error hidden" role="alert">Answer every question before submitting.</div>`;
+    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Save and exit</button><button class="btn btn-primary" onclick="Actions.submitCurriculumQuiz('${actId}')">Submit attempt</button>`;
+    modal.classList.remove("hidden");
+  },
+
+  submitCurriculumQuiz(actId) {
+    const answers = [1, 2, 3].map(number => document.querySelector(`input[name="curriculum-q${number}"]:checked`));
+    if (answers.some(answer => !answer)) {
+      document.getElementById("curriculum-quiz-error")?.classList.remove("hidden");
+      return;
+    }
+    const correct = answers.filter(answer => answer.value === "correct").length;
+    const score = Math.round(correct / answers.length * 100);
+    const row = LearnerCurriculum.findActivity(actId);
+    row.activity.lastScore = score;
+    if (score >= (row.activity.passScore || 80)) {
+      row.activity.status = "Passed";
+      this.addLearnerProgressEvent(actId, "Passed", `${score}% score against ${row.activity.passScore || 80}% threshold`);
+      this.recalculateLearnerCurriculum();
+      document.getElementById("generic-modal").classList.add("hidden");
+      Notifications.push("Quiz passed", `${score}% recorded. Parent lesson and milestone rules were recalculated.`, "success");
+      Router.navigate("learner-learning-milestones");
+    } else {
+      row.activity.status = "Retry Available";
+      this.addLearnerProgressEvent(actId, "Failed", `${score}% score; pass mark not met`);
+      document.getElementById("generic-modal").classList.add("hidden");
+      Notifications.push("Retry available", `${score}% did not meet the ${row.activity.passScore || 80}% pass mark. One attempt remains.`, "warning");
+      Router.renderView("learner-learning-activities");
+    }
+  },
+
+  openCurriculumSubmission(actId) {
+    const row = LearnerCurriculum.findActivity(actId);
+    if (!row) return;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Submit activity: ${row.activity.title}`;
+    document.getElementById("modal-body").innerHTML = `<div class="workflow-source"><strong>${row.lesson.title}</strong><span>${actId} | ${db.learnerData.learningState.courseVersion}</span></div><div class="form-group"><label for="curriculum-evidence">Repository or evidence link</label><input id="curriculum-evidence" class="form-control" type="url" placeholder="https://github.com/your-name/project"></div><div class="form-group"><label for="curriculum-note">Note for reviewer</label><textarea id="curriculum-note" class="form-control" rows="4" placeholder="Summarize what you completed and any review context."></textarea><small>Submission creates a review event. It does not complete the activity until approved.</small></div><div id="curriculum-submission-error" class="field-error hidden" role="alert">Add a valid evidence link and reviewer note.</div>`;
+    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button><button class="btn btn-primary" onclick="Actions.submitCurriculumActivity('${actId}')">Submit for review</button>`;
+    modal.classList.remove("hidden");
+  },
+
+  submitCurriculumActivity(actId) {
+    const link = document.getElementById("curriculum-evidence")?.value.trim();
+    const note = document.getElementById("curriculum-note")?.value.trim();
+    if (!/^https?:\/\//i.test(link || "") || !note) {
+      document.getElementById("curriculum-submission-error")?.classList.remove("hidden");
+      return;
+    }
+    const row = LearnerCurriculum.findActivity(actId);
+    row.activity.status = "Submitted - Awaiting Review";
+    row.activity.submission = { link, note, submittedAt: "18 Aug 2026, just now" };
+    this.addLearnerProgressEvent(actId, "Submitted", "Versioned evidence routed to assigned reviewer");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Notifications.push("Submission recorded", "Evidence is awaiting reviewer approval. The milestone remains in progress.", "success");
+    Router.renderView("learner-learning-activities");
+  },
+
+  runLearnerCompletionAudit() {
+    const summary = LearnerCurriculum.summary();
+    const remaining = summary.total - summary.completed;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Certificate eligibility check";
+    document.getElementById("modal-body").innerHTML = `<div class="notice-card ${remaining ? "notice-warning" : "notice-success"}"><i data-lucide="${remaining ? "clock" : "badge-check"}"></i><div><strong>${remaining ? "Not yet eligible" : "Ready for final certificate audit"}</strong><p>${remaining ? `${remaining} required activities are incomplete or awaiting approval.` : "All published completion rules currently pass."}</p></div></div><dl class="evidence-list"><div><dt>Rule version</dt><dd>${db.learnerData.learningState.courseVersion}</dd></div><div><dt>Activity evidence</dt><dd>${summary.completed} of ${summary.total} complete</dd></div><div><dt>Access expiry</dt><dd>Checked separately: 15 Dec 2026</dd></div></dl>`;
+    document.getElementById("modal-footer").innerHTML = `<button class="btn btn-secondary" onclick="Router.navigate('learner-learning-milestones'); document.getElementById('generic-modal').classList.add('hidden')">View remaining work</button><button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close check</button>`;
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
   },
 
   // --------------------------------------------------------------------------
   // FLOW-019: Interactive Quiz Runner & Auto-Grading Engine
   // --------------------------------------------------------------------------
   openLearnerQuizModal(quizId) {
-    Router.navigate("learner-work-quizzes");
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) {
+      Router.navigate("learner-work-quizzes");
+      return;
+    }
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="help-circle" style="color:var(--primary);"></i> Formative Knowledge Quiz (FLOW-019): Full-Stack Reducers</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:12px; color:var(--slate);">Passing Threshold: <strong>80%</strong> · Questions: <strong>3</strong> · Rubric Points: <strong>50 pts</strong></span>
+          <span class="badge badge-primary"><i data-lucide="clock" style="width:11px; height:11px; vertical-align:middle;"></i> Untimed</span>
+        </div>
+
+        <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+          <strong style="font-size:13px; color:var(--on-surface); display:block; margin-bottom:8px;">1. Why must React / TypeScript reducers be pure functions?</strong>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:12.5px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="modal-q1" value="correct" checked> To ensure deterministic state transitions without side-effects</label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="modal-q1" value="wrong"> To allow direct mutation of the DOM</label>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+          <strong style="font-size:13px; color:var(--on-surface); display:block; margin-bottom:8px;">2. What should a reducer return when receiving an unrecognized action type?</strong>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:12.5px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="modal-q2" value="correct" checked> The existing, unchanged state</label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="modal-q2" value="wrong"> An empty undefined payload</label>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+          <strong style="font-size:13px; color:var(--on-surface); display:block; margin-bottom:8px;">3. How does state machine architecture prevent invalid UI combinations?</strong>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:12.5px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="modal-q3" value="correct" checked> By explicitly declaring allowed state transitions and guards</label>
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;"><input type="radio" name="modal-q3" value="wrong"> By hiding buttons with CSS only</label>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Exit Quiz</button>
+        <button class="btn btn-primary" onclick="Actions.confirmSubmitLearnerQuiz('${quizId}')">
+          <i data-lucide="check-circle-2"></i> Submit Answers & Auto-Grade
+        </button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  confirmSubmitLearnerQuiz(quizId) {
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    this.submitLearnerQuiz(quizId);
   },
 
   submitLearnerQuiz(quizId) {
     const data = db.learnerData;
-    const workItem = data.myWork.find(w => w.id === quizId || w.id === "WRK-302");
+    const workItem = (data.myWork || []).find(w => w.id === quizId || w.id === "WRK-302");
     if (workItem) {
       workItem.status = "Graded";
       workItem.score = "50 / 50 (100%)";
     }
 
-    const devCourse = data.activeCourses.find(c => c.id === "CRS-101");
+    const devCourse = (data.activeCourses || []).find(c => c.id === "CRS-101");
     if (devCourse) {
       devCourse.progressPercent = Math.min(100, devCourse.progressPercent + 5);
     }
 
     // Update DEV-101 Knowledge Quiz Category Score in Gradebook
-    const devGrade = data.grades.find(g => g.courseCode === "DEV-101");
+    const devGrade = (data.grades || []).find(g => g.courseCode === "DEV-101");
     if (devGrade && devGrade.categories && devGrade.categories[0]) {
       devGrade.categories[0].score = "100%";
     }
 
     Notifications.push("Quiz Auto-Graded (FLOW-019)", "Score: 100% (50/50). Gradebook updated and Milestone 2.1 completed!", "success");
-    Router.navigate("learner-grades-gradebook");
+    if (Router.currentRoute === "learner-grades-gradebook") {
+      RenderEngine.learnerWorkspace("learner-grades-gradebook");
+    } else if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
+      RenderEngine.learnerDashboard();
+    }
   },
 
   // --------------------------------------------------------------------------
   // FLOW-020: Voice Studio & Assignment Submissions Loop
   // --------------------------------------------------------------------------
   openLearnerVoiceStudioModal(taskId) {
-    Router.navigate("learner-work-voice");
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) {
+      Router.navigate("learner-work-voice");
+      return;
+    }
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="mic" style="color:var(--primary);"></i> AI Voice Studio & Speech Recording (FLOW-020)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:16px; text-align:center;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:16px;">
+          <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">Voice Standup Drill #4: 2-Minute Professional Pitch</h4>
+          <p style="font-size:12.5px; color:var(--slate); margin:0;">
+            Topic: <em>"Presenting technical architectural trade-offs to senior non-technical stakeholders."</em>
+          </p>
+        </div>
+
+        <div style="background:#0f172a; border-radius:12px; padding:24px 20px; color:#ffffff;">
+          <div id="modal-voice-waveform-box" style="height:60px; display:flex; align-items:center; justify-content:center; gap:5px; margin-bottom:14px;">
+            <div style="width:4px; height:12px; background:var(--primary); border-radius:2px;"></div>
+            <div style="width:4px; height:20px; background:var(--secondary); border-radius:2px;"></div>
+            <div style="width:4px; height:34px; background:var(--primary); border-radius:2px;"></div>
+            <div style="width:4px; height:48px; background:#4ade80; border-radius:2px;"></div>
+            <div style="width:4px; height:28px; background:var(--secondary); border-radius:2px;"></div>
+            <div style="width:4px; height:16px; background:var(--primary); border-radius:2px;"></div>
+            <div style="width:4px; height:10px; background:var(--secondary); border-radius:2px;"></div>
+          </div>
+
+          <div id="modal-voice-status" style="font-size:13px; font-weight:700; color:#94a3b8; margin-bottom:16px;">
+            Ready to record. High-definition microphone connected.
+          </div>
+
+          <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" id="modal-voice-record-btn" onclick="Actions.startModalVoiceRecording()">
+              <i data-lucide="mic"></i> Start Recording
+            </button>
+            <button class="btn btn-secondary btn-sm" id="modal-voice-play-btn" disabled onclick="Actions.playModalVoiceRecording()">
+              <i data-lucide="play"></i> Playback (1:45s)
+            </button>
+          </div>
+        </div>
+
+        <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; text-align:left; font-size:12px;">
+          <strong style="color:var(--on-surface);">CEFR Rubric Criteria (Automated + Faculty Review):</strong>
+          <div style="display:flex; justify-content:space-between; margin-top:6px; color:var(--slate); flex-wrap:wrap; gap:8px;">
+            <span>Intonation Variance (30%)</span>
+            <span>Phonemic Pronunciation (40%)</span>
+            <span>Pacing & Pauses (30%)</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" id="modal-voice-submit-btn" disabled onclick="Actions.confirmSubmitLearnerVoiceWork('${taskId}')">
+          <i data-lucide="send"></i> Submit Audio for Teacher Grading
+        </button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  startModalVoiceRecording() {
+    const statusEl = document.getElementById("modal-voice-status");
+    const recordBtn = document.getElementById("modal-voice-record-btn");
+    const playBtn = document.getElementById("modal-voice-play-btn");
+    const submitBtn = document.getElementById("modal-voice-submit-btn");
+
+    if (statusEl) statusEl.innerHTML = '<span style="color:#ef4444; animation:pulse 0.8s infinite;"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#ef4444; margin-right:4px;"></span> Recording Live Audio... (0:12s)</span>';
+    if (recordBtn) recordBtn.disabled = true;
+
+    setTimeout(() => {
+      if (statusEl) statusEl.innerHTML = '<span style="color:#4ade80;">✓ 1:45s High-Fidelity Audio Captured. AI Pitch Cadence: 94.2% Passed.</span>';
+      if (recordBtn) recordBtn.disabled = false;
+      if (playBtn) playBtn.disabled = false;
+      if (submitBtn) submitBtn.disabled = false;
+      Notifications.push("Audio Captured", "Voice recording verified with 94.2% AI acoustic clarity.", "success");
+    }, 1200);
+  },
+
+  playModalVoiceRecording() {
+    Notifications.push("Audio Playback", "Playing back recorded voice pitch clip (0:45s)...", "info");
+  },
+
+  confirmSubmitLearnerVoiceWork(taskId) {
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    this.submitLearnerVoiceWork(taskId);
   },
 
   recordLearnerVoice(taskId) {
@@ -12190,16 +15969,88 @@ window.Actions = Actions = {
 
   submitLearnerVoiceWork(taskId) {
     const data = db.learnerData;
-    const item = data.myWork.find(w => w.id === taskId || w.id === "WRK-301");
+    const item = (data.myWork || []).find(w => w.id === taskId || w.id === "WRK-301");
     if (item) {
       item.status = "Submitted (Awaiting Review)";
     }
     Notifications.push("Voice Submitted (FLOW-020)", "Audio file uploaded to private storage. Routed to Sara Javed for CEFR rubric grading.", "success");
-    Router.navigate("learner-work-submitted");
+    if (Router.currentRoute === "learner-work-submitted") {
+      RenderEngine.learnerWorkspace("learner-work-submitted");
+    } else if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
+      RenderEngine.learnerDashboard();
+    }
   },
 
   openLearnerSubmissionModal(workId) {
-    Router.navigate("learner-work-assignments");
+    const item = (db.learnerData?.myWork || []).find(w => w.id === workId) || db.learnerData?.myWork?.[0] || {
+      id: "WRK-304", title: "Capstone #1: Full-Stack Microservices Schema",
+      courseCode: "DEV-101", rubric: "Schema normalization & indexes", points: "100 Points"
+    };
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) {
+      Router.navigate("learner-work-assignments");
+      return;
+    }
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="file-code" style="color:var(--primary);"></i> Submit Project & Capstone Evidence (FLOW-020)</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+            <strong style="color:var(--on-surface); font-size:13px;">${item.title}</strong>
+            <span class="badge badge-primary">${item.courseCode}</span>
+          </div>
+          <span style="font-size:11.5px; color:var(--slate);">Rubric: ${item.rubric} · Weight: <strong>${item.points}</strong></span>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">GitHub Repository / Evidence URL</label>
+          <input type="url" id="sub-repo-url" class="form-control" value="https://github.com/zainab-malik/microservices-schema-v2" placeholder="https://github.com/username/project">
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Notes & Implementation Summary for Faculty Reviewer</label>
+          <textarea id="sub-notes" class="form-control" rows="3" placeholder="Describe architectural decisions, schema indexes, and test suite execution results...">Resolved previous feedback: added composite indexes on tenant_id + created_at and verified zero sequential table scans.</textarea>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Attach Architectural Diagrams / Artifacts</label>
+          <div style="border:2px dashed var(--outline); border-radius:8px; padding:14px; text-align:center; background:var(--surface-container-lowest); font-size:12px; color:var(--slate);">
+            <i data-lucide="upload" style="width:20px; height:20px; color:var(--primary); margin:0 auto 4px auto;"></i>
+            <span>schema_migration_v2.sql & schema_erd.png attached (2.4 MB)</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" onclick="Actions.confirmSubmitLearnerWork('${item.id}')">
+          <i data-lucide="send"></i> Submit Project for Faculty Evaluation
+        </button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  confirmSubmitLearnerWork(workId) {
+    const item = (db.learnerData?.myWork || []).find(w => w.id === workId);
+    if (item) {
+      item.status = "Submitted (Awaiting Review)";
+    }
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Project Submitted (FLOW-020)", "Capstone repository and migration artifacts submitted. Faculty notified.", "success");
+    if (Router.currentRoute === "learner-work-submitted" || Router.currentRoute === "learner-work-assignments") {
+      RenderEngine.learnerWorkspace(Router.currentRoute);
+    } else if (Router.currentRoute === "dashboard" || Router.currentRoute === "learner-dashboard") {
+      RenderEngine.learnerDashboard();
+    }
   },
 
   // --------------------------------------------------------------------------
@@ -12210,36 +16061,870 @@ window.Actions = Actions = {
   },
 
   // --------------------------------------------------------------------------
-  // FLOW-023: Contextual Faculty Chat
+  // FLOW-023: Contextual Multi-Faculty Chat Actions
   // --------------------------------------------------------------------------
-  sendTrainerMessage() {
-    const input = document.getElementById("trainer-reply-input");
-    const thread = document.getElementById("trainer-chat-thread");
+  switchFacultyChat(facultyId) {
+    if (db.learnerData) {
+      db.learnerData.activeFacultyChatId = facultyId;
+    }
+    if (Router.currentRoute === "learner-messages-trainer") {
+      RenderEngine.learnerWorkspace("learner-messages-trainer");
+    }
+  },
+
+  sendTrainerChatMessage() {
+    const input = document.getElementById("faculty-chat-input");
     if (!input || !input.value.trim()) return;
 
-    const msgText = input.value.trim();
+    const text = input.value.trim();
     input.value = "";
 
-    if (thread) {
-      const newMsg = document.createElement("div");
-      newMsg.style.cssText = "background:#fff9ee; border:1px solid #f0d97a; border-radius:8px; padding:12px; align-self:flex-end; margin-top:8px;";
-      newMsg.innerHTML = `
-        <span style="font-size:11px; color:var(--slate);">Zainab Malik · Just now</span>
-        <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">${msgText}</p>
-      `;
-      thread.appendChild(newMsg);
+    const data = db.learnerData || {};
+    const activeId = data.activeFacultyChatId || "TRN-101";
+    const activeFaculty = data.facultyChats?.[activeId];
+    if (!activeFaculty) return;
 
-      setTimeout(() => {
-        const reply = document.createElement("div");
-        reply.style.cssText = "background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; align-self:flex-start; margin-top:8px;";
-        reply.innerHTML = `
-          <span style="font-size:11px; color:var(--slate);">Sara Javed · Just now</span>
-          <p style="font-size:12px; color:var(--navy-dark); margin:4px 0 0 0;">Received! I have queued your pitch recording for detailed acoustic evaluation.</p>
-        `;
-        thread.appendChild(reply);
-        Notifications.push("Faculty Reply", "Sara Javed replied to your message.", "info");
-      }, 1200);
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    activeFaculty.messages.push({
+      id: "MSG-" + Date.now(),
+      sender: "student",
+      name: "Zainab Malik",
+      text: text,
+      time: timeStr + " (Just now)",
+      type: "text"
+    });
+
+    if (Router.currentRoute === "learner-messages-trainer") {
+      RenderEngine.learnerWorkspace("learner-messages-trainer");
+      const scrollEl = document.getElementById("faculty-chat-scroll");
+      if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
     }
+
+    // Auto simulated trainer response
+    setTimeout(() => {
+      let replyText = `Thank you for your message, Zainab! I have received your question and will provide comprehensive review notes.`;
+      if (activeFaculty.id === "TRN-101") {
+        replyText = `Understood, Zainab! I'm reviewing your intonation recording for the consonant cluster drill right now. Focus on keeping your vowel length sustained.`;
+      } else if (activeFaculty.id === "TRN-102") {
+        replyText = `Great inquiry, Zainab! In TypeScript 5.4, using the 'never' type in your reducer default case guarantees compile-time exhaustiveness. Keep up the clean code!`;
+      } else if (activeFaculty.id === "TRN-103") {
+        replyText = `Shabash Zainab! Your simultaneous equations worksheet shows excellent step-by-step elimination. Don't forget to write down the final coordinate pair clearly.`;
+      }
+
+      activeFaculty.messages.push({
+        id: "MSG-" + (Date.now() + 1),
+        sender: "trainer",
+        name: activeFaculty.name,
+        text: replyText,
+        time: "Just now",
+        type: "text"
+      });
+
+      if (Router.currentRoute === "learner-messages-trainer") {
+        RenderEngine.learnerWorkspace("learner-messages-trainer");
+        const scrollEl = document.getElementById("faculty-chat-scroll");
+        if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+      }
+      Notifications.push("Faculty Reply Received", `${activeFaculty.name} replied to your message.`, "info");
+    }, 900);
+  },
+
+  recordVoiceNoteToTrainer() {
+    const data = db.learnerData || {};
+    const activeId = data.activeFacultyChatId || "TRN-101";
+    const activeFaculty = data.facultyChats?.[activeId];
+    if (!activeFaculty) return;
+
+    Notifications.push("Voice Note", "Recording 30-second audio note to " + activeFaculty.name + "...", "info");
+    setTimeout(() => {
+      activeFaculty.messages.push({
+        id: "MSG-" + Date.now(),
+        sender: "student",
+        name: "Zainab Malik",
+        text: "🎙️ Spoken question audio memo (0:28s)",
+        time: "Just now",
+        type: "voice_feedback",
+        audioLength: "0:28"
+      });
+      if (Router.currentRoute === "learner-messages-trainer") {
+        RenderEngine.learnerWorkspace("learner-messages-trainer");
+        const scrollEl = document.getElementById("faculty-chat-scroll");
+        if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+      }
+      Notifications.push("Voice Note Sent", "Audio memo sent to " + activeFaculty.name, "success");
+    }, 1200);
+  },
+
+  // --------------------------------------------------------------------------
+  // FLOW-024: Student Support Desk & CSR Chat Actions
+  // --------------------------------------------------------------------------
+  sendSupportChatMessage() {
+    const input = document.getElementById("support-chat-input");
+    if (!input || !input.value.trim()) return;
+
+    const text = input.value.trim();
+    input.value = "";
+
+    const support = db.learnerData.supportDesk || {};
+    if (!support.liveChatMessages) support.liveChatMessages = [];
+
+    support.liveChatMessages.push({
+      id: "CSR-MSG-" + Date.now(),
+      sender: "student",
+      name: "Zainab Malik",
+      text: text,
+      time: "Just now"
+    });
+
+    if (Router.currentRoute === "learner-messages-support") {
+      RenderEngine.learnerWorkspace("learner-messages-support");
+      const scrollEl = document.getElementById("support-chat-scroll");
+      if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+    }
+
+    setTimeout(() => {
+      support.liveChatMessages.push({
+        id: "CSR-MSG-" + (Date.now() + 1),
+        sender: "agent",
+        name: "Bilal (IHS Operations CSR)",
+        text: "Thank you for reaching out, Zainab! I have located your student record. Our team is processing this request immediately.",
+        time: "Just now"
+      });
+
+      if (Router.currentRoute === "learner-messages-support") {
+        RenderEngine.learnerWorkspace("learner-messages-support");
+        const scrollEl = document.getElementById("support-chat-scroll");
+        if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+      }
+      Notifications.push("Helpdesk Response", "CSR Agent Bilal replied on live chat.", "info");
+    }, 800);
+  },
+
+  openSubmitSupportCaseModal() {
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) return;
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="life-buoy" style="color:var(--primary);"></i> Submit Formal Support Ticket / Issue (FLOW-024)</div>`;
+    body.innerHTML = `
+      <form id="submit-support-ticket-form" onsubmit="event.preventDefault(); Actions.submitSupportCase();" style="display:flex; flex-direction:column; gap:14px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; font-size:12px; color:var(--slate);">
+          <strong>SLA Guarantee:</strong> High-priority tickets receive technical review within 4 hours. General queries are answered within 24 hours.
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <div>
+            <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Issue Category *</label>
+            <select id="case-category" class="form-control" required>
+              <option value="Technical & Video WebRTC Desk">Technical & Video WebRTC Desk</option>
+              <option value="Fee Billing & Bank Slip Verification">Fee Billing & Bank Slip Verification</option>
+              <option value="Class Reschedule & Makeup Credits">Class Reschedule & Makeup Credits</option>
+              <option value="Faculty Academic Review Dispute">Faculty Academic Review Dispute</option>
+              <option value="Safeguarding & Minor Consent (K12-013)">Safeguarding & Minor Consent (K12-013)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Priority Level *</label>
+            <select id="case-priority" class="form-control" required>
+              <option value="Normal">Normal (24h SLA)</option>
+              <option value="High" selected>High (4h SLA)</option>
+              <option value="Urgent">Urgent (1h Emergency SLA)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Ticket Subject / Short Summary *</label>
+          <input type="text" id="case-subject" class="form-control" placeholder="e.g. Daily.co WebRTC microphone permission loop on Chrome 127" required>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Detailed Issue Description *</label>
+          <textarea id="case-description" class="form-control" rows="4" placeholder="Provide step-by-step details of the issue, error codes, and screenshots if applicable..." required></textarea>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Attach Diagnostic Screenshot / Error Log (Optional)</label>
+          <input type="file" class="form-control" style="font-size:12px; padding:6px 10px;">
+        </div>
+      </form>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" onclick="Actions.submitSupportCase()">
+          <i data-lucide="send"></i> Submit Ticket & Start SLA Timer
+        </button>
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  submitSupportCase() {
+    const categoryEl = document.getElementById("case-category");
+    const priorityEl = document.getElementById("case-priority");
+    const subjectEl = document.getElementById("case-subject");
+    const descEl = document.getElementById("case-description");
+
+    if (!subjectEl || !subjectEl.value.trim() || !descEl || !descEl.value.trim()) {
+      Notifications.push("Required Fields Missing", "Please complete the ticket subject and description.", "warning");
+      return;
+    }
+
+    const newId = "CASE-" + Math.floor(9045 + Math.random() * 50);
+    const newCase = {
+      id: newId,
+      category: categoryEl ? categoryEl.value : "Technical Support",
+      priority: priorityEl ? priorityEl.value : "High",
+      title: subjectEl.value.trim(),
+      status: "In Review",
+      assignedTo: priorityEl?.value === "Urgent" ? "Lead Technical CSR" : "Hassan Tech Support",
+      slaRemaining: priorityEl?.value === "High" ? "3h 59m remaining" : "23h 59m remaining",
+      createdAt: "Today, 18 Aug 2026 (Just now)",
+      description: descEl.value.trim(),
+      messages: [
+        {
+          id: "TMSG-01",
+          author: "Zainab Malik (Learner)",
+          role: "Learner",
+          text: descEl.value.trim(),
+          time: "Just now"
+        },
+        {
+          id: "TMSG-02",
+          author: "System SLA Dispatcher",
+          role: "System Automated",
+          text: `Ticket successfully logged under SLA queue (${priorityEl?.value || 'High'} Priority). Assigned to Operations Desk.`,
+          time: "Just now"
+        }
+      ]
+    };
+
+    if (!db.learnerData.supportDesk) db.learnerData.supportDesk = {};
+    if (!db.learnerData.supportDesk.cases) db.learnerData.supportDesk.cases = [];
+    db.learnerData.supportDesk.cases.unshift(newCase);
+
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Ticket Created (FLOW-024)", `Support Case ${newId} submitted. SLA countdown active.`, "success");
+    
+    if (Router.currentRoute === "learner-messages-cases") {
+      RenderEngine.learnerWorkspace("learner-messages-cases");
+    } else {
+      Router.navigate("learner-messages-cases");
+    }
+  },
+
+  openSupportCaseDetailModal(caseId) {
+    const c = (db.learnerData?.supportDesk?.cases || []).find(x => x.id === caseId);
+    if (!c) return;
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+    if (!modal || !body) return;
+
+    if (title) title.innerHTML = `<div style="display:flex; align-items:center; gap:8px;"><i data-lucide="life-buoy" style="color:var(--primary);"></i> ${c.id}: ${c.title}</div>`;
+    body.innerHTML = `
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <span class="badge badge-primary">${c.category}</span>
+            <span class="badge ${c.status === 'Resolved' ? 'badge-success' : 'badge-warning'}">${c.status}</span>
+          </div>
+          <p style="font-size:12.5px; color:var(--on-surface); margin:0 0 8px 0; font-weight:600;">${c.description}</p>
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--slate); border-top:1px solid var(--outline-variant); padding-top:6px;">
+            <span>Assigned: <strong>${c.assignedTo}</strong></span>
+            <span>SLA: <strong>${c.slaRemaining}</strong></span>
+          </div>
+        </div>
+
+        <div>
+          <strong style="font-size:12px; text-transform:uppercase; color:var(--slate); display:block; margin-bottom:8px;">Conversation & Audit Log</strong>
+          <div style="display:flex; flex-direction:column; gap:8px; max-height:220px; overflow-y:auto;">
+            ${(c.messages || []).map(m => `
+              <div style="background:var(--surface-container-lowest); border:1px solid var(--outline-variant); border-radius:8px; padding:10px 12px; font-size:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+                  <strong style="color:var(--on-surface); font-size:11.5px;">${m.author}</strong>
+                  <span style="color:var(--slate); font-size:10.5px;">${m.time}</span>
+                </div>
+                <div style="color:var(--slate); line-height:1.4;">${m.text}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:11.5px; font-weight:700; color:var(--on-surface); display:block; margin-bottom:4px;">Add Reply / Additional Diagnostic Information</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="case-reply-input" class="form-control" placeholder="Type your follow-up reply..." style="flex:1; font-size:12px;">
+            <button class="btn btn-primary btn-sm" onclick="Actions.replyToSupportCase('${c.id}')">
+              <i data-lucide="send"></i> Reply
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (footer) {
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Case Log</button>
+        ${c.status !== 'Resolved' ? `
+          <button class="btn btn-success" onclick="Actions.markCaseResolved('${c.id}')">
+            <i data-lucide="check"></i> Mark as Resolved
+          </button>
+        ` : ''}
+      `;
+    }
+
+    modal.classList.remove("hidden");
+    if (window.lucide) window.lucide.createIcons();
+  },
+
+  replyToSupportCase(caseId) {
+    const input = document.getElementById("case-reply-input");
+    if (!input || !input.value.trim()) return;
+
+    const text = input.value.trim();
+    input.value = "";
+
+    const c = (db.learnerData?.supportDesk?.cases || []).find(x => x.id === caseId);
+    if (!c) return;
+
+    if (!c.messages) c.messages = [];
+    c.messages.push({
+      id: "TMSG-" + Date.now(),
+      author: "Zainab Malik (Learner)",
+      role: "Learner",
+      text: text,
+      time: "Just now"
+    });
+
+    Notifications.push("Reply Added", "Your reply was posted to " + caseId, "success");
+    this.openSupportCaseDetailModal(caseId);
+    if (Router.currentRoute === "learner-messages-cases") {
+      RenderEngine.learnerWorkspace("learner-messages-cases");
+    }
+  },
+
+  markCaseResolved(caseId) {
+    const c = (db.learnerData?.supportDesk?.cases || []).find(x => x.id === caseId);
+    if (!c) return;
+    c.status = "Resolved";
+    c.slaRemaining = "Resolved within SLA (0h 42m)";
+    document.getElementById("generic-modal")?.classList.add("hidden");
+    Notifications.push("Ticket Resolved", `${caseId} marked as resolved.`, "success");
+    if (Router.currentRoute === "learner-messages-cases") {
+      RenderEngine.learnerWorkspace("learner-messages-cases");
+    }
+  },
+
+  // --------------------------------------------------------------------------
+  // THE ODIN PROJECT RUNNER ACTIONS (MILE-001 - MILE-015)
+  // --------------------------------------------------------------------------
+  toggleOdinAccordion(levelId) {
+    if (!db.learnerData) return;
+    if (!db.learnerData.learningState) db.learnerData.learningState = {};
+    
+    // Strict FAQ accordion behavior: clicking active level closes it (or keeps it open); clicking another level closes all others and opens target
+    if (db.learnerData.learningState.activeAccordionLevel === levelId) {
+      db.learnerData.learningState.activeAccordionLevel = null;
+    } else {
+      db.learnerData.learningState.activeAccordionLevel = levelId;
+    }
+    
+    if (Router.currentRoute === "learner-learning-continue" || Router.currentRoute === "learner-learning-activities") {
+      RenderEngine.learnerWorkspace("learner-learning-continue");
+    }
+  },
+
+  switchOdinLesson(lessonId) {
+    if (!db.learnerData) return;
+    if (!db.learnerData.learningState) db.learnerData.learningState = {};
+    db.learnerData.learningState.selectedLessonId = lessonId;
+    
+    // Automatically open the target level in the accordion
+    if (lessonId.startsWith('LSN-1')) {
+      db.learnerData.learningState.activeAccordionLevel = 'level-1';
+    } else if (lessonId.startsWith('LSN-2')) {
+      db.learnerData.learningState.activeAccordionLevel = 'level-2';
+    } else if (lessonId.startsWith('LSN-3')) {
+      db.learnerData.learningState.activeAccordionLevel = 'level-3';
+    }
+    
+    // Reset transient activity states for the new lesson
+    if (db.learnerData.flashcardState) {
+      db.learnerData.flashcardState.currentIndex = 0;
+      db.learnerData.flashcardState.isFlipped = false;
+    }
+    if (db.learnerData.quizState) {
+      db.learnerData.quizState.selectedAnswers = {};
+      db.learnerData.quizState.submitted = false;
+    }
+    if (db.learnerData.codelabState) {
+      const lesson = LearnerCurriculum.getLesson(lessonId);
+      db.learnerData.codelabState.code = lesson.codelab?.starter || '';
+      db.learnerData.codelabState.testsPassed = false;
+      db.learnerData.codelabState.activeTab = 'reducer';
+    }
+
+    Notifications.push("Curriculum Navigation", `Switched to ${lessonId}`, "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  switchOdinActivityFormat(formatType) {
+    if (!db.learnerData) return;
+    if (!db.learnerData.learningState) db.learnerData.learningState = {};
+    db.learnerData.learningState.selectedActivityFormat = formatType;
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  toggleOdinAccordion(levelId) {
+    if (!db.learnerData) return;
+    if (!db.learnerData.learningState) db.learnerData.learningState = {};
+    if (db.learnerData.learningState.activeAccordionLevel === levelId) {
+      db.learnerData.learningState.activeAccordionLevel = null;
+    } else {
+      db.learnerData.learningState.activeAccordionLevel = levelId;
+    }
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  switchLearnerCourse(courseId) {
+    if (!db.learnerData) return;
+    if (!db.learnerData.profile) db.learnerData.profile = {};
+    db.learnerData.profile.activeCourseId = courseId;
+    window.selectedPreviewCourseId = courseId;
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.selectedCourseId = courseId;
+    }
+    Notifications.push("Course Switched", `Switched active course context to ${courseId}.`, "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  // --------------------------------------------------------------------------
+  // COURSE PREVIEWS INTERACTIVE SUITE ACTIONS (PORT-001 - PORT-004)
+  // --------------------------------------------------------------------------
+  previewCatalogueCourse(courseId) {
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.selectedCourseId = courseId;
+      window.LearnerPreviewEngine.previewState.activeFormat = "guide";
+    }
+    window.selectedPreviewCourseId = courseId;
+    if (db.learnerData && db.learnerData.profile) {
+      db.learnerData.profile.activeCourseId = courseId;
+    }
+    Router.navigate("learner-explore-previews");
+  },
+
+  switchPreviewCourse(courseId) {
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.selectedCourseId = courseId;
+      window.LearnerPreviewEngine.previewState.activeFormat = "guide";
+    }
+    window.selectedPreviewCourseId = courseId;
+    if (db.learnerData && db.learnerData.profile) {
+      db.learnerData.profile.activeCourseId = courseId;
+    }
+    Notifications.push("Course Preview", `Switched preview to ${courseId}`, "info");
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    } else {
+      Router.navigate("learner-explore-previews");
+    }
+  },
+
+  switchPreviewFormat(formatId) {
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.activeFormat = formatId;
+    }
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  flipPreviewFlashcard() {
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.flashcardFlipped = !window.LearnerPreviewEngine.previewState.flashcardFlipped;
+    }
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  nextPreviewFlashcard() {
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.flashcardIndex = (window.LearnerPreviewEngine.previewState.flashcardIndex + 1) % 3;
+      window.LearnerPreviewEngine.previewState.flashcardFlipped = false;
+    }
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  prevPreviewFlashcard() {
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.flashcardIndex = (window.LearnerPreviewEngine.previewState.flashcardIndex - 1 + 3) % 3;
+      window.LearnerPreviewEngine.previewState.flashcardFlipped = false;
+    }
+    if (Router.currentRoute === "learner-explore-previews") {
+      RenderEngine.learnerWorkspace("learner-explore-previews");
+    }
+  },
+
+  calculatePreviewMath() {
+    const a = parseFloat(document.getElementById('calc-a-input')?.value || 1);
+    const b = parseFloat(document.getElementById('calc-b-input')?.value || -5);
+    const c = parseFloat(document.getElementById('calc-c-input')?.value || 6);
+
+    if (window.LearnerPreviewEngine) {
+      window.LearnerPreviewEngine.previewState.calcA = a;
+      window.LearnerPreviewEngine.previewState.calcB = b;
+      window.LearnerPreviewEngine.previewState.calcC = c;
+    }
+
+    const delta = (b * b) - (4 * a * c);
+    let bStr = b >= 0 ? `+ ${b}` : `- ${Math.abs(b)}`;
+    let cStr = c >= 0 ? `+ ${c}` : `- ${Math.abs(c)}`;
+    let solutionHtml = `<strong>Step-by-Step Derivation for: ${a}x² ${bStr}x ${cStr} = 0</strong><br>`;
+    solutionHtml += `1. Compute Discriminant: Δ = b² - 4ac = (${b})² - 4(${a})(${c}) = ${b*b} - ${4*a*c} = <strong>${delta}</strong><br>`;
+
+    if (delta > 0) {
+      const root1 = ((-b + Math.sqrt(delta)) / (2 * a)).toFixed(2);
+      const root2 = ((-b - Math.sqrt(delta)) / (2 * a)).toFixed(2);
+      solutionHtml += `2. Quadratic Formula: x = (-b ± √Δ) / 2a = (${-b} ± √${delta}) / ${2*a}<br>`;
+      solutionHtml += `3. Root 1: x₁ = (${-b} + ${Math.sqrt(delta).toFixed(2)}) / ${2*a} = <strong>${root1}</strong><br>`;
+      solutionHtml += `4. Root 2: x₂ = (${-b} - ${Math.sqrt(delta).toFixed(2)}) / ${2*a} = <strong>${root2}</strong><br>`;
+      solutionHtml += `<span style="color:#166534; font-weight:700; display:block; margin-top:4px;">✓ Two distinct real roots. Verified against FBISE standard mark scheme.</span>`;
+    } else if (delta === 0) {
+      const root = (-b / (2 * a)).toFixed(2);
+      solutionHtml += `2. Repeated Real Root: x = -b / 2a = ${-b} / ${2*a} = <strong>${root}</strong><br>`;
+      solutionHtml += `<span style="color:#166534; font-weight:700; display:block; margin-top:4px;">✓ One repeated real root.</span>`;
+    } else {
+      const realPart = (-b / (2 * a)).toFixed(2);
+      const imagPart = (Math.sqrt(Math.abs(delta)) / (2 * a)).toFixed(2);
+      solutionHtml += `2. Since Discriminant Δ < 0, there are no real roots. Roots are complex conjugate: <strong>${realPart} ± ${imagPart}i</strong><br>`;
+      solutionHtml += `<span style="color:#b45309; font-weight:700; display:block; margin-top:4px;">⚠ Complex conjugate roots.</span>`;
+    }
+
+    const box = document.getElementById('math-calc-solution-box');
+    if (box) box.innerHTML = solutionHtml;
+    Notifications.push('Calculation Complete', 'Step-by-step mathematical derivation updated.', 'success');
+  },
+
+  toggleOdinOutcome(lessonId, outcomeIdx) {
+    const lesson = LearnerCurriculum.getLesson(lessonId);
+    if (lesson && lesson.outcomes && lesson.outcomes[outcomeIdx]) {
+      lesson.outcomes[outcomeIdx].checked = !lesson.outcomes[outcomeIdx].checked;
+      const status = lesson.outcomes[outcomeIdx].checked ? "completed" : "unmarked";
+      Notifications.push("Outcome Checkpoint", `Self-assessment outcome #${outcomeIdx + 1} marked ${status}.`, "info");
+    }
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  // FLASHCARD ACTIONS
+  flipFlashcard() {
+    if (!db.learnerData.flashcardState) {
+      db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {}, needsReview: {} };
+    }
+    db.learnerData.flashcardState.isFlipped = !db.learnerData.flashcardState.isFlipped;
+    const cardEl = document.getElementById("active-flashcard-card");
+    if (cardEl) {
+      cardEl.classList.toggle("flipped", db.learnerData.flashcardState.isFlipped);
+    } else {
+      const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+      RenderEngine.learnerWorkspace(targetRoute);
+    }
+  },
+
+  prevFlashcard() {
+    if (!db.learnerData.flashcardState) {
+      db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {}, needsReview: {} };
+    }
+    const lessonId = db.learnerData.learningState?.selectedLessonId || "LSN-202";
+    const lesson = LearnerCurriculum.getLesson(lessonId);
+    const total = lesson.flashcards?.length || 1;
+    db.learnerData.flashcardState.currentIndex = (db.learnerData.flashcardState.currentIndex - 1 + total) % total;
+    db.learnerData.flashcardState.isFlipped = false;
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  nextFlashcard() {
+    if (!db.learnerData.flashcardState) {
+      db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {}, needsReview: {} };
+    }
+    const lessonId = db.learnerData.learningState?.selectedLessonId || "LSN-202";
+    const lesson = LearnerCurriculum.getLesson(lessonId);
+    const total = lesson.flashcards?.length || 1;
+    db.learnerData.flashcardState.currentIndex = (db.learnerData.flashcardState.currentIndex + 1) % total;
+    db.learnerData.flashcardState.isFlipped = false;
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  markFlashcardMastered(cardId) {
+    if (!db.learnerData.flashcardState) {
+      db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {}, needsReview: {} };
+    }
+    db.learnerData.flashcardState.mastered[cardId] = true;
+    delete db.learnerData.flashcardState.needsReview[cardId];
+    Notifications.push("Spaced Recall", `Card marked as Mastered! 🎉`, "success");
+    this.nextFlashcard();
+  },
+
+  markFlashcardNeedReview(cardId) {
+    if (!db.learnerData.flashcardState) {
+      db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {}, needsReview: {} };
+    }
+    db.learnerData.flashcardState.needsReview[cardId] = true;
+    delete db.learnerData.flashcardState.mastered[cardId];
+    Notifications.push("Spaced Recall", `Card marked for extra practice.`, "warning");
+    this.nextFlashcard();
+  },
+
+  shuffleFlashcards() {
+    if (!db.learnerData.flashcardState) db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {} };
+    db.learnerData.flashcardState.currentIndex = 0;
+    db.learnerData.flashcardState.isFlipped = false;
+    Notifications.push("Deck Shuffled", "Flashcard deck randomized for active recall.", "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  resetFlashcards() {
+    db.learnerData.flashcardState = { currentIndex: 0, isFlipped: false, mastered: {}, needsReview: {} };
+    Notifications.push("Deck Reset", "Flashcards reset to card 1.", "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  // VIDEO ACTIONS
+  toggleVideoPlay() {
+    if (!db.learnerData.videoState) {
+      db.learnerData.videoState = { isPlaying: false, currentTime: 374, speed: '1.0x', notes: [] };
+    }
+    db.learnerData.videoState.isPlaying = !db.learnerData.videoState.isPlaying;
+    const status = db.learnerData.videoState.isPlaying ? "Playing (1080p HD Stream)" : "Paused";
+    Notifications.push("Video Player", `Masterclass stream ${status}`, "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  seekVideo(seconds, title) {
+    if (!db.learnerData.videoState) {
+      db.learnerData.videoState = { isPlaying: false, currentTime: 0, speed: '1.0x', notes: [] };
+    }
+    db.learnerData.videoState.currentTime = seconds;
+    Notifications.push("Video Chapters", `Jumped to ${title}`, "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  seekVideoTrack(event) {
+    const track = event.currentTarget;
+    const rect = track.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const percent = Math.max(0, Math.min(1, clickX / rect.width));
+    const seconds = Math.round(percent * 1122);
+    if (!db.learnerData.videoState) db.learnerData.videoState = { isPlaying: false, currentTime: 0, speed: '1.0x', notes: [] };
+    db.learnerData.videoState.currentTime = seconds;
+    Notifications.push("Seek Video", `Seeked to ${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`, "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  setVideoSpeed(speed) {
+    if (!db.learnerData.videoState) db.learnerData.videoState = { isPlaying: false, currentTime: 374, speed: '1.0x', notes: [] };
+    db.learnerData.videoState.speed = speed;
+    Notifications.push("Playback Speed", `Speed set to ${speed}`, "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  addVideoNote() {
+    const input = document.getElementById("video-note-input");
+    if (!input || !input.value.trim()) return;
+    const text = input.value.trim();
+    input.value = "";
+    if (!db.learnerData.videoState) db.learnerData.videoState = { isPlaying: false, currentTime: 374, speed: '1.0x', notes: [] };
+    if (!db.learnerData.videoState.notes) db.learnerData.videoState.notes = [];
+    db.learnerData.videoState.notes.unshift({ id: Date.now(), time: "06:14", text: text });
+    
+    const list = document.getElementById("video-notes-list");
+    if (list) {
+      const item = document.createElement("div");
+      item.style.cssText = "background:var(--surface-container-low); padding:6px 10px; border-radius:6px; display:flex; justify-content:space-between; margin-bottom:4px;";
+      item.innerHTML = `<span>${text}</span><span style="color:var(--primary); font-weight:700;">⏱️ 06:14</span>`;
+      list.prepend(item);
+    }
+    Notifications.push("Note Saved", `Timestamped note added at 06:14.`, "success");
+  },
+
+  toggleReadingTheme() {
+    Notifications.push("Reading Mode", "Reading theme toggled (Clean / Sepia / Dark).", "info");
+  },
+
+  copyReadingCode(elementId) {
+    const el = document.getElementById(elementId);
+    if (el) {
+      navigator.clipboard?.writeText(el.innerText);
+      Notifications.push("Code Copied", "TypeScript code copied to clipboard.", "success");
+    }
+  },
+
+  // CODELAB & JEST RUNNER ACTIONS
+  switchCodelabTab(tabName) {
+    if (!db.learnerData.codelabState) db.learnerData.codelabState = { activeTab: tabName, code: '', testsPassed: false };
+    db.learnerData.codelabState.activeTab = tabName;
+    const lessonId = db.learnerData.learningState?.selectedLessonId || "LSN-202";
+    const lesson = LearnerCurriculum.getLesson(lessonId);
+
+    if (tabName === "types") {
+      db.learnerData.codelabState.code = `export interface AuthState {\n  status: 'idle' | 'loading' | 'authenticated' | 'error';\n  token: string | null;\n  error: string | null;\n}`;
+    } else if (tabName === "tests") {
+      db.learnerData.codelabState.code = `import { authReducer } from '../authReducer';\n\ndescribe('authReducer State Machine', () => {\n  test('transitions to loading on LOGIN_START', () => {\n    const next = authReducer({ status: 'idle', token: null, error: null }, { type: 'LOGIN_START' });\n    expect(next.status).toBe('loading');\n  });\n});`;
+    } else {
+      db.learnerData.codelabState.code = lesson.codelab?.starter || '';
+    }
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  runOdinJestTests() {
+    const consoleEl = document.getElementById("preview-codelab-console");
+    if (consoleEl) {
+      consoleEl.innerHTML = '<span style="color:#facc15;"><i data-lucide="loader-2" class="spin" style="vertical-align:middle;"></i> Running Jest test assertion suites in worker isolate...</span>';
+    }
+
+    setTimeout(() => {
+      if (!db.learnerData.codelabState) db.learnerData.codelabState = {};
+      db.learnerData.codelabState.testsPassed = true;
+      Notifications.push("Jest Suite Passed", "✓ 4 of 4 test assertions passed with 100% code coverage.", "success");
+      const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+      RenderEngine.learnerWorkspace(targetRoute);
+    }, 900);
+  },
+
+  resetCodelabCode() {
+    const lessonId = db.learnerData.learningState?.selectedLessonId || "LSN-202";
+    const lesson = LearnerCurriculum.getLesson(lessonId);
+    if (!db.learnerData.codelabState) db.learnerData.codelabState = {};
+    db.learnerData.codelabState.code = lesson.codelab?.starter || '';
+    db.learnerData.codelabState.testsPassed = false;
+    Notifications.push("Codelab Reset", "Starter template reloaded.", "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  loadModelCodelabSolution() {
+    if (!db.learnerData.codelabState) db.learnerData.codelabState = {};
+    db.learnerData.codelabState.code = `export interface AuthState {\n  status: 'idle' | 'loading' | 'authenticated' | 'error';\n  token: string | null;\n  error: string | null;\n}\n\nexport function authReducer(state: AuthState, action: { type: string; payload?: any }): AuthState {\n  switch (action.type) {\n    case 'LOGIN_START':\n      return { ...state, status: 'loading', error: null };\n    case 'LOGIN_SUCCESS':\n      return { ...state, status: 'authenticated', token: action.payload.token, error: null };\n    case 'LOGIN_FAILURE':\n      return { ...state, status: 'error', error: action.payload.error };\n    case 'LOGOUT':\n      return { status: 'idle', token: null, error: null };\n    default:\n      return state;\n  }\n}`;
+    Notifications.push("Solution Loaded", "Reference model solution loaded into editor.", "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  // QUIZ ACTIONS
+  selectQuizAnswer(qIdx, optIdx) {
+    if (!db.learnerData.quizState) db.learnerData.quizState = { selectedAnswers: {}, submitted: false };
+    db.learnerData.quizState.selectedAnswers[qIdx] = optIdx;
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  submitOdinQuiz(lessonId) {
+    const lesson = LearnerCurriculum.getLesson(lessonId);
+    const quiz = lesson.quiz || [];
+    const quizState = db.learnerData.quizState || { selectedAnswers: {} };
+    
+    let correctCount = 0;
+    quiz.forEach((q, idx) => {
+      if (quizState.selectedAnswers[idx] === q.correct) correctCount++;
+    });
+
+    const percent = Math.round((correctCount / (quiz.length || 1)) * 100);
+    if (percent >= 80) {
+      Notifications.push("Quiz Passed (FLOW-019)", `Score: ${percent}% (${correctCount}/${quiz.length} correct). Gatekeeper requirement met!`, "success");
+      this.completeOdinActivity(lessonId);
+    } else {
+      Notifications.push("Quiz Incomplete", `Score: ${percent}%. Pass mark is 80%. Review explanations and try again!`, "warning");
+    }
+  },
+
+  resetOdinQuiz(lessonId) {
+    db.learnerData.quizState = { selectedAnswers: {}, submitted: false };
+    Notifications.push("Quiz Reset", "You can now retake this diagnostic check.", "info");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
+  },
+
+  // VOICE ACTIONS
+  startOdinVoiceRecording() {
+    Notifications.push("Voice Studio", "Recording live 60-second verbal architecture defense drill...", "info");
+    setTimeout(() => {
+      Notifications.push("Audio Captured", "1:00 high-fidelity voice recording captured! AI acoustic analysis ready.", "success");
+      if (!db.learnerData.voiceState) db.learnerData.voiceState = {};
+      db.learnerData.voiceState.hasRecorded = true;
+    }, 1200);
+  },
+
+  playOdinVoiceRecording() {
+    Notifications.push("Audio Playback", "Playing back verbal defense recording (0:54s)...", "info");
+  },
+
+  submitOdinVoiceDefense(lessonId) {
+    Notifications.push("Rubric Evaluation (FLOW-020)", "AI Scorecard: 96/100 (C1 Proficient). Audio recording dispatched to faculty reviewer.", "success");
+    this.completeOdinActivity(lessonId);
+  },
+
+  // PROJECT CAPSTONE ACTIONS
+  submitOdinProject(lessonId) {
+    const repo = document.getElementById("odin-project-repo")?.value || "https://github.com/zainab-malik/react-auth-state-machine";
+    const demo = document.getElementById("odin-project-demo")?.value || "https://auth-demo.vercel.app";
+    Notifications.push("Project Submitted (FLOW-020)", `Repository ${repo} & live demo ${demo} dispatched to Prof. Alex Rivera.`, "success");
+    this.completeOdinActivity(lessonId);
+  },
+
+  // ADVANCEMENT & COMPLETION
+  completeOdinActivity(lessonId) {
+    const course = db.learnerData?.activeCourses?.find(c => c.id === "CRS-101");
+    if (course) {
+      course.progressPercent = Math.min(100, (course.progressPercent || 75) + 10);
+    }
+
+    if (db.learnerData?.learningState?.progressEvents) {
+      const hash = "0x" + Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0');
+      db.learnerData.learningState.progressEvents.push({
+        id: "PRG-" + Date.now(),
+        targetId: lessonId || "LSN-202",
+        event: "PASSED_AND_RECORDED",
+        at: "Just now",
+        evidence: `Lesson Assertions 100% Passed · Cryptographic SHA-256 Event Hash: ${hash}`
+      });
+    }
+
+    // Auto-advance to next sequential lesson if applicable
+    if (lessonId === "LSN-202") {
+      db.learnerData.learningState.selectedLessonId = "LSN-203";
+    }
+
+    Notifications.push("Lesson Complete (FLOW-018)", `Progress updated to ${course?.progressPercent || 85}%! Next milestone unlocked.`, "success");
+    const targetRoute = Router.currentRoute === "learner-explore-previews" ? "learner-explore-previews" : "learner-learning-continue";
+    RenderEngine.learnerWorkspace(targetRoute);
   },
 
   openLearnerNoteModal() {
@@ -12270,10 +16955,8 @@ Actions.setLearnerActiveCourse = function(courseId) {
 };
 
 Actions.openLearnerCourseWorkspace = function(courseCode) {
-  this.setLearnerActiveCourse(courseCode);
-  if (courseCode === "CRS-103") Router.navigate("learner-schedule-upcoming");
-  else if (courseCode === "CRS-101") Router.navigate("learner-learning-milestones");
-  else if (courseCode.startsWith("K12")) Router.navigate("learner-k12-subjects");
+  this.switchLearnerCourse(courseCode);
+  Router.navigate("learner-learning-continue");
 };
 
 Actions.openLearnerJoinClassModal = function(classId) {
@@ -12857,24 +17540,33 @@ const Simulator = {
     const urlParams = new URLSearchParams(window.location.search);
     const roleParam = urlParams.get("role");
     const viewParam = urlParams.get("view");
+    
+    if (selector) {
+      selector.addEventListener("change", () => {
+        this.setRole(selector.value);
+      });
+    }
+    
     if (roleParam && selector) {
       selector.value = roleParam;
       this.setRole(roleParam, viewParam);
     } else if (viewParam) {
       Router.navigate(viewParam);
     }
-    selector.addEventListener("change", () => {
-      this.setRole(selector.value);
-    });
     
     // Stop impersonating sidebar footer button
-    document.getElementById("sidebar-stop-impersonate").addEventListener("click", () => {
+    document.getElementById("sidebar-stop-impersonate")?.addEventListener("click", () => {
       Actions.stopImpersonation();
     });
   },
 
   setRole(roleKey, targetRoute) {
     this.activeRole = roleKey;
+    
+    const selector = document.getElementById("role-simulator-select");
+    if (selector && selector.value !== roleKey) {
+      selector.value = roleKey;
+    }
     
     // Update active profile layout
     const adminName = document.getElementById("admin-display-name");
@@ -12924,6 +17616,8 @@ const Simulator = {
     const isReviewer = roleKey === "academic_reviewer";
     const isTrainer = roleKey === "trainer";
     const isLearner = roleKey === "learner";
+    const isPlatformAdmin = !isCoo && !isOm && !isCsr && !isCreator && !isReviewer && !isTrainer && !isLearner;
+
     const appShell = document.querySelector(".admin-container");
     if (appShell) {
       appShell.classList.toggle("role-coo", isCoo);
@@ -12936,7 +17630,7 @@ const Simulator = {
       appShell.dataset.activeRole = roleKey;
     }
 
-    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer || isLearner);
+    document.getElementById("platform-admin-nav")?.classList.toggle("hidden", !isPlatformAdmin);
     document.getElementById("coo-nav")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-nav")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-nav")?.classList.toggle("hidden", !isCsr);
@@ -12945,11 +17639,17 @@ const Simulator = {
     document.getElementById("trainer-nav")?.classList.toggle("hidden", !isTrainer);
     document.getElementById("learner-nav")?.classList.toggle("hidden", !isLearner);
 
-    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", isCoo || isOm || isCsr || isCreator || isReviewer || isTrainer || isLearner);
+    document.getElementById("platform-dashboard-shell")?.classList.toggle("hidden", !isPlatformAdmin);
     document.getElementById("coo-dashboard-shell")?.classList.toggle("hidden", !isCoo);
     document.getElementById("om-dashboard-shell")?.classList.toggle("hidden", !isOm);
     document.getElementById("csr-dashboard-shell")?.classList.toggle("hidden", !isCsr);
-    document.getElementById("creator-dashboard-shell")?.classList.toggle("hidden", !isCreator);
+    
+    const creatorShell = document.getElementById("creator-dashboard-shell");
+    if (creatorShell) {
+      creatorShell.classList.toggle("hidden", !isCreator);
+      creatorShell.style.display = isCreator ? "flex" : "none";
+    }
+    
     document.getElementById("reviewer-dashboard-shell")?.classList.toggle("hidden", !isReviewer);
     document.getElementById("trainer-dashboard-shell")?.classList.toggle("hidden", !isTrainer);
     document.getElementById("learner-dashboard-shell")?.classList.toggle("hidden", !isLearner);
@@ -12980,6 +17680,7 @@ const Simulator = {
     }
     document.title = `IHS 2.0 ${details.role} Console`;
 
+    if (isPlatformAdmin) RenderEngine.adminDashboard();
     if (isOm) updateOmBadges();
     if (isCsr) RenderEngine.csrDashboard();
     if (isCreator) RenderEngine.creatorDashboard();
@@ -12993,6 +17694,8 @@ const Simulator = {
     // Redirect to target route or dashboard on role swap to refresh layout
     Router.navigate(targetRoute || "dashboard");
     
+    if (window.lucide) window.lucide.createIcons();
+
     // Notify
     Notifications.push("Simulator Session Swapped", `Logged in user context resolved to ${details.role}. Permissions updated.`, "info");
   },
@@ -13196,11 +17899,48 @@ function updateFreshnessText() {
 // ============================================================================
 
 
+const ModalA11y = {
+  trigger: null,
+  init() {
+    const overlay = document.getElementById("generic-modal");
+    if (!overlay) return;
+    const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const observer = new MutationObserver(() => {
+      if (!overlay.classList.contains("hidden")) {
+        this.trigger = document.activeElement;
+        requestAnimationFrame(() => overlay.querySelector(focusableSelector)?.focus());
+      } else if (this.trigger instanceof HTMLElement && document.contains(this.trigger)) {
+        this.trigger.focus();
+      }
+    });
+    observer.observe(overlay, { attributes: true, attributeFilter: ["class"] });
+    overlay.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        overlay.classList.add("hidden");
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = [...overlay.querySelectorAll(focusableSelector)].filter(element => element.offsetParent !== null);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+  }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   // Init core components
   Router.init();
   Simulator.init();
   Notifications.init();
+  ModalA11y.init();
 
   const requestedRole = new URLSearchParams(window.location.search).get("role");
   const roleSelector = document.getElementById("role-simulator-select");
@@ -13212,69 +17952,78 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Render the requested workspace when a view query is present; otherwise open Dashboard.
   const requestedView = new URLSearchParams(window.location.search).get("view");
-  const validRequestedView = requestedView && (document.getElementById(`view-${requestedView}`) || (Simulator.activeRole === "coo" && cooRouteDefinitions[requestedView]) || (Simulator.activeRole === "operational_manager" && omRouteDefinitions[requestedView]) || (Simulator.activeRole === "csr" && csrRouteDefinitions[requestedView]) || (Simulator.activeRole === "course_creator" && creatorRouteDefinitions[requestedView]));
+  const validRequestedView = requestedView && (
+    document.getElementById(`view-${requestedView}`) ||
+    (Simulator.activeRole === "learner" && learnerRouteDefinitions[requestedView]) ||
+    (Simulator.activeRole === "trainer" && trainerRouteDefinitions[requestedView]) ||
+    (Simulator.activeRole === "academic_reviewer" && reviewerRouteDefinitions[requestedView]) ||
+    (Simulator.activeRole === "coo" && cooRouteDefinitions[requestedView]) ||
+    (Simulator.activeRole === "operational_manager" && omRouteDefinitions[requestedView]) ||
+    (Simulator.activeRole === "csr" && csrRouteDefinitions[requestedView]) ||
+    (Simulator.activeRole === "course_creator" && creatorRouteDefinitions[requestedView])
+  );
   Router.navigate(validRequestedView ? requestedView : "dashboard");
 
   // Start freshness time tracking
   startFreshnessCounter();
 
   // Attach search filters listeners dynamically
-  document.getElementById("users-search").addEventListener("input", () => RenderEngine.users());
-  document.getElementById("users-role-filter").addEventListener("change", () => RenderEngine.users());
-  document.getElementById("users-status-filter").addEventListener("change", () => RenderEngine.users());
+  document.getElementById("users-search")?.addEventListener("input", () => RenderEngine.users());
+  document.getElementById("users-role-filter")?.addEventListener("change", () => RenderEngine.users());
+  document.getElementById("users-status-filter")?.addEventListener("change", () => RenderEngine.users());
   
-  document.getElementById("invitations-search").addEventListener("input", () => RenderEngine.invitations());
+  document.getElementById("invitations-search")?.addEventListener("input", () => RenderEngine.invitations());
   
-  document.getElementById("ref-data-category-select").addEventListener("change", () => RenderEngine.referenceData());
+  document.getElementById("ref-data-category-select")?.addEventListener("change", () => RenderEngine.referenceData());
   
-  document.getElementById("webhook-logs-search").addEventListener("input", () => RenderEngine.webhooks());
-  document.getElementById("webhook-logs-status").addEventListener("change", () => {
+  document.getElementById("webhook-logs-search")?.addEventListener("input", () => RenderEngine.webhooks());
+  document.getElementById("webhook-logs-status")?.addEventListener("change", () => {
     // Reset router filters and render
     Router.filters.status = "";
     RenderEngine.webhooks();
   });
 
-  document.getElementById("queue-jobs-search").addEventListener("input", () => RenderEngine.queueJobs());
-  document.getElementById("queue-jobs-status").addEventListener("change", () => RenderEngine.queueJobs());
+  document.getElementById("queue-jobs-search")?.addEventListener("input", () => RenderEngine.queueJobs());
+  document.getElementById("queue-jobs-status")?.addEventListener("change", () => RenderEngine.queueJobs());
 
-  document.getElementById("imports-search").addEventListener("input", () => RenderEngine.imports());
+  document.getElementById("imports-search")?.addEventListener("input", () => RenderEngine.imports());
   
-  document.getElementById("archive-search").addEventListener("input", () => RenderEngine.archive());
+  document.getElementById("archive-search")?.addEventListener("input", () => RenderEngine.archive());
 
-  document.getElementById("audit-logs-search").addEventListener("input", () => RenderEngine.auditLogs());
-  document.getElementById("audit-logs-module").addEventListener("change", () => RenderEngine.auditLogs());
+  document.getElementById("audit-logs-search")?.addEventListener("input", () => RenderEngine.auditLogs());
+  document.getElementById("audit-logs-module")?.addEventListener("change", () => RenderEngine.auditLogs());
 
   // Incident resolution action
-  document.getElementById("resolve-incident-btn").addEventListener("click", () => Actions.resolveIncident());
+  document.getElementById("resolve-incident-btn")?.addEventListener("click", () => Actions.resolveIncident());
 
   // Save Matrix Permissions button
-  document.getElementById("btn-save-role-permissions").addEventListener("click", () => Actions.saveRolePermissions());
-  document.getElementById("btn-create-role").addEventListener("click", () => Actions.createRoleTemplate());
-  document.getElementById("btn-assign-role").addEventListener("click", () => Actions.openRoleAssignment());
+  document.getElementById("btn-save-role-permissions")?.addEventListener("click", () => Actions.saveRolePermissions());
+  document.getElementById("btn-create-role")?.addEventListener("click", () => Actions.createRoleTemplate());
+  document.getElementById("btn-assign-role")?.addEventListener("click", () => Actions.openRoleAssignment());
 
   // Quick Action triggers
-  document.getElementById("qa-flush-deadletters").addEventListener("click", () => Actions.flushDeadLetters());
-  document.getElementById("qa-trigger-backup").addEventListener("click", () => {
+  document.getElementById("qa-flush-deadletters")?.addEventListener("click", () => Actions.flushDeadLetters());
+  document.getElementById("qa-trigger-backup")?.addEventListener("click", () => {
     Notifications.push("Ledger Backup Run", "Supabase DB Core operational backup synchronized successfully.", "success");
     Actions.audit("BACKUP_COMPLETED", "Manual backup replication run finished.", "Medium");
     freshnessSeconds = 0;
     updateFreshnessText();
   });
-  document.getElementById("qa-force-retention").addEventListener("click", () => Actions.runRetentionChecks());
-  document.getElementById("qa-clear-cache").addEventListener("click", () => {
+  document.getElementById("qa-force-retention")?.addEventListener("click", () => Actions.runRetentionChecks());
+  document.getElementById("qa-clear-cache")?.addEventListener("click", () => {
     Notifications.push("Cache Evicted", "Successfully flushed Edge Node translation caches (12 objects).", "success");
     Actions.audit("CACHE_EVICTED", "Platform edge cache cleared manually.", "Low");
   });
-  document.getElementById("qa-impersonate-toggle").addEventListener("click", () => Router.navigate("support-access"));
+  document.getElementById("qa-impersonate-toggle")?.addEventListener("click", () => Router.navigate("support-access"));
 
   // Support page launch controls
-  document.getElementById("btn-start-impersonation").addEventListener("click", () => Actions.startImpersonation());
-  document.getElementById("btn-stop-impersonation").addEventListener("click", () => Actions.stopImpersonation());
-  document.getElementById("sidebar-stop-impersonate").addEventListener("click", () => Actions.stopImpersonation());
+  document.getElementById("btn-start-impersonation")?.addEventListener("click", () => Actions.startImpersonation());
+  document.getElementById("btn-stop-impersonation")?.addEventListener("click", () => Actions.stopImpersonation());
+  document.getElementById("sidebar-stop-impersonate")?.addEventListener("click", () => Actions.stopImpersonation());
 
   // Bulk buttons
-  document.getElementById("btn-flush-deadletters").addEventListener("click", () => Actions.flushDeadLetters());
-  document.getElementById("btn-retry-all-failed").addEventListener("click", () => {
+  document.getElementById("btn-flush-deadletters")?.addEventListener("click", () => Actions.flushDeadLetters());
+  document.getElementById("btn-retry-all-failed")?.addEventListener("click", () => {
     const failed = db.jobs.filter(j => j.status === "Failed");
     failed.forEach(j => {
       j.status = "Queued";
@@ -13286,7 +18035,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Router.renderView("failed-jobs");
     RenderEngine.dashboard();
   });
-  document.getElementById("btn-clear-deadletters").addEventListener("click", () => {
+  document.getElementById("btn-clear-deadletters")?.addEventListener("click", () => {
     const count = db.jobs.filter(j => j.status === "Dead-letter").length;
     db.jobs = db.jobs.filter(j => j.status !== "Dead-letter");
     Actions.audit("DEAD_LETTERS_CLEARED", `Permanently dropped ${count} dead-letter queue records.`, "High");
