@@ -12184,11 +12184,18 @@ const RenderEngine = {
     container.classList.remove("hidden");
     container.style.display = "flex";
 
+    const allCourses = db.creatorData.courses || [];
+    const draftCount = allCourses.filter(c => c.stage === "Draft").length;
+    const inReviewCount = allCourses.filter(c => c.stage === "In Review").length;
+    const approvedCount = allCourses.filter(c => c.stage === "Approved").length;
+    const publishedCount = allCourses.filter(c => c.stage === "Published").length;
+    const openComments = (db.creatorData.reviewComments || []).filter(c => c.status === "Open" || c.severity === "Blocking");
+
     const pipelineStages = [
-      { code: "01. DRAFT", title: "Syllabus Authoring", desc: "Construct levels, milestones, lessons, activities, and link assessment items.", count: "2 Versions", statusText: "2 in Progress", icon: "edit-3", route: "creator-courses-draft", badgeClass: "badge-warning" },
-      { code: "02. REVIEW", title: "Academic Peer Review", desc: "Locked drafts undergoing pedagogical evaluation and rubric verification.", count: "1 In Review", statusText: "1 Under Review", icon: "file-search", route: "creator-courses-review", badgeClass: "badge-warning" },
-      { code: "03. APPROVED", title: "Awaiting Publication", desc: "Cleared academic review. Ready for commercial catalogue release.", count: "1 Approved", statusText: "1 Ready to Publish", icon: "check-circle", route: "creator-courses-approved", badgeClass: "badge-success" },
-      { code: "04. LIVE", title: "Published & Immutable", desc: "Actively serving learners. Protected from in-place drift.", count: "2 Live", statusText: "2 Live in Catalogue", icon: "archive", route: "creator-courses-published", badgeClass: "badge-success" }
+      { stageKey: "Draft", code: "01. DRAFT", title: "Syllabus Authoring", desc: "Construct levels, milestones, lessons, activities, and link assessment items.", count: `${draftCount} Courses`, statusText: `${draftCount} in Progress`, icon: "edit-3", badgeClass: "badge-warning" },
+      { stageKey: "In Review", code: "02. REVIEW", title: "Academic Peer Review", desc: "Locked drafts undergoing pedagogical evaluation and rubric verification.", count: `${inReviewCount} In Review`, statusText: `${inReviewCount} Under Review`, icon: "file-search", badgeClass: "badge-warning" },
+      { stageKey: "Approved", code: "03. APPROVED", title: "Awaiting Publication", desc: "Cleared academic review. Ready for commercial catalogue release.", count: `${approvedCount} Approved`, statusText: `${approvedCount} Ready to Publish`, icon: "check-circle", badgeClass: "badge-success" },
+      { stageKey: "Published", code: "04. LIVE", title: "Published & Immutable", desc: "Actively serving learners. Protected from in-place drift.", count: `${publishedCount} Live`, statusText: `${publishedCount} Live in Catalogue`, icon: "archive", badgeClass: "badge-success" }
     ];
 
     container.innerHTML = `
@@ -12199,11 +12206,11 @@ const RenderEngine = {
           <div class="creator-flight-top-row">
             <div class="creator-flight-heading-box">
               <div class="creator-flight-tag">
-                <i data-lucide="book-open"></i> COURSE AUTHORING & SYLLABUS STUDIO
+                <i data-lucide="book-open"></i> COURSE AUTHORING & SYLLABUS COMMAND (CAT-001 / FLOW-009)
               </div>
-              <h2 class="creator-flight-title">Authoring Command & Portfolio Hub</h2>
+              <h2 class="creator-flight-title">Authoring Command & Curriculum Studio Hub</h2>
               <p class="creator-flight-subtitle">
-                Author structured course syllabi, configure automated milestone gatekeepers, manage centralized question banks, and submit draft versions for Academic Board review.
+                Author structured 5-tier course syllabi, configure automated milestone gatekeepers, manage centralized question banks, simulate guest vs learner view, and submit draft versions for Academic Board review.
               </p>
             </div>
             
@@ -12214,8 +12221,11 @@ const RenderEngine = {
               <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorValidationModal('VER-102')">
                 <i data-lucide="check-square"></i> Pre-Flight Check
               </button>
+              <button class="btn btn-secondary btn-sm" onclick="Actions.exportCreatorSyllabusBlueprint('CRS-101')">
+                <i data-lucide="file-json"></i> Export Blueprint
+              </button>
               <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()">
-                <i data-lucide="plus"></i> New Course
+                <i data-lucide="plus"></i> Author New Course
               </button>
             </div>
           </div>
@@ -12227,7 +12237,7 @@ const RenderEngine = {
               <div class="chip-content">
                 <span>Lead Author</span>
                 <strong>Dr. Arsalan Khan</strong>
-                <small>Faculty of Computing</small>
+                <small>Faculty of Computing & Secondary Ed</small>
               </div>
             </div>
 
@@ -12235,8 +12245,8 @@ const RenderEngine = {
               <div class="chip-icon"><i data-lucide="layers"></i></div>
               <div class="chip-content">
                 <span>Assigned Portfolio</span>
-                <strong>6 Courses</strong>
-                <small>Tech, Spoken & K-12</small>
+                <strong>${allCourses.length} Courses</strong>
+                <small>Tech, Spoken & K-12 FBISE</small>
               </div>
             </div>
 
@@ -12244,7 +12254,7 @@ const RenderEngine = {
               <div class="chip-icon"><i data-lucide="git-branch"></i></div>
               <div class="chip-content">
                 <span>Active Drafts</span>
-                <strong>2 Versions</strong>
+                <strong>${draftCount} Versions</strong>
                 <small>Syllabus In Authoring</small>
               </div>
             </div>
@@ -12254,75 +12264,23 @@ const RenderEngine = {
               <div class="chip-content">
                 <span>Segregation Boundary</span>
                 <strong>Authoring Scope Only</strong>
-                <small>Pricing & publishing locked</small>
+                <small>CAT-001: Commercial pricing locked</small>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="creator-scope-bar">
-          <div class="creator-scope-title">
-            <i data-lucide="sliders"></i>
-            <div>
-              <strong>AUTHORING SCOPE & CATALOGUE TELEMETRY</strong>
-              <small>Real-time Course State Sync · Academic Year 2026/27</small>
-            </div>
-          </div>
-          <div class="creator-scope-filters">
-            <div class="creator-scope-field">
-              <label>Programme Track</label>
-              <select id="creator-track-filter" class="form-control">
-                <option value="">All Programmes (Vocational, Literacy, Spoken, K-12)</option>
-                <option value="Vocational">Vocational Skills</option>
-                <option value="Literacy">Basic Literacy</option>
-                <option value="Spoken">Spoken English</option>
-                <option value="K-12">K-12 Tuition</option>
-              </select>
-            </div>
-            <div class="creator-scope-field">
-              <label>Delivery Model</label>
-              <select id="creator-model-filter" class="form-control">
-                <option value="">All Delivery Models</option>
-                <option value="Self-paced">Self-paced Milestone</option>
-                <option value="Live Scheduled">Live Scheduled</option>
-                <option value="K-12 Live Tuition">K-12 Live Tuition</option>
-              </select>
-            </div>
-            <div class="creator-scope-field">
-              <label>Lifecycle Stage</label>
-              <select id="creator-stage-filter" class="form-control">
-                <option value="">All Stages</option>
-                <option value="Draft">Draft</option>
-                <option value="In Review">In Review</option>
-                <option value="Approved">Approved</option>
-                <option value="Published">Published</option>
-              </select>
-            </div>
-            <div class="creator-scope-field">
-              <label>Action Shortcut</label>
-              <select id="creator-action-shortcut" class="form-control" onchange="if(this.value) { Router.navigate(this.value); this.value=''; }">
-                <option value="">Quick Navigate...</option>
-                <option value="creator-syllabus-milestones">Milestone Progression</option>
-                <option value="creator-syllabus-lessons">Lesson Builder</option>
-                <option value="creator-assessments-bank">Question Bank</option>
-                <option value="creator-resources-library">Resource Vault</option>
-                <option value="creator-rules-prerequisites">Prerequisite Rules</option>
-                <option value="creator-preview">Learner Simulator</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
+        <!-- 4-Stage Course Lifecycle Pipeline Matrix -->
         <div class="creator-pipeline-matrix">
           ${pipelineStages.map(stage => `
-            <div class="creator-stage-card" onclick="Router.navigate('${stage.route}')">
-              <div class="creator-stage-head">
-                <span class="creator-stage-code">${stage.code}</span>
+            <div class="creator-matrix-card" onclick="Actions.setCreatorStageFilter('${stage.stageKey}')" style="cursor: pointer;" title="Filter portfolio by ${stage.title}">
+              <div class="creator-matrix-header">
+                <span class="creator-matrix-step">${stage.code}</span>
                 <span class="badge ${stage.badgeClass}">${stage.count}</span>
               </div>
               <h4>${stage.title}</h4>
               <p>${stage.desc}</p>
-              <div class="creator-stage-foot">
+              <div class="creator-matrix-footer">
                 <span>${stage.statusText}</span>
                 <i data-lucide="arrow-right"></i>
               </div>
@@ -12330,70 +12288,198 @@ const RenderEngine = {
           `).join("")}
         </div>
 
+        <!-- Authoring Scope & Interactive Telemetry Filter Bar -->
+        <div class="creator-scope-bar">
+          <div class="creator-scope-header">
+            <div class="creator-scope-title">
+              <i data-lucide="sliders-horizontal"></i>
+              <span>Authoring Scope & Portfolio Telemetry</span>
+            </div>
+            <div class="creator-scope-status">
+              <span class="pulse-dot"></span>
+              <span id="creator-filtered-course-count">Real-time Course State Sync · Academic Year 2026/27</span>
+            </div>
+          </div>
+          <div class="creator-scope-grid">
+            <div class="form-group">
+              <label>Search Portfolio</label>
+              <input type="text" id="creator-search-input" class="form-control" placeholder="Search title, code, modules, tags..." oninput="Actions.filterCreatorDashboardCourses()">
+            </div>
+            <div class="form-group">
+              <label>Programme Track</label>
+              <select id="creator-track-filter" class="form-control" onchange="Actions.filterCreatorDashboardCourses()">
+                <option value="">All Programmes (Vocational, Literacy, Spoken, K-12)</option>
+                <option value="Vocational Skills">Vocational Skills</option>
+                <option value="Basic Literacy">Basic Literacy</option>
+                <option value="Spoken English">Spoken English</option>
+                <option value="K-12">K-12 Secondary</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Delivery Model</label>
+              <select id="creator-model-filter" class="form-control" onchange="Actions.filterCreatorDashboardCourses()">
+                <option value="">All Delivery Models</option>
+                <option value="Self-paced Milestone">Self-paced Milestone (MILE)</option>
+                <option value="Live Scheduled">Live Scheduled (LIVE)</option>
+                <option value="K-12 Live Tuition">K-12 Live Tuition (K12)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Lifecycle Stage</label>
+              <select id="creator-stage-filter" class="form-control" onchange="Actions.filterCreatorDashboardCourses()">
+                <option value="">All Stages</option>
+                <option value="Draft">Draft (In Authoring)</option>
+                <option value="In Review">In Review (Academic Board)</option>
+                <option value="Approved">Approved (Awaiting Publish)</option>
+                <option value="Published">Published / Live</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Action Shortcuts</label>
+              <select id="creator-action-shortcut" class="form-control" onchange="if(this.value) { Router.navigate(this.value); this.value=''; }">
+                <option value="">Quick Navigate...</option>
+                <option value="creator-syllabus-milestones">Milestones Roadmap</option>
+                <option value="creator-syllabus-lessons">Lesson Content Studio</option>
+                <option value="creator-assessments-bank">Central Question Bank</option>
+                <option value="creator-assessments-voice">Voice Activities Studio</option>
+                <option value="creator-resources-library">Resource Vault</option>
+                <option value="creator-rules-prerequisites">Progression Rules</option>
+                <option value="creator-review-comments">Reviewer Feedback (${openComments.length})</option>
+                <option value="creator-preview">Learner Simulation</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Authored Courses Portfolio Table Card -->
+        <div class="creator-portfolio-card">
+          <div class="creator-portfolio-header">
+            <h3><i data-lucide="book-open"></i> Assigned Authored Courses Portfolio</h3>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.resetCreatorFilters()"><i data-lucide="rotate-ccw"></i> Reset Filters</button>
+              <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorNewCourseModal()"><i data-lucide="plus"></i> New Course</button>
+            </div>
+          </div>
+          <div class="table-container" style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Course Entity & Code</th>
+                  <th>Delivery Model</th>
+                  <th>Active Version</th>
+                  <th>Curriculum Volume</th>
+                  <th>Stage</th>
+                  <th style="min-width:260px;">Authoring Actions</th>
+                </tr>
+              </thead>
+              <tbody id="creator-dashboard-courses-body">
+                <!-- Dynamically populated via Actions.filterCreatorDashboardCourses() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dual Action Queues Grid (Reviewer Feedback & Pre-Flight Validation) -->
         <div class="creator-queues-grid">
-          <div class="creator-queue-panel">
+          
+          <!-- Queue 1: Reviewer Feedback Queue -->
+          <div class="creator-queue-card">
             <div class="creator-queue-header">
               <div>
-                <h4><i data-lucide="message-square"></i> Reviewer Feedback & Comments (CAT-010)</h4>
-                <small>Action items returned by Academic Reviewers requiring syllabus adjustment.</small>
+                <h4 class="creator-queue-title"><i data-lucide="message-square"></i> Reviewer Feedback & Comments (CAT-010)</h4>
+                <p class="creator-queue-desc">Action items returned by Academic Reviewers requiring syllabus adjustment.</p>
               </div>
-              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-review-comments')">View all (2)</button>
+              <button class="text-btn" onclick="Router.navigate('creator-review-comments')">View all (${db.creatorData.reviewComments.length})</button>
             </div>
-            <div class="creator-feedback-list">
-              ${db.creatorData.reviewComments.slice(0, 2).map(comm => `
-                <div class="creator-feedback-item ${comm.severity.toLowerCase()}">
-                  <div class="creator-feedback-meta">
-                    <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity}</span>
-                    <strong>${comm.courseTitle}</strong> · <span>${comm.item}</span>
+            <div class="creator-queue-list">
+              ${db.creatorData.reviewComments.slice(0, 3).map(comm => `
+                <div class="creator-action-row" style="background:#fdfbf7; border:1px solid rgba(124,119,102,0.18); border-radius:10px; padding:14px 16px;">
+                  <div class="creator-action-info">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity}</span>
+                      <span class="creator-action-title">${comm.courseTitle}</span>
+                      <small style="color:var(--slate);">· ${comm.item}</small>
+                    </div>
+                    <p style="font-size:12.5px; color:var(--navy-medium); margin:0 0 6px 0; line-height:1.45;">${comm.comment}</p>
+                    <span class="creator-action-sub">Reviewer: <strong>${comm.reviewer}</strong> · ${comm.date}</span>
                   </div>
-                  <p>${comm.comment}</p>
-                  <div class="creator-feedback-actions">
-                    <small>Reviewer: ${comm.reviewer} · ${comm.date}</small>
-                    <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorReviewComment('${comm.id}')">Address Feedback</button>
+                  <div class="button-row" style="display:flex; align-items:center; gap:6px;">
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorReviewComment('${comm.id}')">
+                      <i data-lucide="check-circle"></i> Address
+                    </button>
                   </div>
                 </div>
               `).join("")}
             </div>
           </div>
 
-          <div class="creator-queue-panel">
+          <!-- Queue 2: Pre-Flight Validation Checks -->
+          <div class="creator-queue-card">
             <div class="creator-queue-header">
               <div>
-                <h4><i data-lucide="shield-alert"></i> Pre-Flight Validation Ready (FLOW-009)</h4>
-                <small>Automated structural integrity audits before review submission.</small>
+                <h4 class="creator-queue-title"><i data-lucide="shield-check"></i> Pre-Flight Validation Ready (FLOW-009)</h4>
+                <p class="creator-queue-desc">Automated structural integrity audits before review submission.</p>
               </div>
-              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-review-validation')">View all</button>
+              <button class="text-btn" onclick="Router.navigate('creator-review-validation')">View all</button>
             </div>
-            <div class="creator-validation-list">
-              <div class="creator-validation-card pass">
-                <div class="creator-val-head">
-                  <span class="badge badge-success"><i data-lucide="check"></i> 100% READY</span>
-                  <strong>Modern Full-Stack Web Dev (v1.2)</strong>
+            <div class="creator-queue-list">
+              
+              <div class="creator-action-row" style="background:#fdfbf7; border:1px solid rgba(124,119,102,0.18); border-left:4px solid #16a34a; border-radius:10px; padding:14px 16px;">
+                <div class="creator-action-info">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span class="badge badge-success"><i data-lucide="check"></i> 100% READY</span>
+                    <span class="creator-action-title">Modern Full-Stack Web Dev (v1.2)</span>
+                  </div>
+                  <p style="font-size:12px; color:#4a586e; margin:0 0 4px 0;">Metadata complete, 28 Lessons verified, 4 Gatekeepers armed, SHA-256 clean.</p>
+                  <span class="creator-action-sub">Assigned: Dr. Arsalan Khan · Self-paced Milestone</span>
                 </div>
-                <p>Metadata complete, 28 Lessons verified, 4 Gatekeepers armed, SHA-256 clean.</p>
-                <div class="creator-val-foot">
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-102')">Audit Report</button>
+                <div class="button-row" style="display:flex; gap:6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-102')">Audit</button>
                   <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('VER-102')">Submit to Board</button>
                 </div>
               </div>
 
-              <div class="creator-validation-card pass" style="border-left-color: var(--primary);">
-                <div class="creator-val-head">
-                  <span class="badge badge-secondary">AUTHORING IN PROGRESS</span>
-                  <strong>Grade 8 Mathematics (v1.1)</strong>
+              <div class="creator-action-row" style="background:#fdfbf7; border:1px solid rgba(124,119,102,0.18); border-left:4px solid var(--primary); border-radius:10px; padding:14px 16px;">
+                <div class="creator-action-info">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span class="badge badge-secondary">IN PROGRESS</span>
+                    <span class="creator-action-title">Grade 8 Mathematics (v1.1)</span>
+                  </div>
+                  <p style="font-size:12px; color:#4a586e; margin:0 0 4px 0;">Curriculum outlines complete. 10 Worksheets attached. Awaiting Term 2 rubrics.</p>
+                  <span class="creator-action-sub">Assigned: Dr. Arsalan Khan · K-12 FBISE</span>
                 </div>
-                <p>Curriculum outlines complete. 10 Worksheets attached. Awaiting Term 2 rubrics.</p>
-                <div class="creator-val-foot">
-                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-k12-syllabi')">Open Syllabus</button>
+                <div class="button-row" style="display:flex; gap:6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-k12-curriculum')">Syllabus</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('VER-104')">Validate Draft</button>
                 </div>
               </div>
+
+              <div class="creator-action-row" style="background:#fdfbf7; border:1px solid rgba(124,119,102,0.18); border-left:4px solid #f59e0b; border-radius:10px; padding:14px 16px;">
+                <div class="creator-action-info">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <span class="badge badge-warning">IN REVIEW</span>
+                    <span class="creator-action-title">Foundational Urdu & English (v2.0)</span>
+                  </div>
+                  <p style="font-size:12px; color:#4a586e; margin:0 0 4px 0;">Locked for Academic Review Board inspection by Prof. Tariq Mahmood.</p>
+                  <span class="creator-action-sub">Review SLA: 48h · 1 open pedagogical citation</span>
+                </div>
+                <div class="button-row" style="display:flex; gap:6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorReviewComment('COM-702')">Inspect Citation</button>
+                </div>
+              </div>
+
             </div>
           </div>
+
         </div>
+
       </div>
     `;
 
+    // Populate initial courses table
+    if (window.Actions?.filterCreatorDashboardCourses) {
+      Actions.filterCreatorDashboardCourses();
+    }
     window.lucide?.createIcons();
   },
 
@@ -19316,6 +19402,195 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("generic-modal").classList.add("hidden");
     if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
     else RenderEngine.creatorWorkspace(Router.currentRoute);
+  };
+
+  Actions.filterCreatorDashboardCourses = function() {
+    const track = document.getElementById("creator-track-filter")?.value || "";
+    const model = document.getElementById("creator-model-filter")?.value || "";
+    const stage = document.getElementById("creator-stage-filter")?.value || "";
+    const search = (document.getElementById("creator-search-input")?.value || "").toLowerCase().trim();
+
+    const tbody = document.getElementById("creator-dashboard-courses-body");
+    if (!tbody) return;
+
+    let courses = db.creatorData.courses || [];
+
+    if (track) {
+      courses = courses.filter(c => c.programme && c.programme.toLowerCase().includes(track.toLowerCase()));
+    }
+    if (model) {
+      courses = courses.filter(c => c.deliveryModel && c.deliveryModel.toLowerCase().includes(model.toLowerCase()));
+    }
+    if (stage) {
+      courses = courses.filter(c => c.stage && c.stage.toLowerCase() === stage.toLowerCase());
+    }
+    if (search) {
+      courses = courses.filter(c => 
+        (c.title && c.title.toLowerCase().includes(search)) || 
+        (c.code && c.code.toLowerCase().includes(search)) || 
+        (c.author && c.author.toLowerCase().includes(search)) ||
+        (c.description && c.description.toLowerCase().includes(search))
+      );
+    }
+
+    const countEl = document.getElementById("creator-filtered-course-count");
+    if (countEl) {
+      countEl.textContent = `Showing ${courses.length} of ${(db.creatorData.courses || []).length} Assigned Courses`;
+    }
+
+    if (courses.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" style="text-align:center; padding:32px; color:var(--slate);">
+            <div style="font-size:14px; font-weight:600; color:var(--navy-medium); margin-bottom:4px;">No courses matching criteria</div>
+            <div style="font-size:12px; margin-bottom:10px;">Try adjusting your search query, programme track, or delivery model filter.</div>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.resetCreatorFilters()"><i data-lucide="rotate-ccw"></i> Reset Filters</button>
+          </td>
+        </tr>
+      `;
+      window.lucide?.createIcons();
+      return;
+    }
+
+    tbody.innerHTML = courses.map(c => {
+      let stageBadge = "badge-secondary";
+      if (c.stage === "Published") stageBadge = "badge-success";
+      else if (c.stage === "Approved") stageBadge = "badge-primary";
+      else if (c.stage === "In Review") stageBadge = "badge-warning";
+      else if (c.stage === "Draft") stageBadge = "badge-secondary";
+
+      let modelBadge = "badge-primary";
+      if (c.deliveryModel.includes("Milestone")) modelBadge = "badge-secondary";
+      else if (c.deliveryModel.includes("K-12")) modelBadge = "badge-warning";
+
+      return `
+        <tr>
+          <td>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <strong style="color:var(--navy-medium); font-size:13.5px;">${c.title}</strong>
+              <span class="table-subline" style="font-family:monospace; font-size:11px; color:var(--slate);">${c.code} · ${c.faculty}</span>
+            </div>
+          </td>
+          <td><span class="badge ${modelBadge}">${c.deliveryModel}</span></td>
+          <td><span style="font-weight:600; font-size:12px; color:var(--navy-medium);">${c.activeVersion}</span></td>
+          <td>
+            <span style="font-size:12px; font-weight:600; color:var(--navy-medium);">${c.modulesCount} Modules · ${c.lessonsCount} Lessons</span>
+            <div style="font-size:11px; color:var(--slate);">${c.estimatedEffort}</div>
+          </td>
+          <td><span class="badge ${stageBadge}">${c.stage}</span></td>
+          <td>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorCourseDetails('${c.id}')" title="Inspect & Author Syllabus">
+                <i data-lucide="layers"></i> Syllabus
+              </button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('${c.id}')" title="Run Pre-Flight Integrity Check">
+                <i data-lucide="shield-check"></i> Validate
+              </button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorPreviewModal('${c.id}')" title="Simulate Learner & Guest View">
+                <i data-lucide="eye"></i> Preview
+              </button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorNewVersionModal('${c.id}')" title="Branch New Semantic Version">
+                <i data-lucide="git-branch"></i> +Version
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+    window.lucide?.createIcons();
+  };
+
+  Actions.setCreatorStageFilter = function(stage) {
+    const stageSel = document.getElementById("creator-stage-filter");
+    if (stageSel) {
+      stageSel.value = stage;
+      Actions.filterCreatorDashboardCourses();
+    }
+    const tableCard = document.querySelector(".creator-portfolio-card");
+    if (tableCard) {
+      tableCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  Actions.resetCreatorFilters = function() {
+    const track = document.getElementById("creator-track-filter");
+    const model = document.getElementById("creator-model-filter");
+    const stage = document.getElementById("creator-stage-filter");
+    const search = document.getElementById("creator-search-input");
+    if (track) track.value = "";
+    if (model) model.value = "";
+    if (stage) stage.value = "";
+    if (search) search.value = "";
+    Actions.filterCreatorDashboardCourses();
+  };
+
+  Actions.exportCreatorSyllabusBlueprint = function(courseId) {
+    const course = (db.creatorData.courses || []).find(c => c.id === courseId) || (db.creatorData.courses || [])[0] || {
+      id: "CRS-101",
+      code: "TECH-FSW-101",
+      title: "Modern Full-Stack Web Development",
+      deliveryModel: "Self-paced Milestone",
+      activeVersion: "v1.2 (Draft)",
+      author: "Dr. Arsalan Khan",
+      stage: "Draft"
+    };
+
+    const blueprint = {
+      specVersion: "IHS-LMS-v2.2",
+      flowRef: "FLOW-009",
+      deliveryModel: course.deliveryModel,
+      courseId: course.id,
+      code: course.code,
+      title: course.title,
+      activeVersion: course.activeVersion,
+      author: course.author,
+      exportedAt: new Date().toISOString(),
+      integrityHash: "sha256-4fe7589e30fc42f7968cb982f8ae752f10e8830113",
+      hierarchy5Tier: {
+        programme: course.programme || "Vocational Skills",
+        courseVersion: course.activeVersion,
+        levels: [
+          { levelNumber: 1, title: "Foundations & Runtime Environment", milestones: 2, lessonsCount: 12, gatekeeperRequiredPass: "80%" },
+          { levelNumber: 2, title: "Architecture, State & APIs", milestones: 2, lessonsCount: 16, gatekeeperRequiredPass: "85%" }
+        ],
+        rubricsLinked: 4,
+        questionBankItemsLinked: 28,
+        voiceAssessmentItems: 2
+      },
+      segregationNotice: "CAT-001: Academic content verified. Pricing and publication reserved for Catalogue Management.",
+      status: course.stage
+    };
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    if (modal && title && body && footer) {
+      title.innerHTML = `<i data-lucide="file-json" style="color:var(--primary);"></i> Export Course Syllabus Blueprint (FLOW-009)`;
+      body.innerHTML = `
+        <div class="om-flow-dialog">
+          <div class="om-flow-banner">
+            <i data-lucide="shield-check"></i>
+            <div>
+              <strong>ACADEMIC SYLLABUS BLUEPRINT MANIFEST</strong>
+              <p>Generated JSON structure for <strong>${course.title}</strong> (${course.code} · ${course.activeVersion}). This audited blueprint is ready for Academic Review Board transmission.</p>
+            </div>
+          </div>
+          <div style="background:#0f172a; color:#38bdf8; padding:14px 16px; border-radius:8px; font-family:monospace; font-size:12px; max-height:240px; overflow-y:auto; white-space:pre-wrap; border:1px solid #334155; line-height:1.4;">${JSON.stringify(blueprint, null, 2)}</div>
+          <div style="margin-top:12px; display:flex; align-items:center; gap:8px; font-size:12px; color:#166534; background:#f0fdf4; padding:10px 14px; border-radius:6px; border:1px solid #bbf7d0;">
+            <i data-lucide="check-circle-2"></i> SHA-256 Checksum Verified · All 5-Tier Level, Milestone and Rubric entities validated.
+          </div>
+        </div>
+      `;
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+        <button class="btn btn-primary" onclick="Notifications.push('Blueprint Downloaded', 'Syllabus JSON manifest saved.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Download Blueprint JSON</button>
+      `;
+      modal.classList.remove("hidden");
+      window.lucide?.createIcons();
+    }
   };
 
   Actions.openCreatorNewVersionModal = function(courseId) {

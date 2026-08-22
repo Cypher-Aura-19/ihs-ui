@@ -8452,16 +8452,47 @@ td:last-child {
   height: 18px !important;
 }
 
-.creator-queue-desc {
-  font-size: 12px !important;
-  color: var(--slate) !important;
-  margin: 4px 0 0 0 !important;
-}
-
 .creator-queue-list {
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
+}
+
+/* Creator Dashboard Portfolio Table Card */
+.creator-portfolio-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.2) !important;
+  border-radius: 14px !important;
+  padding: 24px 28px !important;
+  box-shadow: 0 4px 16px rgba(70, 55, 28, 0.035) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+.creator-portfolio-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
+  padding-bottom: 14px !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+}
+
+.creator-portfolio-header h3 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font: 700 17px/1.2 'Manrope', sans-serif !important;
+  color: var(--navy-medium) !important;
+  margin: 0 !important;
+}
+
+.creator-portfolio-header h3 i {
+  color: var(--primary) !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .creator-action-row {
