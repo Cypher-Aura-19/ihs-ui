@@ -2507,7 +2507,12 @@ const db = {
       { id: "PAY-802", learner: "Areeba Siddiqui", payer: "Areeba Siddiqui (Self)", course: "Applied Numeracy Cohort N4", submittedAmount: "PKR 24,000", expectedAmount: "PKR 24,000", channel: "Bank Transfer (HBL Direct)", reference: "HBL-449102", receiptChecksum: "sha256:3a1b8890c...", receiptFile: "hbl_transfer_802.pdf", age: "3h ago", status: "Under Review", csr: "Sarah Jenkins" },
       { id: "PAY-803", learner: "Hassan Ali", payer: "Tariq Ali (Guardian)", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Easypaisa Direct", reference: "EP-883011", receiptChecksum: "sha256:e4190822c...", receiptFile: "easypaisa_803.jpg", age: "5h ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
       { id: "PAY-804", learner: "Danish Qureshi", payer: "Danish Qureshi", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Allied Bank)", reference: "ABL-772109", receiptChecksum: "sha256:c9918231a...", receiptFile: "abl_receipt_804.pdf", age: "4d ago", status: "Approved", csr: "Sarah Jenkins" },
-      { id: "PAY-805", learner: "Farhan Malik", payer: "Farhan Malik", course: "Vocational Technology", submittedAmount: "PKR 25,000", expectedAmount: "PKR 35,000", channel: "JazzCash", reference: "JC-112290", receiptChecksum: "sha256:b1129988e...", receiptFile: "jazzcash_805.jpg", age: "1d ago", status: "Rejected / Correction", csr: "Sarah Jenkins" }
+      { id: "PAY-805", learner: "Farhan Malik", payer: "Farhan Malik", course: "Vocational Technology", submittedAmount: "PKR 25,000", expectedAmount: "PKR 35,000", channel: "JazzCash", reference: "JC-112290", receiptChecksum: "sha256:b1129988e...", receiptFile: "jazzcash_805.jpg", age: "1d ago", status: "Rejected / Correction", csr: "Sarah Jenkins" },
+      { id: "PAY-806", learner: "Kamran Siddiqui", payer: "Kamran Siddiqui", course: "Vocational Technology", submittedAmount: "PKR 35,000", expectedAmount: "PKR 35,000", channel: "Bank Alfalah Direct", reference: "BAF-990142", receiptChecksum: "sha256:4a810982d...", receiptFile: "alfalah_slip_806.pdf", age: "45m ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
+      { id: "PAY-807", learner: "Nida Yasmeen", payer: "Yasmeen Akhtar (Parent)", course: "Applied Numeracy Cohort N4", submittedAmount: "PKR 24,000", expectedAmount: "PKR 24,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-7719201", receiptChecksum: "sha256:9c124099a...", receiptFile: "meezan_slip_807.pdf", age: "2h ago", status: "Under Review", csr: "Sarah Jenkins" },
+      { id: "PAY-808", learner: "Bilal Ahmed", payer: "Ahmed Raza (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-5510294", receiptChecksum: "sha256:8d33109a1...", receiptFile: "meezan_receipt_808.pdf", age: "6d ago", status: "Approved", csr: "Sarah Jenkins" },
+      { id: "PAY-809", learner: "Fatima Zahra", payer: "Zahra Begum (Mother)", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Bank Transfer (Standard Chartered)", reference: "SCB-229104", receiptChecksum: "sha256:1a847098e...", receiptFile: "scb_receipt_809.pdf", age: "12d ago", status: "Approved", csr: "Sarah Jenkins" },
+      { id: "PAY-810", learner: "Usman Ghani", payer: "Usman Ghani", course: "Vocational Technology", submittedAmount: "PKR 15,000", expectedAmount: "PKR 35,000", channel: "Nayapay Wallet", reference: "NP-883011", receiptChecksum: "sha256:6e190333c...", receiptFile: "nayapay_810.jpg", age: "2d ago", status: "Rejected / Correction", csr: "Sarah Jenkins" }
     ],
     commissions: [
       { id: "COM-901", enrolmentId: "AEN-703", learner: "Danish Qureshi", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-11" },
@@ -2516,14 +2521,22 @@ const db = {
       { id: "COM-904", enrolmentId: "AEN-705", learner: "Areeba Siddiqui", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-16" },
       { id: "COM-905", enrolmentId: "AEN-690", learner: "Sana Mir", product: "Dual Course Bundle", salesValue: "PKR 38,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,800", status: "Paid", payrollPeriod: "Jul 2026", date: "2026-07-28" },
       { id: "COM-906", enrolmentId: "AEN-691", learner: "Omar Khalid", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Paid", payrollPeriod: "Jul 2026", date: "2026-07-25" },
-      { id: "COM-907", enrolmentId: "AEN-680", learner: "Tariq Mahmood", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-02" }
+      { id: "COM-907", enrolmentId: "AEN-680", learner: "Tariq Mahmood", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-02" },
+      { id: "COM-908", enrolmentId: "AEN-712", learner: "Fatima Zahra", product: "K-12 Grade 8 Math", salesValue: "PKR 32,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,200", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-14" },
+      { id: "COM-909", enrolmentId: "AEN-701", learner: "Kamran Siddiqui", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-18" },
+      { id: "COM-910", enrolmentId: "AEN-710", learner: "Sana Mir (Renewal)", product: "Tajweed Mastery 1:1", salesValue: "PKR 18,000", plan: "Renewal Commission Plan (8%)", commissionAmount: "PKR 1,440", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-15" },
+      { id: "COM-911", enrolmentId: "AEN-665", learner: "Waqas Sheikh", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Paid", payrollPeriod: "Jun 2026", date: "2026-06-30" },
+      { id: "COM-912", enrolmentId: "AEN-650", learner: "Rashid Ali", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Reversed", payrollPeriod: "Jul 2026", date: "2026-07-10" }
     ],
     cases: [
       { id: "CAS-401", subject: "Prospect inquiring about evening 1:1 slot availability", category: "Prospect Inquiry", priority: "Medium", sla: "1h 45m remaining", prospect: "Zubair Hashmi", owner: "Sarah Jenkins", status: "In Review" },
       { id: "CAS-402", subject: "Trial placement score discrepancy clarification", category: "Trial Issue", priority: "High", sla: "35m remaining", prospect: "Mariam Tariq", owner: "Sarah Jenkins", status: "In Review" },
       { id: "CAS-403", subject: "Parent requesting fee instalment breakdown for K-12", category: "Payment Inquiry", priority: "Medium", sla: "4h 20m remaining", prospect: "Areeba Farooq", owner: "Sarah Jenkins", status: "Open" },
       { id: "CAS-404", subject: "Assisted checkout bank transfer slip confirmation", category: "Enrolment Support", priority: "Low", sla: "Met", prospect: "Danish Qureshi", owner: "Sarah Jenkins", status: "Resolved" },
-      { id: "CAS-405", subject: "Learner rescheduling trial consultation due to power outage", category: "Trial Reschedule", priority: "Low", sla: "Met", prospect: "Kamran Siddiqui", owner: "Sarah Jenkins", status: "Resolved" }
+      { id: "CAS-405", subject: "Learner rescheduling trial consultation due to power outage", category: "Trial Reschedule", priority: "Low", sla: "Met", prospect: "Kamran Siddiqui", owner: "Sarah Jenkins", status: "Resolved" },
+      { id: "CAS-406", subject: "Parent requesting female trainer preference for Tajweed", category: "Special Request", priority: "High", sla: "50m remaining", prospect: "Hamza Qureshi", owner: "Sarah Jenkins", status: "Open" },
+      { id: "CAS-407", subject: "Corporate invoice generation for vocational student sponsorship", category: "B2B Billing", priority: "Medium", sla: "2h 15m remaining", prospect: "Tariq Mahmood", owner: "Sarah Jenkins", status: "In Review" },
+      { id: "CAS-408", subject: "LMS mobile app login token credential reset", category: "Technical Access", priority: "Low", sla: "Met", prospect: "Bilal Ahmed", owner: "Sarah Jenkins", status: "Resolved" }
     ]
   },
 
@@ -18297,13 +18310,37 @@ const RenderEngine = {
       return `<tr><th>Prospect / Enrolment ID</th><th>Programme</th><th>Membership / Product</th><th>Order Amount</th><th>CSR Attribution</th><th>Status</th><th>Actions</th></tr>`;
     }
     if (dataType === "payments") {
+      if (route === "csr-payment-queue") {
+        return `<tr><th>Slip / Submission ID</th><th>Payer / Course Track</th><th>Submitted vs Expected</th><th>Payment Channel</th><th>SHA-256 Checksum</th><th>Queue Age</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-payment-under-review") {
+        return `<tr><th>Claimed Slip ID / Learner</th><th>Programme Track</th><th>Payable Amount</th><th>Review Lock TTL</th><th>Payer & Reference</th><th>Lock State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-payment-approved") {
+        return `<tr><th>Verified Receipt ID</th><th>Learner & Programme</th><th>Cleared Amount</th><th>Settlement Ledger Ref</th><th>Audit Checksum</th><th>Approval State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-payment-rejected") {
+        return `<tr><th>Rejected Slip ID</th><th>Learner / Payer</th><th>Submitted vs Expected</th><th>Rejection Reason</th><th>Contact Channel</th><th>Correction State</th><th>Actions</th></tr>`;
+      }
       return `<tr><th>Submission / Learner</th><th>Payer / Course</th><th>Submitted vs Expected</th><th>Channel & Reference</th><th>Checksum / Receipt</th><th>State</th><th>Actions</th></tr>`;
     }
     if (dataType === "commissions") {
+      if (route === "csr-commissions-pending") {
+        return `<tr><th>Commission Item ID</th><th>Enrolment Ref / Learner</th><th>Sales Value</th><th>CSR Commission Rate</th><th>Expected Payout</th><th>Qualification Condition</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-commissions-eligible") {
+        return `<tr><th>Accrual ID / Enrolment</th><th>Learner & Product</th><th>Sales Value</th><th>Entitled Commission</th><th>Settlement Payroll Run</th><th>Approval Status</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-commissions-reserved") {
+        return `<tr><th>Batch Item ID</th><th>Learner & Plan</th><th>Sales Value</th><th>Reserved Commission</th><th>Payroll Period</th><th>Batch Review State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-commissions-paid") {
+        return `<tr><th>Settlement ID / Receipt</th><th>Learner & Product</th><th>Disbursed Amount</th><th>Direct Deposit Ref</th><th>Disbursement Date</th><th>Settlement State</th><th>Actions</th></tr>`;
+      }
       return `<tr><th>Commission ID / Enrolment</th><th>Learner / Product</th><th>Sales Value</th><th>Commission Plan</th><th>Calculated Commission</th><th>Payroll State</th><th>Actions</th></tr>`;
     }
     if (dataType === "cases") {
-      return `<tr><th>Inquiry ID / Subject</th><th>Category</th><th>Priority</th><th>SLA Window</th><th>Prospect / Owner</th><th>Status</th><th>Actions</th></tr>`;
+      return `<tr><th>Inquiry ID / Subject</th><th>Customer / Prospect</th><th>Inquiry Category</th><th>Priority & SLA</th><th>Owner & Attribution</th><th>Ticket Status</th><th>Actions</th></tr>`;
     }
     return `<tr><th>Record ID</th><th>Title</th><th>Owner</th><th>Detail</th><th>Timing</th><th>State</th><th>Actions</th></tr>`;
   },
@@ -18762,6 +18799,83 @@ const RenderEngine = {
       }
 
       if (dataType === "payments") {
+        if (route === "csr-payment-queue") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.learner}</span></td>
+              <td><strong>${item.course}</strong><span class="table-subline">Payer: ${item.payer}</span></td>
+              <td><strong class="success-text">${item.submittedAmount}</strong><span class="table-subline">Expected: ${item.expectedAmount}</span></td>
+              <td>${item.channel}<span class="table-subline">${item.reference}</span></td>
+              <td><span class="om-checksum-tag">${item.receiptChecksum}</span><span class="table-subline">${item.receiptFile}</span></td>
+              <td><span class="badge ${badgeClass}">${item.age} (${item.status})</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="receipt"></i> Review Slip</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.approveCsrPayment('${item.id}')"><i data-lucide="check"></i> Approve</button>
+                  <button class="btn btn-error btn-xs" onclick="Actions.rejectCsrPayment('${item.id}')"><i data-lucide="x"></i> Reject</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-payment-under-review") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.learner}</span></td>
+              <td><strong>${item.course}</strong></td>
+              <td><strong class="success-text">${item.submittedAmount}</strong></td>
+              <td><strong class="warning-text"><i data-lucide="clock" style="width:12px;height:12px;display:inline;"></i> 24m remaining</strong><span class="table-subline">Locked by Sarah</span></td>
+              <td>${item.payer}<span class="table-subline">${item.reference}</span></td>
+              <td><span class="badge badge-warning">Under Review</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="check-circle"></i> Complete Audit</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> View Slip</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-payment-approved") {
+          return `
+            <tr>
+              <td><strong>RCP-${item.id.replace('PAY-', '10')}</strong><span class="table-subline">${item.id}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.course}</span></td>
+              <td><strong class="success-text">${item.submittedAmount}</strong></td>
+              <td><span class="font-mono text-xs">${item.reference}</span><span class="table-subline">${item.channel}</span></td>
+              <td><span class="om-checksum-tag">${item.receiptChecksum}</span></td>
+              <td><span class="badge badge-success">Verified & Cleared</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="file-check"></i> Official Receipt</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> Audit Log</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-payment-rejected") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.learner}</span></td>
+              <td>${item.payer}<span class="table-subline">${item.course}</span></td>
+              <td><strong class="error-text">${item.submittedAmount}</strong><span class="table-subline">Expected: ${item.expectedAmount}</span></td>
+              <td><strong class="error-text">Amount Shortfall</strong><span class="table-subline">PKR 10,000 deficit</span></td>
+              <td><span class="badge badge-primary">WhatsApp Notice Sent</span></td>
+              <td><span class="badge badge-error">Awaiting Resubmission</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="rotate-ccw"></i> Re-evaluate</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         return `
           <tr>
             <td><strong>${item.learner}</strong><span class="table-subline">${item.id} · ${item.age}</span></td>
@@ -18781,6 +18895,81 @@ const RenderEngine = {
       }
 
       if (dataType === "commissions") {
+        if (route === "csr-commissions-pending") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">Order: ${item.enrolmentId}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.product}</span></td>
+              <td><strong>${item.salesValue}</strong></td>
+              <td><span class="badge badge-secondary">10.0% Standard Plan</span></td>
+              <td><strong class="warning-text">${item.commissionAmount}</strong></td>
+              <td><span class="badge badge-warning">Awaiting Slip Clearance</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="badge-percent"></i> Commission Dossier</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('csr-payment-queue')"><i data-lucide="receipt"></i> Check Slip</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-commissions-eligible") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.enrolmentId}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.product}</span></td>
+              <td><strong>${item.salesValue}</strong><span class="table-subline">${item.date}</span></td>
+              <td><strong class="success-text">${item.commissionAmount}</strong></td>
+              <td><span class="badge badge-success">Aug 2026 (Settlement #PR-104)</span></td>
+              <td><span class="badge badge-success">Approved for Payout</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="file-text"></i> Payout Dossier</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="eye"></i> Audit Log</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-commissions-reserved") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.enrolmentId}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.product}</span></td>
+              <td><strong>${item.salesValue}</strong></td>
+              <td><strong class="success-text">${item.commissionAmount}</strong></td>
+              <td><span class="badge badge-primary">${item.payrollPeriod} (Batch PR-104)</span></td>
+              <td><span class="badge badge-warning">COO Clearance Pending</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="layers"></i> Batch Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-commissions-paid") {
+          return `
+            <tr>
+              <td><strong>SET-2026-${item.id.replace('COM-', '')}</strong><span class="table-subline">${item.id}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.product}</span></td>
+              <td><strong class="success-text">${item.commissionAmount}</strong><span class="table-subline">Sales: ${item.salesValue}</span></td>
+              <td><span class="font-mono text-xs">DEP-MEEZAN-${Math.floor(100000 + Math.random() * 900000)}</span></td>
+              <td>${item.date}</td>
+              <td><span class="badge badge-success">Disbursed to Bank</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="download"></i> Pay Slip</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="eye"></i> Audit</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         return `
           <tr>
             <td><strong>${item.id}</strong><span class="table-subline">Enrolment: ${item.enrolmentId}</span></td>
@@ -18802,14 +18991,15 @@ const RenderEngine = {
         return `
           <tr>
             <td><strong>${item.subject}</strong><span class="table-subline">${item.id}</span></td>
-            <td>${item.category}</td>
-            <td><span class="badge ${item.priority === 'High' ? 'badge-error' : 'badge-secondary'}">${item.priority}</span></td>
-            <td><strong>${item.sla}</strong></td>
-            <td>${item.prospect}<span class="table-subline">Owner: ${item.owner}</span></td>
+            <td><strong>${item.prospect}</strong></td>
+            <td><span class="badge badge-secondary">${item.category}</span></td>
+            <td><strong class="${item.priority === 'High' ? 'error-text' : ''}">${item.priority}</strong><span class="table-subline">${item.sla}</span></td>
+            <td><span class="badge badge-primary">${item.owner}</span></td>
             <td><span class="badge ${badgeClass}">${item.status}</span></td>
             <td>
               <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCase('${item.id}')"><i data-lucide="message-circle"></i> Reply</button>
+                <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCase('${item.id}')"><i data-lucide="message-circle"></i> Reply & Resolve</button>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.resolveCsrCase('${item.id}')"><i data-lucide="check"></i> Quick Close</button>
               </div>
             </td>
           </tr>
