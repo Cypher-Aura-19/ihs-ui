@@ -17644,8 +17644,9 @@ const RenderEngine = {
   // ==========================================================================
   omWorkspace(route) {
     const config = omRouteDefinitions[route] || {
-      hub: "Operations Management",
+      group: "Operations Management",
       title: "Operations Workspace",
+      headerTitle: "Operations Workspace",
       description: "Operational management and service delivery.",
       dataType: "classes"
     };
@@ -17659,42 +17660,43 @@ const RenderEngine = {
 
     if (dataType === "trials") {
       items = data.trials || [];
-      if (config.filter === "ready") items = items.filter(t => t.status === "Ready for Scheduling");
-      else if (config.filter === "scheduled") items = items.filter(t => t.status === "Scheduled");
-      else if (config.filter === "outcomes") items = items.filter(t => t.status === "Completed" || t.status === "Converted" || t.status === "Follow-up Required");
+      if (route === "om-ready-scheduling") items = items.filter(t => t.status === "Ready for Scheduling");
+      else if (route === "om-scheduled-trials") items = items.filter(t => t.status === "Scheduled");
+      else if (route === "om-trial-outcomes") items = items.filter(t => t.status === "Completed" || t.status === "Converted" || t.status === "Follow-up Required");
     } else if (dataType === "enrolments") {
       items = data.enrolments || [];
-      if (config.filter === "pending") items = items.filter(e => e.status === "Pending Setup");
-      else if (config.filter === "active") items = items.filter(e => e.status === "Active");
-      else if (config.filter === "multi") items = items.filter(e => e.multiCourseFlag);
+      if (route === "om-pending-setup") items = items.filter(e => e.status === "Pending Setup");
+      else if (route === "om-active-enrolments") items = items.filter(e => e.status === "Active" || e.status === "Paused");
+      else if (route === "om-multi-course") items = items.filter(e => e.multiCourseFlag || e.course.includes("&") || e.mode.includes("Multi"));
     } else if (dataType === "cohorts") {
       items = data.cohorts || [];
-      if (config.filter === "transfers") items = items.filter(c => c.capacityRisk || c.enrolled >= c.maxSeats);
+      if (route === "om-capacity-transfers") items = items.filter(c => c.capacityRisk || c.enrolled >= c.maxSeats);
     } else if (dataType === "rosters") {
       items = data.rosters || [];
+      if (route === "om-capacity-transfers") items = items.filter(r => r.status === "Transferred" || r.cohortId === "CRUN-102");
     } else if (dataType === "trainers") {
       items = data.trainers || [];
-      if (config.filter === "conflicts") items = items.filter(t => t.conflictStatus && t.conflictStatus.includes("Conflict"));
+      if (route === "om-schedule-conflicts") items = items.filter(t => t.conflictStatus && t.conflictStatus.includes("Conflict"));
     } else if (dataType === "classes") {
       items = data.classes || [];
-      if (config.filter === "today") items = items.filter(c => c.timing.includes("Today"));
-      else if (config.filter === "upcoming") items = items.filter(c => !c.timing.includes("Today"));
-      else if (config.filter === "overdue") items = items.filter(c => c.status === "Report Overdue" || c.reportStatus.includes("Overdue"));
-      else if (config.filter === "technical") items = items.filter(c => c.status === "Technical Exception" || c.technicalStatus.includes("Exception"));
-      else if (config.filter === "cancelled") items = items.filter(c => c.status === "Cancelled" || c.status === "Rescheduled");
+      if (route === "om-classes-today") items = items.filter(c => c.timing.includes("Today"));
+      else if (route === "om-classes-upcoming") items = items.filter(c => !c.timing.includes("Today"));
+      else if (route === "om-reports-due") items = items.filter(c => c.status === "Report Overdue" || c.reportStatus.includes("Overdue"));
+      else if (route === "om-technical-exceptions") items = items.filter(c => c.status === "Technical Exception" || c.technicalStatus.includes("Exception"));
+      else if (route === "om-cancelled-rescheduled") items = items.filter(c => c.status === "Cancelled" || c.type.includes("Makeup"));
     } else if (dataType === "classReviews") {
       items = data.classReviews || [];
-      if (config.filter === "pending") items = items.filter(r => r.status === "Pending Review");
-      else if (config.filter === "exceptions") items = items.filter(r => r.status === "Attendance Exception" || r.status === "Correction Requested");
-      else if (config.filter === "corrections") items = items.filter(r => r.status === "Correction Requested");
-      else if (config.filter === "approved") items = items.filter(r => r.status === "Approved");
+      if (route === "om-approval-queue" || route === "om-reports-in-review") items = items.filter(r => r.status === "Pending Review");
+      else if (route === "om-attendance-exceptions") items = items.filter(r => r.status === "Attendance Exception" || r.status === "Correction Requested");
+      else if (route === "om-correction-requests") items = items.filter(r => r.status === "Correction Requested");
+      else if (route === "om-trainer-reports") items = items.filter(r => r.status === "Approved");
     } else if (dataType === "payments") {
       items = data.payments || [];
-      if (config.filter === "pending") items = items.filter(p => p.status === "Awaiting Review");
-      else if (config.filter === "under_review") items = items.filter(p => p.status === "Under Review");
-      else if (config.filter === "approved") items = items.filter(p => p.status === "Approved");
-      else if (config.filter === "rejected") items = items.filter(p => p.status === "Correction Requested" || p.status === "Rejected");
-      else if (config.filter === "exceptions") items = items.filter(p => p.status === "Exception" || p.duplicateFlag.includes("Duplicate"));
+      if (route === "om-payment-review") items = items.filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
+      else if (route === "om-payments-under-review") items = items.filter(p => p.status === "Under Review");
+      else if (route === "om-payments-approved") items = items.filter(p => p.status === "Approved");
+      else if (route === "om-payments-rejected-correction") items = items.filter(p => p.status === "Correction Requested" || p.status === "Rejected");
+      else if (route === "om-payment-exceptions") items = items.filter(p => p.status === "Exception" || p.duplicateFlag.includes("Duplicate"));
     } else if (dataType === "entitlements") {
       items = data.entitlements || [];
     } else if (dataType === "k12") {
@@ -17709,40 +17711,47 @@ const RenderEngine = {
       items = data.analytics || [];
     }
 
-    // Top Header Markup
+    const hubName = config.group || config.hub || "Operations Management";
+    const pageTitle = config.headerTitle || config.title || "Operations Workspace";
+
+    // Top Header & Flight Strip
     const headerMarkup = `
       <div class="om-workspace-header" style="display:flex; flex-direction:column; gap:16px; margin-bottom:20px;">
         <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:20px 24px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
           <div>
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
-              <span class="badge badge-primary" style="font-size:10.5px; font-weight:700;">${config.hub.toUpperCase()}</span>
+              <span class="badge badge-primary" style="font-size:10.5px; font-weight:700;">${hubName.toUpperCase()}</span>
               <span style="font-size:12px; color:var(--slate);">Authority Scope: Operations & Delivery Gatekeeper</span>
             </div>
-            <h2 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${config.title}</h2>
+            <h2 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${pageTitle}</h2>
             <p style="font-size:12.5px; color:var(--slate); margin:0; line-height:1.4;">${config.description}</p>
           </div>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="btn btn-secondary btn-sm" onclick="Router.navigate('dashboard')">
-              <i data-lucide="layout-dashboard"></i> Command Center
+              <i data-lucide="layout-dashboard"></i> Operations Command
             </button>
-            ${dataType === 'trials' ? `
+            ${route === 'om-trial-requests' || route === 'om-ready-scheduling' ? `
               <button class="btn btn-primary btn-sm" onclick="Actions.openOmScheduleTrialModal('TRL-201')">
                 <i data-lucide="calendar-plus"></i> Schedule Trial (FLOW-007)
               </button>
-            ` : dataType === 'payments' ? `
-              <button class="btn btn-primary btn-sm" onclick="Actions.openOmPaymentReviewModal('PAY-8012')">
-                <i data-lucide="receipt"></i> Audit Next Receipt (FLOW-013)
+            ` : route === 'om-pending-setup' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmEnrolmentSetupModal('ENR-1001')">
+                <i data-lucide="settings"></i> Configure Enrolment (FLOW-013)
               </button>
-            ` : dataType === 'classReviews' ? `
+            ` : route === 'om-approval-queue' || route === 'om-classes-today' ? `
               <button class="btn btn-primary btn-sm" onclick="Actions.openOmApproveClassModal('REV-501')">
                 <i data-lucide="check-circle-2"></i> Review Delivery Report (FLOW-016)
               </button>
-            ` : dataType === 'cohorts' ? `
-              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Cohort Created', 'New 12-week course run provisioned.', 'success')">
-                <i data-lucide="plus"></i> Create Course Run
+            ` : route === 'om-payment-review' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmPaymentReviewModal('PAY-8012')">
+                <i data-lucide="receipt"></i> Audit Next Receipt (FLOW-013)
+              </button>
+            ` : route === 'om-schedule-conflicts' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmConflictResolveModal('TRN-03')">
+                <i data-lucide="alert-triangle"></i> Resolve Next Collision
               </button>
             ` : `
-              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Export Queued', 'Official records ledger downloaded.', 'info')">
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Ledger Exported', 'Official records ledger downloaded.', 'info')">
                 <i data-lucide="download"></i> Export Data Ledger
               </button>
             `}
@@ -17782,7 +17791,7 @@ const RenderEngine = {
           </div>
           <div style="display:flex; gap:8px; align-items:center;">
             <span style="font-size:12px; color:var(--slate);">Filter:</span>
-            <select id="om-workspace-filter" class="form-control inline" style="font-size:12px;">
+            <select id="om-workspace-filter" class="form-control inline" style="font-size:12px;" onchange="Actions.filterOmTable(this.value)">
               <option value="">All Statuses</option>
               <option value="Active">Active / Ready</option>
               <option value="Pending">Pending / Awaiting</option>
@@ -17793,44 +17802,133 @@ const RenderEngine = {
       </div>
     `;
 
-    // Render Data Table based on dataType
+    // Render Tailored Table based on specific route
     let tableMarkup = "";
 
-    if (dataType === "trials") {
+    if (route === "om-trial-requests" || route === "om-ready-scheduling") {
       tableMarkup = `
         <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Trial ID</th>
-                <th>Learner / Prospect</th>
-                <th>Course Programme</th>
-                <th>Placement Score</th>
+                <th>Trial ID & Intake</th>
+                <th>Learner & Guardian</th>
+                <th>Target Course Track</th>
+                <th>Diagnostic Placement</th>
                 <th>Preferred Window</th>
-                <th>Status</th>
-                <th>Trainer / Room</th>
+                <th>CSR Attribution</th>
+                <th>Qualification State</th>
                 <th>Operations Action</th>
               </tr>
             </thead>
             <tbody id="om-table-body">
               ${items.map(t => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${t.id}</strong></td>
-                  <td><strong>${t.learner}</strong><br><small style="color:var(--slate);">${t.phone || '0300-1234567'} (${t.guardian || 'Parent'})</small></td>
-                  <td>${t.course}</td>
-                  <td><span class="badge badge-primary">${t.placementScore}</span></td>
-                  <td><strong>${t.preferredSlot || t.time}</strong></td>
-                  <td><span class="badge ${t.status === 'Scheduled' ? 'badge-primary' : t.status === 'Completed' ? 'badge-success' : 'badge-warning'}">${t.status}</span></td>
-                  <td>${t.trainer ? `<strong>${t.trainer}</strong><br><small style="font-family:monospace; color:var(--primary);">${t.room || 'Daily.co room'}</small>` : '<span style="color:var(--slate);">Unassigned</span>'}</td>
                   <td>
-                    <div style="display:flex; gap:4px;">
-                      ${t.status === 'Ready for Scheduling' ? `
-                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmScheduleTrialModal('${t.id}')">Schedule (FLOW-007)</button>
-                      ` : t.status === 'Scheduled' ? `
-                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerJoinClassModal('${t.id}')">Inspect Room</button>
-                      ` : `
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Outcome Logged', 'Trial outcome verified.', 'info')">View Dossier</button>
-                      `}
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${t.id}</strong><br>
+                    <small style="color:var(--slate);">${t.date || '16 Aug 2026, 11:30'}</small>
+                  </td>
+                  <td>
+                    <strong>${t.learner}</strong><br>
+                    <small style="color:var(--slate);">${t.phone || '0300-9876543'} (${t.guardian || 'Parent'}) · <span style="color:#166534; font-weight:600;">WhatsApp Verified</span></small>
+                  </td>
+                  <td><strong>${t.course}</strong><br><small style="color:var(--slate);">${t.mode || '1:1 Live Online'}</small></td>
+                  <td>
+                    <span class="badge badge-primary" style="font-weight:700;">${t.placementScore}</span><br>
+                    <small style="color:var(--slate);">CEFR: <strong>B1 (Intermediate)</strong></small>
+                  </td>
+                  <td><strong>${t.preferredSlot || t.time}</strong></td>
+                  <td><span style="font-size:12px; color:var(--navy-medium); font-weight:600;">Bilal Khan (CSR-102)</span></td>
+                  <td><span class="badge ${t.status === 'Scheduled' ? 'badge-primary' : t.status === 'Completed' ? 'badge-success' : 'badge-warning'}">${t.status}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmScheduleTrialModal('${t.id}')"><i data-lucide="calendar-plus"></i> Schedule (FLOW-007)</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmDiagnosticModal('${t.id}')">Diagnostic</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${t.id}')">Contact</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-scheduled-trials") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Occurrence ID</th>
+                <th>Learner & Guardian</th>
+                <th>Assigned Trainer</th>
+                <th>Course & Format</th>
+                <th>Daily.co WebRTC Room</th>
+                <th>Guardian State</th>
+                <th>Join Window</th>
+                <th>Live Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary);">${t.id}</strong><br>
+                    <small style="color:var(--slate); font-weight:700;">${t.time}</small>
+                  </td>
+                  <td><strong>${t.learner}</strong><br><small style="color:var(--slate);">${t.phone || '0300-9876543'}</small></td>
+                  <td><strong>${t.trainer || 'Sara Javed'}</strong><br><small style="color:#166534;">Verified Available</small></td>
+                  <td>${t.course} (Trial · 45 mins)</td>
+                  <td>
+                    <a href="${t.room || '#'}" target="_blank" style="font-family:monospace; color:var(--primary); font-size:12px; text-decoration:underline;">${t.room || 'https://ihs.daily.co/trial-session'}</a><br>
+                    <small style="color:#166534; font-weight:600;">● Room Token Valid</small>
+                  </td>
+                  <td><span class="badge badge-success">Confirmed via SMS</span></td>
+                  <td><span class="badge badge-primary">Opens 15m prior</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${t.id}')">Inspect Telemetry</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRescheduleTrialModal('${t.id}')">Reschedule (FLOW-017)</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.sendTrialReminder('${t.id}')">Send Reminder</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-trial-outcomes") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Trial Ref & Date</th>
+                <th>Learner</th>
+                <th>Attending Trainer</th>
+                <th>Delivered Duration</th>
+                <th>Trainer Evaluation</th>
+                <th>Conversion Intent</th>
+                <th>Assigned CSR</th>
+                <th>Conversion Actions</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${t.id}</strong><br><small style="color:var(--slate);">15 Aug 2026</small></td>
+                  <td><strong>${t.learner}</strong><br><small style="color:var(--slate);">${t.phone || '0300-9876543'}</small></td>
+                  <td><strong>${t.trainer || 'Sara Javed'}</strong></td>
+                  <td><strong style="color:#166534;">44 Mins (Reconciled)</strong></td>
+                  <td><small style="color:var(--navy-dark); font-style:italic;">"${t.evaluation || 'Strong aptitude in grammar formulation. Ready for Grade 8 curriculum.'}"</small></td>
+                  <td><span class="badge badge-success">High Conversion Intent</span></td>
+                  <td><span style="font-size:12px; font-weight:600;">Bilal Khan (CSR-102)</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmDiagnosticModal('${t.id}')">Evaluation Dossier</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmEnrolmentSetupModal('${t.id}')">Initiate Enrolment (FLOW-013)</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${t.id}')">Contact Guardian</button>
                     </div>
                   </td>
                 </tr>
@@ -17858,19 +17956,21 @@ const RenderEngine = {
             <tbody id="om-table-body">
               ${items.map(e => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${e.id}</strong></td>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong></td>
                   <td><strong>${e.learner}</strong><br><small style="color:var(--slate);">${e.email}</small></td>
-                  <td><strong>${e.course}</strong><br><small style="font-family:monospace; color:var(--primary);">${e.version || 'v2.4 (Active)'}</small></td>
-                  <td>${e.cohort ? `<strong>${e.cohort}</strong><br><small>${e.trainer}</small>` : '<span style="color:#b45309; font-weight:600;">Pending Allocation</span>'}</td>
-                  <td><span style="font-family:monospace;">${e.paymentRef}</span></td>
-                  <td><strong style="color:#166534;">${e.entitlementCredits || '8 / 8 Credits'}</strong></td>
+                  <td><strong>${e.course}</strong><br><small style="font-family:monospace; color:var(--primary);">${e.version || 'v2.4 (Active Master)'}</small></td>
+                  <td>${e.cohort ? `<strong>${e.cohort}</strong><br><small style="color:var(--slate);">${e.trainer}</small>` : '<span style="color:#b45309; font-weight:700;">Pending Setup Allocation</span>'}</td>
+                  <td><span style="font-family:monospace; font-size:12px;">${e.paymentRef}</span></td>
+                  <td><strong style="color:#166534; font-size:13px;">${e.entitlementCredits || '8 / 8 Credits'}</strong></td>
                   <td><span class="badge ${e.status === 'Active' ? 'badge-success' : 'badge-warning'}">${e.status}</span></td>
                   <td>
-                    <div style="display:flex; gap:4px;">
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
                       ${e.status === 'Pending Setup' ? `
-                        <button class="btn btn-primary btn-xs" onclick="Notifications.push('Setup Configured', 'Curriculum and trainer allocated to ${e.learner}.', 'success')">Complete Setup</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmEnrolmentSetupModal('${e.id}')"><i data-lucide="settings"></i> Configure Setup (FLOW-013)</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentReviewModal('${e.paymentRef}')">Audit Receipt</button>
                       ` : `
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Learner Dossier', 'Opening comprehensive student record for ${e.learner}.', 'info')">Manage Enrolment</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openOmLearnerDossierModal('${e.id}')">Learner Dossier</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('${e.id}', '${e.cohort}')">Transfer Cohort</button>
                       `}
                     </div>
                   </td>
@@ -17886,7 +17986,7 @@ const RenderEngine = {
           <table class="data-table">
             <thead>
               <tr>
-                <th>Cohort / Run ID</th>
+                <th>Cohort Run ID</th>
                 <th>Course Programme</th>
                 <th>Lead Trainer</th>
                 <th>Weekly Cadence</th>
@@ -17899,10 +17999,10 @@ const RenderEngine = {
             <tbody id="om-table-body">
               ${items.map(c => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${c.id}</strong></td>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${c.id}</strong></td>
                   <td><strong>${c.course}</strong><br><small style="color:var(--slate);">${c.name || 'Cohort Batch'}</small></td>
-                  <td><strong>${c.trainer}</strong><br><small style="color:var(--slate);">Backup: ${c.backupTrainer || 'None'}</small></td>
-                  <td>${c.cadence || 'MWF 18:00 - 19:00 PKT'}</td>
+                  <td><strong>${c.trainer}</strong><br><small style="color:var(--slate);">Backup: ${c.backupTrainer || 'Standby Lead'}</small></td>
+                  <td><strong>${c.cadence || 'MWF 18:00 - 19:00 PKT'}</strong></td>
                   <td>
                     <strong>${c.enrolled} / ${c.maxSeats} Seats</strong>
                     <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; margin-top:4px; overflow:hidden;">
@@ -17912,9 +18012,53 @@ const RenderEngine = {
                   <td>${c.progress || 'Week 4 of 12'}</td>
                   <td><span class="badge ${c.status === 'Active' ? 'badge-success' : 'badge-primary'}">${c.status}</span></td>
                   <td>
-                    <div style="display:flex; gap:4px;">
-                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Roster View', 'Opening roster for ${c.id}.', 'info')">Roster</button>
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Transfer Workbench', 'Opening learner transfer modal (FLOW-018).', 'info')">Transfer</button>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${c.id}')"><i data-lucide="users"></i> Roster Explorer</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1004', '${c.id}')">Transfer (FLOW-018)</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "trainers") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Trainer ID & Name</th>
+                <th>Contracted Capacity</th>
+                <th>Weekly Teaching Load</th>
+                <th>Assigned Tracks</th>
+                <th>Blackout Windows</th>
+                <th>Collision Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${t.id}</strong><br><strong>${t.name}</strong></td>
+                  <td><span style="font-weight:700;">${t.capacity || '25 Hrs / Wk'}</span></td>
+                  <td>
+                    <strong>${t.hours || '18 Hrs'} Assigned</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; margin-top:4px; overflow:hidden;">
+                      <div style="background:#166534; height:100%; width:72%;"></div>
+                    </div>
+                  </td>
+                  <td>${t.courses ? t.courses.join(', ') : 'Spoken English, K-12 Math'}</td>
+                  <td><span style="font-size:12px; color:var(--slate);">${t.blackout || 'None Logged'}</span></td>
+                  <td><span class="badge ${t.conflictStatus && t.conflictStatus.includes('Conflict') ? 'badge-error' : 'badge-success'}">${t.conflictStatus || 'Clear'}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      ${t.conflictStatus && t.conflictStatus.includes('Conflict') ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmConflictResolveModal('${t.id}')"><i data-lucide="alert-triangle"></i> Resolve Collision</button>
+                      ` : `
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Workload Inspected', 'Full teaching load timetable for ${t.name}.', 'info')">Audit Load</button>
+                      `}
                     </div>
                   </td>
                 </tr>
@@ -17942,7 +18086,7 @@ const RenderEngine = {
             <tbody id="om-table-body">
               ${items.map(cls => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${cls.id}</strong></td>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cls.id}</strong></td>
                   <td><strong>${cls.title}</strong></td>
                   <td><strong>${cls.trainer}</strong></td>
                   <td>${cls.learner ? `<strong>${cls.learner}</strong> (1:1)` : `<strong>${cls.participants} Students</strong> (Cohort)`}</td>
@@ -17950,14 +18094,14 @@ const RenderEngine = {
                   <td><span class="badge ${cls.attendanceStatus.includes('Reconciled') ? 'badge-success' : cls.attendanceStatus.includes('Mismatch') ? 'badge-error' : 'badge-warning'}">${cls.attendanceStatus}</span></td>
                   <td><span class="badge ${cls.status === 'Live' ? 'badge-success' : cls.status === 'Report Overdue' ? 'badge-error' : cls.status === 'Completed' ? 'badge-primary' : 'badge-warning'}">${cls.status}</span></td>
                   <td>
-                    <div style="display:flex; gap:4px;">
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')">Telemetry</button>
                       ${cls.status === 'Live' || cls.status === 'Upcoming' ? `
-                        <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')">Enter Room</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')"><i data-lucide="video"></i> Enter Room</button>
                       ` : cls.reportStatus.includes('Submitted') ? `
-                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${cls.reportStatus.replace('Submitted (', '').replace(')', '')}')">Review Report</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${cls.reportStatus.replace('Submitted (', '').replace(')', '')}')">Review Report (FLOW-016)</button>
                       ` : `
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Trainer Nudged', 'Reminder dispatched to ${cls.trainer}.', 'warning')">Nudge</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Trainer Nudged', 'Reminder dispatched to ${cls.trainer}.', 'warning')">Nudge Trainer</button>
                       `}
                     </div>
                   </td>
@@ -17986,7 +18130,7 @@ const RenderEngine = {
             <tbody id="om-table-body">
               ${items.map(r => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${r.id}</strong></td>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong></td>
                   <td><strong>${r.title}</strong><br><small style="font-family:monospace; color:var(--primary);">${r.classId}</small></td>
                   <td><strong>${r.trainer}</strong></td>
                   <td><strong style="color:#166534;">${r.duration}</strong></td>
@@ -17994,9 +18138,9 @@ const RenderEngine = {
                   <td><span style="font-size:12px; color:var(--slate);">${r.reconciledAttendance}</span></td>
                   <td><span class="badge ${r.status === 'Approved' ? 'badge-success' : r.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}">${r.status}</span></td>
                   <td>
-                    <div style="display:flex; gap:4px;">
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">Return Note</button>
-                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')">Approve Delivery</button>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">Return for Note</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')"><i data-lucide="check"></i> Approve Delivery (FLOW-016)</button>
                     </div>
                   </td>
                 </tr>
@@ -18024,7 +18168,7 @@ const RenderEngine = {
             <tbody id="om-table-body">
               ${items.map(p => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${p.id}</strong></td>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${p.id}</strong></td>
                   <td><strong>${p.learner}</strong><br><small style="color:var(--slate);">${p.payer}</small></td>
                   <td>${p.course}</td>
                   <td><strong>${p.channel}</strong><br><small style="font-family:monospace; color:var(--primary);">${p.reference}</small></td>
@@ -18032,9 +18176,9 @@ const RenderEngine = {
                   <td><span class="badge ${p.duplicateFlag.includes('Duplicate') ? 'badge-error' : 'badge-success'}">${p.duplicateFlag}</span></td>
                   <td><span class="badge ${p.status === 'Approved' ? 'badge-success' : p.status === 'Under Review' ? 'badge-primary' : 'badge-warning'}">${p.status}</span></td>
                   <td>
-                    <div style="display:flex; gap:4px;">
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')">Reject</button>
-                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')">Audit & Grant</button>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')">Reject Slip</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')"><i data-lucide="receipt"></i> Audit & Grant Access (FLOW-013)</button>
                     </div>
                   </td>
                 </tr>
@@ -18061,7 +18205,7 @@ const RenderEngine = {
             <tbody id="om-table-body">
               ${items.map(item => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary);">${item.id || item.code}</strong></td>
+                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${item.id || item.code}</strong></td>
                   <td><strong>${item.title || item.name || item.subject}</strong></td>
                   <td>${item.category || item.course || item.type || 'Operational Asset'}</td>
                   <td>${item.owner || item.trainer || item.lead || 'Sarah Connor'}</td>
@@ -22478,23 +22622,312 @@ Actions.submitOmScheduleTrial = function(trialId) {
   RenderEngine.omDashboard();
 };
 
-Actions.openOmRoomTelemetryModal = function(classId) {
-  const cls = (db.omData.classes || []).find(c => c.id === classId) || db.omData.classes[0];
+Actions.openOmDiagnosticModal = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId) || db.omData.trials[0];
   const modal = document.getElementById("generic-modal");
   const title = document.getElementById("modal-title");
   const body = document.getElementById("modal-body");
   const footer = document.getElementById("modal-footer");
 
-  title.textContent = `Daily.co Room WebRTC Telemetry: ${cls.id}`;
+  title.textContent = `Diagnostic Placement Results (FLOW-006): ${trial.learner}`;
   body.innerHTML = `
     <div class="om-flow-dialog">
-      <div style="background:#0f172a; border-radius:8px; padding:16px; color:#f8fafc; font-family:monospace; font-size:12px; line-height:1.5;">
-        <div style="color:#4ade80; margin-bottom:8px;">● WebRTC Session Status: ACTIVE / RECONCILED</div>
-        <div>[13:28:45] Webhook: Room provisioned (Room: ${cls.roomUrl})</div>
-        <div>[13:29:12] Trainer joined: ${cls.trainer} (Audio: OK, Video: 720p 30fps)</div>
-        <div>[13:30:02] Participant roster connected: ${cls.attendanceStatus}</div>
-        <div>[13:45:10] Packet Loss: 0.12% · Jitter: 4ms · Bitrate: 1.4 Mbps</div>
-        <div>[14:15:00] Webhook: Room closed normally. Duration reconciled: 45 mins.</div>
+      <div class="om-flow-banner">
+        <i data-lucide="award"></i>
+        <div>
+          <strong>AUTOMATED DIAGNOSTIC ASSESSMENT AUDIT</strong>
+          <p>Initial skill evaluation administered via Learner Portal diagnostic engine. Used for pedagogical matching.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600; font-size:11.5px;">Student / Prospect:</span>
+          <p style="margin:2px 0 0 0; font-size:14px; font-weight:700; color:var(--navy-dark);">${trial.learner}</p>
+          <small style="color:var(--slate);">${trial.phone || '0300-9876543'} · Guardian: ${trial.guardian || 'Parent'}</small>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600; font-size:11.5px;">Placement Score & Tier:</span>
+          <p style="margin:2px 0 0 0; font-size:15px; font-weight:800; color:#166534;">${trial.placementScore}</p>
+          <small style="color:var(--slate);">CEFR Level: <strong>B1 (Intermediate Fluency)</strong></small>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:14px; font-size:12.5px;">
+        <strong style="color:var(--navy-dark); display:block; margin-bottom:8px;">Competency Dimension Breakdown:</strong>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+              <span>Grammar & Syntax Formulation:</span> <strong>88% (Proficient)</strong>
+            </div>
+            <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; overflow:hidden;">
+              <div style="background:#166534; height:100%; width:88%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+              <span>Spoken Acoustic Comprehension:</span> <strong>82% (Intermediate)</strong>
+            </div>
+            <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; overflow:hidden;">
+              <div style="background:var(--primary); height:100%; width:82%;"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
+              <span>Lexical Vocabulary Breadth:</span> <strong>84% (Intermediate)</strong>
+            </div>
+            <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; overflow:hidden;">
+              <div style="background:var(--primary); height:100%; width:84%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.2); border-left:3px solid var(--primary); padding:12px; border-radius:0 6px 6px 0; font-size:12px; color:#475569;">
+        <strong>Recommended Placement Trajectory:</strong><br>
+        Place in <em>Spoken English - Intermediate Fluency Track (Course CRS-101 / Version v2.4)</em> with trainer Sara Javed.
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openOmScheduleTrialModal('${trial.id}')"><i data-lucide="calendar-plus"></i> Proceed to Schedule (FLOW-007)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openOmContactGuardianModal = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId) || db.omData.trials[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Contact Guardian (FLOW-006): ${trial.learner}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="form-group">
+        <label>Recipient Channel</label>
+        <select id="om-contact-channel" class="form-control">
+          <option value="WhatsApp">WhatsApp Business (0300-9876543)</option>
+          <option value="SMS">Direct Carrier SMS</option>
+          <option value="Email">Official Guardian Email</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Pre-Approved Template</label>
+        <select id="om-contact-tmpl" class="form-control" onchange="document.getElementById('om-contact-body').value=this.value">
+          <option value="Dear Tariq, your trial request for Zayd has been qualified (Score 84%). Please confirm availability for Monday at 16:00 PKT.">Trial Slot Confirmation Request</option>
+          <option value="Dear Tariq, your trial session is scheduled for tomorrow at 16:00 PKT. Join link: https://ihs.daily.co/trial-trl-201.">Trial Reminder & Daily.co Room Link</option>
+          <option value="Dear Tariq, we require parental consent to finalize Zayd's educational profile before trial dispatch.">Guardian Consent Requirement Notice</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Message Content</label>
+        <textarea id="om-contact-body" class="form-control" rows="3">Dear Tariq, your trial request for Zayd has been qualified (Score 84%). Please confirm availability for Monday at 16:00 PKT.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmContactGuardian('${trial.id}')"><i data-lucide="send"></i> Dispatch Message</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmContactGuardian = function(trialId) {
+  this.audit("GUARDIAN_CONTACTED", `Sent message to guardian of trial ${trialId}.`, "Low", "Communication Dispatched");
+  Notifications.push("Message Sent", "Guardian communication dispatched via WhatsApp Gateway.", "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+};
+
+Actions.openOmRescheduleTrialModal = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId) || db.omData.trials[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Reschedule Trial (FLOW-017): ${trial.learner}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="calendar-sync"></i>
+        <div>
+          <strong>TRIAL RESCHEDULE & ROOM RE-PROVISIONING</strong>
+          <p>Re-allocates trainer slot, generates a new Daily.co room token, and automatically updates calendar invites.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>New Proposed Date & Time</label>
+        <input type="datetime-local" id="om-reschedule-time" class="form-control" value="2026-08-18T17:00">
+      </div>
+
+      <div class="form-group">
+        <label>Reason for Rescheduling</label>
+        <select id="om-reschedule-reason" class="form-control">
+          <option value="Guardian Request">Guardian Requested Slot Change</option>
+          <option value="Trainer Conflict">Trainer Emergency Availability Conflict</option>
+          <option value="Technical Disruption">Internet / Power Disruption</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmRescheduleTrial('${trial.id}')"><i data-lucide="check"></i> Confirm Reschedule</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmRescheduleTrial = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId);
+  const time = document.getElementById("om-reschedule-time")?.value || "2026-08-18T17:00";
+  if (trial) {
+    trial.time = "18 Aug 17:00 PKT";
+    trial.status = "Scheduled";
+  }
+
+  this.audit("TRIAL_RESCHEDULED", `Rescheduled trial ${trialId} to ${time}.`, "Medium", "Slot Updated");
+  Notifications.push("Trial Rescheduled", `Session moved to ${trial?.time}. New Daily.co token issued.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.sendTrialReminder = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId) || { learner: "Learner" };
+  this.audit("TRIAL_REMINDER_SENT", `Dispatched automated reminder for trial ${trialId}.`, "Low", "Reminder Queued");
+  Notifications.push("Reminder Dispatched", `SMS and WhatsApp reminders sent to guardian of ${trial.learner}.`, "success");
+};
+
+Actions.openOmEnrolmentSetupModal = function(enrolmentId) {
+  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolmentId) || db.omData.enrolments[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Configure Enrolment Setup (FLOW-013): ${enrol.learner}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="settings"></i>
+        <div>
+          <strong>POST-PAYMENT CURRICULUM & COHORT ALLOCATION</strong>
+          <p>Links confirmed payment to active learning delivery: locks syllabus version, allocates cohort section, and assigns primary trainer.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div class="form-group">
+          <label>Course Programme</label>
+          <input type="text" class="form-control" value="${enrol.course}" disabled>
+        </div>
+        <div class="form-group">
+          <label>Curriculum Version</label>
+          <select id="om-enrol-version" class="form-control">
+            <option value="v2.4 (Active Master)">v2.4 (Active Master - 12 Modules)</option>
+            <option value="v2.3 (Legacy)">v2.3 (Legacy Support)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div class="form-group">
+          <label>Target Cohort / Delivery Mode</label>
+          <select id="om-enrol-cohort" class="form-control">
+            <option value="Cohort E-2026A">Cohort E-2026A (10/12 seats · MWF 18:00)</option>
+            <option value="1:1 Dedicated Live Track">1:1 Dedicated Live Track (Custom slot)</option>
+            <option value="Cohort E-2026B">Cohort E-2026B (4/12 seats · TTS 16:00)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Primary Assigned Trainer</label>
+          <select id="om-enrol-trainer" class="form-control">
+            <option value="Sara Javed">Sara Javed (15h/20h teaching load)</option>
+            <option value="Nadia Rahman">Nadia Rahman (22h/25h teaching load)</option>
+            <option value="Huzsam Ahmed">Huzsam Ahmed (18h/25h teaching load)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmEnrolmentSetup('${enrol.id}')"><i data-lucide="check-circle-2"></i> Activate Enrolment (FLOW-013)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmEnrolmentSetup = function(enrolmentId) {
+  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolmentId);
+  const cohort = document.getElementById("om-enrol-cohort")?.value || "Cohort E-2026A";
+  const trainer = document.getElementById("om-enrol-trainer")?.value || "Sara Javed";
+  if (enrol) {
+    enrol.status = "Active";
+    enrol.cohort = cohort;
+    enrol.trainer = trainer;
+  }
+
+  this.audit("ENROLMENT_ACTIVATED", `Activated enrolment ${enrolmentId} for ${enrol?.learner}. Cohort: ${cohort}, Trainer: ${trainer}.`, "High", "Pending Setup -> Active");
+  Notifications.push("Enrolment Activated", `Learning access activated for ${enrol?.learner}. Cohort allocated.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmLearnerDossierModal = function(learnerId) {
+  const enrol = (db.omData.enrolments || []).find(e => e.id === learnerId || e.learner === learnerId) || db.omData.enrolments[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Learner Educational Dossier: ${enrol.learner}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="font-size:11px; color:var(--slate);">Student Profile</span>
+          <strong style="display:block; font-size:14px; color:var(--navy-dark);">${enrol.learner}</strong>
+          <small style="color:var(--slate);">${enrol.email}</small>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="font-size:11px; color:var(--slate);">Lesson Credits & Entitlement</span>
+          <strong style="display:block; font-size:16px; color:#166534;">${enrol.entitlementCredits || '8 / 8 Credits'}</strong>
+          <small style="color:var(--slate);">Validity: Active until 30 Nov 2026</small>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:14px; font-size:12.5px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Active Course: <strong>${enrol.course}</strong></span>
+          <span>Version: <strong style="font-family:monospace; color:var(--primary);">${enrol.version || 'v2.4'}</strong></span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Assigned Cohort: <strong>${enrol.cohort || 'Cohort E-2026A'}</strong></span>
+          <span>Trainer: <strong>${enrol.trainer || 'Sara Javed'}</strong></span>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span>Attendance Rate: <strong style="color:#166534;">96% Reconciled</strong></span>
+          <span>Syllabus Progress: <strong>4 of 12 Units (33%)</strong></span>
+        </div>
       </div>
     </div>
   `;
@@ -22505,6 +22938,196 @@ Actions.openOmRoomTelemetryModal = function(classId) {
 
   modal.classList.remove("hidden");
   if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openOmCohortRosterModal = function(cohortId) {
+  const cohort = (db.omData.cohorts || []).find(c => c.id === cohortId) || db.omData.cohorts[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Cohort Roster Explorer: ${cohort.name} (${cohort.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:12px 16px; border-radius:8px; margin-bottom:12px;">
+        <div>
+          <strong style="color:var(--navy-dark);">${cohort.course}</strong> · <span>Lead: ${cohort.trainer}</span>
+        </div>
+        <div style="font-weight:700; color:#166534;">
+          ${cohort.enrolled} / ${cohort.maxSeats} Seats Occupied
+        </div>
+      </div>
+
+      <div class="table-container" style="max-height:220px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px;">
+        <table class="data-table" style="font-size:12px;">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Enrolment Ref</th>
+              <th>Attendance</th>
+              <th>Seat Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Ayesha Siddiqui</strong></td>
+              <td>ENR-1004</td>
+              <td><span class="badge badge-success">100%</span></td>
+              <td><span class="badge badge-success">Active</span></td>
+              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1004', '${cohort.id}')">Transfer</button></td>
+            </tr>
+            <tr>
+              <td><strong>Mustafa Hashmi</strong></td>
+              <td>ENR-1005</td>
+              <td><span class="badge badge-success">92%</span></td>
+              <td><span class="badge badge-success">Active</span></td>
+              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1005', '${cohort.id}')">Transfer</button></td>
+            </tr>
+            <tr>
+              <td><strong>Hania Zubair</strong></td>
+              <td>ENR-1006</td>
+              <td><span class="badge badge-warning">78%</span></td>
+              <td><span class="badge badge-success">Active</span></td>
+              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1006', '${cohort.id}')">Transfer</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openOmTransferStudentModal = function(studentId, fromCohortId) {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Transfer Learner Between Cohorts (FLOW-018)`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="arrow-left-right"></i>
+        <div>
+          <strong>COHORT CAPACITY & SECTION TRANSFER WORKBENCH</strong>
+          <p>Preserves student attendance and completed unit progress while reassigning the learner to a compatible section.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Selected Learner</label>
+        <input type="text" class="form-control" value="${studentId} (Current: ${fromCohortId})" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Target Destination Cohort</label>
+        <select id="om-transfer-target" class="form-control">
+          <option value="CRUN-102">Cohort E-2026B (TTS 16:00 PKT · 4/12 seats · 8 Open Seats)</option>
+          <option value="CRUN-103">Cohort N-2026A (MWF 20:00 PKT · 6/15 seats · 9 Open Seats)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Transfer Rationale</label>
+        <textarea id="om-transfer-reason" class="form-control" rows="2">Learner requested evening slot timing adjustment due to school examination schedule.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmTransferStudent('${studentId}', '${fromCohortId}')"><i data-lucide="check"></i> Complete Transfer (FLOW-018)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmTransferStudent = function(studentId, fromCohortId) {
+  const target = document.getElementById("om-transfer-target")?.value || "CRUN-102";
+  this.audit("LEARNER_COHORT_TRANSFERRED", `Transferred ${studentId} from ${fromCohortId} to ${target}. Progress preserved.`, "High", "Cohort Reassigned");
+  Notifications.push("Transfer Complete", `Learner ${studentId} successfully transferred to ${target}.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmConflictResolveModal = function(trainerId) {
+  const trainer = (db.omData.trainers || []).find(t => t.id === trainerId) || db.omData.trainers[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Resolve Schedule Collision: ${trainer.name}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner" style="border-left:4px solid #dc2626;">
+        <i data-lucide="alert-circle" style="color:#dc2626;"></i>
+        <div>
+          <strong>SCHEDULE COLLISION DETECTED</strong>
+          <p>${trainer.name} has 2 overlapping sessions booked on Friday 15:00 PKT (1:1 Live + Cohort Section).</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Conflicting Occurrence</label>
+        <input type="text" class="form-control" value="CLS-9904: Spoken English 1:1 Live (Fri 15:00)" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Reassign Occurrence to Standby Trainer</label>
+        <select id="om-reassign-trainer" class="form-control">
+          <option value="Huzsam Ahmed">Huzsam Ahmed (Available · 18h/25h load · Standby Lead)</option>
+          <option value="Usman Tariq">Usman Tariq (Available · 14h/20h load)</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmConflictResolve('${trainer.id}')"><i data-lucide="check"></i> Reassign & Clear Conflict</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmConflictResolve = function(trainerId) {
+  const trainer = (db.omData.trainers || []).find(t => t.id === trainerId);
+  const reassigned = document.getElementById("om-reassign-trainer")?.value || "Huzsam Ahmed";
+  if (trainer) {
+    trainer.conflictStatus = "Clear (Reassigned)";
+  }
+
+  this.audit("SCHEDULE_CONFLICT_RESOLVED", `Resolved collision for ${trainer?.name}. Reassigned occurrence to ${reassigned}.`, "High", "Collision Cleared");
+  Notifications.push("Conflict Resolved", `Class reassigned to ${reassigned}. Telemetry conflict cleared.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.filterOmTable = function(statusVal) {
+  const rows = document.querySelectorAll("#om-table-body tr");
+  if (!rows || rows.length === 0) return;
+  rows.forEach(r => {
+    if (!statusVal) {
+      r.style.display = "";
+    } else {
+      const text = r.textContent.toLowerCase();
+      r.style.display = text.includes(statusVal.toLowerCase()) ? "" : "none";
+    }
+  });
 };
 
 const Simulator = {
