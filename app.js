@@ -18411,6 +18411,247 @@ const RenderEngine = {
           </table>
         </div>
       `;
+    } else if (dataType === "entitlements") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Entitlement ID & Record</th>
+                <th>Learner & Course Track</th>
+                <th>Credit Ledger Balance</th>
+                <th>Debited / Reserved</th>
+                <th>Expiry & Renewal Date</th>
+                <th>Risk Level & Telemetry</th>
+                <th>Renewal Notice</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(e => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong><br>
+                    <small style="color:var(--slate);">Last debit: ${e.lastDebit || 'Today'}</small>
+                  </td>
+                  <td>
+                    <strong>${e.learner}</strong><br>
+                    <small style="color:var(--slate);">${e.course}</small>
+                  </td>
+                  <td>
+                    <strong style="color:${e.balance <= 2 ? '#b45309' : '#166534'}; font-size:14px;">${e.balance} / ${e.totalGranted} Credits</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:110px; margin-top:4px; overflow:hidden;">
+                      <div style="background:${e.balance <= 2 ? '#b45309' : '#166534'}; height:100%; width:${Math.min(100, (e.balance / e.totalGranted) * 100)}%;"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <span>${e.debited} Debited</span> · <span style="color:var(--slate);">${e.reserved} In-Flight</span>
+                  </td>
+                  <td><strong>${e.expiry}</strong></td>
+                  <td><span class="badge ${e.riskLevel && e.riskLevel.includes('High') ? 'badge-error' : 'badge-success'}">${e.riskLevel}</span></td>
+                  <td><span class="badge badge-primary">${e.renewalNotice || 'Sent'}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEntitlementAdjustModal('${e.id}')"><i data-lucide="sliders"></i> Adjust Ledger</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Renewal Dispatched', 'Automated renewal notice sent to ${e.learner}.', 'success')"><i data-lucide="bell"></i> Dispatch Notice</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${e.id}')"><i data-lucide="message-square"></i> Contact</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "k12") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Section Code & Grade</th>
+                <th>Academic Year & Cohort</th>
+                <th>Lead Teacher</th>
+                <th>Enrolled / Capacity</th>
+                <th>Daily Schedule Cadence</th>
+                <th>Curriculum Board & Subjects</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(k => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${k.id}</strong><br>
+                    <strong>${k.grade} · ${k.section}</strong>
+                  </td>
+                  <td><strong>${k.academicYear}</strong><br><small style="color:#166534; font-weight:600;">Federal Board Aligned</small></td>
+                  <td><strong>${k.leadTeacher}</strong></td>
+                  <td>
+                    <strong>${k.students} / 25 Students</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100px; margin-top:4px; overflow:hidden;">
+                      <div style="background:#166534; height:100%; width:${(k.students / 25) * 100}%;"></div>
+                    </div>
+                  </td>
+                  <td><strong>${k.schedule}</strong></td>
+                  <td>${Array.isArray(k.subjects) ? k.subjects.join(', ') : 'Mathematics, Science, English, Urdu'}</td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${k.id}')"><i data-lucide="users"></i> Class Roster</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-4104', '${k.id}')"><i data-lucide="arrow-right-left"></i> Transfer Student</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "resources") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Resource Ref & Title</th>
+                <th>Version & Format</th>
+                <th>File Size & SHA-256 Checksum</th>
+                <th>Target Programme / Cohort</th>
+                <th>Uploaded By & Date</th>
+                <th>Security State</th>
+                <th>Downloads</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(res => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${res.id}</strong><br>
+                    <strong>${res.title}</strong>
+                  </td>
+                  <td><span class="badge badge-primary">${res.version}</span> · <strong>${res.format}</strong></td>
+                  <td>
+                    <strong style="color:var(--navy-medium);">${res.size}</strong><br>
+                    <small style="font-family:monospace; color:var(--slate);">${res.checksum}</small>
+                  </td>
+                  <td><strong>${res.course}</strong><br><small style="color:var(--slate);">${res.cohort || 'All Cohorts'}</small></td>
+                  <td><strong>${res.uploadedBy}</strong><br><small style="color:var(--slate);">${res.date}</small></td>
+                  <td>
+                    <span class="badge ${res.status === 'Active' ? 'badge-success' : res.status === 'Quarantined' ? 'badge-error' : 'badge-warning'}">${res.status}</span>
+                  </td>
+                  <td><strong style="color:#166534;">${res.downloads || 0} Downloads</strong></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('SHA-256 Verified', 'Integrity verified for ${res.id}: ${res.checksum}', 'success')"><i data-lucide="shield-check"></i> Verify Hash</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Resource Access', 'Streaming signed URL for ${res.title}.', 'info')"><i data-lucide="download"></i> Download</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "cases") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Case Ref & SLA</th>
+                <th>Subject & Description</th>
+                <th>Category & Scope</th>
+                <th>Associated Learner</th>
+                <th>Assigned Owner</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${c.id}</strong><br>
+                    <small style="color:${c.sla && c.sla.includes('Breached') ? '#dc2626' : '#166534'}; font-weight:700;">SLA: ${c.sla}</small>
+                  </td>
+                  <td>
+                    <strong>${c.subject}</strong><br>
+                    <small style="color:var(--slate);">${c.notes || 'Investigating case telemetry.'}</small>
+                  </td>
+                  <td><span class="badge badge-primary">${c.category}</span></td>
+                  <td><strong>${c.learner || 'General Prospect'}</strong></td>
+                  <td><strong>${c.owner || 'Sarah Connor'}</strong></td>
+                  <td><span class="badge ${c.status === 'Resolved' ? 'badge-success' : c.status === 'Escalated' ? 'badge-error' : 'badge-warning'}">${c.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Case Updated', 'Operational notes updated for ${c.id}.', 'info')"><i data-lucide="edit-3"></i> Triage Case</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${c.id}')"><i data-lucide="message-square"></i> Contact</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "catalogue") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Course Code & Title</th>
+                <th>Active Master Version</th>
+                <th>Supported Delivery Formats</th>
+                <th>Session Duration</th>
+                <th>Approved Pricing Snapshots</th>
+                <th>Publication Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(cat => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cat.code}</strong><br>
+                    <strong>${cat.title}</strong>
+                  </td>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${cat.activeVersion}</strong></td>
+                  <td>${Array.isArray(cat.deliveryModes) ? cat.deliveryModes.join(' · ') : cat.deliveryModes}</td>
+                  <td><strong>${cat.duration}</strong></td>
+                  <td><strong style="color:#166534; font-size:12.5px;">${cat.activePrices}</strong></td>
+                  <td><span class="badge badge-success">${cat.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Version Locked', 'Curriculum version ${cat.activeVersion} is immutable and live.', 'info')"><i data-lucide="shield-check"></i> Audit Version Lock</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Catalogue Inspected', 'Scope verified for ${cat.title}.', 'info')"><i data-lucide="eye"></i> View Details</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "analytics") {
+      tableMarkup = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            ${items.map(m => `
+              <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:18px;">
+                <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">${m.metric}</span>
+                <div style="font:800 24px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0;">${m.value}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; margin-top:8px;">
+                  <span style="color:var(--slate);">Target: <strong>${m.target}</strong></span>
+                  <span class="badge badge-success">${m.status}</span>
+                </div>
+                <p style="font-size:11px; color:var(--slate); margin:8px 0 0 0; padding-top:6px; border-top:1px solid rgba(124, 119, 102, 0.12);">${m.detail}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     } else {
       tableMarkup = `
         <div class="table-container">
