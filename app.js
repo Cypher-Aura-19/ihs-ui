@@ -3024,6 +3024,549 @@ Object.entries(omRouteDefinitions).forEach(([route, config]) => {
   };
 });
 
+// ============================================================================
+// CUSTOMER SUPPORT REPRESENTATIVE (CSR) ROUTE DEFINITIONS & ACCESS MODEL
+// ============================================================================
+const csrRouteDefinitions = {
+  "csr-dashboard": { 
+    group: "Command Center", 
+    title: "Sales & Intake Command", 
+    headerTitle: "CSR Sales & Intake Command Center", 
+    description: "Assigned prospect management, trial qualification, follow-ups, and assisted conversion pipeline.", 
+    context: "Commercial & Intake", 
+    family: "dashboard" 
+  },
+
+  // Hub 1: Leads & Prospects (CSR-001, CSR-008, FLOW-031)
+  "csr-leads-my": { 
+    group: "Leads & Prospects", 
+    title: "My Assigned Leads", 
+    headerTitle: "My Assigned Leads", 
+    description: "Inbound prospects and inquiries assigned to Sarah Jenkins with source attribution, consent tracking, and conversion stage.", 
+    scopeAuthority: "CSR-001 / CSR-002: Direct ownership and attribution for assigned commercial leads and prospects.",
+    context: "Assigned leads", 
+    family: "table", 
+    dataType: "leads", 
+    filterFn: l => l.csr === "Sarah Jenkins",
+    metrics: [
+      ["My Leads", () => (db.csrData?.leads || []).filter(l => l.csr === "Sarah Jenkins").length, "Assigned to you"],
+      ["Expected Pipeline", () => "PKR 151,000", "Total potential value"],
+      ["Consent Verified", () => (db.csrData?.leads || []).filter(l => l.csr === "Sarah Jenkins" && l.consent && l.consent.includes("Verified")).length, "GDPR / Parent Consent"]
+    ]
+  },
+  "csr-leads-new": { 
+    group: "Leads & Prospects", 
+    title: "New Inbound Leads", 
+    headerTitle: "New Leads Queue", 
+    description: "Uncontacted inquiries from Meta Ads, Google Ads, and Web Portal awaiting initial qualification and consent capture.", 
+    scopeAuthority: "CSR-001: Separation of anonymous/inbound leads from authenticated accounts until conversion.",
+    context: "New intake", 
+    family: "table", 
+    dataType: "leads", 
+    filterFn: l => l.stage === "New",
+    metrics: [
+      ["New Inquiries", () => (db.csrData?.leads || []).filter(l => l.stage === "New").length, "Awaiting first touch"],
+      ["Median Response Time", () => "14 mins", "Within 30m SLA"],
+      ["Top Source", () => "Meta / Facebook Ads", "42% of volume"]
+    ]
+  },
+  "csr-leads-qualified": { 
+    group: "Leads & Prospects", 
+    title: "Qualified Prospects", 
+    headerTitle: "Qualified Prospects", 
+    description: "Assessed prospects with confirmed learning tracks, placement tests completed, and guardian consent verified.", 
+    scopeAuthority: "CSR-008: Configurable qualification stages with placement test evidence and parent consent.",
+    context: "Qualified pipeline", 
+    family: "table", 
+    dataType: "leads", 
+    filterFn: l => l.stage === "Qualified",
+    metrics: [
+      ["Qualified", () => (db.csrData?.leads || []).filter(l => l.stage === "Qualified").length, "Ready for trial"],
+      ["Pipeline Value", () => "PKR 67,000", "High purchase intent"],
+      ["Avg Placement Score", () => "80%", "Level-appropriate"]
+    ]
+  },
+  "csr-leads-converted": { 
+    group: "Leads & Prospects", 
+    title: "Converted & Enrolled Prospects", 
+    headerTitle: "Converted Leads", 
+    description: "Prospects converted to active paid learners with permanent CSR attribution and commission generation.", 
+    scopeAuthority: "CSR-003: Retention of CSR attribution and conversion provenance upon account activation.",
+    context: "Won conversions", 
+    family: "table", 
+    dataType: "leads", 
+    filterFn: l => l.stage === "Converted",
+    metrics: [
+      ["Converted Leads", () => (db.csrData?.leads || []).filter(l => l.stage === "Converted").length, "Lifetime conversions"],
+      ["Realized Sales", () => "PKR 54,000", "Verified bank receipts"],
+      ["Conversion Rate", () => "41.6%", "Trial-to-paid benchmark"]
+    ]
+  },
+  "csr-leads-lost": { 
+    group: "Leads & Prospects", 
+    title: "Lost & Disqualified Leads", 
+    headerTitle: "Lost Leads Archive", 
+    description: "Disqualified inquiries with audited lost reasons (price sensitivity, schedule mismatch, unreachable).", 
+    scopeAuthority: "CSR-008: Audited lost reasons and re-engagement scheduling without deleting historical records.",
+    context: "Lost analysis", 
+    family: "table", 
+    dataType: "leads", 
+    filterFn: l => l.stage === "Lost",
+    metrics: [
+      ["Lost Records", () => (db.csrData?.leads || []).filter(l => l.stage === "Lost").length, "Disqualified inquiries"],
+      ["Primary Reason", () => "Price / Q4 Deferral", "Scheduled for re-touch"],
+      ["Re-engageable", () => "1 Record", "Nov 2026 callback"]
+    ]
+  },
+
+  // Hub 2: Follow-ups & Tasks (CSR-007, FLOW-007, FLOW-037)
+  "csr-followups-due": { 
+    group: "Follow-ups & Tasks", 
+    title: "Due Today Follow-ups", 
+    headerTitle: "Due Today Tasks", 
+    description: "Time-critical outreach calls, WhatsApp reminders, and parent consultations scheduled for today.", 
+    scopeAuthority: "CSR-007: Automatic follow-up task generation following inquiry and trial delivery events.",
+    context: "Today's tasks", 
+    family: "table", 
+    dataType: "followups", 
+    filterFn: f => f.status === "Due",
+    metrics: [
+      ["Due Today", () => (db.csrData?.followups || []).filter(f => f.status === "Due").length, "Urgent touchpoints"],
+      ["Calls Scheduled", () => "2 Calls", "Phone consultations"],
+      ["Trial Confirmations", () => "2 Reminders", "Daily.co links"]
+    ]
+  },
+  "csr-followups-upcoming": { 
+    group: "Follow-ups & Tasks", 
+    title: "Upcoming Follow-up Schedule", 
+    headerTitle: "Upcoming Follow-ups", 
+    description: "Scheduled tasks and deferred callbacks planned for subsequent business days.", 
+    scopeAuthority: "CSR-007: Structured activity scheduling across multi-day prospect conversion cycles.",
+    context: "Scheduled outreach", 
+    family: "table", 
+    dataType: "followups", 
+    filterFn: f => f.status === "Upcoming",
+    metrics: [
+      ["Upcoming Tasks", () => (db.csrData?.followups || []).filter(f => f.status === "Upcoming").length, "Next 48 hours"],
+      ["Pipeline Covered", () => "PKR 53,000", "Expected deal value"],
+      ["Auto-Reminders", () => "Active", "SMS/WhatsApp queue"]
+    ]
+  },
+  "csr-followups-completed": { 
+    group: "Follow-ups & Tasks", 
+    title: "Completed Follow-up Activities", 
+    headerTitle: "Completed Activities", 
+    description: "Historical log of executed customer phone calls, WhatsApp messages, and conversion reviews.", 
+    scopeAuthority: "CSR-007 / CSR-009: Immutable activity log of CSR interactions for audit and performance metrics.",
+    context: "Activity log", 
+    family: "table", 
+    dataType: "followups", 
+    filterFn: f => f.status === "Completed",
+    metrics: [
+      ["Completed Tasks", () => (db.csrData?.followups || []).filter(f => f.status === "Completed").length, "Successfully closed"],
+      ["Conversions Resulting", () => "100%", "Direct enrolment link"],
+      ["Avg Touches to Close", () => "3.2 touches", "Efficient cycle"]
+    ]
+  },
+  "csr-followups-no-response": { 
+    group: "Follow-ups & Tasks", 
+    title: "No Response / Escalation Tasks", 
+    headerTitle: "Unresponsive Leads Queue", 
+    description: "Inquiries with multiple unreturned outreach attempts requiring alternate contact channels or archival.", 
+    scopeAuthority: "CSR-007 / FLOW-037: Structured retry cadence before lead disqualification.",
+    context: "Retry queue", 
+    family: "table", 
+    dataType: "followups", 
+    filterFn: f => f.status === "No Response",
+    metrics: [
+      ["Unresponsive", () => (db.csrData?.followups || []).filter(f => f.status === "No Response").length, "3+ attempts logged"],
+      ["Retry Channels", () => "SMS / WhatsApp", "Fallback automated notice"],
+      ["Archival Horizon", () => "7 Days", "Automated cooling"]
+    ]
+  },
+
+  // Hub 3: Trials & Intake (CSR-002, CSR-007, FLOW-007)
+  "csr-trials-requests": { 
+    group: "Trials & Intake", 
+    title: "Trial Requests & Intake", 
+    headerTitle: "Trial Requests Queue", 
+    description: "Inbound trial consultation bookings requiring placement level validation and guardian approval.", 
+    scopeAuthority: "LIVE-017 / CSR-007: Scoped commercial trial management distinct from operational class scheduling.",
+    context: "Trial queue", 
+    family: "table", 
+    dataType: "trials",
+    metrics: [
+      ["Total Trials", () => (db.csrData?.trials || []).length, "In active pipeline"],
+      ["Scheduled", () => (db.csrData?.trials || []).filter(t => t.status === "Scheduled").length, "Confirmed slots"],
+      ["Conversion Target", () => "40.0%", "Target conversion %"]
+    ]
+  },
+  "csr-trials-qualification": { 
+    group: "Trials & Intake", 
+    title: "Trial Placement & Qualification", 
+    headerTitle: "Trial Qualification", 
+    description: "Prospects undergoing placement scoring and syllabus matching before slot booking.", 
+    scopeAuthority: "CSR-008: Placement test verification and curriculum tier recommendation.",
+    context: "Placement scoring", 
+    family: "table", 
+    dataType: "trials", 
+    filterFn: t => t.status === "Qualification",
+    metrics: [
+      ["Awaiting Placement", () => (db.csrData?.trials || []).filter(t => t.status === "Qualification").length, "Assessment pending"],
+      ["Tests Dispatched", () => "1 Sent", "WhatsApp link active"],
+      ["Assessment SLA", () => "24h Window", "Time to complete"]
+    ]
+  },
+  "csr-trials-ready": { 
+    group: "Trials & Intake", 
+    title: "Ready for Slot Scheduling", 
+    headerTitle: "Ready for Scheduling", 
+    description: "Qualified prospects ready for trainer assignment and Daily.co video room allocation.", 
+    scopeAuthority: "FLOW-007: Coordinated slot booking between CSR and Operations Manager.",
+    context: "Booking ready", 
+    family: "table", 
+    dataType: "trials", 
+    filterFn: t => t.status === "Ready for Scheduling",
+    metrics: [
+      ["Ready to Book", () => (db.csrData?.trials || []).filter(t => t.status === "Ready for Scheduling").length, "Qualified learners"],
+      ["Available Trainers", () => "4 Active", "Literacy & Numeracy"],
+      ["Preferred Windows", () => "Evening (17:00+)", "Peak demand"]
+    ]
+  },
+  "csr-trials-scheduled": { 
+    group: "Trials & Intake", 
+    title: "Scheduled Live Trials", 
+    headerTitle: "Scheduled Trials", 
+    description: "Live trial occurrences with confirmed trainer, Daily.co room link, and reminder automation.", 
+    scopeAuthority: "LIVE-017 / FLOW-007: Live trial delivery monitoring and CSR presence support.",
+    context: "Upcoming trials", 
+    family: "table", 
+    dataType: "trials", 
+    filterFn: t => t.status === "Scheduled",
+    metrics: [
+      ["Scheduled Trials", () => (db.csrData?.trials || []).filter(t => t.status === "Scheduled").length, "Upcoming sessions"],
+      ["Room Provisioning", () => "100% Provisioned", "Daily.co WebRTC"],
+      ["Reminder Status", () => "Dispatched", "WhatsApp & Email"]
+    ]
+  },
+  "csr-trials-outcomes": { 
+    group: "Trials & Intake", 
+    title: "Trial Outcomes & Conversion Pitch", 
+    headerTitle: "Trial Outcomes", 
+    description: "Completed trials with trainer assessment notes and CSR conversion pitch actions.", 
+    scopeAuthority: "CSR-007 / FLOW-007: Immediate post-trial follow-up and assisted checkout dispatch.",
+    context: "Outcome reviews", 
+    family: "table", 
+    dataType: "trials", 
+    filterFn: t => ["Completed", "No-Show"].includes(t.status),
+    metrics: [
+      ["Delivered Trials", () => (db.csrData?.trials || []).filter(t => t.status === "Completed").length, "Completed attendance"],
+      ["High Interest", () => "100%", "Ready for purchase"],
+      ["No-Show Rate", () => "16.7%", "Re-engagement queued"]
+    ]
+  },
+
+  // Hub 4: Assisted Enrolments (CSR-002, CSR-003, FLOW-013, FLOW-031)
+  "csr-enrolments-opportunities": { 
+    group: "Assisted Enrolments", 
+    title: "Conversion Opportunities", 
+    headerTitle: "Conversion Opportunities", 
+    description: "Warm leads who completed trials, awaiting order creation and payment instructions.", 
+    scopeAuthority: "CSR-002 / FLOW-031: Assisted checkout initiation and CSR attribution lock.",
+    context: "Hot opportunities", 
+    family: "table", 
+    dataType: "enrolments", 
+    filterFn: e => e.status === "Conversion Opportunity",
+    metrics: [
+      ["Active Opps", () => (db.csrData?.enrolments || []).filter(e => e.status === "Conversion Opportunity").length, "Ready to close"],
+      ["Deal Pipeline", () => "PKR 35,000", "Vocational Tech"],
+      ["Attribution Lock", () => "Sarah Jenkins (100%)", "Protected commission"]
+    ]
+  },
+  "csr-enrolments-membership-requests": { 
+    group: "Assisted Enrolments", 
+    title: "Membership Requests & Orders", 
+    headerTitle: "Membership Requests", 
+    description: "Initiated membership orders awaiting bank transfer slip upload or payment gateway settlement.", 
+    scopeAuthority: "COM-001 / CSR-003: Assisted order snapshot generation with price lock and tax compliance.",
+    context: "Pending orders", 
+    family: "table", 
+    dataType: "enrolments", 
+    filterFn: e => e.status === "Membership Request" || e.status === "Pending Activation",
+    metrics: [
+      ["Pending Slips", () => (db.csrData?.enrolments || []).filter(e => e.status === "Membership Request" || e.status === "Pending Activation").length, "Orders in checkout"],
+      ["Total Value", () => "PKR 74,000", "Awaiting verification"],
+      ["Payment Channel", () => "Direct Bank Transfer", "Meezan & HBL"]
+    ]
+  },
+  "csr-enrolments-attributed": { 
+    group: "Assisted Enrolments", 
+    title: "Attributed Enrolments Directory", 
+    headerTitle: "Attributed Enrolments", 
+    description: "Active learner enrolments permanently attributed to Sarah Jenkins for commission and tier-1 support.", 
+    scopeAuthority: "CSR-002 / CSR-003: Authoritative CSR attribution across multi-month learning lifecycles.",
+    context: "Attributed learners", 
+    family: "table", 
+    dataType: "enrolments", 
+    filterFn: e => e.attribution && e.attribution.includes("Sarah Jenkins"),
+    metrics: [
+      ["Attributed Enrolments", () => (db.csrData?.enrolments || []).filter(e => e.attribution && e.attribution.includes("Sarah Jenkins")).length, "Owned learners"],
+      ["Active Learners", () => (db.csrData?.enrolments || []).filter(e => e.status === "Active Enrolment").length, "In delivery"],
+      ["Commission Earned", () => "PKR 3,600", "Paid & payable"]
+    ]
+  },
+  "csr-enrolments-status": { 
+    group: "Assisted Enrolments", 
+    title: "Live Enrolment Status & Health", 
+    headerTitle: "Enrolment Status", 
+    description: "Real-time provisioning status, class attendance progress, and low credit renewal alerts.", 
+    scopeAuthority: "ENR-001 / CSR-009: Ongoing visibility into learner attendance, credit burn, and renewal readiness.",
+    context: "Enrolment health", 
+    family: "table", 
+    dataType: "enrolments",
+    metrics: [
+      ["Total Managed", () => (db.csrData?.enrolments || []).length, "All active records"],
+      ["Healthy Delivery", () => "100%", "No complaints"],
+      ["Upcoming Renewals", () => "2 Opportunities", "Month-end"]
+    ]
+  },
+
+  // Hub 5: Payment Review (Permission-Scoped) (CSR-002, CSR-009, FLOW-013)
+  "csr-payment-queue": { 
+    group: "Payment Verification (Scoped)", 
+    title: "Payment Review Queue", 
+    headerTitle: "Payment Review Queue", 
+    description: "Permission-scoped verification of manual bank transfer slips submitted by assigned prospects.", 
+    scopeAuthority: "PAY-003 / CSR-009: Segregated manual payment verification gateway with SHA-256 hash checks.",
+    context: "Payment reviews", 
+    family: "table", 
+    dataType: "payments", 
+    filterFn: p => p.status === "Awaiting Review" || p.status === "Under Review",
+    metrics: [
+      ["Review Queue", () => (db.csrData?.payments || []).filter(p => p.status === "Awaiting Review" || p.status === "Under Review").length, "Slips awaiting audit"],
+      ["Queue Value", () => "PKR 74,000", "Meezan / HBL / Easypaisa"],
+      ["Median Age", () => "1h 45m", "Within 3h SLA"]
+    ]
+  },
+  "csr-payment-under-review": { 
+    group: "Payment Verification (Scoped)", 
+    title: "Claimed Payments Under Review", 
+    headerTitle: "Payments Under Review", 
+    description: "Payment verification sessions currently locked by Sarah Jenkins to prevent duplicate processing.", 
+    scopeAuthority: "PAY-003: Concurrent review locking with 30-minute auto-expiry TTL.",
+    context: "Claimed reviews", 
+    family: "table", 
+    dataType: "payments", 
+    filterFn: p => p.status === "Under Review",
+    metrics: [
+      ["Locked by You", () => (db.csrData?.payments || []).filter(p => p.status === "Under Review").length, "Active audit"],
+      ["Review Lock TTL", () => "24m remaining", "Auto-releases if idle"],
+      ["Checksum Verification", () => "Passed (SHA-256)", "Unique receipt slip"]
+    ]
+  },
+  "csr-payment-approved": { 
+    group: "Payment Verification (Scoped)", 
+    title: "Approved Payments Archive", 
+    headerTitle: "Approved Payments", 
+    description: "Verified financial records with official receipt numbers, transaction IDs, and activated enrolments.", 
+    scopeAuthority: "PAY-003 / CSR-005: Verified payment transactions that qualify commission earning items.",
+    context: "Approved receipts", 
+    family: "table", 
+    dataType: "payments", 
+    filterFn: p => p.status === "Approved",
+    metrics: [
+      ["Approved Today", () => (db.csrData?.payments || []).filter(p => p.status === "Approved").length, "Access activated"],
+      ["Verified Value", () => "PKR 18,000", "Allied Bank"],
+      ["Official Receipt", () => "RCP-1049", "Immutable record"]
+    ]
+  },
+  "csr-payment-rejected": { 
+    group: "Payment Verification (Scoped)", 
+    title: "Rejected & Resubmission Slips", 
+    headerTitle: "Rejected Payments", 
+    description: "Transfer slips returned to payers due to illegible screenshots, amount mismatches, or wrong accounts.", 
+    scopeAuthority: "PAY-003: Audited rejection reasons with automated payer correction instructions.",
+    context: "Corrections queue", 
+    family: "table", 
+    dataType: "payments", 
+    filterFn: p => p.status === "Rejected / Correction" || p.status === "Rejected",
+    metrics: [
+      ["Correction Needed", () => (db.csrData?.payments || []).filter(p => p.status === "Rejected / Correction" || p.status === "Rejected").length, "Awaiting re-upload"],
+      ["Rejection Reason", () => "Amount Mismatch", "Submitted 25k vs Exp 35k"],
+      ["Payer Contacted", () => "WhatsApp Notice", "Instructions sent"]
+    ]
+  },
+  "csr-payment-exceptions": { 
+    group: "Payment Verification (Scoped)", 
+    title: "Payment Anomaly Exceptions", 
+    headerTitle: "Payment Exceptions", 
+    description: "Flagged transactions with duplicate references or checksum collisions across historical archives.", 
+    scopeAuthority: "PAY-003 / COM-015: Anomaly detection and fraud mitigation before enrolment provisioning.",
+    context: "Anomaly workbench", 
+    family: "table", 
+    dataType: "payments", 
+    filterFn: p => p.status === "Exception" || (p.receiptChecksum && p.receiptChecksum.includes("Duplicate")),
+    metrics: [
+      ["Exceptions", () => 0, "No active collisions"],
+      ["Integrity Level", () => "100% Verified", "No duplicate hashes"],
+      ["Settlement Risk", () => "Low / Green", "Clean ledger"]
+    ]
+  },
+
+  // Hub 6: My Commissions (CSR-004, CSR-005, CSR-006, FLOW-031)
+  "csr-commissions-pending": { 
+    group: "My Commissions", 
+    title: "Pending Commission Qualification", 
+    headerTitle: "Pending Commissions", 
+    description: "Commission items generated from assisted orders, awaiting manual bank transfer verification.", 
+    scopeAuthority: "CSR-005: Commission items remain pending until payment verification conditions are met.",
+    context: "Pending qualification", 
+    family: "table", 
+    dataType: "commissions", 
+    filterFn: c => c.status === "Pending Verification",
+    metrics: [
+      ["Pending Verification", () => (db.csrData?.commissions || []).filter(c => c.status === "Pending Verification").length, "2 orders pending"],
+      ["Expected Commission", () => "PKR 4,200", "10% Standard Plan"],
+      ["Associated Value", () => "PKR 42,000", "Pipeline sales"]
+    ]
+  },
+  "csr-commissions-eligible": { 
+    group: "My Commissions", 
+    title: "Eligible & Payable Commissions", 
+    headerTitle: "Payable Commissions", 
+    description: "Verified sales commissions approved for inclusion in the upcoming monthly payroll settlement.", 
+    scopeAuthority: "CSR-005 / CSR-006: Commission earnings flow into unified payroll settlement without duplicate spreadsheets.",
+    context: "Payable earnings", 
+    family: "table", 
+    dataType: "commissions", 
+    filterFn: c => c.status === "Payable",
+    metrics: [
+      ["Payable This Month", () => "PKR 3,600", "Approved for payout"],
+      ["Verified Sales", () => "2 Enrolments", "Basic Literacy 1:1"],
+      ["Payroll Run", () => "Aug 2026", "Settlement #PR-104"]
+    ]
+  },
+  "csr-commissions-reserved": { 
+    group: "My Commissions", 
+    title: "Reserved Commissions in Payroll", 
+    headerTitle: "Reserved Commissions", 
+    description: "Commissions locked into an active payroll batch currently undergoing COO/Finance review.", 
+    scopeAuthority: "CSR-006 / PAY-001: Integration with payroll batch processing and segregation of duties.",
+    context: "Payroll batch", 
+    family: "table", 
+    dataType: "commissions", 
+    filterFn: c => c.status === "Reserved",
+    metrics: [
+      ["Reserved Amount", () => "PKR 3,500", "Locked in PR-104"],
+      ["Batch Status", () => "Under Review", "COO Approval"],
+      ["Expected Payout", () => "31 Aug 2026", "Direct deposit"]
+    ]
+  },
+  "csr-commissions-paid": { 
+    group: "My Commissions", 
+    title: "Paid & Settled Commissions History", 
+    headerTitle: "Settled Commissions", 
+    description: "Historical record of disbursed commission earnings with bank deposit references and payroll slips.", 
+    scopeAuthority: "CSR-006: Complete historical earning traceability linked to authoritative payroll runs.",
+    context: "Disbursed earnings", 
+    family: "table", 
+    dataType: "commissions", 
+    filterFn: c => c.status === "Paid",
+    metrics: [
+      ["Total Paid to Date", () => "PKR 6,200", "July & August"],
+      ["Settled Batches", () => "2 Payroll Runs", "PR-102, PR-103"],
+      ["Commission Ratio", () => "10.0% Flat", "Standard CSR Plan"]
+    ]
+  },
+  "csr-commissions-reversed": { 
+    group: "My Commissions", 
+    title: "Reversed & Clawed Back Commissions", 
+    headerTitle: "Commission Reversals", 
+    description: "Commissions reversed due to learner refund, chargeback, or order cancellation within cooling period.", 
+    scopeAuthority: "CSR-005: Explicit clawback entries preserving original transaction auditability.",
+    context: "Clawbacks", 
+    family: "table", 
+    dataType: "commissions", 
+    filterFn: c => c.status === "Reversed",
+    metrics: [
+      ["Total Reversals", () => "PKR 0", "Zero refunds logged"],
+      ["Refund Rate", () => "0.0%", "Clean retention"],
+      ["Dispute Count", () => "0 Disputes", "No commission disputes"]
+    ]
+  },
+
+  // Hub 7: Communications & Support (CSR-002, CSR-009, ADM-009, FLOW-024)
+  "csr-cases": { 
+    group: "Communications & Support", 
+    title: "Owned Learner Inquiries & Support Cases", 
+    headerTitle: "CSR Support Cases", 
+    description: "Support inquiries, schedule queries, and fee breakdowns automatically routed to the responsible CSR.", 
+    scopeAuthority: "ADM-009 / CSR-002: Default case routing to responsible CSR for owned learners.",
+    context: "Case queue", 
+    family: "table", 
+    dataType: "cases",
+    metrics: [
+      ["Open Cases", () => (db.csrData?.cases || []).filter(c => c.status !== "Resolved").length, "Active tickets"],
+      ["SLA Compliant", () => "100%", "No breached timers"],
+      ["Avg Resolution Time", () => "42 mins", "Target < 2h"]
+    ]
+  },
+
+  // Hub 8: Performance Analytics (CSR-009, DSH-001 - DSH-014)
+  "csr-analytics": { 
+    group: "Performance Analytics", 
+    title: "CSR Commercial & Intake Scorecard", 
+    headerTitle: "Sales & Performance Analytics", 
+    description: "Attribution windows, conversion funnels, response times, quota progress, and commission totals.", 
+    scopeAuthority: "CSR-009: Comprehensive individual and team intake analytics and SLA tracking.",
+    context: "Scorecard", 
+    family: "analytics", 
+    dataType: "analytics",
+    metrics: [
+      ["Monthly Quota", () => "75.0%", "PKR 450k / 600k"],
+      ["Conversion Rate", () => "41.6%", "Trial to Paid"],
+      ["Response Time", () => "14 mins", "Median SLA"]
+    ]
+  }
+};
+
+Object.entries(csrRouteDefinitions).forEach(([route, config]) => {
+  moduleViews[route] = {
+    group: config.group,
+    title: config.title,
+    description: config.description,
+    context: config.context,
+    family: config.family
+  };
+});
+
+function updateCsrBadges() {
+  if (!db.csrData) return;
+  const setBadge = (selector, count) => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.textContent = String(count);
+      el.classList.toggle("hidden", count === 0);
+    });
+  };
+  const myLeads = (db.csrData.leads || []).filter(l => l.csr === "Sarah Jenkins");
+  const newLeads = (db.csrData.leads || []).filter(l => l.stage === "New");
+  const dueFollowups = (db.csrData.followups || []).filter(f => f.status === "Due");
+  const trials = db.csrData.trials || [];
+  const convOpps = (db.csrData.enrolments || []).filter(e => e.status === "Conversion Opportunity");
+  const reviewPayments = (db.csrData.payments || []).filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
+  const payableComm = (db.csrData.commissions || []).filter(c => c.status === "Payable");
+  const openCases = (db.csrData.cases || []).filter(c => c.status !== "Resolved");
+
+  setBadge(".count-csr-my-leads", myLeads.length);
+  setBadge(".count-csr-new-leads", newLeads.length);
+  setBadge(".count-csr-followups-due", dueFollowups.length);
+  setBadge(".count-csr-trial-reqs", trials.length);
+  setBadge(".count-csr-conv-opps", convOpps.length);
+  setBadge(".count-csr-payment-queue", reviewPayments.length);
+  setBadge(".count-csr-comm-payable", payableComm.length);
+  setBadge(".count-csr-open-cases", openCases.length);
+}
+
 function getOmRecordsForConfig(config) {
   if (!config.dataType || !db.omData || !db.omData[config.dataType]) return [];
   const list = db.omData[config.dataType];
@@ -17160,12 +17703,24 @@ const RenderEngine = {
       if (e) e.textContent = String(text);
     };
 
-    const myLeads = db.csrData.leads.filter(l => l.csr === "Sarah Jenkins");
-    const newLeads = db.csrData.leads.filter(l => l.stage === "New");
-    const dueFollowups = db.csrData.followups.filter(f => f.status === "Due");
-    const scheduledTrials = db.csrData.trials.filter(t => t.status === "Scheduled");
-    const convOpps = db.csrData.enrolments.filter(e => e.status === "Conversion Opportunity");
-    const reviewPayments = db.csrData.payments.filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
+    const courseFilter = document.getElementById("csr-filter-course")?.value || "";
+    const sourceFilter = document.getElementById("csr-filter-source")?.value || "";
+    const ownerFilter = document.getElementById("csr-filter-owner")?.value || "my";
+
+    let myLeads = (db.csrData?.leads || []);
+    if (ownerFilter === "my") myLeads = myLeads.filter(l => l.csr === "Sarah Jenkins");
+    if (courseFilter) myLeads = myLeads.filter(l => (l.programme || "").toLowerCase().includes(courseFilter.toLowerCase()));
+    if (sourceFilter) myLeads = myLeads.filter(l => (l.source || "").toLowerCase().includes(sourceFilter.toLowerCase()));
+
+    const newLeads = (db.csrData?.leads || []).filter(l => l.stage === "New");
+    let dueFollowups = (db.csrData?.followups || []).filter(f => f.status === "Due");
+    if (courseFilter) dueFollowups = dueFollowups.filter(f => (f.programme || "").toLowerCase().includes(courseFilter.toLowerCase()));
+
+    const scheduledTrials = (db.csrData?.trials || []).filter(t => t.status === "Scheduled");
+    let convOpps = (db.csrData?.enrolments || []).filter(e => e.status === "Conversion Opportunity");
+    if (courseFilter) convOpps = convOpps.filter(e => (e.programme || "").toLowerCase().includes(courseFilter.toLowerCase()));
+
+    const reviewPayments = (db.csrData?.payments || []).filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
 
     el("csr-flight-followups-count", dueFollowups.length);
     el("csr-pipe-leads-count", myLeads.length);
@@ -17188,12 +17743,12 @@ const RenderEngine = {
             </div>
             <div class="csr-action-sub">${f.type} · ${f.dueDate} · ${f.nextAction}</div>
           </div>
-          <div class="button-row">
-            <button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowup('${f.id}')">Contact Lead</button>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${f.leadId}')">Lead File</button>
+          <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+            <button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowup('${f.id}')"><i data-lucide="phone"></i> Contact Lead</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${f.leadId}')"><i data-lucide="file-text"></i> Lead File</button>
           </div>
         </div>
-      `).join("");
+      `).join("") || `<div style="padding:16px; color:var(--slate); font-size:13px;">No priority follow-ups pending for current filters.</div>`;
     }
 
     // Populate Right Queue: Conversion Opportunities & Payment Reviews
@@ -17208,8 +17763,8 @@ const RenderEngine = {
             </div>
             <div class="csr-action-sub">${o.programme} · ${o.membership} · Attributed to ${o.csr}</div>
           </div>
-          <div class="button-row">
-            <button class="btn btn-primary btn-xs" onclick="Actions.openCsrAssistedEnrolment('${o.id}')">Assist Checkout</button>
+          <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+            <button class="btn btn-primary btn-xs" onclick="Actions.openCsrAssistedEnrolment('${o.id}')"><i data-lucide="shopping-cart"></i> Assist Checkout</button>
           </div>
         </div>
       `);
@@ -17223,28 +17778,37 @@ const RenderEngine = {
             </div>
             <div class="csr-action-sub">${p.channel} · ${p.reference} · ${p.receiptChecksum}</div>
           </div>
-          <div class="button-row">
-            <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${p.id}')">Review Slip</button>
+          <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+            <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${p.id}')"><i data-lucide="receipt"></i> Review Slip</button>
           </div>
         </div>
       `);
 
-      convContainer.innerHTML = [...oppItems, ...payItems].join("");
+      convContainer.innerHTML = [...oppItems, ...payItems].join("") || `<div style="padding:16px; color:var(--slate); font-size:13px;">No active conversion opportunities for current filters.</div>`;
     }
 
     // Update Sidebar Badge Counts
     document.querySelectorAll(".count-csr-my-leads").forEach(e => e.textContent = myLeads.length);
     document.querySelectorAll(".count-csr-new-leads").forEach(e => e.textContent = newLeads.length);
     document.querySelectorAll(".count-csr-followups-due").forEach(e => e.textContent = dueFollowups.length);
-    document.querySelectorAll(".count-csr-trial-reqs").forEach(e => e.textContent = db.csrData.trials.length);
+    document.querySelectorAll(".count-csr-trial-reqs").forEach(e => e.textContent = (db.csrData?.trials || []).length);
     document.querySelectorAll(".count-csr-conv-opps").forEach(e => e.textContent = convOpps.length);
     document.querySelectorAll(".count-csr-payment-queue").forEach(e => e.textContent = reviewPayments.length);
-    document.querySelectorAll(".count-csr-comm-payable").forEach(e => e.textContent = db.csrData.commissions.filter(c => c.status === "Payable").length);
-    document.querySelectorAll(".count-csr-open-cases").forEach(e => e.textContent = db.csrData.cases.filter(c => c.status !== "Resolved").length);
+    document.querySelectorAll(".count-csr-comm-payable").forEach(e => e.textContent = (db.csrData?.commissions || []).filter(c => c.status === "Payable").length);
+    document.querySelectorAll(".count-csr-open-cases").forEach(e => e.textContent = (db.csrData?.cases || []).filter(c => c.status !== "Resolved").length);
 
     // Event listener for CSR shortcuts
     document.querySelectorAll("#csr-dashboard-shell [data-route-shortcut]").forEach(btn => {
       btn.onclick = () => Router.navigate(btn.getAttribute("data-route-shortcut"));
+    });
+
+    // Bind Filter Change Events
+    ["csr-filter-date", "csr-filter-course", "csr-filter-source", "csr-filter-owner"].forEach(id => {
+      const select = document.getElementById(id);
+      if (select && !select.dataset.bound) {
+        select.dataset.bound = "true";
+        select.addEventListener("change", () => RenderEngine.csrDashboard());
+      }
     });
 
     window.lucide?.createIcons();
@@ -17255,6 +17819,177 @@ const RenderEngine = {
     const config = csrRouteDefinitions[route];
     const container = document.getElementById("csr-workspace-content");
     if (!config || !container) return;
+
+    if (route === "csr-analytics") {
+      container.innerHTML = `
+        <div class="coo-workspace-view">
+          <header class="coo-workspace-header">
+            <div class="coo-workspace-heading">
+              <span class="coo-workspace-group">${config.group}</span>
+              <h2>${config.title}</h2>
+              <p>${config.description}</p>
+            </div>
+            <div class="coo-workspace-metrics-strip">
+              <article class="coo-workspace-metric">
+                <span>Monthly Quota Progress</span>
+                <strong class="success-text">PKR 450,000 / 600,000 (75.0%)</strong>
+                <small>15 days remaining in cycle</small>
+              </article>
+              <article class="coo-workspace-metric">
+                <span>Verified Conversion Rate</span>
+                <strong>41.6%</strong>
+                <small>Trial to paid enrolment</small>
+              </article>
+              <article class="coo-workspace-metric">
+                <span>Support Case SLA</span>
+                <strong class="success-text">100%</strong>
+                <small>0 breaches / 14m avg first response</small>
+              </article>
+            </div>
+          </header>
+
+          <section class="coo-scope-notice" aria-label="CSR Authority">
+            <i data-lucide="shield-check"></i>
+            <div>
+              <strong>CSR SCOPE & COMPLIANCE AUTHORITY</strong>
+              <p>${config.scopeAuthority}</p>
+            </div>
+          </section>
+
+          <!-- 4-Card Performance Matrix -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-bottom:20px;">
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Attributed Realized Sales</span>
+              <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">PKR 450,000</strong>
+              <span style="font-size:12px; color:#166534; font-weight:600;"><i data-lucide="arrow-up-right" style="width:12px; height:12px; display:inline;"></i> +18.4% vs last month</span>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Verified Commissions</span>
+              <strong style="display:block; font-size:22px; color:#166534; margin:4px 0 2px 0;">PKR 45,000</strong>
+              <span style="font-size:12px; color:var(--slate);">PKR 3,600 payable in Aug payroll</span>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Trials Delivered & Won</span>
+              <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">19 / 21 (90.5%)</strong>
+              <span style="font-size:12px; color:var(--slate);">Only 2 no-shows across 21 booked</span>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Owned Learner Retention</span>
+              <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">96.8%</strong>
+              <span style="font-size:12px; color:#166534; font-weight:600;">Low churn / proactive renewals</span>
+            </div>
+          </div>
+
+          <!-- Stage Conversion Funnel -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:20px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h4 style="margin:0; font-size:15px; color:var(--navy-dark);"><i data-lucide="filter" style="width:16px; height:16px; display:inline; vertical-align:middle; color:var(--primary);"></i> Inbound-to-Enrolment Conversion Funnel</h4>
+              <span class="badge badge-success">38.9% Overall Conversion</span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; text-align:center;">
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">1. Inbound Leads</span>
+                <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">36</strong>
+                <span style="font-size:11px; color:var(--slate);">100% Top of Funnel</span>
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">2. Assessed / Consent</span>
+                <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">28</strong>
+                <span style="font-size:11px; color:#166534;">77.8% Qualified</span>
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">3. Trials Booked</span>
+                <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">21</strong>
+                <span style="font-size:11px; color:#166534;">75.0% Booked</span>
+              </div>
+              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+                <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">4. Trials Attended</span>
+                <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">19</strong>
+                <span style="font-size:11px; color:#166534;">90.5% Show-up</span>
+              </div>
+              <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px;">
+                <span style="font-size:11px; color:#166534; text-transform:uppercase; font-weight:700;">5. Paid Enrolments</span>
+                <strong style="display:block; font-size:18px; color:#166534; margin-top:2px;">14</strong>
+                <span style="font-size:11px; color:#166534; font-weight:700;">73.7% Post-Trial</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance Telemetry Table -->
+          <div class="table-container" style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
+            <table class="coo-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th>Performance Dimension</th>
+                  <th>Target Benchmark</th>
+                  <th>Current Score</th>
+                  <th>Attribution Window</th>
+                  <th>SLA Compliance</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Inbound Inquiry First Touch</strong><span class="table-subline">Phone, WhatsApp, Email initial outreach</span></td>
+                  <td>&lt; 30 Minutes</td>
+                  <td><strong class="success-text">14 Minutes</strong></td>
+                  <td>August 2026</td>
+                  <td><span class="badge badge-success">98.4% Compliant</span></td>
+                  <td><span class="badge badge-success">Exceeding SLA</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Telemetry Exported', 'Downloaded First Touch response logs.', 'success')"><i data-lucide="download"></i> Audit Log</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Trial-to-Paid Conversion</strong><span class="table-subline">Attended trial to verified payment</span></td>
+                  <td>&gt; 35.0%</td>
+                  <td><strong class="success-text">41.6%</strong></td>
+                  <td>Lifetime / Trailing 90d</td>
+                  <td><span class="badge badge-success">118% of Target</span></td>
+                  <td><span class="badge badge-success">High Conversion</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Funnel Exported', 'Downloaded conversion breakdown.', 'success')"><i data-lucide="download"></i> Audit Log</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Payment Review Slip Turnaround</strong><span class="table-subline">Scoped bank receipt verification</span></td>
+                  <td>&lt; 3 Hours</td>
+                  <td><strong>1h 45m</strong></td>
+                  <td>August 2026</td>
+                  <td><span class="badge badge-success">100% Compliant</span></td>
+                  <td><span class="badge badge-success">On Track</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Payment Telemetry', 'Exported payment review logs.', 'success')"><i data-lucide="download"></i> Audit Log</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Owned Learner Support Resolution</strong><span class="table-subline">Inquiries, timetable updates & requests</span></td>
+                  <td>&lt; 2 Hours</td>
+                  <td><strong class="success-text">42 Minutes</strong></td>
+                  <td>August 2026</td>
+                  <td><span class="badge badge-success">100% Compliant</span></td>
+                  <td><span class="badge badge-success">Excellent SLA</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Support Telemetry', 'Exported support case resolution logs.', 'success')"><i data-lucide="download"></i> Audit Log</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+      if (window.lucide) window.lucide.createIcons();
+      return;
+    }
 
     let items = (db.csrData[config.dataType] || []);
     if (config.filterFn) {
@@ -17312,8 +18047,8 @@ const RenderEngine = {
           </div>
         </section>
 
-        <div class="table-container">
-          <table class="coo-table">
+        <div class="table-container" style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
+          <table class="coo-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
             <thead>
               ${this.csrTableHeaders(config.dataType)}
             </thead>
@@ -17396,13 +18131,13 @@ const RenderEngine = {
             <td><strong>${item.programme}</strong><span class="table-subline">${item.email}</span></td>
             <td>${item.source}<span class="table-subline">${item.created}</span></td>
             <td><strong>${item.expectedValue}</strong></td>
-            <td><span class="badge ${item.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${item.consent.includes('Verified') ? 'Verified' : 'Pending'}</span></td>
+            <td><span class="badge ${item.consent && item.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${item.consent && item.consent.includes('Verified') ? 'Verified' : 'Pending'}</span></td>
             <td><span class="badge ${badgeClass}">${item.stage}</span></td>
             <td>
-              <div class="button-row">
-                ${item.stage === 'New' || item.stage === 'Contacted' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrContactLead('${item.id}')">Log Contact</button>` : ''}
-                ${item.stage === 'Qualified' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')">Schedule Trial</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')">View</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                ${item.stage === 'New' || item.stage === 'Contacted' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrContactLead('${item.id}')"><i data-lucide="phone"></i> Log Contact</button>` : ''}
+                ${item.stage === 'Qualified' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar"></i> Schedule Trial</button>` : ''}
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> View</button>
               </div>
             </td>
           </tr>
@@ -17419,9 +18154,9 @@ const RenderEngine = {
             <td><strong>${item.nextAction}</strong><span class="table-subline">${item.history}</span></td>
             <td><span class="badge ${badgeClass}">${item.status}</span></td>
             <td>
-              <div class="button-row">
-                ${item.status === 'Due' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowup('${item.id}')">Execute Task</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')">Lead File</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                ${item.status === 'Due' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowup('${item.id}')"><i data-lucide="check-circle"></i> Execute Task</button>` : ''}
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="file-text"></i> Lead File</button>
               </div>
             </td>
           </tr>
@@ -17438,10 +18173,10 @@ const RenderEngine = {
             <td>${item.room ? `<span class="badge badge-success">Provisioned</span>` : `<span class="badge badge-secondary">Pending</span>`}</td>
             <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">${item.outcome}</span></td>
             <td>
-              <div class="button-row">
-                ${item.status === 'Ready for Scheduling' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')">Book Slot</button>` : ''}
-                ${item.status === 'Scheduled' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')">Record Outcome</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')">Details</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                ${item.status === 'Ready for Scheduling' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar"></i> Book Slot</button>` : ''}
+                ${item.status === 'Scheduled' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="check"></i> Record Outcome</button>` : ''}
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
               </div>
             </td>
           </tr>
@@ -17458,9 +18193,9 @@ const RenderEngine = {
             <td><span class="badge badge-success">${item.attribution}</span></td>
             <td><span class="badge ${badgeClass}">${item.status}</span></td>
             <td>
-              <div class="button-row">
-                ${item.status === 'Conversion Opportunity' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrAssistedEnrolment('${item.id}')">Assist Order</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')">View</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                ${item.status === 'Conversion Opportunity' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrAssistedEnrolment('${item.id}')"><i data-lucide="shopping-cart"></i> Assist Order</button>` : ''}
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="eye"></i> View</button>
               </div>
             </td>
           </tr>
@@ -17477,9 +18212,9 @@ const RenderEngine = {
             <td><span class="om-checksum-tag">${item.receiptChecksum}</span><span class="table-subline">${item.receiptFile}</span></td>
             <td><span class="badge ${badgeClass}">${item.status}</span></td>
             <td>
-              <div class="button-row">
-                ${item.status === 'Awaiting Review' || item.status === 'Under Review' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')">Review Slip</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRecord('${item.id}')">View</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                ${item.status === 'Awaiting Review' || item.status === 'Under Review' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="receipt"></i> Review Slip</button>` : ''}
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> View</button>
               </div>
             </td>
           </tr>
@@ -17496,8 +18231,8 @@ const RenderEngine = {
             <td><strong class="success-text">${item.commissionAmount}</strong></td>
             <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">${item.payrollPeriod}</span></td>
             <td>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrCommission('${item.id}')">Inspect</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="eye"></i> Inspect</button>
               </div>
             </td>
           </tr>
@@ -17514,8 +18249,8 @@ const RenderEngine = {
             <td>${item.prospect}<span class="table-subline">Owner: ${item.owner}</span></td>
             <td><span class="badge ${badgeClass}">${item.status}</span></td>
             <td>
-              <div class="button-row">
-                <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCase('${item.id}')">Reply</button>
+              <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCase('${item.id}')"><i data-lucide="message-circle"></i> Reply</button>
               </div>
             </td>
           </tr>
@@ -17534,7 +18269,7 @@ const RenderEngine = {
     }).join("");
   },
 
-    cooWorkspace(route) {
+  cooWorkspace(route) {
     const config = cooRouteDefinitions[route];
     const container = document.getElementById("coo-workspace-content");
     if (!config || !container) return;
@@ -27212,6 +27947,146 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Actions.audit("CSR_TRIAL_SCHEDULED", `Scheduled trial ${newTrialId} for ${lead.name} with ${trainer}.`, "Medium");
     Notifications.push("Trial Confirmed", `Trial session booked for ${slot}. Daily.co room provisioned.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrTrial = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Trial Session Consultation: ${trial.prospect} (${trial.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="video"></i>
+          <div>
+            <strong>FLOW-007 TRIAL CONSULTATION & ROOM RECORD</strong>
+            <p>Placement Level: ${trial.placementScore} · Course Track: ${trial.course}</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>Lead: ${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Trainer</span><strong>${trial.trainer}</strong><small>Assigned Faculty</small></div>
+          <div class="om-flow-metric"><span>Scheduled Window</span><strong>${trial.slot}</strong><small>Timezone: PKT</small></div>
+          <div class="om-flow-metric"><span>Status</span><strong>${trial.status}</strong><small>${trial.outcome}</small></div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="link"></i> Daily.co Video Room Access</h5>
+          <p><strong>Room URL:</strong> <code>${trial.room || "https://ihs.daily.co/trial-session"}</code></p>
+          <p><strong>Attendance State:</strong> <span class="badge badge-success">${trial.attendance}</span> · <strong>Consent:</strong> <span class="badge badge-success">${trial.consent}</span></p>
+        </div>
+
+        <div class="form-group">
+          <label>CSR Commercial Notes</label>
+          <p style="font-size:13px; color:var(--navy-dark); margin:0;">Prospect evaluated for ${trial.course}. Strong engagement observed. Parent expressed interest in monthly subscription plan.</p>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      ${trial.status === 'Scheduled' ? `<button class="btn btn-primary" onclick="Actions.openCsrTrialOutcome('${trial.id}')"><i data-lucide="check"></i> Record Trial Outcome</button>` : ''}
+      ${trial.status === 'Ready for Scheduling' ? `<button class="btn btn-primary" onclick="Actions.openCsrScheduleTrialModal('${trial.leadId || trial.id}')"><i data-lucide="calendar"></i> Book Slot</button>` : ''}
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrTrialOutcome = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Record Trial Outcome: ${trial.prospect} (${trial.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="award"></i>
+          <div>
+            <strong>FLOW-007 / FLOW-031 TRIAL EVALUATION & CONVERSION DISPATCH</strong>
+            <p>Record trainer assessment notes and initiate assisted enrolment checkout.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Course</span><strong>${trial.course}</strong><small>Trainer: ${trial.trainer}</small></div>
+          <div class="om-flow-metric"><span>Slot Delivered</span><strong>${trial.slot}</strong></div>
+          <div class="om-flow-metric"><span>CSR Owner</span><strong>${trial.csr || 'Sarah Jenkins'}</strong></div>
+        </div>
+
+        <div class="form-group">
+          <label>Trial Outcome & Purchase Readiness *</label>
+          <select id="csr-outcome-select" class="form-control">
+            <option value="Completed - High Interest">Completed — High Interest (Create Enrolment Opportunity)</option>
+            <option value="Completed - Needs Follow-up">Completed — Follow-up Required (Schedule Callback)</option>
+            <option value="Completed - Disqualified">Completed — Disqualified / Schedule Conflict</option>
+            <option value="No-Show">No-Show — Schedule Re-booking</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Trainer Assessment & Feedback *</label>
+          <textarea id="csr-outcome-notes" class="form-control" rows="2" placeholder="Learner showed strong aptitude. Level 1 curriculum recommended. Ready for enrolment."></textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrTrialOutcome('${trial.id}')"><i data-lucide="check-circle"></i> Save Outcome & Proceed</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrTrialOutcome = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const outcomeVal = document.getElementById("csr-outcome-select")?.value || "Completed - High Interest";
+    const notes = document.getElementById("csr-outcome-notes")?.value || "Trial completed successfully.";
+
+    if (outcomeVal.includes("No-Show")) {
+      trial.status = "No-Show";
+      trial.outcome = "No-Show (Re-booking scheduled)";
+      trial.attendance = "Absent";
+      Actions.audit("CSR_TRIAL_NOSHOW", `Logged trial no-show for ${trial.prospect} (${trial.id}).`, "Low");
+      Notifications.push("Outcome Saved", `No-show logged. Re-engagement task added to follow-up queue.`, "warning");
+    } else {
+      trial.status = "Completed";
+      trial.outcome = outcomeVal;
+      trial.attendance = "Attended (45 mins)";
+
+      if (outcomeVal.includes("High Interest")) {
+        // Automatically check if enrolment exists or create conversion opportunity
+        let existing = (db.csrData.enrolments || []).find(e => e.leadId === trial.leadId);
+        if (!existing) {
+          const newEnrId = "AEN-" + (700 + db.csrData.enrolments.length + 1);
+          db.csrData.enrolments.unshift({
+            id: newEnrId,
+            leadId: trial.leadId,
+            prospect: trial.prospect,
+            programme: trial.course,
+            membership: "1:1 Live Interactive (Monthly)",
+            amount: "PKR 18,000 / mo",
+            paymentStatus: "Conversion Pitch Dispatched",
+            csr: "Sarah Jenkins",
+            attribution: "Sarah Jenkins (100%)",
+            status: "Conversion Opportunity"
+          });
+        }
+        Actions.audit("CSR_TRIAL_COMPLETED_CONVERSION_OPP", `Completed trial ${trial.id} with high interest for ${trial.prospect}. Created conversion opportunity.`, "Medium");
+        Notifications.push("Trial Completed", `Outcome logged. Assisted enrolment opportunity created for ${trial.prospect}.`, "success");
+      } else {
+        Actions.audit("CSR_TRIAL_OUTCOME_SAVED", `Saved trial outcome ${trial.id} for ${trial.prospect}: ${outcomeVal}`, "Low");
+        Notifications.push("Trial Outcome Saved", `Outcome saved to prospect record.`, "info");
+      }
+    }
 
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);

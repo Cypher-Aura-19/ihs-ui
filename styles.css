@@ -11919,6 +11919,7 @@ td:last-child {
 
 .table-container,
 .om-table-container,
+.csr-table-container,
 .responsive-table-wrapper {
   background: #ffffff !important;
   border: 1px solid rgba(124, 119, 102, 0.22) !important;
@@ -11936,12 +11937,14 @@ td:last-child {
 /* Custom Sleek Scrollbar for Tables */
 .table-container::-webkit-scrollbar,
 .om-table-container::-webkit-scrollbar,
+.csr-table-container::-webkit-scrollbar,
 .responsive-table-wrapper::-webkit-scrollbar {
   height: 9px !important;
 }
 
 .table-container::-webkit-scrollbar-track,
 .om-table-container::-webkit-scrollbar-track,
+.csr-table-container::-webkit-scrollbar-track,
 .responsive-table-wrapper::-webkit-scrollbar-track {
   background: #f8fafc !important;
   border-radius: 4px !important;
@@ -11949,6 +11952,7 @@ td:last-child {
 
 .table-container::-webkit-scrollbar-thumb,
 .om-table-container::-webkit-scrollbar-thumb,
+.csr-table-container::-webkit-scrollbar-thumb,
 .responsive-table-wrapper::-webkit-scrollbar-thumb {
   background: #cbd5e1 !important;
   border-radius: 4px !important;
@@ -11957,22 +11961,25 @@ td:last-child {
 
 .table-container::-webkit-scrollbar-thumb:hover,
 .om-table-container::-webkit-scrollbar-thumb:hover,
+.csr-table-container::-webkit-scrollbar-thumb:hover,
 .responsive-table-wrapper::-webkit-scrollbar-thumb:hover {
   background: var(--primary) !important;
 }
 
 /* Data Table Architecture */
 .data-table,
-.om-data-table {
+.om-data-table,
+.csr-data-table {
   width: 100% !important;
-  min-width: 1100px !important;
+  min-width: 1250px !important;
   border-collapse: collapse !important;
   text-align: left !important;
   font-size: 13px !important;
 }
 
 .data-table th,
-.om-data-table th {
+.om-data-table th,
+.csr-data-table th {
   background: #fbf6ec !important;
   color: var(--navy-medium) !important;
   font: 800 11.5px 'Manrope', sans-serif !important;
@@ -11985,7 +11992,8 @@ td:last-child {
 }
 
 .data-table td,
-.om-data-table td {
+.om-data-table td,
+.csr-data-table td {
   padding: 14px 18px !important;
   border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
   color: var(--on-surface) !important;
@@ -11994,12 +12002,14 @@ td:last-child {
 }
 
 .data-table tr:last-child td,
-.om-data-table tr:last-child td {
+.om-data-table tr:last-child td,
+.csr-data-table tr:last-child td {
   border-bottom: none !important;
 }
 
 .data-table tr:hover td,
-.om-data-table tr:hover td {
+.om-data-table tr:hover td,
+.csr-data-table tr:hover td {
   background: #fdfbf7 !important;
 }
 

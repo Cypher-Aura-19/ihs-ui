@@ -460,178 +460,242 @@
         </div>
       </nav>
       
-            <!-- CSR (CUSTOMER SERVICE & SALES REPRESENTATIVE) SIDEBAR NAVIGATION -->
+      <!-- CSR (CUSTOMER SERVICE & SALES REPRESENTATIVE) SIDEBAR NAVIGATION -->
       <nav class="sidebar-nav csr-sidebar-nav hidden" id="csr-nav" aria-label="CSR navigation">
         <!-- 1. Dashboard -->
         <div class="nav-item active" data-route="csr-dashboard" id="nav-csr-dashboard">
           <i data-lucide="layout-dashboard"></i>
-          <span>Dashboard</span>
+          <span>Sales & Intake Command</span>
         </div>
 
-        <!-- 2. Leads / Prospects -->
-        <div class="nav-group">
-          <div class="nav-group-title">Leads & Prospects</div>
-          <div class="nav-item" data-route="csr-leads-my" id="nav-csr-leads-my">
-            <i data-lucide="user-check"></i>
-            <span>My Leads</span>
-            <span class="badge badge-primary count-csr-my-leads">12</span>
+        <!-- Hub 1: Leads & Prospects (CSR-001, CSR-008, FLOW-031) -->
+        <div class="nav-group collapsible open" data-group="csr-leads">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="users" style="width:13px; height:13px; color:var(--primary);"></i> Leads & Prospects</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-csr-new-leads">5</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="csr-leads-new" id="nav-csr-leads-new">
-            <i data-lucide="user-plus"></i>
-            <span>New Leads</span>
-            <span class="badge badge-warning count-csr-new-leads">5</span>
-          </div>
-          <div class="nav-item" data-route="csr-leads-qualified" id="nav-csr-leads-qualified">
-            <i data-lucide="award"></i>
-            <span>Qualified</span>
-          </div>
-          <div class="nav-item" data-route="csr-leads-converted" id="nav-csr-leads-converted">
-            <i data-lucide="check-check"></i>
-            <span>Converted</span>
-          </div>
-          <div class="nav-item" data-route="csr-leads-lost" id="nav-csr-leads-lost">
-            <i data-lucide="user-x"></i>
-            <span>Lost</span>
-          </div>
-        </div>
-
-        <!-- 3. Follow-ups -->
-        <div class="nav-group">
-          <div class="nav-group-title">Follow-ups</div>
-          <div class="nav-item" data-route="csr-followups-due" id="nav-csr-followups-due">
-            <i data-lucide="alarm-clock"></i>
-            <span>Due Today</span>
-            <span class="badge badge-error count-csr-followups-due">4</span>
-          </div>
-          <div class="nav-item" data-route="csr-followups-upcoming" id="nav-csr-followups-upcoming">
-            <i data-lucide="calendar"></i>
-            <span>Upcoming</span>
-          </div>
-          <div class="nav-item" data-route="csr-followups-completed" id="nav-csr-followups-completed">
-            <i data-lucide="calendar-check"></i>
-            <span>Completed</span>
-          </div>
-          <div class="nav-item" data-route="csr-followups-no-response" id="nav-csr-followups-no-response">
-            <i data-lucide="phone-missed"></i>
-            <span>No Response</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-leads-my" id="nav-csr-leads-my">
+              <i data-lucide="user-check"></i>
+              <span>My Assigned Leads</span>
+              <span class="badge badge-primary count-csr-my-leads">12</span>
+            </div>
+            <div class="nav-item" data-route="csr-leads-new" id="nav-csr-leads-new">
+              <i data-lucide="user-plus"></i>
+              <span>New Inbound Leads</span>
+              <span class="badge badge-warning count-csr-new-leads">5</span>
+            </div>
+            <div class="nav-item" data-route="csr-leads-qualified" id="nav-csr-leads-qualified">
+              <i data-lucide="award"></i>
+              <span>Qualified Prospects</span>
+            </div>
+            <div class="nav-item" data-route="csr-leads-converted" id="nav-csr-leads-converted">
+              <i data-lucide="check-check"></i>
+              <span>Converted & Enrolled</span>
+            </div>
+            <div class="nav-item" data-route="csr-leads-lost" id="nav-csr-leads-lost">
+              <i data-lucide="user-x"></i>
+              <span>Lost & Disqualified</span>
+            </div>
           </div>
         </div>
 
-        <!-- 4. Trials -->
-        <div class="nav-group">
-          <div class="nav-group-title">Trials</div>
-          <div class="nav-item" data-route="csr-trials-requests" id="nav-csr-trials-requests">
-            <i data-lucide="inbox"></i>
-            <span>Trial Requests</span>
-            <span class="badge badge-warning count-csr-trial-reqs">3</span>
+        <!-- Hub 2: Follow-ups & Tasks (CSR-007, FLOW-007, FLOW-037) -->
+        <div class="nav-group collapsible open" data-group="csr-followups">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="alarm-clock" style="width:13px; height:13px; color:var(--primary);"></i> Follow-ups & Tasks</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-error nav-group-badge count-csr-followups-due">4</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="csr-trials-qualification" id="nav-csr-trials-qualification">
-            <i data-lucide="clipboard-check"></i>
-            <span>Qualification</span>
-          </div>
-          <div class="nav-item" data-route="csr-trials-ready" id="nav-csr-trials-ready">
-            <i data-lucide="clock"></i>
-            <span>Ready for Scheduling</span>
-          </div>
-          <div class="nav-item" data-route="csr-trials-scheduled" id="nav-csr-trials-scheduled">
-            <i data-lucide="video"></i>
-            <span>Scheduled Trials</span>
-          </div>
-          <div class="nav-item" data-route="csr-trials-outcomes" id="nav-csr-trials-outcomes">
-            <i data-lucide="target"></i>
-            <span>Trial Outcomes</span>
-          </div>
-        </div>
-
-        <!-- 5. Assisted Enrolments -->
-        <div class="nav-group">
-          <div class="nav-group-title">Assisted Enrolments</div>
-          <div class="nav-item" data-route="csr-enrolments-opportunities" id="nav-csr-enrolments-opportunities">
-            <i data-lucide="sparkles"></i>
-            <span>Conversion Opps</span>
-            <span class="badge badge-primary count-csr-conv-opps">4</span>
-          </div>
-          <div class="nav-item" data-route="csr-enrolments-membership-requests" id="nav-csr-enrolments-membership-requests">
-            <i data-lucide="shopping-bag"></i>
-            <span>Membership Requests</span>
-          </div>
-          <div class="nav-item" data-route="csr-enrolments-attributed" id="nav-csr-enrolments-attributed">
-            <i data-lucide="badge-percent"></i>
-            <span>Attributed Enrolments</span>
-          </div>
-          <div class="nav-item" data-route="csr-enrolments-status" id="nav-csr-enrolments-status">
-            <i data-lucide="layers"></i>
-            <span>Enrolment Status</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-followups-due" id="nav-csr-followups-due">
+              <i data-lucide="alert-circle"></i>
+              <span>Due Today</span>
+              <span class="badge badge-error count-csr-followups-due">4</span>
+            </div>
+            <div class="nav-item" data-route="csr-followups-upcoming" id="nav-csr-followups-upcoming">
+              <i data-lucide="calendar"></i>
+              <span>Upcoming Follow-ups</span>
+            </div>
+            <div class="nav-item" data-route="csr-followups-completed" id="nav-csr-followups-completed">
+              <i data-lucide="calendar-check"></i>
+              <span>Completed Activities</span>
+            </div>
+            <div class="nav-item" data-route="csr-followups-no-response" id="nav-csr-followups-no-response">
+              <i data-lucide="phone-missed"></i>
+              <span>No Response / Escalations</span>
+            </div>
           </div>
         </div>
 
-        <!-- 6. Payment Review (Conditional Permission) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Payment Review</div>
-          <div class="nav-item" data-route="csr-payment-queue" id="nav-csr-payment-queue">
-            <i data-lucide="receipt"></i>
-            <span>Review Queue</span>
-            <span class="badge badge-warning count-csr-payment-queue">3</span>
+        <!-- Hub 3: Trials & Intake (CSR-002, CSR-007, FLOW-007) -->
+        <div class="nav-group collapsible open" data-group="csr-trials">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="video" style="width:13px; height:13px; color:var(--primary);"></i> Trials & Intake</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-csr-trial-reqs">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="csr-payment-under-review" id="nav-csr-payment-under-review">
-            <i data-lucide="file-search"></i>
-            <span>Under Review</span>
-          </div>
-          <div class="nav-item" data-route="csr-payment-approved" id="nav-csr-payment-approved">
-            <i data-lucide="check-circle-2"></i>
-            <span>Approved</span>
-          </div>
-          <div class="nav-item" data-route="csr-payment-rejected" id="nav-csr-payment-rejected">
-            <i data-lucide="x-circle"></i>
-            <span>Rejected / Correction</span>
-          </div>
-          <div class="nav-item" data-route="csr-payment-exceptions" id="nav-csr-payment-exceptions">
-            <i data-lucide="alert-triangle"></i>
-            <span>Exceptions</span>
-          </div>
-        </div>
-
-        <!-- 7. My Commissions -->
-        <div class="nav-group">
-          <div class="nav-group-title">My Commissions</div>
-          <div class="nav-item" data-route="csr-commissions-pending" id="nav-csr-commissions-pending">
-            <i data-lucide="hourglass"></i>
-            <span>Pending Verification</span>
-          </div>
-          <div class="nav-item" data-route="csr-commissions-eligible" id="nav-csr-commissions-eligible">
-            <i data-lucide="check"></i>
-            <span>Eligible / Payable</span>
-            <span class="badge badge-success count-csr-comm-payable">2</span>
-          </div>
-          <div class="nav-item" data-route="csr-commissions-reserved" id="nav-csr-commissions-reserved">
-            <i data-lucide="lock"></i>
-            <span>Reserved</span>
-          </div>
-          <div class="nav-item" data-route="csr-commissions-paid" id="nav-csr-commissions-paid">
-            <i data-lucide="banknote"></i>
-            <span>Paid</span>
-          </div>
-          <div class="nav-item" data-route="csr-commissions-reversed" id="nav-csr-commissions-reversed">
-            <i data-lucide="rotate-ccw"></i>
-            <span>Reversed</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-trials-requests" id="nav-csr-trials-requests">
+              <i data-lucide="inbox"></i>
+              <span>Trial Requests</span>
+              <span class="badge badge-warning count-csr-trial-reqs">3</span>
+            </div>
+            <div class="nav-item" data-route="csr-trials-qualification" id="nav-csr-trials-qualification">
+              <i data-lucide="clipboard-check"></i>
+              <span>Placement Qualification</span>
+            </div>
+            <div class="nav-item" data-route="csr-trials-ready" id="nav-csr-trials-ready">
+              <i data-lucide="clock"></i>
+              <span>Ready for Scheduling</span>
+            </div>
+            <div class="nav-item" data-route="csr-trials-scheduled" id="nav-csr-trials-scheduled">
+              <i data-lucide="play-circle"></i>
+              <span>Scheduled Trials</span>
+            </div>
+            <div class="nav-item" data-route="csr-trials-outcomes" id="nav-csr-trials-outcomes">
+              <i data-lucide="target"></i>
+              <span>Trial Outcomes</span>
+            </div>
           </div>
         </div>
 
-        <!-- 8. Cases & Communications -->
-        <div class="nav-group">
-          <div class="nav-group-title">Communications</div>
-          <div class="nav-item" data-route="csr-cases" id="nav-csr-cases">
-            <i data-lucide="message-square"></i>
-            <span>Inquiries & Cases</span>
-            <span class="badge badge-error count-csr-open-cases">2</span>
+        <!-- Hub 4: Assisted Enrolments (CSR-002, CSR-003, FLOW-013, FLOW-031) -->
+        <div class="nav-group collapsible open" data-group="csr-enrolments">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="sparkles" style="width:13px; height:13px; color:var(--primary);"></i> Assisted Enrolments</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge count-csr-conv-opps">4</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-enrolments-opportunities" id="nav-csr-enrolments-opportunities">
+              <i data-lucide="zap"></i>
+              <span>Conversion Opportunities</span>
+              <span class="badge badge-primary count-csr-conv-opps">4</span>
+            </div>
+            <div class="nav-item" data-route="csr-enrolments-membership-requests" id="nav-csr-enrolments-membership-requests">
+              <i data-lucide="shopping-bag"></i>
+              <span>Membership Orders</span>
+            </div>
+            <div class="nav-item" data-route="csr-enrolments-attributed" id="nav-csr-enrolments-attributed">
+              <i data-lucide="badge-percent"></i>
+              <span>Attributed Enrolments</span>
+            </div>
+            <div class="nav-item" data-route="csr-enrolments-status" id="nav-csr-enrolments-status">
+              <i data-lucide="layers"></i>
+              <span>Enrolment Status</span>
+            </div>
           </div>
         </div>
 
-        <!-- 9. Analytics / Performance -->
-        <div class="nav-group nav-group-primary">
-          <div class="nav-item" data-route="csr-analytics" id="nav-csr-analytics">
-            <i data-lucide="trending-up"></i>
-            <span>Sales Performance</span>
+        <!-- Hub 5: Payment Review (Permission-Scoped) (CSR-002, CSR-009, FLOW-013) -->
+        <div class="nav-group collapsible open" data-group="csr-payments">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="receipt" style="width:13px; height:13px; color:var(--primary);"></i> Payment Review</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-csr-payment-queue">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-payment-queue" id="nav-csr-payment-queue">
+              <i data-lucide="inbox"></i>
+              <span>Review Queue</span>
+              <span class="badge badge-warning count-csr-payment-queue">3</span>
+            </div>
+            <div class="nav-item" data-route="csr-payment-under-review" id="nav-csr-payment-under-review">
+              <i data-lucide="file-search"></i>
+              <span>Under Review</span>
+            </div>
+            <div class="nav-item" data-route="csr-payment-approved" id="nav-csr-payment-approved">
+              <i data-lucide="check-circle-2"></i>
+              <span>Approved Slips Archive</span>
+            </div>
+            <div class="nav-item" data-route="csr-payment-rejected" id="nav-csr-payment-rejected">
+              <i data-lucide="x-circle"></i>
+              <span>Rejected / Resubmissions</span>
+            </div>
+            <div class="nav-item" data-route="csr-payment-exceptions" id="nav-csr-payment-exceptions">
+              <i data-lucide="alert-triangle"></i>
+              <span>Payment Exceptions</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 6: My Commissions (CSR-004, CSR-005, CSR-006, FLOW-031) -->
+        <div class="nav-group collapsible open" data-group="csr-commissions">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="badge-percent" style="width:13px; height:13px; color:var(--primary);"></i> My Commissions</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-success nav-group-badge count-csr-comm-payable">2</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-commissions-pending" id="nav-csr-commissions-pending">
+              <i data-lucide="hourglass"></i>
+              <span>Pending Verification</span>
+            </div>
+            <div class="nav-item" data-route="csr-commissions-eligible" id="nav-csr-commissions-eligible">
+              <i data-lucide="check"></i>
+              <span>Eligible / Payable</span>
+              <span class="badge badge-success count-csr-comm-payable">2</span>
+            </div>
+            <div class="nav-item" data-route="csr-commissions-reserved" id="nav-csr-commissions-reserved">
+              <i data-lucide="lock"></i>
+              <span>Reserved in Payroll</span>
+            </div>
+            <div class="nav-item" data-route="csr-commissions-paid" id="nav-csr-commissions-paid">
+              <i data-lucide="banknote"></i>
+              <span>Paid & Settled History</span>
+            </div>
+            <div class="nav-item" data-route="csr-commissions-reversed" id="nav-csr-commissions-reversed">
+              <i data-lucide="rotate-ccw"></i>
+              <span>Reversals & Clawbacks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 7: Communications & Support (CSR-002, CSR-009, ADM-009, FLOW-024) -->
+        <div class="nav-group collapsible open" data-group="csr-cases-group">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="message-square" style="width:13px; height:13px; color:var(--primary);"></i> Communications</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-error nav-group-badge count-csr-open-cases">2</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-cases" id="nav-csr-cases">
+              <i data-lucide="messages-square"></i>
+              <span>Owned Learner Cases</span>
+              <span class="badge badge-error count-csr-open-cases">2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hub 8: Performance Analytics (CSR-009, DSH-001 - DSH-014) -->
+        <div class="nav-group collapsible open" data-group="csr-analytics-group">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="trending-up" style="width:13px; height:13px; color:var(--primary);"></i> Performance</div>
+            <div class="nav-group-meta">
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="csr-analytics" id="nav-csr-analytics">
+              <i data-lucide="bar-chart-2"></i>
+              <span>Sales & Intake Scorecard</span>
+            </div>
           </div>
         </div>
       </nav>
