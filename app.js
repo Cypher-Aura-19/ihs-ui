@@ -17937,6 +17937,230 @@ const RenderEngine = {
           </table>
         </div>
       `;
+    } else if (route === "om-pending-setup") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1200px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Enrolment Ref & Intake</th>
+                <th>Learner & Contact</th>
+                <th>Target Course & Format</th>
+                <th>Verified Payment & Receipt</th>
+                <th>Access Grant Allocation</th>
+                <th>Curriculum Version</th>
+                <th>Setup State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(e => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong><br>
+                    <small style="color:var(--slate);">${e.created || 'Today 10:45'}</small>
+                  </td>
+                  <td>
+                    <strong>${e.learner}</strong><br>
+                    <small style="color:var(--slate);">${e.email}</small>
+                  </td>
+                  <td>
+                    <strong>${e.course}</strong><br>
+                    <small style="color:var(--slate);">${e.mode || 'Group / Cohort'}</small>
+                  </td>
+                  <td>
+                    <strong>${e.paymentRef}</strong><br>
+                    <small style="color:#166534; font-weight:600;">● Confirmed & Verified</small>
+                  </td>
+                  <td>
+                    <span class="badge badge-primary" style="font-family:monospace; font-size:11px;">${e.grantRef || 'AG-901'}</span><br>
+                    <small style="color:var(--slate);">8 Lesson Credits</small>
+                  </td>
+                  <td>
+                    <span class="badge badge-secondary" style="font-family:monospace;">${e.version || 'v2.4 (Active)'}</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-warning">${e.status}</span><br>
+                    <small style="color:#b45309; font-weight:600;">${e.signal || 'Awaiting Cohort Assignment'}</small>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmEnrolmentSetupModal('${e.id}')"><i data-lucide="settings"></i> Configure Setup (FLOW-013)</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentReviewModal('${(e.paymentRef || '').split(' ')[0]}')"><i data-lucide="receipt"></i> Audit Receipt</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${e.id}')"><i data-lucide="message-square"></i> Contact</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-active-enrolments") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Enrolment ID</th>
+                <th>Learner Name & Contact</th>
+                <th>Course Programme & Version</th>
+                <th>Assigned Cohort / Trainer</th>
+                <th>Weekly Cadence</th>
+                <th>Lesson Credits Ledger</th>
+                <th>Enrolment Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(e => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong><br>
+                    <small style="color:var(--slate);">Since ${e.created || '01 Aug 2026'}</small>
+                  </td>
+                  <td>
+                    <strong>${e.learner}</strong><br>
+                    <small style="color:var(--slate);">${e.email}</small>
+                  </td>
+                  <td>
+                    <strong>${e.course}</strong><br>
+                    <small style="font-family:monospace; color:var(--primary);">${e.version || 'v2.4'}</small>
+                  </td>
+                  <td>
+                    <strong>${e.cohort || '1:1 Live Online'}</strong><br>
+                    <small style="color:var(--slate);">${e.trainer || 'Sara Javed'}</small>
+                  </td>
+                  <td><strong>${e.schedule || 'MWF 18:00 PKT'}</strong></td>
+                  <td>
+                    <strong style="color:#166534; font-size:13px;">${e.credits || '12 / 16 Credits'}</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100px; margin-top:4px; overflow:hidden;">
+                      <div style="background:#166534; height:100%; width:75%;"></div>
+                    </div>
+                  </td>
+                  <td><span class="badge ${e.status === 'Active' ? 'badge-success' : 'badge-warning'}">${e.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmLearnerDossierModal('${e.id}')"><i data-lucide="user-check"></i> Learner Dossier</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEntitlementAdjustModal('${e.id}')"><i data-lucide="sliders"></i> Adjust Credits</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('${e.id}', '${e.cohort}')"><i data-lucide="arrow-right-left"></i> Transfer (FLOW-018)</button>
+                      <button class="btn ${e.status === 'Active' ? 'btn-secondary' : 'btn-primary'} btn-xs" onclick="Actions.togglePauseEnrolment('${e.id}')">
+                        ${e.status === 'Active' ? '<i data-lucide="pause"></i> Pause' : '<i data-lucide="play"></i> Resume'}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-course-assignments") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Assignment Ref & ID</th>
+                <th>Learner Name</th>
+                <th>Course Track</th>
+                <th>Locked Curriculum Version</th>
+                <th>Lead Trainer & Cadence</th>
+                <th>Delivery Format</th>
+                <th>Assignment State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(e => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">ASG-${e.id.replace('ENR-', '')}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${e.id}</small>
+                  </td>
+                  <td>
+                    <strong>${e.learner}</strong><br>
+                    <small style="color:var(--slate);">${e.email}</small>
+                  </td>
+                  <td><strong>${e.course}</strong></td>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary);">${e.version || 'v2.4'}</strong><br>
+                    <small style="color:#166534; font-weight:600;">● Immutable Version Lock (ENR-002)</small>
+                  </td>
+                  <td>
+                    <strong>${e.trainer || 'Pending Assignment'}</strong><br>
+                    <small style="color:var(--slate);">${e.schedule || 'Schedule TBD'}</small>
+                  </td>
+                  <td><span class="badge badge-primary">${e.mode || 'Group / Cohort'}</span></td>
+                  <td><span class="badge ${e.status === 'Active' ? 'badge-success' : e.status === 'Pending Setup' ? 'badge-warning' : 'badge-secondary'}">${e.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmLearnerDossierModal('${e.id}')"><i data-lucide="book-open"></i> Syllabus Units</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmConflictResolveModal('TRN-01')"><i data-lucide="user-plus"></i> Reassign Trainer</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Version Locked', 'Curriculum version lock verified for ${e.id}.', 'info')"><i data-lucide="shield-check"></i> Audit Lock</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-multi-course") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Learner ID & Name</th>
+                <th>Concurrent Active Enrolments</th>
+                <th>Assigned Trainers & Sections</th>
+                <th>Isolated Lesson Balances</th>
+                <th>Weekly Session Load</th>
+                <th>Commercial Grant Links</th>
+                <th>Multi-Track Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(e => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong><br>
+                    <strong>${e.learner}</strong><br>
+                    <small style="color:var(--slate);">${e.email}</small>
+                  </td>
+                  <td>
+                    <strong>${e.course}</strong><br>
+                    <small style="color:var(--primary); font-weight:600;">2 Independent Academic Tracks (ENR-001)</small>
+                  </td>
+                  <td>
+                    <strong>${e.trainer || 'Huzsam Ahmed & Nadia Rahman'}</strong><br>
+                    <small style="color:var(--slate);">${e.cohort || 'CRUN-101 / CRUN-102'}</small>
+                  </td>
+                  <td>
+                    <strong style="color:#166534; font-size:13px;">${e.credits || '22 / 24 Credits'}</strong><br>
+                    <small style="color:var(--slate);">Isolated Ledgers (ENR-006)</small>
+                  </td>
+                  <td><strong>${e.schedule || 'Mon/Wed/Thu 14:00 PKT'}</strong></td>
+                  <td>
+                    <span style="font-family:monospace; font-size:11.5px; font-weight:700; color:var(--navy-medium);">${e.grantRef || 'AG-830'}</span><br>
+                    <small style="color:#166534; font-weight:600;">● Active Commercial Allocation</small>
+                  </td>
+                  <td><span class="badge badge-success">Dual Active</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmLearnerDossierModal('${e.id}')"><i data-lucide="layers"></i> Consolidated Dossier</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Credits Reconciled', 'Independent entitlement ledger for ${e.learner} verified without cross-course leakage.', 'success')"><i data-lucide="check-check"></i> Audit Ledgers</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${e.id}')"><i data-lucide="message-square"></i> Contact</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
     } else if (dataType === "enrolments") {
       tableMarkup = `
         <div class="table-container">
@@ -22878,17 +23102,21 @@ Actions.openOmEnrolmentSetupModal = function(enrolmentId) {
 };
 
 Actions.submitOmEnrolmentSetup = function(enrolmentId) {
-  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolmentId);
+  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolmentId) || db.omData.enrolments[0];
   const cohort = document.getElementById("om-enrol-cohort")?.value || "Cohort E-2026A";
   const trainer = document.getElementById("om-enrol-trainer")?.value || "Sara Javed";
+  const version = document.getElementById("om-enrol-version")?.value || "v2.4 (Active Master)";
   if (enrol) {
     enrol.status = "Active";
     enrol.cohort = cohort;
     enrol.trainer = trainer;
+    enrol.version = version;
+    enrol.credits = enrol.credits || "8 / 8 Credits";
+    enrol.schedule = "MWF 18:00 PKT";
   }
 
-  this.audit("ENROLMENT_ACTIVATED", `Activated enrolment ${enrolmentId} for ${enrol?.learner}. Cohort: ${cohort}, Trainer: ${trainer}.`, "High", "Pending Setup -> Active");
-  Notifications.push("Enrolment Activated", `Learning access activated for ${enrol?.learner}. Cohort allocated.`, "success");
+  this.audit("ENROLMENT_ACTIVATED", `Activated enrolment ${enrolmentId} for ${enrol?.learner}. Curriculum: ${version}, Cohort: ${cohort}, Trainer: ${trainer}.`, "High", "Pending Setup -> Active");
+  Notifications.push("Enrolment Activated", `Learning access activated for ${enrol?.learner}. Curriculum locked and trainer assigned.`, "success");
   document.getElementById("generic-modal").classList.add("hidden");
   if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
   else RenderEngine.omDashboard();
@@ -23115,6 +23343,109 @@ Actions.submitOmConflictResolve = function(trainerId) {
   this.audit("SCHEDULE_CONFLICT_RESOLVED", `Resolved collision for ${trainer?.name}. Reassigned occurrence to ${reassigned}.`, "High", "Collision Cleared");
   Notifications.push("Conflict Resolved", `Class reassigned to ${reassigned}. Telemetry conflict cleared.`, "success");
   document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmEntitlementAdjustModal = function(enrolId) {
+  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolId);
+  if (!enrol) return;
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="sliders" style="color:var(--primary);"></i> Adjust Lesson Credits Entitlement Ledger (${enrol.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">ENTITLEMENT LEDGER ADJUSTMENT (ENR-006 / COM-001)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Adjust lesson credits for ${enrol.learner} on course ${enrol.course}. Every grant, debit, and adjustment is recorded immutably in the entitlement ledger.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner</label>
+          <input type="text" class="form-control" value="${enrol.learner} (${enrol.email})" disabled>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Current Balance</label>
+          <input type="text" class="form-control" value="${enrol.credits || '8 / 8 Credits'}" disabled style="font-weight:700; color:#166534;">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Adjustment Action</label>
+          <select id="om-adjust-action" class="form-control">
+            <option value="grant">+ Grant Extra Credits</option>
+            <option value="debit">- Manual Debit</option>
+            <option value="reset">Set Absolute Balance</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Credits Amount</label>
+          <input type="number" id="om-adjust-amount" class="form-control" value="2" min="1" max="50">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Reason & Regulatory Justification</label>
+        <select id="om-adjust-reason" class="form-control">
+          <option value="Make-up session credit">Make-up session credit (Technical disruption)</option>
+          <option value="Administrative correction">Administrative ledger reconciliation</option>
+          <option value="Goodwill promotion">Goodwill compensation grant</option>
+          <option value="Syllabus extension">Syllabus extension grant</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Auditor Notes</label>
+        <textarea id="om-adjust-notes" class="form-control" rows="2" placeholder="Describe context for internal compliance review...">Authorized credit adjustment by OM Sarah Connor for ${enrol.learner}.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmEntitlementAdjust('${enrol.id}')"><i data-lucide="check"></i> Post Adjustment to Ledger</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmEntitlementAdjust = function(enrolId) {
+  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolId);
+  const action = document.getElementById("om-adjust-action")?.value || "grant";
+  const amount = parseInt(document.getElementById("om-adjust-amount")?.value || "2", 10);
+  const reason = document.getElementById("om-adjust-reason")?.value || "Administrative correction";
+
+  if (enrol) {
+    let curr = 8;
+    if (enrol.credits) {
+      const match = enrol.credits.match(/(\d+)\s*\/\s*(\d+)/);
+      if (match) curr = parseInt(match[1], 10);
+    }
+    let newBal = action === "grant" ? curr + amount : action === "debit" ? Math.max(0, curr - amount) : amount;
+    enrol.credits = `${newBal} / ${Math.max(newBal, 16)} Credits`;
+  }
+
+  this.audit("ENTITLEMENT_MANUAL_ADJUST", `Adjusted credits for ${enrol?.learner} (${enrolId}) on ${enrol?.course}. Action: ${action} ${amount} credits. Reason: ${reason}.`, "High", "Ledger Reconciled");
+  Notifications.push("Entitlement Adjusted", `Posted ${amount} credits adjustment for ${enrol?.learner}. New balance: ${enrol?.credits}.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.togglePauseEnrolment = function(enrolId) {
+  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolId);
+  if (!enrol) return;
+  const isCurrentlyActive = enrol.status === "Active";
+  enrol.status = isCurrentlyActive ? "Paused" : "Active";
+
+  this.audit("ENROLMENT_STATUS_TOGGLED", `${isCurrentlyActive ? 'Paused' : 'Resumed'} enrolment ${enrolId} for ${enrol.learner} on ${enrol.course}.`, "Medium", `${isCurrentlyActive ? 'Active -> Paused' : 'Paused -> Active'}`);
+  Notifications.push(isCurrentlyActive ? "Enrolment Paused" : "Enrolment Resumed", `${enrol.learner}'s enrolment has been ${isCurrentlyActive ? 'paused' : 'resumed'}.`, "info");
   if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
   else RenderEngine.omDashboard();
 };
