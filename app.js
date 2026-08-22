@@ -19123,42 +19123,51 @@ const RenderEngine = {
           </table>
         </div>
       `;
-    } else if (dataType === "classes") {
+    } else if (route === "om-payment-review") {
       tableMarkup = `
         <div class="table-container">
-          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
             <thead>
               <tr>
-                <th>Class ID</th>
-                <th>Course / Section</th>
-                <th>Trainer</th>
-                <th>Learner / Roster</th>
-                <th>Scheduled Timing</th>
-                <th>Daily.co Telemetry</th>
-                <th>Status</th>
+                <th>Payment ID & Age</th>
+                <th>Learner / Payer Name</th>
+                <th>Course Track</th>
+                <th>Channel & Reference</th>
+                <th>Submitted vs Expected</th>
+                <th>Duplicate / Checksum</th>
+                <th>Queue Status</th>
                 <th>Operations Action</th>
               </tr>
             </thead>
             <tbody id="om-table-body">
-              ${items.map(cls => `
+              ${items.map(p => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cls.id}</strong></td>
-                  <td><strong>${cls.title}</strong></td>
-                  <td><strong>${cls.trainer}</strong></td>
-                  <td>${cls.learner ? `<strong>${cls.learner}</strong> (1:1)` : `<strong>${cls.participants} Students</strong> (Cohort)`}</td>
-                  <td><strong>${cls.timing}</strong></td>
-                  <td><span class="badge ${cls.attendanceStatus.includes('Reconciled') ? 'badge-success' : cls.attendanceStatus.includes('Mismatch') ? 'badge-error' : 'badge-warning'}">${cls.attendanceStatus}</span></td>
-                  <td><span class="badge ${cls.status === 'Live' ? 'badge-success' : cls.status === 'Report Overdue' ? 'badge-error' : cls.status === 'Completed' ? 'badge-primary' : 'badge-warning'}">${cls.status}</span></td>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${p.id}</strong><br>
+                    <small style="color:var(--slate);">Age: ${p.queueAge || '1h 15m'}</small>
+                  </td>
+                  <td>
+                    <strong>${p.learner}</strong><br>
+                    <small style="color:var(--slate);">Payer: ${p.payer}</small>
+                  </td>
+                  <td><strong>${p.course}</strong></td>
+                  <td>
+                    <strong>${p.channel}</strong><br>
+                    <small style="font-family:monospace; color:var(--primary);">${p.reference}</small>
+                  </td>
+                  <td>
+                    <strong style="color:#166534; font-size:13.5px;">${p.submittedAmount}</strong><br>
+                    <small style="color:var(--slate);">Expected: ${p.expectedAmount}</small>
+                  </td>
+                  <td>
+                    <span class="badge ${p.duplicateFlag.includes('Duplicate') ? 'badge-error' : 'badge-success'}">${p.duplicateFlag}</span><br>
+                    <small style="font-family:monospace; color:var(--slate);">${p.receiptChecksum || 'sha256:7f3a88...'}</small>
+                  </td>
+                  <td><span class="badge ${p.status === 'Under Review' ? 'badge-primary' : 'badge-warning'}">${p.status}</span></td>
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')">Telemetry</button>
-                      ${cls.status === 'Live' || cls.status === 'Upcoming' ? `
-                        <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')"><i data-lucide="video"></i> Enter Room</button>
-                      ` : cls.reportStatus.includes('Submitted') ? `
-                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${cls.reportStatus.replace('Submitted (', '').replace(')', '')}')">Review Report (FLOW-016)</button>
-                      ` : `
-                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Trainer Nudged', 'Reminder dispatched to ${cls.trainer}.', 'warning')">Nudge Trainer</button>
-                      `}
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')"><i data-lucide="x-circle"></i> Reject Slip</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')"><i data-lucide="check-circle-2"></i> Audit & Grant Access (FLOW-013)</button>
                     </div>
                   </td>
                 </tr>
@@ -19167,36 +19176,169 @@ const RenderEngine = {
           </table>
         </div>
       `;
-    } else if (dataType === "classReviews") {
+    } else if (route === "om-payments-under-review") {
       tableMarkup = `
         <div class="table-container">
-          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
             <thead>
               <tr>
-                <th>Review ID</th>
-                <th>Class & Course</th>
-                <th>Trainer</th>
-                <th>Duration Logged</th>
-                <th>Syllabus Unit Delivered</th>
-                <th>Reconciled Attendance</th>
-                <th>Status</th>
+                <th>Payment ID</th>
+                <th>Claimed Reviewer</th>
+                <th>Learner / Payer</th>
+                <th>Channel & TRX Reference</th>
+                <th>Submitted Amount</th>
+                <th>Lock State</th>
                 <th>Operations Action</th>
               </tr>
             </thead>
             <tbody id="om-table-body">
-              ${items.map(r => `
+              ${items.map(p => `
                 <tr>
-                  <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong></td>
-                  <td><strong>${r.title}</strong><br><small style="font-family:monospace; color:var(--primary);">${r.classId}</small></td>
-                  <td><strong>${r.trainer}</strong></td>
-                  <td><strong style="color:#166534;">${r.duration}</strong></td>
-                  <td><em>"${r.syllabus}"</em></td>
-                  <td><span style="font-size:12px; color:var(--slate);">${r.reconciledAttendance}</span></td>
-                  <td><span class="badge ${r.status === 'Approved' ? 'badge-success' : r.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}">${r.status}</span></td>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${p.id}</strong><br>
+                    <small style="color:var(--slate);">${p.course}</small>
+                  </td>
+                  <td><strong>${p.reviewer || 'Sarah Connor (OM)'}</strong><br><small style="color:#166534; font-weight:600;">● Active Lock</small></td>
+                  <td><strong>${p.learner}</strong><br><small style="color:var(--slate);">${p.payer}</small></td>
+                  <td><strong>${p.channel}</strong><br><small style="font-family:monospace; color:var(--primary);">${p.reference}</small></td>
+                  <td><strong style="color:#166534; font-size:13.5px;">${p.submittedAmount}</strong></td>
+                  <td><span class="badge badge-primary">Locked (30m TTL)</span></td>
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">Return Note</button>
-                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')"><i data-lucide="check"></i> Approve Delivery (FLOW-016)</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')"><i data-lucide="play"></i> Resume Review</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Lock Released', 'Concurrent review lock released for ${p.id}.', 'info')"><i data-lucide="unlock"></i> Release Lock</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-payments-approved") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Payment Ref & Approval Date</th>
+                <th>Learner / Payer</th>
+                <th>Course Programme</th>
+                <th>Verified Amount</th>
+                <th>Official Receipt Ref</th>
+                <th>Access Grant & Allocation Link</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(p => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${p.id}</strong><br>
+                    <small style="color:var(--slate);">Approved ${p.submittedAt || 'Yesterday'}</small>
+                  </td>
+                  <td><strong>${p.learner}</strong><br><small style="color:var(--slate);">${p.payer}</small></td>
+                  <td><strong>${p.course}</strong></td>
+                  <td><strong style="color:#166534; font-size:13.5px;">${p.submittedAmount}</strong></td>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary);">${p.receiptId || 'RCP-1049'}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${p.txId || 'TX-5510'}</small>
+                  </td>
+                  <td>
+                    <span class="badge badge-success">● ${p.accessGrant || 'AG-881 Active'}</span><br>
+                    <small style="color:#166534; font-weight:600;">Enrolment Provisioned</small>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Official Receipt', 'Downloading PDF receipt ${p.receiptId || 'RCP-1049'}.', 'info')"><i data-lucide="file-text"></i> Official Receipt</button>
+                      <button class="btn btn-primary btn-xs" onclick="Router.navigate('om-active-enrolments')"><i data-lucide="user-check"></i> Enrolment Link</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-payments-rejected-correction") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Payment ID</th>
+                <th>Payer Name & Contact</th>
+                <th>Payment Channel & Ref</th>
+                <th>Submitted Amount</th>
+                <th>Audited Rejection Rationale</th>
+                <th>Payer Notice State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(p => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${p.id}</strong><br>
+                    <small style="color:var(--slate);">${p.course}</small>
+                  </td>
+                  <td><strong>${p.payer}</strong><br><small style="color:var(--slate);">${p.learner}</small></td>
+                  <td><strong>${p.channel}</strong><br><small style="font-family:monospace; color:var(--primary);">${p.reference}</small></td>
+                  <td><strong style="color:var(--navy-medium); font-size:13.5px;">${p.submittedAmount}</strong></td>
+                  <td>
+                    <strong style="color:#dc2626;">${p.returnReason || 'Receipt cropped transaction ID and timestamp.'}</strong>
+                  </td>
+                  <td><span class="badge badge-error">Awaiting Payer Re-upload</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Rejection Inspected', 'Full audit trail for ${p.id}.', 'info')"><i data-lucide="eye"></i> View Audit</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmContactGuardianModal('${p.id}')"><i data-lucide="message-square"></i> Contact Payer</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-payment-exceptions") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Payment Ref & Discrepancy</th>
+                <th>Learner / Payer</th>
+                <th>Flagged Anomaly Details</th>
+                <th>Submitted vs Expected</th>
+                <th>Checksum Match Collision</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(p => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${p.id}</strong><br>
+                    <span class="badge badge-error">Anomaly Flagged</span>
+                  </td>
+                  <td><strong>${p.learner}</strong><br><small style="color:var(--slate);">${p.payer}</small></td>
+                  <td>
+                    <strong style="color:#dc2626;">${p.duplicateFlag}</strong><br>
+                    <small style="color:var(--slate);">${p.notes}</small>
+                  </td>
+                  <td>
+                    <strong style="color:var(--navy-medium);">${p.submittedAmount}</strong><br>
+                    <small style="color:var(--slate);">Expected: ${p.expectedAmount}</small>
+                  </td>
+                  <td>
+                    <strong style="font-family:monospace; color:#dc2626;">${p.receiptChecksum}</strong><br>
+                    <small style="color:#dc2626; font-weight:600;">Collision with PAY-7890</small>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Duplicate Traced', 'Identical SHA-256 hash discovered in archive partition 2026-08.', 'warning')"><i data-lucide="shield-alert"></i> Trace Collision</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')"><i data-lucide="x-circle"></i> Reject Duplicate</button>
                     </div>
                   </td>
                 </tr>
@@ -25199,6 +25341,168 @@ Actions.openTrainerJoinClassModal = function(classId) {
 
   modal.classList.remove("hidden");
   if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openOmPaymentReviewModal = function(paymentId) {
+  const p = (db.omData.payments || []).find(pay => pay.id === paymentId) || db.omData.payments[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="receipt" style="color:var(--primary);"></i> Manual Payment Audit & Access Grant Gateway (FLOW-013)`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #166534; padding:12px; border-radius:8px;">
+        <strong style="color:#166534;">FINANCIAL RECONCILIATION & ACCESS PROVISIONING (PAY-003 / FLOW-013)</strong>
+        <p style="font-size:12px; color:#374151; margin:2px 0 0 0;">Approving this manual bank transfer validates the financial receipt slip against the order snapshot, issues the immutable official receipt, and activates course access.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Learner & Payer Profile</small>
+          <strong style="display:block; font-size:14px; color:var(--navy-dark);">${p.learner}</strong>
+          <span style="font-size:12px; color:var(--slate);">Payer: <strong>${p.payer}</strong> · Course: <strong>${p.course}</strong></span>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Financial Transaction Details</small>
+          <strong style="display:block; font-size:16px; color:#166534;">${p.submittedAmount}</strong>
+          <span style="font-size:12px; color:var(--slate);">${p.channel} · Ref: <strong style="font-family:monospace; color:var(--primary);">${p.reference}</strong></span>
+        </div>
+      </div>
+
+      <!-- Receipt Slip Image / Inspection Card -->
+      <div style="border:1px solid #e2e8f0; border-radius:8px; padding:12px; background:#ffffff;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <strong style="color:var(--navy-medium); font-size:12.5px;"><i data-lucide="image"></i> Bank Transfer Receipt Slip Preview</strong>
+          <span class="badge badge-success"><i data-lucide="shield-check"></i> ${p.duplicateFlag || 'Clean (No Duplicates)'}</span>
+        </div>
+        
+        <div style="background:#f1f5f9; border:1px dashed #cbd5e1; border-radius:6px; padding:16px; text-align:center;">
+          <div style="display:inline-block; background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px 24px; text-align:left; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <div style="font-weight:700; color:var(--navy-dark); border-bottom:1px solid #e2e8f0; padding-bottom:4px; margin-bottom:6px;">Meezan Bank Ltd · Electronic Funds Transfer</div>
+            <div style="font-size:12px; color:#374151;">Amount: <strong>${p.submittedAmount}</strong></div>
+            <div style="font-size:12px; color:#374151;">From Account: <strong>PK92MEZN000184719283</strong> (${p.payer})</div>
+            <div style="font-size:12px; color:#374151;">To Account: <strong>PK44HABB000928172635</strong> (Innovator Huzsam LMS)</div>
+            <div style="font-size:12px; color:#374151;">TRX Reference: <code style="font-family:monospace; color:var(--primary);">${p.reference}</code></div>
+            <div style="font-size:11px; color:var(--slate); margin-top:4px;">Date: 2026-08-19 14:22 PKT · Status: Success</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:11.5px; color:var(--slate);">
+          <span>SHA-256 Hash: <code style="font-family:monospace;">${p.receiptChecksum || 'sha256:7f3a88c91d4e'}</code></span>
+          <span>Matched to Order: <strong>ORD-9081 (${p.expectedAmount})</strong></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Auditor Notes</label>
+        <textarea id="om-pay-review-notes" class="form-control" rows="2" placeholder="Audit confirmation notes...">Bank statement verified. Funds received in LMS operating account with exact reference match.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-secondary" style="color:#dc2626; border-color:#fecaca;" onclick="Actions.openOmPaymentRejectModal('${p.id}')"><i data-lucide="x-circle"></i> Reject Slip</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmPaymentApproval('${p.id}')"><i data-lucide="check-circle-2"></i> Approve & Grant Access (FLOW-013)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmPaymentApproval = function(paymentId) {
+  const p = (db.omData.payments || []).find(pay => pay.id === paymentId);
+  const notes = document.getElementById("om-pay-review-notes")?.value || "Approved by OM";
+  
+  if (p) {
+    p.status = "Approved";
+    p.receiptId = `RCP-${Math.floor(1000 + Math.random() * 9000)}`;
+    p.accessGrant = `AG-${Math.floor(100 + Math.random() * 900)}`;
+  }
+
+  // Create new active/pending enrolment if not existing
+  const existingEnrol = (db.omData.enrolments || []).find(e => e.learner === p?.learner);
+  if (!existingEnrol && p) {
+    db.omData.enrolments.push({
+      id: `ENR-${Math.floor(4000 + Math.random() * 1000)}`,
+      learner: p.learner,
+      email: `${p.learner.toLowerCase().replace(/\s+/g, '.')}@example.com`,
+      course: p.course,
+      status: "Pending Setup",
+      enrolledDate: "2026-08-19",
+      credits: "8 / 8 Credits",
+      entitlementCredits: "8 / 8 Credits",
+      trainer: "TBD (Assign during setup)",
+      cohort: "TBD",
+      version: "v2.4 (Active Master)"
+    });
+  }
+
+  this.audit("MANUAL_PAYMENT_APPROVED", `Approved payment ${paymentId} (${p?.submittedAmount}) from ${p?.payer} for ${p?.learner}. Issued official receipt ${p?.receiptId} and granted access.`, "High", "Access Granted (FLOW-013)");
+  Notifications.push("Payment Approved", `Receipt ${p?.receiptId} generated. Access granted to ${p?.learner}!`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmPaymentRejectModal = function(paymentId) {
+  const p = (db.omData.payments || []).find(pay => pay.id === paymentId) || db.omData.payments[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="x-circle" style="color:#dc2626;"></i> Reject Manual Payment Slip (${p.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #dc2626; padding:12px; border-radius:8px;">
+        <strong style="color:#dc2626;">PAYMENT REJECTION & AUDIT LOG (PAY-004)</strong>
+        <p style="font-size:12px; color:#374151; margin:2px 0 0 0;">Rejecting will mark the submission as rejected and notify payer ${p.payer} with correction instructions to submit a valid slip.</p>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Rejection Reason</label>
+        <select id="om-pay-reject-reason" class="form-control">
+          <option value="Illegible / cropped receipt slip">Illegible or cropped receipt image (Missing TRX ID or timestamp)</option>
+          <option value="Amount mismatch">Amount deposited is lower than package requirement</option>
+          <option value="Duplicate receipt image">Duplicate receipt slip already claimed on another order</option>
+          <option value="Account mismatch">Deposited into incorrect destination account</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Detailed Instructions to Payer</label>
+        <textarea id="om-pay-reject-notes" class="form-control" rows="3">The uploaded bank transfer slip is cropped and does not show the full 16-digit transaction reference or timestamp. Please re-upload the official PDF statement or uncropped receipt.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" style="background:#dc2626; border-color:#dc2626;" onclick="Actions.submitOmPaymentReject('${p.id}')"><i data-lucide="send"></i> Confirm Rejection & Notify Payer</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmPaymentReject = function(paymentId) {
+  const p = (db.omData.payments || []).find(pay => pay.id === paymentId);
+  const reason = document.getElementById("om-pay-reject-reason")?.value || "Payment rejected";
+  const notes = document.getElementById("om-pay-reject-notes")?.value || "";
+
+  if (p) {
+    p.status = "Rejected (Correction Needed)";
+    p.returnReason = `${reason}: ${notes}`;
+  }
+
+  this.audit("MANUAL_PAYMENT_REJECTED", `Rejected manual payment slip ${paymentId} for ${p?.learner} (${p?.submittedAmount}). Reason: ${reason}.`, "High", "Rejected");
+  Notifications.push("Payment Rejected", `Payment slip ${paymentId} rejected. Payer ${p?.payer} notified.`, "warning");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
 };
 
 Actions.filterOmTable = function(statusVal) {
