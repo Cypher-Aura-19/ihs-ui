@@ -6452,17 +6452,30 @@ const Router = {
       });
     });
 
-    // Collapsible navigation groups
+    // Collapsible navigation groups (Single-Open Accordion)
     document.querySelectorAll(".nav-group.collapsible .nav-group-header").forEach(header => {
       header.setAttribute("role", "button");
       header.setAttribute("tabindex", "0");
       const toggleGroup = (e) => {
         e?.stopPropagation();
         const group = header.closest(".nav-group.collapsible");
-        if (group) {
-          const isOpen = group.classList.toggle("open");
-          header.setAttribute("aria-expanded", String(isOpen));
-        }
+        if (!group) return;
+        const parentNav = group.closest(".sidebar-nav") || document;
+        const wasOpen = group.classList.contains("open");
+
+        // Close all other collapsible groups in this sidebar
+        parentNav.querySelectorAll(".nav-group.collapsible").forEach(otherGroup => {
+          if (otherGroup !== group) {
+            otherGroup.classList.remove("open");
+            const otherHdr = otherGroup.querySelector(".nav-group-header");
+            if (otherHdr) otherHdr.setAttribute("aria-expanded", "false");
+          }
+        });
+
+        // Toggle clicked group
+        const isNowOpen = !wasOpen;
+        group.classList.toggle("open", isNowOpen);
+        header.setAttribute("aria-expanded", String(isNowOpen));
       };
       header.addEventListener("click", toggleGroup);
       header.addEventListener("keydown", event => {
@@ -6631,7 +6644,15 @@ const Router = {
     if (activeNavItem) {
       activeNavItem.classList.add("active");
       const parentCollapsible = activeNavItem.closest(".nav-group.collapsible");
-      if (parentCollapsible) {
+      const parentNav = activeNavItem.closest(".sidebar-nav");
+      if (parentNav && parentCollapsible) {
+        parentNav.querySelectorAll(".nav-group.collapsible").forEach(otherGroup => {
+          if (otherGroup !== parentCollapsible) {
+            otherGroup.classList.remove("open");
+            const otherHdr = otherGroup.querySelector(".nav-group-header");
+            if (otherHdr) otherHdr.setAttribute("aria-expanded", "false");
+          }
+        });
         parentCollapsible.classList.add("open");
         const hdr = parentCollapsible.querySelector(".nav-group-header");
         if (hdr) hdr.setAttribute("aria-expanded", "true");

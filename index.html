@@ -51,86 +51,110 @@
           <span>Enterprise Dashboard</span>
         </div>
 
-        <!-- Group: Business Oversight -->
-        <div class="nav-group">
-          <div class="nav-group-title">Business Oversight</div>
-          <div class="nav-item" data-route="admin-csr-sales" id="nav-admin-csr-sales">
-            <i data-lucide="funnel"></i>
-            <span>CSR & Sales Pipeline</span>
-            <span class="badge badge-primary">14 Trials</span>
+        <!-- Group 1: Business Operations & Rosters -->
+        <div class="nav-group collapsible open" data-group="admin-ops">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="activity" style="width:13px; height:13px; color:var(--primary);"></i> Operations & Delivery</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">16 Classes</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="admin-finance-payments" id="nav-admin-finance-payments">
-            <i data-lucide="receipt"></i>
-            <span>Finance & Payments</span>
-            <span class="badge badge-warning">7 Pending</span>
-          </div>
-          <div class="nav-item" data-route="admin-memberships-renewals" id="nav-admin-memberships-renewals">
-            <i data-lucide="refresh-cw"></i>
-            <span>Memberships & Renewals</span>
-            <span class="badge badge-error">18 Expiring</span>
-          </div>
-          <div class="nav-item" data-route="admin-academic-delivery" id="nav-admin-academic-delivery">
-            <i data-lucide="presentation"></i>
-            <span>Academic Delivery</span>
-            <span class="badge badge-primary">16 Classes</span>
-          </div>
-          <div class="nav-item" data-route="admin-hr-staff" id="nav-admin-hr-staff">
-            <i data-lucide="users-round"></i>
-            <span>HR & Staff Rosters</span>
-          </div>
-        </div>
-
-        <!-- Group: User & Access -->
-        <div class="nav-group">
-          <div class="nav-group-title">User & Access</div>
-          <div class="nav-item" data-route="users" id="nav-users">
-            <i data-lucide="users"></i>
-            <span>User Directory</span>
-          </div>
-          <div class="nav-item" data-route="invitations" id="nav-invitations">
-            <i data-lucide="mail-open"></i>
-            <span>Staff Invitations</span>
-          </div>
-          <div class="nav-item" data-route="security-sessions" id="nav-security-sessions">
-            <i data-lucide="shield-alert"></i>
-            <span>Security & Sessions (MFA)</span>
-          </div>
-          <div class="nav-item" data-route="roles-permissions" id="nav-roles-permissions">
-            <i data-lucide="user-check"></i>
-            <span>Roles & Permissions (FLOW-004)</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="admin-csr-sales" id="nav-admin-csr-sales">
+              <i data-lucide="funnel"></i>
+              <span>CSR & Sales Pipeline</span>
+              <span class="badge badge-primary">14 Trials</span>
+            </div>
+            <div class="nav-item" data-route="admin-finance-payments" id="nav-admin-finance-payments">
+              <i data-lucide="receipt"></i>
+              <span>Finance & Payments</span>
+              <span class="badge badge-warning">7 Pending</span>
+            </div>
+            <div class="nav-item" data-route="admin-memberships-renewals" id="nav-admin-memberships-renewals">
+              <i data-lucide="refresh-cw"></i>
+              <span>Memberships & Renewals</span>
+              <span class="badge badge-error">18 Expiring</span>
+            </div>
+            <div class="nav-item" data-route="admin-academic-delivery" id="nav-admin-academic-delivery">
+              <i data-lucide="presentation"></i>
+              <span>Academic Delivery</span>
+              <span class="badge badge-primary">16 Classes</span>
+            </div>
+            <div class="nav-item" data-route="admin-hr-staff" id="nav-admin-hr-staff">
+              <i data-lucide="users-round"></i>
+              <span>HR & Staff Rosters</span>
+            </div>
           </div>
         </div>
 
-        <!-- Group: Business Governance -->
-        <div class="nav-group">
-          <div class="nav-group-title">Business Governance</div>
-          <div class="nav-item" data-route="reference-data" id="nav-reference-data">
-            <i data-lucide="database"></i>
-            <span>Controlled Reference Data</span>
+        <!-- Group 2: User Access & Security -->
+        <div class="nav-group collapsible" data-group="admin-access">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="shield-check" style="width:13px; height:13px; color:var(--primary);"></i> Identity & Access</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">MFA Active</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="business-rules" id="nav-business-rules">
-            <i data-lucide="scale"></i>
-            <span>Versioned Business Rules</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="users" id="nav-users">
+              <i data-lucide="users"></i>
+              <span>User Directory</span>
+            </div>
+            <div class="nav-item" data-route="invitations" id="nav-invitations">
+              <i data-lucide="mail-open"></i>
+              <span>Staff Invitations</span>
+            </div>
+            <div class="nav-item" data-route="security-sessions" id="nav-security-sessions">
+              <i data-lucide="shield-alert"></i>
+              <span>Security & Sessions (MFA)</span>
+            </div>
+            <div class="nav-item" data-route="roles-permissions" id="nav-roles-permissions">
+              <i data-lucide="user-check"></i>
+              <span>Roles & Permissions (FLOW-004)</span>
+            </div>
           </div>
-          <div class="nav-item" data-route="imports" id="nav-imports">
-            <i data-lucide="file-input"></i>
-            <span>Staged Business Imports</span>
+        </div>
+
+        <!-- Group 3: Business Governance & Compliance -->
+        <div class="nav-group collapsible" data-group="admin-governance">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="scale" style="width:13px; height:13px; color:var(--primary);"></i> Governance & Compliance</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">Audit Ready</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="exports" id="nav-exports">
-            <i data-lucide="file-output"></i>
-            <span>Controlled Data Exports</span>
-          </div>
-          <div class="nav-item" data-route="audit-logs" id="nav-audit-logs">
-            <i data-lucide="file-spreadsheet"></i>
-            <span>Searchable Business Audit</span>
-          </div>
-          <div class="nav-item" data-route="retention-policies" id="nav-retention-policies">
-            <i data-lucide="history"></i>
-            <span>Data Retention & Archive</span>
-          </div>
-          <div class="nav-item" data-route="support-access" id="nav-support-access">
-            <i data-lucide="heart-handshake"></i>
-            <span>Support Case Routing</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reference-data" id="nav-reference-data">
+              <i data-lucide="database"></i>
+              <span>Controlled Reference Data</span>
+            </div>
+            <div class="nav-item" data-route="business-rules" id="nav-business-rules">
+              <i data-lucide="scale"></i>
+              <span>Versioned Business Rules</span>
+            </div>
+            <div class="nav-item" data-route="imports" id="nav-imports">
+              <i data-lucide="file-input"></i>
+              <span>Staged Business Imports</span>
+            </div>
+            <div class="nav-item" data-route="exports" id="nav-exports">
+              <i data-lucide="file-output"></i>
+              <span>Controlled Data Exports</span>
+            </div>
+            <div class="nav-item" data-route="audit-logs" id="nav-audit-logs">
+              <i data-lucide="file-spreadsheet"></i>
+              <span>Searchable Business Audit</span>
+            </div>
+            <div class="nav-item" data-route="retention-policies" id="nav-retention-policies">
+              <i data-lucide="history"></i>
+              <span>Data Retention & Archive</span>
+            </div>
+            <div class="nav-item" data-route="support-access" id="nav-support-access">
+              <i data-lucide="heart-handshake"></i>
+              <span>Support Case Routing</span>
+            </div>
           </div>
         </div>
       </nav>
@@ -1273,6 +1297,7 @@
 
       </nav>
       <!-- STUDENT / LEARNER NAVIGATION (ORGANIZED ACADEMIC PRESTIGE) -->
+      <!-- STUDENT / LEARNER NAVIGATION (ORGANIZED COLLAPSIBLE PRESTIGE) -->
       <nav class="sidebar-nav hidden" id="learner-nav" aria-label="Student & Learner navigation">
         
         <!-- 1. Learner Home -->
@@ -1282,138 +1307,181 @@
         </div>
 
         <!-- 2. Academic Curriculum & Tracks -->
-        <div class="nav-group">
-          <div class="nav-group-title">Curriculum & Courses</div>
-          <div class="nav-item" data-route="learner-learning-continue" id="nav-learner-learning-continue">
-            <i data-lucide="play-circle"></i>
-            <span>Resume Learning</span>
+        <div class="nav-group collapsible open" data-group="learner-curriculum">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="book-marked" style="width:13px; height:13px; color:var(--primary);"></i> Curriculum & Courses</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge count-learner-courses-active">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="learner-courses-active" id="nav-learner-courses-active">
-            <i data-lucide="book-marked"></i>
-            <span>My Active Tracks</span>
-            <span class="badge badge-primary count-learner-courses-active">3</span>
-          </div>
-          <div class="nav-item" data-route="learner-explore-catalogue" id="nav-learner-explore-catalogue">
-            <i data-lucide="compass"></i>
-            <span>Course Catalogue</span>
-          </div>
-          <div class="nav-item" data-route="learner-explore-previews" id="nav-learner-explore-previews">
-            <i data-lucide="eye"></i>
-            <span>Course Previews</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="learner-learning-continue" id="nav-learner-learning-continue">
+              <i data-lucide="play-circle"></i>
+              <span>Resume Learning</span>
+            </div>
+            <div class="nav-item" data-route="learner-courses-active" id="nav-learner-courses-active">
+              <i data-lucide="book-open"></i>
+              <span>My Active Tracks</span>
+              <span class="badge badge-primary count-learner-courses-active">3</span>
+            </div>
+            <div class="nav-item" data-route="learner-explore-catalogue" id="nav-learner-explore-catalogue">
+              <i data-lucide="compass"></i>
+              <span>Course Catalogue</span>
+            </div>
+            <div class="nav-item" data-route="learner-explore-previews" id="nav-learner-explore-previews">
+              <i data-lucide="eye"></i>
+              <span>Course Previews</span>
+            </div>
           </div>
         </div>
 
         <!-- 3. Live Classes & Timetable -->
-        <div class="nav-group">
-          <div class="nav-group-title">Live Classes & Schedule</div>
-          <div class="nav-item" data-route="learner-schedule-upcoming" id="nav-learner-schedule-upcoming">
-            <i data-lucide="calendar-check"></i>
-            <span>Upcoming Classes</span>
-            <span class="badge badge-primary count-learner-schedule-upcoming">2</span>
+        <div class="nav-group collapsible" data-group="learner-schedule">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="calendar" style="width:13px; height:13px; color:var(--primary);"></i> Live Classes & Schedule</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge count-learner-schedule-upcoming">2</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="learner-schedule-calendar" id="nav-learner-schedule-calendar">
-            <i data-lucide="calendar"></i>
-            <span>Timetable Calendar</span>
-          </div>
-          <div class="nav-item" data-route="learner-schedule-attendance" id="nav-learner-schedule-attendance">
-            <i data-lucide="user-check"></i>
-            <span>Attendance Telemetry</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="learner-schedule-upcoming" id="nav-learner-schedule-upcoming">
+              <i data-lucide="calendar-check"></i>
+              <span>Upcoming Classes</span>
+              <span class="badge badge-primary count-learner-schedule-upcoming">2</span>
+            </div>
+            <div class="nav-item" data-route="learner-schedule-calendar" id="nav-learner-schedule-calendar">
+              <i data-lucide="calendar"></i>
+              <span>Timetable Calendar</span>
+            </div>
+            <div class="nav-item" data-route="learner-schedule-attendance" id="nav-learner-schedule-attendance">
+              <i data-lucide="user-check"></i>
+              <span>Attendance Telemetry</span>
+            </div>
           </div>
         </div>
 
         <!-- 4. Formative Work & Quizzes -->
-        <div class="nav-group">
-          <div class="nav-group-title">Assignments & Submissions</div>
-          <div class="nav-item" data-route="learner-work-due" id="nav-learner-work-due">
-            <i data-lucide="alert-circle"></i>
-            <span>Action Required</span>
-            <span class="badge badge-warning count-learner-work-due">2</span>
+        <div class="nav-group collapsible" data-group="learner-work">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="clipboard-list" style="width:13px; height:13px; color:var(--primary);"></i> Assignments & Work</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-learner-work-due">2</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="learner-work-quizzes" id="nav-learner-work-quizzes">
-            <i data-lucide="help-circle"></i>
-            <span>Quizzes & Voice Studio</span>
-          </div>
-          <div class="nav-item" data-route="learner-work-submitted" id="nav-learner-work-submitted">
-            <i data-lucide="send"></i>
-            <span>Submitted Evidence</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="learner-work-due" id="nav-learner-work-due">
+              <i data-lucide="alert-circle"></i>
+              <span>Action Required</span>
+              <span class="badge badge-warning count-learner-work-due">2</span>
+            </div>
+            <div class="nav-item" data-route="learner-work-quizzes" id="nav-learner-work-quizzes">
+              <i data-lucide="help-circle"></i>
+              <span>Quizzes & Voice Studio</span>
+            </div>
+            <div class="nav-item" data-route="learner-work-submitted" id="nav-learner-work-submitted">
+              <i data-lucide="send"></i>
+              <span>Submitted Evidence</span>
+            </div>
           </div>
         </div>
 
         <!-- 5. Academic Evaluation & Feedback -->
-        <div class="nav-group">
-          <div class="nav-group-title">Grades & Governance</div>
-          <div class="nav-item" data-route="learner-grades-gradebook" id="nav-learner-grades-gradebook">
-            <i data-lucide="award"></i>
-            <span>Published Gradebook</span>
+        <div class="nav-group collapsible" data-group="learner-grades">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="award" style="width:13px; height:13px; color:var(--primary);"></i> Grades & Feedback</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">Reports</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="learner-grades-feedback" id="nav-learner-grades-feedback">
-            <i data-lucide="message-square-quote"></i>
-            <span>Faculty Feedback</span>
-          </div>
-          <div class="nav-item" data-route="learner-k12-subjects" id="nav-learner-k12-subjects">
-            <i data-lucide="school"></i>
-            <span>K-12 & Guardian Sync</span>
-          </div>
-        </div>
-
-        <!-- 6. Messages & Support Desk (MSG-001 - MSG-015 / FLOW-023 / FLOW-024) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Messages & Support</div>
-          <div class="nav-item" data-route="learner-messages-trainer" id="nav-learner-messages-trainer">
-            <i data-lucide="message-square"></i>
-            <span>Teacher Chat (FLOW-023)</span>
-            <span class="badge badge-primary">2</span>
-          </div>
-          <div class="nav-item" data-route="learner-messages-support" id="nav-learner-messages-support">
-            <i data-lucide="headphones"></i>
-            <span>Support Team Chat</span>
-          </div>
-          <div class="nav-item" data-route="learner-messages-cases" id="nav-learner-messages-cases">
-            <i data-lucide="life-buoy"></i>
-            <span>Report Issue & Cases (FLOW-024)</span>
-            <span class="badge badge-warning">1</span>
-          </div>
-          <div class="nav-item" data-route="learner-messages-announcements" id="nav-learner-messages-announcements">
-            <i data-lucide="megaphone"></i>
-            <span>Announcements (MSG-014)</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="learner-grades-gradebook" id="nav-learner-grades-gradebook">
+              <i data-lucide="award"></i>
+              <span>Published Gradebook</span>
+            </div>
+            <div class="nav-item" data-route="learner-grades-feedback" id="nav-learner-grades-feedback">
+              <i data-lucide="message-square-quote"></i>
+              <span>Faculty Feedback</span>
+            </div>
+            <div class="nav-item" data-route="learner-k12-subjects" id="nav-learner-k12-subjects">
+              <i data-lucide="school"></i>
+              <span>K-12 & Guardian Sync</span>
+            </div>
           </div>
         </div>
 
-        <!-- 7. Resources & Account Finance -->
-        <div class="nav-group">
-          <div class="nav-group-title">Resources & Ledger</div>
-          <div class="nav-item" data-route="learner-resources-course" id="nav-learner-resources-course">
-            <i data-lucide="folder-archive"></i>
-            <span>Resource Vault</span>
+        <!-- 6. Messages & Support Desk -->
+        <div class="nav-group collapsible" data-group="learner-messages">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="message-square" style="width:13px; height:13px; color:var(--primary);"></i> Messages & Support</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">2 Unread</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="learner-payments-memberships" id="nav-learner-payments-memberships">
-            <i data-lucide="credit-card"></i>
-            <span>Memberships & Slips</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="learner-messages-trainer" id="nav-learner-messages-trainer">
+              <i data-lucide="message-square"></i>
+              <span>Teacher Chat</span>
+              <span class="badge badge-primary">2</span>
+            </div>
+            <div class="nav-item" data-route="learner-messages-support" id="nav-learner-messages-support">
+              <i data-lucide="headphones"></i>
+              <span>Support Team Chat</span>
+            </div>
+            <div class="nav-item" data-route="learner-messages-cases" id="nav-learner-messages-cases">
+              <i data-lucide="life-buoy"></i>
+              <span>Report Issue & Cases</span>
+              <span class="badge badge-warning">1</span>
+            </div>
+            <div class="nav-item" data-route="learner-messages-announcements" id="nav-learner-messages-announcements">
+              <i data-lucide="megaphone"></i>
+              <span>Announcements</span>
+            </div>
           </div>
         </div>
 
-        <!-- 8. Account & Profile -->
-        <div class="nav-group">
-          <div class="nav-group-title">Account & Profile</div>
-          <div class="nav-item" data-route="learner-profile-personal" id="nav-learner-profile-personal">
-            <i data-lucide="user"></i>
-            <span>Personal Details</span>
+        <!-- 7. Account, Vault & Profile -->
+        <div class="nav-group collapsible" data-group="learner-account">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="false">
+            <div class="nav-group-title"><i data-lucide="user" style="width:13px; height:13px; color:var(--primary);"></i> Account & Profile</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">Verified</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="learner-profile-contact" id="nav-learner-profile-contact">
-            <i data-lucide="mail"></i>
-            <span>Contact Details</span>
-          </div>
-          <div class="nav-item" data-route="learner-profile-verification" id="nav-learner-profile-verification">
-            <i data-lucide="shield-check"></i>
-            <span>Verification Status</span>
-          </div>
-          <div class="nav-item" data-route="learner-profile-guardian" id="nav-learner-profile-guardian">
-            <i data-lucide="users"></i>
-            <span>Guardian & Consent</span>
-          </div>
-          <div class="nav-item" data-route="learner-profile-history" id="nav-learner-profile-history">
-            <i data-lucide="scroll"></i>
-            <span>Profile History</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="learner-resources-course" id="nav-learner-resources-course">
+              <i data-lucide="folder-archive"></i>
+              <span>Resource Vault</span>
+            </div>
+            <div class="nav-item" data-route="learner-payments-memberships" id="nav-learner-payments-memberships">
+              <i data-lucide="credit-card"></i>
+              <span>Memberships & Slips</span>
+            </div>
+            <div class="nav-item" data-route="learner-profile-personal" id="nav-learner-profile-personal">
+              <i data-lucide="user"></i>
+              <span>Personal Details</span>
+            </div>
+            <div class="nav-item" data-route="learner-profile-contact" id="nav-learner-profile-contact">
+              <i data-lucide="mail"></i>
+              <span>Contact Details</span>
+            </div>
+            <div class="nav-item" data-route="learner-profile-verification" id="nav-learner-profile-verification">
+              <i data-lucide="shield-check"></i>
+              <span>Verification Status</span>
+            </div>
+            <div class="nav-item" data-route="learner-profile-guardian" id="nav-learner-profile-guardian">
+              <i data-lucide="users"></i>
+              <span>Guardian & Consent</span>
+            </div>
+            <div class="nav-item" data-route="learner-profile-history" id="nav-learner-profile-history">
+              <i data-lucide="scroll"></i>
+              <span>Profile History</span>
+            </div>
           </div>
         </div>
 
