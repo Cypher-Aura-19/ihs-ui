@@ -19385,56 +19385,114 @@ const RenderEngine = {
           </table>
         </div>
       `;
-    } else if (dataType === "entitlements") {
+    } else if (dataType === "entitlements" || route === "om-entitlements-renewals") {
+      const renewalsList = db.omData.renewals || [];
       tableMarkup = `
-        <div class="table-container">
-          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
-            <thead>
-              <tr>
-                <th>Entitlement ID & Record</th>
-                <th>Learner & Course Track</th>
-                <th>Credit Ledger Balance</th>
-                <th>Debited / Reserved</th>
-                <th>Expiry & Renewal Date</th>
-                <th>Risk Level & Telemetry</th>
-                <th>Renewal Notice</th>
-                <th>Operations Action</th>
-              </tr>
-            </thead>
-            <tbody id="om-table-body">
-              ${items.map(e => `
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <div class="table-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:0 4px;">
+              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">
+                <i data-lucide="ticket-check" style="color:var(--primary); width:18px; height:18px; vertical-align:middle; margin-right:6px;"></i>
+                Active Learner Entitlement Ledgers (ENR-006 / COM-001)
+              </h3>
+              <span class="badge badge-primary">${items.length} Active Ledgers</span>
+            </div>
+            <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+              <thead>
                 <tr>
-                  <td>
-                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong><br>
-                    <small style="color:var(--slate);">Last debit: ${e.lastDebit || 'Today'}</small>
-                  </td>
-                  <td>
-                    <strong>${e.learner}</strong><br>
-                    <small style="color:var(--slate);">${e.course}</small>
-                  </td>
-                  <td>
-                    <strong style="color:${e.balance <= 2 ? '#b45309' : '#166534'}; font-size:14px;">${e.balance} / ${e.totalGranted} Credits</strong>
-                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:110px; margin-top:4px; overflow:hidden;">
-                      <div style="background:${e.balance <= 2 ? '#b45309' : '#166534'}; height:100%; width:${Math.min(100, (e.balance / e.totalGranted) * 100)}%;"></div>
-                    </div>
-                  </td>
-                  <td>
-                    <span>${e.debited} Debited</span> · <span style="color:var(--slate);">${e.reserved} In-Flight</span>
-                  </td>
-                  <td><strong>${e.expiry}</strong></td>
-                  <td><span class="badge ${e.riskLevel && e.riskLevel.includes('High') ? 'badge-error' : 'badge-success'}">${e.riskLevel}</span></td>
-                  <td><span class="badge badge-primary">${e.renewalNotice || 'Sent'}</span></td>
-                  <td style="white-space:nowrap;">
-                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEntitlementAdjustModal('${e.id}')"><i data-lucide="sliders"></i> Adjust Ledger</button>
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Renewal Dispatched', 'Automated renewal notice sent to ${e.learner}.', 'success')"><i data-lucide="bell"></i> Dispatch Notice</button>
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${e.id}')"><i data-lucide="message-square"></i> Contact</button>
-                    </div>
-                  </td>
+                  <th>Entitlement ID & Record</th>
+                  <th>Learner & Course Track</th>
+                  <th>Credit Ledger Balance</th>
+                  <th>Debited / Reserved</th>
+                  <th>Expiry & Renewal Date</th>
+                  <th>Risk Level & Telemetry</th>
+                  <th>Renewal Notice</th>
+                  <th>Operations Action</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody id="om-table-body">
+                ${items.map(e => `
+                  <tr>
+                    <td>
+                      <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${e.id}</strong><br>
+                      <small style="color:var(--slate);">Last debit: ${e.lastDebit || 'Today'}</small>
+                    </td>
+                    <td>
+                      <strong>${e.learner}</strong><br>
+                      <small style="color:var(--slate);">${e.course}</small>
+                    </td>
+                    <td>
+                      <strong style="color:${e.balance <= 2 ? '#b45309' : '#166534'}; font-size:14px;">${e.balance} / ${e.totalGranted} Credits</strong>
+                      <div style="background:#e2e8f0; border-radius:4px; height:6px; width:110px; margin-top:4px; overflow:hidden;">
+                        <div style="background:${e.balance <= 2 ? '#b45309' : '#166534'}; height:100%; width:${Math.min(100, (e.balance / e.totalGranted) * 100)}%;"></div>
+                      </div>
+                    </td>
+                    <td>
+                      <span>${e.debited} Debited</span> · <span style="color:var(--slate);">${e.reserved} In-Flight</span>
+                    </td>
+                    <td><strong>${e.expiry}</strong></td>
+                    <td><span class="badge ${e.riskLevel && e.riskLevel.includes('High') ? 'badge-error' : 'badge-success'}">${e.riskLevel}</span></td>
+                    <td><span class="badge badge-primary">${e.renewalNotice || 'Sent'}</span></td>
+                    <td style="white-space:nowrap;">
+                      <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEntitlementAuditModal('${e.id}')"><i data-lucide="shield-check"></i> Audit History</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEntitlementAdjustModal('${e.id}')"><i data-lucide="sliders"></i> Adjust Ledger</button>
+                        <button class="btn btn-primary btn-xs" onclick="Notifications.push('Renewal Dispatched', 'Automated renewal notice sent to ${e.learner}.', 'success')"><i data-lucide="bell"></i> Dispatch Notice</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Section 2: Membership Renewals Pipeline -->
+          <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <div>
+                <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 2px 0;">
+                  <i data-lucide="refresh-cw" style="color:var(--primary); width:18px; height:18px; vertical-align:middle; margin-right:6px;"></i>
+                  Upcoming Membership Renewal Opportunities (FLOW-013)
+                </h3>
+                <p style="font-size:12px; color:var(--slate); margin:0;">Target proactive renewal outreach before entitlement expiry to maintain continuous attendance.</p>
+              </div>
+              <span class="badge badge-warning">${renewalsList.length} Active Renewals</span>
+            </div>
+
+            <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th>Renewal Ref</th>
+                  <th>Learner Beneficiary</th>
+                  <th>Target Plan & Term</th>
+                  <th>Expected Amount</th>
+                  <th>Target Renewal Date</th>
+                  <th>Contact Status</th>
+                  <th>Status</th>
+                  <th>Operations Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renewalsList.map(r => `
+                  <tr>
+                    <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong></td>
+                    <td><strong>${r.learner}</strong></td>
+                    <td><strong>${r.plan}</strong></td>
+                    <td><strong style="color:#166534; font-size:13.5px;">${r.expectedAmount}</strong></td>
+                    <td><strong>${r.renewalDate}</strong></td>
+                    <td><span style="font-size:12px; color:var(--slate);">${r.contactAttempt}</span></td>
+                    <td><span class="badge ${r.status.includes('Awaiting') ? 'badge-warning' : 'badge-primary'}">${r.status}</span></td>
+                    <td style="white-space:nowrap;">
+                      <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${r.id}')"><i data-lucide="message-square"></i> Contact Payer</button>
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmInitiateRenewalModal('${r.id}')"><i data-lucide="send"></i> Initiate Renewal (FLOW-013)</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         </div>
       `;
     } else if (dataType === "k12") {
@@ -24810,30 +24868,35 @@ Actions.submitOmConflictResolve = function(trainerId) {
   else RenderEngine.omDashboard();
 };
 
-Actions.openOmEntitlementAdjustModal = function(enrolId) {
-  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolId);
-  if (!enrol) return;
+Actions.openOmEntitlementAdjustModal = function(entOrEnrolId) {
+  let item = (db.omData.entitlements || []).find(e => e.id === entOrEnrolId);
+  let enrol = (db.omData.enrolments || []).find(e => e.id === entOrEnrolId || (item && e.learner === item.learner));
+  
+  const learnerName = item ? item.learner : (enrol ? enrol.learner : "John Doe");
+  const courseName = item ? item.course : (enrol ? enrol.course : "Basic Literacy");
+  const currentBalance = item ? `${item.balance} / ${item.totalGranted} Credits` : (enrol ? enrol.credits : "8 / 8 Credits");
+
   const modal = document.getElementById("generic-modal");
   const title = document.getElementById("modal-title");
   const body = document.getElementById("modal-body");
   const footer = document.getElementById("modal-footer");
 
-  title.innerHTML = `<i data-lucide="sliders" style="color:var(--primary);"></i> Adjust Lesson Credits Entitlement Ledger (${enrol.id})`;
+  title.innerHTML = `<i data-lucide="sliders" style="color:var(--primary);"></i> Adjust Lesson Credits Entitlement Ledger (${entOrEnrolId})`;
   body.innerHTML = `
     <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
       <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
         <strong style="color:var(--navy-medium);">ENTITLEMENT LEDGER ADJUSTMENT (ENR-006 / COM-001)</strong>
-        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Adjust lesson credits for ${enrol.learner} on course ${enrol.course}. Every grant, debit, and adjustment is recorded immutably in the entitlement ledger.</p>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Adjust lesson credits for <strong>${learnerName}</strong> on course <strong>${courseName}</strong>. Every grant, debit, and adjustment is recorded immutably in the entitlement ledger.</p>
       </div>
 
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
         <div class="form-group">
-          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner</label>
-          <input type="text" class="form-control" value="${enrol.learner} (${enrol.email})" disabled>
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner Beneficiary</label>
+          <input type="text" class="form-control" value="${learnerName}" disabled>
         </div>
         <div class="form-group">
-          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Current Balance</label>
-          <input type="text" class="form-control" value="${enrol.credits || '8 / 8 Credits'}" disabled style="font-weight:700; color:#166534;">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Current Available Balance</label>
+          <input type="text" class="form-control" value="${currentBalance}" disabled style="font-weight:700; color:#166534;">
         </div>
       </div>
 
@@ -24864,25 +24927,35 @@ Actions.openOmEntitlementAdjustModal = function(enrolId) {
 
       <div class="form-group">
         <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Auditor Notes</label>
-        <textarea id="om-adjust-notes" class="form-control" rows="2" placeholder="Describe context for internal compliance review...">Authorized credit adjustment by OM Sarah Connor for ${enrol.learner}.</textarea>
+        <textarea id="om-adjust-notes" class="form-control" rows="2" placeholder="Describe context for internal compliance review...">Authorized credit adjustment by OM Sarah Connor for ${learnerName}.</textarea>
       </div>
     </div>
   `;
 
   footer.innerHTML = `
     <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-    <button class="btn btn-primary" onclick="Actions.submitOmEntitlementAdjust('${enrol.id}')"><i data-lucide="check"></i> Post Adjustment to Ledger</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmEntitlementAdjust('${entOrEnrolId}')"><i data-lucide="check"></i> Post Adjustment to Ledger</button>
   `;
 
   modal.classList.remove("hidden");
   if (window.lucide) window.lucide.createIcons();
 };
 
-Actions.submitOmEntitlementAdjust = function(enrolId) {
-  const enrol = (db.omData.enrolments || []).find(e => e.id === enrolId);
+Actions.submitOmEntitlementAdjust = function(entOrEnrolId) {
+  let ent = (db.omData.entitlements || []).find(e => e.id === entOrEnrolId);
+  let enrol = (db.omData.enrolments || []).find(e => e.id === entOrEnrolId || (ent && e.learner === ent.learner));
+  
   const action = document.getElementById("om-adjust-action")?.value || "grant";
   const amount = parseInt(document.getElementById("om-adjust-amount")?.value || "2", 10);
   const reason = document.getElementById("om-adjust-reason")?.value || "Administrative correction";
+
+  if (ent) {
+    let curr = ent.balance;
+    let newBal = action === "grant" ? curr + amount : action === "debit" ? Math.max(0, curr - amount) : amount;
+    ent.balance = newBal;
+    ent.totalGranted = Math.max(ent.totalGranted, newBal + ent.debited);
+    ent.riskLevel = newBal <= 2 ? "High (Low Balance)" : "Normal";
+  }
 
   if (enrol) {
     let curr = 8;
@@ -24894,8 +24967,183 @@ Actions.submitOmEntitlementAdjust = function(enrolId) {
     enrol.credits = `${newBal} / ${Math.max(newBal, 16)} Credits`;
   }
 
-  this.audit("ENTITLEMENT_MANUAL_ADJUST", `Adjusted credits for ${enrol?.learner} (${enrolId}) on ${enrol?.course}. Action: ${action} ${amount} credits. Reason: ${reason}.`, "High", "Ledger Reconciled");
-  Notifications.push("Entitlement Adjusted", `Posted ${amount} credits adjustment for ${enrol?.learner}. New balance: ${enrol?.credits}.`, "success");
+  const targetName = ent ? ent.learner : (enrol ? enrol.learner : "Learner");
+  this.audit("ENTITLEMENT_MANUAL_ADJUST", `Adjusted credits for ${targetName} (${entOrEnrolId}). Action: ${action} ${amount} credits. Reason: ${reason}.`, "High", "Ledger Reconciled");
+  Notifications.push("Entitlement Adjusted", `Posted ${amount} credits adjustment for ${targetName}. New balance recorded.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmEntitlementAuditModal = function(entId) {
+  const ent = (db.omData.entitlements || []).find(e => e.id === entId) || db.omData.entitlements[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="shield-check" style="color:var(--primary);"></i> Immutable Entitlement Ledger History (${ent.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #166534; padding:12px; border-radius:8px;">
+        <strong style="color:#166534;">ENTITLEMENT AUDIT LOG (ENR-006 / COM-001)</strong>
+        <p style="font-size:12px; color:#374151; margin:2px 0 0 0;">Authoritative immutable balance breakdown for <strong>${ent.learner}</strong> (${ent.course}). Every balance mutation is linked to a confirmed transaction, delivery QA sign-off, or manual adjustment.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; text-align:center;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+          <small style="color:var(--slate); font-size:10.5px; text-transform:uppercase; font-weight:700;">Granted</small>
+          <strong style="display:block; font-size:16px; color:var(--navy-dark);">${ent.totalGranted} Credits</strong>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+          <small style="color:var(--slate); font-size:10.5px; text-transform:uppercase; font-weight:700;">Consumed</small>
+          <strong style="display:block; font-size:16px; color:#dc2626;">${ent.debited} Debited</strong>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+          <small style="color:var(--slate); font-size:10.5px; text-transform:uppercase; font-weight:700;">In-Flight</small>
+          <strong style="display:block; font-size:16px; color:#d97706;">${ent.reserved} Reserved</strong>
+        </div>
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:10px;">
+          <small style="color:#166534; font-size:10.5px; text-transform:uppercase; font-weight:700;">Available</small>
+          <strong style="display:block; font-size:16px; color:#166534;">${ent.balance} Credits</strong>
+        </div>
+      </div>
+
+      <div style="border:1px solid #e2e8f0; border-radius:6px; overflow:hidden;">
+        <div style="background:#f8fafc; padding:8px 12px; font-weight:700; font-size:12px; border-bottom:1px solid #e2e8f0; color:var(--navy-medium);">
+          Immutable Transaction & Delivery Log
+        </div>
+        <div style="max-height:180px; overflow-y:auto; font-size:11.5px;">
+          <table style="width:100%; border-collapse:collapse;">
+            <thead>
+              <tr style="background:#f1f5f9; text-align:left;">
+                <th style="padding:6px 10px;">Timestamp</th>
+                <th style="padding:6px 10px;">Event Type</th>
+                <th style="padding:6px 10px;">Reference</th>
+                <th style="padding:6px 10px;">Delta</th>
+                <th style="padding:6px 10px;">Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:6px 10px;">2026-08-01 10:00</td>
+                <td style="padding:6px 10px;"><span class="badge badge-success">Initial Grant</span></td>
+                <td style="padding:6px 10px;"><code style="font-family:monospace;">PAY-8009 (RCP-1049)</code></td>
+                <td style="padding:6px 10px; font-weight:700; color:#166534;">+${ent.totalGranted}</td>
+                <td style="padding:6px 10px; font-weight:700;">${ent.totalGranted}</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:6px 10px;">2026-08-08 14:30</td>
+                <td style="padding:6px 10px;"><span class="badge badge-primary">Delivery QA Debit</span></td>
+                <td style="padding:6px 10px;"><code style="font-family:monospace;">REV-501 (CLS-9840)</code></td>
+                <td style="padding:6px 10px; font-weight:700; color:#dc2626;">-1</td>
+                <td style="padding:6px 10px; font-weight:700;">${ent.totalGranted - 1}</td>
+              </tr>
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:6px 10px;">2026-08-15 11:45</td>
+                <td style="padding:6px 10px;"><span class="badge badge-primary">Delivery QA Debit</span></td>
+                <td style="padding:6px 10px;"><code style="font-family:monospace;">REV-502 (CLS-9870)</code></td>
+                <td style="padding:6px 10px; font-weight:700; color:#dc2626;">-1</td>
+                <td style="padding:6px 10px; font-weight:700;">${ent.balance}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; font-size:12px;">
+        <span style="color:var(--slate);">Membership Expiry: <strong>${ent.expiry}</strong></span> · 
+        <span style="color:var(--slate);">Risk Status: <strong style="color:${ent.riskLevel.includes('High') ? '#dc2626' : '#166534'};">${ent.riskLevel}</strong></span>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Ledger</button>
+    <button class="btn btn-primary" onclick="Actions.openOmEntitlementAdjustModal('${ent.id}')"><i data-lucide="sliders"></i> Adjust Ledger</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openOmInitiateRenewalModal = function(renewalId) {
+  const ren = (db.omData.renewals || []).find(r => r.id === renewalId) || db.omData.renewals[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="refresh-cw" style="color:var(--primary);"></i> Initiate Assisted Membership Renewal (FLOW-013)`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #166534; padding:12px; border-radius:8px;">
+        <strong style="color:#166534;">MEMBERSHIP RENEWAL ORDER GENERATION (COM-011 / COM-013)</strong>
+        <p style="font-size:12px; color:#374151; margin:2px 0 0 0;">Initiating a renewal creates a fresh versioned term agreement for <strong>${ren.learner}</strong> without overwriting previous history.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner Beneficiary</label>
+          <input type="text" class="form-control" value="${ren.learner}" disabled>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Renewal Term Plan</label>
+          <input type="text" class="form-control" value="${ren.plan}" disabled>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Expected Renewal Amount</label>
+          <input type="text" class="form-control" value="${ren.expectedAmount}" style="font-weight:700; color:#166534;">
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Entitlement Credit Allowance</label>
+          <select id="om-renew-credits" class="form-control">
+            <option value="8">8 Lesson Credits (1-Month Standard)</option>
+            <option value="16" selected>16 Lesson Credits (2-Month Extension)</option>
+            <option value="24">24 Lesson Credits (3-Month Term Plan)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Payment Request Dispatch Channel</label>
+        <select id="om-renew-dispatch-channel" class="form-control">
+          <option value="email_sms">Email Invoice + SMS Payment Link (Meezan Bank / Easypaisa)</option>
+          <option value="whatsapp">WhatsApp Direct Business Payment Request</option>
+          <option value="phone_assisted">Phone Assisted Bank Transfer Instructions</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Renewal Outreach Notes</label>
+        <textarea id="om-renew-notes" class="form-control" rows="2">Guardian contacted via telephone. Confirmed renewal of 3-month package with carry-forward of remaining credits.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmInitiateRenewal('${ren.id}')"><i data-lucide="send"></i> Issue Renewal Request (FLOW-013)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmInitiateRenewal = function(renewalId) {
+  const ren = (db.omData.renewals || []).find(r => r.id === renewalId);
+  const credits = document.getElementById("om-renew-credits")?.value || "16";
+
+  if (ren) {
+    ren.status = "Payment Request Dispatched";
+    ren.signal = "Invoice sent to guardian";
+  }
+
+  this.audit("RENEWAL_REQUEST_DISPATCHED", `Issued assisted renewal ${renewalId} for ${ren?.learner} (${ren?.plan}, ${credits} credits, ${ren?.expectedAmount}).`, "High", "Payment Request Issued");
+  Notifications.push("Renewal Dispatched", `Issued renewal order for ${ren?.learner}. Payment instructions sent to payer.`, "success");
   document.getElementById("generic-modal").classList.add("hidden");
   if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
   else RenderEngine.omDashboard();
