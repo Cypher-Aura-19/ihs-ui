@@ -8881,111 +8881,289 @@ const RenderEngine = {
     shell.classList.remove("hidden");
     shell.style.display = "block";
 
-    const data = db.trainerData;
-    const todayClasses = data.classes.filter(c => c.status === "Today");
-    const reportsDue = (data.reports || []).filter(r => r.status === "Draft" || r.status === "Pending Delivery");
-    const urgentGrading = (data.gradingQueue || []).filter(g => g.status === "Pending Grading");
-    const riskLearners = (data.learners || []).filter(l => l.riskFlag);
+    const data = db.trainerData || {};
+    const classes = data.classes || [];
+    const todayClasses = classes.filter(c => c.status === "Today" || c.joinable);
+    const reportsDue = (data.reports || []).filter(r => r.status === "Draft" || r.status === "Reports Due" || r.status === "Pending Delivery");
+    const gradingQueue = data.gradingQueue || [];
+    const urgentGrading = gradingQueue.filter(g => g.status === "Pending Grading" || g.status === "Pending Manual Review");
+    const riskLearners = (data.learners || []).filter(l => l.risk !== "None" && l.risk !== "Remediated");
+    const earnings = data.earnings || [];
+    const totalEarnedPkr = earnings.reduce((acc, e) => acc + (e.grossAmount || 0), 142500);
+
+    const activeFilter = window.trainerHomeTab || "all";
+    const filteredClasses = activeFilter === "all" ? classes.slice(0, 4) :
+      activeFilter === "joinable" ? classes.filter(c => c.joinable) :
+      activeFilter === "reports" ? classes.filter(c => c.status === "Awaiting Report" || c.status === "Correction Requested") :
+      classes.filter(c => c.status === "Trial Classes");
 
     shell.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:20px; width:100%;">
-        <!-- HERO BANNER -->
-        <div class="creator-flight-strip" style="background:#ffffff; border:1px solid var(--outline-variant); border-top:3px solid var(--primary); border-radius:12px; padding:22px 26px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
-          <div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-              <span class="badge badge-primary" style="font-size:10.5px; font-weight:800;">TEACHING & LEARNING DELIVERY</span>
-              <span class="badge badge-success">● LIVE SESSION WINDOW ACTIVE</span>
+      <div style="display:flex; flex-direction:column; gap:22px; width:100%; max-width:1400px; margin:0 auto;">
+        
+        <!-- 1. ACADEMIC PRESTIGE MASTER HERO BANNER (DSH-005 / FLOW-015) -->
+        <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-top:4px solid var(--primary); border-radius:14px; padding:24px 28px; box-shadow:0 4px 18px rgba(70, 55, 28, 0.04); display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:20px;">
+          <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+            <div style="width:58px; height:58px; border-radius:50%; background:#fdfbf7; border:2px solid var(--primary); display:flex; align-items:center; justify-content:center; color:var(--primary); font:800 22px 'Manrope', sans-serif; box-shadow:0 3px 10px rgba(110,94,6,0.12);">
+              SJ
             </div>
-            <h2 style="font:800 22px 'Manrope', sans-serif; color:var(--on-surface); margin:0 0 4px 0;">Teaching Command Center — Sara Javed</h2>
-            <p style="font-size:12.5px; color:var(--slate); margin:0;">
-              Manage today's live class schedules, launch Daily.co video rooms, record post-class educational notes, and grade student submissions.
-            </p>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;">
+                <span class="badge badge-primary" style="font-size:10.5px; font-weight:800;"><i data-lucide="award"></i> LEAD ACADEMIC SPECIALIST</span>
+                <span class="badge badge-success"><span class="pulse-dot"></span> LIVE OCCURRENCE READY</span>
+                <span class="badge badge-secondary">PKT Timezone (UTC+5)</span>
+              </div>
+              <h2 style="font:800 23px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 3px 0;">Teaching Command Center — Sara Javed</h2>
+              <p style="font-size:12.5px; color:#5a687c; margin:0;">
+                Conduct assigned live cohort sessions, launch Daily.co WebRTC video rooms, record post-class educational notes, and evaluate rubric assignments.
+              </p>
+            </div>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <div class="button-row" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
             <button class="btn btn-secondary btn-sm" onclick="Router.navigate('trainer-reports-due')">
-              <i data-lucide="file-text"></i> Post-Class Reports (${reportsDue.length})
+              <i data-lucide="file-text"></i> Post-Class Reports <span class="badge badge-warning" style="margin-left:4px;">${reportsDue.length}</span>
             </button>
             <button class="btn btn-secondary btn-sm" onclick="Router.navigate('trainer-grading-queue')">
-              <i data-lucide="check-square"></i> Grading Queue (${urgentGrading.length})
+              <i data-lucide="check-square"></i> Grading Queue <span class="badge badge-primary" style="margin-left:4px;">${urgentGrading.length}</span>
             </button>
-            <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerJoinClassModal('CLS-101')">
-              <i data-lucide="video"></i> Enter Live Room (Daily.co) &rarr;
+            <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerJoinClassModal('CLS-101')" style="box-shadow:0 2px 8px rgba(110,94,6,0.2);">
+              <i data-lucide="video"></i> Launch Daily.co Room &rarr;
             </button>
           </div>
         </div>
 
-        <!-- 4 KPIS -->
-        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;">
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Classes Today</div>
-            <h3 style="font:800 24px 'Manrope', sans-serif; color:var(--on-surface); margin:4px 0 0 0;">${todayClasses.length} Sessions</h3>
-            <small style="font-size:11px; color:var(--primary); font-weight:600;">Daily.co WebRTC Ready</small>
-          </div>
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Post-Class Reports</div>
-            <h3 style="font:800 24px 'Manrope', sans-serif; color:#b45309; margin:4px 0 0 0;">${reportsDue.length} Due</h3>
-            <small style="font-size:11px; color:var(--slate);">FLOW-016 Educational Notes</small>
-          </div>
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Pending Grading</div>
-            <h3 style="font:800 24px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">${urgentGrading.length} Submissions</h3>
-            <small style="font-size:11px; color:var(--slate);">Rubric Evaluation (FLOW-020)</small>
-          </div>
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:10px; padding:18px; box-shadow:var(--shadow-subtle);">
-            <div style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner Risks</div>
-            <h3 style="font:800 24px 'Manrope', sans-serif; color:#dc2626; margin:4px 0 0 0;">${riskLearners.length} Flagged</h3>
-            <small style="font-size:11px; color:#dc2626; font-weight:600;">Low Attendance / Tech Triage</small>
-          </div>
-        </div>
-
-        <!-- TODAY'S SCHEDULE & TRIAGE DECK -->
-        <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:20px;">
-          <!-- CLASSES LIST -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Today's Live Delivery Schedule</h3>
-              <button class="link-btn" style="font-size:12px;" onclick="Router.navigate('trainer-classes-today')">View Full Schedule &rarr;</button>
+        <!-- 2. NEXT LIVE CLASS COUNTDOWN & IMMEDIATE FOCUS STRIP -->
+        <div style="background:linear-gradient(135deg, #182232, #253852); color:#ffffff; border-radius:12px; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; box-shadow:0 4px 16px rgba(18,34,50,0.15);">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="width:44px; height:44px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; color:#70b8ff;">
+              <i data-lucide="video" style="width:24px; height:24px;"></i>
             </div>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              ${data.classes.slice(0, 3).map(cls => `
-                <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                  <div>
-                    <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                      <span class="badge ${cls.joinable ? 'badge-success' : 'badge-secondary'}" style="font-size:9.5px;">${cls.joinable ? '● READY TO LAUNCH' : cls.status}</span>
-                      <strong style="font-size:13px; color:var(--on-surface);">${cls.courseTitle}</strong>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+                <span class="badge badge-success" style="font-size:10px; font-weight:700;">● JOIN WINDOW OPEN</span>
+                <strong style="color:#ffffff; font-size:15px;">CLS-101: Spoken English Fluency & Professional Voice</strong>
+              </div>
+              <span style="font-size:12px; color:#cbd5e1;">Slot: <strong>10:00 AM – 11:00 AM PKT</strong> · Module: <strong>Module 1.1: English Rhythm & Stress Patterns</strong> · 4 Learners Enrolled</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRosterModal('CLS-101')" style="background:rgba(255,255,255,0.15); color:#ffffff; border:1px solid rgba(255,255,255,0.25);">
+              <i data-lucide="users"></i> View Roster
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerJoinClassModal('CLS-101')" style="font-weight:700;">
+              <i data-lucide="play"></i> Enter Live Studio &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. 5 CORE OPERATIONAL KPIS (DSH-005 / DSH-014) -->
+        <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:16px;">
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('trainer-classes-today')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Today's Classes</span>
+              <i data-lucide="calendar-check" style="width:16px; height:16px; color:var(--primary);"></i>
+            </div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:var(--navy-medium); margin:6px 0 2px 0;">${todayClasses.length} Sessions</h3>
+            <small style="font-size:11px; color:#166534; font-weight:600;">1 Live · 2 Upcoming · 1 Trial</small>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('trainer-reports-due')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Reports Due</span>
+              <i data-lucide="file-clock" style="width:16px; height:16px; color:#b45309;"></i>
+            </div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:#b45309; margin:6px 0 2px 0;">${reportsDue.length} Due</h3>
+            <small style="font-size:11px; color:var(--slate);">FLOW-016 Post-Class Notes</small>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('trainer-grading-queue')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Grading Queue</span>
+              <i data-lucide="check-square" style="width:16px; height:16px; color:var(--primary);"></i>
+            </div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:var(--primary); margin:6px 0 2px 0;">${urgentGrading.length} Items</h3>
+            <small style="font-size:11px; color:var(--slate);">Rubric Evaluator (FLOW-020)</small>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('trainer-learners-risks')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner Risks</span>
+              <i data-lucide="alert-triangle" style="width:16px; height:16px; color:#dc2626;"></i>
+            </div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:#dc2626; margin:6px 0 2px 0;">${riskLearners.length} Flagged</h3>
+            <small style="font-size:11px; color:#dc2626; font-weight:600;">Attendance & Dropouts</small>
+          </div>
+
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('trainer-pay-earnings')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Earnings (MTD)</span>
+              <i data-lucide="wallet" style="width:16px; height:16px; color:#166534;"></i>
+            </div>
+            <h3 style="font:800 24px 'Manrope', sans-serif; color:#166534; margin:6px 0 2px 0;">PKR ${(totalEarnedPkr/1000).toFixed(1)}k</h3>
+            <small style="font-size:11px; color:var(--slate);">38 Classes Verified · PAY-013</small>
+          </div>
+        </div>
+
+        <!-- 4. MAIN WORKSPACE: 2 COLUMNS (TODAY'S SCHEDULE DECK & GRADING / RISK DECK) -->
+        <div style="display:grid; grid-template-columns: 1.45fr 1fr; gap:22px;">
+          
+          <!-- LEFT COLUMN: TODAY'S LIVE DELIVERY SCHEDULE -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:14px; padding:22px 24px; box-shadow:0 4px 16px rgba(70, 55, 28, 0.035); display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h3 style="font:700 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Today's Live Delivery Schedule</h3>
+                <span style="font-size:12px; color:var(--slate);">Assigned Occurrences, WebRTC Join Windows & Attendance Telemetry</span>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button class="btn ${activeFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerHomeTab='all'; RenderEngine.trainerDashboard();">All (${classes.length})</button>
+                <button class="btn ${activeFilter === 'joinable' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerHomeTab='joinable'; RenderEngine.trainerDashboard();">Joinable (1)</button>
+                <button class="btn ${activeFilter === 'reports' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerHomeTab='reports'; RenderEngine.trainerDashboard();">Reports Due (2)</button>
+              </div>
+            </div>
+
+            <!-- CLASS CARDS -->
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              ${filteredClasses.map(cls => {
+                const isLive = cls.joinable;
+                const isReportDue = cls.status === "Awaiting Report" || cls.status === "Correction Requested";
+                return `
+                  <div style="padding:18px 20px; background:#fdfbf7; border:1px solid ${isLive ? 'var(--primary)' : 'rgba(124, 119, 102, 0.2)'}; border-radius:12px; display:flex; flex-direction:column; gap:12px; transition:all 0.2s; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+                      <div>
+                        <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                          <span class="badge ${isLive ? 'badge-success' : isReportDue ? 'badge-warning' : 'badge-secondary'}" style="font-size:10px;">
+                            ${isLive ? '● LIVE ROOM READY' : cls.status}
+                          </span>
+                          <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${cls.id}</span>
+                          <span class="badge badge-secondary" style="font-size:10px;">${cls.type}</span>
+                        </div>
+                        <h4 style="font:700 15.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${cls.courseTitle}</h4>
+                        <span style="font-size:12px; color:var(--slate);">${cls.date} · <strong>${cls.slotTime}</strong> · Duration: ${cls.duration}</span>
+                      </div>
+                      <span class="badge badge-primary" style="font-size:11px;"><strong>${cls.learnersCount} Learners</strong></span>
                     </div>
-                    <span style="font-size:11.5px; color:var(--slate);">${cls.date} · ${cls.slotTime} · <strong>${cls.learnersCount} Learners</strong></span>
+
+                    <!-- Syllabus Covered -->
+                    <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.15); border-left:3px solid var(--primary); padding:8px 12px; border-radius:0 6px 6px 0; font-size:12px; color:#4a586e;">
+                      <strong style="color:var(--navy-medium);">Syllabus Node:</strong> ${cls.syllabusNode}
+                    </div>
+
+                    <!-- Live Roster Attendees Chip List -->
+                    ${cls.roster && cls.roster.length > 0 ? `
+                      <div style="display:flex; flex-direction:column; gap:4px;">
+                        <span style="font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--slate);">Participant Presence Telemetry:</span>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                          ${cls.roster.map(r => `
+                            <span style="font-size:11px; padding:3px 8px; border-radius:6px; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.18); display:inline-flex; align-items:center; gap:5px;">
+                              <span style="width:6px; height:6px; border-radius:50%; background:${r.attendance === 'Present' ? '#22c55e' : r.attendance === 'Late' ? '#eab308' : r.attendance === 'Tech Issue' ? '#3b82f6' : '#ef4444'};"></span>
+                              <strong>${r.name}</strong> (${r.attendance}${r.minutes > 0 ? ` · ${r.minutes}m` : ''})
+                            </span>
+                          `).join('')}
+                        </div>
+                      </div>
+                    ` : ''}
+
+                    <!-- Action Controls -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding-top:8px; border-top:1px solid rgba(124, 119, 102, 0.12); flex-wrap:wrap; gap:8px;">
+                      <div class="button-row" style="display:flex; gap:6px;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRosterModal('${cls.id}')">
+                          <i data-lucide="users"></i> Roster & Attendance
+                        </button>
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRescheduleModal('${cls.id}')">
+                          <i data-lucide="repeat"></i> Reschedule
+                        </button>
+                      </div>
+                      <div class="button-row" style="display:flex; gap:6px;">
+                        ${isReportDue ? `
+                          <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerPostClassReportModal('${cls.id}')" style="background:#b45309; border:none;">
+                            <i data-lucide="file-text"></i> Submit Report
+                          </button>
+                        ` : ''}
+                        ${isLive ? `
+                          <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')" style="font-weight:700;">
+                            <i data-lucide="video"></i> Launch Room
+                          </button>
+                        ` : `
+                          <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')">
+                            <i data-lucide="video"></i> Test Stream
+                          </button>
+                        `}
+                      </div>
+                    </div>
                   </div>
-                  <div style="display:flex; gap:8px;">
-                    <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerReportModal('${cls.id}')">Report</button>
-                    <button class="btn ${cls.joinable ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')">
-                      <i data-lucide="video"></i> Launch
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: GRADING TRIAGE & LEARNER RISKS -->
+          <div style="display:flex; flex-direction:column; gap:20px;">
+            
+            <!-- URGENT GRADING QUEUE -->
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:14px; padding:22px; box-shadow:0 4px 16px rgba(70, 55, 28, 0.035); display:flex; flex-direction:column; gap:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <h3 style="font:700 16.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Urgent Grading Triage</h3>
+                  <span style="font-size:11.5px; color:var(--slate);">Rubric Evaluation SLA: 24h (FLOW-020)</span>
+                </div>
+                <button class="btn btn-secondary btn-xs" onclick="Router.navigate('trainer-grading-queue')">View All (${gradingQueue.length})</button>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                ${gradingQueue.slice(0, 3).map(g => `
+                  <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:10px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                    <div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                        <span class="badge badge-primary" style="font-size:9.5px;">${g.type}</span>
+                        <strong style="font-size:13px; color:var(--navy-medium);">${g.learnerName}</strong>
+                      </div>
+                      <span style="font-size:11.5px; color:#5a687c; display:block;">${g.assignmentTitle}</span>
+                      <small style="font-size:10.5px; color:var(--slate);">Submitted: ${g.submittedAt} · Rubric: <strong>${g.rubricId || 'Standard'}</strong></small>
+                    </div>
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerGradingModal('${g.id}')">
+                      <i data-lucide="check-square"></i> Grade &rarr;
                     </button>
                   </div>
-                </div>
-              `).join('')}
+                `).join('')}
+              </div>
             </div>
-          </div>
 
-          <!-- URGENT SUBMISSIONS -->
-          <div style="background:#ffffff; border:1px solid var(--outline-variant); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--on-surface); margin:0;">Urgent Grading Triage</h3>
-              <button class="link-btn" style="font-size:12px;" onclick="Router.navigate('trainer-grading-queue')">View All (${(data.gradingQueue || []).length}) &rarr;</button>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-              ${(data.gradingQueue || []).slice(0, 3).map(g => `
-                <div style="background:var(--surface-container-low); border:1px solid var(--outline-variant); border-radius:8px; padding:12px; display:flex; justify-content:space-between; align-items:center;">
-                  <div>
-                    <strong style="font-size:12px; color:var(--on-surface); display:block;">${g.learnerName}</strong>
-                    <span style="font-size:11px; color:var(--slate);">${g.assignmentTitle} · Due ${g.submittedAt}</span>
-                  </div>
-                  <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerGradingModal('${g.id}')">Grade &rarr;</button>
+            <!-- LEARNER RISKS & INTERVENTIONS -->
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:14px; padding:22px; box-shadow:0 4px 16px rgba(70, 55, 28, 0.035); display:flex; flex-direction:column; gap:14px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <h3 style="font:700 16.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Learner Academic Risks</h3>
+                  <span style="font-size:11.5px; color:var(--slate);">Early Warning Telemetry (DSH-014)</span>
                 </div>
-              `).join('')}
+                <button class="btn btn-secondary btn-xs" onclick="Router.navigate('trainer-learners-risks')">All Risks (${riskLearners.length})</button>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                ${riskLearners.slice(0, 3).map(l => `
+                  <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:10px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                    <div>
+                      <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                        <span class="badge badge-error" style="font-size:9.5px;">${l.risk}</span>
+                        <strong style="font-size:13px; color:#991b1b;">${l.name}</strong>
+                      </div>
+                      <span style="font-size:11.5px; color:#7f1d1d; display:block;">${l.course}</span>
+                      <small style="font-size:10.5px; color:#b91c1c;">${l.riskReason || 'Repeated absence / Low quiz score'}</small>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')" style="font-size:10.5px; padding:2px 8px;">
+                        <i data-lucide="message-square"></i> Message
+                      </button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerInterventionModal('${l.id}')" style="font-size:10.5px; padding:2px 8px; background:#dc2626; border:none;">
+                        <i data-lucide="life-buoy"></i> Intervene
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
             </div>
+
           </div>
         </div>
+
       </div>
     `;
 
@@ -18797,6 +18975,65 @@ Actions.openTrainerMessageModal = function(learnerId) {
 Actions.sendTrainerMessage = function(learnerId) {
   Notifications.push("Message Sent", "Message delivered to assigned learner inbox.", "success");
   document.getElementById("generic-modal").classList.add("hidden");
+};
+
+Actions.openTrainerInterventionModal = function(learnerId) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId) || { name: "Learner", course: "Spoken English Fluency", riskReason: "2 Consecutive Absences" };
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Log Academic Intervention (DSH-014): ${learner.name}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner" style="border-left:4px solid #dc2626;">
+        <i data-lucide="alert-triangle" style="color:#dc2626;"></i>
+        <div>
+          <strong>EARLY WARNING & PEDAGOGICAL TRIAGE</strong>
+          <p>Record structured remediation, makeup class authorization, or CSR/Guardian escalation for at-risk learner.</p>
+        </div>
+      </div>
+
+      <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div class="form-group">
+          <label>Intervention Category</label>
+          <select id="trainer-interv-type" class="form-control">
+            <option value="Attendance Remediation">Attendance Remediation (Makeup Class)</option>
+            <option value="Technical Dropouts">Technical Dropouts (Offline Backup)</option>
+            <option value="Milestone Stalled">Milestone Stalled (1:1 Consultation)</option>
+            <option value="Guardian Escalation">Guardian / Safeguarding Escalation</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Proposed Action Date</label>
+          <input type="date" id="trainer-interv-date" class="form-control" value="2026-08-23">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Intervention Rationale & Action Plan</label>
+        <textarea id="trainer-interv-notes" class="form-control" rows="3" placeholder="Document academic diagnosis and remediation steps...">Student missed consecutive sessions. Authorizing makeup session credit and sending offline video review package.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.saveTrainerIntervention('${learnerId}')">Record Intervention</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.saveTrainerIntervention = function(learnerId) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId);
+  if (learner) learner.risk = "Remediated";
+  Notifications.push("Intervention Recorded", "Academic remediation plan registered in student record and CSR triage.", "success");
+  this.audit("TRAINER_INTERVENTION_LOGGED", `Logged academic intervention for ${learnerId}.`, "Medium", "Remediation Active");
+  document.getElementById("generic-modal").classList.add("hidden");
+  RenderEngine.trainerDashboard();
 };
 
 const Simulator = {
