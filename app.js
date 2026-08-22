@@ -2503,16 +2503,22 @@ const db = {
       { id: "AEN-712", leadId: "LD-114", prospect: "Fatima Zahra", programme: "K-12 Grade 8 Math", membership: "Full Academic Term (6 Months)", amount: "PKR 32,000", discount: "None", payableAmount: "PKR 32,000", paymentStatus: "Verified & Active", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Active Enrolment", commissionId: "COM-908", classesRemaining: "18/24 Sessions Remaining", attendanceRate: "96%", healthStatus: "Optimal", lmsSync: "Active" }
     ],
     payments: [
-      { id: "PAY-801", learner: "Zaid Khan", payer: "Muhammad Khan (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-9823104", receiptChecksum: "sha256:7f3a88019...", receiptFile: "meezan_slip_801.pdf", age: "1h ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
-      { id: "PAY-802", learner: "Areeba Siddiqui", payer: "Areeba Siddiqui (Self)", course: "Applied Numeracy Cohort N4", submittedAmount: "PKR 24,000", expectedAmount: "PKR 24,000", channel: "Bank Transfer (HBL Direct)", reference: "HBL-449102", receiptChecksum: "sha256:3a1b8890c...", receiptFile: "hbl_transfer_802.pdf", age: "3h ago", status: "Under Review", csr: "Sarah Jenkins" },
-      { id: "PAY-803", learner: "Hassan Ali", payer: "Tariq Ali (Guardian)", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Easypaisa Direct", reference: "EP-883011", receiptChecksum: "sha256:e4190822c...", receiptFile: "easypaisa_803.jpg", age: "5h ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
-      { id: "PAY-804", learner: "Danish Qureshi", payer: "Danish Qureshi", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Allied Bank)", reference: "ABL-772109", receiptChecksum: "sha256:c9918231a...", receiptFile: "abl_receipt_804.pdf", age: "4d ago", status: "Approved", csr: "Sarah Jenkins" },
-      { id: "PAY-805", learner: "Farhan Malik", payer: "Farhan Malik", course: "Vocational Technology", submittedAmount: "PKR 25,000", expectedAmount: "PKR 35,000", channel: "JazzCash", reference: "JC-112290", receiptChecksum: "sha256:b1129988e...", receiptFile: "jazzcash_805.jpg", age: "1d ago", status: "Rejected / Correction", csr: "Sarah Jenkins" },
-      { id: "PAY-806", learner: "Kamran Siddiqui", payer: "Kamran Siddiqui", course: "Vocational Technology", submittedAmount: "PKR 35,000", expectedAmount: "PKR 35,000", channel: "Bank Alfalah Direct", reference: "BAF-990142", receiptChecksum: "sha256:4a810982d...", receiptFile: "alfalah_slip_806.pdf", age: "45m ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
-      { id: "PAY-807", learner: "Nida Yasmeen", payer: "Yasmeen Akhtar (Parent)", course: "Applied Numeracy Cohort N4", submittedAmount: "PKR 24,000", expectedAmount: "PKR 24,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-7719201", receiptChecksum: "sha256:9c124099a...", receiptFile: "meezan_slip_807.pdf", age: "2h ago", status: "Under Review", csr: "Sarah Jenkins" },
-      { id: "PAY-808", learner: "Bilal Ahmed", payer: "Ahmed Raza (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-5510294", receiptChecksum: "sha256:8d33109a1...", receiptFile: "meezan_receipt_808.pdf", age: "6d ago", status: "Approved", csr: "Sarah Jenkins" },
-      { id: "PAY-809", learner: "Fatima Zahra", payer: "Zahra Begum (Mother)", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Bank Transfer (Standard Chartered)", reference: "SCB-229104", receiptChecksum: "sha256:1a847098e...", receiptFile: "scb_receipt_809.pdf", age: "12d ago", status: "Approved", csr: "Sarah Jenkins" },
-      { id: "PAY-810", learner: "Usman Ghani", payer: "Usman Ghani", course: "Vocational Technology", submittedAmount: "PKR 15,000", expectedAmount: "PKR 35,000", channel: "Nayapay Wallet", reference: "NP-883011", receiptChecksum: "sha256:6e190333c...", receiptFile: "nayapay_810.jpg", age: "2d ago", status: "Rejected / Correction", csr: "Sarah Jenkins" }
+      { id: "PAY-801", learner: "Zaid Khan", payer: "Muhammad Khan (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-9823104", receiptChecksum: "sha256:7f3a88019...", receiptFile: "meezan_slip_801.pdf", age: "1h ago", status: "Awaiting Review", csr: "Sarah Jenkins", receiptNo: "RCP-1051", orderId: "AEN-704" },
+      { id: "PAY-802", learner: "Areeba Siddiqui", payer: "Areeba Siddiqui (Self)", course: "Applied Numeracy Cohort N4", submittedAmount: "PKR 24,000", expectedAmount: "PKR 24,000", channel: "Bank Transfer (HBL Direct)", reference: "HBL-449102", receiptChecksum: "sha256:3a1b8890c...", receiptFile: "hbl_transfer_802.pdf", age: "3h ago", status: "Under Review", lockOwner: "Sarah Jenkins", lockTtl: "24m remaining", csr: "Sarah Jenkins", receiptNo: "RCP-1052", orderId: "AEN-705" },
+      { id: "PAY-803", learner: "Hassan Ali", payer: "Tariq Ali (Guardian)", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Easypaisa Direct", reference: "EP-883011", receiptChecksum: "sha256:e4190822c...", receiptFile: "easypaisa_803.jpg", age: "5h ago", status: "Awaiting Review", csr: "Sarah Jenkins", receiptNo: "RCP-1053", orderId: "AEN-708" },
+      { id: "PAY-804", learner: "Danish Qureshi", payer: "Danish Qureshi", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Allied Bank)", reference: "ABL-772109", receiptChecksum: "sha256:c9918231a...", receiptFile: "abl_receipt_804.pdf", age: "4d ago", status: "Approved", csr: "Sarah Jenkins", receiptNo: "RCP-1049", orderId: "AEN-703", clearedDate: "2026-08-18" },
+      { id: "PAY-805", learner: "Farhan Malik", payer: "Farhan Malik", course: "Vocational Technology", submittedAmount: "PKR 25,000", expectedAmount: "PKR 35,000", channel: "JazzCash", reference: "JC-112290", receiptChecksum: "sha256:b1129988e...", receiptFile: "jazzcash_805.jpg", age: "1d ago", status: "Rejected / Correction", rejectionReason: "Amount Shortfall (PKR 10,000 Deficit)", noticeStatus: "WhatsApp Dispatched", csr: "Sarah Jenkins", orderId: "AEN-709" },
+      { id: "PAY-806", learner: "Kamran Siddiqui", payer: "Kamran Siddiqui", course: "Vocational Technology", submittedAmount: "PKR 35,000", expectedAmount: "PKR 35,000", channel: "Bank Alfalah Direct", reference: "BAF-990142", receiptChecksum: "sha256:4a810982d...", receiptFile: "alfalah_slip_806.pdf", age: "45m ago", status: "Awaiting Review", csr: "Sarah Jenkins", receiptNo: "RCP-1054", orderId: "AEN-701" },
+      { id: "PAY-807", learner: "Nida Yasmeen", payer: "Yasmeen Akhtar (Parent)", course: "Applied Numeracy Cohort N4", submittedAmount: "PKR 24,000", expectedAmount: "PKR 24,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-7719201", receiptChecksum: "sha256:9c124099a...", receiptFile: "meezan_slip_807.pdf", age: "2h ago", status: "Under Review", lockOwner: "Sarah Jenkins", lockTtl: "18m remaining", csr: "Sarah Jenkins", receiptNo: "RCP-1055", orderId: "AEN-702" },
+      { id: "PAY-808", learner: "Bilal Ahmed", payer: "Ahmed Raza (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-5510294", receiptChecksum: "sha256:8d33109a1...", receiptFile: "meezan_receipt_808.pdf", age: "6d ago", status: "Approved", csr: "Sarah Jenkins", receiptNo: "RCP-1045", orderId: "AEN-706", clearedDate: "2026-08-16" },
+      { id: "PAY-809", learner: "Fatima Zahra", payer: "Zahra Begum (Mother)", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Bank Transfer (Standard Chartered)", reference: "SCB-229104", receiptChecksum: "sha256:1a847098e...", receiptFile: "scb_receipt_809.pdf", age: "12d ago", status: "Approved", csr: "Sarah Jenkins", receiptNo: "RCP-1038", orderId: "AEN-712", clearedDate: "2026-08-10" },
+      { id: "PAY-810", learner: "Usman Ghani", payer: "Usman Ghani", course: "Vocational Technology", submittedAmount: "PKR 15,000", expectedAmount: "PKR 35,000", channel: "Nayapay Wallet", reference: "NP-883011", receiptChecksum: "sha256:6e190333c...", receiptFile: "nayapay_810.jpg", age: "2d ago", status: "Rejected / Correction", rejectionReason: "Amount Deficit / Blurry Screenshot", noticeStatus: "SMS Dispatched", csr: "Sarah Jenkins", orderId: "AEN-715" },
+      { id: "PAY-811", learner: "Hamza Qureshi", payer: "Tariq Qureshi (Brother)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-9823104", receiptChecksum: "sha256:7f3a88019... [COLLISION]", receiptFile: "meezan_slip_811.pdf", age: "4h ago", status: "Exception", anomalyType: "Duplicate SHA-256 Hash Collision", severity: "Critical / Fraud Risk", notes: "Exact byte-for-byte duplicate of Zaid Khan (PAY-801) deposit slip submitted for another student.", csr: "Sarah Jenkins", orderId: "AEN-717" },
+      { id: "PAY-812", learner: "Rashid Mahmood", payer: "Rashid Mahmood", course: "Vocational Technology", submittedAmount: "PKR 45,000", expectedAmount: "PKR 35,000", channel: "Bank Transfer (HBL Direct)", reference: "HBL-991048", receiptChecksum: "sha256:44b10889f...", receiptFile: "hbl_transfer_812.pdf", age: "1d ago", status: "Exception", anomalyType: "Excess Overpayment (PKR 10,000 Surplus)", severity: "Medium / Credit Allocation", notes: "Payer deposited PKR 45,000 instead of PKR 35,000. Requires PKR 10,000 credit buffer allocation to learner wallet.", csr: "Sarah Jenkins", orderId: "AEN-718" },
+      { id: "PAY-813", learner: "Zubair Ahmed", payer: "Zubair Ahmed", course: "K-12 Grade 8 Math Section A", submittedAmount: "PKR 32,000", expectedAmount: "PKR 32,000", channel: "Easypaisa Direct", reference: "EP-998811", receiptChecksum: "sha256:33c90111d...", receiptFile: "ep_altered_813.jpg", age: "2d ago", status: "Exception", anomalyType: "Unrecognized Reference / Font OCR Flag", severity: "High / Verification Required", notes: "Automated OCR flagged digital font discrepancy in transaction reference digits.", csr: "Sarah Jenkins", orderId: "AEN-719" },
+      { id: "PAY-814", learner: "Tariq Mehmood", payer: "Tariq Mehmood (Self)", course: "Vocational Technology", submittedAmount: "PKR 35,000", expectedAmount: "PKR 35,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-889104", receiptChecksum: "sha256:2b901a88c...", receiptFile: "meezan_slip_814.pdf", age: "20m ago", status: "Under Review", lockOwner: "Sarah Jenkins", lockTtl: "28m remaining", csr: "Sarah Jenkins", receiptNo: "RCP-1056", orderId: "AEN-720" },
+      { id: "PAY-815", learner: "Sana Mir", payer: "Sana Mir", course: "Quranic Studies (Tajweed)", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-1029384", receiptChecksum: "sha256:88fa1098b...", receiptFile: "meezan_receipt_815.pdf", age: "15d ago", status: "Approved", csr: "Sarah Jenkins", receiptNo: "RCP-1031", orderId: "AEN-710", clearedDate: "2026-08-07" },
+      { id: "PAY-816", learner: "Kamran Rafiq", payer: "Kamran Rafiq", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Alfalah Direct", reference: "BAF-001928", receiptChecksum: "sha256:55ab9012a...", receiptFile: "alfalah_blurry_816.jpg", age: "3d ago", status: "Rejected / Correction", rejectionReason: "Illegible Bank Slip Image (Low Resolution Screenshot)", noticeStatus: "WhatsApp Dispatched", csr: "Sarah Jenkins", orderId: "AEN-721" }
     ],
     commissions: [
       { id: "COM-901", enrolmentId: "AEN-703", learner: "Danish Qureshi", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-11" },
@@ -3373,20 +3379,20 @@ const csrRouteDefinitions = {
     ]
   },
 
-  // Hub 5: Payment Review (Permission-Scoped) (CSR-002, CSR-009, FLOW-013)
+  // Hub 5: Payment Review (Permission-Scoped) (CSR-002, CSR-009, FLOW-012, FLOW-013)
   "csr-payment-queue": { 
     group: "Payment Verification (Scoped)", 
     title: "Payment Review Queue", 
     headerTitle: "Payment Review Queue", 
     description: "Permission-scoped verification of manual bank transfer slips submitted by assigned prospects.", 
-    scopeAuthority: "PAY-003 / CSR-009: Segregated manual payment verification gateway with SHA-256 hash checks.",
+    scopeAuthority: "PAY-003 / CSR-009 / FLOW-012: Segregated manual payment verification gateway with SHA-256 hash checks.",
     context: "Payment reviews", 
     family: "table", 
     dataType: "payments", 
     filterFn: p => p.status === "Awaiting Review" || p.status === "Under Review",
     metrics: [
-      ["Review Queue", () => (db.csrData?.payments || []).filter(p => p.status === "Awaiting Review" || p.status === "Under Review").length, "Slips awaiting audit"],
-      ["Queue Value", () => "PKR 74,000", "Meezan / HBL / Easypaisa"],
+      ["Review Queue", () => (db.csrData?.payments || []).filter(p => p.status === "Awaiting Review" || p.status === "Under Review").length + " Slips", "Slips awaiting audit"],
+      ["Queue Value", () => "PKR " + (db.csrData?.payments || []).filter(p => p.status === "Awaiting Review" || p.status === "Under Review").reduce((acc, p) => acc + (parseInt(p.submittedAmount.replace(/[^0-9]/g, '')) || 0), 0).toLocaleString(), "Meezan / HBL / Easypaisa"],
       ["Median Age", () => "1h 45m", "Within 3h SLA"]
     ]
   },
@@ -3395,13 +3401,13 @@ const csrRouteDefinitions = {
     title: "Claimed Payments Under Review", 
     headerTitle: "Payments Under Review", 
     description: "Payment verification sessions currently locked by Sarah Jenkins to prevent duplicate processing.", 
-    scopeAuthority: "PAY-003: Concurrent review locking with 30-minute auto-expiry TTL.",
+    scopeAuthority: "PAY-003 / FLOW-012: Concurrent review locking with 30-minute auto-expiry TTL.",
     context: "Claimed reviews", 
     family: "table", 
     dataType: "payments", 
     filterFn: p => p.status === "Under Review",
     metrics: [
-      ["Locked by You", () => (db.csrData?.payments || []).filter(p => p.status === "Under Review").length, "Active audit"],
+      ["Locked by You", () => (db.csrData?.payments || []).filter(p => p.status === "Under Review").length + " Sessions", "Active audit"],
       ["Review Lock TTL", () => "24m remaining", "Auto-releases if idle"],
       ["Checksum Verification", () => "Passed (SHA-256)", "Unique receipt slip"]
     ]
@@ -3411,15 +3417,15 @@ const csrRouteDefinitions = {
     title: "Approved Payments Archive", 
     headerTitle: "Approved Payments", 
     description: "Verified financial records with official receipt numbers, transaction IDs, and activated enrolments.", 
-    scopeAuthority: "PAY-003 / CSR-005: Verified payment transactions that qualify commission earning items.",
+    scopeAuthority: "PAY-003 / CSR-005 / FLOW-012: Verified payment transactions that qualify commission earning items.",
     context: "Approved receipts", 
     family: "table", 
     dataType: "payments", 
     filterFn: p => p.status === "Approved",
     metrics: [
-      ["Approved Today", () => (db.csrData?.payments || []).filter(p => p.status === "Approved").length, "Access activated"],
-      ["Verified Value", () => "PKR 18,000", "Allied Bank"],
-      ["Official Receipt", () => "RCP-1049", "Immutable record"]
+      ["Approved Slips", () => (db.csrData?.payments || []).filter(p => p.status === "Approved").length + " Records", "Access activated"],
+      ["Cleared Value", () => "PKR " + (db.csrData?.payments || []).filter(p => p.status === "Approved").reduce((acc, p) => acc + (parseInt(p.submittedAmount.replace(/[^0-9]/g, '')) || 0), 0).toLocaleString(), "Bank settled"],
+      ["Official Receipts", () => (db.csrData?.payments || []).filter(p => p.status === "Approved").length + " Invoices", "Immutable records"]
     ]
   },
   "csr-payment-rejected": { 
@@ -3427,14 +3433,14 @@ const csrRouteDefinitions = {
     title: "Rejected & Resubmission Slips", 
     headerTitle: "Rejected Payments", 
     description: "Transfer slips returned to payers due to illegible screenshots, amount mismatches, or wrong accounts.", 
-    scopeAuthority: "PAY-003: Audited rejection reasons with automated payer correction instructions.",
+    scopeAuthority: "PAY-003 / FLOW-012: Audited rejection reasons with automated payer correction instructions.",
     context: "Corrections queue", 
     family: "table", 
     dataType: "payments", 
     filterFn: p => p.status === "Rejected / Correction" || p.status === "Rejected",
     metrics: [
-      ["Correction Needed", () => (db.csrData?.payments || []).filter(p => p.status === "Rejected / Correction" || p.status === "Rejected").length, "Awaiting re-upload"],
-      ["Rejection Reason", () => "Amount Mismatch", "Submitted 25k vs Exp 35k"],
+      ["Correction Needed", () => (db.csrData?.payments || []).filter(p => p.status === "Rejected / Correction" || p.status === "Rejected").length + " Slips", "Awaiting re-upload"],
+      ["Primary Reason", () => "Amount Shortfall", "10k deficit detected"],
       ["Payer Contacted", () => "WhatsApp Notice", "Instructions sent"]
     ]
   },
@@ -3443,15 +3449,15 @@ const csrRouteDefinitions = {
     title: "Payment Anomaly Exceptions", 
     headerTitle: "Payment Exceptions", 
     description: "Flagged transactions with duplicate references or checksum collisions across historical archives.", 
-    scopeAuthority: "PAY-003 / COM-015: Anomaly detection and fraud mitigation before enrolment provisioning.",
+    scopeAuthority: "PAY-003 / COM-015 / FLOW-012: Anomaly detection and fraud mitigation before enrolment provisioning.",
     context: "Anomaly workbench", 
     family: "table", 
     dataType: "payments", 
-    filterFn: p => p.status === "Exception" || (p.receiptChecksum && p.receiptChecksum.includes("Duplicate")),
+    filterFn: p => p.status === "Exception" || (p.receiptChecksum && p.receiptChecksum.includes("COLLISION")) || (p.receiptChecksum && p.receiptChecksum.includes("Duplicate")) || p.anomalyType != null,
     metrics: [
-      ["Exceptions", () => 0, "No active collisions"],
-      ["Integrity Level", () => "100% Verified", "No duplicate hashes"],
-      ["Settlement Risk", () => "Low / Green", "Clean ledger"]
+      ["Active Exceptions", () => (db.csrData?.payments || []).filter(p => p.status === "Exception" || p.anomalyType != null).length + " Anomalies", "Flagged anomalies"],
+      ["Collision Risk", () => "Critical (1 Collision)", "Blocked from auto-enrol"],
+      ["Buffer Overpayments", () => "1 Overpayment", "PKR 10k wallet credit"]
     ]
   },
 
@@ -18144,10 +18150,42 @@ const RenderEngine = {
         `;
       }
     } else if (config.dataType === "payments") {
-      toolbarActions = `
-        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Bank Slip</button>
-        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Slips</button>
-      `;
+      if (route === "csr-payment-queue") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Bank Slip</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.batchApprovePendingPayments()"><i data-lucide="check-check"></i> Batch Approve (SHA-256 Passed)</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Queue</button>
+        `;
+      } else if (route === "csr-payment-under-review") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.completeAllClaimedPaymentReviews()"><i data-lucide="check-circle"></i> Complete All Claimed</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.releaseAllClaimedPaymentLocks()"><i data-lucide="unlock"></i> Release Review Locks</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Locked Sessions</button>
+        `;
+      } else if (route === "csr-payment-approved") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.batchDownloadReceiptsZip()"><i data-lucide="file-archive"></i> Download Official Receipts (ZIP)</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.syncApprovedPaymentsWithLms()"><i data-lucide="refresh-cw"></i> Sync Provisioned Enrolments</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Approved Ledger</button>
+        `;
+      } else if (route === "csr-payment-rejected") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.batchSendPaymentCorrectionReminders()"><i data-lucide="send"></i> Batch Resend WhatsApp Notices</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Resubmission Slip</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Corrections Queue</button>
+        `;
+      } else if (route === "csr-payment-exceptions") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.runForensicAnomalyScan()"><i data-lucide="shield-alert"></i> Run Forensic Anomaly Scan</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.batchAllocateWalletBuffers()"><i data-lucide="wallet"></i> Allocate Excess Buffers</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Exceptions Report</button>
+        `;
+      } else {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Bank Slip</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Slips</button>
+        `;
+      }
     } else if (config.dataType === "commissions") {
       toolbarActions = `
         <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Commission Report</button>
@@ -18321,6 +18359,9 @@ const RenderEngine = {
       }
       if (route === "csr-payment-rejected") {
         return `<tr><th>Rejected Slip ID</th><th>Learner / Payer</th><th>Submitted vs Expected</th><th>Rejection Reason</th><th>Contact Channel</th><th>Correction State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-payment-exceptions") {
+        return `<tr><th>Flagged Item / ID</th><th>Learner & Course</th><th>Amount Breakdown</th><th>Anomaly Classification</th><th>Severity & Flagged Reference</th><th>Risk State</th><th>Actions</th></tr>`;
       }
       return `<tr><th>Submission / Learner</th><th>Payer / Course</th><th>Submitted vs Expected</th><th>Channel & Reference</th><th>Checksum / Receipt</th><th>State</th><th>Actions</th></tr>`;
     }
@@ -18812,7 +18853,7 @@ const RenderEngine = {
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                   <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="receipt"></i> Review Slip</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.approveCsrPayment('${item.id}')"><i data-lucide="check"></i> Approve</button>
-                  <button class="btn btn-error btn-xs" onclick="Actions.rejectCsrPayment('${item.id}')"><i data-lucide="x"></i> Reject</button>
+                  <button class="btn btn-error btn-xs" onclick="Actions.openCsrPaymentRejectModal('${item.id}')"><i data-lucide="x"></i> Reject</button>
                 </div>
               </td>
             </tr>
@@ -18823,15 +18864,15 @@ const RenderEngine = {
           return `
             <tr>
               <td><strong>${item.id}</strong><span class="table-subline">${item.learner}</span></td>
-              <td><strong>${item.course}</strong></td>
-              <td><strong class="success-text">${item.submittedAmount}</strong></td>
-              <td><strong class="warning-text"><i data-lucide="clock" style="width:12px;height:12px;display:inline;"></i> 24m remaining</strong><span class="table-subline">Locked by Sarah</span></td>
-              <td>${item.payer}<span class="table-subline">${item.reference}</span></td>
+              <td><strong>${item.course}</strong><span class="table-subline">Payer: ${item.payer}</span></td>
+              <td><strong class="success-text">${item.submittedAmount}</strong><span class="table-subline">Expected: ${item.expectedAmount}</span></td>
+              <td><strong class="warning-text"><i data-lucide="clock" style="width:12px;height:12px;display:inline;"></i> ${item.lockTTL || '24m remaining'}</strong><span class="table-subline">Locked by ${item.reviewer || 'Sarah Jenkins'}</span></td>
+              <td>${item.channel}<span class="table-subline">${item.reference}</span></td>
               <td><span class="badge badge-warning">Under Review</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                   <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="check-circle"></i> Complete Audit</button>
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> View Slip</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.releaseCsrPaymentLock('${item.id}')"><i data-lucide="unlock"></i> Unlock</button>
                 </div>
               </td>
             </tr>
@@ -18839,17 +18880,18 @@ const RenderEngine = {
         }
 
         if (route === "csr-payment-approved") {
+          const rcp = item.officialReceipt || `RCP-${item.id.replace('PAY-', '10')}`;
           return `
             <tr>
-              <td><strong>RCP-${item.id.replace('PAY-', '10')}</strong><span class="table-subline">${item.id}</span></td>
+              <td><strong>${rcp}</strong><span class="table-subline">${item.id}</span></td>
               <td><strong>${item.learner}</strong><span class="table-subline">${item.course}</span></td>
-              <td><strong class="success-text">${item.submittedAmount}</strong></td>
+              <td><strong class="success-text">${item.submittedAmount}</strong><span class="table-subline">Cleared: ${item.clearedAt || 'Today 14:15'}</span></td>
               <td><span class="font-mono text-xs">${item.reference}</span><span class="table-subline">${item.channel}</span></td>
-              <td><span class="om-checksum-tag">${item.receiptChecksum}</span></td>
+              <td><span class="om-checksum-tag">${item.receiptChecksum}</span><span class="table-subline">${item.receiptFile}</span></td>
               <td><span class="badge badge-success">Verified & Cleared</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="file-check"></i> Official Receipt</button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrOfficialReceiptModal('${item.id}')"><i data-lucide="file-check"></i> Official Receipt</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> Audit Log</button>
                 </div>
               </td>
@@ -18863,13 +18905,37 @@ const RenderEngine = {
               <td><strong>${item.id}</strong><span class="table-subline">${item.learner}</span></td>
               <td>${item.payer}<span class="table-subline">${item.course}</span></td>
               <td><strong class="error-text">${item.submittedAmount}</strong><span class="table-subline">Expected: ${item.expectedAmount}</span></td>
-              <td><strong class="error-text">Amount Shortfall</strong><span class="table-subline">PKR 10,000 deficit</span></td>
-              <td><span class="badge badge-primary">WhatsApp Notice Sent</span></td>
+              <td><strong class="error-text">${item.rejectionReason || 'Amount Shortfall'}</strong><span class="table-subline">${item.notes || 'Verification failed'}</span></td>
+              <td><span class="badge badge-primary">${item.noticeStatus || 'WhatsApp Notice Sent'}</span></td>
               <td><span class="badge badge-error">Awaiting Resubmission</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                   <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="rotate-ccw"></i> Re-evaluate</button>
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> New Slip</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-payment-exceptions") {
+          const isCritical = (item.severity && item.severity.includes("High")) || (item.severity && item.severity.includes("Critical"));
+          const isOverpayment = (item.anomalyType && item.anomalyType.includes("Surplus")) || (item.anomalyType && item.anomalyType.includes("Overpayment"));
+          const isOCR = item.anomalyType && (item.anomalyType.includes("Stamp") || item.anomalyType.includes("OCR") || item.anomalyType.includes("Font"));
+          const severityBadgeClass = isCritical ? 'badge-error' : (isOCR ? 'badge-warning' : 'badge-primary');
+
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.receiptFile || 'bank_slip.pdf'}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.course}</span></td>
+              <td><strong class="${isOverpayment ? 'warning-text' : 'error-text'}">${item.submittedAmount}</strong><span class="table-subline">Expected: ${item.expectedAmount}</span></td>
+              <td><strong>${item.anomalyType || 'Checksum Collision'}</strong><span class="table-subline">${item.collisionTarget || item.notes || 'Validation flag'}</span></td>
+              <td><span class="badge ${severityBadgeClass}">${item.severity || 'Medium Risk'}</span><span class="table-subline">${item.reference}</span></td>
+              <td><span class="badge badge-error">Enrolment Blocked</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentExceptionDetailModal('${item.id}')"><i data-lucide="shield-alert"></i> Resolve Anomaly</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrPaymentReview('${item.id}')"><i data-lucide="receipt"></i> Inspect Slip</button>
                 </div>
               </td>
             </tr>
@@ -30564,41 +30630,118 @@ document.addEventListener("DOMContentLoaded", () => {
     const pay = db.csrData.payments.find(p => p.id === id);
     if (!pay) return;
 
+    // Check if under review by someone else or lock it
+    if (pay.status === "Awaiting Review") {
+      pay.status = "Under Review";
+      pay.reviewer = "Sarah Jenkins";
+      pay.lockTTL = "29m remaining";
+    }
+
+    const rcp = pay.officialReceipt || `RCP-${pay.id.replace('PAY-', '10')}`;
     const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Permissioned Payment Review (FLOW-012): ${pay.learner}`;
+    document.getElementById("modal-title").textContent = `Permissioned Payment Audit (FLOW-012): ${pay.id} · ${pay.learner}`;
     document.getElementById("modal-body").innerHTML = `
       <div class="om-flow-dialog">
-        <div class="om-flow-banner">
-          <i data-lucide="receipt"></i>
-          <div>
-            <strong>PERMISSION-SCOPED RECEIPT VERIFICATION</strong>
-            <p>Verify bank transfer slip and SHA-256 checksum match expected course fee before granting access.</p>
+        <div class="om-flow-banner" style="background:linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(16, 185, 129, 0.08)); border-left:4px solid var(--color-primary); padding:12px 16px; border-radius:6px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <i data-lucide="shield-check" style="width:28px; height:28px; color:var(--color-primary);"></i>
+            <div>
+              <strong style="font-size:14px; color:var(--color-text);">FLOW-012 CONCURRENT REVIEW & SLIP VERIFICATION</strong>
+              <p style="margin:2px 0 0; font-size:12px; color:var(--color-muted);">Anti-collision review lock active (Reviewer: ${pay.reviewer || 'Sarah Jenkins'} · TTL: ${pay.lockTTL || '28m remaining'}). Verifying bank ledger & SHA-256 slip integrity before LMS access grant.</p>
+            </div>
           </div>
         </div>
 
-        <div class="om-flow-grid">
-          <div class="om-flow-metric"><span>Learner</span><strong>${pay.learner}</strong><small>${pay.payer}</small></div>
-          <div class="om-flow-metric"><span>Submitted Amount</span><strong>${pay.submittedAmount}</strong><small>Expected: ${pay.expectedAmount}</small></div>
-          <div class="om-flow-metric"><span>Channel & Ref</span><strong>${pay.channel}</strong><small>${pay.reference}</small></div>
-          <div class="om-flow-metric"><span>Queue Age</span><strong>${pay.age}</strong><small>SLA: Normal</small></div>
+        <div class="om-flow-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin-bottom:16px;">
+          <div class="om-flow-metric" style="background:var(--color-surface-2); padding:10px 14px; border-radius:6px; border:1px solid var(--color-border);">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--color-muted); display:block;">Learner & Payer</span>
+            <strong style="font-size:14px; display:block; margin:2px 0;">${pay.learner}</strong>
+            <small style="color:var(--color-muted);">${pay.payer}</small>
+          </div>
+          <div class="om-flow-metric" style="background:var(--color-surface-2); padding:10px 14px; border-radius:6px; border:1px solid var(--color-border);">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--color-muted); display:block;">Financial Reconciliation</span>
+            <strong class="success-text" style="font-size:14px; display:block; margin:2px 0;">${pay.submittedAmount}</strong>
+            <small style="color:var(--color-muted);">Expected: ${pay.expectedAmount}</small>
+          </div>
+          <div class="om-flow-metric" style="background:var(--color-surface-2); padding:10px 14px; border-radius:6px; border:1px solid var(--color-border);">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--color-muted); display:block;">Channel & Reference</span>
+            <strong style="font-size:14px; display:block; margin:2px 0;">${pay.channel}</strong>
+            <small class="font-mono" style="color:var(--color-primary);">${pay.reference}</small>
+          </div>
+          <div class="om-flow-metric" style="background:var(--color-surface-2); padding:10px 14px; border-radius:6px; border:1px solid var(--color-border);">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--color-muted); display:block;">Review State & SLA</span>
+            <strong style="font-size:14px; display:block; margin:2px 0;"><span class="badge ${pay.status === 'Approved' ? 'badge-success' : (pay.status.includes('Rejected') ? 'badge-error' : 'badge-warning')}">${pay.status}</span></strong>
+            <small style="color:var(--color-muted);">Queue Age: ${pay.age}</small>
+          </div>
         </div>
 
-        <div class="om-flow-evidence-box">
-          <h5><i data-lucide="file-check"></i> Bank Receipt Verification</h5>
-          <p><strong>Uploaded File:</strong> <code>${pay.receiptFile}</code></p>
-          <p><strong>SHA-256 Checksum:</strong> <code class="om-checksum-tag">${pay.receiptChecksum}</code> (Match Verified)</p>
-        </div>
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:16px; margin-bottom:16px;">
+          <!-- Left: Digital Slip Simulation Preview -->
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:8px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--color-border); padding-bottom:8px; margin-bottom:12px;">
+              <span style="font-weight:600; font-size:13px; display:flex; align-items:center; gap:6px;"><i data-lucide="file-text"></i> Digital Deposit Slip Preview</span>
+              <span class="badge badge-success" style="font-size:10px;">OCR Verified</span>
+            </div>
+            
+            <div style="background:#f8fafc; border:1px dashed #cbd5e1; border-radius:6px; padding:14px; font-family:monospace; font-size:12px; color:#1e293b; line-height:1.6;">
+              <div style="text-align:center; font-weight:bold; border-bottom:1px solid #e2e8f0; padding-bottom:6px; margin-bottom:8px;">
+                *** OFFICIAL BANK TRANSACTION RECEIPT ***<br>
+                <span style="font-size:11px; color:#64748b;">${pay.channel.toUpperCase()} ELECTRONIC TRANSFER</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;"><span>Txn Ref:</span><strong>${pay.reference}</strong></div>
+              <div style="display:flex; justify-content:space-between;"><span>Date / Time:</span><span>2026-08-22 14:15 PKT</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>Payer:</span><span>${pay.payer}</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>Beneficiary:</span><span>Innovator Huzsam LMS Ops (Pvt) Ltd</span></div>
+              <div style="display:flex; justify-content:space-between;"><span>Beneficiary IBAN:</span><span>PK36MEZN00010982348891</span></div>
+              <div style="display:flex; justify-content:space-between; border-top:1px solid #e2e8f0; margin-top:6px; padding-top:6px; font-weight:bold; font-size:13px; color:#059669;">
+                <span>AMOUNT CLEARED:</span><span>${pay.submittedAmount}</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:11px; color:#64748b;">
+                <span>Remarks:</span><span>${pay.learner} - ${pay.course}</span>
+              </div>
+            </div>
+            <div style="margin-top:10px; font-size:11px; color:var(--color-muted); display:flex; justify-content:space-between; align-items:center;">
+              <span>File: <code>${pay.receiptFile}</code></span>
+              <button class="btn btn-ghost btn-xs" onclick="Notifications.push('Slip Downloaded', 'Exported copy of raw receipt file.', 'info')"><i data-lucide="download"></i> Download Slip</button>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label>Review Decision Note</label>
-          <textarea id="csr-pay-decision-notes" class="form-control" rows="2" placeholder="Bank ledger reference confirmed. Amount matches full term tuition."></textarea>
+          <!-- Right: Audit Evidence & Integrity Checklist -->
+          <div style="background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:8px; padding:16px;">
+            <h5 style="margin:0 0 10px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:6px;"><i data-lucide="check-square"></i> Integrity Verification Checklist</h5>
+            
+            <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" checked id="chk-sha" style="accent-color:var(--color-success);">
+                <span><strong>SHA-256 Checksum:</strong> <code class="om-checksum-tag" style="font-size:10px;">${pay.receiptChecksum}</code></span>
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" checked id="chk-amount" style="accent-color:var(--color-success);">
+                <span>Amount matches required tuition (<code>${pay.expectedAmount}</code>)</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" checked id="chk-ref" style="accent-color:var(--color-success);">
+                <span>Transaction reference unique in Bank Ledger</span>
+              </label>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" checked id="chk-auth" style="accent-color:var(--color-success);">
+                <span>Bank settlement stamp & security watermark valid</span>
+              </label>
+            </div>
+
+            <div style="margin-top:14px; padding-top:10px; border-top:1px solid var(--color-border);">
+              <label style="font-size:12px; font-weight:600; margin-bottom:4px; display:block;">Audit Log Notes</label>
+              <textarea id="csr-pay-decision-notes" class="form-control" rows="2" style="font-size:12px;" placeholder="Verified bank ledger ref against Meezan statements. Cleared for LMS account provision.">${pay.notes || ''}</textarea>
+            </div>
+          </div>
         </div>
       </div>
     `;
     document.getElementById("modal-footer").innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-error" onclick="Actions.rejectCsrPayment('${pay.id}')">Request Correction</button>
-      <button class="btn btn-primary" onclick="Actions.approveCsrPayment('${pay.id}')">Approve & Grant Access</button>
+      <button class="btn btn-error" onclick="Actions.openCsrPaymentRejectModal('${pay.id}')"><i data-lucide="x"></i> Reject / Request Correction</button>
+      <button class="btn btn-warning" onclick="Actions.flagCsrPaymentException('${pay.id}')"><i data-lucide="alert-triangle"></i> Flag Exception</button>
+      <button class="btn btn-primary" onclick="Actions.approveCsrPayment('${pay.id}')"><i data-lucide="check-check"></i> Approve & Provision LMS Access</button>
     `;
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
@@ -30609,51 +30752,414 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!pay) return;
 
     pay.status = "Approved";
-    Actions.audit("CSR_PAYMENT_APPROVED", `Approved manual payment ${pay.id} for ${pay.learner} (${pay.submittedAmount}). Created Access Grant.`, "High");
-    Notifications.push("Payment Approved", `Payment ${pay.id} cleared. Access grant created.`, "success");
+    pay.officialReceipt = pay.officialReceipt || `RCP-${pay.id.replace('PAY-', '10')}`;
+    pay.clearedAt = new Date().toISOString().replace('T', ' ').slice(0, 16);
+    pay.reviewer = "Sarah Jenkins";
+    pay.lockTTL = "Completed";
+
+    // Also update any related lead or enrolment
+    const relatedLead = db.csrData.leads.find(l => l.name.toLowerCase() === pay.learner.toLowerCase());
+    if (relatedLead) {
+      relatedLead.stage = "Enrolled";
+      relatedLead.status = "Paid & Cleared";
+    }
+
+    Actions.audit("CSR_PAYMENT_APPROVED", `FLOW-012: Approved bank slip ${pay.id} for ${pay.learner} (${pay.submittedAmount}). Created Official Receipt ${pay.officialReceipt}, LMS Access Grant, and Revenue Allocation.`, "High");
+    Notifications.push("Payment Cleared & Access Granted", `Receipt ${pay.officialReceipt} issued for ${pay.learner}. LMS entitlement provisioned.`, "success");
 
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);
     RenderEngine.csrDashboard();
   };
 
-  Actions.rejectCsrPayment = function(id) {
+  Actions.openCsrPaymentRejectModal = function(id) {
     const pay = db.csrData.payments.find(p => p.id === id);
     if (!pay) return;
 
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Request Payment Slip Correction: ${pay.id} (${pay.learner})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:rgba(239, 68, 68, 0.1); border-left:4px solid var(--color-error); padding:12px 16px; border-radius:6px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <i data-lucide="alert-octagon" style="width:28px; height:28px; color:var(--color-error);"></i>
+            <div>
+              <strong style="color:var(--color-error); font-size:14px;">FLOW-012 REJECTION & CORRECTION WORKFLOW</strong>
+              <p style="margin:2px 0 0; font-size:12px; color:var(--color-muted);">Specifying a structured reason will trigger an automated WhatsApp & Email notification to the payer with instructions for resubmitting their slip.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Audit Rejection Reason</label>
+          <select id="csr-pay-reject-reason" class="form-control">
+            <option value="Amount Shortfall (Tuition Deficit)">Amount Shortfall (Tuition Deficit)</option>
+            <option value="Unreadable / Blurry Image">Unreadable / Blurry Image (OCR Failed)</option>
+            <option value="Invalid / Non-Existent Bank Transaction ID">Invalid / Non-Existent Bank Transaction ID</option>
+            <option value="Payer Account Name Mismatch">Payer Account Name Mismatch</option>
+            <option value="Expired / Stale Transfer Slip (> 14 Days)">Expired / Stale Transfer Slip (> 14 Days)</option>
+            <option value="Counterfeit / Altered Digital Font Artifacts">Counterfeit / Altered Digital Font Artifacts</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Deficit / Required Correction Amount</label>
+          <input type="text" id="csr-pay-reject-amount" class="form-control" value="PKR 10,000" placeholder="e.g. PKR 10,000 deficit or Re-upload clear PDF">
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Detailed Feedback Message (Sent via WhatsApp & SMS to ${pay.payer})</label>
+          <textarea id="csr-pay-reject-msg" class="form-control" rows="3">Dear ${pay.learner}, your payment verification for ${pay.course} requires correction. Please provide a high-resolution slip confirming the full course tuition of ${pay.expectedAmount}. Contact your advisor Sarah Jenkins on +92 300 1234567 for assistance.</textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-error" onclick="Actions.submitCsrPaymentReject('${pay.id}')"><i data-lucide="send"></i> Dispatch Correction Notice & Reject</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrPaymentReject = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    const reason = document.getElementById("csr-pay-reject-reason") ? document.getElementById("csr-pay-reject-reason").value : "Amount Shortfall";
+    const notes = document.getElementById("csr-pay-reject-msg") ? document.getElementById("csr-pay-reject-msg").value : "Correction requested.";
+
     pay.status = "Rejected / Correction";
-    Actions.audit("CSR_PAYMENT_CORRECTION_REQUESTED", `Requested correction for payment ${pay.id}.`, "Medium");
-    Notifications.push("Correction Requested", `Learner alerted to provide updated transfer slip.`, "warning");
+    pay.rejectionReason = reason;
+    pay.notes = notes;
+    pay.noticeStatus = "WhatsApp Notice Sent (" + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ")";
+    pay.reviewer = "Sarah Jenkins";
+    pay.lockTTL = "Rejected";
+
+    Actions.audit("CSR_PAYMENT_REJECTED", `FLOW-012: Rejected payment ${pay.id} for ${pay.learner}. Reason: ${reason}. Automated correction notice dispatched via MSG service.`, "Medium");
+    Notifications.push("Correction Notice Dispatched", `Learner ${pay.learner} notified via WhatsApp/SMS. Awaiting resubmission.`, "warning");
 
     document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.flagCsrPaymentException = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    pay.status = "Exception";
+    pay.anomalyType = "Manual Fraud / Hash Exception Flag";
+    pay.severity = "High Risk - Critical";
+    pay.collisionTarget = "Flagged by Sarah Jenkins during audit";
+    pay.reviewer = "Sarah Jenkins";
+    pay.lockTTL = "Escalated";
+
+    Actions.audit("CSR_PAYMENT_EXCEPTION_FLAGGED", `FLOW-012: Escalated payment ${pay.id} (${pay.learner}) to Payment Exceptions queue for compliance audit.`, "High");
+    Notifications.push("Payment Exception Flagged", `Payment ${pay.id} moved to Exceptions Hub for executive review.`, "error");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.releaseCsrPaymentLock = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    pay.status = "Awaiting Review";
+    pay.reviewer = null;
+    pay.lockTTL = null;
+
+    Actions.audit("CSR_PAYMENT_LOCK_RELEASED", `Released concurrent review lock on payment ${pay.id}.`, "Low");
+    Notifications.push("Lock Released", `Payment ${pay.id} returned to open review queue.`, "info");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrOfficialReceiptModal = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    const rcp = pay.officialReceipt || `RCP-${pay.id.replace('PAY-', '10')}`;
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Official Tax & Tuition Receipt: ${rcp}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div style="background:var(--color-surface); border:2px solid var(--color-border); border-radius:8px; padding:24px; font-family:var(--font-sans); color:var(--color-text);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid var(--color-primary); padding-bottom:16px; margin-bottom:16px;">
+          <div>
+            <h3 style="margin:0; font-size:20px; font-weight:800; color:var(--color-primary);">INNOVATOR HUZSAM (PVT) LTD</h3>
+            <p style="margin:2px 0 0; font-size:12px; color:var(--color-muted);">Autonomous LMS & Advanced Vocational Education System<br>NTN: 8941029-7 · STRN: 3277876192837 · Islamabad, Pakistan</p>
+          </div>
+          <div style="text-align:right;">
+            <span class="badge badge-success" style="font-size:12px; padding:4px 10px;">OFFICIAL RECEIPT: VERIFIED</span>
+            <div style="margin-top:6px; font-family:monospace; font-weight:bold; font-size:15px;">${rcp}</div>
+            <div style="font-size:11px; color:var(--color-muted);">Date: ${pay.clearedAt || '2026-08-22 14:15'}</div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; font-size:13px;">
+          <div style="background:var(--color-surface-2); padding:12px; border-radius:6px;">
+            <strong style="color:var(--color-muted); font-size:11px; text-transform:uppercase; display:block;">Bill To (Learner)</strong>
+            <div style="font-weight:700; font-size:15px; margin-top:2px;">${pay.learner}</div>
+            <div style="color:var(--color-muted);">Payer: ${pay.payer}</div>
+            <div style="color:var(--color-muted);">Enrolment ID: ${pay.id}</div>
+          </div>
+          <div style="background:var(--color-surface-2); padding:12px; border-radius:6px;">
+            <strong style="color:var(--color-muted); font-size:11px; text-transform:uppercase; display:block;">Payment Method & Ledger Ref</strong>
+            <div style="font-weight:700; font-size:14px; margin-top:2px;">${pay.channel}</div>
+            <div style="font-family:monospace; color:var(--color-primary); font-size:12px;">Ref: ${pay.reference}</div>
+            <div style="font-size:11px; color:var(--color-muted);">Verified By: Sarah Jenkins (CSR Ops)</div>
+          </div>
+        </div>
+
+        <table style="width:100%; border-collapse:collapse; margin-bottom:16px; font-size:13px;">
+          <thead>
+            <tr style="background:var(--color-surface-2); border-bottom:1px solid var(--color-border); text-align:left;">
+              <th style="padding:8px 12px;">Item / Educational Service</th>
+              <th style="padding:8px 12px; text-align:center;">Term</th>
+              <th style="padding:8px 12px; text-align:right;">Gross Amount</th>
+              <th style="padding:8px 12px; text-align:right;">Tax (0%)</th>
+              <th style="padding:8px 12px; text-align:right;">Net Cleared</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-border);">
+              <td style="padding:10px 12px;">
+                <strong>${pay.course}</strong><br>
+                <small style="color:var(--color-muted);">Full LMS access entitlement, 1:1 mentorship & certificate tracks</small>
+              </td>
+              <td style="padding:10px 12px; text-align:center;">Term 1 (2026)</td>
+              <td style="padding:10px 12px; text-align:right;">${pay.submittedAmount}</td>
+              <td style="padding:10px 12px; text-align:right;">PKR 0</td>
+              <td style="padding:10px 12px; text-align:right; font-weight:bold; color:var(--color-success);">${pay.submittedAmount}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#475569;">
+          <div>
+            <strong>Audit Cryptographic Hash:</strong> <code style="color:#0284c7;">${pay.receiptChecksum}</code><br>
+            <span>Verified against Central Bank RAAS / IBAN settlement records.</span>
+          </div>
+          <div style="text-align:right; font-weight:bold; color:#059669;">
+            STATUS: CLEARED & PROVISIONED
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Notifications.push('PDF Exported', 'Downloaded receipt ${rcp}.pdf', 'success')"><i data-lucide="printer"></i> Print / Download Official PDF</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrPaymentExceptionDetailModal = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Forensic Anomaly Resolution: ${pay.id} (${pay.learner})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:rgba(245, 158, 11, 0.1); border-left:4px solid var(--color-warning); padding:12px 16px; border-radius:6px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <i data-lucide="shield-alert" style="width:28px; height:28px; color:var(--color-warning);"></i>
+            <div>
+              <strong style="font-size:14px; color:var(--color-warning);">FORENSIC RISK EXCEPTION DETECTED</strong>
+              <p style="margin:2px 0 0; font-size:12px; color:var(--color-muted);">Anomaly Type: <strong>${pay.anomalyType || 'Checksum Collision'}</strong> · Severity: <strong>${pay.severity || 'Medium Risk'}</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:6px; padding:14px; margin-bottom:16px; font-size:13px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <div><strong>Learner:</strong> ${pay.learner}</div>
+            <div><strong>Course:</strong> ${pay.course}</div>
+            <div><strong>Submitted:</strong> <span class="warning-text">${pay.submittedAmount}</span> (Expected: ${pay.expectedAmount})</div>
+            <div><strong>Channel & Ref:</strong> ${pay.channel} · ${pay.reference}</div>
+            <div><strong>Checksum:</strong> <code class="om-checksum-tag">${pay.receiptChecksum}</code></div>
+            <div><strong>Anomaly Details:</strong> ${pay.collisionTarget || pay.notes || 'Collision detected'}</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Select Anomaly Resolution Strategy</label>
+          <select id="csr-anomaly-resolution-strategy" class="form-control">
+            <option value="allocate-buffer">Allocate Excess Surplus (PKR 10,000) to Learner Pre-paid Wallet Buffer</option>
+            <option value="override-hash">Force Authorize: Cryptographically Verify Unique Bank Transaction ID</option>
+            <option value="manual-ocr-pass">Manual Stamp Verified: Accept Bank Watermark via Bank Manager Verification</option>
+            <option value="fraud-block">Confirm Fraudulent Collision: Block Learner & Blacklist Account</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Executive Audit Authorization Note</label>
+          <textarea id="csr-anomaly-resolution-note" class="form-control" rows="2" placeholder="Verified with Bank Operations branch manager. Authorizing ledger clearance."></textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrPaymentAnomalyResolution('${pay.id}')"><i data-lucide="check-circle"></i> Execute Anomaly Resolution</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrPaymentAnomalyResolution = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    const strategy = document.getElementById("csr-anomaly-resolution-strategy") ? document.getElementById("csr-anomaly-resolution-strategy").value : "allocate-buffer";
+    
+    if (strategy === "fraud-block") {
+      pay.status = "Rejected / Correction";
+      pay.rejectionReason = "Confirmed Fraudulent Collision / Tampered Slip";
+      Actions.audit("CSR_PAYMENT_FRAUD_BLOCKED", `Blocked and blacklisted payment ${pay.id} for tampered slip collision.`, "Critical");
+      Notifications.push("Payment Blocked", `Fraud exception confirmed for ${pay.id}. Account flagged.`, "error");
+    } else {
+      pay.status = "Approved";
+      pay.officialReceipt = `RCP-${pay.id.replace('PAY-', '10')}`;
+      pay.clearedAt = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      Actions.audit("CSR_PAYMENT_EXCEPTION_RESOLVED", `Resolved exception for ${pay.id} using strategy [${strategy}]. Cleared enrolment.`, "High");
+      Notifications.push("Exception Resolved", `Payment ${pay.id} cleared and provisioned via resolution strategy.`, "success");
+    }
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.batchApprovePendingPayments = function() {
+    const queue = db.csrData.payments.filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
+    if (queue.length === 0) {
+      Notifications.push("Queue Empty", "No pending payments awaiting batch approval.", "info");
+      return;
+    }
+
+    queue.forEach(p => {
+      p.status = "Approved";
+      p.officialReceipt = p.officialReceipt || `RCP-${p.id.replace('PAY-', '10')}`;
+      p.clearedAt = new Date().toISOString().replace('T', ' ').slice(0, 16);
+      p.reviewer = "Sarah Jenkins";
+      p.lockTTL = "Completed";
+    });
+
+    Actions.audit("CSR_BATCH_PAYMENT_APPROVAL", `Batch approved ${queue.length} payment slips with verified SHA-256 checksums.`, "High");
+    Notifications.push("Batch Approved", `Successfully approved ${queue.length} payments and provisioned LMS access.`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.completeAllClaimedPaymentReviews = function() {
+    const claimed = db.csrData.payments.filter(p => p.status === "Under Review");
+    if (claimed.length === 0) {
+      Notifications.push("No Active Reviews", "No payment slips currently locked under review.", "info");
+      return;
+    }
+
+    claimed.forEach(p => {
+      p.status = "Approved";
+      p.officialReceipt = p.officialReceipt || `RCP-${p.id.replace('PAY-', '10')}`;
+      p.clearedAt = new Date().toISOString().replace('T', ' ').slice(0, 16);
+    });
+
+    Actions.audit("CSR_CLAIMED_PAYMENTS_COMPLETED", `Completed and cleared ${claimed.length} claimed payment reviews.`, "High");
+    Notifications.push("Reviews Completed", `Cleared ${claimed.length} claimed payments.`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.releaseAllClaimedPaymentLocks = function() {
+    const claimed = db.csrData.payments.filter(p => p.status === "Under Review");
+    claimed.forEach(p => {
+      p.status = "Awaiting Review";
+      p.reviewer = null;
+      p.lockTTL = null;
+    });
+
+    Actions.audit("CSR_REVIEW_LOCKS_RELEASED", `Released review locks on ${claimed.length} payments.`, "Low");
+    Notifications.push("Review Locks Released", `Returned ${claimed.length} payments to open queue.`, "info");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.batchDownloadReceiptsZip = function() {
+    const approved = db.csrData.payments.filter(p => p.status === "Approved");
+    Actions.audit("CSR_RECEIPTS_ZIP_EXPORTED", `Exported ZIP archive containing ${approved.length} official tax receipts.`, "Medium");
+    Notifications.push("ZIP Archive Generated", `Exported ${approved.length} official receipts in official_receipts_archive.zip.`, "success");
+  };
+
+  Actions.syncApprovedPaymentsWithLms = function() {
+    const approved = db.csrData.payments.filter(p => p.status === "Approved");
+    Actions.audit("CSR_PAYMENTS_LMS_SYNCED", `Synchronized ${approved.length} cleared payment entitlements with LMS authentication cluster.`, "Medium");
+    Notifications.push("LMS Sync Complete", `Synchronized ${approved.length} learner accounts with active course access.`, "success");
+  };
+
+  Actions.batchSendPaymentCorrectionReminders = function() {
+    const rejected = db.csrData.payments.filter(p => p.status.includes("Rejected"));
+    Actions.audit("CSR_CORRECTION_REMINDERS_SENT", `Resent WhatsApp & SMS correction alerts to ${rejected.length} payers.`, "Medium");
+    Notifications.push("Reminders Dispatched", `Dispatched automated correction reminders to ${rejected.length} payers.`, "success");
+  };
+
+  Actions.runForensicAnomalyScan = function() {
+    Actions.audit("CSR_FORENSIC_ANOMALY_SCAN", `Ran forensic SHA-256 and bank transaction deduplication scan across 16 payment slips.`, "Medium");
+    Notifications.push("Forensic Scan Complete", `Scan complete. 3 risk exceptions flagged in Exceptions Hub.`, "warning");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.batchAllocateWalletBuffers = function() {
+    const exceptions = db.csrData.payments.filter(p => p.status === "Exception");
+    exceptions.forEach(p => {
+      p.status = "Approved";
+      p.officialReceipt = `RCP-${p.id.replace('PAY-', '10')}`;
+      p.clearedAt = new Date().toISOString().replace('T', ' ').slice(0, 16);
+    });
+
+    Actions.audit("CSR_WALLET_BUFFERS_ALLOCATED", `Allocated surplus funds to learner wallet buffers for ${exceptions.length} payments.`, "High");
+    Notifications.push("Buffers Allocated", `Allocated excess buffers and cleared ${exceptions.length} exceptions.`, "success");
+
     Router.renderView(Router.currentRoute);
     RenderEngine.csrDashboard();
   };
 
   Actions.openCsrManualSlipUploadModal = function() {
     const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = "Upload Bank Deposit Slip for Verification";
+    document.getElementById("modal-title").textContent = "Upload Bank Deposit Slip for Verification (FLOW-012)";
     document.getElementById("modal-body").innerHTML = `
       <div class="form-group">
         <label>Learner Full Name</label>
         <input type="text" id="csr-upload-learner" class="form-control" placeholder="e.g. Sana Mir">
       </div>
       <div class="form-group">
-        <label>Course / Programme</label>
+        <label>Payer Name & Relationship</label>
+        <input type="text" id="csr-upload-payer" class="form-control" placeholder="e.g. Asad Mir (Father)">
+      </div>
+      <div class="form-group">
+        <label>Course / Programme Track</label>
         <select id="csr-upload-course" class="form-control">
           <option value="Basic Literacy Foundations">Basic Literacy Foundations</option>
           <option value="Applied Numeracy Cohort">Applied Numeracy Cohort</option>
           <option value="Vocational Technology">Vocational Technology</option>
           <option value="K-12 Grade 8 Math">K-12 Grade 8 Math</option>
+          <option value="Full-Stack Web Engineering">Full-Stack Web Engineering</option>
+          <option value="Data Analytics Fundamentals">Data Analytics Fundamentals</option>
         </select>
       </div>
       <div class="form-group">
         <label>Deposit Amount (PKR)</label>
-        <input type="text" id="csr-upload-amount" class="form-control" value="PKR 18,000">
+        <input type="text" id="csr-upload-amount" class="form-control" value="PKR 24,000">
       </div>
       <div class="form-group">
-        <label>Deposit Channel & Bank Transaction ID</label>
-        <input type="text" id="csr-upload-ref" class="form-control" placeholder="Meezan Bank / TRX-992201">
+        <label>Bank Channel & Transaction Reference</label>
+        <input type="text" id="csr-upload-ref" class="form-control" placeholder="Meezan Bank Raast / RAAST-PK-994821">
       </div>
       <div class="form-group">
         <label>Slip Image / PDF Document</label>
@@ -30662,22 +31168,24 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     document.getElementById("modal-footer").innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.submitCsrManualSlipUpload()">Submit for Review</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrManualSlipUpload()"><i data-lucide="upload"></i> Submit for Audit</button>
     `;
     modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
   Actions.submitCsrManualSlipUpload = function() {
     const learner = document.getElementById("csr-upload-learner").value.trim() || "New Payer";
+    const payer = document.getElementById("csr-upload-payer") ? (document.getElementById("csr-upload-payer").value.trim() || learner) : learner;
     const course = document.getElementById("csr-upload-course").value;
-    const amount = document.getElementById("csr-upload-amount").value.trim() || "PKR 18,000";
+    const amount = document.getElementById("csr-upload-amount").value.trim() || "PKR 24,000";
     const ref = document.getElementById("csr-upload-ref").value.trim() || "BANK-DIRECT";
 
     const newId = "PAY-" + (800 + db.csrData.payments.length + 1);
     const newPay = {
       id: newId,
       learner,
-      payer: learner,
+      payer,
       course,
       submittedAmount: amount,
       expectedAmount: amount,
