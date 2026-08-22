@@ -2521,18 +2521,36 @@ const db = {
       { id: "PAY-816", learner: "Kamran Rafiq", payer: "Kamran Rafiq", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Alfalah Direct", reference: "BAF-001928", receiptChecksum: "sha256:55ab9012a...", receiptFile: "alfalah_blurry_816.jpg", age: "3d ago", status: "Rejected / Correction", rejectionReason: "Illegible Bank Slip Image (Low Resolution Screenshot)", noticeStatus: "WhatsApp Dispatched", csr: "Sarah Jenkins", orderId: "AEN-721" }
     ],
     commissions: [
-      { id: "COM-901", enrolmentId: "AEN-703", learner: "Danish Qureshi", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-11" },
-      { id: "COM-902", enrolmentId: "AEN-706", learner: "Bilal Ahmed", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-09" },
-      { id: "COM-903", enrolmentId: "AEN-704", learner: "Zaid Khan", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-16" },
-      { id: "COM-904", enrolmentId: "AEN-705", learner: "Areeba Siddiqui", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-16" },
-      { id: "COM-905", enrolmentId: "AEN-690", learner: "Sana Mir", product: "Dual Course Bundle", salesValue: "PKR 38,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,800", status: "Paid", payrollPeriod: "Jul 2026", date: "2026-07-28" },
-      { id: "COM-906", enrolmentId: "AEN-691", learner: "Omar Khalid", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Paid", payrollPeriod: "Jul 2026", date: "2026-07-25" },
-      { id: "COM-907", enrolmentId: "AEN-680", learner: "Tariq Mahmood", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-02" },
-      { id: "COM-908", enrolmentId: "AEN-712", learner: "Fatima Zahra", product: "K-12 Grade 8 Math", salesValue: "PKR 32,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,200", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-14" },
-      { id: "COM-909", enrolmentId: "AEN-701", learner: "Kamran Siddiqui", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-18" },
-      { id: "COM-910", enrolmentId: "AEN-710", learner: "Sana Mir (Renewal)", product: "Tajweed Mastery 1:1", salesValue: "PKR 18,000", plan: "Renewal Commission Plan (8%)", commissionAmount: "PKR 1,440", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-15" },
-      { id: "COM-911", enrolmentId: "AEN-665", learner: "Waqas Sheikh", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Paid", payrollPeriod: "Jun 2026", date: "2026-06-30" },
-      { id: "COM-912", enrolmentId: "AEN-650", learner: "Rashid Ali", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Reversed", payrollPeriod: "Jul 2026", date: "2026-07-10" }
+      // 1. Pending Verification
+      { id: "COM-903", enrolmentId: "AEN-704", learner: "Zaid Khan", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-16", paymentRef: "TRX-9823101", slipId: "PAY-801", rate: "10.0%", expectedPayout: "31 Aug 2026" },
+      { id: "COM-904", enrolmentId: "AEN-705", learner: "Areeba Siddiqui", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-16", paymentRef: "TRX-994820", slipId: "PAY-802", rate: "10.0%", expectedPayout: "31 Aug 2026" },
+      { id: "COM-909", enrolmentId: "AEN-701", learner: "Kamran Siddiqui", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-18", paymentRef: "TRX-990142", slipId: "PAY-803", rate: "10.0%", expectedPayout: "31 Aug 2026" },
+      { id: "COM-913", enrolmentId: "AEN-716", learner: "Noman Ali", product: "Full-Stack Web Engineering", salesValue: "PKR 45,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 4,500", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-19", paymentRef: "TRX-884019", slipId: "PAY-806", rate: "10.0%", expectedPayout: "31 Aug 2026" },
+      { id: "COM-918", enrolmentId: "AEN-714", learner: "Farhan Zaidi", product: "Data Analytics Fundamentals", salesValue: "PKR 30,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,000", status: "Pending Verification", payrollPeriod: "Aug 2026", date: "2026-08-20", paymentRef: "TRX-771920", slipId: "PAY-807", rate: "10.0%", expectedPayout: "31 Aug 2026" },
+
+      // 2. Eligible / Payable
+      { id: "COM-901", enrolmentId: "AEN-703", learner: "Danish Qureshi", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-11", verifiedReceipt: "RCP-1049", rate: "10.0%", batchTarget: "PR-105", clearanceStatus: "Payment Cleared & Provisioned" },
+      { id: "COM-902", enrolmentId: "AEN-706", learner: "Bilal Ahmed", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-09", verifiedReceipt: "RCP-1045", rate: "10.0%", batchTarget: "PR-105", clearanceStatus: "Payment Cleared & Provisioned" },
+      { id: "COM-908", enrolmentId: "AEN-712", learner: "Fatima Zahra", product: "K-12 Grade 8 Math", salesValue: "PKR 32,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,200", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-14", verifiedReceipt: "RCP-1038", rate: "10.0%", batchTarget: "PR-105", clearanceStatus: "Payment Cleared & Provisioned" },
+      { id: "COM-914", enrolmentId: "AEN-708", learner: "Amina Sheikh", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-12", verifiedReceipt: "RCP-1050", rate: "10.0%", batchTarget: "PR-105", clearanceStatus: "Payment Cleared & Provisioned" },
+      { id: "COM-919", enrolmentId: "AEN-709", learner: "Zainab Abbas", product: "Quranic Studies (Tajweed)", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Payable", payrollPeriod: "Aug 2026", date: "2026-08-13", verifiedReceipt: "RCP-1052", rate: "10.0%", batchTarget: "PR-105", clearanceStatus: "Payment Cleared & Provisioned" },
+
+      // 3. Reserved in Payroll
+      { id: "COM-907", enrolmentId: "AEN-680", learner: "Tariq Mahmood", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-02", batchNo: "PR-104", cooStatus: "Pending Executive Clearance", payoutDate: "31 Aug 2026" },
+      { id: "COM-910", enrolmentId: "AEN-710", learner: "Sana Mir (Renewal)", product: "Tajweed Mastery 1:1", salesValue: "PKR 18,000", plan: "Renewal Commission Plan (8%)", commissionAmount: "PKR 1,440", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-15", batchNo: "PR-104", cooStatus: "Pending Executive Clearance", payoutDate: "31 Aug 2026" },
+      { id: "COM-920", enrolmentId: "AEN-695", learner: "Hassan Raza", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-05", batchNo: "PR-104", cooStatus: "Pending Executive Clearance", payoutDate: "31 Aug 2026" },
+      { id: "COM-921", enrolmentId: "AEN-698", learner: "Maria Qureshi", product: "K-12 Full Academic Term", salesValue: "PKR 32,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,200", status: "Reserved", payrollPeriod: "Aug 2026", date: "2026-08-07", batchNo: "PR-104", cooStatus: "Pending Executive Clearance", payoutDate: "31 Aug 2026" },
+
+      // 4. Paid & Settled History
+      { id: "COM-905", enrolmentId: "AEN-690", learner: "Sana Mir", product: "Dual Course Bundle", salesValue: "PKR 38,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,800", status: "Paid", payrollPeriod: "Jul 2026", date: "2026-07-28", depositRef: "DEP-MEEZAN-992104", taxWithheld: "PKR 0", netPaid: "PKR 3,800", voucherNo: "PV-2026-07-88" },
+      { id: "COM-906", enrolmentId: "AEN-691", learner: "Omar Khalid", product: "Applied Numeracy Group", salesValue: "PKR 24,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 2,400", status: "Paid", payrollPeriod: "Jul 2026", date: "2026-07-25", depositRef: "DEP-MEEZAN-881920", taxWithheld: "PKR 0", netPaid: "PKR 2,400", voucherNo: "PV-2026-07-81" },
+      { id: "COM-911", enrolmentId: "AEN-665", learner: "Waqas Sheikh", product: "Vocational Technology", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Paid", payrollPeriod: "Jun 2026", date: "2026-06-30", depositRef: "DEP-MEEZAN-771092", taxWithheld: "PKR 0", netPaid: "PKR 3,500", voucherNo: "PV-2026-06-49" },
+      { id: "COM-915", enrolmentId: "AEN-660", learner: "Asad Ullah", product: "Full-Stack Web Engineering", salesValue: "PKR 45,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 4,500", status: "Paid", payrollPeriod: "Jun 2026", date: "2026-06-28", depositRef: "DEP-MEEZAN-661028", taxWithheld: "PKR 0", netPaid: "PKR 4,500", voucherNo: "PV-2026-06-34" },
+
+      // 5. Reversed & Clawbacks
+      { id: "COM-912", enrolmentId: "AEN-650", learner: "Rashid Ali", product: "Basic Literacy 1:1", salesValue: "PKR 18,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 1,800", status: "Reversed", payrollPeriod: "Jul 2026", date: "2026-07-10", refundRef: "REF-4401", reversalReason: "Learner 7-Day Cooling-Off Cancellation", auditNotes: "Full refund authorized by Operations Manager under LMS Refund Policy (FLOW-031)." },
+      { id: "COM-916", enrolmentId: "AEN-655", learner: "Kashif Javed", product: "Vocational Track", salesValue: "PKR 35,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,500", status: "Reversed", payrollPeriod: "Jul 2026", date: "2026-07-18", refundRef: "REF-4408", reversalReason: "Duplicate Transaction Allocation Chargeback", auditNotes: "Financial ledger chargeback offset applied. Commission clawed back atomically." },
+      { id: "COM-917", enrolmentId: "AEN-662", learner: "Naveed Akhtar", product: "K-12 Grade 8 Math", salesValue: "PKR 32,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,200", status: "Reversed", payrollPeriod: "Aug 2026", date: "2026-08-01", refundRef: "REF-4415", reversalReason: "Guardian Relocation Withdrawal Authorization", auditNotes: "Student transferred abroad before term start. Pro-rata commission reversed." }
     ],
     cases: [
       { id: "CAS-401", subject: "Prospect inquiring about evening 1:1 slot availability", category: "Prospect Inquiry", priority: "Medium", sla: "1h 45m remaining", prospect: "Zubair Hashmi", owner: "Sarah Jenkins", status: "In Review" },
@@ -3466,63 +3484,63 @@ const csrRouteDefinitions = {
     group: "My Commissions", 
     title: "Pending Commission Qualification", 
     headerTitle: "Pending Commissions", 
-    description: "Commission items generated from assisted orders, awaiting manual bank transfer verification.", 
-    scopeAuthority: "CSR-005: Commission items remain pending until payment verification conditions are met.",
+    description: "Commission items generated from assisted orders, awaiting manual bank transfer verification and slip clearance.", 
+    scopeAuthority: "CSR-005: Commission items remain pending until payment verification conditions and slip audits are approved.",
     context: "Pending qualification", 
     family: "table", 
     dataType: "commissions", 
     filterFn: c => c.status === "Pending Verification",
     metrics: [
-      ["Pending Verification", () => (db.csrData?.commissions || []).filter(c => c.status === "Pending Verification").length, "2 orders pending"],
-      ["Expected Commission", () => "PKR 4,200", "10% Standard Plan"],
-      ["Associated Value", () => "PKR 42,000", "Pipeline sales"]
+      ["Pending Items", () => (db.csrData?.commissions || []).filter(c => c.status === "Pending Verification").length + " Accruals", "Awaiting slip audit"],
+      ["Expected Pipeline", () => "PKR " + (db.csrData?.commissions || []).filter(c => c.status === "Pending Verification").reduce((sum, c) => sum + parseInt((c.commissionAmount || "0").replace(/[^0-9]/g, "") || 0), 0).toLocaleString(), "10.0% Standard Tier"],
+      ["Pipeline Sales Value", () => "PKR " + (db.csrData?.commissions || []).filter(c => c.status === "Pending Verification").reduce((sum, c) => sum + parseInt((c.salesValue || "0").replace(/[^0-9]/g, "") || 0), 0).toLocaleString(), "Gross assisted orders"]
     ]
   },
   "csr-commissions-eligible": { 
     group: "My Commissions", 
     title: "Eligible & Payable Commissions", 
     headerTitle: "Payable Commissions", 
-    description: "Verified sales commissions approved for inclusion in the upcoming monthly payroll settlement.", 
+    description: "Verified sales commissions approved for inclusion in the upcoming monthly payroll settlement run.", 
     scopeAuthority: "CSR-005 / CSR-006: Commission earnings flow into unified payroll settlement without duplicate spreadsheets.",
     context: "Payable earnings", 
     family: "table", 
     dataType: "commissions", 
     filterFn: c => c.status === "Payable",
     metrics: [
-      ["Payable This Month", () => "PKR 3,600", "Approved for payout"],
-      ["Verified Sales", () => "2 Enrolments", "Basic Literacy 1:1"],
-      ["Payroll Run", () => "Aug 2026", "Settlement #PR-104"]
+      ["Payable Balance", () => "PKR " + (db.csrData?.commissions || []).filter(c => c.status === "Payable").reduce((sum, c) => sum + parseInt((c.commissionAmount || "0").replace(/[^0-9]/g, "") || 0), 0).toLocaleString(), "Approved for payout"],
+      ["Verified Orders", () => (db.csrData?.commissions || []).filter(c => c.status === "Payable").length + " Enrolments", "Cleared & provisioned"],
+      ["Target Payroll Run", () => "Aug 2026 (#PR-105)", "Settlement run"]
     ]
   },
   "csr-commissions-reserved": { 
     group: "My Commissions", 
     title: "Reserved Commissions in Payroll", 
     headerTitle: "Reserved Commissions", 
-    description: "Commissions locked into an active payroll batch currently undergoing COO/Finance review.", 
+    description: "Commissions locked into an active payroll batch currently undergoing COO and Finance executive review.", 
     scopeAuthority: "CSR-006 / PAY-001: Integration with payroll batch processing and segregation of duties.",
     context: "Payroll batch", 
     family: "table", 
     dataType: "commissions", 
     filterFn: c => c.status === "Reserved",
     metrics: [
-      ["Reserved Amount", () => "PKR 3,500", "Locked in PR-104"],
-      ["Batch Status", () => "Under Review", "COO Approval"],
-      ["Expected Payout", () => "31 Aug 2026", "Direct deposit"]
+      ["Reserved Amount", () => "PKR " + (db.csrData?.commissions || []).filter(c => c.status === "Reserved").reduce((sum, c) => sum + parseInt((c.commissionAmount || "0").replace(/[^0-9]/g, "") || 0), 0).toLocaleString(), "Locked in PR-104"],
+      ["Active Batch", () => "Batch #PR-104 (" + (db.csrData?.commissions || []).filter(c => c.status === "Reserved").length + " Items)", "Executive clearance"],
+      ["Disbursement Date", () => "31 Aug 2026", "Direct bank deposit"]
     ]
   },
   "csr-commissions-paid": { 
     group: "My Commissions", 
     title: "Paid & Settled Commissions History", 
     headerTitle: "Settled Commissions", 
-    description: "Historical record of disbursed commission earnings with bank deposit references and payroll slips.", 
+    description: "Historical record of disbursed commission earnings with bank deposit references, tax records, and payroll vouchers.", 
     scopeAuthority: "CSR-006: Complete historical earning traceability linked to authoritative payroll runs.",
     context: "Disbursed earnings", 
     family: "table", 
     dataType: "commissions", 
     filterFn: c => c.status === "Paid",
     metrics: [
-      ["Total Paid to Date", () => "PKR 6,200", "July & August"],
-      ["Settled Batches", () => "2 Payroll Runs", "PR-102, PR-103"],
+      ["Total Paid to Date", () => "PKR " + (db.csrData?.commissions || []).filter(c => c.status === "Paid").reduce((sum, c) => sum + parseInt((c.commissionAmount || "0").replace(/[^0-9]/g, "") || 0), 0).toLocaleString(), "Disbursed to Meezan"],
+      ["Settled Batches", () => "PR-102, PR-103 (" + (db.csrData?.commissions || []).filter(c => c.status === "Paid").length + " Items)", "Archived settlements"],
       ["Commission Ratio", () => "10.0% Flat", "Standard CSR Plan"]
     ]
   },
@@ -3530,16 +3548,16 @@ const csrRouteDefinitions = {
     group: "My Commissions", 
     title: "Reversed & Clawed Back Commissions", 
     headerTitle: "Commission Reversals", 
-    description: "Commissions reversed due to learner refund, chargeback, or order cancellation within cooling period.", 
-    scopeAuthority: "CSR-005: Explicit clawback entries preserving original transaction auditability.",
+    description: "Commissions reversed due to learner refund, cooling-off cancellation, or order cancellation under FLOW-031.", 
+    scopeAuthority: "CSR-005: Explicit clawback entries preserving original transaction auditability without destructive deletes.",
     context: "Clawbacks", 
     family: "table", 
     dataType: "commissions", 
     filterFn: c => c.status === "Reversed",
     metrics: [
-      ["Total Reversals", () => "PKR 0", "Zero refunds logged"],
-      ["Refund Rate", () => "0.0%", "Clean retention"],
-      ["Dispute Count", () => "0 Disputes", "No commission disputes"]
+      ["Total Clawbacks", () => "PKR " + (db.csrData?.commissions || []).filter(c => c.status === "Reversed").reduce((sum, c) => sum + parseInt((c.commissionAmount || "0").replace(/[^0-9]/g, "") || 0), 0).toLocaleString(), "Offset against ledger"],
+      ["Reversed Enrolments", () => (db.csrData?.commissions || []).filter(c => c.status === "Reversed").length + " Reversed", "Cooling-off refunds"],
+      ["Clawback Ratio", () => (((db.csrData?.commissions || []).filter(c => c.status === "Reversed").length / Math.max(1, (db.csrData?.commissions || []).length)) * 100).toFixed(1) + "% Audited Rate", "Low clawback index"]
     ]
   },
 
@@ -18187,12 +18205,46 @@ const RenderEngine = {
         `;
       }
     } else if (config.dataType === "commissions") {
-      toolbarActions = `
-        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Commission Report</button>
-      `;
+      if (route === "csr-commissions-pending") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommissionAuditSummaryModal()"><i data-lucide="calculator"></i> Commission Tier Calculator</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.syncPendingCommissionsWithOrders()"><i data-lucide="refresh-cw"></i> Sync Pending Accruals</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Pipeline</button>
+        `;
+      } else if (route === "csr-commissions-eligible") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.requestEarlyCommissionPayoutReview()"><i data-lucide="send"></i> Submit Payout Batch for COO Sign-off</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.downloadEligibleCommissionsSummary()"><i data-lucide="file-spreadsheet"></i> Download Payroll Preview (CSV)</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Payable</button>
+        `;
+      } else if (route === "csr-commissions-reserved") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.viewActivePayrollBatchDetails('PR-104')"><i data-lucide="file-text"></i> View Batch #PR-104 Voucher</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.refreshPayrollBatchStatus('PR-104')"><i data-lucide="refresh-cw"></i> Check Finance Clearance</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Reserved</button>
+        `;
+      } else if (route === "csr-commissions-paid") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.downloadCommissionTaxStatement()"><i data-lucide="file-check"></i> Download FBR Annual Tax Certificate</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrHistoricalPayoutBreakdownModal()"><i data-lucide="layers"></i> Payout Run Summary</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Settled Ledger</button>
+        `;
+      } else if (route === "csr-commissions-reversed") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrClawbackAuditPolicyModal()"><i data-lucide="scale"></i> View FLOW-031 Clawback Policy</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrCommissionDisputeModal()"><i data-lucide="alert-circle"></i> File Commission Audit Dispute</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Clawbacks</button>
+        `;
+      } else {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommissionAuditSummaryModal()"><i data-lucide="badge-percent"></i> Commission Ledger</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Commission Report</button>
+        `;
+      }
     } else if (config.dataType === "cases") {
       toolbarActions = `
         <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewCaseModal()"><i data-lucide="message-square-plus"></i> Log Customer Ticket</button>
+        <button class="btn btn-secondary btn-xs" onclick="Actions.resolveAllPendingCsrCases()"><i data-lucide="check-check"></i> Batch Resolve Closed Tickets</button>
         <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Tickets</button>
       `;
     }
@@ -18377,6 +18429,9 @@ const RenderEngine = {
       }
       if (route === "csr-commissions-paid") {
         return `<tr><th>Settlement ID / Receipt</th><th>Learner & Product</th><th>Disbursed Amount</th><th>Direct Deposit Ref</th><th>Disbursement Date</th><th>Settlement State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-commissions-reversed") {
+        return `<tr><th>Clawback Item ID</th><th>Reversed Enrolment / Learner</th><th>Original Value</th><th>Clawed Amount</th><th>Audit Reason / Trigger</th><th>Ledger Adjustment State</th><th>Actions</th></tr>`;
       }
       return `<tr><th>Commission ID / Enrolment</th><th>Learner / Product</th><th>Sales Value</th><th>Commission Plan</th><th>Calculated Commission</th><th>Payroll State</th><th>Actions</th></tr>`;
     }
@@ -19036,6 +19091,25 @@ const RenderEngine = {
           `;
         }
 
+        if (route === "csr-commissions-reversed") {
+          return `
+            <tr>
+              <td><strong>${item.id}</strong><span class="table-subline">${item.enrolmentId}</span></td>
+              <td><strong>${item.learner}</strong><span class="table-subline">${item.product}</span></td>
+              <td>${item.salesValue}<span class="table-subline">Reversed: ${item.date}</span></td>
+              <td><strong class="error-text">-${item.commissionAmount}</strong></td>
+              <td><strong>${item.clawbackReason || 'Refund / Chargeback within 14-Day Guarantee'}</strong></td>
+              <td><span class="badge badge-error">Reversed & Deducted</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommission('${item.id}')"><i data-lucide="scale"></i> Inspect Clawback</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrCommissionDisputeModal('${item.id}')"><i data-lucide="alert-circle"></i> Dispute</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         return `
           <tr>
             <td><strong>${item.id}</strong><span class="table-subline">Enrolment: ${item.enrolmentId}</span></td>
@@ -19057,7 +19131,7 @@ const RenderEngine = {
         return `
           <tr>
             <td><strong>${item.subject}</strong><span class="table-subline">${item.id}</span></td>
-            <td><strong>${item.prospect}</strong></td>
+            <td><strong>${item.prospect}</strong><span class="table-subline">${item.contact || '+92 300 1234567'}</span></td>
             <td><span class="badge badge-secondary">${item.category}</span></td>
             <td><strong class="${item.priority === 'High' ? 'error-text' : ''}">${item.priority}</strong><span class="table-subline">${item.sla}</span></td>
             <td><span class="badge badge-primary">${item.owner}</span></td>
@@ -31362,6 +31436,155 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = config ? config.title : "CSR Export";
     Actions.audit("CSR_DATA_EXPORTED", `Exported verified records for ${title}.`, "Low");
     Notifications.push("Export Generated", `Downloaded verified CSV dataset for ${title}.`, "success");
+  };
+
+  Actions.claimCsrPaymentLock = function(id) {
+    const pay = db.csrData.payments.find(p => p.id === id);
+    if (!pay) return;
+
+    pay.status = "Under Review";
+    pay.reviewer = "Sarah Jenkins";
+    pay.lockTTL = "29m remaining";
+
+    Actions.audit("CSR_PAYMENT_LOCK_CLAIMED", `FLOW-012: Claimed exclusive review lock on payment ${pay.id} for 30 minutes.`, "Low");
+    Notifications.push("Review Lock Claimed", `Locked ${pay.id} for audit. Anti-collision lock TTL is 29m.`, "info");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrCommissionDisputeModal = function(id) {
+    const com = db.csrData.commissions.find(c => c.id === id);
+    if (!com) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Dispute Commission Reversal: ${com.id}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:rgba(239, 68, 68, 0.1); border-left:4px solid var(--color-error); padding:12px 16px; border-radius:6px; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <i data-lucide="scale" style="width:28px; height:28px; color:var(--color-error);"></i>
+            <div>
+              <strong style="color:var(--color-error); font-size:14px;">CSR-001 / FLOW-031 COMMISSION REVERSAL DISPUTE</strong>
+              <p style="margin:2px 0 0; font-size:12px; color:var(--color-muted);">Submit evidence to Financial Operations for re-evaluation of clawback on enrolment ${com.enrolmentId}.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--color-surface-2); border:1px solid var(--color-border); border-radius:6px; padding:12px; margin-bottom:14px; font-size:13px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <div><strong>Learner:</strong> ${com.learner}</div>
+            <div><strong>Product:</strong> ${com.product}</div>
+            <div><strong>Original Sales:</strong> ${com.salesValue}</div>
+            <div><strong>Clawback Amount:</strong> <span class="error-text">-${com.commissionAmount}</span></div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Dispute Ground / Legal Exemption</label>
+          <select id="csr-dispute-reason" class="form-control">
+            <option value="Learner did not cancel - switched to alternate track">Learner did not cancel - switched to alternate track</option>
+            <option value="Chargeback error confirmed by Meezan Bank">Chargeback error confirmed by Meezan Bank</option>
+            <option value="Refund issued outside 14-day policy window">Refund issued outside 14-day policy window</option>
+            <option value="CSR retention override approved by Academic Director">CSR retention override approved by Academic Director</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Audit Evidence Notes & Bank Reference</label>
+          <textarea id="csr-dispute-notes" class="form-control" rows="3" placeholder="Learner Zubair Hashmi transferred to Vocational Track instead of refunding. Requesting commission reinstatement."></textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrCommissionDispute('${com.id}')"><i data-lucide="send"></i> Submit Dispute to Finance Desk</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrCommissionDispute = function(id) {
+    const com = db.csrData.commissions.find(c => c.id === id);
+    if (!com) return;
+
+    const reason = document.getElementById("csr-dispute-reason") ? document.getElementById("csr-dispute-reason").value : "Dispute ground";
+    com.status = "Dispute Under Review";
+    com.clawbackReason = `DISPUTED: ${reason}`;
+
+    Actions.audit("CSR_COMMISSION_DISPUTE_SUBMITTED", `Submitted formal dispute for clawback on ${com.id} (${com.learner}).`, "Medium");
+    Notifications.push("Dispute Submitted", `Dispute for ${com.id} sent to Financial Operations audit queue.`, "warning");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.exportCsrCommissionPayrollStatement = function() {
+    Actions.audit("CSR_COMMISSION_PAYROLL_STATEMENT_EXPORTED", "Exported certified monthly commission payroll statement (August 2026).", "Medium");
+    Notifications.push("Statement Exported", "Downloaded August 2026 Commission Payroll Statement (PDF & CSV).", "success");
+  };
+
+  Actions.openCsrCommissionExportModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Export Commission Settlement Ledger";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="file-spreadsheet"></i>
+          <div>
+            <strong>COMMISSION LEDGER EXPORT (FLOW-031 / CSR-001)</strong>
+            <p>Generate auditable tax and disbursement reports for payroll settlement.</p>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Payroll Period</label>
+          <select id="csr-export-period" class="form-control">
+            <option value="August 2026">August 2026 (Current Active)</option>
+            <option value="July 2026">July 2026 (Settled)</option>
+            <option value="June 2026">June 2026 (Settled)</option>
+            <option value="Q2 2026">Q2 2026 (Quarterly Comprehensive)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Export Format</label>
+          <select id="csr-export-format" class="form-control">
+            <option value="csv">CSV Ledger (Bank Reconciliation Format)</option>
+            <option value="pdf">Official Signed Statement (PDF with NTN/STRN)</option>
+            <option value="xlsx">Excel Workbook with Formula Allocations</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Include Withholding Tax Breakdown</label>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <input type="checkbox" checked id="csr-export-tax-chk" style="accent-color:var(--color-primary);">
+            <span style="font-size:13px;">Include FBR Section 233 Withholding Tax (10% Filer Rate)</span>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.exportCsrCommissionPayrollStatement(); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Generate & Download Report</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.resolveAllOverdueCsrCases = function() {
+    const overdue = (db.csrData.cases || []).filter(c => c.status !== "Resolved");
+    overdue.forEach(c => {
+      c.status = "Resolved";
+    });
+
+    Actions.audit("CSR_ALL_CASES_RESOLVED", `Quick-resolved ${overdue.length} open service desk inquiries.`, "Medium");
+    Notifications.push("Inquiries Resolved", `Successfully marked ${overdue.length} inquiries as resolved.`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
   };
 
   // ---------------------------------------------------------------------------
