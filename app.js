@@ -10081,16 +10081,34 @@ const RenderEngine = {
       `;
     }
 
-    // Bespoke view switcher or Data Table
+    // Dynamic clean & connected bespoke view switcher for Academic Reviewer
     let customContentHtml = "";
-    if (config.dataType === "reviews") {
+    if (route === "reviewer-content-metadata") {
+      customContentHtml = this.renderReviewerContentMetadataStudio(records);
+    } else if (route === "reviewer-content-syllabus") {
+      customContentHtml = this.renderReviewerContentSyllabusStudio(records);
+    } else if (route === "reviewer-content-lessons") {
+      customContentHtml = this.renderReviewerContentLessonsStudio(records);
+    } else if (route === "reviewer-content-outcomes") {
+      customContentHtml = this.renderReviewerContentOutcomesStudio(records);
+    } else if (route === "reviewer-content-resources") {
+      customContentHtml = this.renderReviewerContentResourcesStudio(records);
+    } else if (route.startsWith("reviewer-rules-")) {
+      customContentHtml = this.renderReviewerRulesStudio(records, route);
+    } else if (route.startsWith("reviewer-assessments-")) {
+      customContentHtml = this.renderReviewerAssessmentsStudio(records, route);
+    } else if (route === "reviewer-approved-versions") {
+      customContentHtml = this.renderReviewerPublicationReadiness(records);
+    } else if (route === "reviewer-audit-history") {
+      customContentHtml = this.renderReviewerAuditStudio(records);
+    } else if (config.dataType === "reviews") {
       customContentHtml = this.renderReviewerCoursesCards(records);
     } else if (config.dataType === "comments") {
       customContentHtml = this.renderReviewerCommentsMatrix(records);
     } else if (config.dataType === "submissions") {
       customContentHtml = this.renderReviewerSubmissionsCards(records);
-    } else if (config.dataType === "k12Schemes") {
-      customContentHtml = this.renderReviewerK12SchemesCards(records);
+    } else if (config.dataType === "k12Schemes" || route.startsWith("reviewer-k12-")) {
+      customContentHtml = this.renderReviewerK12Studio(records, route);
     } else {
       customContentHtml = `
         <div class="table-container" style="overflow-x: auto !important; width: 100%;">
@@ -10106,6 +10124,24 @@ const RenderEngine = {
       `;
     }
 
+    const courseScopeBarHtml = `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 10px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Active Review Scope:</span>
+          <select id="reviewer-course-scope-select" class="form-control" style="width: auto; min-width: 320px; font-weight: 600; font-size: 13px;" onchange="Actions.filterReviewerByCourse(this.value)">
+            <option value="all" ${(!window.reviewerCourseScope || window.reviewerCourseScope === 'all') ? 'selected' : ''}>All Reviewed Courses (Multi-track Portfolio)</option>
+            <option value="TECH-FE-201" ${window.reviewerCourseScope === 'TECH-FE-201' ? 'selected' : ''}>Modern Full-Stack Web Development (v1.2 In Review)</option>
+            <option value="ENG-SPK-301" ${window.reviewerCourseScope === 'ENG-SPK-301' ? 'selected' : ''}>Spoken English Fluency (v2.0 Changes Requested)</option>
+            <option value="K12-MTH-08" ${window.reviewerCourseScope === 'K12-MTH-08' ? 'selected' : ''}>Grade 8 Mathematics (v1.0 Awaiting Review)</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-comments-blocking')"><i data-lucide="shield-alert"></i> Blocking Issues</button>
+          <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')"><i data-lucide="file-search"></i> Inspect Active Version</button>
+        </div>
+      </div>
+    `;
+
     container.innerHTML = `
       <div class="coo-workspace-view creator-workspace-view">
         <div class="coo-workspace-header">
@@ -10117,6 +10153,8 @@ const RenderEngine = {
           ${metricsHtml}
           ${scopeHtml}
         </div>
+
+        ${courseScopeBarHtml}
 
         <div class="module-toolbar">
           <div class="search-filter-row">
@@ -10134,10 +10172,10 @@ const RenderEngine = {
           </div>
           <div class="button-row">
             <button class="btn btn-secondary btn-sm" onclick="Router.navigate('reviewer-comments-blocking')">
-              <i data-lucide="shield-alert"></i> Blocking Issues
+              <i data-lucide="shield-alert"></i> Blocking Citations
             </button>
             <button class="btn btn-primary btn-sm" onclick="Actions.openReviewerInspectionModal('VER-102')">
-              <i data-lucide="file-search"></i> Inspect Active Version
+              <i data-lucide="file-search"></i> Full Quality Inspection
             </button>
           </div>
         </div>
@@ -10171,51 +10209,633 @@ const RenderEngine = {
     window.lucide?.createIcons();
   },
 
-  renderReviewerCoursesCards(reviews) {
+  renderReviewerContentMetadataStudio(courses) {
+    const activeScope = window.reviewerCourseScope || "all";
+    const filtered = (activeScope === "all") ? courses : courses.filter(c => c.code === activeScope);
+
     return `
-      <div class="creator-courses-grid">
-        ${reviews.map(rev => {
-          let badgeClass = "badge-secondary";
-          if (rev.reviewStage === "Awaiting Review") badgeClass = "badge-warning";
-          if (rev.reviewStage === "In Review") badgeClass = "badge-primary";
-          if (rev.reviewStage === "Changes Requested") badgeClass = "badge-error";
-          if (rev.reviewStage === "Approved") badgeClass = "badge-success";
-
-          return `
-            <article class="creator-course-card">
-              <div class="creator-course-top">
-                <span class="badge badge-secondary">${rev.version}</span>
-                <span class="badge ${badgeClass}">${rev.reviewStage.toUpperCase()}</span>
-              </div>
-
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        ${filtered.map(c => `
+          <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
-                <h3>${rev.courseTitle}</h3>
-                <span class="table-subline" style="margin-top: 3px; display: block;">Code: ${rev.courseCode} · Model: <strong>${rev.deliveryModel}</strong></span>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <span class="badge badge-primary">${c.code}</span>
+                  <span class="badge badge-secondary">${c.deliveryModel}</span>
+                  <span class="badge ${c.stage === 'Approved' ? 'badge-success' : 'badge-warning'}">${c.stage}</span>
+                </div>
+                <h3 style="font: 800 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${c.title}</h3>
+                <span class="table-subline" style="margin-top: 2px;">Faculty: ${c.faculty} · Author: <strong>${c.author}</strong></span>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge badge-secondary" style="font-size:11px;">Active Version: ${c.activeVersion}</span>
+                <div style="font-size: 11px; color: var(--slate); margin-top: 4px;">Last Audited: Today, 11:20 PKT</div>
+              </div>
+            </div>
+
+            <p style="font-size: 13px; color: #4a586e; line-height: 1.6; margin: 0;">${c.description}</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; background: #fdfbf7; padding: 14px 18px; border-radius: 10px; border: 1px solid rgba(124, 119, 102, 0.16); font-size: 12px;">
+              <div>
+                <span style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Pedagogical Scope</span>
+                <div style="font-weight:700; color:var(--navy-medium); margin-top:2px;">${c.modulesCount} Modules · ${c.lessonsCount} Lessons · ${c.assessmentsCount} Assessments</div>
+              </div>
+              <div>
+                <span style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Prerequisites Standard</span>
+                <div style="font-weight:700; color:var(--primary); margin-top:2px;">${c.prerequisites || 'Open Entry'}</div>
+              </div>
+              <div>
+                <span style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Bloom's Taxonomy Level</span>
+                <div style="font-weight:700; color:#166534; margin-top:2px;">Level 4 (Analyze) & Level 5 (Evaluate)</div>
+              </div>
+              <div>
+                <span style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Completion Certification</span>
+                <div style="font-weight:700; color:var(--navy-medium); margin-top:2px;">${c.completionRule}</div>
+              </div>
+            </div>
+
+            <div class="om-flow-evidence-box" style="margin: 0; background: #f8fafc; border-left-color: #1e60aa;">
+              <h5 style="font: 800 12.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 6px 0;"><i data-lucide="award"></i> Learning Outcomes Alignment (CAT-006)</h5>
+              <p style="font-size: 12px; color: #4a586e; margin: 0; line-height: 1.5;">${c.learningOutcomes}</p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <span style="font-size: 11.5px; color: var(--slate);"><i data-lucide="shield-check" style="color:#166534; vertical-align:middle; margin-right:4px;"></i> Quality Standard: <strong>CAT-006 Verified</strong></span>
+              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102', 'metadata')"><i data-lucide="file-search"></i> Inspect Metadata</button>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerAddCitationModal('VER-102', 'Metadata: ${c.code}')"><i data-lucide="message-square"></i> Flag Citation</button>
+                <button class="btn btn-primary btn-xs" onclick="Notifications.push('Metadata Approved', 'Verified metadata standards for ${c.code}.', 'success')"><i data-lucide="check"></i> Sign-off Metadata</button>
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  },
+
+  renderReviewerContentSyllabusStudio(syllabusList) {
+    const activeScope = window.reviewerCourseScope || "all";
+    const filtered = (activeScope === "all") ? syllabusList : syllabusList.filter(s => s.courseId === (activeScope === 'TECH-FE-201' ? 'CRS-101' : activeScope === 'ENG-SPK-301' ? 'CRS-103' : 'CRS-104'));
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+          <div style="padding: 16px 20px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 10px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase;">1. Foundations Tier</span>
+            <h4 style="font: 800 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0;">Level 1 & Milestone 1</h4>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+              <span class="badge badge-success">✓ 2 Lessons Verified</span>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102', 'syllabus')">Audit Tier</button>
+            </div>
+          </div>
+          <div style="padding: 16px 20px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 10px; border-top: 3px solid #d97706;">
+            <span style="font-size: 11px; font-weight: 700; color: #d97706; text-transform: uppercase;">2. Intermediate Tier</span>
+            <h4 style="font: 800 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0;">Level 2: State Machines</h4>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+              <span class="badge badge-warning">● 1 Citation Pending</span>
+              <button class="btn btn-primary btn-xs" onclick="Router.navigate('reviewer-comments-blocking')">View Blocker</button>
+            </div>
+          </div>
+          <div style="padding: 16px 20px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 10px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase;">3. Capstone Defense</span>
+            <h4 style="font: 800 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0;">Level 3: Cloud & Deploy</h4>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+              <span class="badge badge-secondary">Rubric RUB-101 Gated</span>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102', 'rubrics')">Audit Rubric</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <h4 style="font: 800 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;"><i data-lucide="layers"></i> 5-Tier Canonical Hierarchy Nodes (MILE-001)</h4>
+          ${filtered.map(s => `
+            <div style="padding: 18px 22px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 10px; display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span class="badge badge-primary">${s.level}</span>
+                  <span class="badge badge-secondary">${s.milestone}</span>
+                  <strong style="font-size: 14px; color: var(--navy-medium);">${s.lesson}</strong>
+                </div>
+                <span class="badge ${s.status && s.status.includes('Approved') ? 'badge-success' : 'badge-warning'}">${s.status}</span>
               </div>
 
-              <div class="creator-course-meta-pills">
-                <span><i data-lucide="user"></i> ${rev.author}</span>
-                <span><i data-lucide="clock"></i> ${rev.submittedAt}</span>
-                <span><i data-lucide="shield-alert" style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : ''}"></i> ${rev.blockingIssuesCount} Blocking</span>
+              <div style="display: grid; grid-template-columns: 1.5fr 1.5fr 1fr; gap: 12px; font-size: 12px; background: #fdfbf7; padding: 10px 14px; border-radius: 8px;">
+                <div><span style="color:var(--slate);">Activity Format:</span> <strong>${s.activityType} (${s.duration})</strong></div>
+                <div><span style="color:var(--slate);">Linked Assessment:</span> <code>${s.linkedAssessment || 'None'}</code></div>
+                <div><span style="color:var(--slate);">Prerequisite:</span> <strong>${s.prerequisite || 'None'}</strong></div>
               </div>
 
-              <div class="creator-course-delivery-box" style="background: #fdfbf7;">
-                <strong><i data-lucide="file-text"></i> Review Summary:</strong>
-                <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">${rev.summary}</p>
-              </div>
-
-              <div class="creator-course-footer">
-                <span style="font-size: 11.5px; color: var(--slate);">Readiness: <strong style="${rev.publicationReadiness.includes('Approved') ? 'color:var(--secondary);' : 'color:var(--secondary);'}">${rev.publicationReadiness}</strong></span>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--slate);">
+                <span>Completion Standard: <strong>${s.completionCondition}</strong></span>
                 <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}')">Inspect Version</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerSandboxPreview('${s.lesson}')"><i data-lucide="play"></i> Simulate Activity</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerAddCitationModal('VER-102', '${s.lesson}')"><i data-lucide="message-square"></i> Flag Citation</button>
+                  <button class="btn btn-primary btn-xs" onclick="Notifications.push('Node Verified', 'Syllabus node ${s.lesson} verified compliant.', 'success')"><i data-lucide="check"></i> Approve Node</button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerContentLessonsStudio(lessonsList) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="file-check-2"></i> Lesson Activity Quality & Assertion Suite</h4>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">Audit interactive coding sandboxes, voice cadence recording engines, and video CDN bitrate streams.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Notifications.push('Automated Lint Passed', 'All 28 lesson manifests verified with valid metadata and contrast checks.', 'success')">
+            <i data-lucide="check-circle"></i> Run Quality Lint
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="badge badge-primary">INTERACTIVE MONACO SANDBOX</span>
+                <h3 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">Lesson 2.1: State Machines & Custom React Hooks</h3>
+                <span class="table-subline">Module: Module 2.1 React State & Server Components · Duration: 75 Mins</span>
+              </div>
+              <span class="badge badge-warning">CITATION OPEN</span>
+            </div>
+
+            <div class="om-flow-evidence-box" style="margin: 0; background: #f8fafc; border-left-color: #d97706;">
+              <h5 style="font: 800 12.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="code-2"></i> Sandbox Assertion Specification</h5>
+              <p style="font-size: 12px; color: #4a586e; margin: 0; line-height: 1.5;">Learner implements a custom useAuthToken hook with token refresh logic. Monaco IDE loads sandbox bundle with Vitest test assertions.</p>
+              <div style="margin-top: 8px; font-family: monospace; font-size: 11.5px; color: #1e60aa; background: #ffffff; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                expect(authReducer(initialState, { type: 'REFRESH_TOKEN_FAIL' })).toEqual({ user: null, isAuthenticated: false });
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <span style="font-size: 11.5px; color: var(--slate);">Accessibility: <strong>WCAG AA (4.5:1 ratio)</strong> · Test Engine: <strong>Vitest 2.0 In-browser</strong></span>
+              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerSandboxPreview('State Machines Sandbox')"><i data-lucide="play"></i> Test In Sandbox</button>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('REV-COM-101')"><i data-lucide="shield-alert"></i> View Citation</button>
+                <button class="btn btn-primary btn-xs" onclick="Notifications.push('Sandbox Approved', 'Monaco sandbox test suite verified.', 'success')"><i data-lucide="check"></i> Approve Activity</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="badge badge-secondary">VOICE RECORDING ENGINE</span>
+                <h3 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">Lesson 1.1: Sentence Stress in Professional Dialogues</h3>
+                <span class="table-subline">Module: Module 1.1 English Rhythm & Stress · Duration: 30 Mins</span>
+              </div>
+              <span class="badge badge-success">✓ PASSED AUDIT</span>
+            </div>
+
+            <div class="om-flow-evidence-box" style="margin: 0; background: #f8fafc; border-left-color: #166534;">
+              <h5 style="font: 800 12.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="mic"></i> Voice Cadence & Acoustic Calibration</h5>
+              <p style="font-size: 12px; color: #4a586e; margin: 0; line-height: 1.5;">Learner records a 60-second self-introduction. Audio wave analyzer applies CAIE phonetics rubric matrix RUB-102.</p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <span style="font-size: 11.5px; color: var(--slate);">Format: <strong>WebRTC PCM 16kHz</strong> · Noise Threshold: <strong>-42 dBFS</strong></span>
+              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerSandboxPreview('Voice Cadence Recorder')"><i data-lucide="volume-2"></i> Listen Calibration</button>
+                <button class="btn btn-primary btn-xs" onclick="Notifications.push('Voice Activity Approved', 'Acoustic standard verified.', 'success')"><i data-lucide="check"></i> Sign-off Activity</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerContentOutcomesStudio(courses) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px;">
+          <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;"><i data-lucide="target"></i> Bloom's Taxonomy Cognitive Outcome Matrix</h4>
+          <p style="font-size: 12.5px; color: #5a687c; margin: 0 0 16px 0;">All learning outcomes are cross-referenced against measurable assessment rubrics and gatekeeper quizzes.</p>
+
+          <div class="table-container" style="overflow-x: auto !important; width: 100%;">
+            <table style="min-width: 1050px !important; width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th>Course / Code</th>
+                  <th>Learning Outcome Directive</th>
+                  <th>Bloom's Level</th>
+                  <th>Objective Assessment Link</th>
+                  <th>Pedagogical Verification</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>DEV-101</strong><br><span class="table-subline">Full-Stack Web Dev</span></td>
+                  <td>Architect component state machines using unidirectional data flow and custom hooks.</td>
+                  <td><span class="badge badge-primary">Level 4: Analyze</span></td>
+                  <td><code>QZ-202 & ASN-301</code></td>
+                  <td><span class="badge badge-success">✓ Verified Mapped</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102', 'metadata')">Audit Matrix</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>DEV-101</strong><br><span class="table-subline">Full-Stack Web Dev</span></td>
+                  <td>Design and implement secure RESTful microservices with JWT token refresh protocols.</td>
+                  <td><span class="badge badge-primary">Level 5: Evaluate</span></td>
+                  <td><code>Lesson 2.1.2 & ASN-302</code></td>
+                  <td><span class="badge badge-warning">● Citation REV-COM-101</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                      <button class="btn btn-primary btn-xs" onclick="Router.navigate('reviewer-comments-blocking')">Resolve Blocker</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>ENG-103</strong><br><span class="table-subline">Spoken English</span></td>
+                  <td>Deliver persuasive workplace presentations with accurate phonetic vowel cadence.</td>
+                  <td><span class="badge badge-primary">Level 5: Evaluate</span></td>
+                  <td><code>VOC-401 & Rubric RUB-102</code></td>
+                  <td><span class="badge badge-success">✓ CEFR Aligned</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-103')">Audit Outcome</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>K12-801</strong><br><span class="table-subline">Grade 8 Mathematics</span></td>
+                  <td>Solve multi-variable linear equations and interpret geometric coordinate proofs.</td>
+                  <td><span class="badge badge-primary">Level 3: Apply</span></td>
+                  <td><code>QZ-204 (FBISE Exam)</code></td>
+                  <td><span class="badge badge-success">✓ Board Aligned</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">Audit Outcome</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerContentResourcesStudio(resources) {
+    const filter = window.reviewerResourceFilter || "all";
+    const filtered = (filter === "all") ? resources : resources.filter(r => r.format.toLowerCase().includes(filter));
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 8px;">
+            <button class="btn ${filter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.reviewerResourceFilter='all'; RenderEngine.reviewerWorkspace('reviewer-content-resources');">All Assets (${resources.length})</button>
+            <button class="btn ${filter === 'pdf' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.reviewerResourceFilter='pdf'; RenderEngine.reviewerWorkspace('reviewer-content-resources');"><i data-lucide="file-text"></i> PDF Blueprints</button>
+            <button class="btn ${filter === 'video' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.reviewerResourceFilter='video'; RenderEngine.reviewerWorkspace('reviewer-content-resources');"><i data-lucide="video"></i> Video Streams</button>
+            <button class="btn ${filter === 'audio' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.reviewerResourceFilter='audio'; RenderEngine.reviewerWorkspace('reviewer-content-resources');"><i data-lucide="volume-2"></i> Audio Phonics</button>
+          </div>
+          <button class="btn btn-primary btn-xs" onclick="Notifications.push('SHA-256 Check Completed', 'All 6 course vault assets verified with 100% cryptographic integrity.', 'success')">
+            <i data-lucide="shield-check"></i> Verify All Vault Checksums
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;">
+          ${filtered.map(res => `
+            <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <span class="badge badge-secondary">${res.format} · ${res.size}</span>
+                  <h4 style="font: 800 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${res.title}</h4>
+                  <span class="table-subline">Asset ID: ${res.id}</span>
+                </div>
+                <span class="badge badge-success">${res.scanStatus || 'Clean'}</span>
+              </div>
+
+              <div style="background: #fdfbf7; padding: 10px 12px; border-radius: 6px; font-size: 11.5px; border: 1px solid rgba(124, 119, 102, 0.15);">
+                <div style="color: var(--slate); font-weight: 700; margin-bottom: 2px;">Cryptographic Checksum:</div>
+                <code style="font-size: 10.5px; color: #1e60aa; word-break: break-all;">${res.sha256}</code>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
+                <span>Access: <strong>${res.accessLevel || 'Enrolled'}</strong></span>
+                <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.verifyReviewerShaChecksum('${res.id}')"><i data-lucide="check"></i> Verify SHA</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Vault Asset Preview', 'Opening secure DRM preview of ${res.title}.', 'info')"><i data-lucide="eye"></i> Preview</button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerRulesStudio(rules, route) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="sliders"></i> Academic State Machine & Rules Verification</h4>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">Audit prerequisite dependency graphs, milestone unlock criteria, and retry limits.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Actions.runReviewerRulesSimulation()">
+            <i data-lucide="play"></i> Run Rules Simulation Test
+          </button>
+        </div>
+
+        <div class="table-container" style="overflow-x: auto !important; width: 100%;">
+          <table style="min-width: 1100px !important; width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr>
+                <th>Rule Identifier</th>
+                <th>Target Course / Scope</th>
+                <th>Category</th>
+                <th>Enforcement Condition</th>
+                <th>Evaluation Engine</th>
+                <th>Deadlock Check</th>
+                <th>Review Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rules.map(r => `
+                <tr>
+                  <td><code>${r.id}</code></td>
+                  <td><strong>${r.course || r.targetItem}</strong></td>
+                  <td><span class="badge badge-secondary">${r.type}</span></td>
+                  <td><strong>${r.condition}</strong></td>
+                  <td><span style="font-size:12px; color:#4a586e;">${r.evaluationEngine || 'Automated Gating Engine'}</span></td>
+                  <td><span class="badge badge-success">✓ Verified Passed</span></td>
+                  <td>
+                    <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102', 'rules')">Audit Rule</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Rule Verified', 'Rule ${r.id} signed off.', 'success')">Approve Rule</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerAssessmentsStudio(assessments, route) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="check-square"></i> Assessment & Rubrics Quality Audit</h4>
+              <p style="font-size: 12px; color: #5a687c; margin: 0;">Validate question stems, answer keys, quiz thresholds, and rubric criteria matrices.</p>
+            </div>
+            <button class="btn btn-primary btn-xs" onclick="Notifications.push('Assessment Audit Complete', 'All 8 course assessments verified with balanced pass marks.', 'success')">
+              <i data-lucide="check"></i> Sign-off Assessment Bank
+            </button>
+          </div>
+
+          <div class="table-container" style="overflow-x: auto !important; width: 100%;">
+            <table style="min-width: 1100px !important; width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th>Assessment ID / Title</th>
+                  <th>Format Type</th>
+                  <th>Pass Threshold</th>
+                  <th>Rubric Matrix</th>
+                  <th>Attempts & Pacing</th>
+                  <th>Pedagogical Check</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${assessments.map(a => `
+                  <tr>
+                    <td><strong>${a.title}</strong><br><span class="table-subline">Code: ${a.id} · Course: ${a.course}</span></td>
+                    <td><span class="badge badge-primary">${a.type}</span></td>
+                    <td><strong>${a.passMark || '80% Pass Mark'}</strong></td>
+                    <td><code>${a.rubric || 'RUB-101 (Standard)'}</code></td>
+                    <td><span style="font-size:12px; color:var(--slate);">${a.timeLimit || '30 Mins'} · Max ${a.maxAttempts || 3} attempts</span></td>
+                    <td><span class="badge badge-success">✓ 0 Ambiguities</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102', 'rubrics')">Audit Matrix</button>
+                        <button class="btn btn-primary btn-xs" onclick="Notifications.push('Assessment Approved', 'Signed off ${a.id}.', 'success')">Approve</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerK12Studio(records, route) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="graduation-cap"></i> K-12 Board Curriculum Review (K12-001 / K12-005)</h4>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">Review FBISE (Federal Board) and Cambridge CAIE Lower Secondary term weightages and syllabi.</p>
+          </div>
+          <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">
+            <i data-lucide="file-search"></i> Inspect K-12 Syllabus
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="badge badge-primary">FBISE BOARD</span>
+              <span class="badge badge-success">✓ APPROVED</span>
+            </div>
+            <h3 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;">Grade 8 Mathematics & Science</h3>
+            <span class="table-subline">Academic Year: 2026/27 · Term Weighting: <strong>40% Formative / 60% Summative</strong></span>
+            <div style="margin-top: 14px; padding: 10px 14px; background: #fdfbf7; border-radius: 8px; font-size: 12px;">
+              <div>Passing Benchmark: <strong style="color:#166534;">>= 50% Pass Mark</strong></div>
+              <div>Diagnostic Test: <strong>FBISE Question Bank QZ-204 (18 Questions)</strong></div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">Audit Curriculum</button>
+            </div>
+          </div>
+
+          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span class="badge badge-secondary">CAMBRIDGE O-LEVEL</span>
+              <span class="badge badge-success">✓ APPROVED</span>
+            </div>
+            <h3 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;">Grade 9 Physics & Chemistry</h3>
+            <span class="table-subline">Academic Year: 2026/27 · Term Weighting: <strong>30% Coursework / 70% Final Exam</strong></span>
+            <div style="margin-top: 14px; padding: 10px 14px; background: #fdfbf7; border-radius: 8px; font-size: 12px;">
+              <div>Passing Benchmark: <strong style="color:#166534;">Grade C (>= 60%)</strong></div>
+              <div>Practical Lab Reports: <strong>6 Mandatory Physics Lab Worksheets</strong></div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">Audit Curriculum</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerPublicationReadiness(reviews) {
+    const approvedReviews = (reviews || []).filter(r => r.reviewStage === "Approved");
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="award"></i> Publication Readiness & Academic Board Sign-off</h4>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">These course versions have completed academic quality reviews with zero unresolved blocking citations and are signed off for Catalogue Owner release.</p>
+          </div>
+          <button class="btn btn-primary btn-xs" onclick="Notifications.push('Sign-off Manifest Exported', 'Downloaded signed academic approval manifest PDF.', 'success')">
+            <i data-lucide="download"></i> Export Sign-off Manifest
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${approvedReviews.map(rev => `
+            <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <span class="badge badge-success">READY FOR CATALOGUE RELEASE</span>
+                  <h3 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">${rev.courseTitle} (${rev.version})</h3>
+                  <span class="table-subline">Course Code: ${rev.courseCode} · Delivery Model: <strong>${rev.deliveryModel}</strong> · Author: ${rev.author}</span>
+                </div>
+                <span class="badge badge-success">✓ 0 BLOCKERS</span>
+              </div>
+
+              <div class="om-flow-evidence-box" style="margin: 0; background: #f8fafc; border-left-color: #166534;">
+                <h5 style="font: 800 12.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="check-circle"></i> Academic Review Board Finding</h5>
+                <p style="font-size: 12px; color: #4a586e; margin: 0; line-height: 1.5;">${rev.summary}</p>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
+                <span>Sign-off Auditor: <strong>Prof. Tariq Mahmood</strong> · Forwarded to Catalogue Owner</span>
+                <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}')"><i data-lucide="file-search"></i> Inspect Signed Blueprint</button>
+                  <button class="btn btn-primary btn-xs" onclick="Notifications.push('Sign-off Verified', 'Cryptographic signature verified for ${rev.version}.', 'success')"><i data-lucide="shield-check"></i> Verify Cryptographic Signature</button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerAuditStudio(auditLogs) {
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="shield-check"></i> Immutable Academic Audit History (FLOW-033)</h4>
+              <p style="font-size: 12px; color: #5a687c; margin: 0;">Append-only cryptographically sealed log of review decisions, status transitions, citations, and grade corrections.</p>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audit Trail Exported', 'Exported cryptographic JSON audit log.', 'info')">
+              <i data-lucide="download"></i> Export JSON Log
+            </button>
+          </div>
+
+          <div class="table-container" style="overflow-x: auto !important; width: 100%;">
+            <table style="min-width: 1100px !important; width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Auditor / Faculty</th>
+                  <th>Action Event</th>
+                  <th>Target Scope</th>
+                  <th>Audit Decision Details</th>
+                  <th>State Transition</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${(auditLogs || []).map(l => `
+                  <tr>
+                    <td><span class="table-timestamp">${l.timestamp}</span></td>
+                    <td><strong>${l.actor}</strong></td>
+                    <td><span class="badge badge-primary">${l.action}</span></td>
+                    <td><strong>${l.version}</strong></td>
+                    <td><span style="font-size:12px; color:#4a586e;">${l.details}</span></td>
+                    <td><span class="badge badge-secondary">${l.priorState} &rarr; ${l.newState}</span></td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  renderReviewerCoursesCards(reviews) {
+    if (!reviews || reviews.length === 0) {
+      return `
+        <div style="padding: 36px; text-align: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 12px;">
+          <i data-lucide="inbox" style="width: 42px; height: 42px; color: var(--slate); margin-bottom: 10px;"></i>
+          <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 6px 0;">No Course Versions Found</h4>
+          <p style="font-size: 13px; color: #5a687c; margin: 0;">No course version reviews currently match the selected review stage filter.</p>
+        </div>
+      `;
+    }
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        ${reviews.map(rev => {
+          const badgeClass = rev.reviewStage === 'Approved' ? 'badge-success' :
+            rev.reviewStage === 'Changes Requested' ? 'badge-error' :
+            rev.reviewStage === 'In Review' ? 'badge-primary' : 'badge-warning';
+          
+          return `
+            <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;">
+                    <span class="badge ${badgeClass}">${rev.reviewStage.toUpperCase()}</span>
+                    <span class="badge badge-primary">${rev.courseCode || 'COURSE'}</span>
+                    <span class="badge badge-secondary">${rev.deliveryModel}</span>
+                    <span class="badge badge-secondary" style="font-family: monospace;">${rev.version}</span>
+                  </div>
+                  <h3 style="font: 800 17px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 2px 0;">${rev.courseTitle}</h3>
+                  <span class="table-subline">Lead Faculty / Author: <strong>${rev.author}</strong> · Submitted: <strong>${rev.submittedAt}</strong></span>
+                </div>
+                <div style="text-align: right;">
+                  <span class="badge ${rev.blockingIssuesCount > 0 ? 'badge-error' : 'badge-success'}" style="font-size: 11.5px;">
+                    ${rev.blockingIssuesCount > 0 ? `${rev.blockingIssuesCount} Blocking Issues` : '✓ 0 Blockers'}
+                  </span>
+                  <div style="font-size: 11px; color: var(--slate); margin-top: 4px;">Readiness: <strong>${rev.publicationReadiness}</strong></div>
+                </div>
+              </div>
+
+              <div class="om-flow-evidence-box" style="margin: 0; background: #fdfbf7; border-left-color: ${rev.blockingIssuesCount > 0 ? '#dc2626' : '#1e60aa'};">
+                <h5 style="font: 800 12.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="file-text"></i> Version Summary & Review Scope</h5>
+                <p style="font-size: 12.5px; color: #4a586e; margin: 0; line-height: 1.5;">${rev.summary}</p>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12); flex-wrap: wrap; gap: 10px;">
+                <span style="font-size: 11.5px; color: var(--slate);"><i data-lucide="shield-check" style="color:var(--primary); vertical-align:middle; margin-right:4px;"></i> Target SLA: <strong>Within 48 Hours</strong></span>
+                <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}')"><i data-lucide="file-search"></i> Inspect Version</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerAddCitationModal('${rev.versionId}', '${rev.courseTitle} (${rev.version})')"><i data-lucide="message-square"></i> Flag Citation</button>
                   ${rev.reviewStage !== 'Approved' ? `
-                    <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerApprovalModal('${rev.versionId}')">Approve</button>
+                    <button class="btn btn-secondary btn-xs" style="color: #dc2626; border-color: #fca5a5;" onclick="Actions.openReviewerRequestChangesModal('${rev.versionId}')"><i data-lucide="rotate-ccw"></i> Request Changes</button>
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerApprovalModal('${rev.versionId}')"><i data-lucide="check"></i> Approve for Release</button>
                   ` : `
-                    <span class="badge badge-success" style="font-size: 10px;">APPROVED</span>
+                    <button class="btn btn-primary btn-xs" onclick="Notifications.push('Version Cleared', '${rev.courseTitle} (${rev.version}) is approved and signed off for Catalogue Release.', 'success')"><i data-lucide="check-circle-2"></i> Release Verified</button>
                   `}
                 </div>
               </div>
-            </article>
+            </div>
           `;
         }).join("")}
       </div>
@@ -10223,109 +10843,145 @@ const RenderEngine = {
   },
 
   renderReviewerCommentsMatrix(comments) {
+    if (!comments || comments.length === 0) {
+      return `
+        <div style="padding: 36px; text-align: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 12px;">
+          <i data-lucide="check-circle" style="width: 42px; height: 42px; color: #166534; margin-bottom: 10px;"></i>
+          <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 6px 0;">No Active Review Citations</h4>
+          <p style="font-size: 13px; color: #5a687c; margin: 0;">All quality and pedagogical items for this filter scope are fully resolved.</p>
+        </div>
+      `;
+    }
+
     return `
       <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
-        ${comments.map(comm => `
-          <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-left: 4px solid ${comm.severity === 'Blocking' ? '#dc2626' : '#d97706'}; border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <span class="badge ${comm.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${comm.severity.toUpperCase()} CITATION</span>
-                <strong style="font-size: 14px; color: var(--navy-medium);">${comm.courseTitle}</strong>
-                <span class="badge badge-secondary">${comm.nodeType}: ${comm.nodeRef}</span>
-              </div>
-              <span class="badge ${comm.status === 'Resolved' ? 'badge-success' : 'badge-warning'}">${comm.status.toUpperCase()}</span>
-            </div>
-
-            <p style="font-size: 12.5px; color: #4a586e; line-height: 1.5; margin: 0;">${comm.comment}</p>
-
-            ${comm.authorResponse ? `
-              <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.15); border-radius: 8px; padding: 10px 14px; font-size: 12px;">
-                <strong style="color: var(--primary);">Author Response:</strong>
-                <span style="color: #4a586e; margin-left: 6px;">${comm.authorResponse}</span>
-              </div>
-            ` : ""}
-
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
-              <span>Reviewer: <strong>${comm.reviewer}</strong> · ${comm.date}</span>
-              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${comm.versionId}')">Inspect Content Node</button>
-                ${comm.status === 'Open' ? `
-                  <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('${comm.id}')">Mark Resolved</button>
-                ` : `
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.reopenReviewerComment('${comm.id}')">Re-open</button>
-                `}
-              </div>
-            </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 10px;">
+          <div>
+            <strong style="font-size: 13px; color: var(--navy-medium);">ACADEMIC CITATIONS & QUALITY DEFECT TRACKER (CAT-010)</strong>
+            <p style="font-size: 11.5px; color: #5a687c; margin: 2px 0 0 0;">Blocking citations strictly prevent course versions from reaching Approved publication status.</p>
           </div>
-        `).join("")}
+          <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerAddCitationModal('VER-102', 'Course Syllabus Node')">
+            <i data-lucide="plus-circle"></i> Log New Citation
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          ${comments.map(c => `
+            <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;">
+                    <span class="badge ${c.severity === 'Blocking' ? 'badge-error' : 'badge-warning'}">${c.severity.toUpperCase()}</span>
+                    <span class="badge ${c.status === 'Resolved' ? 'badge-success' : 'badge-primary'}">${c.status.toUpperCase()}</span>
+                    <span class="badge badge-secondary">${c.nodeType || 'Node'}</span>
+                    <code style="font-size: 11.5px; color: #1e60aa;">${c.id}</code>
+                  </div>
+                  <h4 style="font: 800 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 2px 0;">${c.nodeRef}</h4>
+                  <span class="table-subline">Course: <strong>${c.courseTitle}</strong> · Reviewer: <strong>${c.reviewer}</strong> · ${c.date}</span>
+                </div>
+                <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${c.versionId || 'VER-102'}')"><i data-lucide="file-search"></i> Inspect Node</button>
+                  ${c.status === 'Open' ? `
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('${c.id}')"><i data-lucide="check-circle"></i> Resolve Citation</button>
+                  ` : `
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.reopenReviewerComment('${c.id}')"><i data-lucide="rotate-ccw"></i> Re-open Citation</button>
+                  `}
+                </div>
+              </div>
+
+              <div class="om-flow-evidence-box" style="margin: 0; background: #f8fafc; border-left-color: ${c.severity === 'Blocking' ? '#dc2626' : '#d97706'};">
+                <strong style="font-size: 11.5px; text-transform: uppercase; color: var(--slate); display: block; margin-bottom: 2px;">Reviewer Citation Feedback</strong>
+                <p style="font-size: 12.5px; color: #334155; margin: 0; line-height: 1.5;">${c.comment}</p>
+              </div>
+
+              ${c.authorResponse ? `
+                <div style="background: #fdfbf7; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.16); font-size: 12px;">
+                  <span style="font-weight: 700; color: var(--navy-medium);">Author Remediation Rationale:</span>
+                  <p style="color: #4a586e; margin: 2px 0 0 0;">${c.authorResponse}</p>
+                </div>
+              ` : ''}
+
+              ${c.resolution ? `
+                <div style="background: #f0fdf4; padding: 10px 14px; border-radius: 8px; border: 1px solid #dcfce7; font-size: 12px; color: #166534;">
+                  <strong>Reviewer Resolution Sign-off:</strong> ${c.resolution}
+                </div>
+              ` : ''}
+            </div>
+          `).join("")}
+        </div>
       </div>
     `;
   },
 
   renderReviewerSubmissionsCards(submissions) {
+    if (!submissions || submissions.length === 0) {
+      return `
+        <div style="padding: 36px; text-align: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 12px;">
+          <i data-lucide="inbox" style="width: 42px; height: 42px; color: var(--slate); margin-bottom: 10px;"></i>
+          <h4 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 6px 0;">No Pending Submissions in Queue</h4>
+          <p style="font-size: 13px; color: #5a687c; margin: 0;">All learner milestone assignments and voice recordings have been evaluated.</p>
+        </div>
+      `;
+    }
+
     return `
-      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
-        ${submissions.map(sub => `
-          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span class="badge badge-primary" style="margin-bottom: 4px;">${sub.type}</span>
-                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${sub.learner} · ${sub.assignment}</h3>
-                <span class="table-subline" style="margin-top: 2px;">${sub.course} · Submitted: ${sub.submittedAt}</span>
-              </div>
-              <div style="text-align: right;">
-                <span class="badge ${sub.status === 'Accepted' ? 'badge-success' : 'badge-warning'}">${sub.status.toUpperCase()}</span>
-                ${sub.score ? `<div style="font: 700 16px 'Manrope', sans-serif; color: #166534; margin-top: 4px;">${sub.score}</div>` : ""}
-              </div>
-            </div>
-
-            <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.15); border-radius: 8px; padding: 12px 16px; font-size: 12px;">
-              <strong>Submitted Evidence:</strong>
-              <p style="margin: 4px 0 0 0; color: #4a586e;">${sub.evidence}</p>
-              <div style="margin-top: 6px;"><code style="color: #1e60aa;">${sub.submissionUrl}</code></div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
-              <span>Rubric Standard: <strong>${sub.rubricId}</strong> · Grader: <strong>${sub.assignedReviewer}</strong></span>
-              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
-                ${sub.status !== 'Accepted' ? `
-                  <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerSubmissionModal('${sub.id}')">Evaluate Rubric & Grade</button>
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerRevisionModal('${sub.id}')">Request Revision</button>
-                ` : `
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerGradeCorrectionModal('${sub.id}')">Audited Grade Correction</button>
-                `}
-              </div>
-            </div>
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.2); border-radius: 10px;">
+          <div>
+            <strong style="font-size: 13px; color: var(--navy-medium);">MANUAL EVALUATION & RUBRIC GRADING QUEUE (FLOW-020)</strong>
+            <p style="font-size: 11.5px; color: #5a687c; margin: 2px 0 0 0;">Evaluate capstones and acoustic voice recordings against normalized rubrics. Grade adjustments are appended to immutable audit logs.</p>
           </div>
-        `).join("")}
-      </div>
-    `;
-  },
+          <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Queue Refreshed', 'Refreshed active grading queue from LMS backend.', 'info')">
+            <i data-lucide="refresh-cw"></i> Sync Queue
+          </button>
+        </div>
 
-  renderReviewerK12SchemesCards(schemes) {
-    return `
-      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
-        ${schemes.map(sch => `
-          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span class="badge badge-primary">${sch.board}</span>
-                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${sch.grade} · ${sch.subject}</h3>
-                <span class="table-subline">Academic Year: ${sch.academicYear}</span>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${submissions.map(sub => {
+            const isAccepted = sub.status === 'Accepted';
+            
+            return `
+              <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;">
+                      <span class="badge ${isAccepted ? 'badge-success' : 'badge-primary'}">${sub.status.toUpperCase()}</span>
+                      <span class="badge badge-secondary">${sub.type}</span>
+                      <code style="font-size: 11.5px; color: #1e60aa;">${sub.id}</code>
+                    </div>
+                    <h3 style="font: 800 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 2px 0;">${sub.learner} — ${sub.assignment}</h3>
+                    <span class="table-subline">Course: <strong>${sub.course}</strong> · Submitted: <strong>${sub.submittedAt}</strong></span>
+                  </div>
+                  <div style="text-align: right;">
+                    <span class="badge ${isAccepted ? 'badge-success' : 'badge-secondary'}" style="font-size: 12px; font-weight: 800;">
+                      ${sub.score ? `Score: ${sub.score}` : 'Pending Evaluation'}
+                    </span>
+                    <div style="font-size: 11px; color: var(--slate); margin-top: 4px;">Status: <strong>${sub.gradeStatus || 'Draft'}</strong></div>
+                  </div>
+                </div>
+
+                <div class="om-flow-evidence-box" style="margin: 0; background: #f8fafc; border-left-color: ${isAccepted ? '#166534' : '#1e60aa'};">
+                  <h5 style="font: 800 12.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 4px 0;"><i data-lucide="link"></i> Submitted Evidence & Repository Artifact</h5>
+                  <p style="font-size: 12.5px; color: #4a586e; margin: 0 0 6px 0; line-height: 1.5;">${sub.evidence}</p>
+                  <code style="color: #1e60aa; font-size: 11.5px;">${sub.submissionUrl}</code>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12); flex-wrap: wrap; gap: 10px;">
+                  <span style="font-size: 11.5px; color: var(--slate);">Rubric Standard: <strong>${sub.rubricId}</strong></span>
+                  <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+                    ${!isAccepted ? `
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerRevisionModal('${sub.id}')"><i data-lucide="rotate-ccw"></i> Request Revision</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerSubmissionModal('${sub.id}')"><i data-lucide="check-square"></i> Evaluate Rubric & Grade</button>
+                    ` : `
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerSubmissionModal('${sub.id}')"><i data-lucide="file-search"></i> View Grade Sheet</button>
+                      <button class="btn btn-secondary btn-xs" style="color: var(--primary);" onclick="Actions.openReviewerGradeCorrectionModal('${sub.id}')"><i data-lucide="edit-3"></i> Correct Grade (FLOW-020)</button>
+                    `}
+                  </div>
+                </div>
               </div>
-              <span class="badge badge-success">${sch.status}</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px; background: #fdfbf7; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.15); font-size: 12px;">
-              <div><span>Term Weightage Distribution:</span><div style="font-weight: 700; color: var(--navy-medium); margin-top: 2px;">${sch.termWeightage}</div></div>
-              <div><span>Passing Benchmark:</span><div style="font-weight: 700; color: #166534; margin-top: 2px;">${sch.passThreshold}</div></div>
-            </div>
-
-            <div style="display: flex; justify-content: flex-end; gap: 8px; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-k12-syllabi')">View Subject Syllabi</button>
-            </div>
-          </div>
-        `).join("")}
+            `;
+          }).join("")}
+        </div>
       </div>
     `;
   },
@@ -35631,32 +36287,203 @@ document.addEventListener("DOMContentLoaded", () => {
     window.lucide?.createIcons();
   };
 
-  Actions.reviewerSubmitRevision = function(subId) {
-    const sub = db.reviewerData.submissions.find(s => s.id === subId);
-    if (!sub) return;
+  Actions.filterReviewerByCourse = function(courseCode) {
+    window.reviewerCourseScope = courseCode;
+    Notifications.push("Course Scope Updated", `Active review scope filtered to ${courseCode === 'all' ? 'All Courses' : courseCode}.`, "info");
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
 
-    const notes = document.getElementById("rev-revision-notes")?.value.trim() || "Revision requested on rubric criteria.";
-    sub.status = "Revision Requested";
-    sub.feedback = notes;
+  Actions.openReviewerAddCitationModal = function(versionId, nodeRef) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").innerHTML = `<i data-lucide="alert-triangle" style="color:#d97706; vertical-align:middle; margin-right:6px;"></i> Flag Academic Citation: ${nodeRef || 'Content Node'}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#fffbeb; border-color:#fef3c7;">
+          <i data-lucide="shield-alert" style="color:#d97706;"></i>
+          <div>
+            <strong style="color:#92400e;">PEDAGOGICAL & QUALITY CITATION (CAT-010)</strong>
+            <p style="color:#b45309;">Logging a Blocking citation will prevent course version publication until resolved by the author.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Target Node / Reference</label>
+          <input type="text" id="rev-cite-node" class="form-control" value="${nodeRef || 'Lesson 2.1.2'}" />
+        </div>
+
+        <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="form-group">
+            <label>Citation Severity</label>
+            <select id="rev-cite-severity" class="form-control">
+              <option value="Blocking">Blocking (Halts Release Approval)</option>
+              <option value="Advisory">Advisory (Non-blocking Recommendation)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Defect Category</label>
+            <select id="rev-cite-category" class="form-control">
+              <option value="Pedagogical Standard">Pedagogical Standard & Bloom's</option>
+              <option value="Sandbox Assertion">Sandbox IDE Automated Assertion</option>
+              <option value="Rubric Normalization">Rubric Normalization (Sum != 100%)</option>
+              <option value="A11y Accessibility">A11y Contrast / Video Transcripts</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Reviewer Citation Feedback & Actionable Directive</label>
+          <textarea id="rev-cite-text" class="form-control" rows="3" placeholder="State specific requirement or missing asset..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveReviewerCitation('${versionId || 'VER-102'}')">Log Citation</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveReviewerCitation = function(versionId) {
+    const node = document.getElementById("rev-cite-node")?.value.trim() || "Content Node";
+    const severity = document.getElementById("rev-cite-severity")?.value || "Blocking";
+    const comment = document.getElementById("rev-cite-text")?.value.trim() || "Quality standard requirement flagged.";
+
+    const newCitation = {
+      id: "REV-COM-" + (100 + db.reviewerData.comments.length + 1),
+      versionId: versionId,
+      courseTitle: "Modern Full-Stack Web Dev (v1.2)",
+      nodeType: "Lesson",
+      nodeRef: node,
+      comment: comment,
+      severity: severity,
+      status: "Open",
+      reviewer: "Prof. Tariq Mahmood",
+      date: "Just now",
+      authorResponse: null
+    };
+
+    db.reviewerData.comments.unshift(newCitation);
+
+    const rev = db.reviewerData.reviews.find(r => r.versionId === versionId);
+    if (rev && severity === "Blocking") {
+      rev.blockingIssuesCount = (rev.blockingIssuesCount || 0) + 1;
+      rev.reviewStage = "In Review";
+      rev.publicationReadiness = `Blocked (${rev.blockingIssuesCount} Unresolved Citations)`;
+    }
 
     db.reviewerData.auditLogs.unshift({
       id: "REV-AUD-" + Math.floor(100 + Math.random() * 900),
       timestamp: new Date().toLocaleTimeString(),
       actor: "Prof. Tariq Mahmood",
-      action: "SUBMISSION_REVISION_REQUESTED",
-      version: sub.course,
-      details: `Returned submission ${sub.id} to ${sub.learner}. Note: ${notes}`,
-      priorState: "Submitted",
-      newState: "Revision Requested"
+      action: "CITATION_LOGGED",
+      version: versionId,
+      details: `Logged ${severity} citation on ${node}: ${comment}`,
+      priorState: "Open",
+      newState: severity
     });
 
     if (window.ReviewerSync) ReviewerSync.syncSidebarCounts();
 
-    Notifications.push("Revision Requested", `Returned assignment to ${sub.learner} for resubmission.`, "warning");
+    Notifications.push("Citation Logged (CAT-010)", `Added ${severity} citation for ${node}.`, severity === "Blocking" ? "warning" : "info");
     document.getElementById("generic-modal").classList.add("hidden");
 
     if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
     else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.openReviewerSandboxPreview = function(lessonTitle) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").innerHTML = `<i data-lucide="play" style="color:var(--primary); vertical-align:middle; margin-right:6px;"></i> Interactive Sandbox & Activity Simulator: ${lessonTitle}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#dcfce7;">
+          <i data-lucide="code-2" style="color:#16a34a;"></i>
+          <div>
+            <strong style="color:#166534;">IN-BROWSER MONACO TEST RUNNER</strong>
+            <p style="color:#15803d;">Simulating student code execution environment with live Vitest unit assertions.</p>
+          </div>
+        </div>
+
+        <div style="background:#0f172a; border-radius:8px; padding:14px; font-family:monospace; color:#38bdf8; font-size:12px; line-height:1.6;">
+          <div style="color:#94a3b8;">// Automated Vitest Spec Runner</div>
+          <div style="color:#4ade80;">✓ PASS  src/hooks/useAuthToken.test.ts</div>
+          <div style="padding-left:14px;">✓ should initialize with guest user state (12ms)</div>
+          <div style="padding-left:14px;">✓ should dispatch REFRESH_TOKEN_SUCCESS on valid bearer (18ms)</div>
+          <div style="padding-left:14px;">✓ should gracefully purge cookies on 401 Unauthorized (15ms)</div>
+          <div style="margin-top:8px; border-top:1px solid #334155; padding-top:6px; color:#f1f5f9;">
+            Tests: <strong>3 passed</strong>, 3 total | Snapshots: 0 | Time: 0.84s
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; font-size:12px;">
+          <div style="padding:10px; background:#f8fafc; border-radius:6px;">
+            <span style="color:var(--slate);">A11y Keyboard Focus:</span> <strong style="color:#166534;">✓ WCAG Compliant</strong>
+          </div>
+          <div style="padding:10px; background:#f8fafc; border-radius:6px;">
+            <span style="color:var(--slate);">Assertion Sandbox:</span> <strong style="color:#166534;">✓ Zero Infinite Loops</strong>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Simulator</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Activity Verified', 'Sandbox assertions verified compliant.', 'success'); document.getElementById('generic-modal').classList.add('hidden');">Mark Activity Verified</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.verifyReviewerShaChecksum = function(resourceId) {
+    const res = (db.creatorData.resources || []).find(r => r.id === resourceId) || { title: "Asset", sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" };
+    Notifications.push("SHA-256 Checksum Verified", `Checksum ${res.sha256.substring(0, 16)}... matches cryptographic vault manifest for ${res.title}.`, "success");
+  };
+
+  Actions.runReviewerRulesSimulation = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").innerHTML = `<i data-lucide="cpu" style="color:var(--primary); vertical-align:middle; margin-right:6px;"></i> Academic Gating Rules Graph Simulator (MILE-008)`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#dcfce7;">
+          <i data-lucide="check-circle-2" style="color:#16a34a;"></i>
+          <div>
+            <strong style="color:#166534;">DEPENDENCY GRAPH SIMULATION COMPLETE</strong>
+            <p style="color:#15803d;">State-machine traversed 28 syllabus nodes across 3 progression tiers with zero deadlock cycles.</p>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+          <div style="padding:10px 14px; background:#f8fafc; border-radius:6px; display:flex; justify-content:space-between;">
+            <span>Level 1 &rarr; Milestone 1 Unlock</span>
+            <strong style="color:#166534;">Pass Mark &ge; 80% (Verified Reachable)</strong>
+          </div>
+          <div style="padding:10px 14px; background:#f8fafc; border-radius:6px; display:flex; justify-content:space-between;">
+            <span>Level 2 &rarr; Milestone 2 Gatekeeper</span>
+            <strong style="color:#166534;">Attempt Limit 3 with 24h Cooldown (Verified)</strong>
+          </div>
+          <div style="padding:10px 14px; background:#f8fafc; border-radius:6px; display:flex; justify-content:space-between;">
+            <span>Level 3 &rarr; Capstone Defense Certification</span>
+            <strong style="color:#166534;">Rubric RUB-101 Threshold &ge; 80/100 (Verified)</strong>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Rules Validated', 'State machine rules signed off.', 'success'); document.getElementById('generic-modal').classList.add('hidden');">Certify Rules Engine</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
 window.ReviewerSync = {
