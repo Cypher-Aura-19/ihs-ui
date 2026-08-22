@@ -193,6 +193,21 @@ const db = {
         blockingIssuesCount: 0,
         summary: "Annual Federal Board (FBISE) syllabus outline and term test bank package.",
         publicationReadiness: "Pending Initial Review"
+      },
+      {
+        id: "REV-105",
+        courseId: "CRS-101",
+        versionId: "VER-100",
+        courseTitle: "Modern Full-Stack Web Development",
+        courseCode: "DEV-101",
+        version: "v1.0",
+        deliveryModel: "Self-Paced Milestone",
+        author: "Prof. Alex Rivera",
+        submittedAt: "2 weeks ago",
+        reviewStage: "Approved",
+        blockingIssuesCount: 0,
+        summary: "Original production baseline syllabus approved by Academic Board and published to live catalogue.",
+        publicationReadiness: "Approved for Publication"
       }
     ],
 
@@ -35171,10 +35186,100 @@ document.addEventListener("DOMContentLoaded", () => {
   // ACADEMIC REVIEWER INTERACTIVE ACTIONS (FLOW-009, CAT-010, FLOW-020)
   // ============================================================================
 
-  Actions.openReviewerInspectionModal = function(versionId) {
+  Actions.openReviewerInspectionModal = function(versionId, activeTab = 'metadata') {
     const rev = db.reviewerData.reviews.find(r => r.versionId === versionId) || db.reviewerData.reviews[0];
     const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Academic Review Inspection: ${rev.courseTitle} (${rev.version})`;
+    document.getElementById("modal-title").innerHTML = `<i data-lucide="shield-check" style="color:var(--primary); vertical-align:middle; margin-right:6px;"></i> Academic Review Inspection: ${rev.courseTitle} (${rev.version})`;
+
+    let tabContent = "";
+    if (activeTab === 'metadata') {
+      tabContent = `
+        <div class="om-flow-evidence-box" style="margin-top:10px;">
+          <h5 style="font:800 13px 'Manrope', sans-serif; color:var(--navy-medium); margin-bottom:8px;"><i data-lucide="award"></i> 1. Course Metadata & Bloom's Taxonomy Outcomes</h5>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; line-height:1.5;">
+            <div><span>Course Code & Scope:</span> <strong style="color:var(--navy-medium);">${rev.courseCode} · ${rev.version}</strong></div>
+            <div><span>Target Faculty / Author:</span> <strong style="color:var(--navy-medium);">${rev.author}</strong></div>
+            <div><span>Delivery Architecture:</span> <strong style="color:var(--primary);">${rev.deliveryModel}</strong></div>
+            <div><span>Estimated Effort:</span> <strong>12 Weeks · 6-8 hrs/week</strong></div>
+            <div><span>Prerequisites Baseline:</span> <strong style="color:var(--secondary);">HTML5 / CSS3 / ES6 Javascript</strong></div>
+            <div><span>Bloom's Taxonomy Level:</span> <strong style="color:#166534;">Level 4 (Analyze) & Level 5 (Evaluate)</strong></div>
+          </div>
+          <div style="margin-top:10px; padding:8px 12px; background:#f8fafc; border-radius:6px; font-size:11.5px; color:var(--slate);">
+            <strong>Core Competencies:</strong> State management architecture, full-stack REST API development, SQL/NoSQL schema modeling, accessibility WCAG AA compliance.
+          </div>
+        </div>
+      `;
+    } else if (activeTab === 'syllabus') {
+      tabContent = `
+        <div class="om-flow-evidence-box" style="margin-top:10px;">
+          <h5 style="font:800 13px 'Manrope', sans-serif; color:var(--navy-medium); margin-bottom:8px;"><i data-lucide="layers"></i> 2. Canonical 5-Tier Syllabus Hierarchy (MILE-001)</h5>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+            <div style="padding:8px 12px; background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.2); border-radius:6px;">
+              <div style="display:flex; justify-content:space-between;">
+                <strong>Level 1: Frontend Architecture & DOM</strong>
+                <span class="badge badge-success">✓ PASSED</span>
+              </div>
+              <small style="color:var(--slate);">Milestone 1.1 (2 Lessons, 1 Code Lab, 1 Gatekeeper Quiz)</small>
+            </div>
+            <div style="padding:8px 12px; background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.2); border-radius:6px;">
+              <div style="display:flex; justify-content:space-between;">
+                <strong>Level 2: State Machines & Backend Integration</strong>
+                <span class="badge badge-warning">● UNDER REVIEW</span>
+              </div>
+              <small style="color:var(--slate);">Lesson 2.1.2 (Auth Reducer Monaco Sandbox Assertion Flagged)</small>
+            </div>
+            <div style="padding:8px 12px; background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.2); border-radius:6px;">
+              <div style="display:flex; justify-content:space-between;">
+                <strong>Level 3: Capstone Defense & Cloud Deployment</strong>
+                <span class="badge badge-secondary">LOCKED</span>
+              </div>
+              <small style="color:var(--slate);">Capstone Project Rubric Matrix RUB-101 (35/35/30)</small>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (activeTab === 'rubrics') {
+      tabContent = `
+        <div class="om-flow-evidence-box" style="margin-top:10px;">
+          <h5 style="font:800 13px 'Manrope', sans-serif; color:var(--navy-medium); margin-bottom:8px;"><i data-lucide="check-square"></i> 3. Assessment & Rubric Scoring Matrix (FLOW-020)</h5>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+            <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr; padding:6px 10px; background:#f8fafc; border-radius:4px; font-weight:700; color:var(--navy-medium);">
+              <span>Criterion</span><span>Weight</span><span>Evaluation Standard</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr; padding:6px 10px; border-bottom:1px solid #f1f5f9;">
+              <span>Component Modularity</span><strong style="color:#166534;">35%</strong><span>Clean atomic design</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr; padding:6px 10px; border-bottom:1px solid #f1f5f9;">
+              <span>Mobile Responsiveness</span><strong style="color:#166534;">35%</strong><span>Breakpoint fluid grid</span>
+            </div>
+            <div style="display:grid; grid-template-columns:1.5fr 1fr 1fr; padding:6px 10px;">
+              <span>Accessibility & Semantic HTML</span><strong style="color:#166534;">30%</strong><span>WCAG AA compliant</span>
+            </div>
+            <div style="padding:6px 10px; background:#fdfbf7; border-top:1px solid rgba(124, 119, 102, 0.2); font-weight:700; display:flex; justify-content:space-between;">
+              <span>Total Normalized Weight</span>
+              <strong style="color:#166534;">100% (Balanced)</strong>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (activeTab === 'rules') {
+      tabContent = `
+        <div class="om-flow-evidence-box" style="margin-top:10px;">
+          <h5 style="font:800 13px 'Manrope', sans-serif; color:var(--navy-medium); margin-bottom:8px;"><i data-lucide="sliders"></i> 4. Academic Rules & Milestone Gating Logic (MILE-004 / MILE-008)</h5>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:12px;">
+            <div style="padding:8px 12px; background:#f8fafc; border-radius:6px;">
+              <strong>Prerequisite Rule (FLOW-018):</strong> Level 1 Gatekeeper Quiz score must be &ge; 80% and all 3 activities verified complete.
+            </div>
+            <div style="padding:8px 12px; background:#f8fafc; border-radius:6px;">
+              <strong>Attempt Limit & Cooldown (MILE-008):</strong> Max 3 attempts on graded quizzes with mandatory 24-hour pedagogical review cooldown.
+            </div>
+            <div style="padding:8px 12px; background:#f8fafc; border-radius:6px;">
+              <strong>Certification Standard (MILE-004):</strong> Digital credential minted upon 100% milestone completion and Capstone Defense &ge; 80/100.
+            </div>
+          </div>
+        </div>
+      `;
+    }
 
     document.getElementById("modal-body").innerHTML = `
       <div class="om-flow-dialog">
@@ -35185,20 +35290,22 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="om-flow-metric"><span>Review Stage</span><strong style="color:${rev.reviewStage === 'Approved' ? '#166534' : '#d97706'}">${rev.reviewStage}</strong></div>
         </div>
 
-        <div style="display: flex; gap: 8px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; margin: 12px 0;">
-          <button class="btn btn-primary btn-xs">1. Metadata & Outcomes</button>
-          <button class="btn btn-secondary btn-xs">2. Syllabus Structure</button>
-          <button class="btn btn-secondary btn-xs">3. Assessment Rubrics</button>
-          <button class="btn btn-secondary btn-xs">4. Academic Rules</button>
+        <div style="display: flex; gap: 8px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; margin: 12px 0; flex-wrap:wrap;">
+          <button class="btn ${activeTab === 'metadata' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}', 'metadata')">1. Metadata & Outcomes</button>
+          <button class="btn ${activeTab === 'syllabus' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}', 'syllabus')">2. Syllabus Structure</button>
+          <button class="btn ${activeTab === 'rubrics' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}', 'rubrics')">3. Assessment Rubrics</button>
+          <button class="btn ${activeTab === 'rules' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}', 'rules')">4. Academic Rules</button>
         </div>
 
-        <div class="om-flow-evidence-box">
+        ${tabContent}
+
+        <div class="om-flow-evidence-box" style="margin-top:12px;">
           <h5><i data-lucide="check-circle"></i> Quality & Compliance Checklist (FLOW-009)</h5>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px;">
-            <div><span>Learning Outcomes:</span> <strong style="color:var(--secondary);">✓ Bloom's Taxonomy Verified</strong></div>
-            <div><span>Prerequisites:</span> <strong style="color:var(--secondary);">✓ Baseline Gating Validated</strong></div>
-            <div><span>Gatekeeper Quizzes:</span> <strong style="color:var(--secondary);">✓ Pass Mark 80% Enforced</strong></div>
-            <div><span>Blocking Issues:</span> <strong style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : 'color:var(--secondary);'}">${rev.blockingIssuesCount} Unresolved Citations</strong></div>
+            <div><span>Learning Outcomes:</span> <strong style="color:#166534;">✓ Bloom's Taxonomy Verified</strong></div>
+            <div><span>Prerequisites:</span> <strong style="color:#166534;">✓ Baseline Gating Validated</strong></div>
+            <div><span>Gatekeeper Quizzes:</span> <strong style="color:#166534;">✓ Pass Mark 80% Enforced</strong></div>
+            <div><span>Blocking Issues:</span> <strong style="${rev.blockingIssuesCount > 0 ? 'color:#dc2626;' : 'color:#166534;'}">${rev.blockingIssuesCount} Unresolved Citations</strong></div>
           </div>
         </div>
 
