@@ -13140,6 +13140,321 @@ const RenderEngine = {
     }
 
     // --------------------------------------------------------------------------
+    // 14. HUB 4 - PAGE 1: MY K-12 CLASS SECTIONS (trainer-k12-sections)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-k12-sections") {
+      const k12Filter = window.trainerK12SecTab || "all";
+      const allSections = data.k12Sections || [];
+      const displayedSections = k12Filter === "all" ? allSections :
+        k12Filter === "fbise" ? allSections.filter(s => s.board.includes("Federal")) :
+        allSections.filter(s => s.board.includes("Cambridge"));
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- K-12 ACADEMIC HEADER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; gap:16px;">
+            <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="graduation-cap" style="width:24px; height:24px;"></i>
+            </div>
+            <div>
+              <strong style="color:var(--navy-medium); font-size:14.5px;">K-12 Tuition Delivery & Section Management (K12-001 - K12-005)</strong>
+              <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                Manage assigned tuition cohorts across Federal Board (FBISE) and Cambridge O-Level curricula with dedicated weekly schedules, textbook SLO blueprints, and guardian reporting.
+              </p>
+            </div>
+          </div>
+
+          <!-- FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${k12Filter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerK12SecTab='all'; RenderEngine.trainerWorkspace('trainer-k12-sections');">All Sections (${allSections.length})</button>
+              <button class="btn ${k12Filter === 'fbise' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerK12SecTab='fbise'; RenderEngine.trainerWorkspace('trainer-k12-sections');">Federal Board (FBISE)</button>
+              <button class="btn ${k12Filter === 'cambridge' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerK12SecTab='cambridge'; RenderEngine.trainerWorkspace('trainer-k12-sections');">Cambridge O-Level</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Academic Cycle: <strong>Term 1 (2026/27)</strong></span>
+          </div>
+
+          <!-- SECTION CARDS -->
+          <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;">
+            ${displayedSections.map(sec => `
+              <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:16px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="badge ${sec.board.includes('Federal') ? 'badge-primary' : 'badge-secondary'}" style="font-size:10px;">${sec.board}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${sec.id}</span>
+                    </div>
+                    <span style="font-size:12px; color:var(--slate); font-weight:600;">${sec.learnersCount} Learners Enrolled</span>
+                  </div>
+
+                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">${sec.name}</h3>
+                  <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
+                    Subject: <strong>${sec.subject} (${sec.grade})</strong> · ${sec.term}
+                  </p>
+
+                  <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:12px; font-size:12.5px; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:var(--slate);">Next Live Session:</span>
+                      <strong style="color:var(--navy-medium);">${sec.nextClass}</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:var(--slate);">Section Attendance Avg:</span>
+                      <strong style="color:#166534;">${sec.attendanceAvg}</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:var(--slate);">Problem Sets Assigned:</span>
+                      <strong style="color:var(--navy-medium);">${sec.homeworkAssigned} Homework Sets</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(124, 119, 102, 0.12); flex-wrap:wrap; gap:8px;">
+                  <div class="button-row" style="display:flex; gap:6px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerAssignK12HomeworkModal('${sec.id}')">
+                      <i data-lucide="plus-circle"></i> Assign HW (FLOW-021)
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Router.navigate('trainer-k12-curriculum')">
+                      <i data-lucide="book-open"></i> SLOs
+                    </button>
+                  </div>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('CLS-102')">
+                    <i data-lucide="video"></i> Enter Room
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 15. HUB 4 - PAGE 2: PRESCRIBED SLOS & SYLLABUS (trainer-k12-curriculum)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-k12-curriculum" || route.includes("curriculum") || route.includes("syllabus")) {
+      const curTab = window.trainerCurTab || "fbise";
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- FILTER & HEADER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${curTab === 'fbise' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerCurTab='fbise'; RenderEngine.trainerWorkspace('trainer-k12-curriculum');">Grade 8 FBISE Math</button>
+              <button class="btn ${curTab === 'cambridge' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerCurTab='cambridge'; RenderEngine.trainerWorkspace('trainer-k12-curriculum');">Cambridge O-Level Math</button>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.exportK12CurriculumOutline()"><i data-lucide="download"></i> Download Blueprint PDF</button>
+              <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerAssignK12HomeworkModal('SEC-8A')"><i data-lucide="plus"></i> Link Homework</button>
+            </div>
+          </div>
+
+          <!-- CURRICULUM CHAPTER TREE -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Chapter 1 -->
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:20px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="badge badge-success">COMPLETED (100%)</span>
+                  <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Chapter 1: Real Numbers & Radicals</h3>
+                </div>
+                <span style="font-size:12px; color:var(--slate);">Delivered in Classes 1–4</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:12.5px;">
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.15); padding:10px 14px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span><strong>SLO 1.1:</strong> Rational and irrational numbers on the real line</span>
+                  <span style="color:#166534; font-weight:700;">✓ Delivered</span>
+                </div>
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.15); padding:10px 14px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span><strong>SLO 1.2:</strong> Radical expressions and square root approximations</span>
+                  <span style="color:#166534; font-weight:700;">✓ Delivered</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 2 -->
+            <div style="background:#ffffff; border:1px solid var(--primary); border-radius:12px; padding:20px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="badge badge-primary">ACTIVE IN PROGRESS (65%)</span>
+                  <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Chapter 2: Linear Equations & Inequalities</h3>
+                </div>
+                <span style="font-size:12px; color:var(--primary); font-weight:700;">Active Unit (Classes 5–8)</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:12.5px;">
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.15); padding:10px 14px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span><strong>SLO 2.1:</strong> Solving one-variable linear equations with fractions</span>
+                  <span style="color:#166534; font-weight:700;">✓ Delivered</span>
+                </div>
+                <div style="background:#fdfbf7; border:1px solid var(--primary); padding:10px 14px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span><strong>SLO 2.2:</strong> Simultaneous linear equations (Elimination & Substitution)</span>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.markK12SLOCompleted('SLO 2.2', 'Linear Equations')">Mark Completed</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chapter 3 -->
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:20px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <span class="badge badge-secondary">SCHEDULED NEXT (0%)</span>
+                  <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Chapter 3: Geometry & Polygon Proofs</h3>
+                </div>
+                <span style="font-size:12px; color:var(--slate);">Starts next week</span>
+              </div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; font-size:12.5px;">
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.15); padding:10px 14px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span><strong>SLO 3.1:</strong> Interior and exterior angle sum of convex polygons</span>
+                  <span style="color:var(--slate);">Upcoming</span>
+                </div>
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.15); padding:10px 14px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span><strong>SLO 3.2:</strong> Congruency and similarity of geometric figures</span>
+                  <span style="color:var(--slate);">Upcoming</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 16. HUB 4 - PAGE 3: HOMEWORK & WORKSHEETS (trainer-k12-homework)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-k12-homework" || route.includes("homework") || route.includes("worksheets")) {
+      const hwFilter = window.trainerHwTab || "all";
+
+      const homeworkSets = [
+        { id: "HW-801", title: "HW-801: Linear Equations & Balancing Problem Set", section: "Section 8-A (FBISE)", due: "18 Aug 2026", submissions: "17 / 18", weight: "20% Category Weight", status: "Submissions In Review", rubric: "RUB-K12-MATH" },
+        { id: "HW-802", title: "HW-802: Quadratic Factoring & Bracket Expansion", section: "Section 8-A (FBISE)", due: "22 Aug 2026", submissions: "12 / 18", weight: "20% Category Weight", status: "Active Window", rubric: "RUB-K12-MATH" },
+        { id: "HW-803", title: "HW-803: Geometry Angle Sums & Polygon Theorems", section: "Section 8-B (Cambridge)", due: "15 Aug 2026", submissions: "16 / 16", weight: "20% Category Weight", status: "Graded & Published", rubric: "RUB-K12-MATH" },
+        { id: "HW-804", title: "HW-804: Radical Simplification & Indices", section: "Section 8-B (Cambridge)", due: "10 Aug 2026", submissions: "16 / 16", weight: "20% Category Weight", status: "Graded & Published", rubric: "RUB-K12-MATH" }
+      ];
+
+      const displayedHw = hwFilter === "all" ? homeworkSets :
+        hwFilter === "active" ? homeworkSets.filter(h => h.status.includes("Active") || h.status.includes("Review")) :
+        homeworkSets.filter(h => h.status.includes("Graded"));
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- FILTER & ASSIGN BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${hwFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerHwTab='all'; RenderEngine.trainerWorkspace('trainer-k12-homework');">All Homework (${homeworkSets.length})</button>
+              <button class="btn ${hwFilter === 'active' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerHwTab='active'; RenderEngine.trainerWorkspace('trainer-k12-homework');">Active / Due (2)</button>
+              <button class="btn ${hwFilter === 'graded' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerHwTab='graded'; RenderEngine.trainerWorkspace('trainer-k12-homework');">Graded & Closed (2)</button>
+            </div>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerAssignK12HomeworkModal('SEC-8A')">
+              <i data-lucide="plus"></i> Assign New Problem Set (FLOW-021)
+            </button>
+          </div>
+
+          <!-- HOMEWORK CARDS -->
+          <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;">
+            ${displayedHw.map(h => `
+              <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:14px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="badge ${h.status.includes('Graded') ? 'badge-success' : 'badge-primary'}" style="font-size:10px;">${h.status}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${h.id}</span>
+                    </div>
+                    <span style="font-size:11.5px; color:var(--slate);">Due: <strong>${h.due}</strong></span>
+                  </div>
+
+                  <h3 style="font:800 17.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">${h.title}</h3>
+                  <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">
+                    Target: <strong>${h.section}</strong> · ${h.weight}
+                  </p>
+
+                  <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:12px; font-size:12.5px; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:var(--slate);">Submissions Received:</span>
+                      <strong style="color:var(--navy-medium);">${h.submissions} Learners</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:var(--slate);">Marking Scheme:</span>
+                      <span class="badge badge-secondary" style="font-size:10px;">${h.rubric}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(124, 119, 102, 0.12); flex-wrap:wrap; gap:8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('PDF Downloaded', 'Downloaded worksheet problem set PDF.', 'success')">
+                    <i data-lucide="file-text"></i> Worksheet PDF
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('trainer-grading-queue')">
+                    <i data-lucide="check-square"></i> Evaluate Submissions
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 17. HUB 4 - PAGE 4: PARENT REPORT COMMENTS (trainer-k12-reports)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-k12-reports" || route.includes("k12-reports") || route.includes("k12-comments")) {
+      const reports = [
+        { id: "LNR-504", name: "Areeba Farooq", section: "Section 8-A (FBISE)", guardian: "Farooq Azam (Father)", attendance: "75%", grade: "77% (Grade B+)", status: "Draft Remarks", comment: "Demonstrates good conceptual grasp of linear equations. Recommend extra practice on sign distribution." },
+        { id: "LNR-501", name: "Zainab Malik", section: "Section 8-A (FBISE)", guardian: "Tariq Malik (Father)", attendance: "96%", grade: "95% (Grade A+)", status: "Approved & Published", comment: "Exemplary performance across algebraic derivations and regular classroom participation." },
+        { id: "LNR-502", name: "Hamza Ahmed", section: "Section 8-A (FBISE)", guardian: "Ahmed Bilal (Father)", attendance: "60%", grade: "66% (Grade B)", status: "Action Required", comment: "Attendance needs improvement. Catch-up sessions authorized for missed classes." },
+        { id: "LNR-503", name: "Bilal Khan", section: "Section 8-B (Cambridge)", guardian: "Khanzada Khan (Father)", attendance: "88%", grade: "78% (Grade B+)", status: "Approved & Published", comment: "Consistently submits worksheets on time with high accuracy in geometric constructions." }
+      ];
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- SAFEGUARDING GUARDIAN BANNER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; gap:16px;">
+            <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="users" style="width:24px; height:24px;"></i>
+            </div>
+            <div>
+              <strong style="color:var(--navy-medium); font-size:14.5px;">Guardian Term Report Card Remarks Studio (K12-007 - K12-011 / FLOW-022)</strong>
+              <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                Record structured teacher remarks for guardian report cards. Published comments are visible on the Parent Portal and linked to official FBISE / Cambridge grade statements.
+              </p>
+            </div>
+          </div>
+
+          <!-- REPORT CARDS -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            ${reports.map(rep => `
+              <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <span class="badge ${rep.status === 'Approved & Published' ? 'badge-success' : rep.status === 'Action Required' ? 'badge-error' : 'badge-warning'}">
+                        ${rep.status}
+                      </span>
+                      <span style="font-family:monospace; font-weight:700; font-size:12px; color:var(--primary);">${rep.id}</span>
+                      <span style="font-size:12px; color:var(--slate);">${rep.section}</span>
+                    </div>
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${rep.name}</h3>
+                    <span style="font-size:12px; color:var(--slate);">Guardian: <strong>${rep.guardian}</strong> · Attendance: <strong>${rep.attendance}</strong> · Mark: <strong style="color:#166534;">${rep.grade}</strong></span>
+                  </div>
+                  <div style="display:flex; gap:6px;">
+                    <button class="btn btn-secondary btn-sm" onclick="Actions.printK12OfficialReportCard('${rep.id}')"><i data-lucide="printer"></i> Print Card</button>
+                    <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerParentReportModal('${rep.id}')" style="font-weight:700;">
+                      <i data-lucide="edit-3"></i> Edit Comments (FLOW-022)
+                    </button>
+                  </div>
+                </div>
+
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-left:3px solid var(--primary); border-radius:0 8px 8px 0; padding:14px; font-size:13px; color:#334155; line-height:1.4;">
+                  <strong style="color:var(--navy-medium); display:block; margin-bottom:2px;">Published Teacher Commentary:</strong>
+                  "${rep.comment}"
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
     // 7. SCHEDULE: WEEKLY TIMETABLE GRID (FLOW-017)
     // --------------------------------------------------------------------------
     else if (route === "trainer-schedule-calendar" || route === "trainer-schedule-availability") {
@@ -19878,11 +20193,78 @@ Actions.openTrainerK12HomeworkModal = function(secId) {
 };
 
 Actions.submitTrainerK12Homework = function(secId) {
-  const title = document.getElementById("hw-title")?.value;
+  const title = document.getElementById("hw-title")?.value || "HW-802: Quadratic Expressions";
   this.audit("K12_HOMEWORK_ASSIGNED", `Assigned homework ${title} to Section ${secId}.`, "Medium", "Assigned -> Active");
   Notifications.push("Homework Assigned", `${title} successfully assigned to all 18 learners in Section 8-A.`, "success");
   document.getElementById("generic-modal").classList.add("hidden");
-  Router.renderView("trainer-k12-homework");
+  if (Router.currentRoute === "trainer-k12-homework") RenderEngine.trainerWorkspace("trainer-k12-homework");
+};
+
+Actions.openTrainerParentReportModal = function(learnerId) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId) || { name: "Areeba Farooq", id: "LNR-504" };
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Term Pedagogical Report Card (FLOW-022): ${learner.name}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="file-text"></i>
+        <div>
+          <strong>OFFICIAL GUARDIAN REPORT CARD REMARKS</strong>
+          <p>These remarks are published to the Parent Portal upon Operations Manager term sign-off.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Academic Strengths & Conceptual Mastery</label>
+        <textarea id="k12-strengths" class="form-control" rows="2">Demonstrates strong conceptual understanding of linear equations and algebraic operations. Participates consistently during live FBISE problem sets.</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Areas for Targeted Improvement</label>
+        <textarea id="k12-improvements" class="form-control" rows="2">Needs to reinforce negative sign distributions when expanding complex algebraic brackets. Recommend completing extra practice sheets.</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Teacher Recommendation for Guardian</label>
+        <textarea id="k12-recommendations" class="form-control" rows="2">Encourage 30 minutes of daily homework practice. Supervise textbook exercise completion before Tuesday sessions.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerParentReport('${learner.id}')">Publish to Parent Portal</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitTrainerParentReport = function(learnerId) {
+  this.audit("K12_PARENT_REPORT_SUBMITTED", `Submitted term report card comments for ${learnerId}.`, "Medium", "Draft -> Published to Parent Portal");
+  Notifications.push("Report Card Published", "Pedagogical remarks published to guardian portal and student dossier.", "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute === "trainer-k12-reports") RenderEngine.trainerWorkspace("trainer-k12-reports");
+};
+
+Actions.markK12SLOCompleted = function(sloId, chapterName) {
+  this.audit("K12_SLO_COMPLETED", `Marked SLO ${sloId} (${chapterName}) as completed.`, "Low", "Syllabus Progress Advanced");
+  Notifications.push("Syllabus SLO Completed", `${sloId} recorded as delivered. Curriculum progress updated.`, "success");
+  if (Router.currentRoute === "trainer-k12-curriculum") RenderEngine.trainerWorkspace("trainer-k12-curriculum");
+};
+
+Actions.printK12OfficialReportCard = function(learnerId) {
+  Notifications.push("Report Card Print Ready", "Generated accredited Term 1 Report Card PDF.", "info");
+  this.audit("K12_REPORT_CARD_PRINTED", `Printed report card for ${learnerId}.`, "Low", "PDF Rendered");
+};
+
+Actions.exportK12CurriculumOutline = function() {
+  Notifications.push("Curriculum Exported", "Downloaded FBISE/Cambridge prescribed curriculum blueprint.", "success");
+  this.audit("K12_CURRICULUM_EXPORTED", "Exported syllabus SLO outline.", "Low", "Document Downloaded");
 };
 
 Actions.openTrainerRosterModal = function(classId) {
