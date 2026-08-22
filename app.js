@@ -5568,6 +5568,44 @@ const learnerRouteParentMap = {
   "learner-notifications": "nav-learner-dashboard"
 };
 
+const trainerRouteParentMap = {
+  "trainer-classes-in-review": "nav-trainer-reports-due",
+  "trainer-classes-correction-requested": "nav-trainer-reports-due",
+  "trainer-classes-completed": "nav-trainer-classes-upcoming",
+  "trainer-classes-awaiting-report": "nav-trainer-reports-due",
+  "trainer-reports-draft": "nav-trainer-reports-due",
+  "trainer-reports-submitted": "nav-trainer-reports-due",
+  "trainer-reports-correction-requested": "nav-trainer-reports-due",
+  "trainer-reports-accepted": "nav-trainer-reports-due",
+  "trainer-attendance-corrections": "nav-trainer-attendance-class",
+  "trainer-attendance-issues": "nav-trainer-attendance-class",
+  "trainer-attendance-history": "nav-trainer-attendance-class",
+  "trainer-learners-attendance": "nav-trainer-learners-progress",
+  "trainer-learners-work": "nav-trainer-grading-queue",
+  "trainer-grading-quizzes": "nav-trainer-grading-queue",
+  "trainer-grading-homework": "nav-trainer-grading-assignments",
+  "trainer-grading-revisions": "nav-trainer-grading-queue",
+  "trainer-grading-corrections": "nav-trainer-grading-gradebook",
+  "trainer-resources-shared": "nav-trainer-resources-teaching",
+  "trainer-resources-upload": "nav-trainer-resources-teaching",
+  "trainer-resources-history": "nav-trainer-resources-teaching",
+  "trainer-milestones-queue": "nav-trainer-grading-queue",
+  "trainer-milestones-progress": "nav-trainer-learners-progress",
+  "trainer-milestones-signoffs": "nav-trainer-grading-gradebook",
+  "trainer-milestones-interventions": "nav-trainer-learners-risks",
+  "trainer-k12-subjects": "nav-trainer-k12-sections",
+  "trainer-k12-gradebook": "nav-trainer-k12-homework",
+  "trainer-messages-guardians": "nav-trainer-messages-learners",
+  "trainer-messages-notifications": "nav-trainer-dashboard",
+  "trainer-schedule-reschedule": "nav-trainer-schedule-calendar",
+  "trainer-schedule-cancellations": "nav-trainer-schedule-calendar",
+  "trainer-pay-statements": "nav-trainer-pay-earnings",
+  "trainer-history-classes": "nav-trainer-classes-upcoming",
+  "trainer-history-reports": "nav-trainer-reports-due",
+  "trainer-history-grading": "nav-trainer-grading-gradebook",
+  "trainer-history-corrections": "nav-trainer-grading-gradebook"
+};
+
 const trainerRouteDefinitions = {
   "trainer-dashboard": { title: "Teaching Home", scope: "Trainer Command Hub · Effective Assignment Scope", section: "TEACHING HOME", icon: "layout-dashboard" },
   "trainer-classes-today": { title: "Today's Assigned Classes", scope: "Live Classes & Occurrence Join Windows (FLOW-015)", section: "MY CLASSES", icon: "calendar-check", filter: c => c.status === "Today", dataType: "classes" },
@@ -6779,6 +6817,9 @@ const Router = {
         }
       } else if (!activeNavItem && Simulator.activeRole === "learner" && typeof learnerRouteParentMap !== "undefined") {
         const parentNavId = learnerRouteParentMap[route];
+        if (parentNavId) activeNavItem = document.getElementById(parentNavId);
+      } else if (!activeNavItem && Simulator.activeRole === "trainer" && typeof trainerRouteParentMap !== "undefined") {
+        const parentNavId = trainerRouteParentMap[route];
         if (parentNavId) activeNavItem = document.getElementById(parentNavId);
       }
     }

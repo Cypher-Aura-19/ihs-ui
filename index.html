@@ -991,307 +991,168 @@
         </div>
 
       </nav>
-      <!-- TRAINER / TEACHER NAVIGATION -->
+      <!-- TRAINER / TEACHER NAVIGATION (ORGANIZED COLLAPSIBLE PRESTIGE) -->
       <nav class="sidebar-nav hidden" id="trainer-nav" aria-label="Trainer & Teacher navigation">
         
-        <!-- 1. Teaching Home -->
+        <!-- 1. Teaching Command Center -->
         <div class="nav-item active" data-route="trainer-dashboard" id="nav-trainer-dashboard">
           <i data-lucide="layout-dashboard"></i>
           <span>Teaching Home</span>
         </div>
 
-        <!-- 2. My Classes -->
-        <div class="nav-group">
-          <div class="nav-group-title">My Classes (Delivery)</div>
-          <div class="nav-item" data-route="trainer-classes-today" id="nav-trainer-classes-today">
-            <i data-lucide="calendar-check"></i>
-            <span>Today's Classes</span>
-            <span class="badge badge-primary count-trainer-classes-today">4</span>
+        <!-- 2. Hub 1: Live Class Delivery (LIVE-001 to LIVE-020) -->
+        <div class="nav-group collapsible open" data-group="trainer-live-delivery">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="video" style="width:13px; height:13px; color:var(--primary);"></i> Live Class Delivery</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">Daily.co</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="trainer-classes-upcoming" id="nav-trainer-classes-upcoming">
-            <i data-lucide="calendar-days"></i>
-            <span>Upcoming Classes</span>
-            <span class="badge badge-secondary count-trainer-classes-upcoming">6</span>
-          </div>
-          <div class="nav-item" data-route="trainer-classes-awaiting-report" id="nav-trainer-classes-awaiting-report">
-            <i data-lucide="file-clock"></i>
-            <span>Awaiting Report</span>
-            <span class="badge badge-warning count-trainer-reports-due">2</span>
-          </div>
-          <div class="nav-item" data-route="trainer-classes-in-review" id="nav-trainer-classes-in-review">
-            <i data-lucide="clock"></i>
-            <span>In Review</span>
-          </div>
-          <div class="nav-item" data-route="trainer-classes-correction-requested" id="nav-trainer-classes-correction-requested">
-            <i data-lucide="alert-circle"></i>
-            <span>Correction Requested</span>
-            <span class="badge badge-error count-trainer-reports-correction">1</span>
-          </div>
-          <div class="nav-item" data-route="trainer-classes-completed" id="nav-trainer-classes-completed">
-            <i data-lucide="check-circle-2"></i>
-            <span>Completed Classes</span>
-          </div>
-          <div class="nav-item" data-route="trainer-classes-trials" id="nav-trainer-classes-trials">
-            <i data-lucide="sparkles"></i>
-            <span>Trial Classes</span>
-            <span class="badge badge-secondary">1</span>
-          </div>
-        </div>
-
-        <!-- 3. My Learners -->
-        <div class="nav-group">
-          <div class="nav-group-title">My Learners</div>
-          <div class="nav-item" data-route="trainer-learners-rosters" id="nav-trainer-learners-rosters">
-            <i data-lucide="users"></i>
-            <span>Assigned Rosters</span>
-          </div>
-          <div class="nav-item" data-route="trainer-learners-progress" id="nav-trainer-learners-progress">
-            <i data-lucide="trending-up"></i>
-            <span>Learner Progress</span>
-          </div>
-          <div class="nav-item" data-route="trainer-learners-attendance" id="nav-trainer-learners-attendance">
-            <i data-lucide="user-check"></i>
-            <span>Learner Attendance</span>
-          </div>
-          <div class="nav-item" data-route="trainer-learners-risks" id="nav-trainer-learners-risks">
-            <i data-lucide="alert-triangle"></i>
-            <span>Learner Risks</span>
-            <span class="badge badge-error count-trainer-risks">3</span>
-          </div>
-          <div class="nav-item" data-route="trainer-learners-work" id="nav-trainer-learners-work">
-            <i data-lucide="folder-git-2"></i>
-            <span>Learner Work</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="trainer-classes-today" id="nav-trainer-classes-today">
+              <i data-lucide="calendar-check"></i>
+              <span>Today's Schedule & Studio</span>
+              <span class="badge badge-primary count-trainer-classes-today">4</span>
+            </div>
+            <div class="nav-item" data-route="trainer-classes-upcoming" id="nav-trainer-classes-upcoming">
+              <i data-lucide="calendar-days"></i>
+              <span>Upcoming Cohort Sessions</span>
+              <span class="badge badge-secondary count-trainer-classes-upcoming">6</span>
+            </div>
+            <div class="nav-item" data-route="trainer-reports-due" id="nav-trainer-reports-due">
+              <i data-lucide="file-clock"></i>
+              <span>Post-Class Delivery Reports</span>
+              <span class="badge badge-warning count-trainer-reports-due">2</span>
+            </div>
+            <div class="nav-item" data-route="trainer-attendance-class" id="nav-trainer-attendance-class">
+              <i data-lucide="user-check"></i>
+              <span>Attendance & Verification</span>
+            </div>
+            <div class="nav-item" data-route="trainer-classes-trials" id="nav-trainer-classes-trials">
+              <i data-lucide="sparkles"></i>
+              <span>Trial Class Assessments</span>
+              <span class="badge badge-secondary">1</span>
+            </div>
           </div>
         </div>
 
-        <!-- 4. Attendance -->
-        <div class="nav-group">
-          <div class="nav-group-title">Attendance</div>
-          <div class="nav-item" data-route="trainer-attendance-class" id="nav-trainer-attendance-class">
-            <i data-lucide="clipboard-check"></i>
-            <span>Class Attendance</span>
+        <!-- 3. Hub 2: Cohorts & Learners (ENR-005, DSH-004) -->
+        <div class="nav-group collapsible open" data-group="trainer-cohorts-learners">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="users" style="width:13px; height:13px; color:var(--primary);"></i> Cohorts & Learners</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">Rosters</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="trainer-attendance-corrections" id="nav-trainer-attendance-corrections">
-            <i data-lucide="file-edit"></i>
-            <span>Attendance Corrections</span>
-          </div>
-          <div class="nav-item" data-route="trainer-attendance-issues" id="nav-trainer-attendance-issues">
-            <i data-lucide="shield-alert"></i>
-            <span>Attendance Issues</span>
-          </div>
-          <div class="nav-item" data-route="trainer-attendance-history" id="nav-trainer-attendance-history">
-            <i data-lucide="history"></i>
-            <span>Attendance History</span>
-          </div>
-        </div>
-
-        <!-- 5. Class Reports (FLOW-016) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Class Reports (FLOW-016)</div>
-          <div class="nav-item" data-route="trainer-reports-due" id="nav-trainer-reports-due">
-            <i data-lucide="file-warning"></i>
-            <span>Reports Due</span>
-            <span class="badge badge-warning count-trainer-reports-due">2</span>
-          </div>
-          <div class="nav-item" data-route="trainer-reports-draft" id="nav-trainer-reports-draft">
-            <i data-lucide="file-text"></i>
-            <span>Draft Reports</span>
-          </div>
-          <div class="nav-item" data-route="trainer-reports-submitted" id="nav-trainer-reports-submitted">
-            <i data-lucide="send"></i>
-            <span>Submitted Reports</span>
-          </div>
-          <div class="nav-item" data-route="trainer-reports-correction-requested" id="nav-trainer-reports-correction-requested">
-            <i data-lucide="alert-octagon"></i>
-            <span>Correction Requested</span>
-          </div>
-          <div class="nav-item" data-route="trainer-reports-accepted" id="nav-trainer-reports-accepted">
-            <i data-lucide="check-check"></i>
-            <span>Accepted Reports</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="trainer-learners-rosters" id="nav-trainer-learners-rosters">
+              <i data-lucide="layout-grid"></i>
+              <span>Assigned Cohort Rosters</span>
+            </div>
+            <div class="nav-item" data-route="trainer-learners-progress" id="nav-trainer-learners-progress">
+              <i data-lucide="trending-up"></i>
+              <span>Learner Academic Progress</span>
+            </div>
+            <div class="nav-item" data-route="trainer-learners-risks" id="nav-trainer-learners-risks">
+              <i data-lucide="alert-triangle"></i>
+              <span>Learner Risks & Interventions</span>
+              <span class="badge badge-error count-trainer-risks">3</span>
+            </div>
+            <div class="nav-item" data-route="trainer-messages-learners" id="nav-trainer-messages-learners">
+              <i data-lucide="messages-square"></i>
+              <span>Contextual Messages & Chat</span>
+              <span class="badge badge-primary">5</span>
+            </div>
           </div>
         </div>
 
-        <!-- 6. Assessments & Grading (FLOW-020) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Assessments & Grading</div>
-          <div class="nav-item" data-route="trainer-grading-queue" id="nav-trainer-grading-queue">
-            <i data-lucide="check-square"></i>
-            <span>Grading Queue</span>
-            <span class="badge badge-primary count-trainer-grading-queue">7</span>
+        <!-- 4. Hub 3: Assessments & Grading (ASM-001 to ASM-017, FLOW-020) -->
+        <div class="nav-group collapsible open" data-group="trainer-assessments-grading">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="clipboard-check" style="width:13px; height:13px; color:var(--primary);"></i> Assessments & Grading</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">Rubrics</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="trainer-grading-quizzes" id="nav-trainer-grading-quizzes">
-            <i data-lucide="help-circle"></i>
-            <span>Quiz Manual Review</span>
-            <span class="badge badge-warning">1</span>
-          </div>
-          <div class="nav-item" data-route="trainer-grading-assignments" id="nav-trainer-grading-assignments">
-            <i data-lucide="file-code"></i>
-            <span>Assignments</span>
-          </div>
-          <div class="nav-item" data-route="trainer-grading-homework" id="nav-trainer-grading-homework">
-            <i data-lucide="book-open"></i>
-            <span>Homework</span>
-          </div>
-          <div class="nav-item" data-route="trainer-grading-voice" id="nav-trainer-grading-voice">
-            <i data-lucide="mic"></i>
-            <span>Voice Activities</span>
-          </div>
-          <div class="nav-item" data-route="trainer-grading-revisions" id="nav-trainer-grading-revisions">
-            <i data-lucide="rotate-ccw"></i>
-            <span>Revision Requests</span>
-          </div>
-          <div class="nav-item" data-route="trainer-grading-gradebook" id="nav-trainer-grading-gradebook">
-            <i data-lucide="table"></i>
-            <span>Gradebook</span>
-          </div>
-          <div class="nav-item" data-route="trainer-grading-corrections" id="nav-trainer-grading-corrections">
-            <i data-lucide="edit-3"></i>
-            <span>Grade Corrections</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="trainer-grading-queue" id="nav-trainer-grading-queue">
+              <i data-lucide="check-square"></i>
+              <span>Central Grading Queue</span>
+              <span class="badge badge-primary count-trainer-grading-queue">7</span>
+            </div>
+            <div class="nav-item" data-route="trainer-grading-assignments" id="nav-trainer-grading-assignments">
+              <i data-lucide="file-code"></i>
+              <span>Project & Capstone Tasks</span>
+            </div>
+            <div class="nav-item" data-route="trainer-grading-voice" id="nav-trainer-grading-voice">
+              <i data-lucide="mic"></i>
+              <span>Acoustic Voice Drills</span>
+            </div>
+            <div class="nav-item" data-route="trainer-grading-gradebook" id="nav-trainer-grading-gradebook">
+              <i data-lucide="table"></i>
+              <span>Gradebook & Final Ledger</span>
+            </div>
           </div>
         </div>
 
-        <!-- 7. Resources (FLOW-022) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Resources (FLOW-022)</div>
-          <div class="nav-item" data-route="trainer-resources-teaching" id="nav-trainer-resources-teaching">
-            <i data-lucide="folder"></i>
-            <span>Teaching Resources</span>
+        <!-- 5. Hub 4: K-12 Tuition Delivery (K12-001 to K12-014, FLOW-021) -->
+        <div class="nav-group collapsible open" data-group="trainer-k12-delivery">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="graduation-cap" style="width:13px; height:13px; color:var(--primary);"></i> K-12 Tuition Delivery</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">FBISE</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="trainer-resources-shared" id="nav-trainer-resources-shared">
-            <i data-lucide="share-2"></i>
-            <span>Shared with Learners</span>
-          </div>
-          <div class="nav-item" data-route="trainer-resources-upload" id="nav-trainer-resources-upload">
-            <i data-lucide="upload-cloud"></i>
-            <span>Upload Resource</span>
-          </div>
-          <div class="nav-item" data-route="trainer-resources-history" id="nav-trainer-resources-history">
-            <i data-lucide="archive"></i>
-            <span>Resource History</span>
-          </div>
-        </div>
-
-        <!-- 8. Milestone Support (FLOW-018) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Milestone Support</div>
-          <div class="nav-item" data-route="trainer-milestones-queue" id="nav-trainer-milestones-queue">
-            <i data-lucide="milestone"></i>
-            <span>Review Queue</span>
-            <span class="badge badge-primary count-trainer-milestones">2</span>
-          </div>
-          <div class="nav-item" data-route="trainer-milestones-progress" id="nav-trainer-milestones-progress">
-            <i data-lucide="bar-chart-2"></i>
-            <span>Learner Progress</span>
-          </div>
-          <div class="nav-item" data-route="trainer-milestones-signoffs" id="nav-trainer-milestones-signoffs">
-            <i data-lucide="award"></i>
-            <span>Trainer Sign-offs</span>
-          </div>
-          <div class="nav-item" data-route="trainer-milestones-interventions" id="nav-trainer-milestones-interventions">
-            <i data-lucide="life-buoy"></i>
-            <span>Interventions</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="trainer-k12-sections" id="nav-trainer-k12-sections">
+              <i data-lucide="layers"></i>
+              <span>My K-12 Class Sections</span>
+            </div>
+            <div class="nav-item" data-route="trainer-k12-syllabus" id="nav-trainer-k12-syllabus">
+              <i data-lucide="book-open"></i>
+              <span>Prescribed SLOs & Syllabus</span>
+            </div>
+            <div class="nav-item" data-route="trainer-k12-homework" id="nav-trainer-k12-homework">
+              <i data-lucide="file-plus"></i>
+              <span>Homework & Worksheets</span>
+            </div>
+            <div class="nav-item" data-route="trainer-k12-comments" id="nav-trainer-k12-comments">
+              <i data-lucide="message-square"></i>
+              <span>Parent Report Comments</span>
+            </div>
           </div>
         </div>
 
-        <!-- 9. K-12 Teaching (FLOW-021) -->
-        <div class="nav-group">
-          <div class="nav-group-title">K-12 Teaching</div>
-          <div class="nav-item" data-route="trainer-k12-sections" id="nav-trainer-k12-sections">
-            <i data-lucide="layout-grid"></i>
-            <span>My Sections</span>
+        <!-- 6. Hub 5: Schedule & Compensation (LIVE-018, PAY-013) -->
+        <div class="nav-group collapsible open" data-group="trainer-schedule-pay">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="wallet" style="width:13px; height:13px; color:var(--primary);"></i> Schedule & Earnings</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-success nav-group-badge">Pay</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="trainer-k12-subjects" id="nav-trainer-k12-subjects">
-            <i data-lucide="book-open"></i>
-            <span>Subjects</span>
-          </div>
-          <div class="nav-item" data-route="trainer-k12-syllabus" id="nav-trainer-k12-syllabus">
-            <i data-lucide="list-ordered"></i>
-            <span>Syllabus Outline</span>
-          </div>
-          <div class="nav-item" data-route="trainer-k12-homework" id="nav-trainer-k12-homework">
-            <i data-lucide="file-plus"></i>
-            <span>Homework & Assessments</span>
-          </div>
-          <div class="nav-item" data-route="trainer-k12-gradebook" id="nav-trainer-k12-gradebook">
-            <i data-lucide="graduation-cap"></i>
-            <span>Gradebook</span>
-          </div>
-          <div class="nav-item" data-route="trainer-k12-comments" id="nav-trainer-k12-comments">
-            <i data-lucide="message-square"></i>
-            <span>Report Comments</span>
-          </div>
-        </div>
-
-        <!-- 10. Messages (FLOW-023) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Messages (Contextual)</div>
-          <div class="nav-item" data-route="trainer-messages-learners" id="nav-trainer-messages-learners">
-            <i data-lucide="messages-square"></i>
-            <span>Learner Conversations</span>
-            <span class="badge badge-primary">5</span>
-          </div>
-          <div class="nav-item" data-route="trainer-messages-guardians" id="nav-trainer-messages-guardians">
-            <i data-lucide="shield-check"></i>
-            <span>Guardian Messages</span>
-          </div>
-          <div class="nav-item" data-route="trainer-messages-notifications" id="nav-trainer-messages-notifications">
-            <i data-lucide="bell"></i>
-            <span>Notifications</span>
-          </div>
-        </div>
-
-        <!-- 11. Schedule (FLOW-017) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Schedule</div>
-          <div class="nav-item" data-route="trainer-schedule-calendar" id="nav-trainer-schedule-calendar">
-            <i data-lucide="calendar"></i>
-            <span>Calendar</span>
-          </div>
-          <div class="nav-item" data-route="trainer-schedule-availability" id="nav-trainer-schedule-availability">
-            <i data-lucide="clock"></i>
-            <span>Availability</span>
-          </div>
-          <div class="nav-item" data-route="trainer-schedule-reschedule" id="nav-trainer-schedule-reschedule">
-            <i data-lucide="repeat"></i>
-            <span>Reschedule Requests</span>
-          </div>
-          <div class="nav-item" data-route="trainer-schedule-cancellations" id="nav-trainer-schedule-cancellations">
-            <i data-lucide="x-circle"></i>
-            <span>Cancellation / Makeup</span>
-          </div>
-        </div>
-
-        <!-- 12. My Pay (PAY-013) -->
-        <div class="nav-group">
-          <div class="nav-group-title">My Compensation (PAY-013)</div>
-          <div class="nav-item" data-route="trainer-pay-earnings" id="nav-trainer-pay-earnings">
-            <i data-lucide="wallet"></i>
-            <span>Approved Earnings</span>
-          </div>
-          <div class="nav-item" data-route="trainer-pay-statements" id="nav-trainer-pay-statements">
-            <i data-lucide="receipt"></i>
-            <span>Pay Statements</span>
-          </div>
-        </div>
-
-        <!-- 13. Teaching History -->
-        <div class="nav-group nav-group-primary">
-          <div class="nav-group-title">Teaching History</div>
-          <div class="nav-item" data-route="trainer-history-classes" id="nav-trainer-history-classes">
-            <i data-lucide="history"></i>
-            <span>Class History</span>
-          </div>
-          <div class="nav-item" data-route="trainer-history-reports" id="nav-trainer-history-reports">
-            <i data-lucide="file-check"></i>
-            <span>Report History</span>
-          </div>
-          <div class="nav-item" data-route="trainer-history-grading" id="nav-trainer-history-grading">
-            <i data-lucide="check-square"></i>
-            <span>Grading History</span>
-          </div>
-          <div class="nav-item" data-route="trainer-history-corrections" id="nav-trainer-history-corrections">
-            <i data-lucide="edit"></i>
-            <span>Correction History</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="trainer-schedule-calendar" id="nav-trainer-schedule-calendar">
+              <i data-lucide="calendar"></i>
+              <span>Teaching Calendar & Slots</span>
+            </div>
+            <div class="nav-item" data-route="trainer-schedule-availability" id="nav-trainer-schedule-availability">
+              <i data-lucide="clock"></i>
+              <span>Trainer Availability & Leave</span>
+            </div>
+            <div class="nav-item" data-route="trainer-pay-earnings" id="nav-trainer-pay-earnings">
+              <i data-lucide="receipt"></i>
+              <span>Approved Earnings & Slips</span>
+            </div>
+            <div class="nav-item" data-route="trainer-resources-teaching" id="nav-trainer-resources-teaching">
+              <i data-lucide="folder-archive"></i>
+              <span>Teaching Resources Vault</span>
+            </div>
           </div>
         </div>
 
