@@ -2090,7 +2090,7 @@ const db = {
         format: "PDF Document",
         size: "2.4 MB",
         version: "v1.2",
-        sha256: "a94f6e812d09c1482b6e...verified",
+        sha256: "a94f6e812d09c1482b6e51e18ac49b06f7902d1d052b6d51cb59da4a8dcfb...verified",
         scanStatus: "Clean / Verified",
         accessLevel: "Enrolled & Guest Preview Eligible",
         linkedCoursesCount: 2,
@@ -2103,7 +2103,7 @@ const db = {
         format: "PDF Document",
         size: "1.8 MB",
         version: "v1.0",
-        sha256: "e3b0c44298fc1c149afb...verified",
+        sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b...verified",
         scanStatus: "Clean / Verified",
         accessLevel: "Enrolled Learners Only",
         linkedCoursesCount: 3,
@@ -2116,7 +2116,7 @@ const db = {
         format: "MP4 Video (1080p)",
         size: "184.5 MB",
         version: "v1.0",
-        sha256: "f48c082a1d77b81938fe...verified",
+        sha256: "f48c082a1d77b81938fe7e4162e7428f526b1f24d36ef55a9e33da260840b...verified",
         scanStatus: "Clean / Stream Ready",
         accessLevel: "Enrolled Learners (Protected DRM)",
         linkedCoursesCount: 1,
@@ -2129,11 +2129,24 @@ const db = {
         format: "Audio MP3 Archive",
         size: "42.0 MB",
         version: "v2.1",
-        sha256: "b21a8901ce4829ad4102...verified",
+        sha256: "b21a8901ce4829ad4102c9a28ebf230248ad6729ef2a075d9e9e7b99c158b...verified",
         scanStatus: "Clean / Verified",
         accessLevel: "Free Preview + Enrolled",
         linkedCoursesCount: 2,
         uploadedAt: "2026-08-14 09:30",
+        status: "Uploaded (Verified)"
+      },
+      {
+        id: "RES-105",
+        title: "Grade 8 Mathematics FBISE Formula Reference Booklet",
+        format: "PDF Document",
+        size: "3.1 MB",
+        version: "v1.0",
+        sha256: "9c3b8813a770425e408d3e218205efcda19c0715f61905ea8bfd0fd3b398a...verified",
+        scanStatus: "Clean / Verified",
+        accessLevel: "Free Preview + Enrolled",
+        linkedCoursesCount: 1,
+        uploadedAt: "2026-08-15 10:00",
         status: "Uploaded (Verified)"
       }
     ],
@@ -2154,20 +2167,30 @@ const db = {
         course: "Modern Full-Stack Web Development",
         type: "Completion Rule",
         targetItem: "Full Course Certificate Generation",
-        condition: "100% Lesson Viewings + Capstone Repository Verified",
+        condition: "100% Lesson Viewings + Capstone Repository Verified (ASN-301 & ASN-302)",
         evaluationEngine: "Automated + Peer Review Check",
         status: "Draft",
         updated: "2026-08-15"
       },
       {
         id: "RUL-603",
-        course: "Spoken English Fluency",
+        course: "Spoken English Fluency & Professional Voice",
         type: "Attempt / Retry Rule",
         targetItem: "Voice Evaluation VOC-401",
         condition: "Max 3 Attempts · 24-Hour Cooldown between attempts · Highest score retained",
         evaluationEngine: "Server Milestone Engine",
         status: "Approved",
         updated: "2026-08-14"
+      },
+      {
+        id: "RUL-604",
+        course: "Grade 8 Mathematics (FBISE Curriculum)",
+        type: "Prerequisite",
+        targetItem: "Term 2 Mid-Year Board Exam",
+        condition: "Term 1 Practice Quizzes Completed (QZ-204 >= 75%) + Homework Worksheet Submitted",
+        evaluationEngine: "School Portal Evaluation Engine",
+        status: "Approved",
+        updated: "2026-08-15"
       }
     ],
 
@@ -2199,11 +2222,11 @@ const db = {
       {
         id: "REV-903",
         versionId: "VER-402",
-        courseTitle: "Foundational Urdu & English Basic Literacy",
-        item: "Lesson 4: Audio Phonics",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        item: "Lesson 4: Audio Phonics & Intonation",
         reviewer: "Dr. Maria Santos (Pedagogy Lead)",
         severity: "Advisory",
-        comment: "Audio volume on sample 4B is slightly low. Re-normalize before live deployment.",
+        comment: "Audio volume on sample 4B is slightly low. Re-normalize to -14 LUFS before live deployment.",
         status: "Open",
         date: "2026-08-15 14:20",
         resolution: "In Review"
@@ -2218,7 +2241,7 @@ const db = {
         curriculumBoard: "Federal Board (FBISE) & Cambridge O-Level aligned",
         academicYear: "2026 / 2027",
         unitsCount: 10,
-        chapters: "1. Rational Numbers, 2. Linear Equations, 3. Geometry & Polygons, 4. Algebraic Identities",
+        chapters: "1. Rational Numbers, 2. Linear Equations, 3. Geometry & Polygons, 4. Algebraic Identities, 5. Practical Geometry",
         status: "Draft (In Authoring)",
         leadAuthor: "Dr. Arsalan Khan",
         updated: "2026-08-14"
@@ -2230,14 +2253,40 @@ const db = {
         curriculumBoard: "Federal Board (FBISE) Standard",
         academicYear: "2026 / 2027",
         unitsCount: 8,
-        chapters: "1. Motion & Forces, 2. Matter & Energy, 3. Chemical Reactions, 4. Ecosystems",
+        chapters: "1. Motion & Forces, 2. Matter & Energy, 3. Chemical Reactions, 4. Ecosystems & Environment",
         status: "Published (Live)",
         leadAuthor: "Dr. Arsalan Khan",
         updated: "2026-06-30"
+      },
+      {
+        id: "K12-SYL-03",
+        grade: "Grade 10",
+        subject: "English Language & Composition",
+        curriculumBoard: "Federal Board (FBISE) & National Curriculum",
+        academicYear: "2026 / 2027",
+        unitsCount: 12,
+        chapters: "1. Reading Comprehension, 2. Formal Essay Writing, 3. Applied Grammar & Synthesis, 4. Oral Presentation Skills",
+        status: "Approved (Awaiting Cycle)",
+        leadAuthor: "Prof. Sarah Mitchell",
+        updated: "2026-08-10"
       }
     ],
 
     auditLogs: [
+      {
+        timestamp: "2026-08-22 18:30",
+        actor: "Dr. Arsalan Khan",
+        action: "CREATOR_ASSESSMENT_CONFIGURED",
+        details: "Configured gatekeeper quiz QZ-201 with 80% passing threshold and randomized distractors.",
+        severity: "Low"
+      },
+      {
+        timestamp: "2026-08-22 17:15",
+        actor: "Dr. Arsalan Khan",
+        action: "CREATOR_RUBRIC_UPDATED",
+        details: "Updated CEFR Rubric RUB-102 with normalized 40%/30%/30% weight distribution.",
+        severity: "Low"
+      },
       {
         timestamp: "2026-08-16 10:45",
         actor: "Dr. Arsalan Khan",
@@ -14062,45 +14111,75 @@ const RenderEngine = {
   },
 
   renderCreatorResourcesStudio(resources) {
+    const activeFilter = window.creatorResourceFilter || "all";
+    const filtered = activeFilter === "all" ? resources : resources.filter(r => r.format.toLowerCase().includes(activeFilter.toLowerCase()));
+
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Cryptographically Verified Storage</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Course Media & Resource Vault (FLOW-009)</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="shield-check"></i> CAT-008 / RES-VAULT</span>
+              <span class="badge badge-secondary">${resources.length} Verified Assets (233.8 MB Total)</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Cryptographic Resource Vault & Asset Library</h3>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddResourceModal()"><i data-lucide="upload"></i> Upload Verified Asset</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Manifest Exported', 'Generated cryptographic resource manifest JSON.', 'success')"><i data-lucide="download"></i> Export Manifest</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddResourceModal()"><i data-lucide="upload"></i> + Upload Verified Asset</button>
+          </div>
         </div>
 
+        <!-- Filter Tabs -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn ${activeFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorResourceFilter='all'; RenderEngine.creatorWorkspace('creator-resources-library');">All Assets (${resources.length})</button>
+          <button class="btn ${activeFilter === 'pdf' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorResourceFilter='pdf'; RenderEngine.creatorWorkspace('creator-resources-library');"><i data-lucide="file-text"></i> PDF Blueprints</button>
+          <button class="btn ${activeFilter === 'video' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorResourceFilter='video'; RenderEngine.creatorWorkspace('creator-resources-library');"><i data-lucide="video"></i> MP4 Video DRM</button>
+          <button class="btn ${activeFilter === 'audio' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorResourceFilter='audio'; RenderEngine.creatorWorkspace('creator-resources-library');"><i data-lucide="volume-2"></i> Audio Phonics</button>
+        </div>
+
+        <!-- Resource Cards Grid -->
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-          ${resources.map(res => `
-            <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; gap: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                  <span class="badge badge-primary"><i data-lucide="file-check"></i> ${res.format}</span>
-                  <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${res.title}</h3>
-                  <span class="table-subline">ID: ${res.id} · Size: ${res.size} · Version: ${res.version}</span>
+          ${filtered.map(res => `
+            <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-family: monospace; font-weight: 700; font-size: 13px; color: var(--primary); background: #fdfbf7; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${res.id}</span>
+                    <span class="badge badge-primary"><i data-lucide="file-check"></i> ${res.format}</span>
+                  </div>
+                  <span class="badge badge-success">${res.scanStatus}</span>
                 </div>
-                <span class="badge badge-success">${res.scanStatus}</span>
+
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">${res.title}</h3>
+                <span class="table-subline" style="display:block; margin-bottom:12px;">Size: <strong>${res.size}</strong> · Version: <strong>${res.version}</strong> · Uploaded: ${res.uploadedAt}</span>
+
+                <!-- SHA-256 Checksum Container -->
+                <div style="background: #0f172a; color: #38bdf8; padding: 10px 14px; border-radius: 8px; font-family: monospace; font-size: 11px; border: 1px solid #334155; word-break: break-all; margin-bottom: 12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="color: #94a3b8; font-size:10px; text-transform:uppercase;">SHA-256 Cryptographic Signature</span>
+                    <span style="color: #4ade80; font-size:10px; font-weight:700;">✓ VALID MATCH</span>
+                  </div>
+                  ${res.sha256}
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fdfbf7; padding: 10px 14px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.14); font-size: 11.5px;">
+                  <div><span style="color:var(--slate); display:block; font-size:10px; text-transform:uppercase;">Access Policy</span><strong style="color:var(--navy-medium);">${res.accessLevel}</strong></div>
+                  <div><span style="color:var(--slate); display:block; font-size:10px; text-transform:uppercase;">Linked References</span><strong style="color:var(--primary);">${res.linkedCoursesCount} Modules / Syllabi</strong></div>
+                </div>
               </div>
 
-              <div style="background: #0f172a; color: #38bdf8; padding: 10px 14px; border-radius: 8px; font-family: monospace; font-size: 11px; border: 1px solid #334155;">
-                <span style="color: #94a3b8;">SHA-256 Checksum:</span><br>
-                ${res.sha256}
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #5a687c;">
-                <span><strong>Access Gating:</strong> ${res.accessLevel}</span>
-                <span><strong>Linked:</strong> ${res.linkedCoursesCount} Courses</span>
-              </div>
-
+              <!-- Card Action Controls -->
               <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-                <span style="font-size: 11px; color: var(--slate);">Uploaded: ${res.uploadedAt}</span>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAttachResourceModal('MOD-101')">
+                  <i data-lucide="link"></i> Attach to Module
+                </button>
                 <div class="button-row" style="display: flex; gap: 6px;">
-                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Checksum Verified', 'SHA-256 signature verified against private storage ledger.', 'success')">
+                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Checksum Verified', 'SHA-256 hash verified against private immutable storage ledger: OK.', 'success')">
                     <i data-lucide="shield-check"></i> Verify Hash
                   </button>
-                  <button class="btn btn-primary btn-xs" onclick="Notifications.push('Asset Streamed', 'Initiated secure tokenized download.', 'info')">
+                  <button class="btn btn-primary btn-xs" onclick="Notifications.push('Asset Streamed', 'Initiated secure tokenized download for ${res.id}.', 'info')">
                     <i data-lucide="download"></i> Download
                   </button>
                 </div>
@@ -14115,34 +14194,54 @@ const RenderEngine = {
   renderCreatorRulesStudio(rules) {
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Progression Logic Engine (MILE-001)</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Prerequisite & Milestone Unlock Rules</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="git-merge"></i> MILE-001 / FLOW-019</span>
+              <span class="badge badge-secondary">${rules.length} Active Engine Rules</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Progression Logic, Prerequisites & Unlock Gates</h3>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorEditRulesModal()"><i data-lucide="plus"></i> Add Progression Rule</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Logic Audit Passed', 'All 4 progression rules verified against syllabus DAG (0 deadlocks).', 'success')"><i data-lucide="check-circle"></i> Validate Rule DAG</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorEditRulesModal()"><i data-lucide="plus"></i> + Add Progression Rule</button>
+          </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 14px;">
+        <!-- Rules List -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
           ${rules.map(r => `
-            <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: center; gap: 20px;">
-              <div style="flex: 1;">
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+            <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 300px;">
+                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 6px;">
+                  <span style="font-family: monospace; font-weight: 700; font-size: 13px; color: var(--primary); background: #fdfbf7; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${r.id}</span>
                   <span class="badge badge-primary">${r.type}</span>
-                  <span class="badge badge-secondary">${r.id}</span>
-                  <strong style="font-size: 14.5px; color: var(--navy-medium);">${r.targetItem}</strong>
+                  <span class="badge ${r.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${r.status}</span>
                 </div>
-                <span class="table-subline">${r.course}</span>
+
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">Target: ${r.targetItem}</h3>
+                <span class="table-subline" style="display:block; margin-bottom:10px;">${r.course}</span>
                 
-                <div style="background: #fbf9f4; border-left: 3px solid var(--primary); padding: 8px 14px; border-radius: 6px; margin: 10px 0 6px 0; font-family: monospace; font-size: 12px; color: var(--navy-medium);">
-                  Condition: <strong>${r.condition}</strong>
+                <!-- Logical Condition Expression -->
+                <div style="background: #fdfbf7; border-left: 4px solid var(--primary); padding: 10px 16px; border-radius: 0 8px 8px 0; margin-bottom: 8px;">
+                  <span style="font-size: 10.5px; text-transform: uppercase; color: var(--slate); font-weight: 700; display: block; margin-bottom: 3px;">Evaluation Expression:</span>
+                  <code style="font-family: monospace; font-size: 13px; color: #166534; font-weight: 700;">${r.condition}</code>
                 </div>
-                <div style="font-size: 11.5px; color: var(--slate);">Engine: <strong>${r.evaluationEngine}</strong> · Updated: ${r.updated}</div>
+
+                <div style="font-size: 11.5px; color: var(--slate);">
+                  Evaluation Engine: <strong style="color: var(--navy-medium);">${r.evaluationEngine}</strong> · Last Modified: ${r.updated}
+                </div>
               </div>
 
-              <div class="button-row" style="display: flex; flex-direction: column; gap: 6px;">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorEditRulesModal('${r.id}')"><i data-lucide="edit"></i> Edit Expression</button>
-                <button class="btn btn-primary btn-xs" onclick="Notifications.push('Logic Evaluated', 'Evaluated condition against active rule graph: PASSED (100%).', 'success')"><i data-lucide="play"></i> Test Rule</button>
+              <!-- Action Controls -->
+              <div class="button-row" style="display: flex; flex-direction: column; gap: 8px; min-width: 140px;">
+                <button class="btn btn-primary btn-sm" onclick="Notifications.push('Rule Evaluated', 'Evaluated condition: [${r.condition}] -> PASSED (100%).', 'success')">
+                  <i data-lucide="play"></i> Test Rule Logic
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorEditRulesModal('${r.id}')">
+                  <i data-lucide="edit"></i> Edit Expression
+                </button>
               </div>
             </div>
           `).join("")}
@@ -14158,40 +14257,43 @@ const RenderEngine = {
         <!-- Flight Header -->
         <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; padding: 22px 26px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
           <div>
-            <span class="badge badge-success" style="margin-bottom: 4px;"><i data-lucide="shield-check"></i> AUTOMATED VERIFICATION ENGINE (VER-102 / FLOW-009)</span>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span class="badge badge-success"><i data-lucide="shield-check"></i> VER-102 / FLOW-009</span>
+              <span class="badge badge-secondary">Segregation of Duties Enforced</span>
+            </div>
             <h2 style="font: 700 20px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Pre-Flight Syllabus & Integrity Suite</h2>
             <p style="font-size: 12.5px; color: #5a687c; margin: 4px 0 0 0;">Audit syllabus structure, gatekeeper pass rules, resource SHA-256 hashes, and segregation of duties before review submission.</p>
           </div>
           <div style="display: flex; gap: 10px;">
-            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Audit Running', 'Executing 5 structural verification test suites...', 'info')"><i data-lucide="refresh-cw"></i> Re-run Suite</button>
-            <button class="btn btn-primary btn-sm" onclick="Actions.submitVersionForReview('VER-401')"><i data-lucide="send"></i> Submit to Academic Board</button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.runPreFlightAudit()"><i data-lucide="refresh-cw"></i> Re-run Integrity Suite</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorSubmitReviewModal('VER-401')"><i data-lucide="send"></i> Submit to Academic Board</button>
           </div>
         </div>
 
-        <!-- 5 Automated Test Checks Scorecard -->
+        <!-- 6 Automated Test Checks Scorecard -->
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
           
           <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="font-size: 14.5px; color: var(--navy-medium);">1. Course Scope & Metadata Completeness</strong>
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">1. Course Scope & Entity Metadata Completeness</strong>
               <span class="badge badge-success">PASSED</span>
             </div>
             <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified Title, Unique Course Code (TECH-FE-201), Language Tag, Learning Outcomes, and Estimated Effort.</p>
-            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] All 7 core entity attributes non-null</div>
+            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] All 7 core entity attributes non-null and validated</div>
           </div>
 
           <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="font-size: 14.5px; color: var(--navy-medium);">2. 5-Tier Syllabus Depth Hierarchy</strong>
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">2. 5-Tier Curriculum Hierarchy Depth (CAT-006)</strong>
               <span class="badge badge-success">PASSED</span>
             </div>
             <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified hierarchy: 2 Levels -> 4 Milestones -> 6 Modules -> 28 Lessons -> 8 Interactive Activities.</p>
-            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] No orphan lessons or broken tree references</div>
+            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] No orphan lessons, dangling nodes, or broken references</div>
           </div>
 
           <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="font-size: 14.5px; color: var(--navy-medium);">3. Gatekeeper Assessment Pass Threshold</strong>
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">3. Gatekeeper Assessment Pass Thresholds (FLOW-019)</strong>
               <span class="badge badge-success">PASSED</span>
             </div>
             <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified automated gatekeepers: QZ-201 (80% pass), QZ-202 (70% pass), and VOC-401 (RUB-102 rubric).</p>
@@ -14200,19 +14302,41 @@ const RenderEngine = {
 
           <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong style="font-size: 14.5px; color: var(--navy-medium);">4. SHA-256 Resource Cryptographic Signatures</strong>
-              <span class="badge badge-warning">1 ADVISORY</span>
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">4. SHA-256 Resource Cryptographic Signatures (CAT-008)</strong>
+              <span class="badge badge-success">PASSED</span>
             </div>
-            <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified 4 attached media assets. 1 optional reference link (RES-104) has non-critical audio normalization advisory.</p>
-            <div style="font-size: 11px; color: #a45800; font-family: monospace; background: #fdf4e8; padding: 6px 10px; border-radius: 6px;">[ADVISORY] Non-blocking pedagogical recommendation</div>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified 5 attached media assets against immutable SHA-256 storage signatures.</p>
+            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] All cryptographic checksums match storage ledger</div>
+          </div>
+
+          <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">5. Delivery Model Integrity & Pacing Rules (CAT-002)</strong>
+              <span class="badge badge-success">PASSED</span>
+            </div>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified pacing models: Self-Paced Milestone vs Live Scheduled Daily.co sessions.</p>
+            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] Delivery type constraints and schedule boundaries verified</div>
+          </div>
+
+          <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">6. Segregation of Duties Compliance (CAT-003 / CAT-010)</strong>
+              <span class="badge badge-success">PASSED</span>
+            </div>
+            <p style="font-size: 12px; color: #5a687c; margin: 0;">Verified role boundaries: Author cannot approve own syllabus or publish without Reviewer Board sign-off.</p>
+            <div style="font-size: 11px; color: #166534; font-family: monospace; background: #f0fdf4; padding: 6px 10px; border-radius: 6px;">[OK] Institutional governance isolation active</div>
           </div>
 
         </div>
 
+        <!-- Readiness Bottom Banner -->
         <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.18); border-radius: 12px; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
           <div>
-            <strong style="font-size: 13.5px; color: var(--navy-medium);">Overall Pre-Flight Readiness Score: 98% (Ready for Academic Board)</strong>
-            <span style="display: block; font-size: 12px; color: var(--slate); margin-top: 2px;">Meets all FRS v2.2 CAT-001 through CAT-010 criteria. Segregation of duties boundary respected.</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <strong style="font-size: 14.5px; color: var(--navy-medium);">Overall Pre-Flight Readiness Score: 100% (Ready for Academic Board)</strong>
+              <span class="badge badge-success">ALL 6 SUITES PASSED</span>
+            </div>
+            <span style="display: block; font-size: 12px; color: var(--slate); margin-top: 2px;">Meets all FRS v2.2 CAT-001 through CAT-010 criteria. Ready for dispatch to Academic Review Board.</span>
           </div>
           <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorSubmitReviewModal('VER-401')">
             <i data-lucide="send"></i> Dispatch to Review Board
@@ -14224,41 +14348,80 @@ const RenderEngine = {
   },
 
   renderCreatorReviewCommentsStudio(comments) {
+    const activeFilter = window.creatorCommentsFilter || "all";
+    const filtered = activeFilter === "all" ? comments :
+      activeFilter === "blocking" ? comments.filter(c => c.severity === "Blocking") :
+      activeFilter === "advisory" ? comments.filter(c => c.severity === "Advisory") :
+      comments.filter(c => c.status === "Resolved");
+
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Academic Board Peer Review (CAT-010)</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Reviewer Citations & Action Items</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="message-square"></i> CAT-010 / PEER-REVIEW</span>
+              <span class="badge badge-secondary">${comments.length} Logged Citations</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Academic Reviewer Feedback & Citation Ledger</h3>
           </div>
-          <button class="btn btn-secondary btn-sm" onclick="Notifications.push('SLA Checked', 'Review turn-around SLA is 48h. 1 citation open.', 'info')"><i data-lucide="clock"></i> Review SLA: 48h</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('SLA Validated', 'Peer review SLA is 48 hours. Turnaround on track.', 'info')"><i data-lucide="clock"></i> Review SLA: 48h</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-review-validation')"><i data-lucide="shield-check"></i> Open Pre-Flight Suite</button>
+          </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-          ${comments.map(c => {
+        <!-- Filter Tabs -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn ${activeFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorCommentsFilter='all'; RenderEngine.creatorWorkspace('creator-review-comments');">All Citations (${comments.length})</button>
+          <button class="btn ${activeFilter === 'blocking' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorCommentsFilter='blocking'; RenderEngine.creatorWorkspace('creator-review-comments');"><i data-lucide="alert-triangle"></i> Blocking (${comments.filter(c => c.severity === 'Blocking').length})</button>
+          <button class="btn ${activeFilter === 'advisory' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorCommentsFilter='advisory'; RenderEngine.creatorWorkspace('creator-review-comments');"><i data-lucide="info"></i> Advisory (${comments.filter(c => c.severity === 'Advisory').length})</button>
+          <button class="btn ${activeFilter === 'resolved' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.creatorCommentsFilter='resolved'; RenderEngine.creatorWorkspace('creator-review-comments');"><i data-lucide="check"></i> Resolved (${comments.filter(c => c.status === 'Resolved').length})</button>
+        </div>
+
+        <!-- Citation Cards List -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${filtered.map(c => {
             const isBlocking = c.severity === "Blocking";
             return `
               <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px;">
                   <div>
-                    <span class="badge ${isBlocking ? 'badge-error' : 'badge-warning'}">${c.severity} Citation</span>
-                    <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${c.item}</h3>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <span style="font-family: monospace; font-weight: 700; font-size: 13px; color: var(--primary); background: #fdfbf7; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${c.id}</span>
+                      <span class="badge ${isBlocking ? 'badge-error' : 'badge-warning'}">${c.severity} Citation</span>
+                      <span class="badge badge-secondary">${c.versionId}</span>
+                    </div>
+                    <h3 style="font: 700 16.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">${c.item}</h3>
                     <span class="table-subline">${c.courseTitle} · Reviewer: <strong>${c.reviewer}</strong></span>
                   </div>
                   <span class="badge ${c.status === 'Resolved' ? 'badge-success' : 'badge-warning'}">${c.status}</span>
                 </div>
 
-                <div style="background: #fbf9f4; border-left: 3px solid ${isBlocking ? '#ef4444' : 'var(--primary)'}; padding: 12px 16px; border-radius: 6px; font-size: 12.5px; color: #4a586e; line-height: 1.5;">
-                  <strong>Reviewer Citation:</strong> "${c.comment}"
+                <div style="background: #fdfbf7; border-left: 4px solid ${isBlocking ? '#ef4444' : 'var(--primary)'}; padding: 12px 18px; border-radius: 0 8px 8px 0; font-size: 13px; color: var(--navy-medium); line-height: 1.5;">
+                  <strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block; margin-bottom:3px;">Reviewer Directive:</strong>
+                  "${c.comment}"
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--slate); padding-top: 8px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-                  <span>Citation Ref: <strong>${c.id}</strong> · Logged: ${c.date}</span>
+                ${c.resolution ? `
+                  <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px 14px; border-radius: 6px; font-size: 12px; color: #166534;">
+                    <strong>Author Resolution:</strong> ${c.resolution}
+                  </div>
+                ` : ''}
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--slate); padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+                  <span>Logged Timestamp: <strong>${c.date}</strong></span>
                   <div class="button-row" style="display: flex; gap: 6px;">
-                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorReviewComment('${c.id}')">Address in Syllabus</button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorReviewComment('${c.id}')">
+                      <i data-lucide="edit-3"></i> Address in Syllabus
+                    </button>
                     ${c.status !== 'Resolved' ? `
-                      <button class="btn btn-primary btn-xs" onclick="Actions.resolveReviewComment('${c.id}')"><i data-lucide="check"></i> Mark Resolved</button>
-                    ` : ''}
+                      <button class="btn btn-primary btn-xs" onclick="Actions.resolveReviewComment('${c.id}')">
+                        <i data-lucide="check"></i> Mark Resolved
+                      </button>
+                    ` : `
+                      <span class="badge badge-success"><i data-lucide="check-check"></i> Sign-Off Complete</span>
+                    `}
                   </div>
                 </div>
               </div>
@@ -14272,36 +14435,57 @@ const RenderEngine = {
   renderCreatorK12Studio(syllabi) {
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">National Curriculum Alignment (K12-001 / K12-005)</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">K-12 Board Syllabi & Parent Previews</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="graduation-cap"></i> K12-001 / K12-005</span>
+              <span class="badge badge-secondary">FBISE & Cambridge O-Level</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">K-12 Subject Syllabi & National Curriculum Standards</h3>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()"><i data-lucide="plus"></i> Author K-12 Subject</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Standards Verified', 'Syllabus maps 100% to Federal Board (FBISE) SLOs.', 'success')"><i data-lucide="book-check"></i> FBISE SLO Mapping</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewCourseModal()"><i data-lucide="plus"></i> + Author K-12 Subject</button>
+          </div>
         </div>
 
+        <!-- Syllabi Cards Grid -->
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
           ${syllabi.map(k => `
-            <div style="padding: 24px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; gap: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                  <span class="creator-course-badge-model creator-badge-k12"><i data-lucide="graduation-cap"></i> ${k.grade} · ${k.subject}</span>
-                  <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${k.curriculumBoard}</h3>
-                  <span class="table-subline">Academic Cycle: <strong>${k.academicYear}</strong></span>
+            <div style="padding: 24px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <div>
+                    <span class="creator-course-badge-model creator-badge-k12"><i data-lucide="graduation-cap"></i> ${k.grade} · ${k.subject}</span>
+                    <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${k.curriculumBoard}</h3>
+                    <span class="table-subline">Academic Cycle: <strong>${k.academicYear}</strong> · Total Units: <strong>${k.unitsCount}</strong></span>
+                  </div>
+                  <span class="badge ${k.status.includes('Live') || k.status.includes('Approved') ? 'badge-success' : 'badge-warning'}">${k.status}</span>
                 </div>
-                <span class="badge ${k.status.includes('Live') ? 'badge-success' : 'badge-warning'}">${k.status}</span>
+
+                <!-- Chapter Breakdown Pill -->
+                <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.16); border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #5a687c; line-height: 1.45; margin: 10px 0;">
+                  <strong style="color:var(--navy-medium); display:block; margin-bottom:4px;">Prescribed Chapters & Student Learning Outcomes (SLOs):</strong>
+                  ${k.chapters}
+                </div>
+
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                  <span style="font-size: 10.5px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Term 1: Foundations</span>
+                  <span style="font-size: 10.5px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Term 2: Mid-Year Exam</span>
+                  <span style="font-size: 10.5px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Term 3: Board Prep</span>
+                </div>
               </div>
 
-              <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.16); border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #5a687c; line-height: 1.45;">
-                <strong style="color:var(--navy-medium); display:block; margin-bottom:4px;">Core Units & Chapter Coverage:</strong>
-                ${k.chapters}
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
                 <span style="font-size: 11.5px; color: var(--slate);">Author: <strong>${k.leadAuthor}</strong></span>
                 <div class="button-row" style="display: flex; gap: 6px;">
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('CRS-104')"><i data-lucide="layers"></i> Blueprint</button>
-                  <button class="btn btn-primary btn-xs" onclick="Actions.switchLmsSimMode('guest'); Actions.previewSelectCourse('K12-MTH-801'); Router.navigate('creator-preview');"><i data-lucide="eye"></i> Parent Preview</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('CRS-104')">
+                    <i data-lucide="layers"></i> Blueprint
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.switchLmsSimMode('guest'); Actions.previewSelectCourse('K12-MTH-801'); Router.navigate('creator-preview');">
+                    <i data-lucide="eye"></i> Parent Preview
+                  </button>
                 </div>
               </div>
             </div>
@@ -14314,14 +14498,21 @@ const RenderEngine = {
   renderCreatorAuditStudio(logs) {
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Immutable Authoring Audit Ledger</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Authoring & Governance Activity Logs</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="shield"></i> CAT-008 / AUDIT-LEDGER</span>
+              <span class="badge badge-success">Cryptographic Non-Repudiation Verified</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Immutable Authoring & Governance Activity Logs</h3>
           </div>
-          <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Audit Exported', 'Downloaded cryptographic JSON governance log.', 'success')"><i data-lucide="download"></i> Export Audit JSON</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Audit Exported', 'Exported cryptographic JSON governance ledger with digital signature.', 'success')"><i data-lucide="download"></i> Export Audit JSON</button>
+          </div>
         </div>
 
+        <!-- Audit Table -->
         <div class="table-container">
           <table>
             <thead>
@@ -14336,10 +14527,10 @@ const RenderEngine = {
             <tbody>
               ${logs.map(l => `
                 <tr>
-                  <td style="font-family: monospace; font-size: 11.5px;">${l.timestamp}</td>
+                  <td style="font-family: monospace; font-size: 11.5px; color: var(--slate);">${l.timestamp}</td>
                   <td><strong>${l.actor}</strong></td>
-                  <td><span class="badge badge-primary" style="font-family: monospace;">${l.actionCode}</span></td>
-                  <td style="font-size: 12px; color: #4a586e;">${l.details}</td>
+                  <td><span class="badge badge-primary" style="font-family: monospace; font-size: 10.5px;">${l.actionCode}</span></td>
+                  <td style="font-size: 12.5px; color: #4a586e; line-height: 1.4;">${l.details}</td>
                   <td><span class="badge ${l.severity === 'High' ? 'badge-error' : l.severity === 'Medium' ? 'badge-warning' : 'badge-secondary'}">${l.severity}</span></td>
                 </tr>
               `).join("")}
@@ -21248,44 +21439,237 @@ document.addEventListener("DOMContentLoaded", () => {
     else RenderEngine.creatorWorkspace(Router.currentRoute);
   };
 
-  Actions.openCreatorEditRulesModal = function(id) {
-    const rule = db.creatorData.rules.find(r => r.id === id) || db.creatorData.rules[0];
+  Actions.openCreatorAddResourceModal = function() {
     const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Configure Rule: ${rule.type}`;
-
+    document.getElementById("modal-title").textContent = "Upload Cryptographically Verified Asset (CAT-008)";
     document.getElementById("modal-body").innerHTML = `
       <div class="om-flow-dialog">
-        <div class="form-group">
-          <label>Target Scope / Milestone</label>
-          <input type="text" class="form-control" value="${rule.targetItem}" readonly>
+        <div class="om-flow-banner">
+          <i data-lucide="upload-cloud"></i>
+          <div>
+            <strong>CRYPTOGRAPHIC ASSET INGESTION & HASH LEDGER</strong>
+            <p>Upload digital course assets. SHA-256 integrity hash is computed immediately and registered to immutable storage ledger.</p>
+          </div>
         </div>
+
         <div class="form-group">
-          <label>Condition Expression</label>
-          <textarea id="cc-rule-cond" class="form-control" rows="3">${rule.condition}</textarea>
+          <label>Resource Title</label>
+          <input type="text" id="cc-res-title" class="form-control" placeholder="e.g. Modern Full-Stack Architecture Blueprint PDF">
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Format & Encoding</label>
+            <select id="cc-res-format" class="form-control">
+              <option value="PDF Document">PDF Document (.pdf)</option>
+              <option value="MP4 Video (1080p)">MP4 Video 1080p (Protected DRM)</option>
+              <option value="Audio MP3 Archive">Audio MP3 Archive (128kbps)</option>
+              <option value="Interactive Code Sandbox">Interactive Code Sandbox (Docker Spec)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Asset File Size</label>
+            <input type="text" id="cc-res-size" class="form-control" value="4.2 MB">
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Access Policy Gating</label>
+            <select id="cc-res-access" class="form-control">
+              <option value="Enrolled Learners Only">Enrolled Learners Only</option>
+              <option value="Enrolled & Guest Preview Eligible">Enrolled & Guest Preview Eligible</option>
+              <option value="Enrolled Learners (Protected DRM)">Enrolled Learners (Protected DRM)</option>
+              <option value="Free Preview + Enrolled">Free Preview + Enrolled</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Version Tag</label>
+            <input type="text" id="cc-res-ver" class="form-control" value="v1.0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>SHA-256 Cryptographic Hash (Auto-Computed)</label>
+          <input type="text" id="cc-res-hash" class="form-control" style="font-family: monospace; font-size: 11.5px; background: #fdfbf7;" value="e7f1082a9d41482b6e51e18ac49b06f7902d1d052b6d51cb59da4a8dcfb291a4" readonly>
         </div>
       </div>
     `;
 
     document.getElementById("modal-footer").innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.saveCreatorRules('${rule.id}')">Save Rule Condition</button>
+      <button class="btn btn-primary" onclick="Actions.saveNewCreatorResource()">Register Verified Asset</button>
     `;
 
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
   };
 
-  Actions.saveCreatorRules = function(id) {
-    const cond = document.getElementById("cc-rule-cond")?.value.trim();
-    const rule = db.creatorData.rules.find(r => r.id === id);
-    if (rule && cond) rule.condition = cond;
+  Actions.saveNewCreatorResource = function() {
+    const title = document.getElementById("cc-res-title")?.value.trim();
+    if (!title) {
+      Notifications.push("Validation Error", "Resource title is required.", "error");
+      return;
+    }
 
-    Actions.audit("CREATOR_RULE_UPDATED", `Updated rule condition for ${id}.`, "Low");
-    Notifications.push("Rule Saved", "Learning progression rules updated.", "success");
+    const newId = "RES-" + (100 + db.creatorData.resources.length + 1);
+    db.creatorData.resources.unshift({
+      id: newId,
+      title: title,
+      format: document.getElementById("cc-res-format")?.value || "PDF Document",
+      size: document.getElementById("cc-res-size")?.value || "3.5 MB",
+      version: document.getElementById("cc-res-ver")?.value || "v1.0",
+      sha256: document.getElementById("cc-res-hash")?.value || "d84f6e812d09c1482b6e51e18ac49b06f7902d1d052b6d51cb59da4a8dcfb...verified",
+      scanStatus: "Clean / Verified",
+      accessLevel: document.getElementById("cc-res-access")?.value || "Enrolled Learners Only",
+      linkedCoursesCount: 1,
+      uploadedAt: "2026-08-22 19:40",
+      status: "Uploaded (Verified)"
+    });
+
+    Actions.audit("CREATOR_RESOURCE_UPLOADED", `Uploaded and verified SHA-256 for ${newId} (${title}).`, "Low");
+    Notifications.push("Asset Uploaded", `Registered verified resource ${newId} to vault.`, "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorEditRulesModal = function(id) {
+    const isNew = !id;
+    const rule = isNew ? {
+      id: "RUL-" + (600 + db.creatorData.rules.length + 1),
+      type: "Prerequisite",
+      course: "Modern Full-Stack Web Development",
+      targetItem: "Milestone 3: Database & PostgreSQL Architecture",
+      condition: "Milestone 2 Completed AND Score on QZ-202 >= 75%",
+      evaluationEngine: "Automated (Client & Server State Machine)",
+      status: "Draft",
+      updated: "2026-08-22"
+    } : (db.creatorData.rules.find(r => r.id === id) || db.creatorData.rules[0]);
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = isNew ? "Add Progression Unlock Rule (MILE-001)" : `Configure Rule: ${rule.id} (${rule.type})`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="git-merge"></i>
+          <div>
+            <strong>STATE MACHINE PROGRESSION LOGIC (MILE-001 / FLOW-019)</strong>
+            <p>Define automated unlock conditions, pass mark thresholds, or attempt policies.</p>
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Rule Type</label>
+            <select id="cc-rule-type" class="form-control">
+              <option value="Prerequisite" ${rule.type === 'Prerequisite' ? 'selected' : ''}>Prerequisite Rule</option>
+              <option value="Completion Rule" ${rule.type === 'Completion Rule' ? 'selected' : ''}>Completion Rule</option>
+              <option value="Attempt / Retry Rule" ${rule.type === 'Attempt / Retry Rule' ? 'selected' : ''}>Attempt / Retry Rule</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Course Scope</label>
+            <select id="cc-rule-course" class="form-control">
+              <option value="Modern Full-Stack Web Development" ${rule.course.includes('Web') ? 'selected' : ''}>Modern Full-Stack Web Development</option>
+              <option value="Spoken English Fluency & Professional Voice" ${rule.course.includes('Spoken') ? 'selected' : ''}>Spoken English Fluency</option>
+              <option value="Grade 8 Mathematics (FBISE Curriculum)" ${rule.course.includes('Math') ? 'selected' : ''}>Grade 8 Mathematics (FBISE)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Target Scope / Milestone / Certificate</label>
+          <input type="text" id="cc-rule-target" class="form-control" value="${rule.targetItem}" placeholder="e.g. Milestone 2: React 19 Engineering">
+        </div>
+
+        <div class="form-group">
+          <label>Logical Condition Expression</label>
+          <textarea id="cc-rule-cond" class="form-control" rows="3" style="font-family: monospace; font-size: 12.5px;">${rule.condition}</textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorRules('${rule.id}', ${isNew})">${isNew ? 'Create Progression Rule' : 'Save Rule Condition'}</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorRules = function(id, isNew) {
+    const cond = document.getElementById("cc-rule-cond")?.value.trim();
+    const target = document.getElementById("cc-rule-target")?.value.trim();
+    if (!cond) {
+      Notifications.push("Validation Error", "Condition expression is required.", "error");
+      return;
+    }
+
+    if (isNew) {
+      const newRule = {
+        id: id || ("RUL-" + (600 + db.creatorData.rules.length + 1)),
+        type: document.getElementById("cc-rule-type")?.value || "Prerequisite",
+        course: document.getElementById("cc-rule-course")?.value || "Modern Full-Stack Web Development",
+        targetItem: target || "Milestone Progression",
+        condition: cond,
+        evaluationEngine: "Automated (Client & Server State Machine)",
+        status: "Draft",
+        updated: "2026-08-22"
+      };
+      db.creatorData.rules.push(newRule);
+      Actions.audit("CREATOR_RULE_CREATED", `Added progression rule ${newRule.id}.`, "Low");
+      Notifications.push("Rule Created", `Added progression rule ${newRule.id}.`, "success");
+    } else {
+      const rule = db.creatorData.rules.find(r => r.id === id);
+      if (rule) {
+        rule.condition = cond;
+        if (target) rule.targetItem = target;
+        rule.type = document.getElementById("cc-rule-type")?.value || rule.type;
+        rule.updated = "2026-08-22";
+      }
+      Actions.audit("CREATOR_RULE_UPDATED", `Updated rule condition for ${id}.`, "Low");
+      Notifications.push("Rule Saved", "Learning progression rules updated.", "success");
+    }
 
     document.getElementById("generic-modal").classList.add("hidden");
-    if (Router.currentRoute === "creator-dashboard") RenderEngine.creatorDashboard();
-    else RenderEngine.creatorWorkspace(Router.currentRoute);
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorReviewComment = function(commentId) {
+    const comm = db.creatorData.reviewComments.find(c => c.id === commentId) || db.creatorData.reviewComments[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Address Citation: ${comm.id} (${comm.severity})`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Course</span><strong>${comm.courseTitle}</strong></div>
+          <div class="om-flow-metric"><span>Target Item</span><strong>${comm.item}</strong></div>
+          <div class="om-flow-metric"><span>Reviewer</span><strong>${comm.reviewer}</strong></div>
+          <div class="om-flow-metric"><span>Severity</span><strong style="color:${comm.severity === 'Blocking' ? '#dc2626' : '#d97706'}">${comm.severity}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="alert-circle"></i> Reviewer Academic Directive</h5>
+          <p style="font-size:13px; line-height:1.5;">"${comm.comment}"</p>
+        </div>
+
+        <div class="form-group">
+          <label>Author Resolution Notes (Recorded in Audit Ledger)</label>
+          <textarea id="cc-comment-response" class="form-control" rows="3" placeholder="Describe the updates made in syllabus to satisfy reviewer directive...">${comm.resolution || ''}</textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.resolveCreatorComment('${comm.id}')">Mark Directive as Resolved</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
   Actions.openCreatorPreviewModal = function(courseId) {
