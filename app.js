@@ -12690,317 +12690,99 @@ const RenderEngine = {
     window.lucide?.createIcons();
   },
 
-  renderCreatorMilestonesRoadmap() {
-    const milestones = [
-      {
-        id: "MILE-001",
-        code: "M1",
-        title: "Milestone 1: Web Architecture & DOM Foundations",
-        course: "Modern Full-Stack Web Development",
-        deliveryModel: "Self-Paced Milestone",
-        level: "Level 1: Foundations",
-        duration: "2 Weeks (16 Hours)",
-        unitsCount: 4,
-        lessons: [
-          { name: "Lesson 1: Semantic Structure & Accessibility (A11y)", format: "Guide", time: "45m" },
-          { name: "Lesson 2: Advanced CSS Grid & Flexbox Systems", format: "Sandbox IDE", time: "60m" }
-        ],
-        gatekeeper: "QZ-201 (DOM Fundamentals Quiz) >= 80% Required to Unlock M2",
-        reward: "Milestone 1 Verification Badge",
-        status: "Draft (In Authoring)"
-      },
-      {
-        id: "MILE-002",
-        code: "M2",
-        title: "Milestone 2: React 19 & Component Architecture",
-        course: "Modern Full-Stack Web Development",
-        deliveryModel: "Self-Paced Milestone",
-        level: "Level 2: Frontend Engineering",
-        duration: "3 Weeks (24 Hours)",
-        unitsCount: 6,
-        lessons: [
-          { name: "Lesson 3: State Machines & Custom React Hooks", format: "Video Lecture", time: "75m" },
-          { name: "Lesson 4: React Server Components & Streaming", format: "Sandbox IDE", time: "90m" }
-        ],
-        gatekeeper: "QZ-202 (React 19 State Quiz) >= 70% + ASN-301 Task",
-        reward: "Frontend Specialist Certificate",
-        status: "Draft (In Authoring)"
-      },
-      {
-        id: "MILE-003",
-        code: "M3",
-        title: "Milestone 3: Node.js Microservices & PostgreSQL Engine",
-        course: "Modern Full-Stack Web Development",
-        deliveryModel: "Self-Paced Milestone",
-        level: "Level 2: Backend Architecture",
-        duration: "4 Weeks (32 Hours)",
-        unitsCount: 8,
-        lessons: [
-          { name: "Lesson 5: REST & GraphQL API Gateways", format: "Guide", time: "60m" },
-          { name: "Lesson 6: PostgreSQL Indexing & Query Optimizations", format: "Sandbox IDE", time: "90m" }
-        ],
-        gatekeeper: "API Benchmark Test + Capstone Database Schema Sign-off",
-        reward: "Backend Architecture Badge",
-        status: "Draft (In Authoring)"
-      },
-      {
-        id: "MILE-004",
-        code: "M4",
-        title: "Milestone 4: Cloud CI/CD & Production Capstone",
-        course: "Modern Full-Stack Web Development",
-        deliveryModel: "Self-Paced Milestone",
-        level: "Level 3: Advanced Architect",
-        duration: "3 Weeks (24 Hours)",
-        unitsCount: 4,
-        lessons: [
-          { name: "Lesson 7: Docker Containers & Cloud Deployment", format: "Video Lecture", time: "60m" },
-          { name: "Lesson 8: Full-Stack Production Capstone Defense", format: "Live Project Defense", time: "120m" }
-        ],
-        gatekeeper: "Peer Review Sign-off + 100% Milestone Completion",
-        reward: "Full-Stack Software Engineer Credential",
-        status: "Draft (In Authoring)"
-      }
-    ];
-
+  renderCreatorLevelsLadder() {
+    const curCourse = LearnerCurriculum.getActiveCourse();
     return `
-      <div class="creator-milestones-container">
-        ${milestones.map((m, idx) => `
-          <div class="creator-milestone-card">
-            <div class="creator-milestone-header">
-              <div>
-                <div class="creator-milestone-tagline">
-                  <span class="badge badge-primary">${m.code}</span>
-                  <span class="badge badge-secondary">${m.level}</span>
-                  <span class="badge badge-warning">${m.status}</span>
-                </div>
-                <h3 class="creator-milestone-title">${m.title}</h3>
-                <p class="creator-milestone-desc">${m.course} · Delivery: <strong>${m.deliveryModel}</strong> · Duration: ${m.duration}</p>
-              </div>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">+ Add Lesson</button>
-                <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorEditRulesModal('RUL-601')">Configure Gatekeeper</button>
-              </div>
-            </div>
-
-            <div class="creator-milestone-body">
-              <div class="creator-milestone-units-preview">
-                <strong style="font-size: 11px; text-transform: uppercase; color: var(--slate); letter-spacing: 0.05em;">Curriculum Units (${m.unitsCount} Total)</strong>
-                <div class="creator-unit-pill-row">
-                  ${m.lessons.map(l => `
-                    <span class="creator-unit-mini-chip">
-                      <i data-lucide="${l.format.includes('Video') ? 'video' : l.format.includes('Sandbox') ? 'code-2' : 'file-text'}"></i>
-                      <strong>${l.name}</strong> (${l.time})
-                    </span>
-                  `).join("")}
-                </div>
-              </div>
-
-              <div class="creator-milestone-gate">
-                <strong><i data-lucide="lock" style="width:12px; height:12px;"></i> Unlock Gatekeeper</strong>
-                <span>${m.gatekeeper}</span>
-              </div>
-
-              <div class="creator-milestone-gate" style="border-left-color: #166534; background: #f4faf6;">
-                <strong style="color: #166534;"><i data-lucide="award" style="width:12px; height:12px;"></i> Milestone Credential</strong>
-                <span>${m.reward}</span>
-              </div>
-            </div>
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Hierarchy & Tiers (CAT-001)</span>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Level Proficiency Ladder & Milestone Roadmap</h3>
           </div>
-        `).join("")}
+          <div class="button-row" style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorEditRulesModal('RUL-601')"><i data-lucide="shield"></i> Prerequisite Rules</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-lessons')"><i data-lucide="play-circle"></i> Lesson Runner</button>
+          </div>
+        </div>
+
+        ${LearnerCurriculum.renderMilestonePath(curCourse)}
       </div>
     `;
   },
 
-  renderCreatorLevelsLadder() {
-    const levels = [
-      {
-        level: "Level 1: Foundations & Core Logic",
-        course: "Modern Full-Stack Web Development",
-        desc: "Essential computational thinking, HTML5 semantics, CSS token systems, and syntax basics.",
-        milestonesCount: 2,
-        lessonsCount: 8,
-        quizzesCount: 3,
-        targetAudience: "Beginner & Transitioning Learners",
-        prerequisite: "None (Open Intake Baseline)"
-      },
-      {
-        level: "Level 2: Professional Component Architecture",
-        course: "Modern Full-Stack Web Development",
-        desc: "React 19, custom hook design patterns, state machines, and relational database schema design.",
-        milestonesCount: 3,
-        lessonsCount: 14,
-        quizzesCount: 4,
-        targetAudience: "Intermediate Developers",
-        prerequisite: "Level 1 Certified (Pass mark >= 80%)"
-      },
-      {
-        level: "Level 3: Distributed Systems & Capstone",
-        course: "Modern Full-Stack Web Development",
-        desc: "Production microservices, CI/CD automated deployments, performance telemetry, and Capstone defense.",
-        milestonesCount: 3,
-        lessonsCount: 12,
-        quizzesCount: 2,
-        targetAudience: "Senior & Industry-Ready Engineers",
-        prerequisite: "Level 2 Certified + Project Defense Approval"
-      }
-    ];
-
-    return `
-      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        ${levels.map((lvl, idx) => `
-          <div style="padding: 22px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: center; gap: 20px;">
-            <div style="flex: 1;">
-              <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 6px;">
-                <span class="badge badge-primary">TIER 0${idx + 1}</span>
-                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${lvl.level}</h3>
-              </div>
-              <p style="font-size: 12.5px; color: #5a687c; margin: 0 0 10px 0;">${lvl.desc}</p>
-              <div style="display: flex; gap: 14px; font-size: 11.5px; color: var(--navy-medium); flex-wrap: wrap;">
-                <span><i data-lucide="flag" style="width:13px; color:var(--primary);"></i> <strong>${lvl.milestonesCount}</strong> Milestones</span>
-                <span><i data-lucide="file-text" style="width:13px; color:var(--primary);"></i> <strong>${lvl.lessonsCount}</strong> Lessons</span>
-                <span><i data-lucide="help-circle" style="width:13px; color:var(--primary);"></i> <strong>${lvl.quizzesCount}</strong> Quizzes</span>
-                <span><i data-lucide="shield" style="width:13px; color:var(--primary);"></i> Prereq: <strong>${lvl.prerequisite}</strong></span>
-              </div>
-            </div>
-            <div class="button-row">
-              <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-syllabus-milestones')">View Milestones</button>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    `;
+  renderCreatorMilestonesRoadmap() {
+    return this.renderCreatorLevelsLadder();
   },
 
   renderCreatorModulesStudio() {
-    const modules = [
-      {
-        id: "MOD-101",
-        code: "Module 1.1",
-        title: "Modern HTML5 & Responsive Semantic Tokens",
-        course: "Modern Full-Stack Web Development (Self-Paced)",
-        lessonsCount: 3,
-        duration: "4.5 Hours",
-        resources: ["RES-101 (Semantic HTML PDF)", "RES-102 (Token CSS)"],
-        activities: ["Interactive DOM Guide", "Sandbox Code Test"]
-      },
-      {
-        id: "MOD-102",
-        code: "Module 1.2",
-        title: "Advanced CSS Grid, Flexbox & Fluid Responsive Layouts",
-        course: "Modern Full-Stack Web Development (Self-Paced)",
-        lessonsCount: 4,
-        duration: "6.0 Hours",
-        resources: ["RES-102 (CSS Grid Cheat Sheet)"],
-        activities: ["Dashboard Layout Sandbox", "ASN-301 Responsive Task"]
-      },
-      {
-        id: "MOD-201",
-        code: "Module 2.1",
-        title: "React 19 Server Components, State & Streaming",
-        course: "Modern Full-Stack Web Development (Self-Paced)",
-        lessonsCount: 5,
-        duration: "8.0 Hours",
-        resources: ["RES-103 (React 19 Video Lecture)"],
-        activities: ["State Sandbox", "QZ-202 React Quiz"]
-      }
-    ];
-
-    return `
-      <div style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
-        ${modules.map(mod => `
-          <div style="padding: 20px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035);">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px; margin-bottom: 12px;">
-              <div>
-                <span class="badge badge-secondary" style="margin-bottom: 4px;">${mod.code} · ${mod.id}</span>
-                <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${mod.title}</h3>
-                <span class="table-subline" style="margin-top: 2px;">${mod.course}</span>
-              </div>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">+ Add Lesson Unit</button>
-              </div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #5a687c; flex-wrap: wrap; gap: 10px;">
-              <span><strong>${mod.lessonsCount} Lessons</strong> · Total Duration: <strong>${mod.duration}</strong></span>
-              <div style="display: flex; gap: 8px;">
-                ${mod.resources.map(r => `<span class="badge badge-secondary">${r}</span>`).join("")}
-              </div>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    `;
+    return this.renderCreatorLevelsLadder();
   },
 
   renderCreatorLessonsStudio() {
-    const lessons = db.creatorData.syllabus;
+    const curCourse = LearnerCurriculum.getActiveCourse();
     return `
-      <div class="creator-lessons-studio-grid">
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-          ${lessons.map((s, idx) => `
-            <div style="padding: 16px 20px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 10px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03); display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
-                  <span class="badge badge-primary">Unit 0${idx + 1}</span>
-                  <span class="badge badge-secondary">${s.activityType}</span>
-                </div>
-                <strong style="font-size: 13.5px; color: var(--navy-medium);">${s.lesson}</strong>
-                <div style="font-size: 11.5px; color: var(--slate); margin-top: 2px;">${s.module} · Duration: ${s.duration}</div>
-              </div>
-              <div class="button-row">
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal('${s.id}')">Edit</button>
-                <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-preview')">Preview</button>
-              </div>
-            </div>
-          `).join("")}
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Interactive Curriculum & Lesson Studio</span>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Odin-Project Multi-Activity Lesson Runner & Inspector</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorAddLessonModal()"><i data-lucide="plus"></i> + Add Content Unit</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-preview')"><i data-lucide="eye"></i> Open in Full Player</button>
+          </div>
         </div>
 
-        <div class="creator-lesson-inspector-card">
-          <div style="border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px;">
-            <span class="badge badge-success">ACTIVE UNIT INSPECTOR</span>
-            <h3 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 0 0;">Lesson 1: Semantic Structure & A11y</h3>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 12px;">
-            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Format Mode</label><div style="font-weight: 600; color: var(--navy-medium);">Interactive Formatted Guide + Sandbox</div></div>
-            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Linked Media Asset</label><div style="color: #1e60aa;">RES-101 (HTML5 Blueprint PDF) · Verified SHA-256</div></div>
-            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Gatekeeper Quiz Key</label><div style="color: var(--navy-medium);">QZ-201 (DOM Fundamentals) · 15 Items · Pass: 80%</div></div>
-            <div><label style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 10px;">Completion Criteria</label><div style="color: var(--navy-medium);">100% Reading Scroll + Quiz Score >= 80%</div></div>
-          </div>
-          <div style="margin-top: 10px; display: flex; gap: 10px;">
-            <button class="btn btn-primary btn-sm" style="width: 100%;" onclick="Actions.openCreatorAddLessonModal('SYL-501')">Edit Unit Properties</button>
-          </div>
-        </div>
+        ${LearnerCurriculum.renderOdinLessonRunner(curCourse)}
       </div>
     `;
   },
 
   renderCreatorActivitiesMatrix() {
-    const activities = [
-      { title: "Browser Monaco IDE Sandbox", type: "Interactive Code", desc: "Live code editor testing HTML5, CSS Grid, and React state in a sandbox.", units: "2 Lessons Attached", icon: "code-2" },
-      { title: "Spoken Acoustic Voice Recorder", type: "Speaking Activity", desc: "Captures 90-120s spoken audio prompts evaluated against phonetic pronunciation rubrics.", units: "1 Lesson Attached", icon: "mic" },
-      { title: "Automated Knowledge Check Quiz", type: "Multiple-Choice Assessment", desc: "Shuffle-enabled question bank quizzes with attempt limits and instant grading.", units: "4 Lessons Attached", icon: "help-circle" },
-      { title: "Downloadable Practice Worksheets", type: "PDF Reference", desc: "Structured problem sets and board-standard worksheet attachments.", units: "4 Lessons Attached", icon: "file-text" }
+    const curCourse = LearnerCurriculum.getActiveCourse();
+    const formats = [
+      { id: "text", title: "1. Formatted Textbook Guide", type: "Reading & Code Samples", desc: "Structured architectural concepts with syntax-highlighted code blocks.", icon: "book-open" },
+      { id: "video", title: "2. 1080p Video Masterclass", type: "Interactive Video Player", desc: "Chaptered HD video streaming with timestamped learner notes.", icon: "play" },
+      { id: "flashcards", title: "3. 3D Flashcards & Active Recall", type: "Spaced Repetition Memory", desc: "Flip cards with question/answer drills for concept reinforcement.", icon: "layers" },
+      { id: "codelab", title: "4. TypeScript Monaco Codelab & Jest", type: "Interactive Browser Sandbox", desc: "Monaco IDE editor running live Jest test assertion suites.", icon: "code-2" },
+      { id: "quiz", title: "5. Gatekeeper Quiz (FLOW-019)", type: "Automated Assessment", desc: "Shuffle-enabled question bank quizzes enforcing pass thresholds.", icon: "help-circle" },
+      { id: "voice", title: "6. Spoken Defense (FLOW-020)", type: "Acoustic Audio Studio", desc: "60-90s verbal recording evaluated against phonetic rubrics.", icon: "mic" },
+      { id: "project", title: "7. Capstone Task (FLOW-020)", type: "Project & Repository Task", desc: "GitHub link & rubric-evaluated capstone project submission.", icon: "upload-cloud" }
     ];
 
     return `
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; width: 100%;">
-        ${activities.map(act => `
-          <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="display: inline-flex; padding: 8px; background: #fdfbf7; border: 1px solid #e7dfd3; border-radius: 8px; color: var(--primary);"><i data-lucide="${act.icon}"></i></span>
-                <div>
-                  <h4 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${act.title}</h4>
-                  <span class="badge badge-secondary" style="margin-top: 3px;">${act.type}</span>
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">7-Format Pedagogical Architecture (FRS MILE-002)</span>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Interactive Activities Matrix</h3>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-lessons')"><i data-lucide="play"></i> Open Odin Runner</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
+          ${formats.map(fmt => `
+            <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                  <span style="display: inline-flex; padding: 8px; background: #fdfbf7; border: 1px solid #e7dfd3; border-radius: 8px; color: var(--primary);"><i data-lucide="${fmt.icon}"></i></span>
+                  <div>
+                    <h4 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${fmt.title}</h4>
+                    <span class="badge badge-secondary" style="margin-top: 2px;">${fmt.type}</span>
+                  </div>
                 </div>
+                <p style="font-size: 12px; color: #5a687c; margin: 0; line-height: 1.45;">${fmt.desc}</p>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+                <span class="badge badge-success" style="font-size: 9.5px;">✓ Active in Odin Runner</span>
+                <button class="btn btn-primary btn-xs" onclick="Actions.switchOdinActivityFormat('${fmt.id}'); Router.navigate('creator-syllabus-lessons');">
+                  <i data-lucide="play"></i> Launch Activity
+                </button>
               </div>
             </div>
-            <p style="font-size: 12px; color: #5a687c; margin: 0; line-height: 1.45;">${act.desc}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--navy-medium);">
-              <span><strong>${act.units}</strong></span>
-              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">View Lessons</button>
-            </div>
-          </div>
-        `).join("")}
+          `).join('')}
+        </div>
       </div>
     `;
   },
@@ -13743,8 +13525,8 @@ const RenderEngine = {
   renderCreatorLmsPreview(activeFormat, courseId, simMode) {
     if (!window.creatorPreviewState) {
       window.creatorPreviewState = {
-        activeCourseId: "TECH-FE-201",
-        activeFormat: "video",
+        activeCourseId: "CRS-101",
+        activeFormat: "codelab",
         activeUnitIndex: 0,
         simMode: "free",
         completedUnits: [0],
@@ -13754,431 +13536,52 @@ const RenderEngine = {
       };
     }
 
-    if (activeFormat) window.creatorPreviewState.activeFormat = activeFormat;
-    if (courseId) window.creatorPreviewState.activeCourseId = courseId;
+    if (activeFormat) {
+      window.creatorPreviewState.activeFormat = activeFormat;
+      if (db.learnerData?.learningState) db.learnerData.learningState.selectedActivityFormat = activeFormat;
+    }
+    if (courseId) {
+      window.creatorPreviewState.activeCourseId = courseId;
+      if (db.learnerData?.profile) db.learnerData.profile.activeCourseId = courseId;
+    }
     if (simMode) window.creatorPreviewState.simMode = simMode;
 
-    const curCourseId = window.creatorPreviewState.activeCourseId;
-    const curFormat = window.creatorPreviewState.activeFormat;
-    const curMode = window.creatorPreviewState.simMode;
-    const completedUnits = window.creatorPreviewState.completedUnits || [0];
-
-    const courseCatalog = {
-      "TECH-FE-201": {
-        id: "TECH-FE-201",
-        title: "Modern Full-Stack Web Development",
-        version: "v1.2 (Draft)",
-        deliveryModel: "Self-paced Milestone (MILE-001)",
-        faculty: "Faculty of Computing & Technology",
-        progressPct: Math.round((completedUnits.length / 5) * 100),
-        units: [
-          { index: 0, title: "1. Semantic Structure & A11y", format: "video", duration: "45 min", badge: "FREE PREVIEW", badgeClass: "badge-success", level: "Level 1: Foundations", milestone: "Milestone 1: Web Architecture" },
-          { index: 1, title: "2. CSS Grid Browser Sandbox", format: "sandbox", duration: "60 min", badge: "INTERACTIVE LAB", badgeClass: "badge-primary", level: "Level 1: Foundations", milestone: "Milestone 1: Web Architecture" },
-          { index: 2, title: "3. DOM Fundamentals Quiz", format: "quiz", duration: "15 min", badge: "GATEKEEPER (80%)", badgeClass: "badge-warning", level: "Level 1: Foundations", milestone: "Milestone 1: Web Architecture" },
-          { index: 3, title: "4. Oral Project Introduction", format: "voice", duration: "20 min", badge: "SPOKEN TASK", badgeClass: "badge-secondary", level: "Level 1: Foundations", milestone: "Milestone 2: JS State" },
-          { index: 4, title: "5. Milestone 1 Credential", format: "milestone", duration: "10 min", badge: "CREDENTIAL", badgeClass: "badge-success", level: "Level 1: Foundations", milestone: "Milestone 2: JS State" }
-        ]
-      },
-      "ENG-SPK-301": {
-        id: "ENG-SPK-301",
-        title: "Spoken English Fluency & Workplace Communication",
-        version: "v1.0 (Draft)",
-        deliveryModel: "Live Scheduled Cohort (CAT-002)",
-        faculty: "Faculty of Languages",
-        progressPct: Math.round((completedUnits.length / 4) * 100),
-        units: [
-          { index: 0, title: "1. Daily.co Live Classroom", format: "video", duration: "60 min", badge: "LIVE ATTENDANCE", badgeClass: "badge-primary", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" },
-          { index: 1, title: "2. Phonetic Vowel Stress Lab", format: "voice", duration: "30 min", badge: "ACOUSTIC RUBRIC", badgeClass: "badge-secondary", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" },
-          { index: 2, title: "3. Professional Vocabulary Drill", format: "quiz", duration: "20 min", badge: "VOCAB QUIZ", badgeClass: "badge-warning", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" },
-          { index: 3, title: "4. Spoken Fluency Certification", format: "milestone", duration: "15 min", badge: "CREDENTIAL", badgeClass: "badge-success", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" }
-        ]
-      },
-      "K12-MTH-801": {
-        id: "K12-MTH-801",
-        title: "Grade 8 Mathematics (FBISE Curriculum)",
-        version: "v1.1 (Draft)",
-        deliveryModel: "K-12 Live Tuition (K12-001)",
-        faculty: "Faculty of Secondary Education",
-        progressPct: Math.round((completedUnits.length / 4) * 100),
-        units: [
-          { index: 0, title: "1. Algebraic Expressions Lecture", format: "video", duration: "45 min", badge: "PUBLIC PREVIEW", badgeClass: "badge-success", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" },
-          { index: 1, title: "2. Practice Worksheet & Problem Set", format: "sandbox", duration: "40 min", badge: "BOARD WORKSHEET", badgeClass: "badge-primary", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" },
-          { index: 2, title: "3. Term 1 Knowledge Check", format: "quiz", duration: "30 min", badge: "TERM TEST", badgeClass: "badge-warning", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" },
-          { index: 3, title: "4. FBISE Term 1 Milestone Badge", format: "milestone", duration: "10 min", badge: "TERM BADGE", badgeClass: "badge-success", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" }
-        ]
-      }
+    const curCourseId = window.creatorPreviewState.activeCourseId || "CRS-101";
+    const curCourse = db.learnerData?.activeCourses?.find(c => c.id === curCourseId) || db.learnerData?.activeCourses?.[0] || {
+      id: "CRS-101", code: "DEV-101", title: "Modern Full-Stack Web Development", deliveryModel: "Self-paced Milestone", progressPercent: 75
     };
-
-    const currentCourse = courseCatalog[curCourseId] || courseCatalog["TECH-FE-201"];
-    const curUnit = currentCourse.units[window.creatorPreviewState.activeUnitIndex] || currentCourse.units[0];
-    const isGuest = curMode === "guest";
-
-    // Player Canvas Rendering
-    let playerCanvasHtml = "";
-
-    if (curFormat === "sandbox") {
-      playerCanvasHtml = `
-        <div class="creator-preview-player-pane">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
-            <div>
-              <span class="badge badge-primary"><i data-lucide="code-2"></i> BROWSER MONACO IDE SANDBOX</span>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
-            </div>
-            <span class="badge ${completedUnits.includes(curUnit.index) ? 'badge-success' : 'badge-secondary'}">
-              ${completedUnits.includes(curUnit.index) ? '✓ Completed' : 'In Progress'}
-            </span>
-          </div>
-
-          <div class="creator-code-sandbox-mock">
-            <div class="creator-code-instructions">
-              <strong style="color: #60a5fa; display: block; margin-bottom: 6px; font-size: 13px;">CODING LAB CHALLENGE</strong>
-              <p style="margin: 0 0 8px 0;">Build a semantic responsive card using CSS Grid with minimum 2 columns on desktop and 1 column on mobile.</p>
-              <ul style="padding-left: 18px; margin: 0; font-size: 11px; line-height: 1.5;">
-                <li>Use <code>display: grid</code> on container</li>
-                <li>Set <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code></li>
-                <li>Validate accessible color contrast ratio &gt;= 4.5:1</li>
-              </ul>
-            </div>
-            <div class="creator-code-editor-pane">
-              <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
-                <span>styles.css · Monaco IDE Sandbox</span>
-                <span style="color: #4ade80;">UTF-8 · Live Preview</span>
-              </div>
-              <div class="creator-code-line"><span style="color: #f472b6;">.grid-container</span> {</div>
-              <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">display</span>: grid;</div>
-              <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">grid-template-columns</span>: repeat(auto-fit, minmax(240px, 1fr));</div>
-              <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">gap</span>: 20px;</div>
-              <div class="creator-code-line">}</div>
-              
-              <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 11px; color: #94a3b8;"><i data-lucide="terminal" style="width:12px; height:12px;"></i> Sandbox Virtual DOM ready</span>
-                <div style="display: flex; gap: 8px;">
-                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Hint Unlocked', 'Check repeat(auto-fit, minmax(...)) parameters.', 'info')">Hint</button>
-                  <button class="btn btn-primary btn-xs" onclick="Actions.previewRunCodeTests(${curUnit.index})">
-                    <i data-lucide="play"></i> Run Tests
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          ${window.creatorPreviewState.codeRunOutput ? `
-            <div style="background: #0f172a; color: #38bdf8; padding: 12px 16px; border-radius: 8px; font-family: monospace; font-size: 12px; border: 1px solid #334155; line-height: 1.45;">
-              <span style="color: #4ade80; font-weight: bold;">✔ Test Suite Passed (2 of 2 Assertions):</span><br>
-              <span style="color: #94a3b8;">[PASS]</span> Assertion 1: Container computes display: grid (1ms)<br>
-              <span style="color: #94a3b8;">[PASS]</span> Assertion 2: Responsive column wrap computed &gt;= 240px (2ms)<br>
-              <span style="color: #facc15;">[INFO]</span> Code sandbox challenge verified.
-            </div>
-          ` : ''}
-
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(124,119,102,0.12);">
-            <span style="font-size: 12px; color: var(--slate);">Estimated Effort: <strong>60 Minutes</strong> · Automated Assertion Engine</span>
-            <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
-              <i data-lucide="check-circle"></i> Mark Complete & Advance
-            </button>
-          </div>
-        </div>
-      `;
-    } else if (curFormat === "voice") {
-      playerCanvasHtml = `
-        <div class="creator-preview-player-pane">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
-            <div>
-              <span class="badge badge-secondary"><i data-lucide="mic"></i> ACOUSTIC VOICE RECORDING STUDIO (CAT-002)</span>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
-            </div>
-            <span class="badge ${completedUnits.includes(curUnit.index) ? 'badge-success' : 'badge-secondary'}">
-              ${completedUnits.includes(curUnit.index) ? '✓ Evaluated' : 'Pending Audio'}
-            </span>
-          </div>
-
-          <div class="creator-voice-player-mock">
-            <span class="badge badge-primary"><i data-lucide="volume-2"></i> TARGET SPOKEN PROMPT</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; margin: 6px 0; color: #ffffff;">Workplace Oral Introduction & Articulation</h3>
-            <p style="font-size: 12.5px; opacity: 0.92; margin: 0 0 14px 0; max-width: 540px; line-height: 1.5;">
-              "Hello, my name is Dr. Arsalan. I am a software engineer specializing in scalable backend architectures and frontend state machines."
-            </p>
-
-            <div class="creator-waveform-bars">
-              <div class="creator-waveform-bar" style="animation-delay: 0.1s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.3s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.2s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.4s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.5s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.2s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.6s;"></div>
-              <div class="creator-waveform-bar" style="animation-delay: 0.3s;"></div>
-            </div>
-
-            <div style="display: flex; gap: 12px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
-              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Recording Active', 'Simulating 90-second acoustic audio capture...', 'info')">
-                <i data-lucide="mic"></i> Start 90s Recording
-              </button>
-              <button class="btn btn-primary btn-sm" onclick="Actions.previewSubmitVoiceAudio(${curUnit.index})">
-                <i data-lucide="check-circle-2"></i> Submit for Phonetic Evaluation
-              </button>
-            </div>
-          </div>
-
-          <div style="background: #fdfbf7; border: 1px solid rgba(124,119,102,0.16); border-radius: 10px; padding: 14px 18px;">
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 12px;">
-              <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Pronunciation Score</strong><span style="font-weight:700; color:#166534; font-size:14px;">94% (High Mastery)</span></div>
-              <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Intonation & Stress</strong><span style="font-weight:700; color:#166534; font-size:14px;">90% (Pass)</span></div>
-              <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Evaluated Rubric</strong><span style="font-weight:700; color:var(--primary); font-size:14px;">RUB-102 (Phonetics)</span></div>
-            </div>
-          </div>
-
-          <div style="display: flex; justify-content: flex-end; padding-top: 8px; border-top: 1px solid rgba(124,119,102,0.12);">
-            <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
-              <i data-lucide="check-circle"></i> Mark Complete & Advance
-            </button>
-          </div>
-        </div>
-      `;
-    } else if (curFormat === "quiz") {
-      const selectedOpt = window.creatorPreviewState.quizSelectedOpt || "B";
-      playerCanvasHtml = `
-        <div class="creator-preview-player-pane">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
-            <div>
-              <span class="badge badge-warning"><i data-lucide="help-circle"></i> AUTOMATED GATEKEEPER QUIZ (MILE-001)</span>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
-            </div>
-            <span style="font-size: 12px; color: var(--slate); font-weight:600;"><i data-lucide="clock" style="width:13px; height:13px;"></i> Limit: 15:00</span>
-          </div>
-
-          <div class="creator-quiz-preview-mock">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px;">
-              <span class="badge badge-primary">QUESTION 1 OF 3 · SINGLE CHOICE</span>
-              <span style="font-size: 11.5px; color: #166534; font-weight:600;"><i data-lucide="shield-check" style="width:12px; height:12px;"></i> Gatekeeper Pass Mark: 80%</span>
-            </div>
-
-            <h3 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 10px 0;">
-              Which HTTP response status code signifies that the client request lacks valid authentication credentials?
-            </h3>
-
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <label class="creator-quiz-option-label ${selectedOpt === 'A' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('A')">
-                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'A' ? 'checked' : ''}>
-                <span><strong>A.</strong> 200 OK — Standard Successful Response</span>
-              </label>
-              <label class="creator-quiz-option-label ${selectedOpt === 'B' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('B')">
-                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'B' ? 'checked' : ''}>
-                <span><strong>B.</strong> 401 Unauthorized — Authentication Required (Correct Key)</span>
-              </label>
-              <label class="creator-quiz-option-label ${selectedOpt === 'C' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('C')">
-                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'C' ? 'checked' : ''}>
-                <span><strong>C.</strong> 403 Forbidden — Client Known but Refused</span>
-              </label>
-              <label class="creator-quiz-option-label ${selectedOpt === 'D' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('D')">
-                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'D' ? 'checked' : ''}>
-                <span><strong>D.</strong> 404 Not Found — Resource Unknown</span>
-              </label>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12); margin-top: 6px;">
-              <span style="font-size: 12px; color: #166534;"><strong>Instant Feedback:</strong> Selected Option ${selectedOpt} verified. Pass threshold met.</span>
-              <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
-                <i data-lucide="check"></i> Submit & Unlock Next Milestone
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    } else if (curFormat === "milestone") {
-      playerCanvasHtml = `
-        <div class="creator-preview-player-pane">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
-            <div>
-              <span class="badge badge-success"><i data-lucide="award"></i> MILESTONE ACHIEVEMENT PORTAL (MILE-001)</span>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
-            </div>
-            <span class="badge badge-success">✓ 100% Mastery Certified</span>
-          </div>
-
-          <div class="creator-milestone-journey-mock">
-            <div class="creator-certificate-frame">
-              <i data-lucide="award" style="width: 48px; height: 48px; color: #b45309; margin-bottom: 8px;"></i>
-              <strong style="font: 700 19px 'Manrope', sans-serif; color: #101c2e; letter-spacing:0.02em;">OFFICIAL CERTIFICATE OF MILESTONE ACHIEVEMENT</strong>
-              <p style="font-size: 12.5px; color: #64748b; margin: 6px 0 16px 0; max-width: 520px; line-height: 1.5;">
-                This certifies that the registered learner has demonstrated 100% verified competency in <strong>${currentCourse.title} (${curUnit.milestone})</strong> under academic supervision.
-              </p>
-              
-              <div style="background: #ffffff; border: 1px dashed #d7c9b1; border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; font-family: monospace; font-size: 11px; color: #475569;">
-                SHA-256 Token: sha256-8ef3092a47e1bc8942 · Academic Board Verified · No In-Place Drift
-              </div>
-
-              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Credential Downloaded', 'Downloaded verified PDF certificate.', 'success')">
-                  <i data-lucide="download"></i> Download PDF Credential
-                </button>
-                <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-milestones')">
-                  <i data-lucide="unlock"></i> Proceed to Milestone 2
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    } else {
-      // Default: Video Lecture & Formatted Reading Guide
-      playerCanvasHtml = `
-        <div class="creator-preview-player-pane">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
-            <div>
-              <span class="badge badge-success"><i data-lucide="video"></i> INTERACTIVE VIDEO LECTURE & FORMATTED GUIDE</span>
-              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
-            </div>
-            <span class="badge ${completedUnits.includes(curUnit.index) ? 'badge-success' : 'badge-secondary'}">
-              ${completedUnits.includes(curUnit.index) ? '✓ Completed' : 'In Progress'}
-            </span>
-          </div>
-
-          <div class="creator-player-screen-mock">
-            <i data-lucide="play-circle"></i>
-            <strong style="font-size: 15px; letter-spacing:0.02em;">Interactive Lecture Stream & Live Commentary</strong>
-            <span style="font-size: 12px; opacity: 0.85;">Duration: ${curUnit.duration} · High-Definition Audio/Video</span>
-          </div>
-
-          <div style="display: flex; gap: 10px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 10px; flex-wrap: wrap;">
-            <button class="btn btn-primary btn-xs">Lesson Guide</button>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('sandbox', 1)">Open Monaco Lab</button>
-            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Downloaded', 'Downloaded RES-101 HTML5 Reference Notes PDF.', 'success')">
-              <i data-lucide="download"></i> Download Notes (PDF)
-            </button>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('quiz', 2)">Take Gatekeeper Quiz</button>
-          </div>
-
-          <div>
-            <h4 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Unit Overview & Academic Competencies</h4>
-            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0 0 10px 0;">
-              In this unit, learners master semantic HTML5 elements (<code style="color:var(--primary); font-weight:600;">&lt;main&gt;</code>, <code style="color:var(--primary); font-weight:600;">&lt;header&gt;</code>, <code style="color:var(--primary); font-weight:600;">&lt;section&gt;</code>) and establish accessible color contrast ratios adhering to WCAG AAA standards.
-            </p>
-          </div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(124,119,102,0.12);">
-            <span style="font-size: 12px; color: var(--slate);">Unit 1 of ${currentCourse.units.length} · ${curUnit.duration}</span>
-            <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
-              <i data-lucide="check-circle"></i> Mark Complete & Advance
-            </button>
-          </div>
-        </div>
-      `;
-    }
+    const isGuest = window.creatorPreviewState.simMode === "guest";
 
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
         
-        <!-- Top Course Scope Bar & Simulation Mode Switcher -->
+        <!-- Creator LMS Simulator Flight Bar -->
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: linear-gradient(135deg, #101c2e, #1e3352); border-radius: 12px; color: #ffffff; flex-wrap: wrap; gap: 14px; box-shadow: 0 4px 16px rgba(16, 28, 46, 0.2);">
           <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Active Simulation Scope:</span>
-            <select id="creator-lms-course-select" class="form-control" style="width: auto; min-width: 320px; font-weight: 600; font-size: 13px; background: #ffffff; color: var(--navy-medium);" onchange="Actions.previewSelectCourse(this.value)">
-              <option value="TECH-FE-201" ${curCourseId === 'TECH-FE-201' ? 'selected' : ''}>Modern Full-Stack Web Development (Self-Paced Milestone)</option>
-              <option value="ENG-SPK-301" ${curCourseId === 'ENG-SPK-301' ? 'selected' : ''}>Spoken English Fluency & Workplace (Live Scheduled Cohort)</option>
-              <option value="K12-MTH-801" ${curCourseId === 'K12-MTH-801' ? 'selected' : ''}>Grade 8 Mathematics (K-12 Board Aligned FBISE)</option>
-            </select>
+            <span class="badge badge-success" style="background:#22c55e; color:#052e16; font-weight:800; font-size:11px;"><i data-lucide="eye"></i> ODIN LMS LEARNER SIMULATOR (CAT-009)</span>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 11px; color: #cbd5e1; text-transform: uppercase;">Active Course Scope:</span>
+              <select class="form-control" style="width: auto; min-width: 280px; font-weight: 700; font-size: 12.5px; background: #ffffff; color: var(--navy-medium);" onchange="Actions.switchLearnerCourse(this.value)">
+                ${(db.learnerData?.activeCourses || []).map(c => `
+                  <option value="${c.id}" ${c.id === curCourse.id ? 'selected' : ''}>${c.code} — ${c.title} (${c.progressPercent}%)</option>
+                `).join('')}
+              </select>
+            </div>
           </div>
           
           <div style="display: flex; gap: 10px; align-items: center;">
             <span style="font-size: 11.5px; color: #cbd5e1;">Viewport Mode:</span>
             <button class="btn ${isGuest ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.switchLmsSimMode('guest')">
-              <i data-lucide="user"></i> Guest Visitor
+              <i data-lucide="user"></i> Guest Visitor (Locked)
             </button>
             <button class="btn ${!isGuest ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.switchLmsSimMode('free')">
-              <i data-lucide="user-check"></i> Enrolled Learner
+              <i data-lucide="user-check"></i> Enrolled Learner (Unlocked)
             </button>
           </div>
         </div>
 
-        <!-- Course Header Telemetry & Progression Bar -->
-        <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
-          <div>
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-              <span class="badge badge-primary">${currentCourse.id}</span>
-              <span class="badge badge-secondary">${currentCourse.deliveryModel}</span>
-              <span class="badge badge-warning">${currentCourse.version}</span>
-            </div>
-            <h2 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${currentCourse.title}</h2>
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 4px; min-width: 240px;">
-            <div style="display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: var(--navy-medium);">
-              <span>Course Completion</span>
-              <strong style="color: var(--primary);">${currentCourse.progressPct}% (${completedUnits.length} of ${currentCourse.units.length} Units)</strong>
-            </div>
-            <div style="width: 100%; height: 8px; background: #eef2f6; border-radius: 4px; overflow: hidden;">
-              <div style="width: ${currentCourse.progressPct}%; height: 100%; background: linear-gradient(90deg, var(--primary), #a45800); transition: width 0.3s ease;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Two-Pane The Odin Project / Learner Interactive Workspace -->
-        <div class="creator-preview-viewport-box">
-          
-          <!-- Left Multi-Format Player Pane -->
-          ${playerCanvasHtml}
-
-          <!-- Right Interactive Multi-Tier Curriculum Drawer -->
-          <div class="creator-preview-drawer-pane">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 10px;">
-              <div>
-                <strong style="font-size: 12.5px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Roadmap</strong>
-                <small style="display: block; color: var(--slate); font-size: 11px;">Odin-style Milestone Ladder</small>
-              </div>
-              <span class="badge badge-primary">${currentCourse.units.length} Units</span>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              ${currentCourse.units.map(u => {
-                const isCompleted = completedUnits.includes(u.index);
-                const isActive = curFormat === u.format;
-                const isLocked = isGuest && u.index > 0;
-
-                let iconName = "play";
-                if (u.format === "sandbox") iconName = "code-2";
-                if (u.format === "quiz") iconName = "help-circle";
-                if (u.format === "voice") iconName = "mic";
-                if (u.format === "milestone") iconName = "award";
-
-                return `
-                  <div class="creator-drawer-item ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}" 
-                       onclick="${isLocked ? `Notifications.push('Locked in Guest Mode', 'Please switch simulation to Enrolled Learner mode to view paid lessons.', 'warning')` : `Actions.switchPreviewFormat('${u.format}', ${u.index})`}">
-                    <div style="flex: 1;">
-                      <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 2px;">
-                        <span class="badge ${u.badgeClass}" style="font-size: 9px; padding: 2px 5px;">${u.badge}</span>
-                        ${isCompleted ? `<span style="color:#16a34a; font-size:11px; font-weight:700;">✓ Mastered</span>` : ''}
-                      </div>
-                      <strong style="display: block; font-size: 12px; color: var(--navy-medium);">${u.title}</strong>
-                      <small style="color: #6a788e;">${u.duration} · ${u.milestone}</small>
-                    </div>
-                    <div>
-                      ${isLocked ? `
-                        <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);"></i>
-                      ` : isCompleted ? `
-                        <i data-lucide="check-circle-2" style="width: 16px; height: 16px; color: #16a34a;"></i>
-                      ` : `
-                        <i data-lucide="${iconName}" style="width: 14px; height: 14px; color: var(--primary);"></i>
-                      `}
-                    </div>
-                  </div>
-                `;
-              }).join("")}
-            </div>
-
-            <div style="margin-top: 8px; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); display: flex; flex-direction: column; gap: 6px;">
-              <button class="btn btn-secondary btn-xs" style="width: 100%;" onclick="Router.navigate('creator-syllabus-milestones')">
-                <i data-lucide="flag"></i> Open Milestones Studio
-              </button>
-              <button class="btn btn-secondary btn-xs" style="width: 100%;" onclick="Router.navigate('creator-courses-my')">
-                <i data-lucide="arrow-left"></i> Return to Course Portfolio
-              </button>
-            </div>
-
-          </div>
-
-        </div>
-
+        <!-- Exact Odin Project Curriculum & Player Runner -->
+        ${LearnerCurriculum.renderMilestoneWorkspace("learner-learning-continue", curCourse)}
       </div>
     `;
   },
