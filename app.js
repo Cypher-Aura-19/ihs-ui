@@ -12543,7 +12543,9 @@ const RenderEngine = {
     } else if (route === "creator-syllabus-activities") {
       customContentHtml = this.renderCreatorActivitiesMatrix();
     } else if (config.dataType === "courses") {
-      customContentHtml = this.renderCreatorCoursesStudio(records);
+      customContentHtml = this.renderCreatorCoursesStudio(records, route);
+    } else if (config.dataType === "versions") {
+      customContentHtml = this.renderCreatorVersionsStudio(records, route);
     } else if (config.dataType === "questions") {
       customContentHtml = this.renderCreatorQuestionBankStudio(records);
     } else if (config.dataType === "assessments" && route === "creator-assessments-voice") {
@@ -12989,69 +12991,266 @@ const RenderEngine = {
     `;
   },
 
-  renderCreatorCoursesStudio(courses) {
+  renderCreatorCoursesStudio(courses, currentRoute) {
+    const allCourses = db.creatorData.courses || [];
+    const totalCount = allCourses.length;
+    const draftCount = allCourses.filter(c => c.stage === "Draft").length;
+    const reviewCount = allCourses.filter(c => c.stage === "In Review").length;
+    const approvedCount = allCourses.filter(c => c.stage === "Approved").length;
+    const publishedCount = allCourses.filter(c => c.stage === "Published").length;
+
     return `
-      <div class="creator-courses-grid">
-        ${courses.map(c => {
-          let badgeModelClass = "creator-badge-selfpaced";
-          let modelIcon = "layers";
-          if (c.deliveryModel.includes("Live Scheduled")) {
-            badgeModelClass = "creator-badge-live";
-            modelIcon = "video";
-          } else if (c.deliveryModel.includes("K-12")) {
-            badgeModelClass = "creator-badge-k12";
-            modelIcon = "graduation-cap";
-          }
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        
+        <!-- Stage Switcher Tabs Bar -->
+        <div class="creator-tabs-bar">
+          <button class="creator-tab-btn ${currentRoute === 'creator-courses-my' ? 'active' : ''}" onclick="Router.navigate('creator-courses-my')">
+            <i data-lucide="book-open"></i> All Courses <span class="badge badge-primary">${totalCount}</span>
+          </button>
+          <button class="creator-tab-btn ${currentRoute === 'creator-courses-draft' ? 'active' : ''}" onclick="Router.navigate('creator-courses-draft')">
+            <i data-lucide="file-edit"></i> Drafts <span class="badge badge-warning">${draftCount}</span>
+          </button>
+          <button class="creator-tab-btn ${currentRoute === 'creator-courses-review' ? 'active' : ''}" onclick="Router.navigate('creator-courses-review')">
+            <i data-lucide="file-search"></i> In Peer Review <span class="badge badge-secondary">${reviewCount}</span>
+          </button>
+          <button class="creator-tab-btn ${currentRoute === 'creator-courses-approved' ? 'active' : ''}" onclick="Router.navigate('creator-courses-approved')">
+            <i data-lucide="check-circle-2"></i> Approved <span class="badge badge-success">${approvedCount}</span>
+          </button>
+          <button class="creator-tab-btn ${currentRoute === 'creator-courses-published' ? 'active' : ''}" onclick="Router.navigate('creator-courses-published')">
+            <i data-lucide="archive"></i> Live & Immutable <span class="badge badge-success">${publishedCount}</span>
+          </button>
+        </div>
 
-          let stageBadge = "badge-secondary";
-          if (c.stage === "Draft") stageBadge = "badge-warning";
-          if (c.stage === "In Review") stageBadge = "badge-warning";
-          if (c.stage === "Approved" || c.stage === "Published") stageBadge = "badge-success";
+        <!-- Quick Filter Pills & Fast Actions Strip -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 12px 18px; gap: 14px; flex-wrap: wrap; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--slate); letter-spacing: 0.05em;">Delivery Model:</span>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.filterCreatorCoursesByModel('')">All Models</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.filterCreatorCoursesByModel('Self-paced')"><i data-lucide="layers"></i> Self-paced Milestone</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.filterCreatorCoursesByModel('Live Scheduled')"><i data-lucide="video"></i> Live Scheduled</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.filterCreatorCoursesByModel('K-12')"><i data-lucide="graduation-cap"></i> K-12 FBISE</button>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-xs" onclick="Actions.exportCreatorCatalogueManifest()"><i data-lucide="file-json"></i> Export Manifest</button>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorNewCourseModal()"><i data-lucide="plus"></i> New Course</button>
+          </div>
+        </div>
 
-          return `
-            <article class="creator-course-card">
-              <div class="creator-course-top">
-                <span class="creator-course-badge-model ${badgeModelClass}">
-                  <i data-lucide="${modelIcon}"></i> ${c.deliveryModel}
-                </span>
-                <span class="badge ${stageBadge}">${c.stage}</span>
-              </div>
+        <!-- Course Cards Grid -->
+        <div class="creator-courses-grid" id="creator-courses-studio-cards">
+          ${courses.map(c => {
+            let badgeModelClass = "creator-badge-selfpaced";
+            let modelIcon = "layers";
+            if (c.deliveryModel.includes("Live Scheduled")) {
+              badgeModelClass = "creator-badge-live";
+              modelIcon = "video";
+            } else if (c.deliveryModel.includes("K-12")) {
+              badgeModelClass = "creator-badge-k12";
+              modelIcon = "graduation-cap";
+            }
 
-              <div>
-                <h3>${c.title}</h3>
-                <span class="table-subline" style="margin-top: 3px; display: block;">Code: ${c.code} · Faculty: ${c.faculty}</span>
-              </div>
+            let stageBadge = "badge-secondary";
+            if (c.stage === "Draft") stageBadge = "badge-warning";
+            else if (c.stage === "In Review") stageBadge = "badge-secondary";
+            else if (c.stage === "Approved" || c.stage === "Published") stageBadge = "badge-success";
 
-              <div class="creator-course-meta-pills">
-                <span><i data-lucide="clock"></i> ${c.estimatedEffort}</span>
-                <span><i data-lucide="folder-tree"></i> ${c.modulesCount} Modules</span>
-                <span><i data-lucide="file-text"></i> ${c.lessonsCount} Lessons</span>
-                <span><i data-lucide="git-branch"></i> ${c.activeVersion}</span>
-              </div>
-
-              <div class="creator-course-delivery-box">
-                ${c.deliveryModel.includes("Self-paced") ? `
-                  <strong><i data-lucide="flag"></i> Milestone Self-Paced Track:</strong>
-                  <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">Automated milestone progression state machine. Quiz gatekeepers unlock consecutive modules.</p>
-                ` : c.deliveryModel.includes("Live Scheduled") ? `
-                  <strong><i data-lucide="video"></i> Live Interactive Cohort:</strong>
-                  <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">Daily.co room attachments with 80% live attendance threshold and acoustic voice submissions.</p>
-                ` : `
-                  <strong><i data-lucide="award"></i> K-12 Academic Board Alignment:</strong>
-                  <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">FBISE standard & Cambridge O-Level aligned. Public parent syllabus preview enabled (K12-005).</p>
-                `}
-              </div>
-
-              <div class="creator-course-footer">
-                <span style="font-size: 11.5px; color: var(--slate);">Author: <strong>${c.author}</strong></span>
-                <div class="button-row">
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('${c.id}')">Inspect</button>
-                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">Build Syllabus</button>
+            return `
+              <article class="creator-course-card" data-model="${c.deliveryModel}">
+                <div class="creator-course-top">
+                  <span class="creator-course-badge-model ${badgeModelClass}">
+                    <i data-lucide="${modelIcon}"></i> ${c.deliveryModel}
+                  </span>
+                  <span class="badge ${stageBadge}">${c.stage}</span>
                 </div>
+
+                <div>
+                  <h3 style="font: 700 16px/1.25 'Manrope', sans-serif; color: var(--navy-medium);">${c.title}</h3>
+                  <span class="table-subline" style="margin-top: 3px; display: block; font-family: monospace; font-size: 11.5px;">${c.code} · ${c.faculty}</span>
+                </div>
+
+                <div class="creator-course-meta-pills">
+                  <span><i data-lucide="clock"></i> ${c.estimatedEffort}</span>
+                  <span><i data-lucide="folder-tree"></i> ${c.modulesCount} Modules</span>
+                  <span><i data-lucide="file-text"></i> ${c.lessonsCount} Lessons</span>
+                  <span><i data-lucide="git-branch"></i> ${c.activeVersion}</span>
+                </div>
+
+                <div class="creator-course-delivery-box">
+                  ${c.deliveryModel.includes("Self-paced") ? `
+                    <strong><i data-lucide="flag"></i> Milestone Progression Engine (MILE-001):</strong>
+                    <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">Automated milestone progression with gatekeeper quiz pass rules (>=80%) and linear module unlock state machine.</p>
+                  ` : c.deliveryModel.includes("Live Scheduled") ? `
+                    <strong><i data-lucide="video"></i> Live Interactive Cohort (CAT-002):</strong>
+                    <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">Daily.co room attachments, 80% live attendance gating, and 90s spoken voice activity submissions.</p>
+                  ` : `
+                    <strong><i data-lucide="award"></i> K-12 Academic Board Alignment (K12-001):</strong>
+                    <p style="margin: 3px 0 0 0; font-size: 11.5px; color: #5a687c;">FBISE standard curriculum blueprints with public parent syllabus previews (K12-005) and term worksheets.</p>
+                  `}
+                </div>
+
+                <div class="creator-course-footer">
+                  <span style="font-size: 11.5px; color: var(--slate);">Author: <strong>${c.author}</strong></span>
+                  <div class="button-row" style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('${c.id}')" title="Inspect & edit syllabus">
+                      <i data-lucide="layers"></i> Syllabus
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('${c.id}')" title="Pre-flight check">
+                      <i data-lucide="shield-check"></i> Validate
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorPreviewModal('${c.id}')" title="LMS simulator preview">
+                      <i data-lucide="eye"></i> Preview
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorNewVersionModal('${c.id}')" title="Branch new version">
+                      <i data-lucide="git-branch"></i> +Version
+                    </button>
+                    ${c.stage === 'Draft' ? `
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorSubmitReviewModal('${c.id}')" title="Submit to Academic Board">
+                        <i data-lucide="send"></i> Submit
+                      </button>
+                    ` : c.stage === 'In Review' ? `
+                      <button class="btn btn-warning btn-xs" onclick="Actions.openCreatorReviewComment('COM-702')" title="View open citations">
+                        <i data-lucide="message-square"></i> Feedback
+                      </button>
+                    ` : ''}
+                  </div>
+                </div>
+              </article>
+            `;
+          }).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  renderCreatorVersionsStudio(versions, currentRoute) {
+    const allVersions = db.creatorData.versions || [];
+    const totalVerCount = allVersions.length;
+    const draftVerCount = allVersions.filter(v => v.lifecycleState === "Draft").length;
+    const reviewVerCount = allVersions.filter(v => v.lifecycleState === "In Review").length;
+    const approvedVerCount = allVersions.filter(v => v.lifecycleState === "Approved").length;
+    const publishedVerCount = allVersions.filter(v => v.lifecycleState === "Published").length;
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        
+        <!-- Immutability & Branching Flight Notice -->
+        <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 18px 22px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="display: inline-flex; padding: 10px; background: #fdfbf7; border: 1px solid #e7dfd3; border-radius: 10px; color: var(--primary);">
+              <i data-lucide="git-branch" style="width: 24px; height: 24px;"></i>
+            </span>
+            <div>
+              <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 3px 0;">IMMUTABLE COURSE VERSIONING LIFECYCLE (CAT-004 / FLOW-009)</h3>
+              <p style="margin: 0; font-size: 12px; color: #5a687c; max-width: 800px; line-height: 1.45;">
+                Published course versions are cryptographically locked in LMS to preserve cohort progress integrity. Syllabus additions or rubric edits require branching a discrete Draft Version before Academic Board review.
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorValidationModal('VER-102')"><i data-lucide="check-square"></i> Validation Suite</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorNewVersionModal()"><i data-lucide="plus"></i> Create Version Branch</button>
+          </div>
+        </div>
+
+        <!-- Version Lifecycle Stage Tabs Bar -->
+        <div class="creator-tabs-bar">
+          <button class="creator-tab-btn ${currentRoute === 'creator-versions-draft' ? 'active' : ''}" onclick="Router.navigate('creator-versions-draft')">
+            <i data-lucide="git-pull-request"></i> Active Draft Branches <span class="badge badge-warning">${draftVerCount}</span>
+          </button>
+          <button class="creator-tab-btn ${currentRoute === 'creator-versions-history' ? 'active' : ''}" onclick="Router.navigate('creator-versions-history')">
+            <i data-lucide="history"></i> All Version History <span class="badge badge-primary">${totalVerCount}</span>
+          </button>
+        </div>
+
+        <!-- Version Cards Grid -->
+        <div class="creator-version-cards-grid">
+          ${versions.map(v => {
+            let stateBadge = "badge-secondary";
+            if (v.lifecycleState === "Draft") stateBadge = "badge-warning";
+            else if (v.lifecycleState === "In Review") stateBadge = "badge-secondary";
+            else if (v.lifecycleState === "Approved" || v.lifecycleState === "Published") stateBadge = "badge-success";
+
+            return `
+              <div class="creator-version-card">
+                <div class="creator-version-header">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span style="font: 700 15px/1 'Space Grotesk', sans-serif; color: var(--primary); background: #fdfbf7; padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(124,119,102,0.2);">${v.versionTag}</span>
+                    <div>
+                      <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${v.courseTitle}</h3>
+                      <span class="table-subline" style="font-family: monospace; font-size: 11px;">Version ID: ${v.id} · Course ID: ${v.courseId}</span>
+                    </div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="badge badge-secondary">${v.deliveryModel}</span>
+                    <span class="badge ${stateBadge}">${v.lifecycleState}</span>
+                  </div>
+                </div>
+
+                <div class="creator-version-meta-grid">
+                  <div class="creator-version-meta-item">
+                    <label>Changes / Scope</label>
+                    <strong>${v.changesSummary}</strong>
+                  </div>
+                  <div class="creator-version-meta-item">
+                    <label>Lead Author & Updated</label>
+                    <strong>${v.author}</strong>
+                    <small style="color: var(--slate); font-size: 10.5px;">${v.updated}</small>
+                  </div>
+                  <div class="creator-version-meta-item">
+                    <label>Validation Integrity</label>
+                    <span class="badge ${v.validationStatus.includes('Warning') ? 'badge-warning' : 'badge-success'}">${v.validationStatus}</span>
+                  </div>
+                  <div class="creator-version-meta-item">
+                    <label>Assigned Peer Reviewer</label>
+                    <strong>${v.reviewer}</strong>
+                  </div>
+                </div>
+
+                <div style="background: #fbf9f4; border: 1px solid rgba(124,119,102,0.14); border-radius: 8px; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #5a687c;">
+                  <span><i data-lucide="lock" style="width: 12px; height: 12px; margin-right: 4px;"></i> <strong>Lock Policy:</strong> ${v.publishLock}</span>
+                  <span style="font-family: monospace; color: var(--slate);">SHA: sha256-verified</span>
+                </div>
+
+                <div class="creator-version-footer">
+                  <div class="button-row" style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorValidationModal('${v.id}')" title="Run pre-flight check">
+                      <i data-lucide="shield-check"></i> Audit Report
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorCourseDetails('${v.courseId}')" title="Inspect syllabus outline">
+                      <i data-lucide="layers"></i> Syllabus
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorPreviewModal('${v.courseId}')" title="Preview learner simulation">
+                      <i data-lucide="eye"></i> Preview
+                    </button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorVersionDiffModal('${v.id}')" title="Compare version changelog">
+                      <i data-lucide="git-commit"></i> Changelog Diff
+                    </button>
+                  </div>
+
+                  <div class="button-row" style="display: flex; gap: 6px;">
+                    ${v.lifecycleState === 'Draft' ? `
+                      <button class="btn btn-primary btn-xs" onclick="Actions.submitVersionForReview('${v.id}')" title="Submit to Academic Review Board">
+                        <i data-lucide="send"></i> Submit for Review
+                      </button>
+                    ` : v.lifecycleState === 'In Review' ? `
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.withdrawVersionReview('${v.id}')" title="Withdraw to make corrections">
+                        <i data-lucide="rotate-ccw"></i> Withdraw to Draft
+                      </button>
+                    ` : v.lifecycleState === 'Approved' ? `
+                      <span class="badge badge-success"><i data-lucide="check"></i> Ready for Release</span>
+                    ` : `
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorNewVersionModal('${v.courseId}')" title="Branch a new version">
+                        <i data-lucide="git-branch"></i> + Branch Next Version
+                      </button>
+                    `}
+                  </div>
+                </div>
+
               </div>
-            </article>
-          `;
-        }).join("")}
+            `;
+          }).join("")}
+        </div>
+
       </div>
     `;
   },
@@ -19587,6 +19786,182 @@ document.addEventListener("DOMContentLoaded", () => {
       footer.innerHTML = `
         <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
         <button class="btn btn-primary" onclick="Notifications.push('Blueprint Downloaded', 'Syllabus JSON manifest saved.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Download Blueprint JSON</button>
+      `;
+      modal.classList.remove("hidden");
+      window.lucide?.createIcons();
+    }
+  };
+
+  Actions.filterCreatorCoursesByModel = function(model) {
+    const cards = document.querySelectorAll("#creator-courses-studio-cards .creator-course-card");
+    cards.forEach(card => {
+      const cardModel = card.getAttribute("data-model") || "";
+      if (!model || cardModel.toLowerCase().includes(model.toLowerCase())) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  };
+
+  Actions.exportCreatorCatalogueManifest = function() {
+    const manifest = {
+      specVersion: "IHS-LMS-v2.2",
+      catalogueScope: "Authored Portfolio",
+      exportedAt: new Date().toISOString(),
+      leadAuthor: "Dr. Arsalan Khan",
+      totalCourses: db.creatorData.courses.length,
+      activeDraftVersions: db.creatorData.versions.filter(v => v.lifecycleState === "Draft").length,
+      peerReviewQueue: db.creatorData.versions.filter(v => v.lifecycleState === "In Review").length,
+      courses: db.creatorData.courses.map(c => ({
+        id: c.id,
+        code: c.code,
+        title: c.title,
+        programme: c.programme,
+        deliveryModel: c.deliveryModel,
+        activeVersion: c.activeVersion,
+        stage: c.stage,
+        estimatedEffort: c.estimatedEffort,
+        modulesCount: c.modulesCount,
+        lessonsCount: c.lessonsCount
+      }))
+    };
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    if (modal && title && body && footer) {
+      title.innerHTML = `<i data-lucide="book-open" style="color:var(--primary);"></i> Complete Course Catalogue Manifest (CAT-001 / CAT-005)`;
+      body.innerHTML = `
+        <div class="om-flow-dialog">
+          <div class="om-flow-banner">
+            <i data-lucide="shield-check"></i>
+            <div>
+              <strong>COURSE CATALOGUE & SYLLABUS AUDIT MANIFEST</strong>
+              <p>Cryptographically verified JSON portfolio of all ${db.creatorData.courses.length} courses across Vocational, Literacy, Spoken English, and K-12 tracks.</p>
+            </div>
+          </div>
+          <div style="background:#0f172a; color:#38bdf8; padding:14px 16px; border-radius:8px; font-family:monospace; font-size:12px; max-height:260px; overflow-y:auto; white-space:pre-wrap; border:1px solid #334155; line-height:1.4;">${JSON.stringify(manifest, null, 2)}</div>
+          <div style="margin-top:12px; display:flex; align-items:center; gap:8px; font-size:12px; color:#166534; background:#f0fdf4; padding:10px 14px; border-radius:6px; border:1px solid #bbf7d0;">
+            <i data-lucide="check-circle-2"></i> All Course Entities, Module Hierarchies, and Version Branches Validated.
+          </div>
+        </div>
+      `;
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+        <button class="btn btn-primary" onclick="Notifications.push('Catalogue Exported', 'Course catalogue manifest JSON saved to downloads.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Download Catalogue JSON</button>
+      `;
+      modal.classList.remove("hidden");
+      window.lucide?.createIcons();
+    }
+  };
+
+  Actions.submitVersionForReview = function(versionId) {
+    const version = db.creatorData.versions.find(v => v.id === versionId);
+    if (!version) return;
+
+    version.lifecycleState = "In Review";
+    version.reviewer = "Prof. Tariq Mahmood (Academic Review Board)";
+    version.updated = new Date().toISOString().replace("T", " ").slice(0, 16);
+    version.publishLock = "Locked for Academic Board review SLA (48h).";
+
+    const course = db.creatorData.courses.find(c => c.id === version.courseId);
+    if (course) {
+      course.stage = "In Review";
+      course.activeVersion = `${version.versionTag} (In Review)`;
+    }
+
+    if (window.CreatorSync) CreatorSync.syncSidebarCounts();
+    Actions.audit("VERSION_SUBMITTED_FOR_REVIEW", `Submitted version ${version.versionTag} of ${version.courseTitle} (${version.id}) for Academic Peer Review.`, "Medium");
+    Notifications.push("Submitted for Peer Review", `Version ${version.versionTag} locked and dispatched to Academic Review Board. Review SLA: 48h.`, "success");
+
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.withdrawVersionReview = function(versionId) {
+    const version = db.creatorData.versions.find(v => v.id === versionId);
+    if (!version) return;
+
+    version.lifecycleState = "Draft";
+    version.reviewer = "Unassigned (Authoring Mode)";
+    version.updated = new Date().toISOString().replace("T", " ").slice(0, 16);
+    version.publishLock = "Draft - Authoring in progress.";
+
+    const course = db.creatorData.courses.find(c => c.id === version.courseId);
+    if (course) {
+      course.stage = "Draft";
+      course.activeVersion = `${version.versionTag} (Draft)`;
+    }
+
+    if (window.CreatorSync) CreatorSync.syncSidebarCounts();
+    Actions.audit("VERSION_REVIEW_WITHDRAWN", `Withdrew version ${version.versionTag} of ${version.courseTitle} back to Draft state.`, "Low");
+    Notifications.push("Version Withdrawn to Draft", `Version ${version.versionTag} unlocked for syllabus editing.`, "info");
+
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorVersionDiffModal = function(versionId) {
+    const version = db.creatorData.versions.find(v => v.id === versionId) || db.creatorData.versions[0];
+    const course = db.creatorData.courses.find(c => c.id === version.courseId) || db.creatorData.courses[0];
+
+    const modal = document.getElementById("generic-modal");
+    const title = document.getElementById("modal-title");
+    const body = document.getElementById("modal-body");
+    const footer = document.getElementById("modal-footer");
+
+    if (modal && title && body && footer) {
+      title.innerHTML = `<i data-lucide="git-commit" style="color:var(--primary);"></i> Semantic Version Changelog & Diff (${version.versionTag})`;
+      body.innerHTML = `
+        <div class="om-flow-dialog">
+          <div class="om-flow-banner">
+            <i data-lucide="git-branch"></i>
+            <div>
+              <strong>SEMANTIC SYLLABUS DELTA AUDIT (CAT-004)</strong>
+              <p>Comparing <strong>${version.versionTag} (${version.lifecycleState})</strong> against Baseline <strong>v1.0 (Published)</strong> for ${course.title}.</p>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;">
+            <div style="background:#fdfbf7; border:1px solid #e2d9cc; border-radius:8px; padding:12px 14px;">
+              <span style="font-size:10.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Baseline (v1.0 Published)</span>
+              <div style="font-weight:700; font-size:13.5px; color:var(--navy-medium); margin-top:2px;">12 Lessons · 1 Level · 2 Milestones</div>
+              <ul style="font-size:12px; color:#5a687c; margin:8px 0 0 16px; padding:0; line-height:1.4;">
+                <li>Foundational Syntax & Environment</li>
+                <li>Single Gatekeeper Quiz (Pass: 75%)</li>
+                <li>Standard PDF Worksheets</li>
+              </ul>
+            </div>
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:12px 14px;">
+              <span style="font-size:10.5px; font-weight:700; color:#166534; text-transform:uppercase;">Current Revision (${version.versionTag})</span>
+              <div style="font-weight:700; font-size:13.5px; color:#166534; margin-top:2px;">28 Lessons · 2 Levels · 4 Milestones <span class="badge badge-success">+16 Lessons</span></div>
+              <ul style="font-size:12px; color:#166534; margin:8px 0 0 16px; padding:0; line-height:1.4;">
+                <li><strong>Added:</strong> Level 2 Architecture & REST APIs</li>
+                <li><strong>Added:</strong> Spoken Audio Evaluation Task (90s)</li>
+                <li><strong>Updated:</strong> Gatekeeper Pass Mark raised to 80%</li>
+                <li><strong>Added:</strong> Monaco Browser IDE Activity</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="background:#0f172a; color:#f8fafc; padding:12px 14px; border-radius:8px; font-family:monospace; font-size:11.5px; max-height:160px; overflow-y:auto; border:1px solid #334155; line-height:1.4;">
+<span style="color:#94a3b8;">--- baseline/v1.0/syllabus.json</span>
+<span style="color:#94a3b8;">+++ working/${version.versionTag}/syllabus.json</span>
+<span style="color:#38bdf8;">@@ -4,6 +4,18 @@</span>
+  "totalModules": 4,
+<span style="color:#ef4444;">- "totalLessons": 12,</span>
+<span style="color:#22c55e;">+ "totalLessons": 28,</span>
+<span style="color:#22c55e;">+ "level2_title": "Architecture, State & APIs",</span>
+<span style="color:#22c55e;">+ "gatekeeper_threshold": "80%",</span>
+<span style="color:#22c55e;">+ "voice_assessment_linked": true,</span>
+  "activeIntegrity": "VERIFIED_OK"
+          </div>
+        </div>
+      `;
+      footer.innerHTML = `
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+        <button class="btn btn-primary" onclick="Actions.openCreatorValidationModal('${version.id}')"><i data-lucide="shield-check"></i> Run Pre-Flight Validation</button>
       `;
       modal.classList.remove("hidden");
       window.lucide?.createIcons();

@@ -8778,6 +8778,126 @@ td:last-child {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
+}
+
+/* Tabs Bar & Version Studio Cards */
+.creator-tabs-bar {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  margin-bottom: 18px !important;
+}
+
+.creator-tab-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font: 600 12.5px/1 'Manrope', sans-serif !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  background: #ffffff !important;
+  color: var(--navy-medium) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.creator-tab-btn:hover {
+  background: #fdfbf7 !important;
+  border-color: var(--primary) !important;
+}
+
+.creator-tab-btn.active {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+}
+
+.creator-tab-btn .badge {
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+}
+
+.creator-tab-btn.active .badge {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.creator-version-cards-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+.creator-version-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  padding: 22px 26px !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 16px rgba(70, 55, 28, 0.035) !important;
+  transition: all 0.2s ease !important;
+}
+
+.creator-version-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 22px rgba(70, 55, 28, 0.07) !important;
+  border-color: var(--primary) !important;
+}
+
+.creator-version-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
+  padding-bottom: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.creator-version-meta-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 14px !important;
+  background: #fdfbf7 !important;
+  border: 1px solid rgba(124, 119, 102, 0.16) !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+}
+
+.creator-version-meta-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.creator-version-meta-item label {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: var(--slate) !important;
+  letter-spacing: 0.05em !important;
+}
+
+.creator-version-meta-item strong {
+  font-size: 12.5px !important;
+  color: var(--navy-medium) !important;
+}
+
+.creator-version-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+  padding-top: 4px !important;
+}
+
+.creator-course-meta-pills span {
   background: #fbf9f4 !important;
   padding: 4px 10px !important;
   border-radius: 6px !important;
