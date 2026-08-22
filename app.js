@@ -1405,8 +1405,31 @@ const db = {
 
     earnings: [
       { id: "ERN-401", classId: "CLS-108", title: "Spoken English Fluency & Voice", date: "12 Aug 2026", rate: "PKR 3,500 / Hour", hours: "1.0 Hr", amount: "PKR 3,500", opsApproval: "Approved (Sarah Connor - OM)", payrollBatch: "PAY-2026-08" },
-      { id: "ERN-402", classId: "CLS-106", title: "Web Dev Mentorship Workshop", date: "15 Aug 2026", rate: "PKR 4,000 / Hour", hours: "1.5 Hrs", amount: "PKR 6,000", opsApproval: "Pending Review", payrollBatch: "Pending Settlement" }
+      { id: "ERN-402", classId: "CLS-106", title: "Web Dev Mentorship Workshop", date: "15 Aug 2026", rate: "PKR 4,000 / Hour", hours: "1.5 Hrs", amount: "PKR 6,000", opsApproval: "Pending Review", payrollBatch: "Pending Settlement" },
+      { id: "ERN-403", classId: "CLS-105", title: "Spoken English Fluency & Professional Voice", date: "16 Aug 2026", rate: "PKR 3,500 / Hour", hours: "1.0 Hr", amount: "PKR 3,500", opsApproval: "Approved (Sarah Connor - OM)", payrollBatch: "PAY-2026-08" },
+      { id: "ERN-404", classId: "CLS-107", title: "Grade 8 Mathematics: Geometry Lab", date: "14 Aug 2026", rate: "PKR 3,500 / Hour", hours: "1.0 Hr", amount: "PKR 3,500", opsApproval: "Approved (Sarah Connor - OM)", payrollBatch: "PAY-2026-08" }
     ],
+
+    resources: [
+      { id: "RES-101", title: "Course Syllabus & Prescribed SLO Blueprint", course: "Spoken English Fluency & Voice", type: "PDF Document", size: "2.4 MB", version: "v2.2 (Verified)", sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", downloads: 42, updated: "12 Aug 2026" },
+      { id: "RES-102", title: "CSS Grid Architecture & Responsive Tokens", course: "Modern Full-Stack Web Development", type: "PDF Document", size: "3.8 MB", version: "v1.4 (Verified)", sha256: "a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0", downloads: 88, updated: "14 Aug 2026" },
+      { id: "RES-103", title: "FBISE Grade 8 Mathematics Formula Guide", course: "Grade 8 Mathematics: Section A", type: "PDF Document", size: "1.9 MB", version: "v3.0 (FBISE Official)", sha256: "f0e1d2c3b4a5968778695a4b3c2d1e0ff0e1d2c3b4a5968778695a4b3c2d1e0f", downloads: 64, updated: "10 Aug 2026" },
+      { id: "RES-104", title: "Phonics Audio Pronunciation Reference Pack", course: "Spoken English Fluency & Voice", type: "HQ Audio Pack (ZIP)", size: "14.2 MB", version: "v2.0 (Acoustic Sample)", sha256: "9876543210fedcba0123456789abcdef9876543210fedcba0123456789abcdef", downloads: 51, updated: "15 Aug 2026" },
+      { id: "RES-105", title: "Cambridge Geometry Polygon Angle Proofs", course: "Grade 8 Mathematics: Section B", type: "PDF Worksheet", size: "1.5 MB", version: "v1.1 (Cambridge)", sha256: "5566778899aabbccddeeff00112233445566778899aabbccddeeff0011223344", downloads: 37, updated: "08 Aug 2026" }
+    ],
+
+    leaveRequests: [
+      { id: "LEV-201", period: "24 Aug 2026 - 25 Aug 2026 (2 Days)", type: "Planned Academic Leave", reason: "University Board Examination Supervision", replacement: "Zubair Hashmi (Authorized Substitute)", status: "Approved by Ops Manager", approvedBy: "Sarah Connor (OM)", requestedOn: "12 Aug 2026" },
+      { id: "LEV-202", period: "01 Sep 2026 (1 Day)", type: "Personal Emergency Leave", reason: "Family Medical Consultation", replacement: "Pending Assignment", status: "Pending Ops Review", approvedBy: "-", requestedOn: "16 Aug 2026" }
+    ],
+
+    availabilitySlots: {
+      Monday: { morning: true, afternoon: true, evening: false },
+      Tuesday: { morning: true, afternoon: true, evening: true },
+      Wednesday: { morning: true, afternoon: true, evening: false },
+      Thursday: { morning: false, afternoon: true, evening: true },
+      Friday: { morning: true, afternoon: true, evening: false }
+    },
 
     auditLogs: [
       { timestamp: "2026-08-17 08:50", actor: "Sara Javed (Trainer)", action: "TRAINER_GRADE_DRAFTED", classVersion: "ASN-301", details: "Drafted rubric evaluation for Zainab Malik capstone.", priorState: "Submitted", newState: "Under Review" },
@@ -13455,31 +13478,423 @@ const RenderEngine = {
     }
 
     // --------------------------------------------------------------------------
-    // 7. SCHEDULE: WEEKLY TIMETABLE GRID (FLOW-017)
+    // 18. HUB 5 - PAGE 1: TEACHING CALENDAR & SLOTS (trainer-schedule-calendar)
     // --------------------------------------------------------------------------
-    else if (route === "trainer-schedule-calendar" || route === "trainer-schedule-availability") {
+    else if (route === "trainer-schedule-calendar" || route === "trainer-schedule-reschedule" || route === "trainer-schedule-cancellations") {
+      const calTab = window.trainerCalTab || "all";
+      const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+      const displayedDays = calTab === "all" ? days : [calTab];
+
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:14px;">
-            ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(day => {
-              const daySlots = data.schedule.filter(s => s.day === day);
+          <!-- SCHEDULE METRIC BANNER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i data-lucide="calendar" style="width:24px; height:24px;"></i>
+              </div>
+              <div>
+                <strong style="color:var(--navy-medium); font-size:14.5px;">Weekly Timetable & Occurrence Calendar (FLOW-017 / DSH-005)</strong>
+                <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                  Manage assigned weekly live class occurrences. Join windows open 15 minutes before scheduled start time.
+                </p>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Calendar Synched', 'Downloaded iCalendar (.ics) feed for Apple/Google Calendar.', 'success')">
+                <i data-lucide="download"></i> Sync (.ICS)
+              </button>
+              <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerRescheduleModal('SCH-101')">
+                <i data-lucide="repeat"></i> Request Reschedule
+              </button>
+            </div>
+          </div>
+
+          <!-- SCHEDULE METRIC STRIP -->
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px;">
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px 18px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Weekly Live Classes</span>
+              <div style="font:800 20px 'Manrope', sans-serif; color:var(--navy-medium); margin-top:2px;">5 Sessions</div>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px 18px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Daily.co Rooms</span>
+              <div style="font:800 20px 'Manrope', sans-serif; color:var(--primary); margin-top:2px;">3 Assigned</div>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px 18px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Schedule Conflicts</span>
+              <div style="font:800 20px 'Manrope', sans-serif; color:#166534; margin-top:2px;">0 Conflicts</div>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px 18px;">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Availability Coverage</span>
+              <div style="font:800 20px 'Manrope', sans-serif; color:var(--navy-medium); margin-top:2px;">100% Locked</div>
+            </div>
+          </div>
+
+          <!-- DAY FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${calTab === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerCalTab='all'; RenderEngine.trainerWorkspace('trainer-schedule-calendar');">All Week (5 Days)</button>
+              <button class="btn ${calTab === 'Monday' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerCalTab='Monday'; RenderEngine.trainerWorkspace('trainer-schedule-calendar');">Monday (3)</button>
+              <button class="btn ${calTab === 'Tuesday' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerCalTab='Tuesday'; RenderEngine.trainerWorkspace('trainer-schedule-calendar');">Tuesday (1)</button>
+              <button class="btn ${calTab === 'Wednesday' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerCalTab='Wednesday'; RenderEngine.trainerWorkspace('trainer-schedule-calendar');">Wednesday (1)</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Current Week: <strong>17 Aug – 21 Aug 2026</strong></span>
+          </div>
+
+          <!-- 5-DAY TIMETABLE GRID -->
+          <div style="display:grid; grid-template-columns: repeat(${displayedDays.length === 1 ? '1' : '5'}, 1fr); gap:14px;">
+            ${displayedDays.map(day => {
+              const daySlots = (data.schedule || []).filter(s => s.day === day);
               return `
-                <div style="background:#ffffff; border:1px solid var(--outline); border-radius:10px; padding:16px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:12px;">
-                  <div style="font:800 15px 'Manrope', sans-serif; color:var(--navy-dark); padding-bottom:8px; border-bottom:2px solid var(--primary);">
-                    ${day}
+                <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:16px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:8px; border-bottom:2px solid var(--primary);">
+                    <strong style="font:800 15px 'Manrope', sans-serif; color:var(--navy-medium);">${day}</strong>
+                    <span class="badge badge-secondary" style="font-size:10px;">${daySlots.length} Slots</span>
                   </div>
-                  ${daySlots.length === 0 ? '<div style="color:var(--slate); font-size:12px; text-align:center; padding:20px 0;">No assigned classes</div>' : ''}
+
+                  ${daySlots.length === 0 ? `
+                    <div style="color:var(--slate); font-size:12px; text-align:center; padding:30px 10px; background:#fdfbf7; border-radius:8px; border:1px dashed rgba(124, 119, 102, 0.2);">
+                      <i data-lucide="clock" style="width:20px; height:20px; color:var(--slate); margin:0 auto 4px auto;"></i>
+                      <span>Dedicated Office Hours / 1:1 Booking</span>
+                    </div>
+                  ` : ''}
+
                   ${daySlots.map(s => `
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:6px;">
-                      <span class="badge badge-primary" style="font-size:10px; width:fit-content;">${s.time}</span>
-                      <strong style="color:#0f172a;">${s.title}</strong>
-                      <span style="color:#64748b;">Room: ${s.room}</span>
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRescheduleModal('${s.id}')" style="margin-top:4px;">Reschedule</button>
+                    <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="badge badge-primary" style="font-size:10px;">${s.time}</span>
+                        <span class="badge badge-success" style="font-size:9px;">${s.status}</span>
+                      </div>
+                      <strong style="color:var(--navy-medium); font-size:13px; line-height:1.3;">${s.title}</strong>
+                      <div style="font-size:11.5px; color:var(--slate); display:flex; justify-content:space-between;">
+                        <span>Room: <strong>${s.room}</strong></span>
+                        <span style="font-family:monospace; color:var(--primary); font-weight:700;">${s.id}</span>
+                      </div>
+                      <div style="display:flex; gap:6px; margin-top:4px;">
+                        <button class="btn btn-primary btn-xs" style="flex:1;" onclick="Actions.openTrainerJoinClassModal('${s.id === 'SCH-101' ? 'CLS-105' : s.id === 'SCH-102' ? 'CLS-102' : 'CLS-106'}')">
+                          <i data-lucide="video"></i> Join
+                        </button>
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerRescheduleModal('${s.id}')">
+                          <i data-lucide="repeat"></i> Move
+                        </button>
+                      </div>
                     </div>
                   `).join("")}
                 </div>
               `;
             }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 19. HUB 5 - PAGE 2: TRAINER AVAILABILITY & LEAVE (trainer-schedule-availability)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-schedule-availability" || route.includes("availability") || route.includes("leave")) {
+      const avail = data.availabilitySlots || {
+        Monday: { morning: true, afternoon: true, evening: false },
+        Tuesday: { morning: true, afternoon: true, evening: true },
+        Wednesday: { morning: true, afternoon: true, evening: false },
+        Thursday: { morning: false, afternoon: true, evening: true },
+        Friday: { morning: true, afternoon: true, evening: false }
+      };
+
+      const leaves = data.leaveRequests || [];
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- BANNER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i data-lucide="clock" style="width:24px; height:24px;"></i>
+              </div>
+              <div>
+                <strong style="color:var(--navy-medium); font-size:14.5px;">Trainer Availability Profile & Planned Leave (HR-007 / HR-008)</strong>
+                <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                  Configure recurring weekly teaching windows. Planned leave requests are subject to Operations Manager substitute validation.
+                </p>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerLeaveRequestModal()">
+              <i data-lucide="plus"></i> Request Leave / Absence
+            </button>
+          </div>
+
+          <!-- AVAILABILITY MATRIX -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Weekly Recurring Availability Slots</h3>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Availability Saved', 'Weekly schedule preferences saved to master scheduling engine.', 'success')">
+                <i data-lucide="check"></i> Save Schedule Preferences
+              </button>
+            </div>
+
+            <div class="table-container" style="border:1px solid rgba(124, 119, 102, 0.15); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Day of Week</th>
+                    <th>Morning Window (09:00 - 12:00)</th>
+                    <th>Afternoon Window (14:00 - 17:00)</th>
+                    <th>Evening Window (18:00 - 21:00)</th>
+                    <th>Configured Working Hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map(day => {
+                    const d = avail[day] || { morning: true, afternoon: true, evening: false };
+                    const hours = (d.morning ? 3 : 0) + (d.afternoon ? 3 : 0) + (d.evening ? 3 : 0);
+                    return `
+                      <tr>
+                        <td><strong>${day}</strong></td>
+                        <td>
+                          <button class="btn ${d.morning ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.toggleTrainerAvailabilitySlot('${day}', 'morning')">
+                            ${d.morning ? '✓ Available (09-12)' : '✕ Blocked'}
+                          </button>
+                        </td>
+                        <td>
+                          <button class="btn ${d.afternoon ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.toggleTrainerAvailabilitySlot('${day}', 'afternoon')">
+                            ${d.afternoon ? '✓ Available (14-17)' : '✕ Blocked'}
+                          </button>
+                        </td>
+                        <td>
+                          <button class="btn ${d.evening ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.toggleTrainerAvailabilitySlot('${day}', 'evening')">
+                            ${d.evening ? '✓ Available (18-21)' : '✕ Blocked'}
+                          </button>
+                        </td>
+                        <td><strong style="color:var(--navy-medium);">${hours} Hours / Day</strong></td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- LEAVE REQUESTS LEDGER -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Planned Leave Applications & Blackout Dates</h3>
+              <span style="font-size:12px; color:var(--slate);">${leaves.length} Total Applications</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              ${leaves.map(l => `
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:10px; padding:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <span class="badge ${l.status.includes('Approved') ? 'badge-success' : 'badge-warning'}">${l.status}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:12px; color:var(--primary);">${l.id}</span>
+                      <strong style="color:var(--navy-medium); font-size:13.5px;">${l.type}</strong>
+                    </div>
+                    <span style="font-size:12.5px; color:var(--slate);">Period: <strong>${l.period}</strong> · Reason: <em>"${l.reason}"</em></span>
+                    <div style="font-size:11.5px; color:var(--slate); margin-top:2px;">
+                      Substitute Coverage: <strong>${l.replacement}</strong> · Approved By: <strong>${l.approvedBy}</strong>
+                    </div>
+                  </div>
+                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Leave Dossier', 'Viewing audit trail for ${l.id}...', 'info')">
+                    <i data-lucide="file-text"></i> View Audit Trail
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 20. HUB 5 - PAGE 3: APPROVED EARNINGS & SLIPS (trainer-pay-earnings)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-pay-earnings" || route === "trainer-pay-statements" || route.includes("earnings") || route.includes("payroll")) {
+      const earnings = data.earnings || [];
+      const slips = data.payStatements || [];
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- FINANCIAL METRICS STRIP -->
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px;">
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:16px 20px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">August 2026 Net Earnings</span>
+              <div style="font:800 22px 'Manrope', sans-serif; color:#166534; margin-top:2px;">PKR 63,000</div>
+              <span style="font-size:11px; color:var(--slate);">18 Approved Sessions Settled</span>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:16px 20px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Pending Ops Review</span>
+              <div style="font:800 22px 'Manrope', sans-serif; color:#b45309; margin-top:2px;">PKR 6,000</div>
+              <span style="font-size:11px; color:var(--slate);">1 Workshop in Review</span>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:16px 20px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Year-to-Date Net Total</span>
+              <div style="font:800 22px 'Manrope', sans-serif; color:var(--navy-medium); margin-top:2px;">PKR 140,000</div>
+              <span style="font-size:11px; color:var(--slate);">40 Completed Classes</span>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:16px 20px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Contracted Rate Tier</span>
+              <div style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin-top:2px;">PKR 3,500 / Hr</div>
+              <span style="font-size:11px; color:var(--slate);">Agreement: AGR-2026-T1</span>
+            </div>
+          </div>
+
+          <!-- APPROVED EARNINGS EVENTS TABLE -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Payable Delivery Events (PAY-003 / PAY-004)</h3>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Immutable earning items generated upon Operations Manager class report approval.</p>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Banking Statement', 'Exported banking settlement statement (CSV).', 'success')">
+                <i data-lucide="download"></i> Export CSV
+              </button>
+            </div>
+
+            <div class="table-container" style="border:1px solid rgba(124, 119, 102, 0.15); border-radius:8px; overflow:hidden;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Earning ID</th>
+                    <th>Class Occurrence</th>
+                    <th>Delivery Date</th>
+                    <th>Rate Tier & Duration</th>
+                    <th>Gross Amount</th>
+                    <th>Ops Approval Status</th>
+                    <th>Settlement Batch</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${earnings.map(e => `
+                    <tr>
+                      <td><span style="font-family:monospace; font-weight:700; color:var(--primary);">${e.id}</span></td>
+                      <td>
+                        <strong>${e.title}</strong>
+                        <span class="table-subline">${e.classId}</span>
+                      </td>
+                      <td>${e.date}</td>
+                      <td>${e.rate} (${e.hours})</td>
+                      <td><strong style="color:#166534;">${e.amount}</strong></td>
+                      <td>
+                        <span class="badge ${e.opsApproval.includes('Approved') ? 'badge-success' : 'badge-warning'}">
+                          ${e.opsApproval}
+                        </span>
+                      </td>
+                      <td><span class="badge badge-secondary">${e.payrollBatch}</span></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- MONTHLY PAYSLIPS ARCHIVE -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:16px;">
+            <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">Official Monthly Pay Slips & Bank Settlements (PAY-013)</h3>
+
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              ${slips.map(s => `
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:10px; padding:18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <span class="badge badge-success">${s.settlementStatus}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:12px; color:var(--primary);">${s.id}</span>
+                      <strong style="color:var(--navy-medium); font-size:14px;">${s.period}</strong>
+                    </div>
+                    <span style="font-size:12.5px; color:var(--slate);">Approved Classes: <strong>${s.approvedClasses} Sessions</strong> · Gross: <strong>${s.grossEarning}</strong> · Deductions: <strong>${s.deductions}</strong> · Net: <strong style="color:#166534;">${s.netPay}</strong></span>
+                    <div style="font-size:11.5px; color:var(--slate); margin-top:2px;">Disbursed: <strong>${s.settlementDate}</strong> to Habib Bank Ltd (PK12HABB000123456789)</div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="Actions.downloadTrainerPayslipPDF('${s.id}')">
+                    <i data-lucide="download"></i> Download Pay Slip PDF
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 21. HUB 5 - PAGE 4: TEACHING RESOURCES VAULT (trainer-resources-teaching)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-resources-teaching" || route === "trainer-resources-vault" || route.includes("resources")) {
+      const resFilter = window.trainerResTab || "all";
+      const allResources = data.resources || [];
+      const displayedRes = resFilter === "all" ? allResources :
+        resFilter === "pdf" ? allResources.filter(r => r.type.includes("PDF")) :
+        resFilter === "audio" ? allResources.filter(r => r.type.includes("Audio")) :
+        allResources.filter(r => r.course.includes("Math") || r.course.includes("Web"));
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- VAULT HEADER BANNER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <i data-lucide="folder-lock" style="width:24px; height:24px;"></i>
+              </div>
+              <div>
+                <strong style="color:var(--navy-medium); font-size:14.5px;">Scoped Pedagogical Resource Vault (RES-001 - RES-012)</strong>
+                <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                  SHA-256 virus-scanned private teaching assets, lesson blueprints, and supplementary student practice packs.
+                </p>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerUploadResourceModal()">
+              <i data-lucide="upload"></i> Upload Teaching Material
+            </button>
+          </div>
+
+          <!-- FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${resFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerResTab='all'; RenderEngine.trainerWorkspace('trainer-resources-vault');">All Vault Assets (${allResources.length})</button>
+              <button class="btn ${resFilter === 'pdf' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerResTab='pdf'; RenderEngine.trainerWorkspace('trainer-resources-vault');">PDF Blueprints & Guides</button>
+              <button class="btn ${resFilter === 'audio' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerResTab='audio'; RenderEngine.trainerWorkspace('trainer-resources-vault');">Acoustic Audio Samples</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Security: <strong>SHA-256 Verified</strong></span>
+          </div>
+
+          <!-- RESOURCE CARDS GRID -->
+          <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;">
+            ${displayedRes.map(r => `
+              <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:14px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="badge ${r.type.includes('Audio') ? 'badge-primary' : 'badge-secondary'}" style="font-size:10px;">${r.type}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${r.id}</span>
+                    </div>
+                    <span class="badge badge-success" style="font-size:9.5px;">${r.version}</span>
+                  </div>
+
+                  <h3 style="font:800 17.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">${r.title}</h3>
+                  <p style="font-size:12px; color:var(--slate); margin:0 0 12px 0;">
+                    Course Scope: <strong>${r.course}</strong>
+                  </p>
+
+                  <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:12px; font-size:12px; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; justify-content:space-between;">
+                      <span style="color:var(--slate);">File Size & Telemetry:</span>
+                      <strong style="color:var(--navy-medium);">${r.size} · ${r.downloads} Downloads</strong>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-family:monospace; font-size:10.5px;">
+                      <span style="color:var(--slate);">SHA-256 Hash:</span>
+                      <span style="color:var(--primary);">${r.sha256.substring(0, 16)}...</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(124, 119, 102, 0.12); flex-wrap:wrap; gap:8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.copyTrainerResourceLink('${r.id}')">
+                    <i data-lucide="share-2"></i> Share Link
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.downloadTrainerResource('${r.id}')">
+                    <i data-lucide="download"></i> Download Asset
+                  </button>
+                </div>
+              </div>
+            `).join('')}
           </div>
         </div>
       `;
@@ -20265,6 +20680,218 @@ Actions.printK12OfficialReportCard = function(learnerId) {
 Actions.exportK12CurriculumOutline = function() {
   Notifications.push("Curriculum Exported", "Downloaded FBISE/Cambridge prescribed curriculum blueprint.", "success");
   this.audit("K12_CURRICULUM_EXPORTED", "Exported syllabus SLO outline.", "Low", "Document Downloaded");
+};
+
+Actions.openTrainerLeaveRequestModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = "Apply for Planned Leave / Absence (HR-007 / HR-008)";
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="calendar"></i>
+        <div>
+          <strong>TRAINER LEAVE GOVERNANCE POLICY</strong>
+          <p>Submit planned leave at least 48 hours prior to live occurrences for Ops Manager substitute assignment.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Leave Type & Category</label>
+        <select id="leave-type" class="form-control">
+          <option value="Planned Academic Leave">Planned Academic Leave / Exam</option>
+          <option value="Personal Emergency Leave">Personal Emergency Leave</option>
+          <option value="Medical Absence">Medical / Sick Leave</option>
+        </select>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="date" id="leave-start" class="form-control" value="2026-08-28">
+        </div>
+        <div class="form-group">
+          <label>End Date</label>
+          <input type="date" id="leave-end" class="form-control" value="2026-08-29">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Reason & Replacement Arrangements</label>
+        <textarea id="leave-reason" class="form-control" rows="2" placeholder="State reason and substitute trainer agreement...">Attending university practical examination. Trainer Zubair Hashmi has agreed to substitute for Friday Spoken English session.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerLeaveRequest()">Submit to Operations Manager</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitTrainerLeaveRequest = function() {
+  const type = document.getElementById("leave-type")?.value || "Planned Academic Leave";
+  const start = document.getElementById("leave-start")?.value || "2026-08-28";
+  const end = document.getElementById("leave-end")?.value || "2026-08-29";
+  const reason = document.getElementById("leave-reason")?.value || "University exam";
+
+  const newReq = {
+    id: `LEV-${Math.floor(200 + Math.random() * 800)}`,
+    period: `${start} - ${end}`,
+    type: type,
+    reason: reason,
+    replacement: "Zubair Hashmi (Nominated)",
+    status: "Pending Ops Review",
+    approvedBy: "-",
+    requestedOn: "Today"
+  };
+
+  if (!db.trainerData.leaveRequests) db.trainerData.leaveRequests = [];
+  db.trainerData.leaveRequests.unshift(newReq);
+
+  this.audit("TRAINER_LEAVE_REQUESTED", `Applied for leave ${start} to ${end} (${type}).`, "Medium", "Draft -> Pending Ops Review");
+  Notifications.push("Leave Request Submitted", "Leave application submitted to Operations Manager for policy review and substitute coverage.", "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute === "trainer-schedule-availability") RenderEngine.trainerWorkspace("trainer-schedule-availability");
+};
+
+Actions.toggleTrainerAvailabilitySlot = function(day, slot) {
+  if (!db.trainerData.availabilitySlots) {
+    db.trainerData.availabilitySlots = {
+      Monday: { morning: true, afternoon: true, evening: false },
+      Tuesday: { morning: true, afternoon: true, evening: true },
+      Wednesday: { morning: true, afternoon: true, evening: false },
+      Thursday: { morning: false, afternoon: true, evening: true },
+      Friday: { morning: true, afternoon: true, evening: false }
+    };
+  }
+  if (db.trainerData.availabilitySlots[day]) {
+    db.trainerData.availabilitySlots[day][slot] = !db.trainerData.availabilitySlots[day][slot];
+    const newState = db.trainerData.availabilitySlots[day][slot] ? "Available" : "Blocked";
+    this.audit("TRAINER_AVAILABILITY_CHANGED", `Updated ${day} ${slot} availability to ${newState}.`, "Low", "Profile Saved");
+    Notifications.push("Availability Updated", `${day} ${slot.toUpperCase()} slot marked as ${newState}.`, "info");
+    if (Router.currentRoute === "trainer-schedule-availability") RenderEngine.trainerWorkspace("trainer-schedule-availability");
+  }
+};
+
+Actions.downloadTrainerPayslipPDF = function(payId) {
+  const pay = (db.trainerData.payStatements || []).find(p => p.id === payId) || { id: payId, period: "August 2026", netPay: "PKR 63,000" };
+  this.audit("PAYSLIP_DOWNLOADED", `Downloaded official pay statement PDF for ${pay.id}.`, "Low", "PDF Generated");
+  Notifications.push("Payslip Downloaded", `Itemized pay statement for ${pay.period} (${pay.netPay}) downloaded.`, "success");
+};
+
+Actions.openTrainerUploadResourceModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = "Upload Pedagogical Resource (RES-001 - RES-005)";
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="shield-check"></i>
+        <div>
+          <strong>ENCRYPTED & SCANNED STORAGE (RES-004)</strong>
+          <p>Files are malware-scanned, SHA-256 hashed, and scoped to your assigned courses and learners.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Resource Title & Description</label>
+        <input type="text" id="res-title" class="form-control" value="Chapter 3: Simultaneous Equations Worksheet (FBISE)">
+      </div>
+
+      <div class="form-group">
+        <label>Course Track / Target Scope</label>
+        <select id="res-course" class="form-control">
+          <option value="Grade 8 Mathematics: Section A">Grade 8 Mathematics: Section A (FBISE)</option>
+          <option value="Modern Full-Stack Web Development">Modern Full-Stack Web Development</option>
+          <option value="Spoken English Fluency & Voice">Spoken English Fluency & Voice</option>
+        </select>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label>Asset Format</label>
+          <select id="res-type" class="form-control">
+            <option value="PDF Worksheet">PDF Worksheet / Handout</option>
+            <option value="Slide Deck">Slide Deck Presentation</option>
+            <option value="HQ Audio Sample">Acoustic Audio WAV / MP3</option>
+            <option value="Code ZIP">Source Code Template ZIP</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Version Tag</label>
+          <input type="text" id="res-version" class="form-control" value="v1.0 (Verified)">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Simulated File Upload</label>
+        <div style="border:2px dashed rgba(124, 119, 102, 0.3); border-radius:8px; padding:20px; text-align:center; background:#fdfbf7;">
+          <i data-lucide="upload-cloud" style="width:32px; height:32px; color:var(--primary); margin:0 auto 8px auto;"></i>
+          <p style="margin:0; font-size:13px; font-weight:600; color:var(--navy-medium);">simultaneous_equations_worksheet_v1.pdf</p>
+          <small style="color:var(--slate);">2.1 MB · Ready for virus scanning & upload</small>
+        </div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitTrainerResourceUpload()">Upload & Commit Resource</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitTrainerResourceUpload = function() {
+  const title = document.getElementById("res-title")?.value || "Simultaneous Equations Worksheet";
+  const course = document.getElementById("res-course")?.value || "Grade 8 Mathematics: Section A";
+  const type = document.getElementById("res-type")?.value || "PDF Worksheet";
+  const version = document.getElementById("res-version")?.value || "v1.0";
+
+  const newRes = {
+    id: `RES-${Math.floor(106 + Math.random() * 800)}`,
+    title: title,
+    course: course,
+    type: type,
+    size: "2.1 MB",
+    version: version,
+    sha256: "7c9e8f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f90123456789abcdef01234",
+    downloads: 0,
+    updated: "Just now"
+  };
+
+  if (!db.trainerData.resources) db.trainerData.resources = [];
+  db.trainerData.resources.unshift(newRes);
+
+  this.audit("RESOURCE_UPLOADED", `Uploaded resource ${title} (${type}) for ${course}.`, "Low", "Active");
+  Notifications.push("Resource Uploaded", `${title} successfully virus-scanned, hashed, and published to class vault.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute === "trainer-resources-vault" || Router.currentRoute === "trainer-resources-teaching") {
+    RenderEngine.trainerWorkspace("trainer-resources-vault");
+  }
+};
+
+Actions.downloadTrainerResource = function(resId) {
+  const res = (db.trainerData.resources || []).find(r => r.id === resId) || { title: "Pedagogical Resource", id: resId };
+  res.downloads = (res.downloads || 0) + 1;
+  this.audit("RESOURCE_DOWNLOADED", `Downloaded ${res.title} (${res.id}).`, "Low", "SHA-256 Verified");
+  Notifications.push("Resource Downloaded", `Verified download complete: ${res.title} (${res.size}).`, "success");
+};
+
+Actions.copyTrainerResourceLink = function(resId) {
+  Notifications.push("Secure Link Generated", "Encrypted student share link copied to clipboard (Expires in 7 days).", "info");
+  this.audit("RESOURCE_SHARE_LINK_GENERATED", `Generated scoped share link for ${resId}.`, "Low", "Link Copied");
 };
 
 Actions.openTrainerRosterModal = function(classId) {
