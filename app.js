@@ -2445,7 +2445,15 @@ const db = {
       { id: "LD-105", name: "Danish Qureshi", contact: "+92 301 2233445", email: "danish.q@gmail.com", source: "Facebook Ads", programme: "Basic Literacy", stage: "Converted", reason: "Enrolled in Cohort N4", nextAction: "Enrolment Activated", expectedValue: "PKR 18,000", consent: "Verified", csr: "Sarah Jenkins", created: "2026-08-10 10:20" },
       { id: "LD-106", name: "Hina Altaf", contact: "+92 312 6677889", email: "hina.a@live.com", source: "Google Search", programme: "Applied Numeracy", stage: "Lost", reason: "Price sensitivity / shifted to Q4", nextAction: "Archive & Re-engage Nov 2026", expectedValue: "PKR 24,000", consent: "Declined", csr: "Sarah Jenkins", created: "2026-08-08 12:00" },
       { id: "LD-107", name: "Usman Raza", contact: "+92 300 7788991", email: "usman.raza@gmail.com", source: "Direct Referral", programme: "Vocational Technology", stage: "New", reason: "Web Inquiry Form", nextAction: "Initial Contact", expectedValue: "PKR 35,000", consent: "Pending", csr: "Amna Saleem", created: "2026-08-16 11:15" },
-      { id: "LD-108", name: "Saima Bano", contact: "+92 322 4455667", email: "saima.b@yahoo.com", source: "Facebook Ads", programme: "Basic Literacy", stage: "Contacted", reason: "WhatsApp Inquiry Sent", nextAction: "Follow-up Call", expectedValue: "PKR 18,000", consent: "Pending", csr: "Amna Saleem", created: "2026-08-15 17:30" }
+      { id: "LD-108", name: "Saima Bano", contact: "+92 322 4455667", email: "saima.b@yahoo.com", source: "Facebook Ads", programme: "Basic Literacy", stage: "Contacted", reason: "WhatsApp Inquiry Sent", nextAction: "Follow-up Call", expectedValue: "PKR 18,000", consent: "Pending", csr: "Amna Saleem", created: "2026-08-15 17:30" },
+      { id: "LD-109", name: "Zaid Khan", contact: "+92 300 1144778", email: "zaid.k@gmail.com", source: "Facebook Ads", programme: "Basic Literacy", stage: "Converted", reason: "Paid 1:1 Enrolment (AEN-704)", nextAction: "Orientation Completed", expectedValue: "PKR 18,000", consent: "Verified", csr: "Sarah Jenkins", created: "2026-08-12 11:30" },
+      { id: "LD-110", name: "Areeba Siddiqui", contact: "+92 331 4455889", email: "a.siddiqui@outlook.com", source: "Google Search", programme: "Applied Numeracy", stage: "Converted", reason: "Group Plan Enrolled (AEN-705)", nextAction: "Roster Assigned", expectedValue: "PKR 24,000", consent: "Verified", csr: "Sarah Jenkins", created: "2026-08-11 15:40" },
+      { id: "LD-111", name: "Bilal Ahmed", contact: "+92 344 7788990", email: "bilal.ahmed@yahoo.com", source: "Direct Referral", programme: "Basic Literacy", stage: "Converted", reason: "Foundations Plan (AEN-706)", nextAction: "Trainer Assigned", expectedValue: "PKR 18,000", consent: "Verified", csr: "Sarah Jenkins", created: "2026-08-09 10:15" },
+      { id: "LD-112", name: "Farhan Malik", contact: "+92 321 9900112", email: "farhan.m@gmail.com", source: "Facebook Ads", programme: "Vocational Technology", stage: "Lost", reason: "Schedule conflict with evening job shift", nextAction: "Follow-up in Q4 for weekend batch", expectedValue: "PKR 35,000", consent: "Declined", csr: "Sarah Jenkins", created: "2026-08-07 16:20" },
+      { id: "LD-113", name: "Taimoor Shah", contact: "+92 333 5566778", email: "taimoor.s@hotmail.com", source: "Google Search", programme: "K-12 Grade 8 Math", stage: "Lost", reason: "Unresponsive after 4 contact attempts", nextAction: "Archived lead / Re-engage next term", expectedValue: "PKR 32,000", consent: "Pending", csr: "Sarah Jenkins", created: "2026-08-06 14:10" },
+      { id: "LD-114", name: "Zainab Noor", contact: "+92 305 3344556", email: "zainab.n@gmail.com", source: "Web Portal", programme: "Basic Literacy", stage: "New", reason: "Web Consultation Form", nextAction: "Introductory Call & Assessment", expectedValue: "PKR 18,000", consent: "Pending", csr: "Sarah Jenkins", created: "2026-08-16 12:05" },
+      { id: "LD-115", name: "Hamza Qureshi", contact: "+92 313 7788112", email: "hamza.q@live.com", source: "Facebook Ads", programme: "Vocational Technology", stage: "Qualified", reason: "Placement 88% - Web Dev Interest", nextAction: "Schedule Live Trial Session", expectedValue: "PKR 35,000", consent: "Verified", csr: "Sarah Jenkins", created: "2026-08-15 16:30" },
+      { id: "LD-116", name: "Nida Yasmeen", contact: "+92 324 2233889", email: "nida.y@gmail.com", source: "Direct Referral", programme: "Applied Numeracy", stage: "Qualified", reason: "Assessment Level 2 Confirmed", nextAction: "Trial Consultation Booking", expectedValue: "PKR 24,000", consent: "Verified", csr: "Sarah Jenkins", created: "2026-08-14 18:00" }
     ],
     followups: [
       { id: "FLP-301", leadId: "LD-101", leadName: "Zubair Hashmi", contact: "+92 300 4567890", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Today 14:00 PKT", type: "Phone Call", status: "Due", history: "Inquiry submitted 2h ago. Needs 1:1 adult literacy details.", nextAction: "Call to confirm availability and placement test." },
@@ -2455,7 +2463,9 @@ const db = {
       { id: "FLP-305", leadId: "LD-107", leadName: "Usman Raza", contact: "+92 300 7788991", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "Tomorrow 11:00 PKT", type: "Introductory Call", status: "Upcoming", history: "Inquiry via web form.", nextAction: "Call to introduce Vocational Web Track." },
       { id: "FLP-306", leadId: "LD-108", leadName: "Saima Bano", contact: "+92 322 4455667", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Tomorrow 15:00 PKT", type: "Phone Call", status: "Upcoming", history: "Initial message sent.", nextAction: "Follow-up on WhatsApp reply." },
       { id: "FLP-307", leadId: "LD-105", leadName: "Danish Qureshi", contact: "+92 301 2233445", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "2026-08-11", type: "Post-Trial Conversion", status: "Completed", history: "Trial completed successfully. Enrolment verified.", nextAction: "Enrolment confirmed." },
-      { id: "FLP-308", leadId: "LD-106", leadName: "Hina Altaf", contact: "+92 312 6677889", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "2026-08-09", type: "Phone Call", status: "No Response", history: "3 contact attempts made over 5 days.", nextAction: "Marked lost / re-engage later." }
+      { id: "FLP-308", leadId: "LD-106", leadName: "Hina Altaf", contact: "+92 312 6677889", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "2026-08-09", type: "Phone Call", status: "No Response", history: "3 contact attempts made over 5 days.", nextAction: "Marked lost / re-engage later." },
+      { id: "FLP-309", leadId: "LD-114", leadName: "Zainab Noor", contact: "+92 305 3344556", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Today 17:15 PKT", type: "Phone Call", status: "Due", history: "Web intake form submitted today.", nextAction: "Introductory evaluation call." },
+      { id: "FLP-310", leadId: "LD-115", leadName: "Hamza Qureshi", contact: "+92 313 7788112", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "Tomorrow 16:00 PKT", type: "Trial Scheduling", status: "Upcoming", history: "Qualified score 88%.", nextAction: "Book slot with Trainer Sara Javed." }
     ],
     trials: [
       { id: "TRL-501", leadId: "LD-103", prospect: "Kamran Siddiqui", course: "Vocational Technology", placementScore: "82%", consent: "Verified", csr: "Sarah Jenkins", slot: "Today 16:00 - 16:45", trainer: "Sara Javed", room: "https://ihs.daily.co/trial-501", attendance: "Pending Join", status: "Scheduled", outcome: "Pending Delivery" },
@@ -2463,7 +2473,9 @@ const db = {
       { id: "TRL-503", leadId: "LD-101", prospect: "Zubair Hashmi", course: "Basic Literacy", placementScore: "74%", consent: "Pending", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Unassigned", room: "", attendance: "Not Scheduled", status: "Ready for Scheduling", outcome: "Awaiting Schedule" },
       { id: "TRL-504", leadId: "LD-102", prospect: "Mariam Tariq", course: "Applied Numeracy", placementScore: "Pending", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Unassigned", room: "", attendance: "Not Scheduled", status: "Qualification", outcome: "Needs Placement" },
       { id: "TRL-505", leadId: "LD-105", prospect: "Danish Qureshi", course: "Basic Literacy", placementScore: "85%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-10 14:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-505", attendance: "Completed (45m/45m)", status: "Completed", outcome: "High Interest -> Converted" },
-      { id: "TRL-506", leadId: "LD-106", prospect: "Hina Altaf", course: "Applied Numeracy", placementScore: "68%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-08 15:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-506", attendance: "No-Show (Learner)", status: "No-Show", outcome: "Did not attend" }
+      { id: "TRL-506", leadId: "LD-106", prospect: "Hina Altaf", course: "Applied Numeracy", placementScore: "68%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-08 15:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-506", attendance: "No-Show (Learner)", status: "No-Show", outcome: "Did not attend" },
+      { id: "TRL-507", leadId: "LD-115", prospect: "Hamza Qureshi", course: "Vocational Technology", placementScore: "88%", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Sara Javed", room: "", attendance: "Not Scheduled", status: "Ready for Scheduling", outcome: "Awaiting Schedule" },
+      { id: "TRL-508", leadId: "LD-116", prospect: "Nida Yasmeen", course: "Applied Numeracy", placementScore: "80%", consent: "Verified", csr: "Sarah Jenkins", slot: "Saturday 14:00 - 14:45", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-508", attendance: "Scheduled", status: "Scheduled", outcome: "Pending Delivery" }
     ],
     enrolments: [
       { id: "AEN-701", leadId: "LD-103", prospect: "Kamran Siddiqui", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", paymentStatus: "Awaiting Submission", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Conversion Opportunity" },
@@ -2471,7 +2483,8 @@ const db = {
       { id: "AEN-703", leadId: "LD-105", prospect: "Danish Qureshi", programme: "Basic Literacy", membership: "Foundations 1:1 Plan", amount: "PKR 18,000", paymentStatus: "Verified & Approved", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Active Enrolment" },
       { id: "AEN-704", leadId: "LD-109", prospect: "Zaid Khan", programme: "Basic Literacy", membership: "Foundations 1:1 Plan", amount: "PKR 18,000", paymentStatus: "Payment Under Review", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Pending Activation" },
       { id: "AEN-705", leadId: "LD-110", prospect: "Areeba Siddiqui", programme: "Applied Numeracy", membership: "Group Cohort Plan", amount: "PKR 24,000", paymentStatus: "Payment Under Review", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Pending Activation" },
-      { id: "AEN-706", leadId: "LD-111", prospect: "Bilal Ahmed", programme: "Basic Literacy", membership: "One-to-One Plan", amount: "PKR 18,000", paymentStatus: "Verified & Approved", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Active Enrolment" }
+      { id: "AEN-706", leadId: "LD-111", prospect: "Bilal Ahmed", programme: "Basic Literacy", membership: "One-to-One Plan", amount: "PKR 18,000", paymentStatus: "Verified & Approved", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Active Enrolment" },
+      { id: "AEN-707", leadId: "LD-115", prospect: "Hamza Qureshi", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", paymentStatus: "Conversion Pitch Dispatched", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Conversion Opportunity" }
     ],
     payments: [
       { id: "PAY-801", learner: "Zaid Khan", payer: "Muhammad Khan (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-9823104", receiptChecksum: "sha256:7f3a88019...", receiptFile: "meezan_slip_801.pdf", age: "1h ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
@@ -18007,6 +18020,45 @@ const RenderEngine = {
       `;
     }).join("");
 
+    let toolbarActions = "";
+    if (config.dataType === "leads") {
+      toolbarActions = `
+        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewLeadModal()"><i data-lucide="user-plus"></i> New Prospect</button>
+        ${route === 'csr-leads-new' ? `<button class="btn btn-secondary btn-xs" onclick="Actions.claimAllCsrLeads()"><i data-lucide="check-check"></i> Claim All Inbound</button>` : ''}
+        ${route === 'csr-leads-qualified' ? `<button class="btn btn-secondary btn-xs" onclick="Actions.openCsrScheduleTrialModal()"><i data-lucide="calendar-plus"></i> Schedule Trial</button>` : ''}
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Leads</button>
+      `;
+    } else if (config.dataType === "followups") {
+      toolbarActions = `
+        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewFollowupModal()"><i data-lucide="alarm-clock"></i> New Follow-up Task</button>
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Tasks</button>
+      `;
+    } else if (config.dataType === "trials") {
+      toolbarActions = `
+        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal()"><i data-lucide="calendar-plus"></i> Schedule Trial Session</button>
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Trials</button>
+      `;
+    } else if (config.dataType === "enrolments") {
+      toolbarActions = `
+        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewAssistedEnrolmentModal()"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Orders</button>
+      `;
+    } else if (config.dataType === "payments") {
+      toolbarActions = `
+        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Bank Slip</button>
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Slips</button>
+      `;
+    } else if (config.dataType === "commissions") {
+      toolbarActions = `
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Commission Report</button>
+      `;
+    } else if (config.dataType === "cases") {
+      toolbarActions = `
+        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewCaseModal()"><i data-lucide="message-square-plus"></i> Log Customer Ticket</button>
+        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Tickets</button>
+      `;
+    }
+
     container.innerHTML = `
       <div class="coo-workspace-view">
         <header class="coo-workspace-header">
@@ -18030,7 +18082,7 @@ const RenderEngine = {
 
         <section class="module-toolbar">
           <div class="search-filter-row">
-            <input type="text" id="csr-workspace-search" class="form-control" placeholder="Search by prospect name, ID, status, or keyword...">
+            <input type="text" id="csr-workspace-search" class="form-control" placeholder="Search by prospect name, ID, course, or keyword...">
             <select id="csr-workspace-status" class="form-control">
               <option value="">All Statuses</option>
               <option value="New">New</option>
@@ -18040,20 +18092,21 @@ const RenderEngine = {
               <option value="Scheduled">Scheduled</option>
               <option value="Approved">Approved / Converted</option>
               <option value="Payable">Payable</option>
+              <option value="Lost">Lost / Disqualified</option>
             </select>
           </div>
           <div class="button-row">
-            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('View Saved', 'Filter criteria saved to CSR preset.', 'info')"><i data-lucide="bookmark"></i> Save view</button>
+            ${toolbarActions}
           </div>
         </section>
 
         <div class="table-container" style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
           <table class="coo-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
             <thead>
-              ${this.csrTableHeaders(config.dataType)}
+              ${this.csrTableHeaders(config.dataType, route)}
             </thead>
             <tbody id="csr-table-body">
-              ${this.csrTableRows(config.dataType, items)}
+              ${this.csrTableRows(config.dataType, items, route)}
             </tbody>
           </table>
         </div>
@@ -18077,7 +18130,7 @@ const RenderEngine = {
 
       const tbody = document.getElementById("csr-table-body");
       if (tbody) {
-        tbody.innerHTML = this.csrTableRows(config.dataType, filtered);
+        tbody.innerHTML = this.csrTableRows(config.dataType, filtered, route);
         window.lucide?.createIcons();
       }
     };
@@ -18088,9 +18141,21 @@ const RenderEngine = {
     window.lucide?.createIcons();
   },
 
-  csrTableHeaders(dataType) {
+  csrTableHeaders(dataType, route = "") {
     if (dataType === "leads") {
-      return `<tr><th>Prospect / ID</th><th>Programme / Interest</th><th>Source / Campaign</th><th>Expected Value</th><th>Consent</th><th>Stage</th><th>Actions</th></tr>`;
+      if (route === "csr-leads-new") {
+        return `<tr><th>New Inquiry / ID</th><th>Programme Track</th><th>Inbound Channel</th><th>Expected Value</th><th>Intake Timestamp</th><th>Consent Status</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-leads-qualified") {
+        return `<tr><th>Qualified Prospect / ID</th><th>Programme Track</th><th>Placement Test</th><th>Expected Value</th><th>Guardian Consent</th><th>Readiness State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-leads-converted") {
+        return `<tr><th>Enrolled Learner / ID</th><th>Enrolled Programme</th><th>Sales Value</th><th>Attributed CSR</th><th>Conversion Date</th><th>Status</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-leads-lost") {
+        return `<tr><th>Prospect / ID</th><th>Programme Track</th><th>Audited Lost Reason</th><th>Expected Value</th><th>Lost Date & Re-touch</th><th>Stage</th><th>Actions</th></tr>`;
+      }
+      return `<tr><th>Prospect / ID</th><th>Programme / Interest</th><th>Source / Campaign</th><th>Expected Value</th><th>Consent & Score</th><th>Stage</th><th>Actions</th></tr>`;
     }
     if (dataType === "followups") {
       return `<tr><th>Lead / Contact</th><th>Programme</th><th>Due Date & Time</th><th>Task Type</th><th>History & Next Step</th><th>Status</th><th>Actions</th></tr>`;
@@ -18113,7 +18178,7 @@ const RenderEngine = {
     return `<tr><th>Record ID</th><th>Title</th><th>Owner</th><th>Detail</th><th>Timing</th><th>State</th><th>Actions</th></tr>`;
   },
 
-  csrTableRows(dataType, items) {
+  csrTableRows(dataType, items, route = "") {
     if (!items.length) {
       return `<tr class="table-empty-row"><td colspan="7"><div class="table-empty-state"><strong>No matching records found</strong><span>Adjust search keywords or scope filters.</span></div></td></tr>`;
     }
@@ -18125,6 +18190,87 @@ const RenderEngine = {
       if (item.status === "Rejected / Correction" || item.status === "No-Show" || item.status === "Reversed" || item.stage === "Lost" || (item.priority === "High")) badgeClass = "badge-error";
 
       if (dataType === "leads") {
+        if (route === "csr-leads-new") {
+          return `
+            <tr>
+              <td><strong>${item.name}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong><span class="table-subline">${item.email}</span></td>
+              <td>${item.source}<span class="table-subline">Assigned: ${item.csr}</span></td>
+              <td><strong>${item.expectedValue}</strong></td>
+              <td>${item.created}</td>
+              <td><span class="badge ${item.consent && item.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${item.consent && item.consent.includes('Verified') ? 'Verified' : 'Pending'}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrContactLead('${item.id}')"><i data-lucide="phone-call"></i> First Contact</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.claimCsrLead('${item.id}')"><i data-lucide="user-check"></i> Claim Lead</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> View Lead</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-leads-qualified") {
+          return `
+            <tr>
+              <td><strong>${item.name}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong><span class="table-subline">${item.email}</span></td>
+              <td><span class="badge badge-success">82% Assessment</span><span class="table-subline">Level 1 Recommended</span></td>
+              <td><strong>${item.expectedValue}</strong></td>
+              <td><span class="badge badge-success">Verified</span><span class="table-subline">GDPR Confirmed</span></td>
+              <td><span class="badge badge-warning">Ready for Trial</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar-plus"></i> Book Trial Slot</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrDirectCheckout('${item.id}')"><i data-lucide="shopping-cart"></i> Direct Order</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> Lead File</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-leads-converted") {
+          return `
+            <tr>
+              <td><strong>${item.name}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong><span class="table-subline">${item.email}</span></td>
+              <td><strong class="success-text">${item.expectedValue}</strong><span class="table-subline">Verified Receipt</span></td>
+              <td><span class="badge badge-success">${item.csr} (100%)</span></td>
+              <td>${item.created}</td>
+              <td><span class="badge badge-success">Active Enrolled</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrLeadEnrolment('${item.id}')"><i data-lucide="shopping-bag"></i> View Order</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLeadCommission('${item.id}')"><i data-lucide="badge-percent"></i> Commission</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> Profile</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-leads-lost") {
+          return `
+            <tr>
+              <td><strong>${item.name}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong><span class="table-subline">${item.email}</span></td>
+              <td><strong class="error-text">${item.reason}</strong></td>
+              <td>${item.expectedValue}</td>
+              <td>${item.created}<span class="table-subline">${item.nextAction}</span></td>
+              <td><span class="badge badge-error">Disqualified</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.reopenCsrLead('${item.id}')"><i data-lucide="rotate-ccw"></i> Re-engage Lead</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrEditLostReason('${item.id}')"><i data-lucide="edit-3"></i> Edit Reason</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> Audit Log</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        // Default csr-leads-my view
         return `
           <tr>
             <td><strong>${item.name}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
@@ -18135,9 +18281,23 @@ const RenderEngine = {
             <td><span class="badge ${badgeClass}">${item.stage}</span></td>
             <td>
               <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                ${item.stage === 'New' || item.stage === 'Contacted' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrContactLead('${item.id}')"><i data-lucide="phone"></i> Log Contact</button>` : ''}
-                ${item.stage === 'Qualified' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar"></i> Schedule Trial</button>` : ''}
-                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> View</button>
+                ${item.stage === 'New' || item.stage === 'Contacted' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrContactLead('${item.id}')"><i data-lucide="phone"></i> Log Contact</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrDisqualifyModal('${item.id}')"><i data-lucide="x-circle"></i> Disqualify</button>
+                ` : ''}
+                ${item.stage === 'Qualified' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar"></i> Schedule Trial</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrDirectCheckout('${item.id}')"><i data-lucide="shopping-cart"></i> Assist Order</button>
+                ` : ''}
+                ${item.stage === 'Converted' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrLeadEnrolment('${item.id}')"><i data-lucide="badge-check"></i> Enrolment Order</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLeadCommission('${item.id}')"><i data-lucide="badge-percent"></i> Commission</button>
+                ` : ''}
+                ${item.stage === 'Lost' ? `
+                  <button class="btn btn-primary btn-xs" onclick="Actions.reopenCsrLead('${item.id}')"><i data-lucide="rotate-ccw"></i> Re-engage</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrEditLostReason('${item.id}')"><i data-lucide="edit-3"></i> Edit Reason</button>
+                ` : ''}
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.id}')"><i data-lucide="eye"></i> Lead File</button>
               </div>
             </td>
           </tr>
@@ -27678,43 +27838,270 @@ document.addEventListener("DOMContentLoaded", () => {
   // CSR (CUSTOMER SERVICE & SALES) INTERACTIVE WORKFLOW ACTIONS
   // ==========================================================================
 
+  // ==========================================================================
+  // CSR (CUSTOMER SERVICE & SALES) INTERACTIVE WORKFLOW ACTIONS
+  // ==========================================================================
+
   Actions.openCsrLead = function(id) {
     const lead = db.csrData.leads.find(l => l.id === id);
     if (!lead) return;
 
+    let stageButtons = "";
+    if (lead.stage === "New" || lead.stage === "Contacted") {
+      stageButtons = `
+        <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrContactLead('${lead.id}')"><i data-lucide="phone"></i> Log Contact</button>
+        <button class="btn btn-secondary" onclick="Actions.qualifyCsrLeadDirect('${lead.id}')"><i data-lucide="award"></i> Mark Qualified</button>
+        <button class="btn btn-error" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrDisqualifyModal('${lead.id}')"><i data-lucide="x-circle"></i> Disqualify</button>
+      `;
+    } else if (lead.stage === "Qualified") {
+      stageButtons = `
+        <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrScheduleTrialModal('${lead.id}')"><i data-lucide="calendar"></i> Schedule Trial</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrDirectCheckout('${lead.id}')"><i data-lucide="shopping-cart"></i> Direct Order</button>
+        <button class="btn btn-error" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrDisqualifyModal('${lead.id}')"><i data-lucide="x-circle"></i> Disqualify</button>
+      `;
+    } else if (lead.stage === "Converted") {
+      stageButtons = `
+        <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrLeadEnrolment('${lead.id}')"><i data-lucide="shopping-bag"></i> Enrolment Order</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrLeadCommission('${lead.id}')"><i data-lucide="badge-percent"></i> Commission Record</button>
+      `;
+    } else if (lead.stage === "Lost") {
+      stageButtons = `
+        <button class="btn btn-primary" onclick="Actions.reopenCsrLead('${lead.id}')"><i data-lucide="rotate-ccw"></i> Re-engage Lead</button>
+        <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrEditLostReason('${lead.id}')"><i data-lucide="edit-3"></i> Edit Reason</button>
+      `;
+    }
+
     const modal = document.getElementById("generic-modal");
-    document.getElementById("modal-title").textContent = `Prospect Record: ${lead.name} (${lead.id})`;
+    document.getElementById("modal-title").textContent = `Prospect File: ${lead.name} (${lead.id})`;
     document.getElementById("modal-body").innerHTML = `
       <div class="om-flow-dialog">
         <div class="om-flow-banner">
           <i data-lucide="user-check"></i>
           <div>
-            <strong>LEAD PROFILE & INTAKE STATE</strong>
-            <p>Lead ≠ Learner Account. Contact history and qualification audit remain permanently preserved.</p>
+            <strong>LEAD PROFILE & COMMERCIAL INTAKE STATE (CSR-001)</strong>
+            <p>Lead ≠ Learner Account. Contact history, qualification audit, and source attribution remain permanently preserved.</p>
           </div>
         </div>
 
         <div class="om-flow-grid">
           <div class="om-flow-metric"><span>Prospect Name</span><strong>${lead.name}</strong><small>${lead.email}</small></div>
-          <div class="om-flow-metric"><span>Contact Number</span><strong>${lead.contact}</strong><small>WhatsApp active</small></div>
-          <div class="om-flow-metric"><span>Programme Interest</span><strong>${lead.programme}</strong><small>Expected: ${lead.expectedValue}</small></div>
+          <div class="om-flow-metric"><span>Contact Number</span><strong>${lead.contact}</strong><small>WhatsApp Active</small></div>
+          <div class="om-flow-metric"><span>Programme Track</span><strong>${lead.programme}</strong><small>Potential: ${lead.expectedValue}</small></div>
           <div class="om-flow-metric"><span>Inbound Source</span><strong>${lead.source}</strong><small>${lead.created}</small></div>
         </div>
 
         <div class="om-flow-evidence-box">
-          <h5><i data-lucide="history"></i> Interaction & Contact History</h5>
-          <p><strong>Current Stage:</strong> <span class="badge badge-warning">${lead.stage}</span> · <strong>Stage Reason:</strong> ${lead.reason}</p>
+          <h5><i data-lucide="history"></i> Interaction & Qualification Timeline</h5>
+          <p><strong>Current Stage:</strong> <span class="badge ${lead.stage === 'Converted' ? 'badge-success' : lead.stage === 'Lost' ? 'badge-error' : 'badge-warning'}">${lead.stage}</span> · <strong>Reason/Notes:</strong> ${lead.reason}</p>
           <p><strong>Next Recommended Action:</strong> ${lead.nextAction}</p>
-          <p><strong>Consent Status:</strong> <span class="badge ${lead.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${lead.consent}</span></p>
+          <p><strong>Attributed CSR:</strong> <strong>${lead.csr || 'Sarah Jenkins'}</strong> · <strong>Consent:</strong> <span class="badge ${lead.consent && lead.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${lead.consent}</span></p>
         </div>
       </div>
     `;
     document.getElementById("modal-footer").innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
-      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrContactLead('${lead.id}')">Log Contact Activity</button>
+      ${stageButtons}
     `;
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
+  };
+
+  Actions.qualifyCsrLeadDirect = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    lead.stage = "Qualified";
+    lead.consent = "Verified";
+    lead.reason = "Placement assessment completed (Score 82%). Level 1 confirmed.";
+    lead.nextAction = "Schedule Trial Consultation";
+
+    Actions.audit("CSR_LEAD_QUALIFIED", `Qualified prospect ${lead.name} (${lead.id}) with verified consent.`, "Low");
+    Notifications.push("Lead Qualified", `${lead.name} moved to Qualified Prospects queue.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrDisqualifyModal = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Disqualify Prospect: ${lead.name}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="alert-circle"></i>
+          <div>
+            <strong>AUDITED LEAD DISQUALIFICATION (CSR-008)</strong>
+            <p>Records reason and sets future re-engagement date without deleting history.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Disqualification Reason *</label>
+          <select id="csr-disqualify-reason" class="form-control">
+            <option value="Price sensitivity / shifted to Q4">Price sensitivity / Budget constraints (Target Q4 re-touch)</option>
+            <option value="Schedule mismatch with employment/school">Schedule mismatch with job shift or school</option>
+            <option value="Unresponsive after 4+ contact attempts">Unresponsive after multiple attempts</option>
+            <option value="Duplicate inquiry record">Duplicate inquiry</option>
+            <option value="Not interested in online format">Prefers physical classroom</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Re-engagement Target Date</label>
+          <input type="text" id="csr-disqualify-retouch" class="form-control" value="Re-engage Nov 2026">
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-error" onclick="Actions.submitCsrDisqualify('${lead.id}')">Confirm Disqualification</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrDisqualify = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    const reason = document.getElementById("csr-disqualify-reason")?.value || "Disqualified by CSR";
+    const retouch = document.getElementById("csr-disqualify-retouch")?.value || "Archive";
+
+    lead.stage = "Lost";
+    lead.reason = reason;
+    lead.nextAction = retouch;
+
+    Actions.audit("CSR_LEAD_DISQUALIFIED", `Disqualified lead ${lead.id} (${lead.name}): ${reason}.`, "Medium");
+    Notifications.push("Lead Disqualified", `${lead.name} moved to Lost & Disqualified archive.`, "warning");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.reopenCsrLead = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    lead.stage = "Contacted";
+    lead.reason = "Re-engaged from Lost archive for follow-up.";
+    lead.nextAction = "Re-engagement Consultation Call";
+
+    Actions.audit("CSR_LEAD_REOPENED", `Re-opened lost prospect ${lead.name} (${lead.id}).`, "Low");
+    Notifications.push("Lead Re-engaged", `${lead.name} restored to active outreach pipeline.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrEditLostReason = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Edit Disqualification Reason: ${lead.name}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="form-group">
+        <label>Audited Lost Reason Note</label>
+        <input type="text" id="csr-edit-lost-reason-input" class="form-control" value="${lead.reason}">
+      </div>
+      <div class="form-group">
+        <label>Re-engagement Target / Next Action</label>
+        <input type="text" id="csr-edit-lost-action-input" class="form-control" value="${lead.nextAction}">
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCsrLostReason('${lead.id}')">Save Notes</button>
+    `;
+    modal.classList.remove("hidden");
+  };
+
+  Actions.saveCsrLostReason = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    const reason = document.getElementById("csr-edit-lost-reason-input").value.trim();
+    const action = document.getElementById("csr-edit-lost-action-input").value.trim();
+
+    if (reason) lead.reason = reason;
+    if (action) lead.nextAction = action;
+
+    Actions.audit("CSR_LOST_REASON_UPDATED", `Updated lost reason for ${lead.id}.`, "Low");
+    Notifications.push("Notes Saved", `Disqualification record updated.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.claimCsrLead = function(id) {
+    const lead = db.csrData.leads.find(l => l.id === id);
+    if (!lead) return;
+
+    lead.csr = "Sarah Jenkins";
+    if (lead.stage === "New") lead.stage = "Contacted";
+    lead.nextAction = "Introductory Consultation Scheduled";
+
+    Actions.audit("CSR_LEAD_CLAIMED", `Assigned lead ${lead.id} to Sarah Jenkins portfolio.`, "Low");
+    Notifications.push("Lead Claimed", `${lead.name} is now assigned to your active portfolio.`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.claimAllCsrLeads = function() {
+    let claimed = 0;
+    (db.csrData.leads || []).forEach(l => {
+      if (l.stage === "New" && l.csr !== "Sarah Jenkins") {
+        l.csr = "Sarah Jenkins";
+        l.stage = "Contacted";
+        l.nextAction = "Initial Contact in Progress";
+        claimed++;
+      }
+    });
+
+    Actions.audit("CSR_ALL_INBOUND_CLAIMED", `Claimed ${claimed} new inbound prospects.`, "Medium");
+    Notifications.push("Inbound Claimed", `Successfully claimed ${claimed} inbound prospects to your queue.`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrDirectCheckout = function(leadId) {
+    const lead = db.csrData.leads.find(l => l.id === leadId) || db.csrData.leads[0];
+    let existing = (db.csrData.enrolments || []).find(e => e.leadId === lead.id);
+    if (!existing) {
+      const newEnrId = "AEN-" + (700 + db.csrData.enrolments.length + 1);
+      existing = {
+        id: newEnrId,
+        leadId: lead.id,
+        prospect: lead.name,
+        programme: lead.programme,
+        membership: lead.programme.includes("Vocational") ? "Standard Cohort (3 Months)" : "Foundations 1:1 Plan",
+        amount: lead.expectedValue || "PKR 18,000",
+        paymentStatus: "Conversion Opportunity",
+        csr: "Sarah Jenkins",
+        attribution: "Sarah Jenkins (100%)",
+        status: "Conversion Opportunity"
+      };
+      db.csrData.enrolments.unshift(existing);
+    }
+    Actions.openCsrAssistedEnrolment(existing.id);
+  };
+
+  Actions.openCsrLeadEnrolment = function(leadId) {
+    const enr = (db.csrData.enrolments || []).find(e => e.leadId === leadId) || db.csrData.enrolments[0];
+    Actions.openCsrAssistedEnrolment(enr.id);
+  };
+
+  Actions.openCsrLeadCommission = function(leadId) {
+    const com = (db.csrData.commissions || []).find(c => c.enrolmentId.includes(leadId) || c.learner.includes(leadId)) || db.csrData.commissions[0];
+    Actions.openCsrCommission(com.id);
   };
 
   Actions.openCsrNewLeadModal = function() {
@@ -27872,7 +28259,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   Actions.openCsrScheduleTrialModal = function(id) {
-    const lead = db.csrData.leads.find(l => l.id === id) || db.csrData.leads[0];
+    const lead = (id ? db.csrData.leads.find(l => l.id === id) : null) || db.csrData.leads.find(l => l.stage === "Qualified") || db.csrData.leads[0];
     const modal = document.getElementById("generic-modal");
     document.getElementById("modal-title").textContent = `Schedule Trial Session (FLOW-007): ${lead.name}`;
     document.getElementById("modal-body").innerHTML = `
@@ -28049,7 +28436,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!trial) return;
 
     const outcomeVal = document.getElementById("csr-outcome-select")?.value || "Completed - High Interest";
-    const notes = document.getElementById("csr-outcome-notes")?.value || "Trial completed successfully.";
 
     if (outcomeVal.includes("No-Show")) {
       trial.status = "No-Show";
@@ -28063,7 +28449,6 @@ document.addEventListener("DOMContentLoaded", () => {
       trial.attendance = "Attended (45 mins)";
 
       if (outcomeVal.includes("High Interest")) {
-        // Automatically check if enrolment exists or create conversion opportunity
         let existing = (db.csrData.enrolments || []).find(e => e.leadId === trial.leadId);
         if (!existing) {
           const newEnrId = "AEN-" + (700 + db.csrData.enrolments.length + 1);
@@ -28149,6 +28534,73 @@ document.addEventListener("DOMContentLoaded", () => {
     RenderEngine.csrDashboard();
   };
 
+  Actions.openCsrNewFollowupModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Schedule New Follow-up Touchpoint";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="form-group">
+        <label>Select Prospect</label>
+        <select id="csr-new-flp-lead" class="form-control">
+          ${(db.csrData.leads || []).map(l => `<option value="${l.id}">${l.name} (${l.id} - ${l.programme})</option>`).join("")}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Task Type</label>
+        <select id="csr-new-flp-type" class="form-control">
+          <option value="Phone Call">Phone Call</option>
+          <option value="WhatsApp / Email">WhatsApp / Email</option>
+          <option value="Trial Confirmation">Trial Confirmation</option>
+          <option value="Parent Consultation">Parent Consultation</option>
+          <option value="Post-Trial Conversion">Post-Trial Conversion</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Scheduled Due Timing</label>
+        <input type="text" id="csr-new-flp-due" class="form-control" value="Today 17:30 PKT">
+      </div>
+      <div class="form-group">
+        <label>Objective & Instructions</label>
+        <textarea id="csr-new-flp-notes" class="form-control" rows="2" placeholder="Contact prospect to review curriculum tracks and answer payment questions..."></textarea>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveNewCsrFollowup()">Schedule Follow-up</button>
+    `;
+    modal.classList.remove("hidden");
+  };
+
+  Actions.saveNewCsrFollowup = function() {
+    const leadId = document.getElementById("csr-new-flp-lead").value;
+    const lead = db.csrData.leads.find(l => l.id === leadId) || db.csrData.leads[0];
+    const type = document.getElementById("csr-new-flp-type").value;
+    const due = document.getElementById("csr-new-flp-due").value.trim();
+    const notes = document.getElementById("csr-new-flp-notes").value.trim();
+
+    const newId = "FLP-" + (300 + db.csrData.followups.length + 1);
+    const newFlp = {
+      id: newId,
+      leadId: lead.id,
+      leadName: lead.name,
+      contact: lead.contact,
+      programme: lead.programme,
+      csr: "Sarah Jenkins",
+      dueDate: due || "Today",
+      type,
+      status: "Due",
+      history: notes || "Custom scheduled touchpoint.",
+      nextAction: "Execute outreach"
+    };
+
+    db.csrData.followups.unshift(newFlp);
+    Actions.audit("CSR_FOLLOWUP_SCHEDULED", `Scheduled follow-up ${newId} for ${lead.name}.`, "Low");
+    Notifications.push("Follow-up Scheduled", `Touchpoint added to your Due Today queue.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
   Actions.openCsrAssistedEnrolment = function(id) {
     const enr = db.csrData.enrolments.find(e => e.id === id);
     if (!enr) return;
@@ -28204,6 +28656,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Actions.audit("CSR_ASSISTED_ORDER_INITIATED", `Initiated membership order ${enr.id} for ${enr.prospect} with locked attribution.`, "Medium");
     Notifications.push("Order Initiated", `Assisted order created. Bank instructions dispatched to learner.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrNewAssistedEnrolmentModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Initiate New Assisted Enrolment";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="form-group">
+        <label>Select Prospect</label>
+        <select id="csr-new-assist-lead" class="form-control">
+          ${(db.csrData.leads || []).filter(l => l.stage !== 'Lost').map(l => `<option value="${l.id}">${l.name} (${l.id} - ${l.programme})</option>`).join("")}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Membership / Tuition Plan</label>
+        <select id="csr-new-assist-plan" class="form-control">
+          <option value="Foundations 1:1 Plan (PKR 18,000)">Foundations 1:1 Plan (PKR 18,000)</option>
+          <option value="Standard Cohort Plan (PKR 24,000)">Standard Cohort Plan (PKR 24,000)</option>
+          <option value="Vocational 3-Month Track (PKR 35,000)">Vocational 3-Month Track (PKR 35,000)</option>
+          <option value="K-12 Full Academic Term (PKR 32,000)">K-12 Full Academic Term (PKR 32,000)</option>
+        </select>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitNewCsrAssistedEnrolment()">Generate Order Checkout</button>
+    `;
+    modal.classList.remove("hidden");
+  };
+
+  Actions.submitNewCsrAssistedEnrolment = function() {
+    const leadId = document.getElementById("csr-new-assist-lead").value;
+    const lead = db.csrData.leads.find(l => l.id === leadId) || db.csrData.leads[0];
+    const plan = document.getElementById("csr-new-assist-plan").value;
+
+    const newId = "AEN-" + (700 + db.csrData.enrolments.length + 1);
+    const newEnr = {
+      id: newId,
+      leadId: lead.id,
+      prospect: lead.name,
+      programme: lead.programme,
+      membership: plan,
+      amount: plan.includes("35,000") ? "PKR 35,000" : plan.includes("32,000") ? "PKR 32,000" : plan.includes("24,000") ? "PKR 24,000" : "PKR 18,000",
+      paymentStatus: "Order Initiated",
+      csr: "Sarah Jenkins",
+      attribution: "Sarah Jenkins (100%)",
+      status: "Conversion Opportunity"
+    };
+
+    db.csrData.enrolments.unshift(newEnr);
+    Actions.audit("CSR_ASSISTED_ORDER_CREATED", `Created assisted enrolment order ${newId} for ${lead.name}.`, "Medium");
+    Notifications.push("Assisted Order Created", `Order link dispatched to ${lead.name}.`, "success");
 
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);
@@ -28274,6 +28781,75 @@ document.addEventListener("DOMContentLoaded", () => {
     pay.status = "Rejected / Correction";
     Actions.audit("CSR_PAYMENT_CORRECTION_REQUESTED", `Requested correction for payment ${pay.id}.`, "Medium");
     Notifications.push("Correction Requested", `Learner alerted to provide updated transfer slip.`, "warning");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrManualSlipUploadModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Upload Bank Deposit Slip for Verification";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="form-group">
+        <label>Learner Full Name</label>
+        <input type="text" id="csr-upload-learner" class="form-control" placeholder="e.g. Sana Mir">
+      </div>
+      <div class="form-group">
+        <label>Course / Programme</label>
+        <select id="csr-upload-course" class="form-control">
+          <option value="Basic Literacy Foundations">Basic Literacy Foundations</option>
+          <option value="Applied Numeracy Cohort">Applied Numeracy Cohort</option>
+          <option value="Vocational Technology">Vocational Technology</option>
+          <option value="K-12 Grade 8 Math">K-12 Grade 8 Math</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Deposit Amount (PKR)</label>
+        <input type="text" id="csr-upload-amount" class="form-control" value="PKR 18,000">
+      </div>
+      <div class="form-group">
+        <label>Deposit Channel & Bank Transaction ID</label>
+        <input type="text" id="csr-upload-ref" class="form-control" placeholder="Meezan Bank / TRX-992201">
+      </div>
+      <div class="form-group">
+        <label>Slip Image / PDF Document</label>
+        <input type="file" class="form-control">
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrManualSlipUpload()">Submit for Review</button>
+    `;
+    modal.classList.remove("hidden");
+  };
+
+  Actions.submitCsrManualSlipUpload = function() {
+    const learner = document.getElementById("csr-upload-learner").value.trim() || "New Payer";
+    const course = document.getElementById("csr-upload-course").value;
+    const amount = document.getElementById("csr-upload-amount").value.trim() || "PKR 18,000";
+    const ref = document.getElementById("csr-upload-ref").value.trim() || "BANK-DIRECT";
+
+    const newId = "PAY-" + (800 + db.csrData.payments.length + 1);
+    const newPay = {
+      id: newId,
+      learner,
+      payer: learner,
+      course,
+      submittedAmount: amount,
+      expectedAmount: amount,
+      channel: "Bank Transfer",
+      reference: ref,
+      receiptChecksum: "sha256:" + Math.random().toString(16).slice(2, 10),
+      receiptFile: `slip_${newId.toLowerCase()}.pdf`,
+      age: "Just now",
+      status: "Awaiting Review",
+      csr: "Sarah Jenkins"
+    };
+
+    db.csrData.payments.unshift(newPay);
+    Actions.audit("CSR_SLIP_UPLOADED", `Uploaded payment slip ${newId} for ${learner}.`, "Medium");
+    Notifications.push("Slip Uploaded", `Bank slip submitted to review queue.`, "success");
 
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);
@@ -28364,6 +28940,77 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);
     RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrNewCaseModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Log Inbound Customer Ticket";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="form-group">
+        <label>Customer / Prospect Name</label>
+        <input type="text" id="csr-new-case-name" class="form-control" placeholder="e.g. Zubair Hashmi">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="csr-new-case-cat" class="form-control">
+          <option value="Prospect Inquiry">Prospect Inquiry</option>
+          <option value="Trial Reschedule">Trial Reschedule</option>
+          <option value="Payment Inquiry">Payment Inquiry</option>
+          <option value="Enrolment Support">Enrolment Support</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="csr-new-case-pri" class="form-control">
+          <option value="Medium">Medium</option>
+          <option value="High">High (Urgent SLA)</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Subject & Details</label>
+        <textarea id="csr-new-case-sub" class="form-control" rows="2" placeholder="Customer asking for fee installment details..."></textarea>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitNewCsrCase()">Log Ticket</button>
+    `;
+    modal.classList.remove("hidden");
+  };
+
+  Actions.submitNewCsrCase = function() {
+    const name = document.getElementById("csr-new-case-name").value.trim() || "Anonymous Prospect";
+    const cat = document.getElementById("csr-new-case-cat").value;
+    const pri = document.getElementById("csr-new-case-pri").value;
+    const sub = document.getElementById("csr-new-case-sub").value.trim() || "Customer inquiry";
+
+    const newId = "CAS-" + (400 + db.csrData.cases.length + 1);
+    const newCase = {
+      id: newId,
+      subject: sub,
+      category: cat,
+      priority: pri,
+      sla: "2h 00m remaining",
+      prospect: name,
+      owner: "Sarah Jenkins",
+      status: "In Review"
+    };
+
+    db.csrData.cases.unshift(newCase);
+    Actions.audit("CSR_CASE_CREATED", `Logged customer support case ${newId} for ${name}.`, "Low");
+    Notifications.push("Ticket Created", `Inquiry ticket ${newId} logged with 2h SLA.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.exportCsrData = function(route) {
+    const config = csrRouteDefinitions[route];
+    const title = config ? config.title : "CSR Export";
+    Actions.audit("CSR_DATA_EXPORTED", `Exported verified records for ${title}.`, "Low");
+    Notifications.push("Export Generated", `Downloaded verified CSV dataset for ${title}.`, "success");
   };
 
 
