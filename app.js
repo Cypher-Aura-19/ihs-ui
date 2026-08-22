@@ -18204,6 +18204,403 @@ const RenderEngine = {
           </table>
         </div>
       `;
+    } else if (route === "om-course-runs") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Course Run ID & Period</th>
+                <th>Course Track & Version</th>
+                <th>Delivery Format</th>
+                <th>Lead Trainer & Standby</th>
+                <th>Enrolled / Capacity Cap</th>
+                <th>Daily.co Video Room</th>
+                <th>Run State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${c.id}</strong><br>
+                    <small style="color:var(--slate);">${c.startDate || '01 Aug 2026'} – ${c.endDate || '31 Oct 2026'}</small>
+                  </td>
+                  <td>
+                    <strong>${c.course}</strong><br>
+                    <small style="font-family:monospace; color:var(--primary);">${c.version || 'v7.0 (Active Master)'}</small>
+                  </td>
+                  <td><span class="badge badge-primary">${c.mode || 'Group Cohort'}</span></td>
+                  <td>
+                    <strong>${c.trainer}</strong><br>
+                    <small style="color:var(--slate);">Standby: Sara Javed</small>
+                  </td>
+                  <td>
+                    <strong>${c.enrolled} / ${c.capacity} Enrolled</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:110px; margin-top:4px; overflow:hidden;">
+                      <div style="background:${c.enrolled >= c.capacity ? '#dc2626' : 'var(--primary)'}; height:100%; width:${Math.min(100, (c.enrolled / c.capacity) * 100)}%;"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <a href="${c.room || '#'}" target="_blank" style="font-family:monospace; color:var(--primary); font-size:11.5px; text-decoration:underline;">${c.room || 'https://ihs.daily.co/crun'}</a><br>
+                    <small style="color:#166534; font-weight:600;">● WebRTC Room Active</small>
+                  </td>
+                  <td><span class="badge ${c.status.includes('Full') ? 'badge-error' : c.status === 'Active' ? 'badge-success' : 'badge-warning'}">${c.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${c.id}')"><i data-lucide="users"></i> Roster Explorer</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEditScheduleModal('${c.id}')"><i data-lucide="calendar"></i> Schedule</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-4088', '${c.id}')"><i data-lucide="arrow-right-left"></i> Transfer (FLOW-018)</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-cohorts-sections") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Section Code & Batch</th>
+                <th>Programme Track</th>
+                <th>Lead Primary Trainer</th>
+                <th>Weekly Cadence Slot</th>
+                <th>Seat Cap & Occupancy</th>
+                <th>Capacity Alert Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${c.id}</strong><br>
+                    <strong>${c.name}</strong>
+                  </td>
+                  <td><strong>${c.course}</strong><br><small style="color:var(--slate);">${c.version || 'v4.2'}</small></td>
+                  <td><strong>${c.trainer}</strong><br><small style="color:#166534;">Verified Available</small></td>
+                  <td><strong>${c.schedule}</strong></td>
+                  <td>
+                    <strong style="font-size:13.5px; color:${c.enrolled >= c.capacity ? '#dc2626' : 'var(--navy-medium)'};">${c.enrolled} / ${c.capacity} Seats</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:120px; margin-top:4px; overflow:hidden;">
+                      <div style="background:${c.enrolled >= c.capacity ? '#dc2626' : 'var(--primary)'}; height:100%; width:${Math.min(100, (c.enrolled / c.capacity) * 100)}%;"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge ${c.enrolled >= c.capacity ? 'badge-error' : 'badge-success'}">
+                      ${c.enrolled >= c.capacity ? 'At Max Capacity (Cap 10)' : 'Seats Open (' + (c.capacity - c.enrolled) + ' free)'}
+                    </span>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCapacityAdjustModal('${c.id}')"><i data-lucide="sliders"></i> Adjust Cap</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${c.id}')"><i data-lucide="users"></i> Section Roster</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-4090', '${c.id}')"><i data-lucide="arrow-right-left"></i> Transfer (FLOW-018)</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-rosters") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Roster Ref & Join Date</th>
+                <th>Assigned Cohort Run</th>
+                <th>Learner Name</th>
+                <th>Attendance Fidelity Rate</th>
+                <th>Lead Trainer Attribution</th>
+                <th>Membership State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(r => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong><br>
+                    <small style="color:var(--slate);">Joined ${r.joined || '01 Aug 2026'}</small>
+                  </td>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary);">${r.cohortId}</strong><br>
+                    <small style="color:var(--slate);">${(data.cohorts || []).find(c=>c.id===r.cohortId)?.name || 'Cohort Batch'}</small>
+                  </td>
+                  <td><strong>${r.learner}</strong></td>
+                  <td>
+                    <strong style="color:#166534; font-size:13px;">${r.attendanceRate || '100%'}</strong><br>
+                    <small style="color:var(--slate);">Daily.co Reconciled</small>
+                  </td>
+                  <td><strong>${r.owner || 'Sarah Connor'}</strong></td>
+                  <td>
+                    <span class="badge ${r.status === 'Active' ? 'badge-success' : 'badge-warning'}">${r.status}</span>
+                    ${r.transferTo ? `<br><small style="color:var(--primary); font-weight:600;">Transferred -> ${r.transferTo}</small>` : ''}
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmLearnerDossierModal('${r.learner}')"><i data-lucide="user-check"></i> Dossier</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('${r.learner}', '${r.cohortId}')"><i data-lucide="arrow-right-left"></i> Transfer (FLOW-018)</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Attendance Reconciled', 'Attendance history for ${r.learner} matches Daily.co event stream.', 'info')"><i data-lucide="check-check"></i> Audit</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-capacity-transfers") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Transfer Record & ID</th>
+                <th>Learner Name</th>
+                <th>Origin Cohort (Capacity)</th>
+                <th>Target Destination Cohort</th>
+                <th>Transfer Reason & SLA</th>
+                <th>Capacity Safety Gate</th>
+                <th>Transfer Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(r => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">TRF-${r.id.replace('ROST-', '')}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${r.id}</small>
+                  </td>
+                  <td><strong>${r.learner}</strong></td>
+                  <td>
+                    <strong>${r.cohortId}</strong><br>
+                    <small style="color:#b45309; font-weight:600;">Full (10/10 Seats)</small>
+                  </td>
+                  <td>
+                    <strong>${r.transferTo || 'CRUN-101'}</strong><br>
+                    <small style="color:#166534; font-weight:600;">3 Open Seats Available</small>
+                  </td>
+                  <td>
+                    <strong>Schedule Cadence Adjustment</strong><br>
+                    <small style="color:var(--slate);">Guardian Requested Time Shift (FLOW-018)</small>
+                  </td>
+                  <td><span class="badge badge-success">● Capacity Safe (Approved)</span></td>
+                  <td><span class="badge ${r.status === 'Transferred' ? 'badge-primary' : 'badge-success'}">${r.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('${r.learner}', '${r.cohortId}')"><i data-lucide="arrow-right-left"></i> Execute Transfer</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audit History', 'Transfer audit trail verified for ${r.learner}.', 'info')"><i data-lucide="history"></i> Transfer Audit</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-trainer-assignments") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Trainer ID & Name</th>
+                <th>Contracted Capacity</th>
+                <th>Weekly Teaching Load</th>
+                <th>Assigned Programmes & Cohorts</th>
+                <th>1:1 Learner Roster</th>
+                <th>Effective Assignment Date</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${t.id}</strong><br>
+                    <strong>${t.name}</strong><br>
+                    <small style="color:var(--slate);">${t.email}</small>
+                  </td>
+                  <td><strong style="font-size:13px;">${t.weeklyLoad ? t.weeklyLoad.split('/')[1].trim() : '25h / Wk'}</strong></td>
+                  <td>
+                    <strong style="color:#166534; font-size:13.5px;">${t.weeklyLoad || '18h / 25h'}</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:120px; margin-top:4px; overflow:hidden;">
+                      <div style="background:#166534; height:100%; width:72%;"></div>
+                    </div>
+                  </td>
+                  <td>
+                    <strong>${t.programmes || 'Basic Literacy, K-12'}</strong><br>
+                    <small style="color:var(--slate);">${t.activeCohorts || 2} Active Cohorts</small>
+                  </td>
+                  <td><strong style="color:var(--navy-medium);">${t.oneToOneCount || 4} Students</strong></td>
+                  <td>
+                    <strong style="color:var(--slate);">${t.effectiveDate || '2026-01-01'}</strong><br>
+                    <small style="color:#166534; font-weight:600;">● Immutable Effective Date (ENR-005)</small>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Timetable Loaded', 'Weekly schedule loaded for ${t.name}.', 'info')"><i data-lucide="calendar"></i> Timetable</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmConflictResolveModal('${t.id}')"><i data-lucide="user-plus"></i> Reassign</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Message Dispatched', 'Operational notice sent to ${t.name}.', 'success')"><i data-lucide="send"></i> Notify</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-schedule-plans") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Plan Ref & Target</th>
+                <th>Course Programme</th>
+                <th>Weekly Cadence Pattern</th>
+                <th>Timezone Normalized</th>
+                <th>Primary Lead & Standby</th>
+                <th>Daily Room Readiness</th>
+                <th>Recurrence State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">SCH-${c.id.replace('CRUN-', '')}</strong><br>
+                    <small style="font-family:monospace; color:var(--slate);">${c.id}</small>
+                  </td>
+                  <td><strong>${c.course}</strong><br><small style="color:var(--slate);">${c.name}</small></td>
+                  <td><strong style="font-size:13px; color:var(--navy-medium);">${c.schedule}</strong></td>
+                  <td>
+                    <strong>UTC+5 (Asia/Karachi)</strong><br>
+                    <small style="color:var(--slate);">45 Mins / Occurrence</small>
+                  </td>
+                  <td>
+                    <strong>${c.trainer}</strong><br>
+                    <small style="color:var(--slate);">Standby: Sara Javed</small>
+                  </td>
+                  <td>
+                    <span class="badge badge-success">● Room Token Provisioned</span>
+                  </td>
+                  <td><span class="badge badge-primary">Active Recurring Cadence</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmEditScheduleModal('${c.id}')"><i data-lucide="calendar"></i> Edit Cadence</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Daily Token Verified', 'WebRTC room verified for ${c.id}.', 'success')"><i data-lucide="video"></i> Verify Room</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-availability") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Trainer ID & Name</th>
+                <th>Working Hours Window</th>
+                <th>Weekly Load Utilization</th>
+                <th>Blackout Windows / Leaves</th>
+                <th>Collision & Availability Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${t.id}</strong><br>
+                    <strong>${t.name}</strong><br>
+                    <small style="color:var(--slate);">${t.email}</small>
+                  </td>
+                  <td><strong>${t.availability || 'Mon-Fri 10:00 - 18:00 PKT'}</strong></td>
+                  <td>
+                    <strong style="color:#166534; font-size:13.5px;">${t.weeklyLoad || '15h / 20h'}</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:120px; margin-top:4px; overflow:hidden;">
+                      <div style="background:#166534; height:100%; width:75%;"></div>
+                    </div>
+                  </td>
+                  <td><span style="font-size:12px; color:var(--slate);">${t.blackout || 'No Blackouts Scheduled'}</span></td>
+                  <td>
+                    <span class="badge ${t.conflictStatus && t.conflictStatus.includes('Conflict') ? 'badge-error' : 'badge-success'}">${t.conflictStatus || 'Clear (Available)'}</span>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmAddBlackoutModal('${t.id}')"><i data-lucide="calendar-off"></i> Add Blackout</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmScheduleTrialModal('TRL-201')"><i data-lucide="calendar-plus"></i> Match Slot</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-schedule-conflicts") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Conflict Ref & Severity</th>
+                <th>Conflicted Trainer</th>
+                <th>Collision Occurrence Details</th>
+                <th>Overlap Timing</th>
+                <th>Standby Replacement Options</th>
+                <th>Collision State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">CONF-${t.id.replace('TRN-', '')}</strong><br>
+                    <span class="badge badge-error">High Severity</span>
+                  </td>
+                  <td>
+                    <strong>${t.name}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${t.id}</small>
+                  </td>
+                  <td>
+                    <strong>K-12 Math Section A vs 1:1 Literacy Session</strong><br>
+                    <small style="color:#b45309; font-weight:600;">Simultaneous Occurrence Overlap</small>
+                  </td>
+                  <td><strong style="color:#dc2626;">Friday 15:00 - 15:50 PKT</strong></td>
+                  <td>
+                    <strong>Huzsam Ahmed</strong> (Available) · <strong>Sara Javed</strong> (Available)
+                  </td>
+                  <td><span class="badge badge-error">${t.conflictStatus}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmConflictResolveModal('${t.id}')"><i data-lucide="alert-triangle"></i> Resolve Collision (FLOW-019)</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Trainer Alerted', 'Conflict warning notification dispatched to ${t.name}.', 'warning')"><i data-lucide="bell"></i> Alert Trainer</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
     } else if (dataType === "cohorts") {
       tableMarkup = `
         <div class="table-container">
@@ -18215,7 +18612,6 @@ const RenderEngine = {
                 <th>Lead Trainer</th>
                 <th>Weekly Cadence</th>
                 <th>Enrolled / Capacity</th>
-                <th>Progress State</th>
                 <th>Status</th>
                 <th>Operations Action</th>
               </tr>
@@ -18225,20 +18621,14 @@ const RenderEngine = {
                 <tr>
                   <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${c.id}</strong></td>
                   <td><strong>${c.course}</strong><br><small style="color:var(--slate);">${c.name || 'Cohort Batch'}</small></td>
-                  <td><strong>${c.trainer}</strong><br><small style="color:var(--slate);">Backup: ${c.backupTrainer || 'Standby Lead'}</small></td>
-                  <td><strong>${c.cadence || 'MWF 18:00 - 19:00 PKT'}</strong></td>
-                  <td>
-                    <strong>${c.enrolled} / ${c.maxSeats} Seats</strong>
-                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; margin-top:4px; overflow:hidden;">
-                      <div style="background:${c.enrolled >= c.maxSeats ? '#dc2626' : 'var(--primary)'}; height:100%; width:${Math.min(100, (c.enrolled / c.maxSeats) * 100)}%;"></div>
-                    </div>
-                  </td>
-                  <td>${c.progress || 'Week 4 of 12'}</td>
+                  <td><strong>${c.trainer}</strong></td>
+                  <td><strong>${c.schedule || 'MWF 18:00 - 19:00 PKT'}</strong></td>
+                  <td><strong>${c.enrolled} / ${c.capacity} Seats</strong></td>
                   <td><span class="badge ${c.status === 'Active' ? 'badge-success' : 'badge-primary'}">${c.status}</span></td>
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${c.id}')"><i data-lucide="users"></i> Roster Explorer</button>
-                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1004', '${c.id}')">Transfer (FLOW-018)</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-4088', '${c.id}')">Transfer (FLOW-018)</button>
                     </div>
                   </td>
                 </tr>
@@ -18268,12 +18658,9 @@ const RenderEngine = {
                   <td><strong style="font-family:monospace; color:var(--primary); font-size:13px;">${t.id}</strong><br><strong>${t.name}</strong></td>
                   <td><span style="font-weight:700;">${t.capacity || '25 Hrs / Wk'}</span></td>
                   <td>
-                    <strong>${t.hours || '18 Hrs'} Assigned</strong>
-                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; margin-top:4px; overflow:hidden;">
-                      <div style="background:#166534; height:100%; width:72%;"></div>
-                    </div>
+                    <strong>${t.weeklyLoad || '18h / 25h'}</strong>
                   </td>
-                  <td>${t.courses ? t.courses.join(', ') : 'Spoken English, K-12 Math'}</td>
+                  <td>${t.programmes || 'Basic Literacy, K-12 Math'}</td>
                   <td><span style="font-size:12px; color:var(--slate);">${t.blackout || 'None Logged'}</span></td>
                   <td><span class="badge ${t.conflictStatus && t.conflictStatus.includes('Conflict') ? 'badge-error' : 'badge-success'}">${t.conflictStatus || 'Clear'}</span></td>
                   <td style="white-space:nowrap;">
@@ -23418,51 +23805,55 @@ Actions.openOmCohortRosterModal = function(cohortId) {
   const body = document.getElementById("modal-body");
   const footer = document.getElementById("modal-footer");
 
-  title.textContent = `Cohort Roster Explorer: ${cohort.name} (${cohort.id})`;
+  const rosterStudents = (db.omData.rosters || []).filter(r => r.cohortId === cohort.id || !cohort.id);
+  const displayList = rosterStudents.length > 0 ? rosterStudents : [
+    { id: "ROST-101", learner: "John Doe", status: "Active", joined: "2026-08-01", attendanceRate: "100%" },
+    { id: "ROST-102", learner: "Amina Yousaf", status: "Active", joined: "2026-08-01", attendanceRate: "95%" }
+  ];
+
+  title.innerHTML = `<i data-lucide="users" style="color:var(--primary);"></i> Cohort Roster Explorer: ${cohort.name} (${cohort.id})`;
   body.innerHTML = `
-    <div class="om-flow-dialog">
-      <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:12px 16px; border-radius:8px; margin-bottom:12px;">
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:12px 16px; border-radius:8px; border:1px solid #e2e8f0;">
         <div>
-          <strong style="color:var(--navy-dark);">${cohort.course}</strong> · <span>Lead: ${cohort.trainer}</span>
+          <strong style="color:var(--navy-dark); font-size:14px;">${cohort.course}</strong><br>
+          <small style="color:var(--slate);">Lead Trainer: <strong>${cohort.trainer}</strong> · Schedule: <strong>${cohort.schedule}</strong></small>
         </div>
-        <div style="font-weight:700; color:#166534;">
-          ${cohort.enrolled} / ${cohort.maxSeats} Seats Occupied
+        <div style="text-align:right;">
+          <div style="font-weight:800; font-size:15px; color:${cohort.enrolled >= cohort.capacity ? '#dc2626' : '#166534'};">
+            ${cohort.enrolled} / ${cohort.capacity} Seats
+          </div>
+          <small style="color:var(--slate);">${cohort.enrolled >= cohort.capacity ? 'Cap Reached (Waitlist On)' : 'Seats Available'}</small>
         </div>
       </div>
 
-      <div class="table-container" style="max-height:220px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px;">
-        <table class="data-table" style="font-size:12px;">
+      <div class="table-container" style="max-height:240px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px;">
+        <table class="data-table" style="font-size:12px; width:100%; min-width:600px;">
           <thead>
             <tr>
-              <th>Student</th>
-              <th>Enrolment Ref</th>
-              <th>Attendance</th>
-              <th>Seat Status</th>
-              <th>Action</th>
+              <th>Roster Ref</th>
+              <th>Learner Name</th>
+              <th>Enrolment Date</th>
+              <th>Attendance Fidelity</th>
+              <th>Membership State</th>
+              <th>Quick Transfer</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Ayesha Siddiqui</strong></td>
-              <td>ENR-1004</td>
-              <td><span class="badge badge-success">100%</span></td>
-              <td><span class="badge badge-success">Active</span></td>
-              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1004', '${cohort.id}')">Transfer</button></td>
-            </tr>
-            <tr>
-              <td><strong>Mustafa Hashmi</strong></td>
-              <td>ENR-1005</td>
-              <td><span class="badge badge-success">92%</span></td>
-              <td><span class="badge badge-success">Active</span></td>
-              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1005', '${cohort.id}')">Transfer</button></td>
-            </tr>
-            <tr>
-              <td><strong>Hania Zubair</strong></td>
-              <td>ENR-1006</td>
-              <td><span class="badge badge-warning">78%</span></td>
-              <td><span class="badge badge-success">Active</span></td>
-              <td><button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1006', '${cohort.id}')">Transfer</button></td>
-            </tr>
+            ${displayList.map(r => `
+              <tr>
+                <td><strong style="font-family:monospace; color:var(--primary);">${r.id}</strong></td>
+                <td><strong>${r.learner}</strong></td>
+                <td><small style="color:var(--slate);">${r.joined || '2026-08-01'}</small></td>
+                <td><strong style="color:#166534;">${r.attendanceRate || '100%'}</strong></td>
+                <td><span class="badge ${r.status === 'Active' ? 'badge-success' : 'badge-warning'}">${r.status}</span></td>
+                <td>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openOmTransferStudentModal('${r.learner}', '${cohort.id}')">
+                    <i data-lucide="arrow-right-left"></i> Transfer
+                  </button>
+                </td>
+              </tr>
+            `).join('')}
           </tbody>
         </table>
       </div>
@@ -23470,7 +23861,8 @@ Actions.openOmCohortRosterModal = function(cohortId) {
   `;
 
   footer.innerHTML = `
-    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Roster</button>
+    <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openOmTransferStudentModal('ENR-4088', '${cohort.id}')"><i data-lucide="user-plus"></i> Enrol / Transfer Student</button>
   `;
 
   modal.classList.remove("hidden");
@@ -23483,40 +23875,53 @@ Actions.openOmTransferStudentModal = function(studentId, fromCohortId) {
   const body = document.getElementById("modal-body");
   const footer = document.getElementById("modal-footer");
 
-  title.textContent = `Transfer Learner Between Cohorts (FLOW-018)`;
+  const cohorts = db.omData.cohorts || [];
+
+  title.innerHTML = `<i data-lucide="arrow-left-right" style="color:var(--primary);"></i> Transfer Learner Between Cohorts (FLOW-018)`;
   body.innerHTML = `
-    <div class="om-flow-dialog">
-      <div class="om-flow-banner">
-        <i data-lucide="arrow-left-right"></i>
-        <div>
-          <strong>COHORT CAPACITY & SECTION TRANSFER WORKBENCH</strong>
-          <p>Preserves student attendance and completed unit progress while reassigning the learner to a compatible section.</p>
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">COHORT CAPACITY & SECTION TRANSFER WORKBENCH (FLOW-018)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Preserves student attendance history and completed unit credits while reassigning the learner to a compatible section with verified free capacity.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Selected Student</label>
+          <input type="text" class="form-control" value="${studentId}" disabled style="font-weight:700;">
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Current Origin Cohort</label>
+          <input type="text" class="form-control" value="${fromCohortId || 'CRUN-101'}" disabled>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Selected Learner</label>
-        <input type="text" class="form-control" value="${studentId} (Current: ${fromCohortId})" disabled>
-      </div>
-
-      <div class="form-group">
-        <label>Target Destination Cohort</label>
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Target Destination Cohort (Capacity Validated)</label>
         <select id="om-transfer-target" class="form-control">
-          <option value="CRUN-102">Cohort E-2026B (TTS 16:00 PKT · 4/12 seats · 8 Open Seats)</option>
-          <option value="CRUN-103">Cohort N-2026A (MWF 20:00 PKT · 6/15 seats · 9 Open Seats)</option>
+          ${cohorts.filter(c => c.id !== fromCohortId).map(c => `
+            <option value="${c.id}" ${c.enrolled >= c.capacity ? 'disabled' : ''}>
+              ${c.name} (${c.id}) · ${c.schedule} · [${c.enrolled}/${c.capacity} Seats${c.enrolled >= c.capacity ? ' - FULL' : ' - ' + (c.capacity - c.enrolled) + ' OPEN'}]
+            </option>
+          `).join('')}
         </select>
       </div>
 
       <div class="form-group">
-        <label>Transfer Rationale</label>
-        <textarea id="om-transfer-reason" class="form-control" rows="2">Learner requested evening slot timing adjustment due to school examination schedule.</textarea>
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Transfer Rationale & Pedagogical Justification</label>
+        <select id="om-transfer-reason-type" class="form-control" style="margin-bottom:8px;">
+          <option value="Schedule Cadence Shift">Schedule Cadence Shift (Guardian Requested)</option>
+          <option value="Placement Re-evaluation">Placement Level Re-evaluation</option>
+          <option value="Trainer Workload Rebalance">Trainer Workload Rebalance</option>
+        </select>
+        <textarea id="om-transfer-reason" class="form-control" rows="2" placeholder="Describe context...">Learner requested timing adjustment to evening slot. Validated prerequisite unit compatibility.</textarea>
       </div>
     </div>
   `;
 
   footer.innerHTML = `
     <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-    <button class="btn btn-primary" onclick="Actions.submitOmTransferStudent('${studentId}', '${fromCohortId}')"><i data-lucide="check"></i> Complete Transfer (FLOW-018)</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmTransferStudent('${studentId}', '${fromCohortId}')"><i data-lucide="check"></i> Confirm Transfer (FLOW-018)</button>
   `;
 
   modal.classList.remove("hidden");
@@ -23524,9 +23929,239 @@ Actions.openOmTransferStudentModal = function(studentId, fromCohortId) {
 };
 
 Actions.submitOmTransferStudent = function(studentId, fromCohortId) {
-  const target = document.getElementById("om-transfer-target")?.value || "CRUN-102";
-  this.audit("LEARNER_COHORT_TRANSFERRED", `Transferred ${studentId} from ${fromCohortId} to ${target}. Progress preserved.`, "High", "Cohort Reassigned");
-  Notifications.push("Transfer Complete", `Learner ${studentId} successfully transferred to ${target}.`, "success");
+  const targetId = document.getElementById("om-transfer-target")?.value || "CRUN-101";
+  const reasonType = document.getElementById("om-transfer-reason-type")?.value || "Schedule Cadence Shift";
+  const targetCohort = (db.omData.cohorts || []).find(c => c.id === targetId);
+  const fromCohort = (db.omData.cohorts || []).find(c => c.id === fromCohortId);
+
+  // Update cohort seat counts
+  if (fromCohort && fromCohort.enrolled > 0) fromCohort.enrolled -= 1;
+  if (targetCohort) targetCohort.enrolled = Math.min(targetCohort.capacity, (targetCohort.enrolled || 0) + 1);
+
+  // Update student enrolment and roster record
+  const enrol = (db.omData.enrolments || []).find(e => e.id === studentId || e.learner === studentId);
+  if (enrol) {
+    enrol.cohort = targetCohort?.name || targetId;
+    enrol.trainer = targetCohort?.trainer || enrol.trainer;
+    enrol.schedule = targetCohort?.schedule || enrol.schedule;
+  }
+
+  // Update roster record
+  const roster = (db.omData.rosters || []).find(r => r.learner === studentId || r.id === studentId);
+  if (roster) {
+    roster.cohortId = targetId;
+    roster.status = "Active";
+    roster.transferTo = null;
+  }
+
+  this.audit("LEARNER_COHORT_TRANSFERRED", `Transferred ${studentId} from ${fromCohortId} to ${targetId}. Reason: ${reasonType}. Progress preserved.`, "High", "Transfer Executed");
+  Notifications.push("Transfer Complete", `Learner ${studentId} transferred to ${targetCohort?.name || targetId}. Attendance preserved.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmCapacityAdjustModal = function(cohortId) {
+  const cohort = (db.omData.cohorts || []).find(c => c.id === cohortId) || db.omData.cohorts[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="sliders" style="color:var(--primary);"></i> Adjust Cohort Seat Capacity (${cohort.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">COHORT SECTION CAPACITY THRESHOLD (ENR-008)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Override max seat limits for ${cohort.name}. Maximum pedagogical ceiling per live section is 15 learners.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Currently Enrolled</label>
+          <input type="text" class="form-control" value="${cohort.enrolled} Students" disabled style="font-weight:700;">
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Current Seat Cap</label>
+          <input type="text" class="form-control" value="${cohort.capacity} Seats" disabled>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">New Max Capacity Ceiling</label>
+        <input type="number" id="om-new-capacity" class="form-control" value="${Math.max(cohort.capacity + 2, 12)}" min="${cohort.enrolled}" max="20">
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Manager Override Justification</label>
+        <select id="om-cap-reason" class="form-control">
+          <option value="High demand overflow approved by Academic Lead">High demand overflow approved by Academic Lead</option>
+          <option value="Dedicated co-trainer allocated to session">Dedicated co-trainer allocated to session</option>
+          <option value="Sponsorship cohort expansion">Sponsorship cohort expansion</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmCapacityAdjust('${cohort.id}')"><i data-lucide="check"></i> Save Capacity</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmCapacityAdjust = function(cohortId) {
+  const cohort = (db.omData.cohorts || []).find(c => c.id === cohortId);
+  const newCap = parseInt(document.getElementById("om-new-capacity")?.value || "12", 10);
+  const reason = document.getElementById("om-cap-reason")?.value || "Capacity adjusted";
+
+  if (cohort) {
+    cohort.capacity = newCap;
+    if (cohort.enrolled < newCap && cohort.status === "Full (Cap 10)") {
+      cohort.status = "Active";
+    }
+  }
+
+  this.audit("COHORT_CAPACITY_OVERRIDDEN", `Adjusted max capacity for ${cohortId} to ${newCap} seats. Reason: ${reason}.`, "Medium", `Capacity -> ${newCap}`);
+  Notifications.push("Capacity Updated", `Section ${cohort?.name} capacity increased to ${newCap} seats.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmEditScheduleModal = function(cohortId) {
+  const cohort = (db.omData.cohorts || []).find(c => c.id === cohortId) || db.omData.cohorts[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="calendar" style="color:var(--primary);"></i> Edit Cohort Schedule Plan (${cohort.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">SCHEDULE PLAN CADENCE CONFIGURATION (LIVE-001)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Modify weekly recurring cadence pattern for ${cohort.name}. All enrolled learners and primary trainers will receive automated notification updates.</p>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Weekly Cadence Pattern</label>
+        <select id="om-plan-cadence" class="form-control">
+          <option value="Mon / Wed / Fri 18:00 - 19:00 PKT" ${cohort.schedule.includes('18:00') ? 'selected' : ''}>Mon / Wed / Fri 18:00 - 19:00 PKT</option>
+          <option value="Tue / Thu 14:00 - 15:00 PKT" ${cohort.schedule.includes('14:00') ? 'selected' : ''}>Tue / Thu 14:00 - 15:00 PKT</option>
+          <option value="Mon / Wed 13:30 - 14:30 PKT" ${cohort.schedule.includes('13:30') ? 'selected' : ''}>Mon / Wed 13:30 - 14:30 PKT</option>
+          <option value="Sat / Sun 10:00 - 11:30 PKT (Weekend Track)">Sat / Sun 10:00 - 11:30 PKT (Weekend Track)</option>
+        </select>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Primary Lead Trainer</label>
+          <select id="om-plan-lead" class="form-control">
+            <option value="Huzsam Ahmed">Huzsam Ahmed</option>
+            <option value="Sara Javed">Sara Javed</option>
+            <option value="Nadia Rahman">Nadia Rahman</option>
+            <option value="Miles Dyson">Miles Dyson</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Standby Backup Trainer</label>
+          <select id="om-plan-standby" class="form-control">
+            <option value="Sara Javed">Sara Javed</option>
+            <option value="Usman Tariq">Usman Tariq</option>
+            <option value="Huzsam Ahmed">Huzsam Ahmed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmEditSchedule('${cohort.id}')"><i data-lucide="check"></i> Save Schedule Plan</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmEditSchedule = function(cohortId) {
+  const cohort = (db.omData.cohorts || []).find(c => c.id === cohortId);
+  const newCadence = document.getElementById("om-plan-cadence")?.value || "Mon / Wed / Fri 18:00 - 19:00 PKT";
+  const newLead = document.getElementById("om-plan-lead")?.value || "Huzsam Ahmed";
+
+  if (cohort) {
+    cohort.schedule = newCadence;
+    cohort.trainer = newLead;
+  }
+
+  this.audit("SCHEDULE_PLAN_UPDATED", `Updated cadence for ${cohortId} to ${newCadence}. Lead: ${newLead}.`, "Medium", "Schedule Modified");
+  Notifications.push("Schedule Updated", `Cadence pattern for ${cohort?.name} set to ${newCadence}.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmAddBlackoutModal = function(trainerId) {
+  const trainer = (db.omData.trainers || []).find(t => t.id === trainerId) || db.omData.trainers[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="calendar-off" style="color:var(--primary);"></i> Log Trainer Blackout Window (${trainer.name})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">TRAINER AVAILABILITY & BLACKOUT LOGGING (LIVE-005)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Declares blackout / leave window for ${trainer.name}. System immediately verifies against scheduled occurrences.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Blackout Start Date</label>
+          <input type="date" id="om-blackout-start" class="form-control" value="2026-08-25">
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Blackout End Date</label>
+          <input type="date" id="om-blackout-end" class="form-control" value="2026-08-27">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Leave Reason & Category</label>
+        <select id="om-blackout-reason" class="form-control">
+          <option value="Academic Conference Attendance">Academic Conference Attendance</option>
+          <option value="Personal Leave / Medical">Personal Leave / Medical</option>
+          <option value="Pedagogical Training Workshop">Pedagogical Training Workshop</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmAddBlackout('${trainer.id}')"><i data-lucide="check"></i> Register Blackout Window</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmAddBlackout = function(trainerId) {
+  const trainer = (db.omData.trainers || []).find(t => t.id === trainerId);
+  const start = document.getElementById("om-blackout-start")?.value || "2026-08-25";
+  const end = document.getElementById("om-blackout-end")?.value || "2026-08-27";
+  const reason = document.getElementById("om-blackout-reason")?.value || "Personal Leave";
+
+  if (trainer) {
+    trainer.blackout = `${start} to ${end} (${reason})`;
+  }
+
+  this.audit("TRAINER_BLACKOUT_RECORDED", `Logged blackout window for ${trainer?.name}: ${start} to ${end}. Reason: ${reason}.`, "Medium", "Blackout Logged");
+  Notifications.push("Blackout Registered", `Unavailable window recorded for ${trainer?.name}.`, "info");
   document.getElementById("generic-modal").classList.add("hidden");
   if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
   else RenderEngine.omDashboard();
