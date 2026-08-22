@@ -11913,4 +11913,125 @@ td:last-child {
   margin-top: 2px;
 }
 
+/* ==========================================================================
+   TABLE SYSTEM & HORIZONTAL SCROLLBAR ARCHITECTURE
+   ========================================================================== */
 
+.table-container,
+.om-table-container,
+.responsive-table-wrapper {
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 10px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  box-shadow: 0 2px 8px rgba(70, 55, 28, 0.03) !important;
+  margin-bottom: 20px !important;
+}
+
+/* Custom Sleek Scrollbar for Tables */
+.table-container::-webkit-scrollbar,
+.om-table-container::-webkit-scrollbar,
+.responsive-table-wrapper::-webkit-scrollbar {
+  height: 9px !important;
+}
+
+.table-container::-webkit-scrollbar-track,
+.om-table-container::-webkit-scrollbar-track,
+.responsive-table-wrapper::-webkit-scrollbar-track {
+  background: #f8fafc !important;
+  border-radius: 4px !important;
+}
+
+.table-container::-webkit-scrollbar-thumb,
+.om-table-container::-webkit-scrollbar-thumb,
+.responsive-table-wrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border-radius: 4px !important;
+  border: 2px solid #f8fafc !important;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover,
+.om-table-container::-webkit-scrollbar-thumb:hover,
+.responsive-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--primary) !important;
+}
+
+/* Data Table Architecture */
+.data-table,
+.om-data-table {
+  width: 100% !important;
+  min-width: 1100px !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+  font-size: 13px !important;
+}
+
+.data-table th,
+.om-data-table th {
+  background: #fbf6ec !important;
+  color: var(--navy-medium) !important;
+  font: 800 11.5px 'Manrope', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  padding: 14px 18px !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.22) !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+}
+
+.data-table td,
+.om-data-table td {
+  padding: 14px 18px !important;
+  border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
+  color: var(--on-surface) !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+}
+
+.data-table tr:last-child td,
+.om-data-table tr:last-child td {
+  border-bottom: none !important;
+}
+
+.data-table tr:hover td,
+.om-data-table tr:hover td {
+  background: #fdfbf7 !important;
+}
+
+/* Keep Action Buttons Strictly in a Horizontal Row */
+.table-actions-row,
+.om-table-actions,
+.btn-action-group,
+td .btn-group,
+td .table-actions,
+td > div {
+  white-space: nowrap !important;
+}
+
+.table-actions-row,
+.om-table-actions,
+.btn-action-group {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+}
+
+.table-actions-row .btn,
+.om-table-actions .btn,
+.btn-action-group .btn,
+td .btn {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}

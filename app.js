@@ -17807,8 +17807,8 @@ const RenderEngine = {
 
     if (route === "om-trial-requests" || route === "om-ready-scheduling") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Trial ID & Intake</th>
@@ -17840,8 +17840,8 @@ const RenderEngine = {
                   <td><strong>${t.preferredSlot || t.time}</strong></td>
                   <td><span style="font-size:12px; color:var(--navy-medium); font-weight:600;">Bilal Khan (CSR-102)</span></td>
                   <td><span class="badge ${t.status === 'Scheduled' ? 'badge-primary' : t.status === 'Completed' ? 'badge-success' : 'badge-warning'}">${t.status}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-primary btn-xs" onclick="Actions.openOmScheduleTrialModal('${t.id}')"><i data-lucide="calendar-plus"></i> Schedule (FLOW-007)</button>
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmDiagnosticModal('${t.id}')">Diagnostic</button>
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${t.id}')">Contact</button>
@@ -17855,8 +17855,8 @@ const RenderEngine = {
       `;
     } else if (route === "om-scheduled-trials") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1200px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Occurrence ID</th>
@@ -17885,8 +17885,8 @@ const RenderEngine = {
                   </td>
                   <td><span class="badge badge-success">Confirmed via SMS</span></td>
                   <td><span class="badge badge-primary">Opens 15m prior</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${t.id}')">Inspect Telemetry</button>
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRescheduleTrialModal('${t.id}')">Reschedule (FLOW-017)</button>
                       <button class="btn btn-primary btn-xs" onclick="Actions.sendTrialReminder('${t.id}')">Send Reminder</button>
@@ -17900,8 +17900,8 @@ const RenderEngine = {
       `;
     } else if (route === "om-trial-outcomes") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1200px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Trial Ref & Date</th>
@@ -17924,8 +17924,8 @@ const RenderEngine = {
                   <td><small style="color:var(--navy-dark); font-style:italic;">"${t.evaluation || 'Strong aptitude in grammar formulation. Ready for Grade 8 curriculum.'}"</small></td>
                   <td><span class="badge badge-success">High Conversion Intent</span></td>
                   <td><span style="font-size:12px; font-weight:600;">Bilal Khan (CSR-102)</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmDiagnosticModal('${t.id}')">Evaluation Dossier</button>
                       <button class="btn btn-primary btn-xs" onclick="Actions.openOmEnrolmentSetupModal('${t.id}')">Initiate Enrolment (FLOW-013)</button>
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${t.id}')">Contact Guardian</button>
@@ -17939,8 +17939,8 @@ const RenderEngine = {
       `;
     } else if (dataType === "enrolments") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Enrolment ID</th>
@@ -17963,8 +17963,8 @@ const RenderEngine = {
                   <td><span style="font-family:monospace; font-size:12px;">${e.paymentRef}</span></td>
                   <td><strong style="color:#166534; font-size:13px;">${e.entitlementCredits || '8 / 8 Credits'}</strong></td>
                   <td><span class="badge ${e.status === 'Active' ? 'badge-success' : 'badge-warning'}">${e.status}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       ${e.status === 'Pending Setup' ? `
                         <button class="btn btn-primary btn-xs" onclick="Actions.openOmEnrolmentSetupModal('${e.id}')"><i data-lucide="settings"></i> Configure Setup (FLOW-013)</button>
                         <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentReviewModal('${e.paymentRef}')">Audit Receipt</button>
@@ -17982,8 +17982,8 @@ const RenderEngine = {
       `;
     } else if (dataType === "cohorts") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Cohort Run ID</th>
@@ -18011,8 +18011,8 @@ const RenderEngine = {
                   </td>
                   <td>${c.progress || 'Week 4 of 12'}</td>
                   <td><span class="badge ${c.status === 'Active' ? 'badge-success' : 'badge-primary'}">${c.status}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${c.id}')"><i data-lucide="users"></i> Roster Explorer</button>
                       <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-1004', '${c.id}')">Transfer (FLOW-018)</button>
                     </div>
@@ -18025,8 +18025,8 @@ const RenderEngine = {
       `;
     } else if (dataType === "trainers") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Trainer ID & Name</th>
@@ -18052,8 +18052,8 @@ const RenderEngine = {
                   <td>${t.courses ? t.courses.join(', ') : 'Spoken English, K-12 Math'}</td>
                   <td><span style="font-size:12px; color:var(--slate);">${t.blackout || 'None Logged'}</span></td>
                   <td><span class="badge ${t.conflictStatus && t.conflictStatus.includes('Conflict') ? 'badge-error' : 'badge-success'}">${t.conflictStatus || 'Clear'}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       ${t.conflictStatus && t.conflictStatus.includes('Conflict') ? `
                         <button class="btn btn-primary btn-xs" onclick="Actions.openOmConflictResolveModal('${t.id}')"><i data-lucide="alert-triangle"></i> Resolve Collision</button>
                       ` : `
@@ -18069,8 +18069,8 @@ const RenderEngine = {
       `;
     } else if (dataType === "classes") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Class ID</th>
@@ -18093,8 +18093,8 @@ const RenderEngine = {
                   <td><strong>${cls.timing}</strong></td>
                   <td><span class="badge ${cls.attendanceStatus.includes('Reconciled') ? 'badge-success' : cls.attendanceStatus.includes('Mismatch') ? 'badge-error' : 'badge-warning'}">${cls.attendanceStatus}</span></td>
                   <td><span class="badge ${cls.status === 'Live' ? 'badge-success' : cls.status === 'Report Overdue' ? 'badge-error' : cls.status === 'Completed' ? 'badge-primary' : 'badge-warning'}">${cls.status}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')">Telemetry</button>
                       ${cls.status === 'Live' || cls.status === 'Upcoming' ? `
                         <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')"><i data-lucide="video"></i> Enter Room</button>
@@ -18113,8 +18113,8 @@ const RenderEngine = {
       `;
     } else if (dataType === "classReviews") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Review ID</th>
@@ -18137,9 +18137,9 @@ const RenderEngine = {
                   <td><em>"${r.syllabus}"</em></td>
                   <td><span style="font-size:12px; color:var(--slate);">${r.reconciledAttendance}</span></td>
                   <td><span class="badge ${r.status === 'Approved' ? 'badge-success' : r.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}">${r.status}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
-                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">Return for Note</button>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">Return Note</button>
                       <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')"><i data-lucide="check"></i> Approve Delivery (FLOW-016)</button>
                     </div>
                   </td>
@@ -18151,8 +18151,8 @@ const RenderEngine = {
       `;
     } else if (dataType === "payments") {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Payment ID</th>
@@ -18175,8 +18175,8 @@ const RenderEngine = {
                   <td><strong style="color:#166534; font-size:13.5px;">${p.submittedAmount}</strong></td>
                   <td><span class="badge ${p.duplicateFlag.includes('Duplicate') ? 'badge-error' : 'badge-success'}">${p.duplicateFlag}</span></td>
                   <td><span class="badge ${p.status === 'Approved' ? 'badge-success' : p.status === 'Under Review' ? 'badge-primary' : 'badge-warning'}">${p.status}</span></td>
-                  <td>
-                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')">Reject Slip</button>
                       <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')"><i data-lucide="receipt"></i> Audit & Grant Access (FLOW-013)</button>
                     </div>
@@ -18189,8 +18189,8 @@ const RenderEngine = {
       `;
     } else {
       tableMarkup = `
-        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
-          <table class="data-table">
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
             <thead>
               <tr>
                 <th>Record ID</th>
@@ -18211,8 +18211,10 @@ const RenderEngine = {
                   <td>${item.owner || item.trainer || item.lead || 'Sarah Connor'}</td>
                   <td>${item.score || item.size || item.value || item.hours || '-'}</td>
                   <td><span class="badge badge-primary">${item.status || item.riskLevel || 'Active'}</span></td>
-                  <td>
-                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Record Inspected', 'Opened details for ${item.id || item.code}.', 'info')">Inspect Record</button>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Record Inspected', 'Opened details for ${item.id || item.code}.', 'info')">Inspect Record</button>
+                    </div>
                   </td>
                 </tr>
               `).join('')}
