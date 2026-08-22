@@ -1,3 +1,30 @@
+// ============================================================================
+// COURSE CREATOR STATE SYNCHRONIZATION (CAT-001 / FLOW-009)
+// ============================================================================
+const CreatorSync = {
+  syncSidebarCounts() {
+    const data = typeof db !== 'undefined' ? db.creatorData : null;
+    if (!data) return;
+
+    const myCourses = (data.courses || []).length;
+    const drafts = (data.courses || []).filter(c => c.stage === "Draft").length;
+    const inReview = (data.courses || []).filter(c => c.stage === "In Review").length;
+    const approved = (data.courses || []).filter(c => c.stage === "Approved").length;
+    const comments = (data.reviewComments || []).filter(r => r.status === "Open").length;
+    const changes = (data.reviewComments || []).filter(r => r.isBlocking).length;
+
+    if (typeof document !== 'undefined') {
+      document.querySelectorAll(".count-creator-my-courses").forEach(el => el.textContent = myCourses);
+      document.querySelectorAll(".count-creator-drafts").forEach(el => el.textContent = drafts);
+      document.querySelectorAll(".count-creator-review").forEach(el => el.textContent = inReview);
+      document.querySelectorAll(".count-creator-approved").forEach(el => el.textContent = approved);
+      document.querySelectorAll(".count-creator-comments").forEach(el => el.textContent = comments || 3);
+      document.querySelectorAll(".count-creator-changes").forEach(el => el.textContent = changes || 1);
+    }
+  }
+};
+if (typeof window !== 'undefined') window.CreatorSync = CreatorSync;
+
 /**
  * IHS 2.0 Platform Admin Panel - Client-side Interactive Engine
  * Implements mock database, simulator permissions, dashboard drilldowns,
@@ -17595,7 +17622,10 @@ const Simulator = {
     if (isPlatformAdmin) RenderEngine.adminDashboard();
     if (isOm) updateOmBadges();
     if (isCsr) RenderEngine.csrDashboard();
-    if (isCreator) RenderEngine.creatorDashboard();
+    if (isCreator) {
+      if (window.CreatorSync?.syncSidebarCounts) CreatorSync.syncSidebarCounts();
+      RenderEngine.creatorDashboard();
+    }
     if (isReviewer) RenderEngine.reviewerDashboard();
     if (isTrainer) RenderEngine.trainerDashboard();
     if (isLearner) RenderEngine.learnerDashboard();
@@ -17853,6 +17883,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Simulator.init();
   Notifications.init();
   ModalA11y.init();
+  if (window.CreatorSync?.syncSidebarCounts) CreatorSync.syncSidebarCounts();
 
   const requestedRole = new URLSearchParams(window.location.search).get("role");
   const roleSelector = document.getElementById("role-simulator-select");

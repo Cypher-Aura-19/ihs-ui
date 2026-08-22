@@ -606,14 +606,14 @@
         <button id="sidebar-stop-impersonate" class="link-btn">Stop</button>
       </div>
     
-      <nav class="sidebar-nav" id="creator-nav" aria-label="Course Creator navigation" style="display: none;">
+      <nav class="sidebar-nav hidden" id="creator-nav" aria-label="Course Creator navigation">
         <!-- 1. Authoring Home -->
         <div class="nav-item active" data-route="creator-dashboard" id="nav-creator-dashboard">
           <i data-lucide="layout-dashboard"></i>
           <span>Authoring Home</span>
         </div>
 
-        <!-- 2. Programmes & Courses -->
+        <!-- 2. Catalog & Versions -->
         <div class="nav-group">
           <div class="nav-group-title">Programmes & Courses</div>
           <div class="nav-item" data-route="creator-courses-my" id="nav-creator-courses-my">
@@ -642,7 +642,7 @@
           </div>
         </div>
 
-        <!-- 3. Course Versions -->
+        <!-- 3. Course Versions & Branches -->
         <div class="nav-group">
           <div class="nav-group-title">Course Versions</div>
           <div class="nav-item" data-route="creator-versions-draft" id="nav-creator-versions-draft">
@@ -659,7 +659,7 @@
           </div>
         </div>
 
-        <!-- 4. Syllabus Builder -->
+        <!-- 4. 5-Tier Syllabus Builder -->
         <div class="nav-group">
           <div class="nav-group-title">Syllabus Builder</div>
           <div class="nav-item" data-route="creator-syllabus-levels" id="nav-creator-syllabus-levels">
@@ -684,9 +684,9 @@
           </div>
         </div>
 
-        <!-- 5. Assessments -->
+        <!-- 5. Assessments & Rubrics -->
         <div class="nav-group">
-          <div class="nav-group-title">Assessments</div>
+          <div class="nav-group-title">Assessments & Rubrics</div>
           <div class="nav-item" data-route="creator-assessments-bank" id="nav-creator-assessments-bank">
             <i data-lucide="database"></i>
             <span>Question Bank</span>
@@ -709,7 +709,7 @@
           </div>
         </div>
 
-        <!-- 6. Resources -->
+        <!-- 6. Resources & Attachments -->
         <div class="nav-group">
           <div class="nav-group-title">Resources</div>
           <div class="nav-item" data-route="creator-resources-library" id="nav-creator-resources-library">
@@ -730,7 +730,7 @@
           </div>
         </div>
 
-        <!-- 7. Learning Rules -->
+        <!-- 7. Learning & Progression Rules -->
         <div class="nav-group">
           <div class="nav-group-title">Learning Rules</div>
           <div class="nav-item" data-route="creator-rules-prerequisites" id="nav-creator-rules-prerequisites">
@@ -751,7 +751,7 @@
           </div>
         </div>
 
-        <!-- 8. Preview -->
+        <!-- 8. Preview & Simulation -->
         <div class="nav-group">
           <div class="nav-group-title">Preview & Simulation</div>
           <div class="nav-item" data-route="creator-preview" id="nav-creator-preview">
@@ -760,7 +760,7 @@
           </div>
         </div>
 
-        <!-- 9. Review & Submission -->
+        <!-- 9. Review & Pre-Flight Submission -->
         <div class="nav-group">
           <div class="nav-group-title">Review & Submission</div>
           <div class="nav-item" data-route="creator-review-validation" id="nav-creator-review-validation">
@@ -783,7 +783,7 @@
           </div>
         </div>
 
-        <!-- 10. K-12 Authoring -->
+        <!-- 10. K-12 Board Authoring -->
         <div class="nav-group">
           <div class="nav-group-title">K-12 Authoring</div>
           <div class="nav-item" data-route="creator-k12-curriculum" id="nav-creator-k12-curriculum">
@@ -796,8 +796,9 @@
           </div>
         </div>
 
-        <!-- 11. History / Audit -->
+        <!-- 11. Authoring Audit History -->
         <div class="nav-group nav-group-primary">
+          <div class="nav-group-title">History & Governance</div>
           <div class="nav-item" data-route="creator-audit-history" id="nav-creator-audit-history">
             <i data-lucide="scroll"></i>
             <span>Authoring Audit</span>
