@@ -1351,6 +1351,32 @@ const db = {
         evidence: "Audio resubmission pending (background noise re-recording requested).",
         currentGrade: "Revision Requested",
         feedback: "Audio recording had high fan background noise. Please re-record."
+      },
+      {
+        id: "GRD-706",
+        learner: "Hamza Ahmed",
+        course: "Spoken English Fluency",
+        assignment: "VOC-403: Minimal Pairs & Phoneme Contrast",
+        type: "Acoustic Voice Recording",
+        rubricId: "RUB-102",
+        submittedAt: "12 Aug 2026",
+        status: "Voice Activities",
+        evidence: "s3://ihs-audio-submissions/voc403-hamza.wav (45s audio)",
+        currentGrade: "Draft",
+        feedback: "Accurate contrast on /p/ and /b/ plosive consonants."
+      },
+      {
+        id: "GRD-707",
+        learner: "Areeba Farooq",
+        course: "Grade 8 Mathematics: Section A",
+        assignment: "HW-802: Geometry Polygon Angle Proofs",
+        type: "K-12 Homework Sheet",
+        rubricId: "RUB-K12-MATH",
+        submittedAt: "11 Aug 2026",
+        status: "Homework",
+        evidence: "Polygon interior angle problem set (PDF)",
+        currentGrade: "Draft",
+        feedback: "All geometric angle sum derivations correct."
       }
     ],
 
@@ -12771,94 +12797,344 @@ const RenderEngine = {
     }
 
     // --------------------------------------------------------------------------
-    // 5. MY LEARNERS: WORK & SUBMISSIONS EVIDENCE
+    // 10. HUB 3 - PAGE 1: CENTRAL GRADING QUEUE (trainer-grading-queue)
     // --------------------------------------------------------------------------
-    else if (route === "trainer-learners-work") {
+    else if (route === "trainer-grading-queue") {
+      const gradFilter = window.trainerGradTab || "all";
+      const allSubs = data.gradingQueue || [];
+      const displayedSubs = gradFilter === "all" ? allSubs :
+        gradFilter === "capstones" ? allSubs.filter(g => g.type.includes("Code") || g.type.includes("Repo")) :
+        gradFilter === "voice" ? allSubs.filter(g => g.type.includes("Voice")) :
+        gradFilter === "hw" ? allSubs.filter(g => g.type.includes("Homework") || g.type.includes("K-12")) :
+        allSubs.filter(g => g.currentGrade === "Revision Requested");
+
       viewContent = `
-        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
-          ${data.gradingQueue.map(g => `
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
-              <div>
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
-                  <span class="badge badge-primary">${g.type}</span>
-                  <span style="font-size:12px; color:var(--slate);">Submitted: ${g.submittedAt}</span>
-                </div>
-                <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0 0 4px 0;">${g.assignment}</h3>
-                <span style="font-size:13px; color:var(--primary); font-weight:600;">Student: ${g.learner}</span>
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-top:10px; font-size:12px;">
-                  <span style="color:#64748b; font-weight:700; text-transform:uppercase;">Evidence URI:</span>
-                  <p style="margin:2px 0 0 0; font-family:monospace; color:#0f172a; word-break:break-all;">${g.evidence}</p>
-                </div>
-              </div>
-              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <span class="badge ${g.currentGrade === 'Draft' ? 'badge-warning' : 'badge-success'}">${g.currentGrade}</span>
-                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerGradingModal('${g.id}')">
-                  <i data-lucide="check-square"></i> Evaluate Rubric
-                </button>
-              </div>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- GRADING SLA STRIP -->
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px;">
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--primary); text-transform:uppercase;">Pending Evaluation</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--primary); margin:4px 0 0 0;">${allSubs.length} Submissions</h3>
+              <small style="font-size:10.5px; color:var(--slate);">Central Triaged SLA Queue</small>
             </div>
-          `).join("")}
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Under Revision</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#b45309; margin:4px 0 0 0;">1 Item</h3>
+              <small style="font-size:10.5px; color:var(--slate);">Feedback Dispatched</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Avg Turnaround</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">18.4 Hours</h3>
+              <small style="font-size:10.5px; color:var(--slate);">Target SLA: 24.0 Hours</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Evaluated MTD</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">24 Works</h3>
+              <small style="font-size:10.5px; color:var(--slate);">Published to Gradebook</small>
+            </div>
+          </div>
+
+          <!-- FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${gradFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerGradTab='all'; RenderEngine.trainerWorkspace('trainer-grading-queue');">All Queue (${allSubs.length})</button>
+              <button class="btn ${gradFilter === 'capstones' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerGradTab='capstones'; RenderEngine.trainerWorkspace('trainer-grading-queue');">Code Capstones (2)</button>
+              <button class="btn ${gradFilter === 'voice' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerGradTab='voice'; RenderEngine.trainerWorkspace('trainer-grading-queue');">Voice Activities (3)</button>
+              <button class="btn ${gradFilter === 'hw' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerGradTab='hw'; RenderEngine.trainerWorkspace('trainer-grading-queue');">K-12 Homework (2)</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Rubric Engine: <strong>Weighted SLO Marking (FLOW-020)</strong></span>
+          </div>
+
+          <!-- SUBMISSIONS GRID -->
+          <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;">
+            ${displayedSubs.map(g => `
+              <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; gap:14px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="badge badge-primary" style="font-size:10px;">${g.type}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${g.id}</span>
+                    </div>
+                    <span style="font-size:11.5px; color:var(--slate);">${g.submittedAt}</span>
+                  </div>
+
+                  <h3 style="font:800 17.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">${g.assignment}</h3>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+                    <strong style="font-size:13px; color:var(--primary);">${g.learner}</strong>
+                    <span style="font-size:12px; color:var(--slate);">· ${g.course}</span>
+                  </div>
+
+                  <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:12px; font-size:12.5px; display:flex; flex-direction:column; gap:4px;">
+                    <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Submitted Evidence URI:</span>
+                    <p style="margin:0; font-family:monospace; color:var(--navy-medium); font-size:12px; word-break:break-all;">${g.evidence}</p>
+                    ${g.feedback ? `<p style="margin:4px 0 0 0; font-size:12px; color:#5a687c;"><em>Initial Note:</em> ${g.feedback}</p>` : ''}
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(124, 119, 102, 0.12); flex-wrap:wrap; gap:8px;">
+                  <span class="badge ${g.currentGrade === 'Draft' ? 'badge-warning' : g.currentGrade === 'Revision Requested' ? 'badge-error' : 'badge-success'}">${g.currentGrade}</span>
+                  <div class="button-row" style="display:flex; gap:6px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${g.learner}')"><i data-lucide="message-square"></i> Message</button>
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerGradingModal('${g.id}')">
+                      <i data-lucide="award"></i> Evaluate Rubric
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
         </div>
       `;
     }
 
     // --------------------------------------------------------------------------
-    // 6. ASSESSMENTS & GRADING: VOICE ACTIVITIES STUDIO (FLOW-020)
+    // 11. HUB 3 - PAGE 2: PROJECT & CAPSTONE TASKS (trainer-grading-capstones)
     // --------------------------------------------------------------------------
-    else if (route === "trainer-grading-voice") {
-      const voiceSubs = data.gradingQueue.filter(g => g.type.includes("Voice"));
+    else if (route === "trainer-grading-capstones") {
+      const capstoneSubs = (data.gradingQueue || []).filter(g => g.type.includes("Code") || g.type.includes("Repo") || g.assignment.includes("ASN"));
+
       viewContent = `
         <div style="display:flex; flex-direction:column; gap:20px;">
-          ${voiceSubs.map(v => `
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:24px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; gap:16px;">
-              <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                <div>
-                  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
-                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${v.assignment}</h3>
-                    <span class="badge badge-primary"><i data-lucide="mic"></i> Audio Recording</span>
-                  </div>
-                  <span style="font-size:13px; color:var(--slate);">Learner: <strong>${v.learner}</strong> · Submitted: ${v.submittedAt}</span>
-                </div>
-                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerGradingModal('${v.id}')">
-                  <i data-lucide="award"></i> Grade Audio Rubric
-                </button>
-              </div>
-
-              <!-- AUDIO PLAYER SIMULATOR -->
-              <div style="background:#0f172a; color:#ffffff; border-radius:10px; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
-                <button class="btn btn-primary btn-sm" style="border-radius:50%; width:44px; height:44px; padding:0; display:flex; align-items:center; justify-content:center;" onclick="Notifications.push('Audio Playback', 'Playing 90s acoustic recording...', 'info')">
-                  <i data-lucide="play" style="width:20px; height:20px;"></i>
-                </button>
-                <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
-                  <div style="display:flex; justify-content:space-between; font-size:12px; color:#94a3b8;">
-                    <span>${v.evidence.split('(')[0]}</span>
-                    <span>0:32 / 1:30</span>
-                  </div>
-                  <div style="background:#334155; height:6px; border-radius:3px; overflow:hidden;">
-                    <div style="background:#38bdf8; width:35%; height:100%;"></div>
-                  </div>
-                </div>
-                <span style="font-size:12px; color:#4ade80; font-weight:700; background:rgba(74,222,128,0.1); padding:4px 10px; border-radius:4px;">
-                  HQ WAV (48kHz)
-                </span>
-              </div>
-
-              <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; font-size:13px;">
-                <div>
-                  <span style="color:#64748b; font-weight:700;">Acoustic Metric:</span>
-                  <p style="margin:2px 0 0 0; color:#1e293b;">Intonation & Pitch Cadence</p>
-                </div>
-                <div>
-                  <span style="color:#64748b; font-weight:700;">Diagnostic Baseline:</span>
-                  <p style="margin:2px 0 0 0; color:var(--secondary);">78% Articulation Accuracy</p>
-                </div>
-                <div>
-                  <span style="color:#64748b; font-weight:700;">Feedback State:</span>
-                  <p style="margin:2px 0 0 0; color:#334155;">${v.feedback}</p>
-                </div>
-              </div>
+          <!-- CAPSTONE ARCHITECTURE BANNER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; gap:16px;">
+            <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="code" style="width:24px; height:24px;"></i>
             </div>
-          `).join("")}
+            <div>
+              <strong style="color:var(--navy-medium); font-size:14.5px;">Technical Capstone Code Evaluation Studio (RUB-101)</strong>
+              <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                Evaluate software architecture, code modularity, Git commit discipline, and live deployments. Approvals advance milestone certificate eligibility.
+              </p>
+            </div>
+          </div>
+
+          <!-- CAPSTONE CARDS -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            ${capstoneSubs.map(c => `
+              <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <span class="badge badge-primary">GIT REPO & DEMO</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${c.id}</span>
+                      <span class="badge badge-secondary">Rubric: ${c.rubricId}</span>
+                    </div>
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${c.assignment}</h3>
+                    <span style="font-size:12.5px; color:var(--slate);">Student: <strong>${c.learner}</strong> · Submitted: <strong>${c.submittedAt}</strong></span>
+                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerGradingModal('${c.id}')" style="font-weight:700;">
+                    <i data-lucide="check-square"></i> Evaluate Rubric & Code
+                  </button>
+                </div>
+
+                <div style="background:#0f172a; color:#f8fafc; border-radius:8px; padding:14px 18px; font-family:monospace; font-size:12.5px; display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <span style="color:#94a3b8; font-size:11px; display:block;">SUBMISSION ARTIFACT / REPO URL:</span>
+                    <a href="#" onclick="Notifications.push('Repository Clone', 'Simulating GitHub commit tree inspection for ${c.learner}...', 'info'); return false;" style="color:#38bdf8; text-decoration:none; font-weight:600;">${c.evidence}</a>
+                  </div>
+                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Live Preview Verified', 'Checking Vercel HTTPS SSL and Lighthouse performance...', 'success')" style="background:rgba(255,255,255,0.1); color:#ffffff; border:1px solid rgba(255,255,255,0.2);">
+                    <i data-lucide="external-link"></i> Live Demo
+                  </button>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:14px; font-size:12.5px;">
+                  <div>
+                    <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Code Quality</span>
+                    <p style="margin:2px 0 0 0; font-weight:600; color:#166534;">Semantic HTML5 & 12-Col CSS Grid</p>
+                  </div>
+                  <div>
+                    <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Target Outcome</span>
+                    <p style="margin:2px 0 0 0; font-weight:600; color:var(--navy-medium);">Milestone 2 Capstone Gate</p>
+                  </div>
+                  <div>
+                    <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Evaluation Status</span>
+                    <p style="margin:2px 0 0 0; font-weight:600; color:#b45309;">Draft Evaluation In Progress</p>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 12. HUB 3 - PAGE 3: ACOUSTIC VOICE DRILLS (trainer-grading-voice)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-grading-voice") {
+      const voiceSubs = (data.gradingQueue || []).filter(g => g.type.includes("Voice") || g.assignment.includes("VOC"));
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- VOICE STUDIO HEADER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:18px 22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; gap:16px;">
+            <div style="background:#fdfbf7; color:var(--primary); width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="mic" style="width:24px; height:24px;"></i>
+            </div>
+            <div>
+              <strong style="color:var(--navy-medium); font-size:14.5px;">Acoustic Voice & Fluency Grading Studio (RUB-102 / FLOW-020)</strong>
+              <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0; line-height:1.4;">
+                Evaluate pitch variations, sentence cadence, syllable stress, and vowel phoneme accuracy with calibrated audio rubrics.
+              </p>
+            </div>
+          </div>
+
+          <!-- AUDIO DRILL CARDS -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            ${voiceSubs.map(v => `
+              <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:24px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                      <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">${v.assignment}</h3>
+                      <span class="badge badge-primary"><i data-lucide="mic" style="width:12px; height:12px;"></i> Audio WAV</span>
+                    </div>
+                    <span style="font-size:12.5px; color:var(--slate);">Learner: <strong>${v.learner}</strong> · Submitted: <strong>${v.submittedAt}</strong></span>
+                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerGradingModal('${v.id}')" style="font-weight:700;">
+                    <i data-lucide="award"></i> Grade Audio Rubric
+                  </button>
+                </div>
+
+                <!-- AUDIO PLAYER SIMULATOR -->
+                <div style="background:#0f172a; color:#ffffff; border-radius:10px; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;">
+                  <button class="btn btn-primary btn-sm" style="border-radius:50%; width:44px; height:44px; padding:0; display:flex; align-items:center; justify-content:center;" onclick="Notifications.push('Audio Playback', 'Playing acoustic recording for ${v.learner}...', 'info')">
+                    <i data-lucide="play" style="width:20px; height:20px;"></i>
+                  </button>
+                  <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; justify-content:space-between; font-size:12px; color:#94a3b8;">
+                      <span>${v.evidence.split('(')[0]}</span>
+                      <span>0:32 / 1:30</span>
+                    </div>
+                    <div style="background:#334155; height:6px; border-radius:3px; overflow:hidden;">
+                      <div style="background:#38bdf8; width:35%; height:100%;"></div>
+                    </div>
+                  </div>
+                  <span style="font-size:12px; color:#4ade80; font-weight:700; background:rgba(74,222,128,0.1); padding:4px 10px; border-radius:4px;">
+                    HQ WAV (48kHz)
+                  </span>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:14px; font-size:12.5px;">
+                  <div>
+                    <span style="color:var(--slate); font-weight:700;">Acoustic Metric:</span>
+                    <p style="margin:2px 0 0 0; color:var(--navy-medium); font-weight:600;">Intonation & Pitch Cadence</p>
+                  </div>
+                  <div>
+                    <span style="color:var(--slate); font-weight:700;">Diagnostic Baseline:</span>
+                    <p style="margin:2px 0 0 0; color:#166534; font-weight:600;">78% Articulation Accuracy</p>
+                  </div>
+                  <div>
+                    <span style="color:var(--slate); font-weight:700;">Feedback State:</span>
+                    <p style="margin:2px 0 0 0; color:#475569;">${v.feedback}</p>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 13. HUB 3 - PAGE 4: GRADEBOOK & FINAL LEDGER (trainer-grading-gradebook)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-grading-gradebook" || route.includes("gradebook") || route.includes("ledger")) {
+      const gbFilter = window.trainerGbTab || "all";
+      const allLearners = data.learners || [];
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- WEIGHTING POLICY BANNER -->
+          <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:16px 20px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;">
+            <div>
+              <strong style="color:var(--navy-medium); font-size:14px;">Academic Weighting Policy (ASM-010 - ASM-014)</strong>
+              <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0;">
+                Calculated Weighted Sum: <strong>40% Continuous Coursework + 20% Formative Quizzes + 40% Mid-Term / Capstone = 100%</strong>.
+              </p>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Gradebook Exported', 'Official accredited gradebook CSV downloaded.', 'success')"><i data-lucide="download"></i> Export Grade Ledger</button>
+          </div>
+
+          <!-- GRADEBOOK TABLE -->
+          <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Learner Profile</th>
+                  <th>Course Track</th>
+                  <th>Coursework (40%)</th>
+                  <th>Quizzes & Drills (20%)</th>
+                  <th>Capstone / Mid-Term (40%)</th>
+                  <th>Total Subject Mark</th>
+                  <th>Gradebook State</th>
+                  <th>Verification Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Zainab Malik</strong>
+                    <span class="table-subline">LNR-501</span>
+                  </td>
+                  <td>Modern Full-Stack Web Dev</td>
+                  <td><strong>38 / 40 (95%)</strong></td>
+                  <td><strong>19 / 20 (95%)</strong></td>
+                  <td><strong>38 / 40 (95%)</strong></td>
+                  <td><strong style="color:#166534; font-size:14px;">95 / 100 (Grade A+)</strong></td>
+                  <td><span class="badge badge-success">Published</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Grade Ledger', 'Grade A+ verified and published to student dossier.', 'success')"><i data-lucide="check"></i> Verified</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Hamza Ahmed</strong>
+                    <span class="table-subline">LNR-502</span>
+                  </td>
+                  <td>Spoken English Fluency</td>
+                  <td><strong>24 / 40 (60%)</strong></td>
+                  <td><strong>14 / 20 (70%)</strong></td>
+                  <td><strong>28 / 40 (70%)</strong></td>
+                  <td><strong style="color:#b45309; font-size:14px;">66 / 100 (Grade B)</strong></td>
+                  <td><span class="badge badge-warning">Draft</span></td>
+                  <td>
+                    <button class="btn btn-primary btn-xs" onclick="Notifications.push('Grade Published', 'Gradebook mark published to Hamza Ahmed portal.', 'success')">Publish Grade</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Bilal Khan</strong>
+                    <span class="table-subline">LNR-503</span>
+                  </td>
+                  <td>Modern Full-Stack Web Dev</td>
+                  <td><strong>32 / 40 (80%)</strong></td>
+                  <td><strong>16 / 20 (80%)</strong></td>
+                  <td><strong>30 / 40 (75%)</strong></td>
+                  <td><strong style="color:#166534; font-size:14px;">78 / 100 (Grade B+)</strong></td>
+                  <td><span class="badge badge-success">Published</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Grade Ledger', 'Grade B+ verified in markbook.', 'success')"><i data-lucide="check"></i> Verified</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Areeba Farooq</strong>
+                    <span class="table-subline">LNR-504</span>
+                  </td>
+                  <td>Grade 8 Math (FBISE)</td>
+                  <td><strong>30 / 40 (75%)</strong></td>
+                  <td><strong>15 / 20 (75%)</strong></td>
+                  <td><strong>32 / 40 (80%)</strong></td>
+                  <td><strong style="color:#166534; font-size:14px;">77 / 100 (Grade B+)</strong></td>
+                  <td><span class="badge badge-success">Published</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Grade Ledger', 'K-12 Markbook synched with FBISE grade scale.', 'success')"><i data-lucide="check"></i> Verified</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       `;
     }
