@@ -573,30 +573,465 @@ const db = {
     questions: [
       {
         id: "Q-BANK-101",
-        stem: "In React 19, what is the primary architectural benefit of Actions when handling server mutations?",
-        category: "Frontend Architecture",
-        difficulty: "Intermediate",
-        correctAnswer: "Automatic pending states, optimistic updates, and built-in error boundaries",
-        usedInQuizzes: ["QUIZ-101", "QUIZ-102"],
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        topic: "React 19 Actions & Server Mutations",
+        stem: "In React 19, what is the primary architectural benefit of Actions when handling asynchronous server mutations?",
+        type: "Multiple Choice",
+        difficulty: "Medium",
+        bloomLevel: "Level 4: Analyze",
+        options: [
+          { key: "A", text: "They eliminate the need for HTTP headers in fetch requests", correct: false, distractorPlausibility: "Implausible: HTTP protocol headers are still required." },
+          { key: "B", text: "Automatic pending states, optimistic UI updates, and integrated error boundary rollback", correct: true, distractorPlausibility: "Correct answer key verified." },
+          { key: "C", text: "They compile client-side React code into WebAssembly binaries", correct: false, distractorPlausibility: "Plausible distractor testing build step confusion." },
+          { key: "D", text: "They force all React state into global window storage", correct: false, distractorPlausibility: "Incorrect: violates isolated encapsulation." }
+        ],
+        correctAnswer: "B",
+        explanation: "React 19 Actions manage the lifecycle of async transitions automatically, handling isPending flags, optimistic updates, and form actions natively.",
+        usedInQuizzes: ["QZ-201", "QZ-202"],
+        ambiguityFlag: false,
         status: "Verified Clean"
       },
       {
         id: "Q-BANK-102",
-        stem: "Which CSS property enforces strict isolated stacking context without triggering sub-pixel blur?",
-        category: "Web Layout & Rendering",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        topic: "CSS Stacking & Rendering Contexts",
+        stem: "Which CSS property configuration enforces a strict isolated stacking context and containment without causing font sub-pixel rasterization blur?",
+        type: "Multiple Choice",
         difficulty: "Easy",
-        correctAnswer: "contain: layout or isolation: isolate",
-        usedInQuizzes: ["QUIZ-101"],
+        bloomLevel: "Level 2: Understand",
+        options: [
+          { key: "A", text: "contain: layout or isolation: isolate", correct: true, distractorPlausibility: "Correct answer key verified." },
+          { key: "B", text: "transform: translateZ(0) with filter: blur(0px)", correct: false, distractorPlausibility: "Plausible hack from legacy GPU acceleration, causes subpixel blur." },
+          { key: "C", text: "z-index: 999999 !important", correct: false, distractorPlausibility: "Common novice distractor: does not create an isolated stacking context without positioning." },
+          { key: "D", text: "display: contents", correct: false, distractorPlausibility: "Incorrect: display: contents removes the box from rendering entirely." }
+        ],
+        correctAnswer: "A",
+        explanation: "isolation: isolate and contain: layout create a new stacking context natively without triggering GPU matrix transformations that cause subpixel text blurring.",
+        usedInQuizzes: ["QZ-201"],
+        ambiguityFlag: false,
         status: "Verified Clean"
       },
       {
         id: "Q-BANK-103",
-        stem: "When grading consonant cluster aspiration in Spoken English, what acoustic feature indicates C1 proficiency?",
-        category: "Phonetics & Oral Cadence",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        topic: "CEFR C1 Phonetics & Oral Cadence",
+        stem: "When grading consonant cluster aspiration in Spoken English according to CAIE/CEFR phonetics, what acoustic feature indicates C1 proficiency?",
+        type: "Phonetic Audio",
         difficulty: "Hard",
-        correctAnswer: "Voice onset time (VOT) between 40ms and 70ms on voiceless plosives",
-        usedInQuizzes: ["QUIZ-103"],
+        bloomLevel: "Level 5: Evaluate",
+        options: [
+          { key: "A", text: "Total absence of voicing during vowel transitions", correct: false, distractorPlausibility: "Incorrect: causes unnatural robotic glottalization." },
+          { key: "B", text: "Voice onset time (VOT) calibrated between 40ms and 70ms on voiceless plosives /p/, /t/, /k/", correct: true, distractorPlausibility: "Correct acoustic standard benchmark." },
+          { key: "C", text: "Pitch inflection exceeding 400 Hz on unstressed syllable codas", correct: false, distractorPlausibility: "Plausible distractor: 400Hz is falsetto range." },
+          { key: "D", text: "Constant 0 dB signal gain across the entire utterance", correct: false, distractorPlausibility: "Incorrect: destroys natural linguistic dynamic contrast." }
+        ],
+        correctAnswer: "B",
+        explanation: "A Voice Onset Time (VOT) of 40-70ms on voiceless plosives represents natural Native-equivalent aspiration according to CEFR acoustic rubrics.",
+        usedInQuizzes: ["QZ-203"],
+        ambiguityFlag: false,
         status: "Verified Clean"
+      },
+      {
+        id: "Q-BANK-104",
+        courseCode: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        topic: "Linear Equations & Cartesian Coordinates",
+        stem: "In the Federal Board (FBISE) syllabus, what is the geometric condition for two lines y = m1*x + c1 and y = m2*x + c2 to be perpendicular?",
+        type: "Math Proof",
+        difficulty: "Medium",
+        bloomLevel: "Level 3: Apply",
+        options: [
+          { key: "A", text: "m1 = m2 (Slopes are strictly identical)", correct: false, distractorPlausibility: "Common distractor: this is the parallel condition." },
+          { key: "B", text: "m1 * m2 = -1 (Product of slopes equals -1)", correct: true, distractorPlausibility: "Correct mathematical proof standard." },
+          { key: "C", text: "m1 + m2 = 0", correct: false, distractorPlausibility: "Plausible distractor testing reflection across y-axis." },
+          { key: "D", text: "c1 * c2 = -1", correct: false, distractorPlausibility: "Distractor confusing y-intercepts with gradients." }
+        ],
+        correctAnswer: "B",
+        explanation: "Two non-vertical lines are perpendicular in Cartesian space if and only if the product of their gradients is negative reciprocal: m1 * m2 = -1.",
+        usedInQuizzes: ["QZ-204"],
+        ambiguityFlag: false,
+        status: "Verified Clean"
+      },
+      {
+        id: "Q-BANK-105",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        topic: "TypeScript Generic Type Constraints",
+        stem: "Which TypeScript utility pattern correctly extracts only the mutable object keys whose values extend a specific callback function signature?",
+        type: "Code Fill-in",
+        difficulty: "Hard",
+        bloomLevel: "Level 4: Analyze",
+        options: [
+          { key: "A", text: "type FunctionKeys<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T]", correct: true, distractorPlausibility: "Correct conditional type distribution." },
+          { key: "B", text: "type FunctionKeys<T> = keyof T & Function", correct: false, distractorPlausibility: "Plausible syntax error: intersections on keyof produce 'never'." },
+          { key: "C", text: "type FunctionKeys<T> = T extends Function ? any : void", correct: false, distractorPlausibility: "Does not extract indexed object keys." },
+          { key: "D", text: "type FunctionKeys<T> = typeof T[keyof T]", correct: false, distractorPlausibility: "Produces runtime value type rather than property key names." }
+        ],
+        correctAnswer: "A",
+        explanation: "Mapped types combined with indexed access [keyof T] filter and collapse matching property keys through never-type filtering.",
+        usedInQuizzes: ["QZ-202"],
+        ambiguityFlag: false,
+        status: "Verified Clean"
+      },
+      {
+        id: "Q-BANK-106",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        topic: "Prosody & Sentence Stress",
+        stem: "When conveying contrastive emphasis in professional discourse, where should primary pitch accent shift in the sentence 'I did not say he stole the money'?",
+        type: "Multiple Choice",
+        difficulty: "Medium",
+        bloomLevel: "Level 3: Apply",
+        options: [
+          { key: "A", text: "On the function auxiliary verb 'did'", correct: false, distractorPlausibility: "Conveys truth affirmation rather than contrast." },
+          { key: "B", text: "On the specific target word to isolate the implied alternative (e.g. 'I' = someone else said it; 'HE' = someone else stole it)", correct: true, distractorPlausibility: "Correct linguistic prosodic rule." },
+          { key: "C", text: "Equally distributed with flat intonation across all 8 syllables", correct: false, distractorPlausibility: "Destroys semantic contrast." },
+          { key: "D", text: "Exclusively on the terminal punctuation pause", correct: false, distractorPlausibility: "Distractor confusing cadence with lexical stress." }
+        ],
+        correctAnswer: "B",
+        explanation: "English contrastive stress isolates intended meaning depending on which lexical word carries the nucleus pitch movement.",
+        usedInQuizzes: ["QZ-203"],
+        ambiguityFlag: false,
+        status: "Verified Clean"
+      }
+    ],
+
+    quizzes: [
+      {
+        id: "QZ-201",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        title: "Level 1 Gatekeeper Quiz: Frontend Architecture & DOM",
+        type: "Gatekeeper Quiz",
+        passMark: ">= 80% Required to Unlock Level 2",
+        passThresholdNum: 80,
+        timeLimit: "45 Minutes",
+        poolSize: 40,
+        sampledCount: 15,
+        maxAttempts: 3,
+        cooldownHours: 24,
+        shuffleQuestions: true,
+        shuffleOptions: true,
+        antiCheatCopyPaste: true,
+        retainedScore: "Highest Attempt",
+        gatingTarget: "Unlocks Milestone 2 (MILE-005)",
+        status: "Approved",
+        rubric: "Auto-Scored Pool (Q-BANK-101 to Q-BANK-120)"
+      },
+      {
+        id: "QZ-202",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        title: "Level 2 Checkpoint: State Machines & TypeScript Types",
+        type: "Milestone Checkpoint",
+        passMark: ">= 75% Pass Mark",
+        passThresholdNum: 75,
+        timeLimit: "30 Minutes",
+        poolSize: 30,
+        sampledCount: 10,
+        maxAttempts: 3,
+        cooldownHours: 12,
+        shuffleQuestions: true,
+        shuffleOptions: true,
+        antiCheatCopyPaste: true,
+        retainedScore: "Highest Attempt",
+        gatingTarget: "Unlocks Capstone Task ASN-301",
+        status: "Approved",
+        rubric: "Auto-Scored Pool (Q-BANK-105 to Q-BANK-135)"
+      },
+      {
+        id: "QZ-203",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Voice",
+        title: "Module 1 Diagnostic: Phonetics & Prosodic Cadence",
+        type: "Diagnostic Quiz",
+        passMark: ">= 75% Pass Mark (CEFR B2+)",
+        passThresholdNum: 75,
+        timeLimit: "25 Minutes",
+        poolSize: 25,
+        sampledCount: 10,
+        maxAttempts: 2,
+        cooldownHours: 0,
+        shuffleQuestions: true,
+        shuffleOptions: true,
+        antiCheatCopyPaste: true,
+        retainedScore: "Highest Attempt",
+        gatingTarget: "Unlocks Voice Activity VOC-401",
+        status: "Approved",
+        rubric: "Auto-Scored (Bank Q-BANK-103 to Q-BANK-106)"
+      },
+      {
+        id: "QZ-204",
+        courseCode: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        title: "Term 1 Practice & Diagnostic: Linear Equations",
+        type: "Formative Assessment",
+        passMark: ">= 50% Minimum Passing Standard",
+        passThresholdNum: 50,
+        timeLimit: "60 Minutes",
+        poolSize: 50,
+        sampledCount: 20,
+        maxAttempts: 999,
+        cooldownHours: 0,
+        shuffleQuestions: true,
+        shuffleOptions: true,
+        antiCheatCopyPaste: false,
+        retainedScore: "Latest Attempt for Diagnostic",
+        gatingTarget: "Term 1 Gradebook Weighting (30%)",
+        status: "Approved",
+        rubric: "FBISE Standardized MCQ Bank"
+      }
+    ],
+
+    assignments: [
+      {
+        id: "ASN-301",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        title: "Milestone 2 Capstone: E-Commerce Reducer Architecture",
+        type: "Capstone Project",
+        passMark: ">= 80 / 100 on Rubric RUB-101",
+        timeLimit: "7 Days from Unlock",
+        acceptedFormats: ["GitHub Repository URL", "Live Vercel / Netlify URL", "Architecture Diagram PDF"],
+        brief: "Architect an end-to-end e-commerce state store using unidirectional actions, reducer patterns, and persistent local storage synchronization with 90%+ Vitest test coverage.",
+        linkedRubric: "RUB-101 (Clean Architecture Matrix)",
+        latePolicy: "48-Hour Grace Period (5% deduction per 24h overdue, capped at 20%)",
+        vitestAssertionsMin: "85% Code Coverage & Zero Unhandled Exceptions",
+        status: "Ready for Review"
+      },
+      {
+        id: "ASN-302",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        title: "Milestone 3 Capstone: Distributed Microservices & JWT Auth",
+        type: "Capstone Project",
+        passMark: ">= 80 / 100 on Rubric RUB-101",
+        timeLimit: "10 Days from Unlock",
+        acceptedFormats: ["GitHub Repository URL", "Docker Compose Manifest"],
+        brief: "Implement a secure token-refresh auth service with CSRF protection, rate limiting, and PostgreSQL audit logging.",
+        linkedRubric: "RUB-101 (Clean Architecture Matrix)",
+        latePolicy: "48-Hour Grace Period (-5%/day)",
+        vitestAssertionsMin: "90% Code Coverage & Security Audit Clean",
+        status: "Approved"
+      },
+      {
+        id: "ASN-K12-01",
+        courseCode: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        title: "Term 1 Written Proofs: Coordinate Geometry & Matrices",
+        type: "Homework Submission",
+        passMark: ">= 60 / 100 on Rubric RUB-K12-MATH",
+        timeLimit: "5 Days",
+        acceptedFormats: ["Scanned PDF Document (Max 10MB)"],
+        brief: "Complete 6 multi-step geometric theorems and matrix inverse calculations showing all intermediate steps.",
+        linkedRubric: "RUB-K12-MATH (FBISE Proof Rubric)",
+        latePolicy: "Accepted up to 3 days late with letter grade cap",
+        vitestAssertionsMin: "Manual Trainer Step Evaluation",
+        status: "Approved"
+      }
+    ],
+
+    voiceActivities: [
+      {
+        id: "VOC-401",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        title: "Activity 2.4: 90-Second Impromptu Speech & Voice Pitch Modulation",
+        type: "Voice Activity (Acoustic)",
+        passMark: "Rubric >= 75 / 100 (CEFR B2+ Standard)",
+        targetScenario: "Workplace Client Presentation & Objection Handling",
+        prompt: "Deliver a 90-second response addressing a client's pricing concerns. Maintain steady chest-voice resonance, controlled breathing, and natural contrastive emphasis.",
+        durationSecs: "60 - 120 Seconds",
+        noiseFloorDb: "<= -42 dBFS",
+        sampleRate: "16kHz PCM WebRTC Audio",
+        cefrLevel: "Target: CEFR C1 Professional Speaking",
+        linkedRubric: "RUB-102 (CEFR Phonetics & Fluency)",
+        sampleAudioUrl: "https://storage.innovatorhuzsam.com/audio/sample-voc-401.mp3",
+        status: "Certified"
+      },
+      {
+        id: "VOC-402",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        title: "Activity 3.2: Executive Cross-Examination & Debate",
+        type: "Voice Activity (Acoustic)",
+        passMark: "Rubric >= 80 / 100 (CEFR C1 Standard)",
+        targetScenario: "Boardroom Negotiation & Executive Presence",
+        prompt: "Respond to challenging stakeholder inquiries regarding project deadlines while avoiding filler words (um, ah, like) and vocal fry.",
+        durationSecs: "90 - 180 Seconds",
+        noiseFloorDb: "<= -44 dBFS",
+        sampleRate: "16kHz PCM WebRTC Audio",
+        cefrLevel: "Target: CEFR C1/C2 Fluent Executive",
+        linkedRubric: "RUB-102 (CEFR Phonetics & Fluency)",
+        sampleAudioUrl: "https://storage.innovatorhuzsam.com/audio/sample-voc-402.mp3",
+        status: "Ready for Review"
+      },
+      {
+        id: "VOC-403",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        title: "Activity 1.3: Diagnostic Acoustic Vowel Formants & Connected Speech",
+        type: "Voice Activity (Acoustic)",
+        passMark: "Diagnostic Baseline",
+        targetScenario: "Phonetic Vowel Formant Calibration",
+        prompt: "Read the standardized phonetic passage to calibrate baseline F1/F2 vowel formant frequencies and syllable duration.",
+        durationSecs: "45 - 60 Seconds",
+        noiseFloorDb: "<= -40 dBFS",
+        sampleRate: "16kHz PCM WebRTC Audio",
+        cefrLevel: "Baseline Diagnostic",
+        linkedRubric: "RUB-102 (CEFR Phonetics & Fluency)",
+        sampleAudioUrl: "https://storage.innovatorhuzsam.com/audio/sample-voc-403.mp3",
+        status: "Certified"
+      }
+    ],
+
+    rubrics: [
+      {
+        id: "RUB-101",
+        title: "Full-Stack Software Engineering Capstone Rubric",
+        courseCode: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        domain: "Software Architecture & Frontend Engineering",
+        totalWeight: "100.0%",
+        mathNormalized: true,
+        status: "Approved & Frozen",
+        criteria: [
+          {
+            id: "CRIT-01",
+            name: "Component Modularity & State Isolation",
+            weight: 35,
+            description: "Clean separation of presentation, data fetching, and state machines with zero prop drilling.",
+            levels: {
+              exemplary: "Flawless unidirectional state flow, custom hooks, and isolated pure components.",
+              proficient: "Solid component decomposition with minor inline handler redundancies.",
+              developing: "Monolithic components with scattered state mutations and direct DOM access.",
+              unsatisfactory: "Broken reactivity, state race conditions, and infinite render loops."
+            }
+          },
+          {
+            id: "CRIT-02",
+            name: "UI Responsiveness & Fluid Adaptation",
+            weight: 35,
+            description: "Mobile-first responsive layout, fluid typography, and zero horizontal viewport clipping.",
+            levels: {
+              exemplary: "Seamless responsive behavior across 320px to 4K displays with zero layout shift (CLS < 0.05).",
+              proficient: "Responsive across standard phone, tablet, and desktop breakpoints with minor edge padding flaws.",
+              developing: "Overflow clipping on small mobile viewports (375px) and rigid fixed pixel widths.",
+              unsatisfactory: "Completely broken mobile layouts with overlapping text and horizontal scrollbars."
+            }
+          },
+          {
+            id: "CRIT-03",
+            name: "Accessibility, WCAG AA & Semantic Markup",
+            weight: 30,
+            description: "Strict semantic HTML5, keyboard navigation, screen-reader ARIA live regions, and color contrast >= 4.5:1.",
+            levels: {
+              exemplary: "100% Lighthouse A11y score, perfect focus trap management, and descriptive ARIA labels.",
+              proficient: "Full keyboard navigability with compliant color contrast ratios.",
+              developing: "Missing keyboard focus indicators and generic <div> buttons without ARIA roles.",
+              unsatisfactory: "Trapped keyboard focus, inaccessible contrast ratios, and unlabeled form inputs."
+            }
+          }
+        ]
+      },
+      {
+        id: "RUB-102",
+        title: "CEFR Spoken English Fluency & Oral Phonetics Matrix",
+        courseCode: "ENG-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        domain: "CEFR C1 Professional Speaking & Phonetics",
+        totalWeight: "100.0%",
+        mathNormalized: true,
+        status: "Approved & Frozen",
+        criteria: [
+          {
+            id: "CRIT-11",
+            name: "Pronunciation & Phonetic Aspiration",
+            weight: 35,
+            description: "Accurate vowel formants, aspirated voiceless plosives, and natural consonant clusters.",
+            levels: {
+              exemplary: "Near-native precision with accurate IPA phoneme execution and natural assimilation.",
+              proficient: "Clear, intelligible pronunciation with occasional minor L1 accent interference.",
+              developing: "Frequent phoneme substitution causing listener hesitation.",
+              unsatisfactory: "Heavy phoneme distortion rendering speech largely unintelligible."
+            }
+          },
+          {
+            id: "CRIT-12",
+            name: "Fluency, Cadence & Pitch Modulation",
+            weight: 35,
+            description: "Smooth speech rate (130-160 WPM), controlled pauses, and expressive intonation contours.",
+            levels: {
+              exemplary: "Dynamic pitch variation conveying subtle nuances with zero unnatural speech hesitation.",
+              proficient: "Steady conversational cadence with natural discourse markers.",
+              developing: "Monotone pitch delivery with frequent prolonged mid-sentence pauses.",
+              unsatisfactory: "Staccato delivery with severe vocal fry and continuous disfluencies."
+            }
+          },
+          {
+            id: "CRIT-13",
+            name: "Lexical Precision & Pragmatic Register",
+            weight: 30,
+            description: "Rich professional vocabulary, idiom accuracy, and contextually appropriate formality.",
+            levels: {
+              exemplary: "Sophisticated idiomatic and professional vocabulary tailored to executive audiences.",
+              proficient: "Effective professional terminology with clear contextual relevance.",
+              developing: "Repetitive basic vocabulary with occasional inappropriate informal slang.",
+              unsatisfactory: "Inaccurate word choices obscuring core meaning."
+            }
+          }
+        ]
+      },
+      {
+        id: "RUB-K12-MATH",
+        title: "FBISE Grade 8 Mathematics Step-by-Step Proof Rubric",
+        courseCode: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        domain: "Federal Board Secondary Mathematics",
+        totalWeight: "100.0%",
+        mathNormalized: true,
+        status: "Approved & Frozen",
+        criteria: [
+          {
+            id: "CRIT-21",
+            name: "Step-by-Step Mathematical Derivation",
+            weight: 40,
+            description: "Logical sequential proof steps with explicit algebraic justifications for every transformation.",
+            levels: {
+              exemplary: "Every intermediate proof line stated with formal algebraic axioms.",
+              proficient: "Clear sequence of steps with minor skipped arithmetic justifications.",
+              developing: "Incomplete derivation steps jumping to final solutions.",
+              unsatisfactory: "Disorganized, random calculations with no coherent logical thread."
+            }
+          },
+          {
+            id: "CRIT-22",
+            name: "Cartesian Graph Accuracy & Notation",
+            weight: 30,
+            description: "Accurately plotted coordinate points, labeled axes, line gradients, and intersection markers.",
+            levels: {
+              exemplary: "Perfect Cartesian grid plotting with labeled intercepts and slope triangles.",
+              proficient: "Correct linear plotting with minor axis labeling omissions.",
+              developing: "Inaccurately plotted coordinate points deviating from calculated values.",
+              unsatisfactory: "Missing graphs or incorrect coordinate quadrants."
+            }
+          },
+          {
+            id: "CRIT-23",
+            name: "Final Answer Accuracy & Units",
+            weight: 30,
+            description: "Correct numerical evaluation with required significant figures and algebraic unit labels.",
+            levels: {
+              exemplary: "100% correct final answer with exact mathematical notation and units.",
+              proficient: "Correct numerical result with minor rounding notation variance.",
+              developing: "Arithmetic calculation error carried from earlier step.",
+              unsatisfactory: "Incorrect final value with no supporting calculations."
+            }
+          }
+        ]
       }
     ],
 
