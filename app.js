@@ -8276,11 +8276,367 @@ const RenderEngine = {
         }
       });
     }
+
     let shell = document.getElementById("om-dashboard-shell");
-    if (shell) {
-      shell.classList.remove("hidden");
-      shell.style.display = "block";
+    if (!shell && viewDashboard) {
+      shell = document.createElement("div");
+      shell.id = "om-dashboard-shell";
+      viewDashboard.appendChild(shell);
     }
+    if (!shell) shell = viewDashboard;
+    if (!shell) return;
+    shell.classList.remove("hidden");
+    shell.style.display = "block";
+
+    const data = db.omData || {};
+    const trials = data.trials || [];
+    const enrolments = data.enrolments || [];
+    const classes = data.classes || [];
+    const classReviews = data.classReviews || [];
+    const payments = data.payments || [];
+    const trainers = data.trainers || [];
+    const entitlements = data.entitlements || [];
+    const cases = data.cases || [];
+
+    // Filter states
+    const dateFilter = window.omFilterDate || "today";
+    const courseFilter = window.omFilterCourse || "";
+    const deliveryFilter = window.omFilterDelivery || "";
+    const ownerFilter = window.omFilterOwner || "";
+
+    // Derived counts
+    const intakeTrialsCount = trials.filter(t => t.status === "Ready for Scheduling" || t.status === "Waiting for Info").length;
+    const readyTrialsCount = trials.filter(t => t.status === "Ready for Scheduling").length;
+    const pendingEnrolCount = enrolments.filter(e => e.status === "Pending Setup").length;
+    const activeEnrolCount = enrolments.filter(e => e.status === "Active").length;
+    const todayClasses = classes.filter(c => c.timing.includes("Today"));
+    const liveClassesCount = classes.filter(c => c.status === "Live").length;
+    const pendingReviews = classReviews.filter(r => r.status === "Pending Review");
+    const pendingPayments = payments.filter(p => p.status === "Awaiting Review" || p.status === "Under Review");
+    const scheduleConflicts = trainers.filter(t => t.conflictStatus && t.conflictStatus.includes("Conflict")).length;
+    const atRiskEntitlements = entitlements.filter(e => e.riskLevel && e.riskLevel.includes("High")).length;
+    const openCases = cases.filter(c => c.status !== "Resolved" && c.status !== "Closed").length;
+
+    shell.innerHTML = `
+      <div class="om-command-deck" style="display:flex; flex-direction:column; gap:20px; padding:20px 0;">
+        
+        <!-- TOP COMMAND FLIGHT STRIP -->
+        <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:20px 24px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="background:#fdfbf7; color:var(--primary); width:48px; height:48px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="shield-check" style="width:26px; height:26px;"></i>
+            </div>
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+                <span class="badge badge-primary" style="font-size:10.5px; font-weight:700;">OPERATIONAL MANAGEMENT</span>
+                <span style="font-size:12px; color:var(--slate);">Authority Scope: Central LMS Operations & Quality Gatekeeper</span>
+              </div>
+              <h2 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Operations Command Center (DSH-007)</h2>
+              <p style="font-size:12.5px; color:var(--slate); margin:0; line-height:1.4;">
+                Coordinate trial qualifications, verified enrolment setups, live class occurrences, trainer conflicts, delivery report sign-offs, and manual payment receipt audits.
+              </p>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('om-payment-review')">
+              <i data-lucide="receipt"></i> Verify Payments (${pendingPayments.length})
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('om-approval-queue')">
+              <i data-lucide="check-circle-2"></i> Review Reports (${pendingReviews.length})
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openOmScheduleTrialModal('TRL-201')">
+              <i data-lucide="calendar-plus"></i> Schedule Next Trial
+            </button>
+          </div>
+        </div>
+
+        <!-- SCOPE FILTER CONSOLE -->
+        <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px 20px; display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;">
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:4px;">Date Range</label>
+            <select class="form-control" style="font-size:12.5px;" onchange="window.omFilterDate=this.value; RenderEngine.omDashboard();">
+              <option value="today" ${dateFilter === 'today' ? 'selected' : ''}>Today (16 Aug 2026)</option>
+              <option value="upcoming" ${dateFilter === 'upcoming' ? 'selected' : ''}>Next 7 Days</option>
+              <option value="month" ${dateFilter === 'month' ? 'selected' : ''}>Current Month (August)</option>
+              <option value="all" ${dateFilter === 'all' ? 'selected' : ''}>All Records</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:4px;">Course Track</label>
+            <select class="form-control" style="font-size:12.5px;" onchange="window.omFilterCourse=this.value; RenderEngine.omDashboard();">
+              <option value="">All Programmes</option>
+              <option value="Literacy" ${courseFilter === 'Literacy' ? 'selected' : ''}>Basic Literacy</option>
+              <option value="Numeracy" ${courseFilter === 'Numeracy' ? 'selected' : ''}>Applied Numeracy</option>
+              <option value="Technology" ${courseFilter === 'Technology' ? 'selected' : ''}>Vocational Technology</option>
+              <option value="K-12" ${courseFilter === 'K-12' ? 'selected' : ''}>K-12 Academic</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:4px;">Delivery Mode</label>
+            <select class="form-control" style="font-size:12.5px;" onchange="window.omFilterDelivery=this.value; RenderEngine.omDashboard();">
+              <option value="">All Delivery Modes</option>
+              <option value="One-to-One" ${deliveryFilter === 'One-to-One' ? 'selected' : ''}>One-to-One (1:1)</option>
+              <option value="Group" ${deliveryFilter === 'Group' ? 'selected' : ''}>Group / Cohort</option>
+              <option value="Trial" ${deliveryFilter === 'Trial' ? 'selected' : ''}>Trial Consultation</option>
+              <option value="K-12" ${deliveryFilter === 'K-12' ? 'selected' : ''}>K-12 Section</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:4px;">Assignment Owner</label>
+            <select class="form-control" style="font-size:12.5px;" onchange="window.omFilterOwner=this.value; RenderEngine.omDashboard();">
+              <option value="">All Operations Staff</option>
+              <option value="Sarah Connor" ${ownerFilter === 'Sarah Connor' ? 'selected' : ''}>Sarah Connor (You)</option>
+              <option value="Enrolment Ops" ${ownerFilter === 'Enrolment Ops' ? 'selected' : ''}>Enrolment Ops</option>
+              <option value="Scheduling Team" ${ownerFilter === 'Scheduling Team' ? 'selected' : ''}>Scheduling Team</option>
+              <option value="Support Team" ${ownerFilter === 'Support Team' ? 'selected' : ''}>Support Team</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4-STAGE OPERATIONAL PIPELINE MATRIX -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px;">
+          
+          <!-- Stage 1: Trial Qualification -->
+          <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('om-trial-requests')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:800; color:var(--slate); font-family:monospace;">STAGE 01</span>
+              <span class="badge badge-warning">${intakeTrialsCount} Intake</span>
+            </div>
+            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Trial Qualification</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Placement checks, consent & slot dispatch</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; padding-top:8px; border-top:1px solid rgba(124, 119, 102, 0.12);">
+              <strong style="color:var(--navy-medium);">${readyTrialsCount} Ready to Schedule</strong>
+              <i data-lucide="chevron-right" style="width:14px; height:14px; color:var(--primary);"></i>
+            </div>
+          </div>
+
+          <!-- Stage 2: Enrolment & Setup -->
+          <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('om-pending-setup')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:800; color:var(--slate); font-family:monospace;">STAGE 02</span>
+              <span class="badge badge-warning">${pendingEnrolCount} Pending</span>
+            </div>
+            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Enrolment & Setup</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Curriculum matching & trainer allocation</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; padding-top:8px; border-top:1px solid rgba(124, 119, 102, 0.12);">
+              <strong style="color:var(--navy-medium);">${activeEnrolCount} Active Enrolments</strong>
+              <i data-lucide="chevron-right" style="width:14px; height:14px; color:var(--primary);"></i>
+            </div>
+          </div>
+
+          <!-- Stage 3: Live Delivery -->
+          <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('om-classes-today')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:800; color:var(--slate); font-family:monospace;">STAGE 03</span>
+              <span class="badge badge-success">${todayClasses.length} Today</span>
+            </div>
+            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">Live Delivery</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Daily.co room tokens & telemetry logs</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; padding-top:8px; border-top:1px solid rgba(124, 119, 102, 0.12);">
+              <strong style="color:#166534;">${liveClassesCount} Live In-Flight</strong>
+              <i data-lucide="chevron-right" style="width:14px; height:14px; color:var(--primary);"></i>
+            </div>
+          </div>
+
+          <!-- Stage 4: QA & Sign-Off -->
+          <div class="stat-card" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; cursor:pointer; transition:all 0.2s;" onclick="Router.navigate('om-approval-queue')" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='rgba(124, 119, 102, 0.22)'">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:800; color:var(--slate); font-family:monospace;">STAGE 04</span>
+              <span class="badge badge-error">${pendingReviews.length + pendingPayments.length} Action</span>
+            </div>
+            <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">QA & Sign-Off</h3>
+            <p style="font-size:12px; color:var(--slate); margin:0 0 10px 0;">Class reports QA & manual payment grants</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; padding-top:8px; border-top:1px solid rgba(124, 119, 102, 0.12);">
+              <strong style="color:var(--navy-medium);">${pendingReviews.length} Reports · ${pendingPayments.length} Payments</strong>
+              <i data-lucide="chevron-right" style="width:14px; height:14px; color:var(--primary);"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6-METRIC TELEMETRY & SIGNAL STRIP -->
+        <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:12px;">
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Today's Classes</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:var(--navy-medium); margin-top:2px;">${todayClasses.length} Sessions</div>
+            <span style="font-size:11px; color:#166534;">${liveClassesCount} Currently In-Flight</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Delivery Approvals</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:#b45309; margin-top:2px;">${pendingReviews.length} Reports</div>
+            <span style="font-size:11px; color:var(--slate);">Awaiting OM Sign-off</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Payment Audits</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:#b45309; margin-top:2px;">${pendingPayments.length} Receipts</div>
+            <span style="font-size:11px; color:var(--slate);">PKR 74,000 Volume</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Schedule Conflicts</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:${scheduleConflicts > 0 ? '#991b1b' : '#166534'}; margin-top:2px;">${scheduleConflicts} Flagged</div>
+            <span style="font-size:11px; color:var(--slate);">Trainer Overlaps</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Entitlement Risks</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:#b45309; margin-top:2px;">${atRiskEntitlements} At Risk</div>
+            <span style="font-size:11px; color:var(--slate);">Low Lesson Balances</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Open Cases</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:${openCases > 0 ? '#991b1b' : '#166534'}; margin-top:2px;">${openCases} Active</div>
+            <span style="font-size:11px; color:var(--slate);">1 Technical Exception</span>
+          </div>
+        </div>
+
+        <!-- TODAY'S LIVE CLASS RADAR DECK -->
+        <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:16px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font:800 17.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">
+                <i data-lucide="radio" style="color:#16a34a; width:18px; height:18px; display:inline-block; vertical-align:middle; margin-right:6px;"></i>
+                Today's Live Class Operations & Telemetry Deck
+              </h3>
+              <p style="font-size:12.5px; color:var(--slate); margin:2px 0 0 0;">Real-time room provisioning, attendance reconciliation, and trainer sign-offs.</p>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('om-classes-upcoming')">Upcoming (7d)</button>
+              <button class="btn btn-primary btn-xs" onclick="Router.navigate('om-classes-today')">View Full Class Board</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            ${todayClasses.map(cls => `
+              <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:10px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+                    <span class="badge ${cls.status === 'Live' ? 'badge-success' : cls.status === 'Report Overdue' ? 'badge-error' : cls.status === 'Completed' ? 'badge-primary' : 'badge-warning'}" style="font-size:10px;">
+                      ${cls.status === 'Live' ? '● Live Now' : cls.status}
+                    </span>
+                    <span style="font-family:monospace; font-weight:700; font-size:11.5px; color:var(--primary);">${cls.id}</span>
+                  </div>
+
+                  <strong style="color:var(--navy-medium); font-size:14px; display:block; margin-bottom:4px; line-height:1.3;">${cls.title}</strong>
+                  <div style="font-size:12px; color:var(--slate); display:flex; flex-direction:column; gap:3px;">
+                    <span>Trainer: <strong>${cls.trainer}</strong> ${cls.learner ? `· Learner: <strong>${cls.learner}</strong>` : `· <strong>${cls.participants} Students</strong>`}</span>
+                    <span>Timing: <strong>${cls.timing}</strong></span>
+                    <span>Attendance: <strong style="color:var(--navy-medium);">${cls.attendanceStatus}</strong></span>
+                  </div>
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid rgba(124, 119, 102, 0.12); gap:6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')">
+                    <i data-lucide="activity"></i> Telemetry
+                  </button>
+                  ${cls.status === 'Live' || cls.status === 'Upcoming' ? `
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')">
+                      <i data-lucide="video"></i> Enter Room
+                    </button>
+                  ` : cls.reportStatus.includes('Submitted') ? `
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${cls.reportStatus.replace('Submitted (', '').replace(')', '')}')">
+                      <i data-lucide="check-circle-2"></i> Review Report
+                    </button>
+                  ` : `
+                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Trainer Nudged', 'Automated reminder dispatched to ${cls.trainer} to submit overdue report.', 'warning')">
+                      <i data-lucide="bell"></i> Nudge
+                    </button>
+                  `}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- DUAL ACTION QUEUES (DELIVERY QA & MANUAL PAYMENTS) -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          
+          <!-- LEFT QUEUE: CLASS DELIVERY SIGN-OFF -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0;">
+                  <i data-lucide="file-text" style="color:var(--primary); width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;"></i>
+                  Class Delivery Approval Queue (FLOW-016)
+                </h4>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Verify syllabus covered & attendance to credit trainer earnings & debit credits.</p>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('om-approval-queue')">View All (${classReviews.length})</button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${classReviews.slice(0, 3).map(r => `
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="badge ${r.status === 'Approved' ? 'badge-success' : r.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}" style="font-size:9.5px;">${r.status}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11px; color:var(--primary);">${r.id}</span>
+                    </div>
+                    <span style="font-size:11px; color:var(--slate);">${r.duration}</span>
+                  </div>
+
+                  <strong style="color:var(--navy-medium); font-size:13.5px;">${r.title}</strong>
+                  <p style="font-size:12px; color:var(--slate); margin:0;">
+                    Trainer: <strong>${r.trainer}</strong> · Syllabus: <em>"${r.syllabus}"</em>
+                  </p>
+
+                  <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:2px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">
+                      <i data-lucide="undo-2"></i> Return Note
+                    </button>
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')">
+                      <i data-lucide="check-circle"></i> Approve Delivery
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- RIGHT QUEUE: MANUAL PAYMENT VERIFICATION -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; gap:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--primary); width:16px; height:16px; display:inline-block; vertical-align:middle; margin-right:4px;">
+                  <i data-lucide="receipt"></i>
+                  Manual Payment Verification (FLOW-013)
+                </h4>
+                <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Audit bank transfer receipt slips and SHA-256 hashes before granting access.</p>
+              </div>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('om-payment-review')">View All (${payments.length})</button>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${payments.slice(0, 3).map(p => `
+                <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="badge ${p.status === 'Approved' ? 'badge-success' : p.status === 'Exception' ? 'badge-error' : p.status === 'Under Review' ? 'badge-primary' : 'badge-warning'}" style="font-size:9.5px;">${p.status}</span>
+                      <span style="font-family:monospace; font-weight:700; font-size:11px; color:var(--primary);">${p.id}</span>
+                    </div>
+                    <strong style="color:#166534; font-size:13px;">${p.submittedAmount}</strong>
+                  </div>
+
+                  <strong style="color:var(--navy-medium); font-size:13.5px;">${p.learner} · ${p.course}</strong>
+                  <div style="font-size:11.5px; color:var(--slate); display:flex; justify-content:space-between;">
+                    <span>Channel: <strong>${p.channel}</strong> (${p.reference})</span>
+                    <span style="font-family:monospace; color:var(--primary);">${p.duplicateFlag}</span>
+                  </div>
+
+                  <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:2px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')">
+                      <i data-lucide="x-circle"></i> Reject
+                    </button>
+                    <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')">
+                      <i data-lucide="check-check"></i> Audit & Grant Access
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+
     if (typeof updateOmBadges === "function") updateOmBadges();
     if (window.lucide) window.lucide.createIcons();
   },
@@ -17283,6 +17639,462 @@ const RenderEngine = {
       </button>`).join("");
   },
 
+  // ==========================================================================
+  // OPERATIONAL MANAGER (OM) - 6-HUB WORKSPACE SUB-VIEW RENDERER
+  // ==========================================================================
+  omWorkspace(route) {
+    const config = omRouteDefinitions[route] || {
+      hub: "Operations Management",
+      title: "Operations Workspace",
+      description: "Operational management and service delivery.",
+      dataType: "classes"
+    };
+
+    const container = document.getElementById("om-workspace-content");
+    if (!container) return;
+
+    const data = db.omData || {};
+    let items = [];
+    const dataType = config.dataType;
+
+    if (dataType === "trials") {
+      items = data.trials || [];
+      if (config.filter === "ready") items = items.filter(t => t.status === "Ready for Scheduling");
+      else if (config.filter === "scheduled") items = items.filter(t => t.status === "Scheduled");
+      else if (config.filter === "outcomes") items = items.filter(t => t.status === "Completed" || t.status === "Converted" || t.status === "Follow-up Required");
+    } else if (dataType === "enrolments") {
+      items = data.enrolments || [];
+      if (config.filter === "pending") items = items.filter(e => e.status === "Pending Setup");
+      else if (config.filter === "active") items = items.filter(e => e.status === "Active");
+      else if (config.filter === "multi") items = items.filter(e => e.multiCourseFlag);
+    } else if (dataType === "cohorts") {
+      items = data.cohorts || [];
+      if (config.filter === "transfers") items = items.filter(c => c.capacityRisk || c.enrolled >= c.maxSeats);
+    } else if (dataType === "rosters") {
+      items = data.rosters || [];
+    } else if (dataType === "trainers") {
+      items = data.trainers || [];
+      if (config.filter === "conflicts") items = items.filter(t => t.conflictStatus && t.conflictStatus.includes("Conflict"));
+    } else if (dataType === "classes") {
+      items = data.classes || [];
+      if (config.filter === "today") items = items.filter(c => c.timing.includes("Today"));
+      else if (config.filter === "upcoming") items = items.filter(c => !c.timing.includes("Today"));
+      else if (config.filter === "overdue") items = items.filter(c => c.status === "Report Overdue" || c.reportStatus.includes("Overdue"));
+      else if (config.filter === "technical") items = items.filter(c => c.status === "Technical Exception" || c.technicalStatus.includes("Exception"));
+      else if (config.filter === "cancelled") items = items.filter(c => c.status === "Cancelled" || c.status === "Rescheduled");
+    } else if (dataType === "classReviews") {
+      items = data.classReviews || [];
+      if (config.filter === "pending") items = items.filter(r => r.status === "Pending Review");
+      else if (config.filter === "exceptions") items = items.filter(r => r.status === "Attendance Exception" || r.status === "Correction Requested");
+      else if (config.filter === "corrections") items = items.filter(r => r.status === "Correction Requested");
+      else if (config.filter === "approved") items = items.filter(r => r.status === "Approved");
+    } else if (dataType === "payments") {
+      items = data.payments || [];
+      if (config.filter === "pending") items = items.filter(p => p.status === "Awaiting Review");
+      else if (config.filter === "under_review") items = items.filter(p => p.status === "Under Review");
+      else if (config.filter === "approved") items = items.filter(p => p.status === "Approved");
+      else if (config.filter === "rejected") items = items.filter(p => p.status === "Correction Requested" || p.status === "Rejected");
+      else if (config.filter === "exceptions") items = items.filter(p => p.status === "Exception" || p.duplicateFlag.includes("Duplicate"));
+    } else if (dataType === "entitlements") {
+      items = data.entitlements || [];
+    } else if (dataType === "k12") {
+      items = data.k12 || [];
+    } else if (dataType === "resources") {
+      items = data.resources || [];
+    } else if (dataType === "cases") {
+      items = data.cases || [];
+    } else if (dataType === "catalogue") {
+      items = data.catalogue || [];
+    } else if (dataType === "analytics") {
+      items = data.analytics || [];
+    }
+
+    // Top Header Markup
+    const headerMarkup = `
+      <div class="om-workspace-header" style="display:flex; flex-direction:column; gap:16px; margin-bottom:20px;">
+        <div class="banner-box" style="background:#ffffff; border-radius:12px; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:20px 24px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:2px;">
+              <span class="badge badge-primary" style="font-size:10.5px; font-weight:700;">${config.hub.toUpperCase()}</span>
+              <span style="font-size:12px; color:var(--slate);">Authority Scope: Operations & Delivery Gatekeeper</span>
+            </div>
+            <h2 style="font:800 20px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${config.title}</h2>
+            <p style="font-size:12.5px; color:var(--slate); margin:0; line-height:1.4;">${config.description}</p>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('dashboard')">
+              <i data-lucide="layout-dashboard"></i> Command Center
+            </button>
+            ${dataType === 'trials' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmScheduleTrialModal('TRL-201')">
+                <i data-lucide="calendar-plus"></i> Schedule Trial (FLOW-007)
+              </button>
+            ` : dataType === 'payments' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmPaymentReviewModal('PAY-8012')">
+                <i data-lucide="receipt"></i> Audit Next Receipt (FLOW-013)
+              </button>
+            ` : dataType === 'classReviews' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmApproveClassModal('REV-501')">
+                <i data-lucide="check-circle-2"></i> Review Delivery Report (FLOW-016)
+              </button>
+            ` : dataType === 'cohorts' ? `
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Cohort Created', 'New 12-week course run provisioned.', 'success')">
+                <i data-lucide="plus"></i> Create Course Run
+              </button>
+            ` : `
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Export Queued', 'Official records ledger downloaded.', 'info')">
+                <i data-lucide="download"></i> Export Data Ledger
+              </button>
+            `}
+          </div>
+        </div>
+
+        <!-- 4-METRIC STAT STRIP -->
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;">
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Records In Scope</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:var(--navy-medium); margin-top:2px;">${items.length} Total</div>
+            <span style="font-size:11px; color:#166534;">Authoritative dataset</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Action Required</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:#b45309; margin-top:2px;">
+              ${dataType === 'classReviews' ? items.filter(r=>r.status==='Pending Review').length : dataType === 'payments' ? items.filter(p=>p.status==='Awaiting Review').length : dataType === 'trials' ? items.filter(t=>t.status==='Ready for Scheduling').length : items.filter(i=>i.status==='Pending Setup'||i.status==='Exception'||i.riskLevel==='High').length} Action
+            </div>
+            <span style="font-size:11px; color:var(--slate);">Operations gatekeeper</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Integrity State</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:#166534; margin-top:2px;">100% Reconciled</div>
+            <span style="font-size:11px; color:var(--slate);">SHA-256 / Daily.co logs</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:14px;">
+            <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Assigned Manager</span>
+            <div style="font:800 19px 'Manrope', sans-serif; color:var(--navy-medium); margin-top:2px;">Sarah Connor</div>
+            <span style="font-size:11px; color:var(--slate);">Lead Operations Manager</span>
+          </div>
+        </div>
+
+        <!-- SEARCH & FILTER TOOLBAR -->
+        <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.2); border-radius:10px; padding:12px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div style="display:flex; align-items:center; gap:12px; flex:1; max-width:480px;">
+            <input type="search" id="om-workspace-search" class="form-control inline" placeholder="Search records by ID, student, trainer, or status..." style="width:100%;">
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <span style="font-size:12px; color:var(--slate);">Filter:</span>
+            <select id="om-workspace-filter" class="form-control inline" style="font-size:12px;">
+              <option value="">All Statuses</option>
+              <option value="Active">Active / Ready</option>
+              <option value="Pending">Pending / Awaiting</option>
+              <option value="Completed">Completed / Approved</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Render Data Table based on dataType
+    let tableMarkup = "";
+
+    if (dataType === "trials") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Trial ID</th>
+                <th>Learner / Prospect</th>
+                <th>Course Programme</th>
+                <th>Placement Score</th>
+                <th>Preferred Window</th>
+                <th>Status</th>
+                <th>Trainer / Room</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(t => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${t.id}</strong></td>
+                  <td><strong>${t.learner}</strong><br><small style="color:var(--slate);">${t.phone || '0300-1234567'} (${t.guardian || 'Parent'})</small></td>
+                  <td>${t.course}</td>
+                  <td><span class="badge badge-primary">${t.placementScore}</span></td>
+                  <td><strong>${t.preferredSlot || t.time}</strong></td>
+                  <td><span class="badge ${t.status === 'Scheduled' ? 'badge-primary' : t.status === 'Completed' ? 'badge-success' : 'badge-warning'}">${t.status}</span></td>
+                  <td>${t.trainer ? `<strong>${t.trainer}</strong><br><small style="font-family:monospace; color:var(--primary);">${t.room || 'Daily.co room'}</small>` : '<span style="color:var(--slate);">Unassigned</span>'}</td>
+                  <td>
+                    <div style="display:flex; gap:4px;">
+                      ${t.status === 'Ready for Scheduling' ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmScheduleTrialModal('${t.id}')">Schedule (FLOW-007)</button>
+                      ` : t.status === 'Scheduled' ? `
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerJoinClassModal('${t.id}')">Inspect Room</button>
+                      ` : `
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Outcome Logged', 'Trial outcome verified.', 'info')">View Dossier</button>
+                      `}
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "enrolments") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Enrolment ID</th>
+                <th>Learner Name</th>
+                <th>Course & Version</th>
+                <th>Assigned Cohort / Trainer</th>
+                <th>Payment Ref</th>
+                <th>Lesson Credits</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(e => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${e.id}</strong></td>
+                  <td><strong>${e.learner}</strong><br><small style="color:var(--slate);">${e.email}</small></td>
+                  <td><strong>${e.course}</strong><br><small style="font-family:monospace; color:var(--primary);">${e.version || 'v2.4 (Active)'}</small></td>
+                  <td>${e.cohort ? `<strong>${e.cohort}</strong><br><small>${e.trainer}</small>` : '<span style="color:#b45309; font-weight:600;">Pending Allocation</span>'}</td>
+                  <td><span style="font-family:monospace;">${e.paymentRef}</span></td>
+                  <td><strong style="color:#166534;">${e.entitlementCredits || '8 / 8 Credits'}</strong></td>
+                  <td><span class="badge ${e.status === 'Active' ? 'badge-success' : 'badge-warning'}">${e.status}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px;">
+                      ${e.status === 'Pending Setup' ? `
+                        <button class="btn btn-primary btn-xs" onclick="Notifications.push('Setup Configured', 'Curriculum and trainer allocated to ${e.learner}.', 'success')">Complete Setup</button>
+                      ` : `
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Learner Dossier', 'Opening comprehensive student record for ${e.learner}.', 'info')">Manage Enrolment</button>
+                      `}
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "cohorts") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Cohort / Run ID</th>
+                <th>Course Programme</th>
+                <th>Lead Trainer</th>
+                <th>Weekly Cadence</th>
+                <th>Enrolled / Capacity</th>
+                <th>Progress State</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${c.id}</strong></td>
+                  <td><strong>${c.course}</strong><br><small style="color:var(--slate);">${c.name || 'Cohort Batch'}</small></td>
+                  <td><strong>${c.trainer}</strong><br><small style="color:var(--slate);">Backup: ${c.backupTrainer || 'None'}</small></td>
+                  <td>${c.cadence || 'MWF 18:00 - 19:00 PKT'}</td>
+                  <td>
+                    <strong>${c.enrolled} / ${c.maxSeats} Seats</strong>
+                    <div style="background:#e2e8f0; border-radius:4px; height:6px; width:100%; margin-top:4px; overflow:hidden;">
+                      <div style="background:${c.enrolled >= c.maxSeats ? '#dc2626' : 'var(--primary)'}; height:100%; width:${Math.min(100, (c.enrolled / c.maxSeats) * 100)}%;"></div>
+                    </div>
+                  </td>
+                  <td>${c.progress || 'Week 4 of 12'}</td>
+                  <td><span class="badge ${c.status === 'Active' ? 'badge-success' : 'badge-primary'}">${c.status}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Roster View', 'Opening roster for ${c.id}.', 'info')">Roster</button>
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Transfer Workbench', 'Opening learner transfer modal (FLOW-018).', 'info')">Transfer</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "classes") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Class ID</th>
+                <th>Course / Section</th>
+                <th>Trainer</th>
+                <th>Learner / Roster</th>
+                <th>Scheduled Timing</th>
+                <th>Daily.co Telemetry</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(cls => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${cls.id}</strong></td>
+                  <td><strong>${cls.title}</strong></td>
+                  <td><strong>${cls.trainer}</strong></td>
+                  <td>${cls.learner ? `<strong>${cls.learner}</strong> (1:1)` : `<strong>${cls.participants} Students</strong> (Cohort)`}</td>
+                  <td><strong>${cls.timing}</strong></td>
+                  <td><span class="badge ${cls.attendanceStatus.includes('Reconciled') ? 'badge-success' : cls.attendanceStatus.includes('Mismatch') ? 'badge-error' : 'badge-warning'}">${cls.attendanceStatus}</span></td>
+                  <td><span class="badge ${cls.status === 'Live' ? 'badge-success' : cls.status === 'Report Overdue' ? 'badge-error' : cls.status === 'Completed' ? 'badge-primary' : 'badge-warning'}">${cls.status}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')">Telemetry</button>
+                      ${cls.status === 'Live' || cls.status === 'Upcoming' ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')">Enter Room</button>
+                      ` : cls.reportStatus.includes('Submitted') ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${cls.reportStatus.replace('Submitted (', '').replace(')', '')}')">Review Report</button>
+                      ` : `
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Trainer Nudged', 'Reminder dispatched to ${cls.trainer}.', 'warning')">Nudge</button>
+                      `}
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "classReviews") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Review ID</th>
+                <th>Class & Course</th>
+                <th>Trainer</th>
+                <th>Duration Logged</th>
+                <th>Syllabus Unit Delivered</th>
+                <th>Reconciled Attendance</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(r => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${r.id}</strong></td>
+                  <td><strong>${r.title}</strong><br><small style="font-family:monospace; color:var(--primary);">${r.classId}</small></td>
+                  <td><strong>${r.trainer}</strong></td>
+                  <td><strong style="color:#166534;">${r.duration}</strong></td>
+                  <td><em>"${r.syllabus}"</em></td>
+                  <td><span style="font-size:12px; color:var(--slate);">${r.reconciledAttendance}</span></td>
+                  <td><span class="badge ${r.status === 'Approved' ? 'badge-success' : r.status === 'Correction Requested' ? 'badge-error' : 'badge-warning'}">${r.status}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')">Return Note</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')">Approve Delivery</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (dataType === "payments") {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Payment ID</th>
+                <th>Learner / Payer</th>
+                <th>Course Programme</th>
+                <th>Channel & Reference</th>
+                <th>Submitted Amount</th>
+                <th>Checksum / Duplicate Check</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(p => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${p.id}</strong></td>
+                  <td><strong>${p.learner}</strong><br><small style="color:var(--slate);">${p.payer}</small></td>
+                  <td>${p.course}</td>
+                  <td><strong>${p.channel}</strong><br><small style="font-family:monospace; color:var(--primary);">${p.reference}</small></td>
+                  <td><strong style="color:#166534; font-size:13.5px;">${p.submittedAmount}</strong></td>
+                  <td><span class="badge ${p.duplicateFlag.includes('Duplicate') ? 'badge-error' : 'badge-success'}">${p.duplicateFlag}</span></td>
+                  <td><span class="badge ${p.status === 'Approved' ? 'badge-success' : p.status === 'Under Review' ? 'badge-primary' : 'badge-warning'}">${p.status}</span></td>
+                  <td>
+                    <div style="display:flex; gap:4px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmPaymentRejectModal('${p.id}')">Reject</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmPaymentReviewModal('${p.id}')">Audit & Grant</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else {
+      tableMarkup = `
+        <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; overflow:hidden;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Record ID</th>
+                <th>Title / Entity</th>
+                <th>Category / Scope</th>
+                <th>Assigned Owner</th>
+                <th>Metric / Telemetry</th>
+                <th>Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(item => `
+                <tr>
+                  <td><strong style="font-family:monospace; color:var(--primary);">${item.id || item.code}</strong></td>
+                  <td><strong>${item.title || item.name || item.subject}</strong></td>
+                  <td>${item.category || item.course || item.type || 'Operational Asset'}</td>
+                  <td>${item.owner || item.trainer || item.lead || 'Sarah Connor'}</td>
+                  <td>${item.score || item.size || item.value || item.hours || '-'}</td>
+                  <td><span class="badge badge-primary">${item.status || item.riskLevel || 'Active'}</span></td>
+                  <td>
+                    <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Record Inspected', 'Opened details for ${item.id || item.code}.', 'info')">Inspect Record</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    container.innerHTML = headerMarkup + tableMarkup;
+
+    // Filter event listener
+    const searchInput = document.getElementById("om-workspace-search");
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll("#om-table-body tr");
+        rows.forEach(r => {
+          r.style.display = r.textContent.toLowerCase().includes(query) ? "" : "none";
+        });
+      });
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  },
+
   // USERS GRID
   users() {
     const tableBody = document.getElementById("users-table-body");
@@ -21313,6 +22125,386 @@ Actions.sendTrainerQuickChatMessage = function(learnerId, text) {
   if (inputEl) inputEl.value = "";
   Notifications.push("Message Delivered", `Message sent to learner under Safeguarded Thread (FLOW-023).`, "success");
   this.audit("TRAINER_CHAT_MESSAGE_SENT", `Sent message to learner ${learnerId}.`, "Low", "Delivered -> Logged");
+};
+
+// ============================================================================
+// OPERATIONS MANAGER (OM) - CORE DOMAIN ACTION WORKFLOWS
+// ============================================================================
+
+Actions.openOmApproveClassModal = function(reviewId) {
+  const rep = (db.omData.classReviews || []).find(r => r.id === reviewId) || db.omData.classReviews[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Approve Class Delivery (FLOW-016): ${rep.title}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="check-check"></i>
+        <div>
+          <strong>DELIVERY SIGN-OFF & SIDE EFFECTS VALIDATION</strong>
+          <p>Approval permanently records educational delivery, debits learner entitlement, and generates an immutable payable earning item for the trainer.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; font-size:12.5px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600;">Trainer & Occurrence:</span>
+          <p style="margin:2px 0 0 0; font-size:13.5px; font-weight:700; color:var(--navy-dark);">${rep.trainer} (${rep.classId})</p>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600;">Verified Duration:</span>
+          <p style="margin:2px 0 0 0; font-size:13.5px; font-weight:700; color:#166534;">${rep.duration}</p>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-bottom:12px; font-size:12.5px;">
+        <strong style="color:var(--navy-dark); display:block; margin-bottom:4px;">Delivered Syllabus & Student Outcomes:</strong>
+        <p style="margin:0 0 6px 0; color:#334155;"><em>"${rep.syllabus}"</em></p>
+        <p style="margin:0; color:#475569;">Progress: ${rep.progress} · Homework: <strong>${rep.homework}</strong></p>
+      </div>
+
+      <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.2); border-left:3px solid var(--primary); padding:12px; border-radius:0 6px 6px 0; font-size:12px; color:#475569; margin-bottom:12px;">
+        <strong>Daily.co Reconciled Telemetry:</strong><br>
+        ${rep.reconciledAttendance}
+      </div>
+
+      <div class="form-group">
+        <label>Operations Sign-Off Remarks (Optional)</label>
+        <input type="text" id="om-approval-notes" class="form-control" value="Delivery verified against telemetry logs. Earning approved for payroll batch.">
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.confirmOmClassApproval('${rep.id}')"><i data-lucide="check"></i> Confirm Delivery Approval (FLOW-016)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.confirmOmClassApproval = function(reviewId) {
+  const rep = (db.omData.classReviews || []).find(r => r.id === reviewId);
+  if (rep) {
+    rep.status = "Approved";
+    rep.decidedBy = "Sarah Connor (OM)";
+    rep.decidedAt = "Just now";
+  }
+
+  // Create immutable payable earning event
+  const newEarning = {
+    id: `ERN-${Math.floor(8825 + Math.random() * 500)}`,
+    classId: rep?.classId || "CLS-9902",
+    title: rep?.title || "Class Delivery",
+    date: "16 Aug 2026",
+    rate: "PKR 3,500 / Hour",
+    hours: "1.0 Hr",
+    amount: "PKR 3,500",
+    opsApproval: "Approved (Sarah Connor - OM)",
+    payrollBatch: "PAY-2026-08"
+  };
+  if (db.trainerData && db.trainerData.earnings) db.trainerData.earnings.unshift(newEarning);
+
+  this.audit("OM_CLASS_DELIVERY_APPROVED", `Approved class delivery for ${rep?.classId} (${rep?.trainer}). Created earning ${newEarning.id} and debited 1 credit.`, "High", "Pending Review -> Approved");
+  Notifications.push("Delivery Approved", `Class ${rep?.classId} approved. Earning credited to trainer and entitlement credit debited.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  RenderEngine.omDashboard();
+};
+
+Actions.openOmReturnReportModal = function(reviewId) {
+  const rep = (db.omData.classReviews || []).find(r => r.id === reviewId) || db.omData.classReviews[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Return Report for Correction: ${rep.title}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner" style="border-left:4px solid #dc2626;">
+        <i data-lucide="alert-triangle" style="color:#dc2626;"></i>
+        <div>
+          <strong>REPORT CORRECTION POLICY (FLOW-016)</strong>
+          <p>Specify the exact discrepancies (e.g. participant attendance dispute, missing syllabus details) for trainer resubmission.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Discrepancy Category</label>
+        <select id="om-return-cat" class="form-control">
+          <option value="Attendance Mismatch">Attendance Telemetry Mismatch</option>
+          <option value="Incomplete Syllabus">Incomplete Syllabus / Homework Notes</option>
+          <option value="Duration Variance">Duration Variance Unjustified</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Explicit Correction Note for Trainer</label>
+        <textarea id="om-return-notes" class="form-control" rows="3" placeholder="State explicit revision required...">Telemetry logs show student joined for 42 minutes, but report recorded absent. Please reconcile attendance status.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-error" onclick="Actions.submitOmReturnReport('${rep.id}')"><i data-lucide="undo-2"></i> Return for Correction</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmReturnReport = function(reviewId) {
+  const rep = (db.omData.classReviews || []).find(r => r.id === reviewId);
+  const note = document.getElementById("om-return-notes")?.value || "Correction requested";
+  if (rep) {
+    rep.status = "Correction Requested";
+    rep.returnReason = note;
+  }
+
+  this.audit("OM_REPORT_CORRECTION_REQUESTED", `Returned report ${reviewId} to trainer (${rep?.trainer}). Reason: ${note}`, "Medium", "Pending Review -> Correction Requested");
+  Notifications.push("Correction Requested", `Report ${reviewId} returned to trainer with revision notes.`, "warning");
+  document.getElementById("generic-modal").classList.add("hidden");
+  RenderEngine.omDashboard();
+};
+
+Actions.openOmPaymentReviewModal = function(payId) {
+  const pay = (db.omData.payments || []).find(p => p.id === payId) || db.omData.payments[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Manual Payment Verification (FLOW-013): ${pay.id}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="receipt"></i>
+        <div>
+          <strong>MANUAL PAYMENT AUDIT & ENTITLEMENT ACTIVATION</strong>
+          <p>Verify bank transfer receipt slip against the order snapshot. Approval issues official receipt RCP-${Math.floor(1050 + Math.random() * 500)} and creates active learning access.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; font-size:12.5px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600;">Learner & Payer:</span>
+          <p style="margin:2px 0 0 0; font-size:13.5px; font-weight:700; color:var(--navy-dark);">${pay.learner}</p>
+          <small style="color:var(--slate);">${pay.payer}</small>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600;">Verified Amount:</span>
+          <p style="margin:2px 0 0 0; font-size:16px; font-weight:800; color:#166534;">${pay.submittedAmount}</p>
+          <small style="color:var(--slate);">Expected: ${pay.expectedAmount}</small>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:14px; margin-bottom:12px; font-size:12.5px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span>Payment Channel: <strong>${pay.channel}</strong></span>
+          <span>Transaction Ref: <strong style="font-family:monospace; color:var(--primary);">${pay.reference}</strong></span>
+        </div>
+        <div style="display:flex; justify-content:space-between; font-family:monospace; font-size:11px; color:var(--slate);">
+          <span>SHA-256 Checksum:</span>
+          <span style="color:#166534;">${pay.receiptChecksum || 'sha256:7f3a88019b22e1a49f…'} (Clean / Zero Duplicates)</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Receipt Slip Preview</label>
+        <div style="background:#1e293b; border-radius:8px; padding:18px; text-align:center; color:#94a3b8; display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <i data-lucide="file-check" style="font-size:28px; color:#4ade80;"></i>
+          <strong style="color:#f8fafc; font-size:13px;">${pay.receiptFile || 'receipt_slip.png'}</strong>
+          <span style="font-size:11.5px;">Bank Stamp: Meezan Bank Ltd · Date: 16 Aug 2026 · Amount: ${pay.submittedAmount}</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-error btn-sm" onclick="Actions.openOmPaymentRejectModal('${pay.id}')"><i data-lucide="x-circle"></i> Reject</button>
+    <button class="btn btn-primary" onclick="Actions.confirmOmPaymentApproval('${pay.id}')"><i data-lucide="check-check"></i> Approve & Issue Access Grant (FLOW-013)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.confirmOmPaymentApproval = function(payId) {
+  const pay = (db.omData.payments || []).find(p => p.id === payId);
+  const rcpId = `RCP-${Math.floor(1050 + Math.random() * 500)}`;
+  const grantId = `AG-${Math.floor(900 + Math.random() * 100)}`;
+  if (pay) {
+    pay.status = "Approved";
+    pay.reviewer = "Sarah Connor (OM)";
+    pay.receiptId = rcpId;
+    pay.accessGrant = grantId;
+  }
+
+  // Update learner enrolment if pending
+  const enrol = (db.omData.enrolments || []).find(e => e.learner === pay?.learner);
+  if (enrol) enrol.paymentRef = `${payId} (Approved)`;
+
+  this.audit("OM_PAYMENT_APPROVED", `Approved payment ${payId} (${pay?.submittedAmount}) for ${pay?.learner}. Issued official receipt ${rcpId} and access grant ${grantId}.`, "High", "Awaiting Review -> Approved");
+  Notifications.push("Payment Approved", `Payment verified. Official receipt ${rcpId} issued and learning access grant created.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  RenderEngine.omDashboard();
+};
+
+Actions.openOmPaymentRejectModal = function(payId) {
+  const pay = (db.omData.payments || []).find(p => p.id === payId) || db.omData.payments[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Reject Payment Receipt: ${pay.id}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="form-group">
+        <label>Rejection / Correction Reason</label>
+        <select id="om-pay-reject-reason" class="form-control">
+          <option value="Cropped Screenshot">Cropped Screenshot (Transaction ID / Date missing)</option>
+          <option value="Amount Mismatch">Amount Mismatch with Expected Order</option>
+          <option value="Duplicate Reference">Duplicate Reference Collision Detected</option>
+          <option value="Illegible Bank Slip">Illegible / Blurry Receipt Image</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Detailed Note for Payer</label>
+        <textarea id="om-pay-reject-notes" class="form-control" rows="3">Please re-upload a clear, uncropped copy of the official bank transfer receipt showing the reference number and date.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-error" onclick="Actions.submitOmPaymentReject('${pay.id}')"><i data-lucide="x-circle"></i> Reject Submission</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmPaymentReject = function(payId) {
+  const pay = (db.omData.payments || []).find(p => p.id === payId);
+  const reason = document.getElementById("om-pay-reject-reason")?.value || "Cropped Screenshot";
+  if (pay) {
+    pay.status = "Correction Requested";
+    pay.returnReason = reason;
+  }
+
+  this.audit("OM_PAYMENT_REJECTED", `Rejected payment submission ${payId}. Reason: ${reason}.`, "High", "Awaiting Review -> Correction Requested");
+  Notifications.push("Payment Rejected", `Payer notified to re-upload proof of payment.`, "warning");
+  document.getElementById("generic-modal").classList.add("hidden");
+  RenderEngine.omDashboard();
+};
+
+Actions.openOmScheduleTrialModal = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId) || db.omData.trials[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Schedule Trial Session (FLOW-007): ${trial.learner}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="om-flow-banner">
+        <i data-lucide="calendar-plus"></i>
+        <div>
+          <strong>TRIAL OCCURRENCE DISPATCH & ROOM PROVISIONING</strong>
+          <p>Allocate an available trainer and provision Daily.co room. Triggers guardian confirmation notification and calendar invite.</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div class="form-group">
+          <label>Learner & Placement Score</label>
+          <input type="text" class="form-control" value="${trial.learner} (${trial.course} · ${trial.placementScore})" disabled>
+        </div>
+        <div class="form-group">
+          <label>Preferred Time Window</label>
+          <input type="text" class="form-control" value="${trial.preferredSlot}" disabled>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div class="form-group">
+          <label>Assign Available Trainer</label>
+          <select id="om-trial-trainer" class="form-control">
+            <option value="Sara Javed">Sara Javed (15h/20h · Clear Availability)</option>
+            <option value="Nadia Rahman">Nadia Rahman (22h/25h · Clear Availability)</option>
+            <option value="Huzsam Ahmed">Huzsam Ahmed (18h/25h · Clear Availability)</option>
+            <option value="Usman Tariq">Usman Tariq (14h/20h · Clear Availability)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Scheduled Slot</label>
+          <input type="datetime-local" id="om-trial-time" class="form-control" value="2026-08-17T16:00">
+        </div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmScheduleTrial('${trial.id}')"><i data-lucide="video"></i> Provision Room & Dispatch Trial</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmScheduleTrial = function(trialId) {
+  const trial = (db.omData.trials || []).find(t => t.id === trialId);
+  const trainer = document.getElementById("om-trial-trainer")?.value || "Sara Javed";
+  if (trial) {
+    trial.status = "Scheduled";
+    trial.trainer = trainer;
+    trial.time = "Tomorrow 16:00 PKT";
+    trial.room = `https://ihs.daily.co/trial-${trial.id.toLowerCase()}`;
+  }
+
+  this.audit("OM_TRIAL_SCHEDULED", `Scheduled trial ${trialId} for ${trial?.learner} with trainer ${trainer}. Room token provisioned.`, "Medium", "Ready -> Scheduled");
+  Notifications.push("Trial Scheduled", `Trial session booked with ${trainer}. Daily.co room provisioned and SMS reminder queued.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  RenderEngine.omDashboard();
+};
+
+Actions.openOmRoomTelemetryModal = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId) || db.omData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Daily.co Room WebRTC Telemetry: ${cls.id}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div style="background:#0f172a; border-radius:8px; padding:16px; color:#f8fafc; font-family:monospace; font-size:12px; line-height:1.5;">
+        <div style="color:#4ade80; margin-bottom:8px;">● WebRTC Session Status: ACTIVE / RECONCILED</div>
+        <div>[13:28:45] Webhook: Room provisioned (Room: ${cls.roomUrl})</div>
+        <div>[13:29:12] Trainer joined: ${cls.trainer} (Audio: OK, Video: 720p 30fps)</div>
+        <div>[13:30:02] Participant roster connected: ${cls.attendanceStatus}</div>
+        <div>[13:45:10] Packet Loss: 0.12% · Jitter: 4ms · Bitrate: 1.4 Mbps</div>
+        <div>[14:15:00] Webhook: Room closed normally. Duration reconciled: 45 mins.</div>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
 };
 
 const Simulator = {

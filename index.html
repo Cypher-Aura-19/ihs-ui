@@ -212,238 +212,250 @@
         </div>
       </nav>
 
-      <!-- Operational Manager (OM) Navigation Rail -->
+      <!-- Operational Manager (OM) Navigation Rail (Streamlined 6-Hub Structure) -->
       <nav class="sidebar-nav om-sidebar-nav hidden" id="om-nav" aria-label="Operational Manager navigation">
+        <!-- 1. Command Hub -->
         <div class="nav-item active" data-route="dashboard" id="om-nav-dashboard">
           <i data-lucide="layout-dashboard"></i>
-          <span>Dashboard</span>
+          <span>Operations Command</span>
         </div>
 
-        <!-- Group 2: Trials -->
-        <div class="nav-group">
-          <div class="nav-group-title">Trials</div>
-          <div class="nav-item" data-route="om-trial-requests" id="nav-om-trial-requests">
-            <i data-lucide="clipboard-list"></i>
-            <span>Trial Requests</span>
-            <span class="badge badge-warning count-om-trial-requests">3</span>
+        <!-- Hub 1: Trials & Intake (FLOW-006 - FLOW-009) -->
+        <div class="nav-group collapsible open" data-group="om-trials">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="user-plus" style="width:13px; height:13px; color:var(--primary);"></i> Trials & Intake</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-om-trial-requests">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="om-ready-scheduling" id="nav-om-ready-scheduling">
-            <i data-lucide="calendar-plus"></i>
-            <span>Ready for Scheduling</span>
-            <span class="badge badge-primary count-om-ready-scheduling">2</span>
-          </div>
-          <div class="nav-item" data-route="om-scheduled-trials" id="nav-om-scheduled-trials">
-            <i data-lucide="calendar-clock"></i>
-            <span>Scheduled Trials</span>
-          </div>
-          <div class="nav-item" data-route="om-trial-outcomes" id="nav-om-trial-outcomes">
-            <i data-lucide="calendar-check-2"></i>
-            <span>Trial Outcomes</span>
-          </div>
-        </div>
-
-        <!-- Group 3: Learners & Enrolments -->
-        <div class="nav-group">
-          <div class="nav-group-title">Learners & Enrolments</div>
-          <div class="nav-item" data-route="om-pending-setup" id="nav-om-pending-setup">
-            <i data-lucide="user-plus"></i>
-            <span>Pending Setup</span>
-            <span class="badge badge-warning count-om-pending-setup">4</span>
-          </div>
-          <div class="nav-item" data-route="om-active-enrolments" id="nav-om-active-enrolments">
-            <i data-lucide="graduation-cap"></i>
-            <span>Active Enrolments</span>
-          </div>
-          <div class="nav-item" data-route="om-course-assignments" id="nav-om-course-assignments">
-            <i data-lucide="book-marked"></i>
-            <span>Course Assignments</span>
-          </div>
-          <div class="nav-item" data-route="om-multi-course" id="nav-om-multi-course">
-            <i data-lucide="layers"></i>
-            <span>Multi-Course Learners</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="om-trial-requests" id="nav-om-trial-requests">
+              <i data-lucide="clipboard-list"></i>
+              <span>Trial Requests Queue</span>
+              <span class="badge badge-warning count-om-trial-requests">3</span>
+            </div>
+            <div class="nav-item" data-route="om-ready-scheduling" id="nav-om-ready-scheduling">
+              <i data-lucide="calendar-plus"></i>
+              <span>Ready for Scheduling</span>
+              <span class="badge badge-primary count-om-ready-scheduling">2</span>
+            </div>
+            <div class="nav-item" data-route="om-scheduled-trials" id="nav-om-scheduled-trials">
+              <i data-lucide="calendar-clock"></i>
+              <span>Scheduled Trials</span>
+            </div>
+            <div class="nav-item" data-route="om-trial-outcomes" id="nav-om-trial-outcomes">
+              <i data-lucide="calendar-check-2"></i>
+              <span>Trial Outcomes</span>
+            </div>
           </div>
         </div>
 
-        <!-- Group 4: Cohorts & Rosters -->
-        <div class="nav-group">
-          <div class="nav-group-title">Cohorts & Rosters</div>
-          <div class="nav-item" data-route="om-course-runs" id="nav-om-course-runs">
-            <i data-lucide="play-circle"></i>
-            <span>Course Runs</span>
+        <!-- Hub 2: Learners & Enrolments (ENR-001 - ENR-012) -->
+        <div class="nav-group collapsible open" data-group="om-enrolments">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="graduation-cap" style="width:13px; height:13px; color:var(--primary);"></i> Enrolments & Setup</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-om-pending-setup">4</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="om-cohorts-sections" id="nav-om-cohorts-sections">
-            <i data-lucide="users"></i>
-            <span>Cohorts / Sections</span>
-          </div>
-          <div class="nav-item" data-route="om-rosters" id="nav-om-rosters">
-            <i data-lucide="contact-2"></i>
-            <span>Rosters</span>
-          </div>
-          <div class="nav-item" data-route="om-capacity-transfers" id="nav-om-capacity-transfers">
-            <i data-lucide="arrow-left-right"></i>
-            <span>Capacity / Transfers</span>
-          </div>
-        </div>
-
-        <!-- Group 5: Trainers & Scheduling -->
-        <div class="nav-group">
-          <div class="nav-group-title">Trainers & Scheduling</div>
-          <div class="nav-item" data-route="om-trainer-assignments" id="nav-om-trainer-assignments">
-            <i data-lucide="user-check"></i>
-            <span>Trainer Assignments</span>
-          </div>
-          <div class="nav-item" data-route="om-schedule-plans" id="nav-om-schedule-plans">
-            <i data-lucide="calendar-range"></i>
-            <span>Schedule Plans</span>
-          </div>
-          <div class="nav-item" data-route="om-availability" id="nav-om-availability">
-            <i data-lucide="clock"></i>
-            <span>Availability</span>
-          </div>
-          <div class="nav-item" data-route="om-schedule-conflicts" id="nav-om-schedule-conflicts">
-            <i data-lucide="alert-octagon"></i>
-            <span>Schedule Conflicts</span>
-            <span class="badge badge-error count-om-conflicts">1</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="om-pending-setup" id="nav-om-pending-setup">
+              <i data-lucide="user-plus"></i>
+              <span>Pending Setup Queue</span>
+              <span class="badge badge-warning count-om-pending-setup">4</span>
+            </div>
+            <div class="nav-item" data-route="om-active-enrolments" id="nav-om-active-enrolments">
+              <i data-lucide="users"></i>
+              <span>Active Enrolments</span>
+            </div>
+            <div class="nav-item" data-route="om-course-assignments" id="nav-om-course-assignments">
+              <i data-lucide="book-marked"></i>
+              <span>Course Assignments</span>
+            </div>
+            <div class="nav-item" data-route="om-multi-course" id="nav-om-multi-course">
+              <i data-lucide="layers"></i>
+              <span>Multi-Course Learners</span>
+            </div>
           </div>
         </div>
 
-        <!-- Group 6: Live Classes -->
-        <div class="nav-group">
-          <div class="nav-group-title">Live Classes</div>
-          <div class="nav-item" data-route="om-classes-today" id="nav-om-classes-today">
-            <i data-lucide="radio"></i>
-            <span>Today</span>
-            <span class="badge badge-primary count-om-classes-today">6</span>
+        <!-- Hub 3: Cohorts, Rosters & Scheduling (LIVE-001 - LIVE-008) -->
+        <div class="nav-group collapsible open" data-group="om-scheduling">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="calendar-range" style="width:13px; height:13px; color:var(--primary);"></i> Cohorts & Scheduling</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-error nav-group-badge count-om-conflicts">1</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="om-classes-upcoming" id="nav-om-classes-upcoming">
-            <i data-lucide="calendar-days"></i>
-            <span>Upcoming</span>
-          </div>
-          <div class="nav-item" data-route="om-attendance" id="nav-om-attendance">
-            <i data-lucide="clipboard-check"></i>
-            <span>Attendance</span>
-          </div>
-          <div class="nav-item" data-route="om-reports-due" id="nav-om-reports-due">
-            <i data-lucide="file-clock"></i>
-            <span>Reports Due</span>
-            <span class="badge badge-warning count-om-reports-due">3</span>
-          </div>
-          <div class="nav-item" data-route="om-reports-in-review" id="nav-om-reports-in-review">
-            <i data-lucide="file-search"></i>
-            <span>In Review</span>
-          </div>
-          <div class="nav-item" data-route="om-technical-exceptions" id="nav-om-technical-exceptions">
-            <i data-lucide="video-off"></i>
-            <span>Technical Exceptions</span>
-            <span class="badge badge-error count-om-tech-exceptions">1</span>
-          </div>
-          <div class="nav-item" data-route="om-cancelled-rescheduled" id="nav-om-cancelled-rescheduled">
-            <i data-lucide="calendar-x"></i>
-            <span>Cancelled / Rescheduled</span>
-          </div>
-        </div>
-
-        <!-- Group 7: Class Review -->
-        <div class="nav-group">
-          <div class="nav-group-title">Class Review</div>
-          <div class="nav-item" data-route="om-trainer-reports" id="nav-om-trainer-reports">
-            <i data-lucide="file-text"></i>
-            <span>Trainer Reports</span>
-          </div>
-          <div class="nav-item" data-route="om-attendance-exceptions" id="nav-om-attendance-exceptions">
-            <i data-lucide="user-x"></i>
-            <span>Attendance Exceptions</span>
-            <span class="badge badge-warning count-om-att-exceptions">2</span>
-          </div>
-          <div class="nav-item" data-route="om-approval-queue" id="nav-om-approval-queue">
-            <i data-lucide="check-circle-2"></i>
-            <span>Approval Queue</span>
-            <span class="badge badge-warning count-om-approvals">4</span>
-          </div>
-          <div class="nav-item" data-route="om-correction-requests" id="nav-om-correction-requests">
-            <i data-lucide="undo-2"></i>
-            <span>Correction Requests</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="om-course-runs" id="nav-om-course-runs">
+              <i data-lucide="play-circle"></i>
+              <span>Live Course Runs</span>
+            </div>
+            <div class="nav-item" data-route="om-cohorts-sections" id="nav-om-cohorts-sections">
+              <i data-lucide="users"></i>
+              <span>Cohorts & Sections</span>
+            </div>
+            <div class="nav-item" data-route="om-rosters" id="nav-om-rosters">
+              <i data-lucide="contact-2"></i>
+              <span>Roster Memberships</span>
+            </div>
+            <div class="nav-item" data-route="om-capacity-transfers" id="nav-om-capacity-transfers">
+              <i data-lucide="arrow-left-right"></i>
+              <span>Capacity & Transfers</span>
+            </div>
+            <div class="nav-item" data-route="om-trainer-assignments" id="nav-om-trainer-assignments">
+              <i data-lucide="user-check"></i>
+              <span>Trainer Assignments</span>
+            </div>
+            <div class="nav-item" data-route="om-schedule-plans" id="nav-om-schedule-plans">
+              <i data-lucide="calendar"></i>
+              <span>Schedule Plans</span>
+            </div>
+            <div class="nav-item" data-route="om-availability" id="nav-om-availability">
+              <i data-lucide="clock"></i>
+              <span>Trainer Availability</span>
+            </div>
+            <div class="nav-item" data-route="om-schedule-conflicts" id="nav-om-schedule-conflicts">
+              <i data-lucide="alert-octagon"></i>
+              <span>Schedule Conflicts</span>
+              <span class="badge badge-error count-om-conflicts">1</span>
+            </div>
           </div>
         </div>
 
-        <!-- Group 8: Entitlements & Renewals -->
-        <div class="nav-group">
-          <div class="nav-item" data-route="om-entitlements-renewals" id="nav-om-entitlements-renewals">
-            <i data-lucide="ticket-check"></i>
-            <span>Entitlements & Renewals</span>
-            <span class="badge badge-warning count-om-entitlement-risks">3</span>
+        <!-- Hub 4: Live Delivery & QA Sign-Off (LIVE-010 - LIVE-020, FLOW-016) -->
+        <div class="nav-group collapsible open" data-group="om-delivery">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="radio" style="width:13px; height:13px; color:var(--primary);"></i> Live Delivery & QA</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge count-om-classes-today">6</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="om-classes-today" id="nav-om-classes-today">
+              <i data-lucide="radio"></i>
+              <span>Today's Live Classes</span>
+              <span class="badge badge-primary count-om-classes-today">6</span>
+            </div>
+            <div class="nav-item" data-route="om-classes-upcoming" id="nav-om-classes-upcoming">
+              <i data-lucide="calendar-days"></i>
+              <span>Upcoming Delivery</span>
+            </div>
+            <div class="nav-item" data-route="om-attendance" id="nav-om-attendance">
+              <i data-lucide="clipboard-check"></i>
+              <span>Attendance Reconciliation</span>
+            </div>
+            <div class="nav-item" data-route="om-reports-due" id="nav-om-reports-due">
+              <i data-lucide="file-clock"></i>
+              <span>Reports Due & Overdue</span>
+              <span class="badge badge-warning count-om-reports-due">3</span>
+            </div>
+            <div class="nav-item" data-route="om-approval-queue" id="nav-om-approval-queue">
+              <i data-lucide="check-circle-2"></i>
+              <span>Delivery Approval Queue</span>
+              <span class="badge badge-warning count-om-approvals">4</span>
+            </div>
+            <div class="nav-item" data-route="om-attendance-exceptions" id="nav-om-attendance-exceptions">
+              <i data-lucide="user-x"></i>
+              <span>Attendance Exceptions</span>
+              <span class="badge badge-warning count-om-att-exceptions">2</span>
+            </div>
+            <div class="nav-item" data-route="om-technical-exceptions" id="nav-om-technical-exceptions">
+              <i data-lucide="video-off"></i>
+              <span>Technical Exceptions</span>
+              <span class="badge badge-error count-om-tech-exceptions">1</span>
+            </div>
+            <div class="nav-item" data-route="om-correction-requests" id="nav-om-correction-requests">
+              <i data-lucide="undo-2"></i>
+              <span>Correction Requests</span>
+            </div>
+            <div class="nav-item" data-route="om-trainer-reports" id="nav-om-trainer-reports">
+              <i data-lucide="file-text"></i>
+              <span>Trainer Reports Archive</span>
+            </div>
+            <div class="nav-item" data-route="om-cancelled-rescheduled" id="nav-om-cancelled-rescheduled">
+              <i data-lucide="calendar-x"></i>
+              <span>Cancelled & Makeups</span>
+            </div>
           </div>
         </div>
 
-        <!-- Group 9: Payments -->
-        <div class="nav-group">
-          <div class="nav-group-title">Payments</div>
-          <div class="nav-item" data-route="om-payment-review" id="nav-om-payment-review">
-            <i data-lucide="receipt"></i>
-            <span>Payment Review Queue</span>
-            <span class="badge badge-warning count-om-payments-pending">3</span>
+        <!-- Hub 5: Payments & Entitlements (COM-001 - COM-015, FIN-001 - FIN-014) -->
+        <div class="nav-group collapsible open" data-group="om-payments">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="receipt" style="width:13px; height:13px; color:var(--primary);"></i> Payments & Entitlements</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-om-payments-pending">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="om-payments-under-review" id="nav-om-payments-under-review">
-            <i data-lucide="lock"></i>
-            <span>Under Review</span>
-          </div>
-          <div class="nav-item" data-route="om-payments-approved" id="nav-om-payments-approved">
-            <i data-lucide="check-check"></i>
-            <span>Approved</span>
-          </div>
-          <div class="nav-item" data-route="om-payments-rejected-correction" id="nav-om-payments-rejected-correction">
-            <i data-lucide="x-circle"></i>
-            <span>Rejected / Correction</span>
-          </div>
-          <div class="nav-item" data-route="om-payment-exceptions" id="nav-om-payment-exceptions">
-            <i data-lucide="alert-triangle"></i>
-            <span>Payment Exceptions</span>
-            <span class="badge badge-error count-om-pay-exceptions">1</span>
-          </div>
-        </div>
-
-        <!-- Group 10: Resources -->
-        <div class="nav-group">
-          <div class="nav-group-title">Resources</div>
-          <div class="nav-item" data-route="om-resources" id="nav-om-resources">
-            <i data-lucide="folder-git-2"></i>
-            <span>Resources Library</span>
-          </div>
-        </div>
-
-        <!-- Group 11: Cases & Communications -->
-        <div class="nav-group">
-          <div class="nav-group-title">Cases & Communications</div>
-          <div class="nav-item" data-route="om-cases-communications" id="nav-om-cases-communications">
-            <i data-lucide="messages-square"></i>
-            <span>Operational Cases</span>
-            <span class="badge badge-error count-om-open-cases">3</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="om-payment-review" id="nav-om-payment-review">
+              <i data-lucide="receipt"></i>
+              <span>Payment Review Queue</span>
+              <span class="badge badge-warning count-om-payments-pending">3</span>
+            </div>
+            <div class="nav-item" data-route="om-payments-under-review" id="nav-om-payments-under-review">
+              <i data-lucide="lock"></i>
+              <span>Under Review</span>
+            </div>
+            <div class="nav-item" data-route="om-payments-approved" id="nav-om-payments-approved">
+              <i data-lucide="check-check"></i>
+              <span>Approved Payments</span>
+            </div>
+            <div class="nav-item" data-route="om-payments-rejected-correction" id="nav-om-payments-rejected-correction">
+              <i data-lucide="x-circle"></i>
+              <span>Rejected / Corrections</span>
+            </div>
+            <div class="nav-item" data-route="om-payment-exceptions" id="nav-om-payment-exceptions">
+              <i data-lucide="alert-triangle"></i>
+              <span>Payment Exceptions</span>
+              <span class="badge badge-error count-om-pay-exceptions">1</span>
+            </div>
+            <div class="nav-item" data-route="om-entitlements-renewals" id="nav-om-entitlements-renewals">
+              <i data-lucide="ticket-check"></i>
+              <span>Entitlements & Renewals</span>
+              <span class="badge badge-warning count-om-entitlement-risks">3</span>
+            </div>
           </div>
         </div>
 
-        <!-- Group 12: K-12 Operations -->
-        <div class="nav-group">
-          <div class="nav-group-title">K-12 Operations</div>
-          <div class="nav-item" data-route="om-k12-operations" id="nav-om-k12-operations">
-            <i data-lucide="school"></i>
-            <span>K-12 Operations</span>
+        <!-- Hub 6: Academic Ops & Governance (K12, RES, MSG, ADM) -->
+        <div class="nav-group collapsible open" data-group="om-academic">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="school" style="width:13px; height:13px; color:var(--primary);"></i> Academic Ops & Governance</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-error nav-group-badge count-om-open-cases">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-        </div>
-
-        <!-- Group 13: Scoped Catalogue -->
-        <div class="nav-group">
-          <div class="nav-group-title">Catalogue (Scoped)</div>
-          <div class="nav-item" data-route="om-catalogue-operations" id="nav-om-catalogue-operations">
-            <i data-lucide="book-open"></i>
-            <span>Product Operations</span>
-          </div>
-        </div>
-
-        <!-- Group 14: Reports / Analytics -->
-        <div class="nav-group nav-group-primary">
-          <div class="nav-item" data-route="om-reports-analytics" id="nav-om-reports-analytics">
-            <i data-lucide="chart-pie"></i>
-            <span>Operational Analytics</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="om-k12-operations" id="nav-om-k12-operations">
+              <i data-lucide="school"></i>
+              <span>K-12 Section Operations</span>
+            </div>
+            <div class="nav-item" data-route="om-resources" id="nav-om-resources">
+              <i data-lucide="folder-git-2"></i>
+              <span>Resources Library</span>
+            </div>
+            <div class="nav-item" data-route="om-cases-communications" id="nav-om-cases-communications">
+              <i data-lucide="messages-square"></i>
+              <span>Operational Cases</span>
+              <span class="badge badge-error count-om-open-cases">3</span>
+            </div>
+            <div class="nav-item" data-route="om-catalogue-operations" id="nav-om-catalogue-operations">
+              <i data-lucide="book-open"></i>
+              <span>Product Operations</span>
+            </div>
+            <div class="nav-item" data-route="om-reports-analytics" id="nav-om-reports-analytics">
+              <i data-lucide="chart-pie"></i>
+              <span>Operational Analytics</span>
+            </div>
           </div>
         </div>
       </nav>
