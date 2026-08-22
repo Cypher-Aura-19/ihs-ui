@@ -874,195 +874,268 @@
 
       </nav>
     
-      <!-- ACADEMIC REVIEWER NAVIGATION -->
+      <!-- ACADEMIC REVIEWER NAVIGATION (ORGANIZED COLLAPSIBLE PRESTIGE) -->
       <nav class="sidebar-nav hidden" id="academic-reviewer-nav" aria-label="Academic Reviewer navigation">
         
-        <!-- 1. Review Home -->
+        <!-- 1. Review Command Center -->
         <div class="nav-item active" data-route="reviewer-dashboard" id="nav-reviewer-dashboard">
           <i data-lucide="layout-dashboard"></i>
           <span>Review Home</span>
         </div>
 
-        <!-- 2. Course Reviews (FLOW-009) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Course Reviews (FLOW-009)</div>
-          <div class="nav-item" data-route="reviewer-courses-awaiting" id="nav-reviewer-courses-awaiting">
-            <i data-lucide="inbox"></i>
-            <span>Awaiting Review</span>
-            <span class="badge badge-warning count-reviewer-awaiting">3</span>
+        <!-- 2. Hub 1: Course Reviews (FLOW-009) -->
+        <div class="nav-group collapsible open" data-group="reviewer-course-reviews">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="book-check" style="width:13px; height:13px; color:var(--primary);"></i> Course Reviews</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">FLOW-009</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="reviewer-courses-in-review" id="nav-reviewer-courses-in-review">
-            <i data-lucide="file-search"></i>
-            <span>In Review</span>
-            <span class="badge badge-primary count-reviewer-in-review">2</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-courses-changes" id="nav-reviewer-courses-changes">
-            <i data-lucide="alert-triangle"></i>
-            <span>Changes Requested</span>
-            <span class="badge badge-error count-reviewer-changes">1</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-courses-approved" id="nav-reviewer-courses-approved">
-            <i data-lucide="check-circle-2"></i>
-            <span>Approved Versions</span>
-            <span class="badge badge-success count-reviewer-approved">2</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-courses-history" id="nav-reviewer-courses-history">
-            <i data-lucide="history"></i>
-            <span>Review History</span>
-          </div>
-        </div>
-
-        <!-- 3. Content Review -->
-        <div class="nav-group">
-          <div class="nav-group-title">Content Review</div>
-          <div class="nav-item" data-route="reviewer-content-metadata" id="nav-reviewer-content-metadata">
-            <i data-lucide="info"></i>
-            <span>Course Metadata</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-content-syllabus" id="nav-reviewer-content-syllabus">
-            <i data-lucide="folder-tree"></i>
-            <span>Syllabus Structure</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-content-lessons" id="nav-reviewer-content-lessons">
-            <i data-lucide="file-text"></i>
-            <span>Lessons & Activities</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-content-outcomes" id="nav-reviewer-content-outcomes">
-            <i data-lucide="target"></i>
-            <span>Learning Outcomes</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-content-resources" id="nav-reviewer-content-resources">
-            <i data-lucide="paperclip"></i>
-            <span>Resources / References</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-courses-awaiting" id="nav-reviewer-courses-awaiting">
+              <i data-lucide="inbox"></i>
+              <span>Awaiting Review</span>
+              <span class="badge badge-warning count-reviewer-awaiting">1</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-courses-in-review" id="nav-reviewer-courses-in-review">
+              <i data-lucide="file-search"></i>
+              <span>In Review</span>
+              <span class="badge badge-primary count-reviewer-in-review">1</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-courses-changes" id="nav-reviewer-courses-changes">
+              <i data-lucide="alert-triangle"></i>
+              <span>Changes Requested</span>
+              <span class="badge badge-error count-reviewer-changes">1</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-courses-approved" id="nav-reviewer-courses-approved">
+              <i data-lucide="check-circle-2"></i>
+              <span>Approved Versions</span>
+              <span class="badge badge-success count-reviewer-approved">1</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-courses-history" id="nav-reviewer-courses-history">
+              <i data-lucide="history"></i>
+              <span>Review History</span>
+            </div>
           </div>
         </div>
 
-        <!-- 4. Academic Rules -->
-        <div class="nav-group">
-          <div class="nav-group-title">Academic Rules</div>
-          <div class="nav-item" data-route="reviewer-rules-prerequisites" id="nav-reviewer-rules-prerequisites">
-            <i data-lucide="lock"></i>
-            <span>Prerequisites</span>
+        <!-- 3. Hub 2: Content & Syllabus Review (CAT-006 - CAT-009) -->
+        <div class="nav-group collapsible open" data-group="reviewer-content-review">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="folder-tree" style="width:13px; height:13px; color:var(--primary);"></i> Content & Syllabus</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">CAT-006</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="reviewer-rules-release" id="nav-reviewer-rules-release">
-            <i data-lucide="calendar"></i>
-            <span>Release Rules</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-rules-completion" id="nav-reviewer-rules-completion">
-            <i data-lucide="award"></i>
-            <span>Completion Rules</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-rules-attempts" id="nav-reviewer-rules-attempts">
-            <i data-lucide="refresh-cw"></i>
-            <span>Attempt / Retry Rules</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-rules-preview" id="nav-reviewer-rules-preview">
-            <i data-lucide="eye"></i>
-            <span>Preview Rules</span>
-          </div>
-        </div>
-
-        <!-- 5. Assessment Review -->
-        <div class="nav-group">
-          <div class="nav-group-title">Assessment Review</div>
-          <div class="nav-item" data-route="reviewer-assessments-bank" id="nav-reviewer-assessments-bank">
-            <i data-lucide="database"></i>
-            <span>Question Banks</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-assessments-quizzes" id="nav-reviewer-assessments-quizzes">
-            <i data-lucide="help-circle"></i>
-            <span>Quizzes</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-assessments-assignments" id="nav-reviewer-assessments-assignments">
-            <i data-lucide="clipboard-list"></i>
-            <span>Assignments</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-assessments-voice" id="nav-reviewer-assessments-voice">
-            <i data-lucide="mic"></i>
-            <span>Voice Activities</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-assessments-rubrics" id="nav-reviewer-assessments-rubrics">
-            <i data-lucide="table"></i>
-            <span>Rubrics</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-content-metadata" id="nav-reviewer-content-metadata">
+              <i data-lucide="info"></i>
+              <span>Course Metadata</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-content-syllabus" id="nav-reviewer-content-syllabus">
+              <i data-lucide="folder-tree"></i>
+              <span>Syllabus Structure</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-content-lessons" id="nav-reviewer-content-lessons">
+              <i data-lucide="file-text"></i>
+              <span>Lessons & Activities</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-content-outcomes" id="nav-reviewer-content-outcomes">
+              <i data-lucide="target"></i>
+              <span>Learning Outcomes</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-content-resources" id="nav-reviewer-content-resources">
+              <i data-lucide="paperclip"></i>
+              <span>Resources & Vault</span>
+            </div>
           </div>
         </div>
 
-        <!-- 6. Review Comments (CAT-010) -->
-        <div class="nav-group">
-          <div class="nav-group-title">Review Comments (CAT-010)</div>
-          <div class="nav-item" data-route="reviewer-comments-open" id="nav-reviewer-comments-open">
-            <i data-lucide="message-square"></i>
-            <span>Open Comments</span>
-            <span class="badge badge-warning count-reviewer-comments-open">4</span>
+        <!-- 4. Hub 3: Academic Rules (MILE-004 / MILE-008) -->
+        <div class="nav-group collapsible open" data-group="reviewer-academic-rules">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="lock" style="width:13px; height:13px; color:var(--primary);"></i> Academic Rules</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">MILE-004</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="reviewer-comments-blocking" id="nav-reviewer-comments-blocking">
-            <i data-lucide="shield-alert"></i>
-            <span>Blocking Issues</span>
-            <span class="badge badge-error count-reviewer-blocking">2</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-comments-resolved" id="nav-reviewer-comments-resolved">
-            <i data-lucide="check-check"></i>
-            <span>Resolved Comments</span>
-          </div>
-        </div>
-
-        <!-- 7. Submission / Grading Review [Assigned Scope - FLOW-020] -->
-        <div class="nav-group">
-          <div class="nav-group-title">Submission / Grading Review</div>
-          <div class="nav-item" data-route="reviewer-grading-queue" id="nav-reviewer-grading-queue">
-            <i data-lucide="check-square"></i>
-            <span>Manual Review Queue</span>
-            <span class="badge badge-primary count-reviewer-grading-queue">3</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-grading-assignments" id="nav-reviewer-grading-assignments">
-            <i data-lucide="file-check"></i>
-            <span>Assignment Reviews</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-grading-revisions" id="nav-reviewer-grading-revisions">
-            <i data-lucide="rotate-ccw"></i>
-            <span>Revision Requests</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-grading-corrections" id="nav-reviewer-grading-corrections">
-            <i data-lucide="edit"></i>
-            <span>Grade Corrections</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-rules-prerequisites" id="nav-reviewer-rules-prerequisites">
+              <i data-lucide="lock"></i>
+              <span>Prerequisites</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-rules-release" id="nav-reviewer-rules-release">
+              <i data-lucide="calendar"></i>
+              <span>Release Rules</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-rules-completion" id="nav-reviewer-rules-completion">
+              <i data-lucide="award"></i>
+              <span>Completion Rules</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-rules-attempts" id="nav-reviewer-rules-attempts">
+              <i data-lucide="refresh-cw"></i>
+              <span>Attempt / Retry Rules</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-rules-preview" id="nav-reviewer-rules-preview">
+              <i data-lucide="eye"></i>
+              <span>Preview Rules</span>
+            </div>
           </div>
         </div>
 
-        <!-- 8. K-12 Academic Review -->
-        <div class="nav-group">
-          <div class="nav-group-title">K-12 Academic Review</div>
-          <div class="nav-item" data-route="reviewer-k12-syllabi" id="nav-reviewer-k12-syllabi">
-            <i data-lucide="graduation-cap"></i>
-            <span>Syllabus Versions</span>
+        <!-- 5. Hub 4: Assessment Review -->
+        <div class="nav-group collapsible open" data-group="reviewer-assessment-review">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="clipboard-check" style="width:13px; height:13px; color:var(--primary);"></i> Assessment Review</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">ASM-001</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="reviewer-k12-schemes" id="nav-reviewer-k12-schemes">
-            <i data-lucide="percent"></i>
-            <span>Grading Schemes</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-k12-categories" id="nav-reviewer-k12-categories">
-            <i data-lucide="tags"></i>
-            <span>Assessment Categories</span>
-          </div>
-          <div class="nav-item" data-route="reviewer-k12-structure" id="nav-reviewer-k12-structure">
-            <i data-lucide="book-marked"></i>
-            <span>Academic Structure</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-assessments-bank" id="nav-reviewer-assessments-bank">
+              <i data-lucide="database"></i>
+              <span>Question Banks</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-assessments-quizzes" id="nav-reviewer-assessments-quizzes">
+              <i data-lucide="help-circle"></i>
+              <span>Quizzes & Scoring</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-assessments-assignments" id="nav-reviewer-assessments-assignments">
+              <i data-lucide="clipboard-list"></i>
+              <span>Assignments</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-assessments-voice" id="nav-reviewer-assessments-voice">
+              <i data-lucide="mic"></i>
+              <span>Voice Activities</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-assessments-rubrics" id="nav-reviewer-assessments-rubrics">
+              <i data-lucide="table"></i>
+              <span>Rubrics Matrix</span>
+            </div>
           </div>
         </div>
 
-        <!-- 9. Approved Versions -->
-        <div class="nav-group">
-          <div class="nav-group-title">Publication Readiness</div>
-          <div class="nav-item" data-route="reviewer-approved-versions" id="nav-reviewer-approved-versions">
-            <i data-lucide="award"></i>
-            <span>Approved Versions</span>
+        <!-- 6. Hub 5: Review Comments & Citations (CAT-010) -->
+        <div class="nav-group collapsible open" data-group="reviewer-comments-citations">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="message-square" style="width:13px; height:13px; color:var(--primary);"></i> Review Citations</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge">CAT-010</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-comments-open" id="nav-reviewer-comments-open">
+              <i data-lucide="message-square"></i>
+              <span>Open Comments</span>
+              <span class="badge badge-warning count-reviewer-comments-open">3</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-comments-blocking" id="nav-reviewer-comments-blocking">
+              <i data-lucide="shield-alert"></i>
+              <span>Blocking Issues Guard</span>
+              <span class="badge badge-error count-reviewer-blocking">2</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-comments-resolved" id="nav-reviewer-comments-resolved">
+              <i data-lucide="check-check"></i>
+              <span>Resolved Comments</span>
+            </div>
           </div>
         </div>
 
-        <!-- 10. Audit / Review History -->
-        <div class="nav-group nav-group-primary">
-          <div class="nav-item" data-route="reviewer-audit-history" id="nav-reviewer-audit-history">
-            <i data-lucide="scroll"></i>
-            <span>Review Audit History</span>
+        <!-- 7. Hub 6: Submission / Grading Review [Assigned Scope - FLOW-020] -->
+        <div class="nav-group collapsible open" data-group="reviewer-grading-flow">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="check-square" style="width:13px; height:13px; color:var(--primary);"></i> Manual Grading</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">FLOW-020</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-grading-queue" id="nav-reviewer-grading-queue">
+              <i data-lucide="check-square"></i>
+              <span>Manual Review Queue</span>
+              <span class="badge badge-primary count-reviewer-grading-queue">2</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-grading-assignments" id="nav-reviewer-grading-assignments">
+              <i data-lucide="file-check"></i>
+              <span>Assignment Reviews</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-grading-revisions" id="nav-reviewer-grading-revisions">
+              <i data-lucide="rotate-ccw"></i>
+              <span>Revision Requests</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-grading-corrections" id="nav-reviewer-grading-corrections">
+              <i data-lucide="edit"></i>
+              <span>Grade Corrections</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Hub 7: K-12 Academic Review (K12-001) -->
+        <div class="nav-group collapsible open" data-group="reviewer-k12-review">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="graduation-cap" style="width:13px; height:13px; color:var(--primary);"></i> K-12 Review</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">K-12</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-k12-syllabi" id="nav-reviewer-k12-syllabi">
+              <i data-lucide="graduation-cap"></i>
+              <span>Syllabus Versions</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-k12-schemes" id="nav-reviewer-k12-schemes">
+              <i data-lucide="percent"></i>
+              <span>Grading Schemes</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-k12-categories" id="nav-reviewer-k12-categories">
+              <i data-lucide="tags"></i>
+              <span>Assessment Categories</span>
+            </div>
+            <div class="nav-item" data-route="reviewer-k12-structure" id="nav-reviewer-k12-structure">
+              <i data-lucide="book-marked"></i>
+              <span>Academic Structure</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Hub 8: Publication Readiness -->
+        <div class="nav-group collapsible open" data-group="reviewer-publication-readiness">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="award" style="width:13px; height:13px; color:var(--primary);"></i> Sign-off</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-success nav-group-badge">APPROVAL</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-approved-versions" id="nav-reviewer-approved-versions">
+              <i data-lucide="award"></i>
+              <span>Approved Versions</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10. Hub 9: Audit / Review History (FLOW-033) -->
+        <div class="nav-group collapsible open" data-group="reviewer-audit-history-hub">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="scroll" style="width:13px; height:13px; color:var(--primary);"></i> Academic Audit</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">FLOW-033</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="reviewer-audit-history" id="nav-reviewer-audit-history">
+              <i data-lucide="scroll"></i>
+              <span>Review Audit History</span>
+            </div>
           </div>
         </div>
 

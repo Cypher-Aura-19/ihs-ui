@@ -11976,10 +11976,209 @@ td:last-child {
   text-align: left !important;
   font-size: 13px !important;
 }
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preview-format-btn:hover {
+  background: var(--surface-container-low);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.preview-format-btn.active {
+  background: var(--primary-container);
+  color: var(--on-primary-fixed-variant);
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(110, 94, 6, 0.12);
+}
+
+/* K-12 Interactive Math Calculator */
+.math-calc-card {
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.math-calc-input-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.math-calc-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.math-calc-input-box label {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.math-calc-input-box input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--outline-variant);
+  font: 700 15px 'Fira Code', monospace;
+  background: #ffffff;
+  color: var(--on-surface);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.math-calc-input-box input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-container);
+}
+
+.math-step-solve-box {
+  background: #ffffff;
+  border: 1px solid var(--outline-variant);
+  border-left: 4px solid var(--primary);
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--on-surface);
+  box-shadow: 0 2px 10px rgba(110, 94, 6, 0.03);
+}
+
+/* Solved Past Papers Vault Cards */
+.past-paper-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.past-paper-item {
+  background: var(--surface-container-low);
+  border: 1px solid var(--outline-variant);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all var(--transition-fast);
+}
+
+.past-paper-item:hover {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(110, 94, 6, 0.06);
+}
+
+/* CEFR Speech Score Panel */
+.cefr-score-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cefr-score-chip {
+  background: #ffffff;
+  border: 1px solid var(--outline-variant);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.cefr-score-chip span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--slate);
+  text-transform: uppercase;
+  display: block;
+}
+
+.cefr-score-chip strong {
+  font: 800 18px 'Manrope', sans-serif;
+  color: var(--primary);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   TABLE SYSTEM & HORIZONTAL SCROLLBAR ARCHITECTURE
+   ========================================================================== */
+
+.table-container,
+.om-table-container,
+.csr-table-container,
+.responsive-table-wrapper {
+  background: #ffffff !important;
+  border: 1px solid rgba(124, 119, 102, 0.22) !important;
+  border-radius: 10px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  box-shadow: 0 2px 8px rgba(70, 55, 28, 0.03) !important;
+  margin-bottom: 20px !important;
+}
+
+/* Custom Sleek Scrollbar for Tables */
+.table-container::-webkit-scrollbar,
+.om-table-container::-webkit-scrollbar,
+.csr-table-container::-webkit-scrollbar,
+.responsive-table-wrapper::-webkit-scrollbar {
+  height: 9px !important;
+}
+
+.table-container::-webkit-scrollbar-track,
+.om-table-container::-webkit-scrollbar-track,
+.csr-table-container::-webkit-scrollbar-track,
+.responsive-table-wrapper::-webkit-scrollbar-track {
+  background: #f8fafc !important;
+  border-radius: 4px !important;
+}
+
+.table-container::-webkit-scrollbar-thumb,
+.om-table-container::-webkit-scrollbar-thumb,
+.csr-table-container::-webkit-scrollbar-thumb,
+.responsive-table-wrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+  border-radius: 4px !important;
+  border: 2px solid #f8fafc !important;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover,
+.om-table-container::-webkit-scrollbar-thumb:hover,
+.csr-table-container::-webkit-scrollbar-thumb:hover,
+.responsive-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--primary) !important;
+}
+
+/* Data Table Architecture */
+.data-table,
+.om-table-container,
+.csr-table-container,
+.reviewer-data-table,
+.creator-data-table {
+  width: 100% !important;
+  min-width: 1250px !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+  font-size: 13px !important;
+}
 
 .data-table th,
 .om-data-table th,
-.csr-data-table th {
+.csr-data-table th,
+.reviewer-data-table th,
+.creator-data-table th {
   background: #fbf6ec !important;
   color: var(--navy-medium) !important;
   font: 800 11.5px 'Manrope', sans-serif !important;
@@ -11993,7 +12192,9 @@ td:last-child {
 
 .data-table td,
 .om-data-table td,
-.csr-data-table td {
+.csr-data-table td,
+.reviewer-data-table td,
+.creator-data-table td {
   padding: 14px 18px !important;
   border-bottom: 1px solid rgba(124, 119, 102, 0.12) !important;
   color: var(--on-surface) !important;
@@ -12003,19 +12204,25 @@ td:last-child {
 
 .data-table tr:last-child td,
 .om-data-table tr:last-child td,
-.csr-data-table tr:last-child td {
+.csr-data-table tr:last-child td,
+.reviewer-data-table tr:last-child td,
+.creator-data-table tr:last-child td {
   border-bottom: none !important;
 }
 
 .data-table tr:hover td,
 .om-data-table tr:hover td,
-.csr-data-table tr:hover td {
+.csr-data-table tr:hover td,
+.reviewer-data-table tr:hover td,
+.creator-data-table tr:hover td {
   background: #fdfbf7 !important;
 }
 
 /* Keep Action Buttons Strictly in a Horizontal Row */
 .table-actions-row,
 .om-table-actions,
+.csr-table-actions,
+.reviewer-table-actions,
 .btn-action-group,
 td .btn-group,
 td .table-actions,
@@ -12025,6 +12232,8 @@ td > div {
 
 .table-actions-row,
 .om-table-actions,
+.csr-table-actions,
+.reviewer-table-actions,
 .btn-action-group {
   display: inline-flex !important;
   flex-direction: row !important;
@@ -12037,6 +12246,8 @@ td > div {
 
 .table-actions-row .btn,
 .om-table-actions .btn,
+.csr-table-actions .btn,
+.reviewer-table-actions .btn,
 .btn-action-group .btn,
 td .btn {
   white-space: nowrap !important;

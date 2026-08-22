@@ -25,6 +25,36 @@ const CreatorSync = {
 };
 if (typeof window !== 'undefined') window.CreatorSync = CreatorSync;
 
+// ============================================================================
+// ACADEMIC REVIEWER STATE SYNCHRONIZATION (CAT-010 / FLOW-009 / FLOW-020)
+// ============================================================================
+const ReviewerSync = {
+  syncSidebarCounts() {
+    const data = typeof db !== 'undefined' ? db.reviewerData : null;
+    if (!data) return;
+
+    const awaiting = (data.reviews || []).filter(r => r.reviewStage === "Awaiting Review").length;
+    const inReview = (data.reviews || []).filter(r => r.reviewStage === "In Review").length;
+    const changes = (data.reviews || []).filter(r => r.reviewStage === "Changes Requested").length;
+    const approved = (data.reviews || []).filter(r => r.reviewStage === "Approved").length;
+    const openComments = (data.comments || []).filter(c => c.status === "Open").length;
+    const blocking = (data.comments || []).filter(c => c.status === "Open" && c.severity === "Blocking").length;
+    const gradingQueue = (data.submissions || []).filter(s => s.status !== "Accepted").length;
+
+    if (typeof document !== 'undefined') {
+      document.querySelectorAll(".count-reviewer-awaiting").forEach(el => el.textContent = awaiting);
+      document.querySelectorAll(".count-reviewer-in-review").forEach(el => el.textContent = inReview);
+      document.querySelectorAll(".count-reviewer-changes").forEach(el => el.textContent = changes);
+      document.querySelectorAll(".count-reviewer-approved").forEach(el => el.textContent = approved);
+      document.querySelectorAll(".count-reviewer-comments-open").forEach(el => el.textContent = openComments);
+      document.querySelectorAll(".count-reviewer-blocking").forEach(el => el.textContent = blocking);
+      document.querySelectorAll(".count-reviewer-grading-queue").forEach(el => el.textContent = gradingQueue);
+    }
+  }
+};
+if (typeof window !== 'undefined') window.ReviewerSync = ReviewerSync;
+
+
 /**
  * IHS 2.0 Platform Admin Panel - Client-side Interactive Engine
  * Implements mock database, simulator permissions, dashboard drilldowns,
@@ -102,6 +132,352 @@ const db = {
   // ============================================================================
   // ACADEMIC REVIEWER DOMAIN DATA (FLOW-009, CAT-010, FLOW-020, FLOW-021)
   // ============================================================================
+  reviewerData: {
+    reviews: [
+      {
+        id: "REV-101",
+        courseId: "CRS-101",
+        versionId: "VER-102",
+        courseTitle: "Modern Full-Stack Web Development",
+        courseCode: "DEV-101",
+        version: "v1.2",
+        deliveryModel: "Self-Paced Milestone",
+        author: "Prof. Alex Rivera",
+        submittedAt: "Yesterday, 14:30 PKT",
+        reviewStage: "In Review",
+        blockingIssuesCount: 2,
+        summary: "Major milestone structural update adding Monaco IDE code sandboxes and state machine gating.",
+        publicationReadiness: "Blocked (2 Unresolved Citations)"
+      },
+      {
+        id: "REV-102",
+        courseId: "CRS-103",
+        versionId: "VER-103",
+        courseTitle: "Spoken English Fluency & Professional Voice",
+        courseCode: "ENG-103",
+        version: "v2.0",
+        deliveryModel: "Live Scheduled Cohort",
+        author: "Sara Javed",
+        submittedAt: "3 days ago",
+        reviewStage: "Changes Requested",
+        blockingIssuesCount: 1,
+        summary: "Audio phonetics rubric weighting adjustment required before CAIE sign-off.",
+        publicationReadiness: "Rejected - Awaiting Resubmission"
+      },
+      {
+        id: "REV-103",
+        courseId: "CRS-102",
+        versionId: "VER-101",
+        courseTitle: "Basic Literacy & Numeracy Foundations",
+        courseCode: "LIT-101",
+        version: "v1.0",
+        deliveryModel: "Self-Paced Milestone",
+        author: "Ayesha Noor",
+        submittedAt: "5 days ago",
+        reviewStage: "Approved",
+        blockingIssuesCount: 0,
+        summary: "Complete foundational syllabus verified against National Curriculum standards.",
+        publicationReadiness: "Approved for Publication"
+      },
+      {
+        id: "REV-104",
+        courseId: "CRS-104",
+        versionId: "VER-104",
+        courseTitle: "Grade 8 Mathematics & Science (FBISE)",
+        courseCode: "K12-801",
+        version: "v1.0",
+        deliveryModel: "K-12 Live Tuition",
+        author: "Prof. Tariq Siddiqui",
+        submittedAt: "Today, 10:15 PKT",
+        reviewStage: "Awaiting Review",
+        blockingIssuesCount: 0,
+        summary: "Annual Federal Board (FBISE) syllabus outline and term test bank package.",
+        publicationReadiness: "Pending Initial Review"
+      }
+    ],
+
+    comments: [
+      {
+        id: "REV-COM-101",
+        versionId: "VER-102",
+        courseTitle: "Modern Full-Stack Web Dev (v1.2)",
+        nodeType: "Lesson",
+        nodeRef: "Lesson 2.1.2 (Auth Reducer)",
+        comment: "Missing automated test assertions in Monaco sandbox for refresh token fail state. Must be non-blocking or provided with clear mock stub.",
+        severity: "Blocking",
+        status: "Open",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "Today, 11:30 PKT",
+        authorResponse: "Added Vitest test assertions in sandbox bundle."
+      },
+      {
+        id: "REV-COM-102",
+        versionId: "VER-102",
+        courseTitle: "Modern Full-Stack Web Dev (v1.2)",
+        nodeType: "Rubric",
+        nodeRef: "RUB-101 (Capstone Rubric)",
+        comment: "Criterion 3 percentage weighting is set to 35% while criteria 1 and 2 are 35% each (total 105%). Normalization to exactly 100% is required.",
+        severity: "Blocking",
+        status: "Open",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "Yesterday, 16:00 PKT",
+        authorResponse: "Adjusted criteria to 35%, 35%, 30%."
+      },
+      {
+        id: "REV-COM-103",
+        versionId: "VER-103",
+        courseTitle: "Spoken English Fluency (v2.0)",
+        nodeType: "Activity",
+        nodeRef: "Activity 1.3 (Voice Cadence)",
+        comment: "Suggested adding background noise threshold guide for microphone recording to prevent audio clipping.",
+        severity: "Non-Blocking",
+        status: "Open",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "2 days ago",
+        authorResponse: "Will update advisory note in learner instructions."
+      },
+      {
+        id: "REV-COM-104",
+        versionId: "VER-101",
+        courseTitle: "Basic Literacy (v1.0)",
+        nodeType: "Outcomes",
+        nodeRef: "Module 1 Learning Outcomes",
+        comment: "Ensure Bloom's taxonomy verbs are used (e.g. 'Demonstrate' instead of 'Understand').",
+        severity: "Non-Blocking",
+        status: "Resolved",
+        reviewer: "Prof. Tariq Mahmood",
+        date: "4 days ago",
+        authorResponse: "Replaced all verbs with Bloom's level 2/3 descriptors.",
+        resolution: "Verified in syllabus tree. Approved."
+      }
+    ],
+
+    submissions: [
+      {
+        id: "SUB-401",
+        learner: "Zainab Malik",
+        course: "Modern Full-Stack Web Development",
+        assignment: "Milestone 2 Capstone: E-Commerce Reducer Architecture",
+        type: "Code Repository",
+        submittedAt: "Yesterday 17:45 PKT",
+        submissionUrl: "https://github.com/zainab-malik/ihs-fullstack-capstone",
+        evidence: "Clean TypeScript repository with 98% unit test coverage and modular architecture.",
+        rubricId: "RUB-101 (Frontend Capstone Rubric)",
+        assignedReviewer: "Prof. Tariq Mahmood",
+        status: "Submitted",
+        score: null,
+        gradeStatus: "Draft"
+      },
+      {
+        id: "SUB-402",
+        learner: "Kamran Ali",
+        course: "Spoken English Fluency & Professional Voice",
+        assignment: "Activity 2.4: 90-Second Impromptu Speech & Voice Pitch Modulation",
+        type: "Voice Activity (Acoustic)",
+        submittedAt: "Today 09:20 PKT",
+        submissionUrl: "https://storage.innovatorhuzsam.com/audio/sub-402-kamran.mp3",
+        evidence: "Acoustic recording: 1m 28s duration, 128kbps stereo MP3. CEFR C1 target.",
+        rubricId: "RUB-102 (CEFR Phonetics & Fluency)",
+        assignedReviewer: "Prof. Tariq Mahmood",
+        status: "Submitted",
+        score: null,
+        gradeStatus: "Draft"
+      },
+      {
+        id: "SUB-403",
+        learner: "Sana Mir",
+        course: "Grade 8 Mathematics & Science",
+        assignment: "Mid-Term Linear Equations & Coordinate Geometry Proofs",
+        type: "Written Assignment",
+        submittedAt: "2 days ago",
+        submissionUrl: "https://storage.innovatorhuzsam.com/docs/sub-403-sana.pdf",
+        evidence: "Scanned handwriting assignment: 6 pages step-by-step proofs with diagram annotations.",
+        rubricId: "RUB-K12-MATH (FBISE Proof Rubric)",
+        assignedReviewer: "Prof. Tariq Mahmood",
+        status: "Accepted",
+        score: "94 / 100 (Grade A*)",
+        gradeStatus: "Published",
+        feedback: "Exceptional geometric proofs. Neat Cartesian coordinate plots."
+      }
+    ],
+
+    k12Schemes: [
+      {
+        id: "K12-SCH-01",
+        board: "FBISE (Federal Board)",
+        grade: "Grade 8",
+        subject: "Mathematics & Science",
+        academicYear: "2026 / 2027",
+        termWeightage: "40% Formative (Quizzes & HW) + 60% Summative (Term Exams)",
+        passThreshold: "50% Minimum (Letter Grade D+)",
+        status: "Approved & Frozen",
+        categories: "Class Participation (10%), Quizzes (30%), Mid-Term (25%), Final Board Exam (35%)"
+      },
+      {
+        id: "K12-SCH-02",
+        board: "Cambridge CAIE (Lower Secondary)",
+        grade: "Grade 9 (Checkpoint)",
+        subject: "English as a Second Language",
+        academicYear: "2026 / 2027",
+        termWeightage: "50% Coursework + 50% End-of-Stage Checkpoint",
+        passThreshold: "Grade C (Scale A* to U)",
+        status: "Approved & Frozen",
+        categories: "Oral Presentation (25%), Reading Comprehension (25%), Written Composition (50%)"
+      }
+    ],
+
+    rules: [
+      {
+        id: "RULE-REV-01",
+        targetItem: "DEV-101 (Modern Web Dev v1.2)",
+        course: "DEV-101",
+        type: "Prerequisite",
+        condition: "Milestone 1 Quiz Score >= 80% AND Lesson 1.4 Code Passed",
+        evaluationEngine: "Automated Milestone State Machine (FLOW-018)",
+        status: "Active"
+      },
+      {
+        id: "RULE-REV-02",
+        targetItem: "ENG-103 (Spoken English v2.0)",
+        course: "ENG-103",
+        type: "Completion Rule",
+        condition: "100% Activities Watched + 4 Voice Tasks Rubric Graded >= 75%",
+        evaluationEngine: "Credential Issuance Engine (MILE-004)",
+        status: "Active"
+      },
+      {
+        id: "RULE-REV-03",
+        targetItem: "DEV-101 (Modern Web Dev v1.2)",
+        course: "DEV-101",
+        type: "Attempt & Retry Rule",
+        condition: "Max 3 Quiz Attempts with 24h Mandatory Cooldown Timer",
+        evaluationEngine: "Assessment Integrity Engine (MILE-008)",
+        status: "Active"
+      }
+    ],
+
+    questions: [
+      {
+        id: "Q-BANK-101",
+        stem: "In React 19, what is the primary architectural benefit of Actions when handling server mutations?",
+        category: "Frontend Architecture",
+        difficulty: "Intermediate",
+        correctAnswer: "Automatic pending states, optimistic updates, and built-in error boundaries",
+        usedInQuizzes: ["QUIZ-101", "QUIZ-102"],
+        status: "Verified Clean"
+      },
+      {
+        id: "Q-BANK-102",
+        stem: "Which CSS property enforces strict isolated stacking context without triggering sub-pixel blur?",
+        category: "Web Layout & Rendering",
+        difficulty: "Easy",
+        correctAnswer: "contain: layout or isolation: isolate",
+        usedInQuizzes: ["QUIZ-101"],
+        status: "Verified Clean"
+      },
+      {
+        id: "Q-BANK-103",
+        stem: "When grading consonant cluster aspiration in Spoken English, what acoustic feature indicates C1 proficiency?",
+        category: "Phonetics & Oral Cadence",
+        difficulty: "Hard",
+        correctAnswer: "Voice onset time (VOT) between 40ms and 70ms on voiceless plosives",
+        usedInQuizzes: ["QUIZ-103"],
+        status: "Verified Clean"
+      }
+    ],
+
+    assessments: [
+      {
+        id: "ASM-REV-101",
+        title: "Level 1 Gatekeeper Quiz: Modern State & TypeScript Types",
+        course: "DEV-101 (v1.2)",
+        type: "Quiz",
+        passMark: "Pass >= 80%",
+        rubric: "Auto-Scored (Bank Q-101 to Q-115)",
+        timeLimit: "45 Minutes",
+        randomization: "Question & Option Shuffling Active",
+        status: "Ready for Review"
+      },
+      {
+        id: "ASM-REV-102",
+        title: "Level 2 Capstone: Distributed Web Application Architecture",
+        course: "DEV-101 (v1.2)",
+        type: "Assignment",
+        passMark: "Rubric >= 80/100",
+        rubric: "RUB-101 (Clean Architecture Matrix)",
+        timeLimit: "7 Days",
+        randomization: "N/A",
+        status: "Ready for Review"
+      },
+      {
+        id: "ASM-REV-103",
+        title: "Oral Cadence & Impromptu Speaking Audio Checkpoint",
+        course: "ENG-103 (v2.0)",
+        type: "Voice Activity",
+        passMark: "Rubric >= 75/100 (CEFR B2+)",
+        rubric: "RUB-102 (CEFR Oral Matrix)",
+        timeLimit: "90-120 Seconds",
+        randomization: "Prompt Randomizer",
+        status: "Ready for Review"
+      }
+    ],
+
+    resources: [
+      {
+        id: "RES-REV-101",
+        title: "TypeScript Enterprise Architecture & Design Patterns (PDF Guide)",
+        format: "PDF",
+        size: "4.8 MB",
+        accessLevel: "Enrolled Learners",
+        sha256: "sha256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069",
+        scanStatus: "Clean / Verified by CrowdStrike",
+        status: "Active"
+      },
+      {
+        id: "RES-REV-102",
+        title: "CEFR Spoken English Phonetics Guide & Practice Exercises",
+        format: "PDF + MP3",
+        size: "18.2 MB",
+        accessLevel: "Public Preview Eligible",
+        sha256: "sha256:3a45c908e2bfd60920d3f829f01bc49048a609d81d2834b7f83e2009187e5512",
+        scanStatus: "Clean / Verified",
+        status: "Active"
+      }
+    ],
+
+    auditLogs: [
+      {
+        id: "REV-AUD-101",
+        timestamp: "Today, 11:30 PKT",
+        actor: "Prof. Tariq Mahmood",
+        action: "BLOCKING_CITATION_LOGGED",
+        version: "Modern Full-Stack Web Dev (v1.2)",
+        details: "Logged blocking citation on Lesson 2.1.2 (Auth Reducer sandbox).",
+        priorState: "Draft",
+        newState: "In Review"
+      },
+      {
+        id: "REV-AUD-102",
+        timestamp: "Yesterday, 16:15 PKT",
+        actor: "Prof. Tariq Mahmood",
+        action: "CHANGES_REQUESTED",
+        version: "Spoken English Fluency (v2.0)",
+        details: "Returned to author Sara Javed for phonetic rubric calibration.",
+        priorState: "In Review",
+        newState: "Changes Requested"
+      },
+      {
+        id: "REV-AUD-103",
+        timestamp: "3 days ago",
+        actor: "Prof. Tariq Mahmood",
+        action: "VERSION_ACADEMICALLY_APPROVED",
+        version: "Basic Literacy & Numeracy Foundations (v1.0)",
+        details: "Academic Board signed off on complete syllabus. Handed to Catalogue Owner.",
+        priorState: "In Review",
+        newState: "Approved"
+      }
+    ]
+  },
   
   
   learnerData: {
@@ -9418,11 +9794,24 @@ const RenderEngine = {
     container.classList.remove("hidden");
     container.style.display = "block";
 
+    if (window.ReviewerSync) ReviewerSync.syncSidebarCounts();
+
+    const reviews = db.reviewerData?.reviews || [];
+    const comments = db.reviewerData?.comments || [];
+    const submissions = db.reviewerData?.submissions || [];
+
+    const awaitingCount = reviews.filter(r => r.reviewStage === "Awaiting Review").length;
+    const inReviewCount = reviews.filter(r => r.reviewStage === "In Review").length;
+    const changesCount = reviews.filter(r => r.reviewStage === "Changes Requested").length;
+    const approvedCount = reviews.filter(r => r.reviewStage === "Approved").length;
+    const openBlockingCount = comments.filter(c => c.status === "Open" && c.severity === "Blocking").length;
+    const pendingGradingCount = submissions.filter(s => s.status !== "Accepted").length;
+
     const pipelineStages = [
-      { code: "01. INTAKE", title: "Awaiting Review", desc: "Submitted course versions requiring initial academic evaluation.", count: "1 Version", statusText: "1 Awaiting Audit", icon: "inbox", route: "reviewer-courses-awaiting", badgeClass: "badge-warning" },
-      { code: "02. EVALUATION", title: "Active In Review", desc: "Detailed inspection of syllabus nodes, assessment rubrics, and rules.", count: "1 In Review", statusText: "1 In Inspection", icon: "file-search", route: "reviewer-courses-in-review", badgeClass: "badge-primary" },
-      { code: "03. REVISION", title: "Changes Requested", desc: "Returned to authors with blocking citations awaiting correction.", count: "1 Returned", statusText: "1 Awaiting Author", icon: "alert-triangle", route: "reviewer-courses-changes", badgeClass: "badge-error" },
-      { code: "04. APPROVED", title: "Publication Approved", desc: "Academically approved versions ready for Catalogue Owner release.", count: "2 Approved", statusText: "2 Ready to Publish", icon: "check-circle-2", route: "reviewer-approved-versions", badgeClass: "badge-success" }
+      { code: "01. INTAKE", title: "Awaiting Review", desc: "Submitted course versions requiring initial academic evaluation.", count: `${awaitingCount} Version${awaitingCount !== 1 ? 's' : ''}`, statusText: `${awaitingCount} Awaiting Audit`, icon: "inbox", route: "reviewer-courses-awaiting", badgeClass: "badge-warning" },
+      { code: "02. EVALUATION", title: "Active In Review", desc: "Detailed inspection of syllabus nodes, assessment rubrics, and rules.", count: `${inReviewCount} In Review`, statusText: `${inReviewCount} In Inspection`, icon: "file-search", route: "reviewer-courses-in-review", badgeClass: "badge-primary" },
+      { code: "03. REVISION", title: "Changes Requested", desc: "Returned to authors with blocking citations awaiting correction.", count: `${changesCount} Returned`, statusText: `${changesCount} Awaiting Author`, icon: "alert-triangle", route: "reviewer-courses-changes", badgeClass: "badge-error" },
+      { code: "04. APPROVED", title: "Publication Approved", desc: "Academically approved versions ready for Catalogue Owner release.", count: `${approvedCount} Approved`, statusText: `${approvedCount} Ready to Publish`, icon: "check-circle-2", route: "reviewer-approved-versions", badgeClass: "badge-success" }
     ];
 
     container.innerHTML = `
@@ -9443,10 +9832,10 @@ const RenderEngine = {
             
             <div class="creator-flight-actions">
               <button class="btn btn-secondary btn-sm" onclick="Router.navigate('reviewer-comments-blocking')">
-                <i data-lucide="shield-alert"></i> Blocking Issues (2)
+                <i data-lucide="shield-alert"></i> Blocking Issues (${openBlockingCount})
               </button>
               <button class="btn btn-secondary btn-sm" onclick="Router.navigate('reviewer-grading-queue')">
-                <i data-lucide="check-square"></i> Manual Grading Queue (3)
+                <i data-lucide="check-square"></i> Manual Grading Queue (${pendingGradingCount})
               </button>
               <button class="btn btn-primary btn-sm" onclick="Actions.openReviewerInspectionModal('VER-102')">
                 <i data-lucide="file-search"></i> Inspect v1.2 Draft
@@ -9469,7 +9858,7 @@ const RenderEngine = {
               <div class="chip-icon"><i data-lucide="file-search"></i></div>
               <div class="chip-content">
                 <span>Pending Reviews</span>
-                <strong>2 Versions</strong>
+                <strong>${awaitingCount + inReviewCount} Versions</strong>
                 <small>Within 48h SLA</small>
               </div>
             </div>
@@ -9478,7 +9867,7 @@ const RenderEngine = {
               <div class="chip-icon" style="color:#dc2626; background:#fef2f2; border-color:#fecaca;"><i data-lucide="shield-alert"></i></div>
               <div class="chip-content">
                 <span>Blocking Issues</span>
-                <strong>2 Unresolved</strong>
+                <strong>${openBlockingCount} Unresolved</strong>
                 <small>CAT-010 Strict Guard</small>
               </div>
             </div>
@@ -9506,7 +9895,7 @@ const RenderEngine = {
           <div class="creator-scope-filters">
             <div class="creator-scope-field">
               <label>Review Stream</label>
-              <select id="reviewer-stream-filter" class="form-control">
+              <select id="reviewer-stream-filter" class="form-control" onchange="Notifications.push('Stream Filtered', 'Applied review stream filter: ' + this.value, 'info')">
                 <option value="">All Review Streams (Vocational, Spoken, K-12)</option>
                 <option value="Vocational">Vocational Tech Tracks</option>
                 <option value="Spoken">Spoken English Cohorts</option>
@@ -9515,7 +9904,7 @@ const RenderEngine = {
             </div>
             <div class="creator-scope-field">
               <label>Delivery Model</label>
-              <select id="reviewer-model-filter" class="form-control">
+              <select id="reviewer-model-filter" class="form-control" onchange="Notifications.push('Model Filtered', 'Applied delivery model filter: ' + this.value, 'info')">
                 <option value="">All Delivery Models</option>
                 <option value="Self-Paced Milestone">Self-Paced Milestone</option>
                 <option value="Live Scheduled Cohort">Live Scheduled Cohort</option>
@@ -9524,12 +9913,12 @@ const RenderEngine = {
             </div>
             <div class="creator-scope-field">
               <label>Review Stage</label>
-              <select id="reviewer-stage-filter" class="form-control">
+              <select id="reviewer-stage-filter" class="form-control" onchange="if(this.value){ const routeMap={'Awaiting Review':'reviewer-courses-awaiting', 'In Review':'reviewer-courses-in-review', 'Changes Requested':'reviewer-courses-changes', 'Approved':'reviewer-courses-approved'}; if(routeMap[this.value]) Router.navigate(routeMap[this.value]); }">
                 <option value="">All Stages</option>
-                <option value="Awaiting Review">Awaiting Review</option>
-                <option value="In Review">In Review</option>
-                <option value="Changes Requested">Changes Requested</option>
-                <option value="Approved">Approved</option>
+                <option value="Awaiting Review">Awaiting Review (${awaitingCount})</option>
+                <option value="In Review">In Review (${inReviewCount})</option>
+                <option value="Changes Requested">Changes Requested (${changesCount})</option>
+                <option value="Approved">Approved (${approvedCount})</option>
               </select>
             </div>
             <div class="creator-scope-field">
@@ -9575,10 +9964,10 @@ const RenderEngine = {
                 <h4><i data-lucide="shield-alert" style="color:#dc2626;"></i> Blocking Issues Guard (CAT-010)</h4>
                 <small>Unresolved citations strictly preventing course publication.</small>
               </div>
-              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-comments-blocking')">View all (${db.reviewerData.comments.filter(c => c.status === 'Open' && c.severity === 'Blocking').length})</button>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-comments-blocking')">View all (${openBlockingCount})</button>
             </div>
             <div class="creator-feedback-list">
-              ${db.reviewerData.comments.filter(c => c.severity === 'Blocking').slice(0, 2).map(comm => `
+              ${comments.filter(c => c.severity === 'Blocking').slice(0, 2).map(comm => `
                 <div class="creator-feedback-item blocking">
                   <div class="creator-feedback-meta">
                     <span class="badge badge-error">BLOCKING</span>
@@ -9604,10 +9993,10 @@ const RenderEngine = {
                 <h4><i data-lucide="check-square"></i> Assigned Submission Queue (FLOW-020)</h4>
                 <small>Learner capstones & voice recordings assigned for rubric evaluation.</small>
               </div>
-              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-grading-queue')">View all (${db.reviewerData.submissions.length})</button>
+              <button class="btn btn-secondary btn-xs" onclick="Router.navigate('reviewer-grading-queue')">View all (${submissions.length})</button>
             </div>
             <div class="creator-validation-list">
-              ${db.reviewerData.submissions.slice(0, 2).map(sub => `
+              ${submissions.slice(0, 2).map(sub => `
                 <div class="creator-validation-card ${sub.status === 'Accepted' ? 'pass' : ''}">
                   <div class="creator-val-head">
                     <span class="badge ${sub.status === 'Accepted' ? 'badge-success' : 'badge-primary'}">${sub.status.toUpperCase()}</span>
@@ -9642,6 +10031,8 @@ const RenderEngine = {
 
     const container = document.getElementById("reviewer-workspace-content");
     if (!container) return;
+
+    if (window.ReviewerSync) ReviewerSync.syncSidebarCounts();
 
     const metrics = config.metrics ? config.metrics() : [];
     const rawItems = db.reviewerData[config.dataType] || db.creatorData[config.dataType] || [];
@@ -9687,8 +10078,8 @@ const RenderEngine = {
       customContentHtml = this.renderReviewerK12SchemesCards(records);
     } else {
       customContentHtml = `
-        <div class="table-container">
-          <table>
+        <div class="table-container" style="overflow-x: auto !important; width: 100%;">
+          <table style="min-width: 1100px !important; width: 100%; border-collapse: collapse;">
             <thead>
               ${this.reviewerTableHeaders(config.dataType)}
             </thead>
@@ -9800,7 +10191,7 @@ const RenderEngine = {
 
               <div class="creator-course-footer">
                 <span style="font-size: 11.5px; color: var(--slate);">Readiness: <strong style="${rev.publicationReadiness.includes('Approved') ? 'color:var(--secondary);' : 'color:var(--secondary);'}">${rev.publicationReadiness}</strong></span>
-                <div class="button-row">
+                <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${rev.versionId}')">Inspect Version</button>
                   ${rev.reviewStage !== 'Approved' ? `
                     <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerApprovalModal('${rev.versionId}')">Approve</button>
@@ -9841,7 +10232,7 @@ const RenderEngine = {
 
             <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
               <span>Reviewer: <strong>${comm.reviewer}</strong> · ${comm.date}</span>
-              <div class="button-row">
+              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
                 <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('${comm.versionId}')">Inspect Content Node</button>
                 ${comm.status === 'Open' ? `
                   <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('${comm.id}')">Mark Resolved</button>
@@ -9881,7 +10272,7 @@ const RenderEngine = {
 
             <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
               <span>Rubric Standard: <strong>${sub.rubricId}</strong> · Grader: <strong>${sub.assignedReviewer}</strong></span>
-              <div class="button-row">
+              <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
                 ${sub.status !== 'Accepted' ? `
                   <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerSubmissionModal('${sub.id}')">Evaluate Rubric & Grade</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerRevisionModal('${sub.id}')">Request Revision</button>
@@ -9966,7 +10357,7 @@ const RenderEngine = {
           <td><span class="badge badge-primary">${c.prerequisites || 'None (Open Entry)'}</span></td>
           <td><span class="badge ${c.stage === 'Published' ? 'badge-success' : c.stage === 'Approved' ? 'badge-primary' : 'badge-warning'}">${c.stage || 'In Review'}</span></td>
           <td>
-            <div class="button-row">
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
               <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Inspect Version</button>
               <button class="btn btn-primary btn-xs" onclick="Actions.openReviewerCommentResolutionModal('REV-COM-101')">View Citations</button>
             </div>
@@ -9984,7 +10375,9 @@ const RenderEngine = {
           <td><span class="badge badge-success">✓ Pedagogically Compliant</span></td>
           <td><code>${s.linkedAssessment || s.linkedResource || 'Standard A11y'}</code></td>
           <td>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Inspect Node</button>
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Inspect Node</button>
+            </div>
           </td>
         </tr>
       `).join("");
@@ -9999,7 +10392,9 @@ const RenderEngine = {
           <td><span style="font-size:12px; color:#4a586e;">${r.evaluationEngine || 'Automated Rule Engine'}</span></td>
           <td><span class="badge badge-success">✓ Verified Compliant</span></td>
           <td>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Verify Logic</button>
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Verify Logic</button>
+            </div>
           </td>
         </tr>
       `).join("");
@@ -10014,7 +10409,9 @@ const RenderEngine = {
           <td><strong style="color:var(--secondary);">${q.correctAnswer}</strong></td>
           <td><span class="badge badge-success">✓ 0 Ambiguities Flagged</span></td>
           <td>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Audit Item</button>
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Audit Item</button>
+            </div>
           </td>
         </tr>
       `).join("");
@@ -10029,7 +10426,9 @@ const RenderEngine = {
           <td><code>${a.rubric || 'RUB-101'}</code></td>
           <td><span style="font-size:12px; color:var(--slate);">${a.timeLimit || 'Untimed'} · ${a.randomization || 'Standard'}</span></td>
           <td>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Review Criteria</button>
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-102')">Review Criteria</button>
+            </div>
           </td>
         </tr>
       `).join("");
@@ -10044,7 +10443,9 @@ const RenderEngine = {
           <td><code>${res.sha256}</code></td>
           <td><span class="badge badge-success">${res.scanStatus || 'Clean / Verified'}</span></td>
           <td>
-            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Verified', '${res.title} verified with valid SHA-256 hash.', 'success')">Verify SHA</button>
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+              <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Verified', '${res.title} verified with valid SHA-256 hash.', 'success')">Verify SHA</button>
+            </div>
           </td>
         </tr>
       `).join("");
@@ -10059,7 +10460,9 @@ const RenderEngine = {
           <td><span class="badge badge-success">${k.publicPreview ? 'Public Parent Preview' : 'Gated Preview'}</span></td>
           <td><span class="badge ${k.status && k.status.includes('Live') ? 'badge-success' : 'badge-warning'}">${k.status || 'Approved'}</span></td>
           <td>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">Audit Curriculum</button>
+            <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+              <button class="btn btn-secondary btn-xs" onclick="Actions.openReviewerInspectionModal('VER-104')">Audit Curriculum</button>
+            </div>
           </td>
         </tr>
       `).join("");
@@ -10083,7 +10486,11 @@ const RenderEngine = {
         <td><strong>${item.id || item.title || 'Record'}</strong></td>
         <td>${item.details || item.desc || item.status || '-'}</td>
         <td><span class="badge badge-secondary">${item.status || 'Active'}</span></td>
-        <td><button class="btn btn-secondary btn-xs">View</button></td>
+        <td>
+          <div class="table-actions-row" style="display: inline-flex !important; flex-direction: row !important; flex-wrap: nowrap !important; align-items: center !important; gap: 6px !important; white-space: nowrap !important;">
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Record Inspected', 'Inspecting record: ' + '${item.id || item.title}', 'info')">View</button>
+          </div>
+        </td>
       </tr>
     `).join("");
   },
@@ -35076,12 +35483,99 @@ document.addEventListener("DOMContentLoaded", () => {
       newState: newScore
     });
 
-    Notifications.push("Grade Corrected & Audited", `Score updated to ${newScore}. Historical grade preserved in audit ledger.`, "info");
+    if (window.ReviewerSync) ReviewerSync.syncSidebarCounts();
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
+  };
+
+  Actions.openReviewerRevisionModal = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId) || db.reviewerData.submissions[0];
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Request Assignment Revision (FLOW-020): ${sub.learner}`;
+
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Learner</span><strong>${sub.learner}</strong></div>
+          <div class="om-flow-metric"><span>Assignment</span><strong>${sub.assignment}</strong></div>
+          <div class="om-flow-metric"><span>Rubric Applied</span><strong>${sub.rubricId}</strong></div>
+          <div class="om-flow-metric"><span>Current Status</span><strong>${sub.status}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="border-left-color:#d97706;">
+          <h5><i data-lucide="rotate-ccw"></i> Resubmission Policy (FLOW-020)</h5>
+          <p>Requesting revision permits the learner to push code or audio corrections without wiping submission history or original timestamps.</p>
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label>Specific Corrective Items Required from Learner</label>
+          <textarea id="rev-revision-notes" class="form-control" rows="3" placeholder="Specify exact code modularity, test assertions, or acoustic criteria needing revision..."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.reviewerSubmitRevision('${sub.id}')">Send Revision Request</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.reviewerSubmitRevision = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId);
+    if (!sub) return;
+
+    const notes = document.getElementById("rev-revision-notes")?.value.trim() || "Revision requested on rubric criteria.";
+    sub.status = "Revision Requested";
+    sub.feedback = notes;
+
+    db.reviewerData.auditLogs.unshift({
+      id: "REV-AUD-" + Math.floor(100 + Math.random() * 900),
+      timestamp: new Date().toLocaleTimeString(),
+      actor: "Prof. Tariq Mahmood",
+      action: "SUBMISSION_REVISION_REQUESTED",
+      version: sub.course,
+      details: `Returned submission ${sub.id} to ${sub.learner}. Note: ${notes}`,
+      priorState: "Submitted",
+      newState: "Revision Requested"
+    });
+
+    if (window.ReviewerSync) ReviewerSync.syncSidebarCounts();
+
+    Notifications.push("Revision Requested", `Returned assignment to ${sub.learner} for resubmission.`, "warning");
     document.getElementById("generic-modal").classList.add("hidden");
 
     if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
     else RenderEngine.reviewerWorkspace(Router.currentRoute);
   };
+
+window.ReviewerSync = {
+  syncSidebarCounts() {
+    if (!db.reviewerData) return;
+    const reviews = db.reviewerData.reviews || [];
+    const comments = db.reviewerData.comments || [];
+    const submissions = db.reviewerData.submissions || [];
+
+    const awaiting = reviews.filter(r => r.reviewStage === 'Awaiting Review').length;
+    const inReview = reviews.filter(r => r.reviewStage === 'In Review').length;
+    const changes = reviews.filter(r => r.reviewStage === 'Changes Requested').length;
+    const approved = reviews.filter(r => r.reviewStage === 'Approved').length;
+    const openComments = comments.filter(c => c.status === 'Open').length;
+    const blockingComments = comments.filter(c => c.status === 'Open' && c.severity === 'Blocking').length;
+    const gradingQueue = submissions.filter(s => s.status !== 'Accepted').length;
+
+    document.querySelectorAll('.count-reviewer-awaiting').forEach(el => el.textContent = awaiting);
+    document.querySelectorAll('.count-reviewer-in-review').forEach(el => el.textContent = inReview);
+    document.querySelectorAll('.count-reviewer-changes').forEach(el => el.textContent = changes);
+    document.querySelectorAll('.count-reviewer-approved').forEach(el => el.textContent = approved);
+    document.querySelectorAll('.count-reviewer-comments-open').forEach(el => el.textContent = openComments);
+    document.querySelectorAll('.count-reviewer-blocking').forEach(el => el.textContent = blockingComments);
+    document.querySelectorAll('.count-reviewer-grading-queue').forEach(el => el.textContent = gradingQueue);
+  }
+};
 
   
 // ============================================================================
