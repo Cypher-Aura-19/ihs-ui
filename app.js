@@ -18235,14 +18235,17 @@ const RenderEngine = {
       return `<tr><th>Lead / Contact</th><th>Programme</th><th>Due Date & Time</th><th>Task Type</th><th>History & Next Step</th><th>Status</th><th>Actions</th></tr>`;
     }
     if (dataType === "trials") {
+      if (route === "csr-trials-requests") {
+        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Diagnostic & Consent</th><th>Slot & Timing (PKT)</th><th>Assigned Trainer</th><th>Intake Stage</th><th>Actions</th></tr>`;
+      }
       if (route === "csr-trials-qualification") {
-        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Assessment State</th><th>Diagnostic Score</th><th>Guardian Consent</th><th>Readiness State</th><th>Actions</th></tr>`;
+        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Diagnostic Status</th><th>Placement Score</th><th>Guardian Consent</th><th>Qualification State</th><th>Actions</th></tr>`;
       }
       if (route === "csr-trials-ready") {
-        return `<tr><th>Qualified Prospect / ID</th><th>Programme Track</th><th>Placement Level</th><th>Preferred Slot Window</th><th>Recommended Trainer</th><th>Booking State</th><th>Actions</th></tr>`;
+        return `<tr><th>Qualified Prospect / ID</th><th>Programme Track</th><th>Placement Level</th><th>Preferred Slot Window</th><th>Matched Faculty</th><th>Booking State</th><th>Actions</th></tr>`;
       }
       if (route === "csr-trials-scheduled") {
-        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Scheduled Slot (PKT)</th><th>Assigned Trainer</th><th>Daily.co Room Token</th><th>Reminder State</th><th>Actions</th></tr>`;
+        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Confirmed Slot (PKT)</th><th>Assigned Trainer</th><th>Daily.co Room Token</th><th>Session State</th><th>Actions</th></tr>`;
       }
       if (route === "csr-trials-outcomes") {
         return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Delivered Slot</th><th>Trainer Evaluation</th><th>Learner Attendance</th><th>Conversion Pitch State</th><th>Actions</th></tr>`;
@@ -18489,19 +18492,43 @@ const RenderEngine = {
       }
 
       if (dataType === "trials") {
+        if (route === "csr-trials-requests") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.course}</strong><span class="table-subline">CSR: ${item.csr || 'Sarah Jenkins'}</span></td>
+              <td><span class="badge ${item.placementScore && item.placementScore.includes('Pending') ? 'badge-warning' : 'badge-success'}">${item.placementScore}</span><span class="table-subline">${item.consent}</span></td>
+              <td><strong>${item.slot || 'Flexible Slot (Unassigned)'}</strong></td>
+              <td><strong>${item.trainer || 'Faculty TBD'}</strong></td>
+              <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">${item.outcome}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  ${item.status === 'Qualification' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrRecordPlacementScoreModal('${item.id}')"><i data-lucide="award"></i> Record Score</button><button class="btn btn-secondary btn-xs" onclick="Actions.openCsrSendPlacementLink('${item.id}')"><i data-lucide="send"></i> Send Link</button>` : ''}
+                  ${item.status === 'Ready for Scheduling' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar-plus"></i> Book Slot</button><button class="btn btn-secondary btn-xs" onclick="Actions.fastTrackTrialBooking('${item.id}')"><i data-lucide="zap"></i> Fast-Track</button>` : ''}
+                  ${item.status === 'Scheduled' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="check-circle"></i> Record Outcome</button><button class="btn btn-secondary btn-xs" onclick="Actions.openCsrJoinTrialRoom('${item.room || 'https://ihs.daily.co/trial-' + item.id.toLowerCase()}')"><i data-lucide="video"></i> Join Room</button>` : ''}
+                  ${item.status === 'Completed' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrConvertToEnrolment('${item.id}')"><i data-lucide="shopping-cart"></i> Enrol</button>` : ''}
+                  ${item.status === 'No-Show' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrRescheduleTrialModal('${item.id}')"><i data-lucide="calendar"></i> Re-book</button>` : ''}
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         if (route === "csr-trials-qualification") {
           return `
             <tr>
               <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
               <td><strong>${item.course}</strong></td>
-              <td>${item.placementScore.includes("Pending") ? `<span class="badge badge-warning">Awaiting Diagnostic</span>` : `<span class="badge badge-success">Evaluated</span>`}</td>
+              <td>${item.placementScore.includes("Pending") ? `<span class="badge badge-warning">Awaiting Diagnostic</span>` : `<span class="badge badge-success">Completed</span>`}</td>
               <td><strong>${item.placementScore}</strong></td>
-              <td><span class="badge badge-outline">${item.consent}</span></td>
+              <td><span class="badge ${item.consent && item.consent.includes('Verified') ? 'badge-success' : 'badge-warning'}">${item.consent}</span></td>
               <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">${item.outcome}</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                  ${item.placementScore.includes("Pending") ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrSendPlacementLink('${item.id}')"><i data-lucide="send"></i> Send Link</button>` : ''}
                   <button class="btn btn-primary btn-xs" onclick="Actions.openCsrRecordPlacementScoreModal('${item.id}')"><i data-lucide="award"></i> Record Score</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrSendPlacementLink('${item.id}')"><i data-lucide="send"></i> Send Quiz Link</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.fastTrackTrialBooking('${item.id}')"><i data-lucide="zap"></i> Fast-Track</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
                 </div>
               </td>
@@ -18515,12 +18542,12 @@ const RenderEngine = {
               <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
               <td><strong>${item.course}</strong></td>
               <td><span class="badge badge-success">${item.placementScore}</span><span class="table-subline">Consent: ${item.consent}</span></td>
-              <td><strong>${item.slot || 'Flexible PKT Slot'}</strong></td>
-              <td><strong>${item.trainer || 'Auto-match Faculty'}</strong></td>
+              <td><strong>${item.slot || 'Flexible Evening (17:00+ PKT)'}</strong></td>
+              <td><strong>${item.trainer || 'Ustadh Bilal (Auto-match)'}</strong></td>
               <td><span class="badge badge-warning">Ready for Booking</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar-plus"></i> Book Slot</button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar-plus"></i> Book Trial Slot</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="file-text"></i> Lead File</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
                 </div>
@@ -18539,11 +18566,14 @@ const RenderEngine = {
               <td>
                 ${item.room ? `<a href="javascript:void(0)" onclick="Actions.openCsrJoinTrialRoom('${item.room}')" class="font-mono text-xs" style="color:var(--teal-primary); font-weight:600;"><i data-lucide="video" style="width:12px;height:12px;display:inline-block;vertical-align:middle;"></i> Token Active</a>` : `<span class="badge badge-secondary">Pending</span>`}
               </td>
-              <td><span class="badge badge-success">Dispatched</span></td>
+              <td><span class="badge badge-success">${item.attendance || 'Confirmed'}</span><span class="table-subline">Reminders Dispatched</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrJoinTrialRoom('${item.room || 'https://ihs.daily.co/trial-' + item.id.toLowerCase()}')"><i data-lucide="video"></i> Join Room</button>
                   <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="check-circle"></i> Record Outcome</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.sendCsrTrialReminder('${item.id}')"><i data-lucide="bell"></i> Send Reminder</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrReassignTrainerModal('${item.id}')"><i data-lucide="user-check"></i> Re-assign</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrRescheduleTrialModal('${item.id}')"><i data-lucide="calendar"></i> Reschedule</button>
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
                 </div>
               </td>
@@ -18558,11 +18588,11 @@ const RenderEngine = {
               <td><strong>${item.course}</strong></td>
               <td>${item.slot}</td>
               <td><strong>${item.outcome}</strong><span class="table-subline">Trainer: ${item.trainer}</span></td>
-              <td><span class="badge ${item.attendance.includes('Absent') ? 'badge-error' : 'badge-success'}">${item.attendance}</span></td>
+              <td><span class="badge ${item.attendance.includes('Absent') || item.status === 'No-Show' ? 'badge-error' : 'badge-success'}">${item.attendance}</span></td>
               <td><span class="badge ${badgeClass}">${item.status}</span></td>
               <td>
                 <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                  ${item.status === 'Completed' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrDirectCheckout('${item.leadId}')"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>` : `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="edit"></i> Update Outcome</button>`}
+                  ${item.status === 'Completed' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrConvertToEnrolment('${item.id}')"><i data-lucide="shopping-cart"></i> Assisted Checkout</button><button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrialSummaryModal('${item.id}')"><i data-lucide="file-text"></i> Summary</button>` : `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrRescheduleTrialModal('${item.id}')"><i data-lucide="rotate-ccw"></i> Re-book Trial</button><button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="edit"></i> Update Outcome</button>`}
                   <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
                 </div>
               </td>
@@ -29154,6 +29184,254 @@ document.addEventListener("DOMContentLoaded", () => {
 
     Actions.audit("CSR_TRIAL_REMINDER_SENT", `Dispatched automated multi-channel trial session reminder to ${trial.prospect} (${trial.id}) for slot ${trial.slot}.`, "Low");
     Notifications.push("Reminder Dispatched", `Session reminder with Daily.co link sent to ${trial.prospect} & ${trial.trainer}.`, "success");
+  };
+
+  Actions.fastTrackTrialBooking = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    trial.placementScore = "88/100 (Fast-Track Qualified)";
+    trial.consent = "Verified (Direct Fast-Track)";
+    trial.status = "Ready for Scheduling";
+    trial.outcome = "Fast-Tracked to Slot Booking";
+
+    const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+    if (lead) {
+      lead.stage = "Trial Ready";
+      lead.score = 90;
+    }
+
+    Actions.audit("CSR_TRIAL_FAST_TRACK", `Fast-tracked qualification for ${trial.prospect} (${trial.id}). Moved to Ready for Scheduling.`, "Low");
+    Notifications.push("Fast-Track Complete", `${trial.prospect} is now qualified. Opening slot booking modal...`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+
+    // Auto-open scheduling modal
+    setTimeout(() => {
+      Actions.openCsrScheduleTrialModal(trial.id);
+    }, 400);
+  };
+
+  Actions.openCsrReassignTrainerModal = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Re-assign Trainer: ${trial.prospect} (${trial.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="user-check"></i>
+          <div>
+            <strong>FLOW-007 FACULTY RE-ALLOCATION & CONFLICT RESOLUTION</strong>
+            <p>Re-assign certified faculty member for live trial session without affecting student slot timing.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>${trial.course}</small></div>
+          <div class="om-flow-metric"><span>Current Trainer</span><strong>${trial.trainer || 'Unassigned'}</strong></div>
+          <div class="om-flow-metric"><span>Slot Timing</span><strong>${trial.slot}</strong></div>
+          <div class="om-flow-metric"><span>Room Token</span><strong>${trial.room ? 'Active' : 'Pending'}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Select New Certified Faculty Trainer *</label>
+          <select id="csr-reassign-trainer-select" class="form-control">
+            <option value="Dr. Tariq Mahmood" ${trial.trainer === 'Dr. Tariq Mahmood' ? 'selected' : ''}>Dr. Tariq Mahmood — Senior Hifz & Tajweed Specialist (5/5)</option>
+            <option value="Ustadh Bilal" ${trial.trainer === 'Ustadh Bilal' ? 'selected' : ''}>Ustadh Bilal — Foundations Coach (4.9/5)</option>
+            <option value="Hafiz Usman" ${trial.trainer === 'Hafiz Usman' ? 'selected' : ''}>Hafiz Usman — Nazra & Tajweed Master (4.8/5)</option>
+            <option value="Ayesha Khan" ${trial.trainer === 'Ayesha Khan' ? 'selected' : ''}>Ayesha Khan — Female Faculty Lead (5/5)</option>
+            <option value="Zainab Raza" ${trial.trainer === 'Zainab Raza' ? 'selected' : ''}>Zainab Raza — Female Faculty Specialist (4.9/5)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Reason for Faculty Re-assignment *</label>
+          <select id="csr-reassign-reason-select" class="form-control">
+            <option value="Trainer Schedule Conflict">Trainer Schedule Conflict / Duty Overlap</option>
+            <option value="Student Gender Preference">Student / Parent Gender Preference (Female Faculty)</option>
+            <option value="Language / Dialect Match">Language / Dialect Compatibility (Urdu / English)</option>
+            <option value="Senior Specialist Required">Advanced Syllabus Requires Senior Specialist</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCsrReassignTrainer('${trial.id}')"><i data-lucide="check-circle"></i> Save Faculty Assignment</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCsrReassignTrainer = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const newTrainer = document.getElementById("csr-reassign-trainer-select")?.value || "Ustadh Bilal";
+    const reason = document.getElementById("csr-reassign-reason-select")?.value || "Trainer Schedule Conflict";
+
+    const oldTrainer = trial.trainer;
+    trial.trainer = newTrainer;
+
+    Actions.audit("CSR_TRAINER_REASSIGNED", `Re-assigned trial ${trial.id} for ${trial.prospect} from ${oldTrainer} to ${newTrainer}. Reason: ${reason}`, "Low");
+    Notifications.push("Trainer Re-assigned", `Session reassigned to ${newTrainer}. Calendar invitations updated.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrRescheduleTrialModal = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Reschedule Trial Session: ${trial.prospect} (${trial.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="calendar"></i>
+          <div>
+            <strong>FLOW-007 TRIAL RECOVERY & RESCHEDULING ENGINE</strong>
+            <p>Select a new verified timeslot and update session provisioning.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>${trial.course}</small></div>
+          <div class="om-flow-metric"><span>Previous Slot</span><strong class="error-text">${trial.slot}</strong></div>
+          <div class="om-flow-metric"><span>Current Status</span><strong>${trial.status}</strong></div>
+          <div class="om-flow-metric"><span>Faculty</span><strong>${trial.trainer}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Select New Trial Slot (PKT) *</label>
+          <select id="csr-resched-trial-slot-select" class="form-control">
+            <option value="Tomorrow at 16:00 PKT">Tomorrow at 16:00 PKT</option>
+            <option value="Tomorrow at 18:30 PKT" selected>Tomorrow at 18:30 PKT (Evening Prime)</option>
+            <option value="Tomorrow at 20:30 PKT">Tomorrow at 20:30 PKT</option>
+            <option value="In 2 Days at 15:00 PKT">In 2 Days at 15:00 PKT</option>
+            <option value="In 2 Days at 17:30 PKT">In 2 Days at 17:30 PKT</option>
+            <option value="In 3 Days at 19:00 PKT">In 3 Days at 19:00 PKT</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Reschedule Notes & Guardian Communication *</label>
+          <textarea id="csr-resched-trial-notes" class="form-control" rows="2" placeholder="Contacted parent via WhatsApp. Parent confirmed new evening slot and requested Zoom/Daily link 15 minutes prior."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCsrRescheduleTrial('${trial.id}')"><i data-lucide="check-circle"></i> Confirm New Slot & Update Session</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCsrRescheduleTrial = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const newSlot = document.getElementById("csr-resched-trial-slot-select")?.value || "Tomorrow at 18:30 PKT";
+    const notes = document.getElementById("csr-resched-trial-notes")?.value || "Rescheduled per parent request.";
+
+    const prevSlot = trial.slot;
+    trial.slot = newSlot;
+    trial.status = "Scheduled";
+    trial.attendance = "Rescheduled";
+    trial.outcome = "Rescheduled for Live Delivery";
+    trial.notes = notes;
+    if (!trial.room) {
+      trial.room = `https://ihs.daily.co/trial-${trial.id.toLowerCase()}-${Date.now().toString().slice(-4)}`;
+    }
+
+    const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+    if (lead) {
+      lead.stage = "Trial Scheduled";
+      lead.preferredSlot = newSlot;
+    }
+
+    Actions.audit("CSR_TRIAL_RESCHEDULED", `Rescheduled trial ${trial.id} for ${trial.prospect} from ${prevSlot} to ${newSlot}.`, "Medium");
+    Notifications.push("Trial Rescheduled", `New slot confirmed for ${trial.prospect} at ${newSlot}. Notifications sent.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrTrialSummaryModal = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Trial Evaluation & Session Summary: ${trial.prospect}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="award" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">COMPLETED TRIAL SESSION EVALUATION (CSR-007 / FLOW-007)</strong>
+            <p style="color:#166534;">Verified learner attendance, faculty diagnostic notes, and conversion proposal.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect Name</span><strong>${trial.prospect}</strong><small>${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Programme Track</span><strong>${trial.course}</strong></div>
+          <div class="om-flow-metric"><span>Delivered Slot</span><strong>${trial.slot}</strong></div>
+          <div class="om-flow-metric"><span>Trainer Rating</span><strong>${trial.trainer} (5/5)</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="margin-top:12px;">
+          <h5><i data-lucide="clipboard-check"></i> Faculty Diagnostic Findings</h5>
+          <p><strong>Evaluation:</strong> ${trial.outcome || 'Learner showed excellent engagement and grasp of introductory tajweed rules. High conversion likelihood.'}</p>
+          <p><strong>Recommended Membership:</strong> 1:1 Live Interactive (Monthly) — 3 classes/week (PKR 18,000 / mo)</p>
+          <p><strong>Cloud Recording:</strong> <a href="javascript:void(0)" class="font-mono text-xs" style="color:var(--teal-primary);">https://rec.daily.co/archive/session-${trial.id.toLowerCase()}</a></p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Summary</button>
+      <button class="btn btn-primary" onclick="Actions.openCsrConvertToEnrolment('${trial.id}')"><i data-lucide="shopping-cart"></i> Proceed to Assisted Checkout</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrConvertToEnrolment = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    let existing = (db.csrData.enrolments || []).find(e => e.leadId === trial.leadId);
+    if (!existing) {
+      const newEnrId = "AEN-" + (700 + (db.csrData.enrolments || []).length + 1);
+      db.csrData.enrolments.unshift({
+        id: newEnrId,
+        leadId: trial.leadId,
+        prospect: trial.prospect,
+        programme: trial.course,
+        membership: "1:1 Live Interactive (Monthly)",
+        amount: "PKR 18,000 / mo",
+        paymentStatus: "Conversion Pitch Dispatched",
+        csr: "Sarah Jenkins",
+        attribution: "Sarah Jenkins (100%)",
+        status: "Conversion Opportunity"
+      });
+    }
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Actions.audit("CSR_CONVERT_ENROLMENT", `Initiated assisted enrolment for ${trial.prospect} (${trial.id}) into Hub 4.`, "Medium");
+    Notifications.push("Assisted Checkout Ready", `Assisted enrolment order created for ${trial.prospect}. Navigating to Hub 4...`, "success");
+
+    Router.navigate("csr-enrolments-opportunities");
   };
 
   Actions.openCsrBatchProvisionModal = function() {
