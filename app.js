@@ -12692,30 +12692,524 @@ const RenderEngine = {
 
   renderCreatorLevelsLadder() {
     const curCourse = LearnerCurriculum.getActiveCourse();
+    const levels = [
+      {
+        id: "LVL-101",
+        code: "Level 1",
+        title: "Web Architecture & DOM Foundations",
+        targetRole: "Junior Frontend Associate",
+        effort: "6 Weeks (48 Hours)",
+        milestonesCount: 2,
+        milestones: ["MILE-001 (Web Architecture)", "MILE-002 (React 19 & State)"],
+        lessonsCount: 10,
+        prerequisite: "None (Open Entry Point)",
+        completionRule: "100% Milestone Completion + 80% Min Quiz Score",
+        credentialAward: "Foundations Level Credential (SHA-256 Verified)",
+        status: "Draft (In Authoring)"
+      },
+      {
+        id: "LVL-201",
+        code: "Level 2",
+        title: "Backend Microservices & PostgreSQL Engine",
+        targetRole: "Full-Stack Software Engineer",
+        effort: "8 Weeks (64 Hours)",
+        milestonesCount: 1,
+        milestones: ["MILE-003 (REST/GraphQL Gateways & SQL Engine)"],
+        lessonsCount: 8,
+        prerequisite: "Requires LVL-101 Verified Certificate",
+        completionRule: "85% Min Grade on API Benchmark + Schema Sign-off",
+        credentialAward: "Backend Specialist Credential",
+        status: "Draft (In Authoring)"
+      },
+      {
+        id: "LVL-301",
+        code: "Level 3",
+        title: "Distributed Systems & Cloud Production Capstone",
+        targetRole: "Cloud Solutions Architect",
+        effort: "4 Weeks (32 Hours)",
+        milestonesCount: 1,
+        milestones: ["MILE-004 (Docker, CI/CD & Capstone Defense)"],
+        lessonsCount: 4,
+        prerequisite: "Requires LVL-201 Backend Specialist Certificate",
+        completionRule: "100% Unit Completion + Live Project Defense Sign-off",
+        credentialAward: "Full-Stack Cloud Software Engineer Credential",
+        status: "Draft (In Authoring)"
+      }
+    ];
+
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Hierarchy & Tiers (CAT-001)</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Level Proficiency Ladder & Milestone Roadmap</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="layers"></i> CAT-001 / CAT-006</span>
+              <span class="badge badge-secondary">${curCourse.code} · ${curCourse.deliveryModel}</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Level Proficiency Ladder & Tier Progression Studio</h3>
           </div>
-          <div class="button-row" style="display: flex; gap: 8px;">
-            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorEditRulesModal('RUL-601')"><i data-lucide="shield"></i> Prerequisite Rules</button>
-            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-lessons')"><i data-lucide="play-circle"></i> Lesson Runner</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorEditRulesModal('RUL-601')"><i data-lucide="shield"></i> Prerequisite Logic</button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorAddLevelModal()"><i data-lucide="plus"></i> + Add Level Tier</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-lessons')"><i data-lucide="play-circle"></i> Open in Odin Runner</button>
           </div>
         </div>
 
-        ${LearnerCurriculum.renderMilestonePath(curCourse)}
+        <!-- Level Ladder Cards Grid -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${levels.map((lvl, idx) => `
+            <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font: 800 18px/1 'Space Grotesk', sans-serif; color: var(--primary); background: #fdfbf7; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(124,119,102,0.2);">${lvl.code}</span>
+                  <div>
+                    <h3 style="font: 700 17px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 3px 0;">${lvl.title}</h3>
+                    <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate);">
+                      <span style="font-family: monospace;">ID: ${lvl.id}</span>
+                      <span>·</span>
+                      <span style="color:#166534; font-weight:600;"><i data-lucide="target" style="width:12px; height:12px;"></i> Target Role: ${lvl.targetRole}</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="badge badge-warning">${lvl.status}</span>
+                  <span class="badge badge-primary">${lvl.milestonesCount} Milestones</span>
+                </div>
+              </div>
+
+              <!-- Level Metadata Grid -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.14); border-radius: 10px; padding: 14px 18px; font-size: 12px;">
+                <div>
+                  <label style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 3px;">Pacing & Effort</label>
+                  <strong style="color: var(--navy-medium); font-size: 13px;">${lvl.effort}</strong>
+                </div>
+                <div>
+                  <label style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 3px;">Prerequisite Gate</label>
+                  <span class="badge ${lvl.prerequisite.includes('None') ? 'badge-success' : 'badge-secondary'}" style="font-size: 11px;">${lvl.prerequisite}</span>
+                </div>
+                <div>
+                  <label style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 3px;">Mastery Threshold</label>
+                  <strong style="color: #166534; font-size: 12px;">${lvl.completionRule}</strong>
+                </div>
+                <div>
+                  <label style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 3px;">Verifiable Credential</label>
+                  <strong style="color: var(--primary); font-size: 12px;"><i data-lucide="award" style="width:12px; height:12px;"></i> ${lvl.credentialAward}</strong>
+                </div>
+              </div>
+
+              <!-- Child Milestones Preview -->
+              <div>
+                <strong style="font-size: 12px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px;">Included Milestones:</strong>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  ${lvl.milestones.map(m => `
+                    <span class="badge badge-secondary" style="padding: 6px 10px; font-size: 11.5px; background: #ffffff; border: 1px solid #d7c9b1; color: var(--navy-medium);">
+                      <i data-lucide="flag" style="width: 12px; height: 12px; color: var(--primary);"></i> ${m}
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Level Footer Actions -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12); flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorEditLevelModal('${lvl.id}')">
+                    <i data-lucide="edit-3"></i> Edit Tier
+                  </button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddMilestoneModal('${lvl.id}')">
+                    <i data-lucide="plus"></i> + Add Milestone to ${lvl.code}
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-syllabus-milestones')">
+                    <i data-lucide="flag"></i> View Milestones Roadmap
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">
+                    <i data-lucide="play"></i> Test Level in Runner
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
       </div>
     `;
   },
 
   renderCreatorMilestonesRoadmap() {
-    return this.renderCreatorLevelsLadder();
+    const curCourse = LearnerCurriculum.getActiveCourse();
+    const milestones = [
+      {
+        id: "MILE-001",
+        code: "Milestone 1",
+        title: "Web Architecture & DOM Foundations",
+        level: "Level 1: Foundations",
+        duration: "2 Weeks (16 Hours)",
+        unitsCount: 4,
+        gatekeeperQuiz: "QZ-201 (DOM Fundamentals Quiz)",
+        passThreshold: "80% Pass Required to Unlock M2",
+        retryPolicy: "Max 3 Attempts · 24-Hour Cooldown",
+        evaluationEngine: "Automated Assertion + Lint Check",
+        rewardTitle: "Milestone 1 Verification Badge",
+        shaToken: "sha256-8ef3092a47e1bc8942",
+        status: "Draft (In Authoring)",
+        lessons: [
+          { name: "Lesson 1: Semantic Structure & Accessibility (A11y)", format: "Guide", badge: "Textbook", time: "45m" },
+          { name: "Lesson 2: Advanced CSS Grid & Flexbox Systems", format: "Sandbox IDE", badge: "Monaco Lab", time: "60m" },
+          { name: "Lesson 3: DOM Tree & Event Delegation Gatekeeper", format: "Quiz", badge: "Gatekeeper Quiz", time: "30m" },
+          { name: "Lesson 4: Oral Introduction & Communication Task", format: "Voice", badge: "Spoken Task", time: "20m" }
+        ]
+      },
+      {
+        id: "MILE-002",
+        code: "Milestone 2",
+        title: "React 19 & Component Architecture",
+        level: "Level 1: Foundations",
+        duration: "3 Weeks (24 Hours)",
+        unitsCount: 6,
+        gatekeeperQuiz: "QZ-202 (React 19 State Quiz) + ASN-301 Task",
+        passThreshold: "70% Quiz Pass + Academic Sign-off",
+        retryPolicy: "Max 2 Attempts · Reviewer Feedback",
+        evaluationEngine: "Automated Jest + Peer Review Check",
+        rewardTitle: "Frontend Specialist Certificate",
+        shaToken: "sha256-4401fe982b13c77102",
+        status: "Draft (In Authoring)",
+        lessons: [
+          { name: "Lesson 5: State Machines & Custom React Hooks", format: "Video", badge: "1080p Video", time: "75m" },
+          { name: "Lesson 6: React Server Components & Streaming", format: "Sandbox IDE", badge: "Monaco Lab", time: "90m" },
+          { name: "Lesson 7: Responsive Dashboard Capstone Project", format: "Assignment", badge: "Rubric Project", time: "120m" }
+        ]
+      },
+      {
+        id: "MILE-003",
+        code: "Milestone 3",
+        title: "Node.js Microservices & PostgreSQL Engine",
+        level: "Level 2: Backend Architecture",
+        duration: "4 Weeks (32 Hours)",
+        unitsCount: 8,
+        gatekeeperQuiz: "API Benchmark Test + Capstone Database Schema",
+        passThreshold: "85% Min Grade on Query Optimization",
+        retryPolicy: "Max 3 Attempts",
+        evaluationEngine: "Docker Test Runner + Schema Assertion",
+        rewardTitle: "Backend Architecture Badge",
+        shaToken: "sha256-78bc210091aa331289",
+        status: "Draft (In Authoring)",
+        lessons: [
+          { name: "Lesson 8: REST & GraphQL API Gateways", format: "Guide", badge: "API Guide", time: "60m" },
+          { name: "Lesson 9: PostgreSQL Indexing & Query Optimization", format: "Sandbox IDE", badge: "Monaco Lab", time: "90m" }
+        ]
+      },
+      {
+        id: "MILE-004",
+        code: "Milestone 4",
+        title: "Cloud CI/CD & Production Capstone Defense",
+        level: "Level 3: Distributed Systems",
+        duration: "3 Weeks (24 Hours)",
+        unitsCount: 4,
+        gatekeeperQuiz: "Full-Stack Production Capstone Live Defense",
+        passThreshold: "100% Completion + Peer Review Sign-off",
+        retryPolicy: "1 Revision Window",
+        evaluationEngine: "Live Examiner Rubric Evaluation",
+        rewardTitle: "Full-Stack Software Engineer Credential",
+        shaToken: "sha256-99ff2288334411ee67",
+        status: "Draft (In Authoring)",
+        lessons: [
+          { name: "Lesson 10: Docker Containers & Cloud Deployment", format: "Video", badge: "Video Masterclass", time: "60m" },
+          { name: "Lesson 11: Full-Stack Production Capstone Defense", format: "Voice / Defense", badge: "Oral Defense", time: "120m" }
+        ]
+      }
+    ];
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-success"><i data-lucide="flag"></i> MILE-001 / FLOW-019</span>
+              <span class="badge badge-secondary">${curCourse.code} · ${curCourse.deliveryModel}</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Milestone Progression Roadmap & Gatekeeper Verification Timeline</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorAddMilestoneModal()"><i data-lucide="plus"></i> + Add Milestone</button>
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-assessments-quizzes')"><i data-lucide="help-circle"></i> Question Bank</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-lessons')"><i data-lucide="play-circle"></i> Open in Odin Runner</button>
+          </div>
+        </div>
+
+        <!-- Milestones Flow Grid -->
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          ${milestones.map((m, idx) => `
+            <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font: 800 18px/1 'Space Grotesk', sans-serif; color: var(--primary); background: #fdfbf7; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(124,119,102,0.2);">${m.id}</span>
+                  <div>
+                    <h3 style="font: 700 17px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 3px 0;">${m.title}</h3>
+                    <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate);">
+                      <span class="badge badge-primary" style="font-size: 10px;">${m.level}</span>
+                      <span>·</span>
+                      <span>${m.duration} · ${m.unitsCount} Units</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="badge badge-warning">${m.status}</span>
+                </div>
+              </div>
+
+              <!-- Gatekeeper & Verifiable Award Two-Column Box -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <!-- Gatekeeper Rule Box -->
+                <div style="background: #fffdfa; border: 1px solid #e7dfd3; border-radius: 10px; padding: 14px 16px;">
+                  <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                    <i data-lucide="shield-check" style="width: 15px; height: 15px; color: #b45309;"></i>
+                    <strong style="font-size: 12px; text-transform: uppercase; color: var(--navy-medium); letter-spacing: 0.04em;">Unlock Gatekeeper Rule (FLOW-019)</strong>
+                  </div>
+                  <p style="margin: 0 0 6px 0; font-size: 12px; color: #166534; font-weight: 700;">
+                    ${m.passThreshold}
+                  </p>
+                  <div style="font-size: 11.5px; color: #5a687c; display: flex; flex-direction: column; gap: 3px;">
+                    <span><strong>Assessment:</strong> ${m.gatekeeperQuiz}</span>
+                    <span><strong>Attempt Policy:</strong> ${m.retryPolicy}</span>
+                    <span><strong>Engine:</strong> ${m.evaluationEngine}</span>
+                  </div>
+                </div>
+
+                <!-- Verifiable Credential Box -->
+                <div style="background: #fdfbf7; border: 1px dashed #d7c9b1; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; justify-content: space-between;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                      <i data-lucide="award" style="width: 16px; height: 16px; color: #b45309;"></i>
+                      <strong style="font-size: 12px; text-transform: uppercase; color: var(--navy-medium); letter-spacing: 0.04em;">Verifiable Milestone Credential</strong>
+                    </div>
+                    <strong style="font-size: 13px; color: var(--navy-medium); display: block; margin-bottom: 4px;">${m.rewardTitle}</strong>
+                    <span style="font-family: monospace; font-size: 11px; color: var(--slate);">SHA-256 Token: ${m.shaToken}</span>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: 8px;">
+                    <span class="badge badge-success" style="font-size: 9.5px;">✓ Academic Board Verified</span>
+                    <span class="badge badge-secondary" style="font-size: 9.5px;">No In-Place Drift</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lesson Units Chips -->
+              <div>
+                <strong style="font-size: 12px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Units & Content Architecture:</strong>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                  ${m.lessons.map(l => `
+                    <div style="padding: 8px 12px; background: #faf8f5; border: 1px solid rgba(124, 119, 102, 0.16); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 11.5px;">
+                      <div>
+                        <strong style="color: var(--navy-medium); display: block;">${l.name}</strong>
+                        <small style="color: var(--slate);">${l.time}</small>
+                      </div>
+                      <span class="badge badge-primary" style="font-size: 9.5px;">${l.badge}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Milestone Action Buttons -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12); flex-wrap: wrap; gap: 8px;">
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorEditMilestoneModal('${m.id}')">
+                    <i data-lucide="edit"></i> Edit Milestone
+                  </button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorGatekeeperConfigModal('${m.id}')">
+                    <i data-lucide="shield-check"></i> Configure Gatekeeper
+                  </button>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-syllabus-modules')">
+                    <i data-lucide="folder-tree"></i> View Modules Breakdown
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">
+                    <i data-lucide="play"></i> Open in Odin Runner
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
   },
 
   renderCreatorModulesStudio() {
-    return this.renderCreatorLevelsLadder();
+    const curCourse = LearnerCurriculum.getActiveCourse();
+    const modules = [
+      {
+        id: "MOD-101",
+        code: "Module 1.1",
+        title: "Semantic HTML5 & A11y Standards",
+        milestone: "Milestone 1: Web Architecture & DOM",
+        level: "Level 1: Foundations",
+        duration: "105 Mins",
+        unitsCount: 2,
+        resources: ["RES-101 (Semantic HTML5 Blueprint PDF)"],
+        units: [
+          { index: 1, title: "1. Semantic Structure & Accessibility (A11y)", format: "Textbook Guide", type: "text", duration: "45 Mins", rule: "Read 100%", status: "Draft (Editable)" },
+          { index: 2, title: "2. DOM Fundamentals & A11y Gatekeeper Quiz", format: "Gatekeeper Quiz (QZ-201)", type: "quiz", duration: "30 Mins", rule: "Score >= 80%", status: "Draft (Editable)" }
+        ]
+      },
+      {
+        id: "MOD-102",
+        code: "Module 1.2",
+        title: "Advanced CSS Grid & Modern Tokens",
+        milestone: "Milestone 1: Web Architecture & DOM",
+        level: "Level 1: Foundations",
+        duration: "120 Mins",
+        unitsCount: 2,
+        resources: ["RES-102 (CSS Grid Reference Sheet PDF)"],
+        units: [
+          { index: 3, title: "3. CSS Grid Browser Monaco IDE Lab", format: "Monaco Codelab & Jest", type: "codelab", duration: "60 Mins", rule: "All 2 Assertions Pass", status: "Draft (Editable)" },
+          { index: 4, title: "4. Responsive Operations Dashboard Task", format: "Capstone Task (ASN-301)", type: "project", duration: "60 Mins", rule: "Rubric Review Sign-off", status: "Draft (Editable)" }
+        ]
+      },
+      {
+        id: "MOD-201",
+        code: "Module 2.1",
+        title: "React State Machines & Server Components",
+        milestone: "Milestone 2: React 19 Architecture",
+        level: "Level 1: Foundations",
+        duration: "165 Mins",
+        unitsCount: 2,
+        resources: ["RES-103 (React 19 Architecture Video & Diagram)"],
+        units: [
+          { index: 5, title: "5. State Machines & Custom React Hooks", format: "1080p Video Masterclass", type: "video", duration: "75 Mins", rule: "Watch >= 90%", status: "Draft (Editable)" },
+          { index: 6, title: "6. React 19 State & RSC Gatekeeper Quiz", format: "Gatekeeper Quiz (QZ-202)", type: "quiz", duration: "45 Mins", rule: "Score >= 70%", status: "Draft (Editable)" }
+        ]
+      },
+      {
+        id: "MOD-301",
+        code: "Module 3.1",
+        title: "Node.js Microservices & PostgreSQL Engine",
+        milestone: "Milestone 3: Backend Architecture",
+        level: "Level 2: Backend Architecture",
+        duration: "150 Mins",
+        unitsCount: 2,
+        resources: ["RES-104 (PostgreSQL Indexing Guide)"],
+        units: [
+          { index: 7, title: "7. REST & GraphQL API Gateways", format: "Textbook Guide & API Demo", type: "text", duration: "60 Mins", rule: "Read 100%", status: "Draft (Editable)" },
+          { index: 8, title: "8. PostgreSQL Indexing & Query Sandbox", format: "Monaco Codelab", type: "codelab", duration: "90 Mins", rule: "Benchmark < 50ms", status: "Draft (Editable)" }
+        ]
+      }
+    ];
+
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="folder-tree"></i> CAT-006 / FRS 4.8.1</span>
+              <span class="badge badge-secondary">${curCourse.code} · ${curCourse.deliveryModel}</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">5-Tier Modules & Units Syllabus Studio</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorAddModuleModal()"><i data-lucide="plus"></i> + Add Module</button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorAddLessonModal()"><i data-lucide="file-plus"></i> + Add Content Unit</button>
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorUploadResourceModal()"><i data-lucide="upload"></i> Attach Resource</button>
+            <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-lessons')"><i data-lucide="play-circle"></i> Open in Odin Runner</button>
+          </div>
+        </div>
+
+        <!-- Modules List -->
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          ${modules.map(mod => `
+            <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 20px 24px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
+              <!-- Module Header -->
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font: 800 16px/1 'Space Grotesk', sans-serif; color: var(--primary); background: #fdfbf7; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(124,119,102,0.2);">${mod.code}</span>
+                  <div>
+                    <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 2px 0;">${mod.title}</h3>
+                    <div style="display:flex; align-items:center; gap:8px; font-size:12px; color:var(--slate);">
+                      <span class="badge badge-secondary" style="font-size:9.5px;">${mod.level}</span>
+                      <span>➔</span>
+                      <span>${mod.milestone}</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span class="badge badge-primary">${mod.unitsCount} Units · ${mod.duration}</span>
+                </div>
+              </div>
+
+              <!-- Attached Educational Assets -->
+              <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.14); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <i data-lucide="paperclip" style="width: 14px; height: 14px; color: var(--primary);"></i>
+                  <span><strong>Attached Pedagogical Resources:</strong> ${mod.resources.join(', ')}</span>
+                </div>
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAttachResourceModal('${mod.id}')">
+                  <i data-lucide="plus"></i> Link Asset
+                </button>
+              </div>
+
+              <!-- Detailed Units Table Inside Module Card -->
+              <div class="table-container" style="border: 1px solid rgba(124, 119, 102, 0.14); border-radius: 8px; overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                  <thead>
+                    <tr style="background: #fbf9f5; border-bottom: 1px solid rgba(124, 119, 102, 0.15);">
+                      <th style="padding: 8px 12px; text-align: left;">Unit Title</th>
+                      <th style="padding: 8px 12px; text-align: left;">Pedagogical Format</th>
+                      <th style="padding: 8px 12px; text-align: left;">Duration</th>
+                      <th style="padding: 8px 12px; text-align: left;">Completion Rule</th>
+                      <th style="padding: 8px 12px; text-align: left;">Status</th>
+                      <th style="padding: 8px 12px; text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${mod.units.map(u => `
+                      <tr style="border-bottom: 1px solid rgba(124, 119, 102, 0.08);">
+                        <td style="padding: 10px 12px;">
+                          <strong style="color: var(--navy-medium);">${u.title}</strong>
+                        </td>
+                        <td style="padding: 10px 12px;">
+                          <span class="badge badge-primary" style="font-size: 10px;">${u.format}</span>
+                        </td>
+                        <td style="padding: 10px 12px; color: var(--slate); font-weight:600;">${u.duration}</td>
+                        <td style="padding: 10px 12px; color: #166534; font-weight:600;">${u.rule}</td>
+                        <td style="padding: 10px 12px;">
+                          <span class="badge badge-warning" style="font-size: 9.5px;">${u.status}</span>
+                        </td>
+                        <td style="padding: 10px 12px; text-align: right;">
+                          <div style="display: inline-flex; gap: 6px;">
+                            <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal('${u.index}')">
+                              <i data-lucide="edit"></i> Edit
+                            </button>
+                            <button class="btn btn-primary btn-xs" onclick="Actions.switchOdinActivityFormat('${u.type}'); Router.navigate('creator-syllabus-lessons');">
+                              <i data-lucide="play"></i> Run
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Module Card Footer -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); flex-wrap: wrap; gap: 8px;">
+                <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddLessonModal()">
+                  <i data-lucide="plus"></i> + Add Content Unit to ${mod.code}
+                </button>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorEditModuleModal('${mod.id}')">
+                    <i data-lucide="settings"></i> Module Settings
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-lessons')">
+                    <i data-lucide="play"></i> Test Module in Runner
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
   },
 
   renderCreatorLessonsStudio() {
@@ -20783,18 +21277,344 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
 
-  Actions.filterCreatorByCourse = function(courseCode) {
-    Notifications.push("Course Scope Updated", `Filtered authoring hierarchy to course ${courseCode}.`, "info");
+  Actions.openCreatorAddLevelModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Add Proficiency Level Tier (CAT-001 / CAT-006)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="layers"></i>
+          <div>
+            <strong>NEW CURRICULUM LEVEL TIER CONFIGURATION</strong>
+            <p>Define hierarchical level tier, target learner proficiency, prerequisites, and milestone boundaries.</p>
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 2fr; gap: 14px;">
+          <div class="form-group">
+            <label>Level Code</label>
+            <input type="text" id="cc-lvl-code" class="form-control" value="Level 4" placeholder="e.g. Level 4">
+          </div>
+          <div class="form-group">
+            <label>Level Title</label>
+            <input type="text" id="cc-lvl-title" class="form-control" placeholder="e.g. Enterprise Cloud & SRE Specialization">
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Target Role / Outcome</label>
+            <input type="text" id="cc-lvl-role" class="form-control" placeholder="e.g. Senior Cloud Architect">
+          </div>
+          <div class="form-group">
+            <label>Estimated Effort</label>
+            <input type="text" id="cc-lvl-effort" class="form-control" value="4 Weeks (32 Hours)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Prerequisite Gate Rule</label>
+          <select id="cc-lvl-prereq" class="form-control">
+            <option value="Requires Level 3 Verified Certificate">Requires Level 3 Verified Certificate (Sequential)</option>
+            <option value="Requires Level 2 Verified Certificate">Requires Level 2 Verified Certificate</option>
+            <option value="None (Open Entry Point)">None (Open Entry Point)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Verifiable Credential Title</label>
+          <input type="text" id="cc-lvl-credential" class="form-control" value="Enterprise SRE Specialist Credential">
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorLevel()">Create Level Tier</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
-
-  Actions.switchPreviewFormat = function(format) {
-    const canvas = document.getElementById("creator-dynamic-view-canvas");
-    if (canvas) {
-      canvas.innerHTML = RenderEngine.renderCreatorLmsPreview(format);
-      window.lucide?.createIcons();
-      Notifications.push("Preview Format Switched", `Switched simulator view to ${format.toUpperCase()} mode.`, "info");
+  Actions.saveCreatorLevel = function() {
+    const title = document.getElementById("cc-lvl-title")?.value.trim();
+    if (!title) {
+      Notifications.push("Validation Error", "Level title is required.", "error");
+      return;
     }
+    Notifications.push("Level Tier Created", `Added level tier: ${title}.`, "success");
+    Actions.audit("CREATOR_LEVEL_CREATED", `Added new level tier: ${title}`, "Low");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorEditLevelModal = function(lvlId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Edit Level Tier: ${lvlId || 'LVL-101'}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="edit-3"></i>
+          <div>
+            <strong>EDIT LEVEL PROFICIENCY METADATA</strong>
+            <p>Changes apply to active draft version. Published student records remain immutable.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tier Title</label>
+          <input type="text" class="form-control" value="Web Architecture & DOM Foundations">
+        </div>
+        <div class="form-group">
+          <label>Mastery Passing Rule</label>
+          <input type="text" class="form-control" value="100% Milestone Completion + 80% Min Quiz Score">
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Level Saved', 'Updated level tier metadata.', 'success'); document.getElementById('generic-modal').classList.add('hidden');">Save Changes</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorAddMilestoneModal = function(levelId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Add Milestone Checkpoint (MILE-001 / FLOW-019)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="flag"></i>
+          <div>
+            <strong>NEW MILESTONE CREATION & GATEKEEPER SUITE</strong>
+            <p>Milestones bundle lessons and enforce automated unlock gates and credential triggers.</p>
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 2fr; gap: 14px;">
+          <div class="form-group">
+            <label>Parent Level</label>
+            <select class="form-control">
+              <option value="LVL-101">Level 1: Foundations</option>
+              <option value="LVL-201">Level 2: Backend Architecture</option>
+              <option value="LVL-301">Level 3: Distributed Systems</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Milestone Title</label>
+            <input type="text" id="cc-mile-title" class="form-control" placeholder="e.g. Milestone 5: GraphQL Gateways & Caching">
+          </div>
+        </div>
+
+        <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-group">
+            <label>Pacing Duration</label>
+            <input type="text" class="form-control" value="2 Weeks (16 Hours)">
+          </div>
+          <div class="form-group">
+            <label>Unlock Gatekeeper Passing Mark</label>
+            <input type="text" class="form-control" value="80% Pass Required">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Verifiable Credential / Badge Award</label>
+          <input type="text" class="form-control" value="Milestone 5 Performance Badge">
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorMilestone()">Create Milestone</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorMilestone = function() {
+    const title = document.getElementById("cc-mile-title")?.value.trim();
+    if (!title) {
+      Notifications.push("Validation Error", "Milestone title is required.", "error");
+      return;
+    }
+    Notifications.push("Milestone Created", `Added milestone: ${title}.`, "success");
+    Actions.audit("CREATOR_MILESTONE_CREATED", `Added new milestone checkpoint: ${title}`, "Low");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorEditMilestoneModal = function(mileId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Edit Milestone: ${mileId || 'MILE-001'}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="edit"></i>
+          <div>
+            <strong>EDIT MILESTONE CHECKPOINT</strong>
+            <p>Configure passing criteria and linked assessments.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Milestone Title</label>
+          <input type="text" class="form-control" value="Web Architecture & DOM Foundations">
+        </div>
+        <div class="form-group">
+          <label>Pass Threshold (FLOW-019)</label>
+          <input type="text" class="form-control" value="80% Pass Required to Unlock Next Milestone">
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Milestone Saved', 'Updated milestone settings.', 'success'); document.getElementById('generic-modal').classList.add('hidden');">Save Changes</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorGatekeeperConfigModal = function(mileId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Configure Gatekeeper Quiz: ${mileId || 'MILE-001'} (FLOW-019)`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="shield-check"></i>
+          <div>
+            <strong>GATEKEEPER UNLOCK POLICY CONFIGURATION</strong>
+            <p>Learners cannot advance to subsequent milestones until this gatekeeper threshold is certified.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Linked Assessment</label>
+          <select class="form-control">
+            <option value="QZ-201">QZ-201: DOM Fundamentals & Modern HTML5 Mastery (15 Questions)</option>
+            <option value="QZ-202">QZ-202: React 19 State Management & Hook Patterns (20 Questions)</option>
+            <option value="ASN-301">ASN-301: Responsive Multi-Device Dashboard Task</option>
+          </select>
+        </div>
+        <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="form-group">
+            <label>Minimum Passing Score (%)</label>
+            <input type="number" class="form-control" value="80" min="50" max="100">
+          </div>
+          <div class="form-group">
+            <label>Attempt Limit & Cooldown</label>
+            <input type="text" class="form-control" value="3 Attempts (24h Cooldown)">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Randomization & Integrity Mode</label>
+          <select class="form-control">
+            <option value="shuffle">Shuffle Questions & Distractor Choices (Anti-Cheating)</option>
+            <option value="strict">Strict Question Order</option>
+          </select>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Gatekeeper Configured', 'Gatekeeper quiz threshold updated to 80%.', 'success'); document.getElementById('generic-modal').classList.add('hidden');">Save Gatekeeper Policy</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorAddModuleModal = function(mileId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Add Module Bundle (CAT-006 / FRS 4.8.1)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="folder-tree"></i>
+          <div>
+            <strong>NEW CURRICULUM MODULE BUNDLE</strong>
+            <p>Group related lessons, sandbox labs, and resources under a discrete module code.</p>
+          </div>
+        </div>
+        <div class="form-row" style="display:grid; grid-template-columns:1fr 2fr; gap:14px;">
+          <div class="form-group">
+            <label>Module Code</label>
+            <input type="text" id="cc-mod-code" class="form-control" value="Module 1.3">
+          </div>
+          <div class="form-group">
+            <label>Module Title</label>
+            <input type="text" id="cc-mod-title" class="form-control" placeholder="e.g. Modern CSS Animation & Transitions">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Parent Milestone</label>
+          <select class="form-control">
+            <option value="MILE-001">Milestone 1: Web Architecture & DOM Foundations</option>
+            <option value="MILE-002">Milestone 2: React 19 & Component Architecture</option>
+            <option value="MILE-003">Milestone 3: Node.js Microservices & PostgreSQL</option>
+          </select>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Module Created', 'Added new module bundle.', 'success'); document.getElementById('generic-modal').classList.add('hidden'); Router.renderView(Router.currentRoute);">Save Module</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorEditModuleModal = function(modId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Module Settings: ${modId || 'MOD-101'}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="form-group">
+          <label>Module Title</label>
+          <input type="text" class="form-control" value="Semantic HTML5 & A11y Standards">
+        </div>
+        <div class="form-group">
+          <label>Pacing Target</label>
+          <input type="text" class="form-control" value="105 Mins">
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Module Saved', 'Updated module metadata.', 'success'); document.getElementById('generic-modal').classList.add('hidden');">Save</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorAttachResourceModal = function(modId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Attach Pedagogical Resource to ${modId || 'Module'}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="paperclip"></i>
+          <div>
+            <strong>LINK REUSABLE EDUCATIONAL ASSET (CAT-008)</strong>
+            <p>Select from centrally verified and cryptographically checked assets without file duplication.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Select Verified Resource</label>
+          <select class="form-control">
+            <option value="RES-101">RES-101: HTML5 Semantic Blueprint PDF (2.4 MB · Verified Clean)</option>
+            <option value="RES-102">RES-102: CSS Grid 2026 Cheat Sheet PDF (1.8 MB · Verified Clean)</option>
+            <option value="RES-103">RES-103: React 19 Component Architecture Video (184.5 MB · Stream Ready)</option>
+            <option value="RES-104">RES-104: Phonetic Audio Reference MP3 (42.0 MB · Verified Clean)</option>
+          </select>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Resource Linked', 'Attached educational resource to module.', 'success'); document.getElementById('generic-modal').classList.add('hidden'); Router.renderView(Router.currentRoute);">Attach to Module</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
 
