@@ -342,31 +342,230 @@ const db = {
     ],
 
     rules: [
+      // 1. Prerequisites (MILE-005)
       {
-        id: "RULE-REV-01",
-        targetItem: "DEV-101 (Modern Web Dev v1.2)",
+        id: "RULE-PRE-01",
+        targetItem: "Level 2: React 19 Engineering",
         course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
         type: "Prerequisite",
-        condition: "Milestone 1 Quiz Score >= 80% AND Lesson 1.4 Code Passed",
-        evaluationEngine: "Automated Milestone State Machine (FLOW-018)",
+        sourceNode: "Milestone 1 (Web Foundations)",
+        unlockTarget: "Level 2 & Milestone 2.1",
+        condition: "Milestone 1 Quiz Score >= 80% AND Code Lab 1.4 Passed",
+        evaluationEngine: "Milestone State Machine (MILE-005)",
+        deadlockCheck: "Acyclic (DAG Valid)",
         status: "Active"
       },
       {
-        id: "RULE-REV-02",
-        targetItem: "ENG-103 (Spoken English v2.0)",
+        id: "RULE-PRE-02",
+        targetItem: "Module 2: Professional Workplace Dialogue",
         course: "ENG-103",
+        courseTitle: "Spoken English Fluency & Voice",
+        type: "Prerequisite",
+        sourceNode: "Module 1 (Acoustic Phonetics)",
+        unlockTarget: "Module 2 Live Seminars",
+        condition: "Diagnostic Voice Recording VOC-401 Score >= 75%",
+        evaluationEngine: "Acoustic Audio Evaluator",
+        deadlockCheck: "Acyclic (DAG Valid)",
+        status: "Active"
+      },
+      {
+        id: "RULE-PRE-03",
+        targetItem: "Term 2 Mid-Year Board Exam",
+        course: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        type: "Prerequisite",
+        sourceNode: "Term 1 Practice Problem Sets",
+        unlockTarget: "Term 2 Curriculum Outline",
+        condition: "Term 1 Quiz QZ-204 Score >= 75% + 100% Homework Submitted",
+        evaluationEngine: "School Board Evaluation Engine",
+        deadlockCheck: "Acyclic (DAG Valid)",
+        status: "Active"
+      },
+      {
+        id: "RULE-PRE-04",
+        targetItem: "Milestone 4: Full-Stack Capstone Defense",
+        course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        type: "Prerequisite",
+        sourceNode: "Milestones 1, 2, and 3",
+        unlockTarget: "Capstone Submission Repository (ASN-301)",
+        condition: "All Prior 3 Milestone Badges Verified AND 90% Lesson Views",
+        evaluationEngine: "Capstone Credential Gate",
+        deadlockCheck: "Acyclic (DAG Valid)",
+        status: "Active"
+      },
+
+      // 2. Release Rules (MILE-012)
+      {
+        id: "RULE-REL-01",
+        targetItem: "Self-Paced Milestone Cadence",
+        course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        type: "Release Rule",
+        releaseModel: "Self-Paced Instant",
+        interval: "Instant Unlock (0 Days)",
+        condition: "Automated instant release upon prior milestone mastery",
+        timezone: "Asia/Karachi (PKT UTC+5)",
+        evaluationEngine: "Real-time Event Engine",
+        status: "Active"
+      },
+      {
+        id: "RULE-REL-02",
+        targetItem: "Weekly Cohort Drip Schedule",
+        course: "ENG-103",
+        courseTitle: "Spoken English Fluency & Voice",
+        type: "Release Rule",
+        releaseModel: "Live Scheduled Cohort",
+        interval: "Weekly (Every Monday 09:00 PKT)",
+        condition: "Cohort calendar date reached + Live Seminar attendance verified",
+        timezone: "Asia/Karachi (PKT UTC+5)",
+        evaluationEngine: "Cohort Drip Scheduler",
+        status: "Active"
+      },
+      {
+        id: "RULE-REL-03",
+        targetItem: "3-Term Academic Calendar",
+        course: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        type: "Release Rule",
+        releaseModel: "K-12 Term-Based",
+        interval: "Term Boundaries (Autumn / Spring / Board Prep)",
+        condition: "Term start date reached with locked holiday blackout periods",
+        timezone: "Asia/Karachi (PKT UTC+5)",
+        evaluationEngine: "Academic Calendar Engine",
+        status: "Active"
+      },
+
+      // 3. Completion Rules (MILE-004 / MILE-013)
+      {
+        id: "RULE-COM-01",
+        targetItem: "Digital Certificate & Verified Badge",
+        course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
         type: "Completion Rule",
-        condition: "100% Activities Watched + 4 Voice Tasks Rubric Graded >= 75%",
+        tier: "Full Course Graduation (Level 3)",
+        condition: "100% Lesson Viewings + Capstone Repository Verified (ASN-301 & ASN-302 >= 80%)",
+        award: "Accredited Full-Stack Engineer Certificate",
         evaluationEngine: "Credential Issuance Engine (MILE-004)",
         status: "Active"
       },
       {
-        id: "RULE-REV-03",
-        targetItem: "DEV-101 (Modern Web Dev v1.2)",
+        id: "RULE-COM-02",
+        targetItem: "CEFR C1 Professional Speaking Badge",
+        course: "ENG-103",
+        courseTitle: "Spoken English Fluency & Voice",
+        type: "Completion Rule",
+        tier: "Track Graduation (Level 2)",
+        condition: "100% Audio Lessons + 4 Voice Tasks CEFR Rubric Score >= 75% (RUB-102)",
+        award: "CEFR C1 Spoken Fluency Credential",
+        evaluationEngine: "Phonetic Assessment Engine",
+        status: "Active"
+      },
+      {
+        id: "RULE-COM-03",
+        targetItem: "Annual Grade 8 Board Readiness Certificate",
+        course: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        type: "Completion Rule",
+        tier: "Grade-Level Completion",
+        condition: "40% Formative + 60% Summative Board Prep Exam Score >= 50% Aggregate",
+        award: "FBISE Grade 8 Mathematics Clearance",
+        evaluationEngine: "Board Certification Engine",
+        status: "Active"
+      },
+      {
+        id: "RULE-COM-04",
+        targetItem: "Milestone 1 Foundation Badge",
         course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        type: "Completion Rule",
+        tier: "Milestone 1 Gating",
+        condition: "All Level 1 Lessons Viewed + Quiz QZ-201 Score >= 80%",
+        award: "Web Architecture Foundation Badge",
+        evaluationEngine: "Automated Milestone Gate",
+        status: "Active"
+      },
+
+      // 4. Attempt & Retry Rules (MILE-008)
+      {
+        id: "RULE-ATT-01",
+        targetItem: "Milestone Gatekeeper Quizzes",
+        course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
         type: "Attempt & Retry Rule",
-        condition: "Max 3 Quiz Attempts with 24h Mandatory Cooldown Timer",
+        scope: "Quizzes QZ-201, QZ-202, QZ-203",
+        maxAttempts: "Max 3 Attempts",
+        cooldown: "24-Hour Mandatory Cooldown after 2nd attempt",
+        scoreRetention: "Highest Score Retained",
+        randomization: "10 Random Questions from 20-Item Pool",
         evaluationEngine: "Assessment Integrity Engine (MILE-008)",
+        status: "Active"
+      },
+      {
+        id: "RULE-ATT-02",
+        targetItem: "Acoustic Speaking Drills & Diagnostic",
+        course: "ENG-103",
+        courseTitle: "Spoken English Fluency & Voice",
+        type: "Attempt & Retry Rule",
+        scope: "Voice Activities VOC-401, VOC-402",
+        maxAttempts: "Max 3 Recordings",
+        cooldown: "None (Instant Re-record)",
+        scoreRetention: "Highest CEFR Rubric Score",
+        randomization: "Fixed Phonetic Prompt",
+        evaluationEngine: "Voice Submission Gateway",
+        status: "Active"
+      },
+      {
+        id: "RULE-ATT-03",
+        targetItem: "FBISE Chapter Practice Quizzes",
+        course: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        type: "Attempt & Retry Rule",
+        scope: "Practice Quizzes QZ-204, QZ-205",
+        maxAttempts: "Unlimited Practice",
+        cooldown: "None",
+        scoreRetention: "Latest Attempt for Diagnostic Tracking",
+        randomization: "Shuffled Options",
+        evaluationEngine: "Formative Practice Engine",
+        status: "Active"
+      },
+
+      // 5. Public Preview Rules
+      {
+        id: "RULE-PRV-01",
+        targetItem: "Lesson 1.1 Starter Sandbox & Overview",
+        course: "DEV-101",
+        courseTitle: "Modern Full-Stack Web Development",
+        type: "Preview Rule",
+        previewScope: "Lesson 1.1 Free Public Preview",
+        gatingBoundary: "Lessons 1.2+ Require Enrolment Verification",
+        drmProtection: "Watermarked 1080p Stream · Code Sandbox Sandboxed",
+        paywallStatus: "Strictly Enforced",
+        status: "Active"
+      },
+      {
+        id: "RULE-PRV-02",
+        targetItem: "Phonetics Diagnostic Overview",
+        course: "ENG-103",
+        courseTitle: "Spoken English Fluency & Voice",
+        type: "Preview Rule",
+        previewScope: "Lesson 1.1 Audio & Pronunciation Guide",
+        gatingBoundary: "Live Cohort Seminars & Voice Recording Gated",
+        drmProtection: "Encrypted Audio Stream (128kbps)",
+        paywallStatus: "Strictly Enforced",
+        status: "Active"
+      },
+      {
+        id: "RULE-PRV-03",
+        targetItem: "K-12 Grade 8 Syllabus & Term Breakdown",
+        course: "K12-801",
+        courseTitle: "Grade 8 Mathematics (FBISE)",
+        type: "Preview Rule",
+        previewScope: "Public Parent Curriculum Preview",
+        gatingBoundary: "Live Tuition Classes & Graded Past Papers Gated",
+        drmProtection: "Read-Only Syllabus Watermark",
+        paywallStatus: "Strictly Enforced",
         status: "Active"
       }
     ],
@@ -7092,66 +7291,69 @@ const reviewerRouteDefinitions = {
 
   // 4. Academic Rules
   "reviewer-rules-prerequisites": {
-    title: "Prerequisite State Machine Rules",
+    title: "Prerequisite State Machine Rules (MILE-005)",
     group: "Academic Rules",
-    desc: "Review gating logic that requires prior milestone completion or quiz pass marks before unlock.",
-    scopeNotice: "Validates that prerequisites enforce meaningful baseline competency without creating deadlocks.",
+    desc: "Review gating logic that requires prior milestone completion or quiz pass marks (>= 80%) before downstream unlock.",
+    scopeNotice: "Validates that prerequisites enforce meaningful baseline competency without creating cyclic deadlocks.",
     dataType: "rules",
     metrics: () => [
-      { label: "Prerequisite Rules", value: 2, hint: "Gatekeepers" },
+      { label: "Prerequisite Rules", value: db.reviewerData.rules.filter(r => r.type === 'Prerequisite').length, hint: "Gatekeepers" },
       { label: "Score Threshold", value: ">= 80%", hint: "Enforced standard" },
-      { label: "Deadlock Check", value: "Passed", hint: "Valid graph" }
+      { label: "Deadlock Check", value: "Acyclic (DAG Valid)", hint: "Zero deadlocks" }
     ],
     filter: (items) => items.filter(r => r.type === "Prerequisite")
   },
   "reviewer-rules-release": {
-    title: "Content Release & Drip Cadence",
+    title: "Content Release & Drip Cadence (MILE-012)",
     group: "Academic Rules",
-    desc: "Audit scheduled drip timelines for live cohorts and instant progression for self-paced tracks.",
-    scopeNotice: "Drip schedules must allow adequate learning time between milestone submissions.",
+    desc: "Audit scheduled drip timelines for live cohorts, term boundaries, and instant progression for self-paced tracks.",
+    scopeNotice: "Drip schedules must allow adequate learning time between milestone submissions normalized to PKT (UTC+5).",
     dataType: "rules",
     metrics: () => [
-      { label: "Release Policies", value: 2, hint: "Milestone & Live" },
-      { label: "Cohort Pacing", value: "Weekly", hint: "Structured cadence" }
+      { label: "Release Policies", value: db.reviewerData.rules.filter(r => r.type === 'Release Rule').length, hint: "Active policies" },
+      { label: "Cohort Pacing", value: "Weekly (Mondays)", hint: "09:00 PKT" },
+      { label: "Timezone Anchor", value: "PKT (UTC+5)", hint: "Standardized" }
     ],
-    filter: (items) => items
+    filter: (items) => items.filter(r => r.type === "Release Rule")
   },
   "reviewer-rules-completion": {
-    title: "Completion Rules & Certification (MILE-004)",
+    title: "Completion Rules & Certification (MILE-004 / MILE-013)",
     group: "Academic Rules",
-    desc: "Verify lesson, milestone, and graduation rules required for digital credential issuance.",
+    desc: "Verify lesson, milestone, and graduation rules required for digital credential issuance independent of access expiry.",
     scopeNotice: "Completion criteria become permanently immutable upon version publication.",
     dataType: "rules",
     metrics: () => [
-      { label: "Completion Rules", value: 2, hint: "Configured" },
-      { label: "Badge Triggers", value: "Automated", hint: "MILE-004 release" }
+      { label: "Completion Rules", value: db.reviewerData.rules.filter(r => r.type === 'Completion Rule').length, hint: "Configured" },
+      { label: "Badge Triggers", value: "Automated", hint: "MILE-004 release" },
+      { label: "Certificate Minting", value: "SHA-256 Signed", hint: "MILE-013" }
     ],
     filter: (items) => items.filter(r => r.type === "Completion Rule")
   },
   "reviewer-rules-attempts": {
-    title: "Attempt & Retry Rules (MILE-008)",
+    title: "Attempt Limits & Retry Rules (MILE-008)",
     group: "Academic Rules",
-    desc: "Audit maximum assessment attempts, cooldown timers, and retained score policies.",
+    desc: "Audit maximum assessment attempts, cooldown timers (24h), anti-cheat randomization, and retained score policies.",
     scopeNotice: "Protects question bank integrity while giving learners fair recovery opportunities.",
     dataType: "rules",
     metrics: () => [
-      { label: "Retry Policies", value: 2, hint: "Active" },
-      { label: "Max Attempts", value: "3 Tries", hint: "Enforced limit" },
-      { label: "Cooldown", value: "24 Hours", hint: "Fair retry" }
+      { label: "Retry Policies", value: db.reviewerData.rules.filter(r => r.type.includes('Attempt')).length, hint: "Active" },
+      { label: "Max Attempts", value: "3 Tries", hint: "Gatekeepers" },
+      { label: "Cooldown Timer", value: "24 Hours", hint: "Fair retry" }
     ],
     filter: (items) => items.filter(r => r.type.includes("Attempt"))
   },
   "reviewer-rules-preview": {
     title: "Public Preview & Guest Gating Rules",
     group: "Academic Rules",
-    desc: "Validate that unauthenticated guests only access approved preview lessons without exposing paid units.",
-    scopeNotice: "Guest previews protect intellectual property while demonstrating pedagogical value.",
+    desc: "Validate that unauthenticated guests only access approved preview lessons without exposing paid proprietary units.",
+    scopeNotice: "Guest previews protect intellectual property with DRM watermarking while demonstrating pedagogical value.",
     dataType: "rules",
     metrics: () => [
-      { label: "Preview Units", value: "Lesson 1 Free", hint: "Public preview" },
-      { label: "Paywall Protection", value: "100% Sealed", hint: "Paid lessons safe" }
+      { label: "Preview Policies", value: db.reviewerData.rules.filter(r => r.type.includes('Preview')).length, hint: "Gating active" },
+      { label: "Preview Scope", value: "Lesson 1.1 Free", hint: "Starter unit" },
+      { label: "Paywall Protection", value: "100% Sealed", hint: "Paid units safe" }
     ],
-    filter: (items) => items
+    filter: (items) => items.filter(r => r.type.includes("Preview"))
   },
 
   // 5. Assessment Review
@@ -36285,6 +36487,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
+  };
+
+  Actions.reviewerSubmitRevision = function(subId) {
+    const sub = db.reviewerData.submissions.find(s => s.id === subId);
+    if (!sub) return;
+
+    const notes = document.getElementById("rev-revision-notes")?.value.trim() || "Revision requested: please address highlighted rubric criteria.";
+    sub.status = "Revision Requested";
+    sub.feedback = notes;
+
+    db.reviewerData.auditLogs.unshift({
+      id: "REV-AUD-" + Math.floor(100 + Math.random() * 900),
+      timestamp: new Date().toLocaleTimeString(),
+      actor: "Prof. Tariq Mahmood",
+      action: "SUBMISSION_REVISION_REQUESTED",
+      version: sub.course,
+      details: `Requested revision for ${sub.learner} (${sub.assignment}): ${notes}`,
+      priorState: "In Review",
+      newState: "Revision Requested"
+    });
+
+    if (window.ReviewerSync) ReviewerSync.syncSidebarCounts();
+
+    Notifications.push("Revision Requested (FLOW-020)", `Sent revision request to ${sub.learner} for ${sub.assignment}.`, "warning");
+    document.getElementById("generic-modal").classList.add("hidden");
+
+    if (Router.currentRoute === "reviewer-dashboard") RenderEngine.reviewerDashboard();
+    else RenderEngine.reviewerWorkspace(Router.currentRoute);
   };
 
   Actions.filterReviewerByCourse = function(courseCode) {
