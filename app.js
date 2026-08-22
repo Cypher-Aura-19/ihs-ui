@@ -2490,13 +2490,17 @@ const db = {
       { id: "TRL-512", leadId: "LD-109", prospect: "Zaid Khan", course: "Basic Literacy", placementScore: "76%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-07 10:00", trainer: "Imran Qureshi", room: "https://ihs.daily.co/trial-512", attendance: "No-Show (Technical Failure)", status: "No-Show", outcome: "No-Show (Rescheduled to WhatsApp 1:1)" }
     ],
     enrolments: [
-      { id: "AEN-701", leadId: "LD-103", prospect: "Kamran Siddiqui", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", paymentStatus: "Awaiting Submission", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Conversion Opportunity" },
-      { id: "AEN-702", leadId: "LD-104", prospect: "Areeba Farooq", programme: "K-12 Grade 8 Math", membership: "Full Academic Term", amount: "PKR 32,000", paymentStatus: "Order Initiated", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Membership Request" },
-      { id: "AEN-703", leadId: "LD-105", prospect: "Danish Qureshi", programme: "Basic Literacy", membership: "Foundations 1:1 Plan", amount: "PKR 18,000", paymentStatus: "Verified & Approved", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Active Enrolment" },
-      { id: "AEN-704", leadId: "LD-109", prospect: "Zaid Khan", programme: "Basic Literacy", membership: "Foundations 1:1 Plan", amount: "PKR 18,000", paymentStatus: "Payment Under Review", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Pending Activation" },
-      { id: "AEN-705", leadId: "LD-110", prospect: "Areeba Siddiqui", programme: "Applied Numeracy", membership: "Group Cohort Plan", amount: "PKR 24,000", paymentStatus: "Payment Under Review", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Pending Activation" },
-      { id: "AEN-706", leadId: "LD-111", prospect: "Bilal Ahmed", programme: "Basic Literacy", membership: "One-to-One Plan", amount: "PKR 18,000", paymentStatus: "Verified & Approved", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Active Enrolment" },
-      { id: "AEN-707", leadId: "LD-115", prospect: "Hamza Qureshi", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", paymentStatus: "Conversion Pitch Dispatched", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Conversion Opportunity" }
+      { id: "AEN-701", leadId: "LD-103", prospect: "Kamran Siddiqui", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", discount: "None", payableAmount: "PKR 35,000", paymentStatus: "Conversion Pitch Dispatched", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Conversion Opportunity", trialScore: "82% (Qualified)", trialId: "TRL-501", lastTouch: "Today 11:00 PKT" },
+      { id: "AEN-707", leadId: "LD-115", prospect: "Hamza Qureshi", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", discount: "PKR 3,500 (Early Bird 10%)", payableAmount: "PKR 31,500", paymentStatus: "Trial Completed (High Intent)", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Conversion Opportunity", trialScore: "88% (Qualified)", trialId: "TRL-507", lastTouch: "Yesterday 17:30 PKT" },
+      { id: "AEN-702", leadId: "LD-104", prospect: "Areeba Farooq", programme: "K-12 Grade 8 Math", membership: "Full Academic Term (6 Months)", amount: "PKR 32,000", discount: "None", payableAmount: "PKR 32,000", paymentStatus: "Awaiting Bank Slip Upload", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Membership Request", payMethod: "Bank Transfer (Meezan Bank)", orderRef: "ORD-992104", channelLink: "Active WhatsApp Invoice" },
+      { id: "AEN-704", leadId: "LD-109", prospect: "Zaid Khan", programme: "Basic Literacy", membership: "Foundations 1:1 Plan (Monthly)", amount: "PKR 18,000", discount: "PKR 1,800 (Sibling Discount 10%)", payableAmount: "PKR 16,200", paymentStatus: "Slip Submitted / Under Review", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Pending Activation", payMethod: "Bank Transfer (Meezan Bank)", slipId: "PAY-801", orderRef: "ORD-992109" },
+      { id: "AEN-705", leadId: "LD-110", prospect: "Areeba Siddiqui", programme: "Applied Numeracy", membership: "Group Cohort Plan (3 Months)", amount: "PKR 24,000", discount: "None", payableAmount: "PKR 24,000", paymentStatus: "Slip Submitted / Under Review", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Pending Activation", payMethod: "Bank Transfer (HBL Direct)", slipId: "PAY-802", orderRef: "ORD-992110" },
+      { id: "AEN-709", leadId: "LD-108", prospect: "Tariq Mahmood", programme: "Vocational Technology", membership: "Senior Specialist Track", amount: "PKR 35,000", discount: "None", payableAmount: "PKR 35,000", paymentStatus: "Order Dispatched / Awaiting Transfer", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Membership Request", payMethod: "Bank Transfer (Allied Bank)", orderRef: "ORD-992115", channelLink: "Active Portal Link" },
+      { id: "AEN-703", leadId: "LD-105", prospect: "Danish Qureshi", programme: "Basic Literacy", membership: "Foundations 1:1 Plan (Monthly)", amount: "PKR 18,000", discount: "None", payableAmount: "PKR 18,000", paymentStatus: "Verified & Active", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Active Enrolment", commissionId: "COM-901", classesRemaining: "9/12 Sessions Remaining", attendanceRate: "100%", healthStatus: "Optimal", lmsSync: "Active" },
+      { id: "AEN-706", leadId: "LD-111", prospect: "Bilal Ahmed", programme: "Basic Literacy", membership: "Foundations 1:1 Plan (Monthly)", amount: "PKR 18,000", discount: "None", payableAmount: "PKR 18,000", paymentStatus: "Verified & Active", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Active Enrolment", commissionId: "COM-902", classesRemaining: "8/12 Sessions Remaining", attendanceRate: "94%", healthStatus: "Healthy", lmsSync: "Active" },
+      { id: "AEN-710", leadId: "LD-102", prospect: "Sana Mir", programme: "Quranic Studies", membership: "Tajweed Mastery (Monthly)", amount: "PKR 20,000", discount: "PKR 2,000 (Scholarship)", payableAmount: "PKR 18,000", paymentStatus: "Verified & Active", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Active Enrolment", commissionId: "COM-905", classesRemaining: "11/12 Sessions Remaining", attendanceRate: "100%", healthStatus: "Optimal", lmsSync: "Active" },
+      { id: "AEN-711", leadId: "LD-106", prospect: "Omar Khalid", programme: "Applied Numeracy", membership: "Group Cohort Plan (3 Months)", amount: "PKR 24,000", discount: "None", payableAmount: "PKR 24,000", paymentStatus: "Verified & Active", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Active Enrolment", commissionId: "COM-906", classesRemaining: "2/12 Sessions Remaining (Low Credit)", attendanceRate: "91%", healthStatus: "Renewal Due", lmsSync: "Active" },
+      { id: "AEN-712", leadId: "LD-114", prospect: "Fatima Zahra", programme: "K-12 Grade 8 Math", membership: "Full Academic Term (6 Months)", amount: "PKR 32,000", discount: "None", payableAmount: "PKR 32,000", paymentStatus: "Verified & Active", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100% Locked)", status: "Active Enrolment", commissionId: "COM-908", classesRemaining: "18/24 Sessions Remaining", attendanceRate: "96%", healthStatus: "Optimal", lmsSync: "Active" }
     ],
     payments: [
       { id: "PAY-801", learner: "Zaid Khan", payer: "Muhammad Khan (Guardian)", course: "Basic Literacy Foundations", submittedAmount: "PKR 18,000", expectedAmount: "PKR 18,000", channel: "Bank Transfer (Meezan Bank)", reference: "TRX-9823104", receiptChecksum: "sha256:7f3a88019...", receiptFile: "meezan_slip_801.pdf", age: "1h ago", status: "Awaiting Review", csr: "Sarah Jenkins" },
@@ -18097,10 +18101,35 @@ const RenderEngine = {
         `;
       }
     } else if (config.dataType === "enrolments") {
-      toolbarActions = `
-        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewAssistedEnrolmentModal()"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>
-        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Orders</button>
-      `;
+      if (route === "csr-enrolments-opportunities") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewAssistedEnrolmentModal()"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.batchSendWhatsAppInvoices()"><i data-lucide="send"></i> Batch WhatsApp Links</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Opportunities</button>
+        `;
+      } else if (route === "csr-enrolments-membership-requests") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Deposit Slip</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.sendAllPaymentReminders()"><i data-lucide="bell"></i> Send All Reminders</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Orders</button>
+        `;
+      } else if (route === "csr-enrolments-attributed") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommissionsSummaryModal()"><i data-lucide="badge-percent"></i> Commission Ledger</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Attribution</button>
+        `;
+      } else if (route === "csr-enrolments-status") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.syncAllLmsAccounts()"><i data-lucide="refresh-cw"></i> Sync LMS Provisioning</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.batchTriggerRenewals()"><i data-lucide="sparkles"></i> Batch Renewal Pitch</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Learner Status</button>
+        `;
+      } else {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewAssistedEnrolmentModal()"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Orders</button>
+        `;
+      }
     } else if (config.dataType === "payments") {
       toolbarActions = `
         <button class="btn btn-primary btn-xs" onclick="Actions.openCsrManualSlipUploadModal()"><i data-lucide="upload"></i> Upload Bank Slip</button>
@@ -18253,6 +18282,18 @@ const RenderEngine = {
       return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Score & Consent</th><th>Slot & Trainer</th><th>Daily.co Room</th><th>Outcome & State</th><th>Actions</th></tr>`;
     }
     if (dataType === "enrolments") {
+      if (route === "csr-enrolments-opportunities") {
+        return `<tr><th>Prospect / Opportunity ID</th><th>Programme Track</th><th>Trial Score / Intent</th><th>Proposed Membership Plan</th><th>Payable Value & Discount</th><th>Attribution Lock</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-enrolments-membership-requests") {
+        return `<tr><th>Prospect / Order ID</th><th>Programme Track</th><th>Enrolled Membership Tier</th><th>Payable Amount</th><th>Payment Channel & Status</th><th>Order State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-enrolments-attributed") {
+        return `<tr><th>Learner / Enrolment ID</th><th>Programme Track</th><th>Active Membership Plan</th><th>Order Value</th><th>CSR Commission Entitlement</th><th>Attribution State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-enrolments-status") {
+        return `<tr><th>Learner / Enrolment ID</th><th>Programme Track</th><th>Sessions / Delivery Progress</th><th>Attendance Rate</th><th>LMS Access Sync</th><th>Health & Renewal Status</th><th>Actions</th></tr>`;
+      }
       return `<tr><th>Prospect / Enrolment ID</th><th>Programme</th><th>Membership / Product</th><th>Order Amount</th><th>CSR Attribution</th><th>Status</th><th>Actions</th></tr>`;
     }
     if (dataType === "payments") {
@@ -18620,6 +18661,88 @@ const RenderEngine = {
       }
 
       if (dataType === "enrolments") {
+        if (route === "csr-enrolments-opportunities") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><span class="badge badge-success">${item.trialScore || 'Qualified'}</span><span class="table-subline">${item.paymentStatus}</span></td>
+              <td><strong>${item.membership}</strong></td>
+              <td><strong>${item.payableAmount || item.amount}</strong><span class="table-subline">${item.discount && item.discount !== 'None' ? `<span class="success-text">${item.discount}</span>` : 'Standard Price'}</span></td>
+              <td><span class="badge badge-primary">${item.attribution || 'Sarah Jenkins (100%)'}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrAssistedEnrolment('${item.id}')"><i data-lucide="shopping-cart"></i> Assist Checkout</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrVoucherModal('${item.id}')"><i data-lucide="tag"></i> Voucher</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.sendCsrWhatsAppInvoice('${item.id}')"><i data-lucide="send"></i> WhatsApp Link</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="eye"></i> Lead File</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-enrolments-membership-requests") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.orderRef || 'ORD-992101'}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><strong>${item.membership}</strong></td>
+              <td><strong>${item.payableAmount || item.amount}</strong><span class="table-subline">${item.discount && item.discount !== 'None' ? item.discount : 'Net Payable'}</span></td>
+              <td><span>${item.payMethod || 'Bank Transfer'}</span><span class="table-subline ${item.status === 'Pending Activation' ? 'warning-text' : 'info-text'}">${item.paymentStatus}</span></td>
+              <td><span class="badge ${badgeClass}">${item.status}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  ${item.status === 'Pending Activation' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrPaymentReview('${item.slipId || 'PAY-801'}')"><i data-lucide="receipt"></i> Review Slip</button>` : `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrUploadSlipForOrderModal('${item.id}')"><i data-lucide="upload"></i> Upload Slip</button>`}
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.sendCsrPaymentReminder('${item.id}')"><i data-lucide="bell"></i> Send Reminder</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrOrderSummaryModal('${item.id}')"><i data-lucide="file-text"></i> Summary</button>
+                  <button class="btn btn-danger btn-xs" onclick="Actions.voidCsrOrder('${item.id}')"><i data-lucide="x"></i> Void</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-enrolments-attributed") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><strong>${item.membership}</strong><span class="table-subline">Active Since Aug 2026</span></td>
+              <td><strong>${item.amount}</strong></td>
+              <td><span class="badge badge-success">10% (PKR ${parseInt(item.amount.replace(/[^0-9]/g, '')) * 0.1 || 1800})</span><span class="table-subline">${item.commissionId || 'COM-901'}</span></td>
+              <td><span class="badge badge-primary">${item.attribution || 'Sarah Jenkins (100%)'}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrCommission('${item.commissionId || 'COM-901'}')"><i data-lucide="badge-percent"></i> Commission</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrEnrolmentHealthModal('${item.id}')"><i data-lucide="activity"></i> Health File</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="user"></i> Learner Profile</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-enrolments-status") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><strong>${item.classesRemaining || '8/12 Sessions Remaining'}</strong><span class="table-subline">Weekly 3x Classes</span></td>
+              <td><span class="badge badge-success">${item.attendanceRate || '96%'} Attendance</span></td>
+              <td><span class="badge badge-success"><i data-lucide="check-circle" style="width:11px;height:11px;display:inline-block;vertical-align:middle;"></i> Provisioned</span></td>
+              <td><span class="badge ${item.healthStatus === 'Renewal Due' ? 'badge-warning' : 'badge-success'}">${item.healthStatus || 'Optimal'}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  ${item.healthStatus === 'Renewal Due' ? `<button class="btn btn-primary btn-xs" onclick="Actions.triggerCsrRenewalPitch('${item.id}')"><i data-lucide="refresh-cw"></i> Pitch Renewal</button>` : `<button class="btn btn-secondary btn-xs" onclick="Actions.triggerCsrLmsSyncCheck('${item.id}')"><i data-lucide="refresh-cw"></i> Check Sync</button>`}
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrNewCaseModalForLearner('${item.prospect}', '${item.id}')"><i data-lucide="message-square"></i> Log Ticket</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrEnrolmentHealthModal('${item.id}')"><i data-lucide="activity"></i> Health Dossier</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         return `
           <tr>
             <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
@@ -30541,6 +30664,389 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = config ? config.title : "CSR Export";
     Actions.audit("CSR_DATA_EXPORTED", `Exported verified records for ${title}.`, "Low");
     Notifications.push("Export Generated", `Downloaded verified CSV dataset for ${title}.`, "success");
+  };
+
+  // ---------------------------------------------------------------------------
+  // CSR HUB 4: ENROLMENTS & ADMISSIONS WORKFLOW ACTIONS
+  // ---------------------------------------------------------------------------
+
+  Actions.openCsrVoucherModal = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Apply Promotional Voucher: ${enr.prospect} (${enr.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="tag"></i>
+          <div>
+            <strong>COMMERCIAL PROMOTIONAL CONCESSION (CSR-001 / FLOW-031)</strong>
+            <p>Select an approved discount code to adjust tuition for assisted order creation.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${enr.prospect}</strong><small>${enr.leadId}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${enr.programme}</strong></div>
+          <div class="om-flow-metric"><span>Base Tuition</span><strong>${enr.amount}</strong></div>
+          <div class="om-flow-metric"><span>Current Discount</span><strong>${enr.discount || 'None'}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Select Approved Promo Voucher *</label>
+          <select id="csr-voucher-select" class="form-control">
+            <option value="RAMADAN15|15% Off (Ramadan Special)|0.15">RAMADAN15 — 15% Seasonal Concession (PKR 2,700 off)</option>
+            <option value="WELCOME10|10% Off (First-time Learner)|0.10">WELCOME10 — 10% First-time Learner Discount (PKR 1,800 off)</option>
+            <option value="SIBLING20|20% Off (Family Sibling Pack)|0.20">SIBLING20 — 20% Family Sibling Concession (PKR 3,600 off)</option>
+            <option value="SCHOLAR25|25% Hardship Concession|0.25">SCHOLAR25 — 25% Merit & Hardship Concession (PKR 4,500 off)</option>
+            <option value="NONE|Standard List Price|0.0">NONE — Remove Discount (Reset to Standard Price)</option>
+          </select>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="shield-check"></i> Attribution & Commission Impact</h5>
+          <p>Applying an authorized promotional voucher does not reduce the CSR commission tier (10%). Sales commission is calculated on the net cleared tuition.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.applyCsrVoucher('${enr.id}')"><i data-lucide="check-circle"></i> Apply Voucher to Order</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.applyCsrVoucher = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    const val = document.getElementById("csr-voucher-select")?.value || "NONE|Standard List Price|0.0";
+    const [code, label, rateStr] = val.split("|");
+    const rate = parseFloat(rateStr) || 0;
+
+    const baseAmount = parseInt(enr.amount.replace(/[^0-9]/g, '')) || 18000;
+    if (rate > 0) {
+      const discounted = Math.round(baseAmount * (1 - rate));
+      enr.discount = `${code} (${label})`;
+      enr.payableAmount = `PKR ${discounted.toLocaleString()}`;
+    } else {
+      enr.discount = "None";
+      enr.payableAmount = enr.amount;
+    }
+
+    Actions.audit("CSR_VOUCHER_APPLIED", `Applied voucher ${code} to enrolment ${enr.id} for ${enr.prospect}. Net: ${enr.payableAmount}`, "Low");
+    Notifications.push("Voucher Applied", `Voucher ${code} applied. Net payable amount updated to ${enr.payableAmount}.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.sendCsrWhatsAppInvoice = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    Actions.audit("CSR_WHATSAPP_INVOICE_SENT", `Dispatched WhatsApp checkout link & Meezan Bank transfer details for ${enr.prospect} (${enr.id}).`, "Low");
+    Notifications.push("Invoice Dispatched", `WhatsApp checkout link sent to ${enr.prospect} with Meezan Bank transfer details.`, "success");
+  };
+
+  Actions.batchSendWhatsAppInvoices = function() {
+    const opps = (db.csrData?.enrolments || []).filter(e => e.status === "Conversion Opportunity");
+    opps.forEach(e => {
+      Actions.audit("CSR_WHATSAPP_INVOICE_SENT", `Batch invoice sent to ${e.prospect} (${e.id}).`, "Low");
+    });
+    Notifications.push("Batch Links Sent", `Sent WhatsApp checkout invoices to ${opps.length} conversion opportunities.`, "success");
+  };
+
+  Actions.openCsrUploadSlipForOrderModal = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Upload Bank Transfer Slip: ${enr.prospect} (${enr.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="upload"></i>
+          <div>
+            <strong>FLOW-012 MANUAL DEPOSIT SLIP SUBMISSION</strong>
+            <p>Upload proof of payment to advance order into Verification Queue.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${enr.prospect}</strong><small>${enr.orderRef || 'ORD-992101'}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${enr.programme}</strong></div>
+          <div class="om-flow-metric"><span>Payable Amount</span><strong class="success-text">${enr.payableAmount || enr.amount}</strong></div>
+          <div class="om-flow-metric"><span>Attribution</span><strong>${enr.attribution || 'Sarah Jenkins'}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Bank Transfer Channel *</label>
+          <select id="csr-slip-order-channel" class="form-control">
+            <option value="Meezan Bank Online Transfer">Meezan Bank Direct Transfer (Account: 0284-010582910)</option>
+            <option value="HBL Interbank Fund Transfer">HBL Interbank Fund Transfer (IBAN: PK64HABB000...)</option>
+            <option value="Easypaisa Direct Checkout">Easypaisa Merchant QR</option>
+            <option value="JazzCash Direct Checkout">JazzCash Merchant QR</option>
+            <option value="Bank Cash Deposit Counter">Bank Cash Deposit Slip Counter</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Bank Transaction ID / Ledger Reference *</label>
+          <input type="text" id="csr-slip-order-ref" class="form-control" placeholder="e.g. TRX-MEEZAN-99281726" value="TRX-MEEZAN-${Math.floor(10000000 + Math.random() * 90000000)}">
+        </div>
+
+        <div class="form-group">
+          <label>Bank Deposit Receipt / Screenshot (PDF / PNG / JPG) *</label>
+          <input type="file" class="form-control">
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrSlipForOrder('${enr.id}')"><i data-lucide="check-circle"></i> Submit Deposit Slip</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrSlipForOrder = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    const channel = document.getElementById("csr-slip-order-channel")?.value || "Meezan Bank Online Transfer";
+    const ref = document.getElementById("csr-slip-order-ref")?.value.trim() || "TRX-MEEZAN-99281726";
+
+    const payId = "PAY-" + (800 + (db.csrData?.payments || []).length + 1);
+    const newPay = {
+      id: payId,
+      learner: enr.prospect,
+      payer: enr.prospect,
+      course: enr.programme,
+      submittedAmount: enr.payableAmount || enr.amount,
+      expectedAmount: enr.payableAmount || enr.amount,
+      channel: channel.split(" ")[0] + " Transfer",
+      reference: ref,
+      receiptChecksum: "sha256:" + Math.random().toString(16).slice(2, 10),
+      receiptFile: `receipt_${payId.toLowerCase()}.pdf`,
+      age: "Just now",
+      status: "Awaiting Review",
+      csr: "Sarah Jenkins"
+    };
+
+    if (!db.csrData.payments) db.csrData.payments = [];
+    db.csrData.payments.unshift(newPay);
+
+    enr.status = "Pending Activation";
+    enr.paymentStatus = "Slip Uploaded (Under Review)";
+    enr.slipId = payId;
+
+    Actions.audit("CSR_ORDER_SLIP_SUBMITTED", `Uploaded bank slip ${payId} for order ${enr.id} (${enr.prospect}). Sent to Verification Queue.`, "Medium");
+    Notifications.push("Deposit Slip Submitted", `Payment receipt for ${enr.prospect} submitted. Slip ${payId} created in Verification queue.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.sendCsrPaymentReminder = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    Actions.audit("CSR_PAYMENT_REMINDER_SENT", `Dispatched automated bank payment reminder to ${enr.prospect} for order ${enr.id}.`, "Low");
+    Notifications.push("Payment Reminder Sent", `SMS & WhatsApp payment reminder with account details sent to ${enr.prospect}.`, "success");
+  };
+
+  Actions.sendAllPaymentReminders = function() {
+    const pending = (db.csrData?.enrolments || []).filter(e => e.status === "Membership Request");
+    pending.forEach(e => {
+      Actions.audit("CSR_PAYMENT_REMINDER_SENT", `Dispatched reminder to ${e.prospect} (${e.id}).`, "Low");
+    });
+    Notifications.push("Reminders Sent", `Dispatched automated payment reminders to ${pending.length} pending orders.`, "success");
+  };
+
+  Actions.openCsrOrderSummaryModal = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Order Summary & Breakdown: ${enr.prospect}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="file-text"></i>
+          <div>
+            <strong>ASSISTED MEMBERSHIP ORDER BREAKDOWN (FLOW-031)</strong>
+            <p>Order ID: ${enr.orderRef || enr.id} · Lead Record: ${enr.leadId}</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Customer Name</span><strong>${enr.prospect}</strong><small>Locked Attribution</small></div>
+          <div class="om-flow-metric"><span>Selected Plan</span><strong>${enr.membership}</strong></div>
+          <div class="om-flow-metric"><span>List Price</span><strong>${enr.amount}</strong></div>
+          <div class="om-flow-metric"><span>Discount Applied</span><strong>${enr.discount || 'None'}</strong></div>
+        </div>
+
+        <div class="om-flow-grid" style="margin-top:12px;">
+          <div class="om-flow-metric"><span>Net Payable</span><strong class="success-text">${enr.payableAmount || enr.amount}</strong></div>
+          <div class="om-flow-metric"><span>Payment Method</span><strong>${enr.payMethod || 'Bank Transfer'}</strong></div>
+          <div class="om-flow-metric"><span>Payment State</span><strong>${enr.paymentStatus}</strong></div>
+          <div class="om-flow-metric"><span>Order Status</span><strong>${enr.status}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="margin-top:12px;">
+          <h5><i data-lucide="badge-percent"></i> Commission & Attribution Audit</h5>
+          <p><strong>CSR Agent:</strong> ${enr.attribution || 'Sarah Jenkins (100%)'}</p>
+          <p><strong>Commission Candidate:</strong> 10% on cleared net amount (PKR 1,800 to PKR 3,500 upon verification).</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Summary</button>
+      <button class="btn btn-primary" onclick="Actions.sendCsrWhatsAppInvoice('${enr.id}'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="send"></i> Send WhatsApp Invoice</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.voidCsrOrder = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    enr.status = "Voided";
+    enr.paymentStatus = "Order Cancelled";
+
+    Actions.audit("CSR_ORDER_VOIDED", `Voided assisted order ${enr.id} for ${enr.prospect}.`, "Medium");
+    Notifications.push("Order Voided", `Order ${enr.id} marked as Voided.`, "warning");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrCommissionsSummaryModal = function() {
+    const attributed = (db.csrData?.enrolments || []).filter(e => e.status === "Attributed" || e.status === "Active");
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `CSR Sales Attribution & Commission Summary`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="badge-percent" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">COMMISSION LEDGER ACCRUAL (FLOW-031)</strong>
+            <p style="color:#166534;">Verified sales conversions locked to Sarah Jenkins portfolio.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Total Attributed Enrolments</span><strong>${attributed.length} Learners</strong></div>
+          <div class="om-flow-metric"><span>Gross Sales Attributed</span><strong>PKR 98,000</strong></div>
+          <div class="om-flow-metric"><span>Commission Rate</span><strong>10.0% Standard</strong></div>
+          <div class="om-flow-metric"><span>Total Accrued Commission</span><strong class="success-text">PKR 9,800</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="margin-top:12px;">
+          <h5><i data-lucide="calendar"></i> Monthly Payroll Settlement</h5>
+          <p>Accrued commission candidates will be settled during monthly institutional payroll run (<strong>August 2026 Payroll</strong>) upon COO executive clearance.</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Ledger</button>
+      <button class="btn btn-primary" onclick="Router.navigate('csr-commissions-all'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="eye"></i> View Full Commission Hub</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrEnrolmentHealthModal = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Learner Health & Provisioning Dossier: ${enr.prospect}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="activity" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">LMS PROVISIONING & ACTIVE LEARNING HEALTH</strong>
+            <p style="color:#166534;">Enrolment Ref: ${enr.id} · Programme: ${enr.programme}</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Learner</span><strong>${enr.prospect}</strong><small>${enr.leadId}</small></div>
+          <div class="om-flow-metric"><span>Curriculum Progress</span><strong>${enr.classesRemaining || '8/12 Classes Left'}</strong></div>
+          <div class="om-flow-metric"><span>Attendance Record</span><strong class="success-text">${enr.attendanceRate || '96%'} Attendance</strong></div>
+          <div class="om-flow-metric"><span>Health State</span><strong class="${enr.healthStatus === 'Renewal Due' ? 'warning-text' : 'success-text'}">${enr.healthStatus || 'Optimal'}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="margin-top:12px;">
+          <h5><i data-lucide="check-circle"></i> LMS Account & Access Token Status</h5>
+          <p><strong>LMS Account:</strong> <code style="font-family:monospace; color:#15803d;">ACTIVE_PROVISIONED</code></p>
+          <p><strong>LMS Role:</strong> Learner (Standard Interactive Track)</p>
+          <p><strong>Faculty Mentor:</strong> Ustadh Bilal (Weekly Feedback Score: 4.9/5)</p>
+          <p><strong>Next Scheduled Live Class:</strong> Tomorrow at 17:00 PKT</p>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Dossier</button>
+      ${enr.healthStatus === 'Renewal Due' ? `<button class="btn btn-primary" onclick="Actions.triggerCsrRenewalPitch('${enr.id}'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="refresh-cw"></i> Pitch Renewal Invoice</button>` : `<button class="btn btn-primary" onclick="Actions.triggerCsrLmsSyncCheck('${enr.id}'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="refresh-cw"></i> Verify LMS Sync</button>`}
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.triggerCsrRenewalPitch = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    Actions.audit("CSR_RENEWAL_PITCH_DISPATCHED", `Dispatched next-month subscription renewal invoice to ${enr.prospect} (${enr.id}).`, "Medium");
+    Notifications.push("Renewal Invoice Sent", `Sent subscription renewal invoice with loyalty discount to ${enr.prospect}.`, "success");
+  };
+
+  Actions.batchTriggerRenewals = function() {
+    const due = (db.csrData?.enrolments || []).filter(e => e.healthStatus === "Renewal Due");
+    due.forEach(e => {
+      Actions.audit("CSR_RENEWAL_PITCH_DISPATCHED", `Dispatched renewal pitch to ${e.prospect} (${e.id}).`, "Medium");
+    });
+    Notifications.push("Batch Renewals Sent", `Dispatched automated renewal pitches to ${due.length} learners.`, "success");
+  };
+
+  Actions.triggerCsrLmsSyncCheck = function(id) {
+    const enr = (db.csrData?.enrolments || []).find(e => e.id === id);
+    if (!enr) return;
+
+    Actions.audit("CSR_LMS_SYNC_VERIFIED", `Verified LMS account provisioning tokens and active grants for ${enr.prospect} (${enr.id}).`, "Low");
+    Notifications.push("LMS Sync Verified", `LMS account provisioning for ${enr.prospect} is 100% active and healthy.`, "success");
+  };
+
+  Actions.syncAllLmsAccounts = function() {
+    const active = (db.csrData?.enrolments || []).filter(e => e.status === "Active");
+    active.forEach(e => {
+      Actions.audit("CSR_LMS_SYNC_VERIFIED", `Synced LMS tokens for ${e.prospect}.`, "Low");
+    });
+    Notifications.push("LMS Accounts Synced", `Verified LMS tokens and classroom access for ${active.length} active learners.`, "success");
+  };
+
+  Actions.openCsrNewCaseModalForLearner = function(prospect, id) {
+    Actions.openCsrNewCaseModal();
+    setTimeout(() => {
+      const nameInput = document.getElementById("csr-new-case-name");
+      const subInput = document.getElementById("csr-new-case-sub");
+      if (nameInput) nameInput.value = `${prospect} (${id})`;
+      if (subInput) subInput.value = `Learner support inquiry regarding schedule adjustment / curriculum progression.`;
+    }, 100);
   };
 
 
