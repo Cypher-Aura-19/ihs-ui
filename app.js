@@ -2460,22 +2460,34 @@ const db = {
       { id: "FLP-302", leadId: "LD-102", leadName: "Mariam Tariq", contact: "+92 321 8899770", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "Today 15:30 PKT", type: "WhatsApp / Email", status: "Due", history: "Placement test link sent yesterday. No score logged yet.", nextAction: "Send reminder prompt with direct assessment link." },
       { id: "FLP-303", leadId: "LD-103", leadName: "Kamran Siddiqui", contact: "+92 333 1122334", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "Today 16:45 PKT", type: "Trial Confirmation", status: "Due", history: "Qualified score 82%. Preferred slot: Sat 16:00.", nextAction: "Confirm trainer availability with OM & send Daily.co link." },
       { id: "FLP-304", leadId: "LD-104", leadName: "Areeba Farooq", contact: "+92 345 9988776", programme: "K-12 Grade 8 Math", csr: "Sarah Jenkins", dueDate: "Today 18:00 PKT", type: "Parent Consultation", status: "Due", history: "Parent inquired about weekend section schedule.", nextAction: "Discuss Section A timings and fee structure." },
+      { id: "FLP-309", leadId: "LD-114", leadName: "Zainab Noor", contact: "+92 305 3344556", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Today 17:15 PKT", type: "Phone Call", status: "Due", history: "Web intake form submitted today.", nextAction: "Introductory evaluation call." },
       { id: "FLP-305", leadId: "LD-107", leadName: "Usman Raza", contact: "+92 300 7788991", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "Tomorrow 11:00 PKT", type: "Introductory Call", status: "Upcoming", history: "Inquiry via web form.", nextAction: "Call to introduce Vocational Web Track." },
       { id: "FLP-306", leadId: "LD-108", leadName: "Saima Bano", contact: "+92 322 4455667", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Tomorrow 15:00 PKT", type: "Phone Call", status: "Upcoming", history: "Initial message sent.", nextAction: "Follow-up on WhatsApp reply." },
-      { id: "FLP-307", leadId: "LD-105", leadName: "Danish Qureshi", contact: "+92 301 2233445", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "2026-08-11", type: "Post-Trial Conversion", status: "Completed", history: "Trial completed successfully. Enrolment verified.", nextAction: "Enrolment confirmed." },
-      { id: "FLP-308", leadId: "LD-106", leadName: "Hina Altaf", contact: "+92 312 6677889", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "2026-08-09", type: "Phone Call", status: "No Response", history: "3 contact attempts made over 5 days.", nextAction: "Marked lost / re-engage later." },
-      { id: "FLP-309", leadId: "LD-114", leadName: "Zainab Noor", contact: "+92 305 3344556", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Today 17:15 PKT", type: "Phone Call", status: "Due", history: "Web intake form submitted today.", nextAction: "Introductory evaluation call." },
-      { id: "FLP-310", leadId: "LD-115", leadName: "Hamza Qureshi", contact: "+92 313 7788112", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "Tomorrow 16:00 PKT", type: "Trial Scheduling", status: "Upcoming", history: "Qualified score 88%.", nextAction: "Book slot with Trainer Sara Javed." }
+      { id: "FLP-310", leadId: "LD-115", leadName: "Hamza Qureshi", contact: "+92 313 7788112", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "Tomorrow 16:00 PKT", type: "Trial Scheduling", status: "Upcoming", history: "Qualified score 88%.", nextAction: "Book slot with Trainer Sara Javed." },
+      { id: "FLP-311", leadId: "LD-116", leadName: "Nida Yasmeen", contact: "+92 324 2233889", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "Saturday 12:00 PKT", type: "Parent Consultation", status: "Upcoming", history: "Assessment Level 2 confirmed.", nextAction: "Consult with parent regarding weekend cohort." },
+      { id: "FLP-312", leadId: "LD-111", leadName: "Bilal Ahmed", contact: "+92 344 7788990", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "Monday 10:00 PKT", type: "Post-Trial Conversion", status: "Upcoming", history: "Trial completed successfully.", nextAction: "Finalize assisted enrolment order & bank slip." },
+      { id: "FLP-307", leadId: "LD-105", leadName: "Danish Qureshi", contact: "+92 301 2233445", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "2026-08-11 14:30", type: "Post-Trial Conversion", status: "Completed", history: "Trial completed successfully. Enrolment verified.", nextAction: "Enrolment order AEN-703 activated." },
+      { id: "FLP-313", leadId: "LD-109", leadName: "Zaid Khan", contact: "+92 300 1234567", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "2026-08-12 11:15", type: "Introductory Consultation", status: "Completed", history: "Discussed 1:1 adult track with guardian.", nextAction: "Placement test link dispatched; guardian consented." },
+      { id: "FLP-314", leadId: "LD-110", leadName: "Areeba Siddiqui", contact: "+92 331 4455889", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "2026-08-13 16:00", type: "Fee Installment Consultation", status: "Completed", history: "Parent requested two-part tuition structure.", nextAction: "Agreed on bi-weekly plan; assisted invoice generated." },
+      { id: "FLP-315", leadId: "LD-108", leadName: "Tariq Mahmood", contact: "+92 300 9988112", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "2026-08-14 15:20", type: "Syllabus Review Call", status: "Completed", history: "Detailed microservices module walkthrough.", nextAction: "Learner confirmed enrollment readiness for Q4 cohort." },
+      { id: "FLP-308", leadId: "LD-106", leadName: "Hina Altaf", contact: "+92 312 6677889", programme: "Applied Numeracy", csr: "Sarah Jenkins", dueDate: "2026-08-09 17:00", type: "Phone Call", status: "No Response", history: "3 contact attempts logged over 5 days.", nextAction: "Alternate WhatsApp reminder sent; pending supervisor review." },
+      { id: "FLP-316", leadId: "LD-112", leadName: "Farhan Malik", contact: "+92 321 9900112", programme: "Vocational Tech", csr: "Sarah Jenkins", dueDate: "2026-08-08 14:00", type: "Phone Call", status: "No Response", history: "4 calls unreturned. Evening shift conflict indicated.", nextAction: "Target Q4 re-touch; archived from daily queue." },
+      { id: "FLP-317", leadId: "LD-113", leadName: "Taimoor Shah", contact: "+92 333 5566778", programme: "K-12 Grade 8 Math", csr: "Sarah Jenkins", dueDate: "2026-08-07 11:30", type: "WhatsApp / SMS", status: "Escalated", history: "Unresponsive to initial 2 WhatsApp messages.", nextAction: "Escalated to Lead CSR for supervisor SMS dispatch." },
+      { id: "FLP-318", leadId: "LD-101", leadName: "Kashif Javed", contact: "+92 322 1100998", programme: "Basic Literacy", csr: "Sarah Jenkins", dueDate: "2026-08-06 16:45", type: "Phone Call", status: "No Response", history: "Phone switched off on 2 attempts.", nextAction: "Logged attempt 2/3. Final SMS scheduled." }
     ],
     trials: [
       { id: "TRL-501", leadId: "LD-103", prospect: "Kamran Siddiqui", course: "Vocational Technology", placementScore: "82%", consent: "Verified", csr: "Sarah Jenkins", slot: "Today 16:00 - 16:45", trainer: "Sara Javed", room: "https://ihs.daily.co/trial-501", attendance: "Pending Join", status: "Scheduled", outcome: "Pending Delivery" },
       { id: "TRL-502", leadId: "LD-104", prospect: "Areeba Farooq", course: "K-12 Grade 8 Math", placementScore: "78%", consent: "Verified (Parent)", csr: "Sarah Jenkins", slot: "Tomorrow 11:00 - 11:45", trainer: "Imran Qureshi", room: "https://ihs.daily.co/trial-502", attendance: "Scheduled", status: "Scheduled", outcome: "Pending Delivery" },
-      { id: "TRL-503", leadId: "LD-101", prospect: "Zubair Hashmi", course: "Basic Literacy", placementScore: "74%", consent: "Pending", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Unassigned", room: "", attendance: "Not Scheduled", status: "Ready for Scheduling", outcome: "Awaiting Schedule" },
-      { id: "TRL-504", leadId: "LD-102", prospect: "Mariam Tariq", course: "Applied Numeracy", placementScore: "Pending", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Unassigned", room: "", attendance: "Not Scheduled", status: "Qualification", outcome: "Needs Placement" },
+      { id: "TRL-503", leadId: "LD-101", prospect: "Zubair Hashmi", course: "Basic Literacy", placementScore: "74%", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Sara Javed", room: "", attendance: "Not Scheduled", status: "Ready for Scheduling", outcome: "Awaiting Slot Booking" },
+      { id: "TRL-504", leadId: "LD-102", prospect: "Mariam Tariq", course: "Applied Numeracy", placementScore: "Pending Score", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Nadia Rahman", room: "", attendance: "Not Scheduled", status: "Qualification", outcome: "Placement Test Dispatched" },
       { id: "TRL-505", leadId: "LD-105", prospect: "Danish Qureshi", course: "Basic Literacy", placementScore: "85%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-10 14:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-505", attendance: "Completed (45m/45m)", status: "Completed", outcome: "High Interest -> Converted" },
-      { id: "TRL-506", leadId: "LD-106", prospect: "Hina Altaf", course: "Applied Numeracy", placementScore: "68%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-08 15:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-506", attendance: "No-Show (Learner)", status: "No-Show", outcome: "Did not attend" },
-      { id: "TRL-507", leadId: "LD-115", prospect: "Hamza Qureshi", course: "Vocational Technology", placementScore: "88%", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Sara Javed", room: "", attendance: "Not Scheduled", status: "Ready for Scheduling", outcome: "Awaiting Schedule" },
-      { id: "TRL-508", leadId: "LD-116", prospect: "Nida Yasmeen", course: "Applied Numeracy", placementScore: "80%", consent: "Verified", csr: "Sarah Jenkins", slot: "Saturday 14:00 - 14:45", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-508", attendance: "Scheduled", status: "Scheduled", outcome: "Pending Delivery" }
+      { id: "TRL-506", leadId: "LD-106", prospect: "Hina Altaf", course: "Applied Numeracy", placementScore: "68%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-08 15:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-506", attendance: "No-Show (Learner)", status: "No-Show", outcome: "Did not attend (Re-booking active)" },
+      { id: "TRL-507", leadId: "LD-115", prospect: "Hamza Qureshi", course: "Vocational Technology", placementScore: "88%", consent: "Verified", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Sara Javed", room: "", attendance: "Not Scheduled", status: "Ready for Scheduling", outcome: "Awaiting Slot Booking" },
+      { id: "TRL-508", leadId: "LD-116", prospect: "Nida Yasmeen", course: "Applied Numeracy", placementScore: "80%", consent: "Verified", csr: "Sarah Jenkins", slot: "Saturday 14:00 - 14:45", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-508", attendance: "Scheduled", status: "Scheduled", outcome: "Pending Delivery" },
+      { id: "TRL-509", leadId: "LD-111", prospect: "Bilal Ahmed", course: "Basic Literacy", placementScore: "Pending Evaluation", consent: "Verified (Parent)", csr: "Sarah Jenkins", slot: "Unassigned", trainer: "Imran Qureshi", room: "", attendance: "Not Scheduled", status: "Qualification", outcome: "Diagnostic Assessment Sent" },
+      { id: "TRL-510", leadId: "LD-110", prospect: "Areeba Siddiqui", course: "Applied Numeracy", placementScore: "84%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-13 11:00", trainer: "Nadia Rahman", room: "https://ihs.daily.co/trial-510", attendance: "Completed (45m/45m)", status: "Completed", outcome: "Completed - Assisted Enrolment Created" },
+      { id: "TRL-511", leadId: "LD-108", prospect: "Tariq Mahmood", course: "Vocational Technology", placementScore: "90%", consent: "Verified", csr: "Sarah Jenkins", slot: "Tomorrow 17:30 - 18:15", trainer: "Sara Javed", room: "https://ihs.daily.co/trial-511", attendance: "Scheduled", status: "Scheduled", outcome: "Pending Delivery" },
+      { id: "TRL-512", leadId: "LD-109", prospect: "Zaid Khan", course: "Basic Literacy", placementScore: "76%", consent: "Verified", csr: "Sarah Jenkins", slot: "2026-08-07 10:00", trainer: "Imran Qureshi", room: "https://ihs.daily.co/trial-512", attendance: "No-Show (Technical Failure)", status: "No-Show", outcome: "No-Show (Rescheduled to WhatsApp 1:1)" }
     ],
     enrolments: [
       { id: "AEN-701", leadId: "LD-103", prospect: "Kamran Siddiqui", programme: "Vocational Technology", membership: "Standard Cohort (3 Months)", amount: "PKR 35,000", paymentStatus: "Awaiting Submission", csr: "Sarah Jenkins", attribution: "Sarah Jenkins (100%)", status: "Conversion Opportunity" },
@@ -3144,9 +3156,9 @@ const csrRouteDefinitions = {
     dataType: "followups", 
     filterFn: f => f.status === "Due",
     metrics: [
-      ["Due Today", () => (db.csrData?.followups || []).filter(f => f.status === "Due").length, "Urgent touchpoints"],
-      ["Calls Scheduled", () => "2 Calls", "Phone consultations"],
-      ["Trial Confirmations", () => "2 Reminders", "Daily.co links"]
+      ["Due Today", () => (db.csrData?.followups || []).filter(f => f.status === "Due").length + " Tasks", "Urgent touchpoints"],
+      ["Calls Scheduled", () => (db.csrData?.followups || []).filter(f => f.status === "Due" && f.type.includes("Call")).length + " Calls", "Phone consultations"],
+      ["SLA Compliance", () => "100%", "Within 2h response window"]
     ]
   },
   "csr-followups-upcoming": { 
@@ -3160,8 +3172,8 @@ const csrRouteDefinitions = {
     dataType: "followups", 
     filterFn: f => f.status === "Upcoming",
     metrics: [
-      ["Upcoming Tasks", () => (db.csrData?.followups || []).filter(f => f.status === "Upcoming").length, "Next 48 hours"],
-      ["Pipeline Covered", () => "PKR 53,000", "Expected deal value"],
+      ["Upcoming Tasks", () => (db.csrData?.followups || []).filter(f => f.status === "Upcoming").length + " Tasks", "Next 48-72 hours"],
+      ["Pipeline Covered", () => "PKR 134,000", "Expected deal value"],
       ["Auto-Reminders", () => "Active", "SMS/WhatsApp queue"]
     ]
   },
@@ -3176,7 +3188,7 @@ const csrRouteDefinitions = {
     dataType: "followups", 
     filterFn: f => f.status === "Completed",
     metrics: [
-      ["Completed Tasks", () => (db.csrData?.followups || []).filter(f => f.status === "Completed").length, "Successfully closed"],
+      ["Completed Tasks", () => (db.csrData?.followups || []).filter(f => f.status === "Completed").length + " Activities", "Successfully logged"],
       ["Conversions Resulting", () => "100%", "Direct enrolment link"],
       ["Avg Touches to Close", () => "3.2 touches", "Efficient cycle"]
     ]
@@ -3190,9 +3202,9 @@ const csrRouteDefinitions = {
     context: "Retry queue", 
     family: "table", 
     dataType: "followups", 
-    filterFn: f => f.status === "No Response",
+    filterFn: f => f.status === "No Response" || f.status === "Escalated",
     metrics: [
-      ["Unresponsive", () => (db.csrData?.followups || []).filter(f => f.status === "No Response").length, "3+ attempts logged"],
+      ["Unresponsive", () => (db.csrData?.followups || []).filter(f => f.status === "No Response" || f.status === "Escalated").length + " Leads", "3+ attempts logged"],
       ["Retry Channels", () => "SMS / WhatsApp", "Fallback automated notice"],
       ["Archival Horizon", () => "7 Days", "Automated cooling"]
     ]
@@ -18029,15 +18041,61 @@ const RenderEngine = {
         <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Leads</button>
       `;
     } else if (config.dataType === "followups") {
-      toolbarActions = `
-        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewFollowupModal()"><i data-lucide="alarm-clock"></i> New Follow-up Task</button>
-        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Tasks</button>
-      `;
+      if (route === "csr-followups-due") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewFollowupModal()"><i data-lucide="alarm-clock"></i> New Follow-up Task</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.completeAllDueCsrFollowups()"><i data-lucide="check-check"></i> Complete All Due Today</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Tasks</button>
+        `;
+      } else if (route === "csr-followups-upcoming") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewFollowupModal()"><i data-lucide="calendar-plus"></i> Schedule New Task</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Schedule</button>
+        `;
+      } else if (route === "csr-followups-completed") {
+        toolbarActions = `
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Activity History</button>
+        `;
+      } else if (route === "csr-followups-no-response") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.retryAllUnresponsiveFollowups()"><i data-lucide="send"></i> Batch Retry (SMS/WhatsApp)</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Escalations</button>
+        `;
+      } else {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewFollowupModal()"><i data-lucide="alarm-clock"></i> New Follow-up Task</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Tasks</button>
+        `;
+      }
     } else if (config.dataType === "trials") {
-      toolbarActions = `
-        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal()"><i data-lucide="calendar-plus"></i> Schedule Trial Session</button>
-        <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Trials</button>
-      `;
+      if (route === "csr-trials-qualification") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewPlacementModal()"><i data-lucide="send"></i> Dispatch Placement Test</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Qualification Queue</button>
+        `;
+      } else if (route === "csr-trials-ready") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewTrialModal()"><i data-lucide="calendar-plus"></i> Book Trial Slot</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrBatchProvisionModal()"><i data-lucide="layers"></i> Batch Daily.co Tokens</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Ready Leads</button>
+        `;
+      } else if (route === "csr-trials-scheduled") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.sendAllTrialReminders()"><i data-lucide="bell"></i> Send Batch Reminders</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrBatchProvisionModal()"><i data-lucide="layers"></i> Batch Daily.co Tokens</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Schedule</button>
+        `;
+      } else if (route === "csr-trials-outcomes") {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrBatchConversionOpportunities()"><i data-lucide="sparkles"></i> Process Conversion Opps</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Outcomes Report</button>
+        `;
+      } else {
+        toolbarActions = `
+          <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewTrialModal()"><i data-lucide="calendar-plus"></i> Schedule Trial Session</button>
+          <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('${route}')"><i data-lucide="download"></i> Export Trials</button>
+        `;
+      }
     } else if (config.dataType === "enrolments") {
       toolbarActions = `
         <button class="btn btn-primary btn-xs" onclick="Actions.openCsrNewAssistedEnrolmentModal()"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>
@@ -18089,9 +18147,13 @@ const RenderEngine = {
               <option value="Contacted">Contacted</option>
               <option value="Qualified">Qualified</option>
               <option value="Due">Due Today</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="Completed">Completed</option>
               <option value="Scheduled">Scheduled</option>
               <option value="Approved">Approved / Converted</option>
               <option value="Payable">Payable</option>
+              <option value="No Response">No Response</option>
+              <option value="Escalated">Escalated</option>
               <option value="Lost">Lost / Disqualified</option>
             </select>
           </div>
@@ -18158,10 +18220,34 @@ const RenderEngine = {
       return `<tr><th>Prospect / ID</th><th>Programme / Interest</th><th>Source / Campaign</th><th>Expected Value</th><th>Consent & Score</th><th>Stage</th><th>Actions</th></tr>`;
     }
     if (dataType === "followups") {
+      if (route === "csr-followups-due") {
+        return `<tr><th>Prospect / Contact</th><th>Programme Track</th><th>Due Timing (PKT)</th><th>Task Type & Channel</th><th>History & Objective</th><th>Urgency</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-followups-upcoming") {
+        return `<tr><th>Prospect / Contact</th><th>Programme Track</th><th>Scheduled Date & Time</th><th>Task Type</th><th>Planned Next Action</th><th>Schedule Status</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-followups-completed") {
+        return `<tr><th>Prospect / Learner</th><th>Programme Track</th><th>Execution Timestamp</th><th>Task Type</th><th>Outcome Notes & Results</th><th>Resulting State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-followups-no-response") {
+        return `<tr><th>Prospect / Contact</th><th>Programme Track</th><th>Attempt Count & Last Touch</th><th>Exhausted Channels</th><th>Escalation Reason</th><th>State</th><th>Actions</th></tr>`;
+      }
       return `<tr><th>Lead / Contact</th><th>Programme</th><th>Due Date & Time</th><th>Task Type</th><th>History & Next Step</th><th>Status</th><th>Actions</th></tr>`;
     }
     if (dataType === "trials") {
-      return `<tr><th>Prospect / Request ID</th><th>Programme</th><th>Score & Consent</th><th>Slot & Trainer</th><th>Daily.co Room</th><th>Outcome & State</th><th>Actions</th></tr>`;
+      if (route === "csr-trials-qualification") {
+        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Assessment State</th><th>Diagnostic Score</th><th>Guardian Consent</th><th>Readiness State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-trials-ready") {
+        return `<tr><th>Qualified Prospect / ID</th><th>Programme Track</th><th>Placement Level</th><th>Preferred Slot Window</th><th>Recommended Trainer</th><th>Booking State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-trials-scheduled") {
+        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Scheduled Slot (PKT)</th><th>Assigned Trainer</th><th>Daily.co Room Token</th><th>Reminder State</th><th>Actions</th></tr>`;
+      }
+      if (route === "csr-trials-outcomes") {
+        return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Delivered Slot</th><th>Trainer Evaluation</th><th>Learner Attendance</th><th>Conversion Pitch State</th><th>Actions</th></tr>`;
+      }
+      return `<tr><th>Prospect / Request ID</th><th>Programme Track</th><th>Score & Consent</th><th>Slot & Trainer</th><th>Daily.co Room</th><th>Outcome & State</th><th>Actions</th></tr>`;
     }
     if (dataType === "enrolments") {
       return `<tr><th>Prospect / Enrolment ID</th><th>Programme</th><th>Membership / Product</th><th>Order Amount</th><th>CSR Attribution</th><th>Status</th><th>Actions</th></tr>`;
@@ -18305,6 +18391,85 @@ const RenderEngine = {
       }
 
       if (dataType === "followups") {
+        if (route === "csr-followups-due") {
+          return `
+            <tr>
+              <td><strong>${item.leadName}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><strong class="error-text"><i data-lucide="clock" style="width:12px;height:12px;display:inline;"></i> ${item.dueDate}</strong></td>
+              <td><span class="badge badge-primary">${item.type}</span></td>
+              <td><strong>${item.nextAction}</strong><span class="table-subline">${item.history}</span></td>
+              <td><span class="badge badge-warning">Due Today</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowup('${item.id}')"><i data-lucide="phone-outgoing"></i> Execute Task</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.rescheduleCsrFollowupModal('${item.id}')"><i data-lucide="clock"></i> Reschedule</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="file-text"></i> Lead File</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-followups-upcoming") {
+          return `
+            <tr>
+              <td><strong>${item.leadName}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><strong><i data-lucide="calendar" style="width:12px;height:12px;display:inline;"></i> ${item.dueDate}</strong></td>
+              <td><span class="badge badge-secondary">${item.type}</span></td>
+              <td><strong>${item.nextAction}</strong><span class="table-subline">${item.history}</span></td>
+              <td><span class="badge badge-info">Upcoming</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowup('${item.id}')"><i data-lucide="play"></i> Start Early</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.rescheduleCsrFollowupModal('${item.id}')"><i data-lucide="calendar"></i> Edit Time</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="file-text"></i> Lead File</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-followups-completed") {
+          return `
+            <tr>
+              <td><strong>${item.leadName}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><span class="table-subline">${item.dueDate}</span></td>
+              <td><span class="badge badge-success">${item.type}</span></td>
+              <td><strong>${item.nextAction}</strong><span class="table-subline">${item.history}</span></td>
+              <td><span class="badge badge-success">Completed</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrFollowupDetailModal('${item.id}')"><i data-lucide="file-check"></i> View Details</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="user-check"></i> Lead File</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-followups-no-response") {
+          return `
+            <tr>
+              <td><strong>${item.leadName}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
+              <td><strong>${item.programme}</strong></td>
+              <td><strong class="error-text">3+ Attempts Logged</strong><span class="table-subline">${item.dueDate}</span></td>
+              <td><span class="badge badge-warning">Phone / WhatsApp</span></td>
+              <td><strong class="${item.status === 'Escalated' ? 'error-text' : ''}">${item.nextAction}</strong><span class="table-subline">${item.history}</span></td>
+              <td><span class="badge ${item.status === 'Escalated' ? 'badge-error' : 'badge-warning'}">${item.status}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrRetryModal('${item.id}')"><i data-lucide="send"></i> Retry Outreach</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.escalateCsrFollowup('${item.id}')"><i data-lucide="alert-triangle"></i> Escalate</button>
+                  <button class="btn btn-error btn-xs" onclick="Actions.openCsrDisqualifyModal('${item.leadId}')"><i data-lucide="x-circle"></i> Disqualify</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         return `
           <tr>
             <td><strong>${item.leadName}</strong><span class="table-subline">${item.id} · ${item.contact}</span></td>
@@ -18324,13 +18489,94 @@ const RenderEngine = {
       }
 
       if (dataType === "trials") {
+        if (route === "csr-trials-qualification") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.course}</strong></td>
+              <td>${item.placementScore.includes("Pending") ? `<span class="badge badge-warning">Awaiting Diagnostic</span>` : `<span class="badge badge-success">Evaluated</span>`}</td>
+              <td><strong>${item.placementScore}</strong></td>
+              <td><span class="badge badge-outline">${item.consent}</span></td>
+              <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">${item.outcome}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  ${item.placementScore.includes("Pending") ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrSendPlacementLink('${item.id}')"><i data-lucide="send"></i> Send Link</button>` : ''}
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrRecordPlacementScoreModal('${item.id}')"><i data-lucide="award"></i> Record Score</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-trials-ready") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.course}</strong></td>
+              <td><span class="badge badge-success">${item.placementScore}</span><span class="table-subline">Consent: ${item.consent}</span></td>
+              <td><strong>${item.slot || 'Flexible PKT Slot'}</strong></td>
+              <td><strong>${item.trainer || 'Auto-match Faculty'}</strong></td>
+              <td><span class="badge badge-warning">Ready for Booking</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrScheduleTrialModal('${item.id}')"><i data-lucide="calendar-plus"></i> Book Slot</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrLead('${item.leadId}')"><i data-lucide="file-text"></i> Lead File</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-trials-scheduled") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.course}</strong></td>
+              <td><strong style="color:var(--navy-dark);">${item.slot}</strong></td>
+              <td><strong>${item.trainer}</strong></td>
+              <td>
+                ${item.room ? `<a href="javascript:void(0)" onclick="Actions.openCsrJoinTrialRoom('${item.room}')" class="font-mono text-xs" style="color:var(--teal-primary); font-weight:600;"><i data-lucide="video" style="width:12px;height:12px;display:inline-block;vertical-align:middle;"></i> Token Active</a>` : `<span class="badge badge-secondary">Pending</span>`}
+              </td>
+              <td><span class="badge badge-success">Dispatched</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="check-circle"></i> Record Outcome</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.sendCsrTrialReminder('${item.id}')"><i data-lucide="bell"></i> Send Reminder</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
+        if (route === "csr-trials-outcomes") {
+          return `
+            <tr>
+              <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
+              <td><strong>${item.course}</strong></td>
+              <td>${item.slot}</td>
+              <td><strong>${item.outcome}</strong><span class="table-subline">Trainer: ${item.trainer}</span></td>
+              <td><span class="badge ${item.attendance.includes('Absent') ? 'badge-error' : 'badge-success'}">${item.attendance}</span></td>
+              <td><span class="badge ${badgeClass}">${item.status}</span></td>
+              <td>
+                <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                  ${item.status === 'Completed' ? `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrDirectCheckout('${item.leadId}')"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>` : `<button class="btn btn-primary btn-xs" onclick="Actions.openCsrTrialOutcome('${item.id}')"><i data-lucide="edit"></i> Update Outcome</button>`}
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTrial('${item.id}')"><i data-lucide="eye"></i> Details</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }
+
         return `
           <tr>
             <td><strong>${item.prospect}</strong><span class="table-subline">${item.id} · ${item.leadId}</span></td>
             <td><strong>${item.course}</strong></td>
             <td>Placement: ${item.placementScore}<span class="table-subline">Consent: ${item.consent}</span></td>
             <td>${item.slot}<span class="table-subline">Trainer: ${item.trainer}</span></td>
-            <td>${item.room ? `<span class="badge badge-success">Provisioned</span>` : `<span class="badge badge-secondary">Pending</span>`}</td>
+            <td>${item.room ? `<a href="javascript:void(0)" onclick="Actions.openCsrJoinTrialRoom('${item.room}')" class="font-mono text-xs" style="color:var(--teal-primary); font-weight:600;"><i data-lucide="video" style="width:12px;height:12px;display:inline-block;vertical-align:middle;"></i> Token Active</a>` : `<span class="badge badge-secondary">Pending</span>`}</td>
             <td><span class="badge ${badgeClass}">${item.status}</span><span class="table-subline">${item.outcome}</span></td>
             <td>
               <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
@@ -28384,6 +28630,178 @@ document.addEventListener("DOMContentLoaded", () => {
     window.lucide?.createIcons();
   };
 
+  Actions.openCsrTrial = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Trial Request & Session File: ${trial.prospect} (${trial.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="video"></i>
+          <div>
+            <strong>FLOW-007 / CSR-007 LIVE TRIAL & DIAGNOSTIC SESSION DOSSIER</strong>
+            <p>Placement score, room provisioning token, trainer attribution, and conversion pipeline.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect Name</span><strong>${trial.prospect}</strong><small>${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Programme Track</span><strong>${trial.course}</strong></div>
+          <div class="om-flow-metric"><span>Trial Status</span><strong class="${trial.status === 'Scheduled' ? 'success-text' : (trial.status === 'Ready for Scheduling' ? 'warning-text' : '')}">${trial.status}</strong></div>
+          <div class="om-flow-metric"><span>Assigned Trainer</span><strong>${trial.trainer || 'Unassigned'}</strong></div>
+        </div>
+
+        <div class="om-flow-grid" style="margin-top:12px;">
+          <div class="om-flow-metric"><span>Diagnostic Score</span><strong>${trial.placementScore}</strong></div>
+          <div class="om-flow-metric"><span>Guardian Consent</span><strong>${trial.consent}</strong></div>
+          <div class="om-flow-metric"><span>Scheduled Slot (PKT)</span><strong>${trial.slot}</strong></div>
+          <div class="om-flow-metric"><span>Attendance Record</span><strong>${trial.attendance || 'Not Yet Logged'}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box" style="margin-top:12px;">
+          <h5><i data-lucide="link"></i> Daily.co Room Token & Technical Diagnostics</h5>
+          <p><strong>Room Token:</strong> ${trial.room ? `<code style="font-family:monospace; background:#e6f4ea; padding:2px 6px; border-radius:4px; color:#137333;">${trial.room}</code>` : `<span class="badge badge-secondary">Pending Provisioning</span>`}</p>
+          <p><strong>Assessment Notes:</strong> ${trial.outcome || 'Pending session execution.'}</p>
+          ${trial.notes ? `<p><strong>CSR Notes:</strong> ${trial.notes}</p>` : ''}
+        </div>
+
+        ${lead ? `
+          <div class="om-flow-evidence-box" style="margin-top:12px; background:#f8fafc; border-left:3px solid var(--teal-primary);">
+            <h5><i data-lucide="user"></i> Associated Lead Record (${lead.id})</h5>
+            <p><strong>Contact:</strong> ${lead.contact} · <strong>City:</strong> ${lead.city} · <strong>Parent Stage:</strong> ${lead.stage}</p>
+            <p><strong>Lead Quality Score:</strong> ${lead.score}/100 · <strong>Preferred Slot:</strong> ${lead.preferredSlot}</p>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+        <div style="display:flex; gap:8px;">
+          ${trial.room ? `<button class="btn btn-primary btn-sm" onclick="Actions.openCsrJoinTrialRoom('${trial.room}')"><i data-lucide="video"></i> Launch Daily.co Session</button>` : `<button class="btn btn-primary btn-sm" onclick="Actions.openCsrScheduleTrialModal('${trial.id}')"><i data-lucide="calendar"></i> Provision & Book Slot</button>`}
+          ${trial.status === 'Scheduled' ? `<button class="btn btn-secondary btn-sm" onclick="Actions.sendCsrTrialReminder('${trial.id}')"><i data-lucide="bell"></i> Send Reminder</button>` : ''}
+        </div>
+        <div style="display:flex; gap:8px;">
+          ${trial.status === 'Scheduled' || trial.status === 'Completed' ? `<button class="btn btn-primary btn-sm" onclick="Actions.openCsrTrialOutcome('${trial.id}')"><i data-lucide="award"></i> Record Outcome</button>` : ''}
+          ${trial.status === 'Completed' ? `<button class="btn btn-success btn-sm" onclick="Actions.openCsrDirectCheckout('${trial.leadId}')"><i data-lucide="shopping-cart"></i> Assisted Checkout</button>` : ''}
+          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Dossier</button>
+        </div>
+      </div>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrScheduleTrialModal = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Book Live Trial Slot (FLOW-007): ${trial.prospect}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="calendar-plus"></i>
+          <div>
+            <strong>TRAINER DISPATCH & DAILY.CO TOKEN PROVISIONING</strong>
+            <p>Coordinate faculty availability, allocate Daily.co room, and dispatch calendar invitations.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${trial.course}</strong></div>
+          <div class="om-flow-metric"><span>Placement Score</span><strong>${trial.placementScore}</strong></div>
+          <div class="om-flow-metric"><span>Consent Status</span><strong>${trial.consent}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Assign Certified Faculty Trainer *</label>
+          <select id="csr-trial-trainer-select" class="form-control">
+            <option value="Dr. Tariq Mahmood" ${trial.trainer === 'Dr. Tariq Mahmood' ? 'selected' : ''}>Dr. Tariq Mahmood — Senior Hifz & Tajweed Specialist (5/5 rating)</option>
+            <option value="Ustadh Bilal" ${trial.trainer === 'Ustadh Bilal' ? 'selected' : ''}>Ustadh Bilal — Level 1 Foundations & Youth Coach (4.9/5 rating)</option>
+            <option value="Hafiz Usman" ${trial.trainer === 'Hafiz Usman' ? 'selected' : ''}>Hafiz Usman — Nazra & Islamic Studies Master (4.8/5 rating)</option>
+            <option value="Ayesha Khan" ${trial.trainer === 'Ayesha Khan' ? 'selected' : ''}>Ayesha Khan — Female Faculty Lead / Kids Specialist (5/5 rating)</option>
+            <option value="Zainab Raza" ${trial.trainer === 'Zainab Raza' ? 'selected' : ''}>Zainab Raza — Female Faculty / Tajweed Rules (4.9/5 rating)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Select Trial Slot Date & Time (PKT) *</label>
+          <select id="csr-trial-slot-select" class="form-control">
+            <option value="Tomorrow at 16:00 PKT">Tomorrow at 16:00 PKT (High Availability)</option>
+            <option value="Tomorrow at 18:00 PKT">Tomorrow at 18:00 PKT (Evening Prime Slot)</option>
+            <option value="Tomorrow at 20:30 PKT">Tomorrow at 20:30 PKT (After-dinner Slot)</option>
+            <option value="In 2 Days at 15:00 PKT">In 2 Days at 15:00 PKT</option>
+            <option value="In 2 Days at 17:30 PKT">In 2 Days at 17:30 PKT</option>
+            <option value="In 3 Days at 19:00 PKT">In 3 Days at 19:00 PKT (Weekend Slot)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Technical Provisioning & Automated Reminders</label>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="csr-trial-auto-room" checked> Auto-generate secure Daily.co video room token with trainer co-host privileges
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="csr-trial-send-invites" checked> Dispatch instant WhatsApp & Email confirmation link with calendar .ics file
+            </label>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCsrScheduleTrial('${trial.id}')"><i data-lucide="check-circle"></i> Confirm Booking & Provision Room</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCsrScheduleTrial = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const trainer = document.getElementById("csr-trial-trainer-select")?.value || "Ustadh Bilal";
+    const slot = document.getElementById("csr-trial-slot-select")?.value || "Tomorrow at 16:00 PKT";
+    const autoRoom = document.getElementById("csr-trial-auto-room")?.checked !== false;
+
+    trial.trainer = trainer;
+    trial.slot = slot;
+    trial.status = "Scheduled";
+    if (autoRoom || !trial.room) {
+      trial.room = `https://ihs.daily.co/trial-${trial.id.toLowerCase()}-${Date.now().toString().slice(-4)}`;
+    }
+
+    // Update corresponding lead record
+    const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+    if (lead) {
+      lead.stage = "Trial Scheduled";
+      lead.preferredSlot = slot;
+    }
+
+    // Update or create follow-up task for the trial reminder
+    let flp = (db.csrData?.followups || []).find(f => f.leadId === trial.leadId);
+    if (flp) {
+      flp.status = "Upcoming";
+      flp.dueDate = slot;
+      flp.type = "Trial Reminder";
+      flp.nextAction = `Execute pre-trial reminder call 1 hour before ${slot}`;
+    }
+
+    Actions.audit("CSR_TRIAL_SCHEDULED", `Scheduled trial ${trial.id} for ${trial.prospect} with ${trainer} at ${slot}. Room token: ${trial.room}`, "Medium");
+    Notifications.push("Trial Slot Confirmed", `Trial scheduled for ${trial.prospect} with ${trainer}. Daily.co room provisioned.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
   Actions.openCsrTrialOutcome = function(id) {
     const trial = (db.csrData?.trials || []).find(t => t.id === id);
     if (!trial) return;
@@ -28407,25 +28825,39 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="om-flow-metric"><span>CSR Owner</span><strong>${trial.csr || 'Sarah Jenkins'}</strong></div>
         </div>
 
-        <div class="form-group">
-          <label>Trial Outcome & Purchase Readiness *</label>
+        <div class="form-group" style="margin-top:12px;">
+          <label>Trial Session Delivery Outcome & Purchase Readiness *</label>
           <select id="csr-outcome-select" class="form-control">
-            <option value="Completed - High Interest">Completed — High Interest (Create Enrolment Opportunity)</option>
-            <option value="Completed - Needs Follow-up">Completed — Follow-up Required (Schedule Callback)</option>
-            <option value="Completed - Disqualified">Completed — Disqualified / Schedule Conflict</option>
-            <option value="No-Show">No-Show — Schedule Re-booking</option>
+            <option value="Completed - High Interest">Completed — High Interest (Create Assisted Enrolment Opportunity)</option>
+            <option value="Completed - Ready for Checkout">Completed — Ready for Immediate Checkout (Send Invoice / Link)</option>
+            <option value="Completed - Follow-up Required">Completed — Follow-up Required (Parent Requested 48h Decision Time)</option>
+            <option value="Completed - Budget Hesitation">Completed — Budget Hesitation (Offer Installment / Custom Plan)</option>
+            <option value="No-Show - Reschedule Required">No-Show — Absent Without Notice (Automate Re-booking Outreach)</option>
+            <option value="Disqualified - Schedule Conflict">Disqualified — Timing Mismatch / Discontinued</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Trainer Assessment & Feedback *</label>
-          <textarea id="csr-outcome-notes" class="form-control" rows="2" placeholder="Learner showed strong aptitude. Level 1 curriculum recommended. Ready for enrolment."></textarea>
+          <label>Trainer Assessment & Diagnostic Feedback *</label>
+          <textarea id="csr-outcome-notes" class="form-control" rows="3" placeholder="Learner showed strong aptitude and retention. Level 1 curriculum recommended. Parent engaged and satisfied with trainer interaction."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Follow-up Workflow Automation</label>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="csr-trial-create-enrolment-cb" checked> Automatically create pending enrolment card in Hub 4 (Assisted Orders)
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="csr-trial-send-eval-report" checked> Dispatch structured PDF evaluation report to guardian via WhatsApp
+            </label>
+          </div>
         </div>
       </div>
     `;
     document.getElementById("modal-footer").innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.submitCsrTrialOutcome('${trial.id}')"><i data-lucide="check-circle"></i> Save Outcome & Proceed</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrTrialOutcome('${trial.id}')"><i data-lucide="check-circle"></i> Save Outcome & Transition Pipeline</button>
     `;
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
@@ -28436,22 +28868,59 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!trial) return;
 
     const outcomeVal = document.getElementById("csr-outcome-select")?.value || "Completed - High Interest";
+    const notes = document.getElementById("csr-outcome-notes")?.value || "Learner completed session successfully.";
+    const createEnrolment = document.getElementById("csr-trial-create-enrolment-cb")?.checked !== false;
+
+    trial.notes = notes;
 
     if (outcomeVal.includes("No-Show")) {
       trial.status = "No-Show";
       trial.outcome = "No-Show (Re-booking scheduled)";
       trial.attendance = "Absent";
-      Actions.audit("CSR_TRIAL_NOSHOW", `Logged trial no-show for ${trial.prospect} (${trial.id}).`, "Low");
-      Notifications.push("Outcome Saved", `No-show logged. Re-engagement task added to follow-up queue.`, "warning");
+
+      // Create a follow-up task for re-booking
+      const newFlpId = "FLP-" + (300 + (db.csrData.followups || []).length + 1);
+      db.csrData.followups.unshift({
+        id: newFlpId,
+        leadId: trial.leadId,
+        leadName: trial.prospect,
+        contact: "+92 300 1234567",
+        programme: trial.course,
+        dueDate: "Today (Overdue)",
+        type: "Trial No-Show Follow-up",
+        history: `Trial missed at ${trial.slot}. Need re-engagement.`,
+        nextAction: "Call parent to re-schedule trial slot with faculty.",
+        status: "Due",
+        csr: "Sarah Jenkins"
+      });
+
+      Actions.audit("CSR_TRIAL_NOSHOW", `Logged trial no-show for ${trial.prospect} (${trial.id}). Scheduled re-booking follow-up.`, "Low");
+      Notifications.push("Trial No-Show Logged", `No-show recorded. Re-engagement task ${newFlpId} added to follow-up queue.`, "warning");
+    } else if (outcomeVal.includes("Disqualified")) {
+      trial.status = "Disqualified";
+      trial.outcome = outcomeVal;
+      trial.attendance = "Attended (Ineligible)";
+      const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+      if (lead) {
+        lead.stage = "Lost";
+        lead.lostReason = "Trial Evaluation: Schedule Mismatch";
+      }
+      Actions.audit("CSR_TRIAL_DISQUALIFIED", `Disqualified trial ${trial.id} for ${trial.prospect}.`, "Low");
+      Notifications.push("Trial Disqualified", `Trial recorded as disqualified.`, "info");
     } else {
       trial.status = "Completed";
       trial.outcome = outcomeVal;
       trial.attendance = "Attended (45 mins)";
 
-      if (outcomeVal.includes("High Interest")) {
+      const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+      if (lead) {
+        lead.stage = "Trial Completed";
+      }
+
+      if (createEnrolment || outcomeVal.includes("High Interest") || outcomeVal.includes("Ready for Checkout")) {
         let existing = (db.csrData.enrolments || []).find(e => e.leadId === trial.leadId);
         if (!existing) {
-          const newEnrId = "AEN-" + (700 + db.csrData.enrolments.length + 1);
+          const newEnrId = "AEN-" + (700 + (db.csrData.enrolments || []).length + 1);
           db.csrData.enrolments.unshift({
             id: newEnrId,
             leadId: trial.leadId,
@@ -28459,13 +28928,13 @@ document.addEventListener("DOMContentLoaded", () => {
             programme: trial.course,
             membership: "1:1 Live Interactive (Monthly)",
             amount: "PKR 18,000 / mo",
-            paymentStatus: "Conversion Pitch Dispatched",
+            paymentStatus: outcomeVal.includes("Ready") ? "Invoice Issued" : "Conversion Pitch Dispatched",
             csr: "Sarah Jenkins",
             attribution: "Sarah Jenkins (100%)",
-            status: "Conversion Opportunity"
+            status: outcomeVal.includes("Ready") ? "Pending Verification" : "Conversion Opportunity"
           });
         }
-        Actions.audit("CSR_TRIAL_COMPLETED_CONVERSION_OPP", `Completed trial ${trial.id} with high interest for ${trial.prospect}. Created conversion opportunity.`, "Medium");
+        Actions.audit("CSR_TRIAL_COMPLETED_CONVERSION_OPP", `Completed trial ${trial.id} with high interest for ${trial.prospect}. Created enrolment opportunity.`, "Medium");
         Notifications.push("Trial Completed", `Outcome logged. Assisted enrolment opportunity created for ${trial.prospect}.`, "success");
       } else {
         Actions.audit("CSR_TRIAL_OUTCOME_SAVED", `Saved trial outcome ${trial.id} for ${trial.prospect}: ${outcomeVal}`, "Low");
@@ -28474,6 +28943,488 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrSendPlacementLink = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Send Diagnostic Assessment: ${trial.prospect}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="send"></i>
+          <div>
+            <strong>FLOW-007 / CSR-007 DIAGNOSTIC PLACEMENT LINK DISPATCH</strong>
+            <p>Send interactive diagnostic assessment URL to learner/parent via automated multi-channel template.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${trial.course}</strong></div>
+          <div class="om-flow-metric"><span>Assessment Status</span><strong>${trial.placementScore}</strong></div>
+          <div class="om-flow-metric"><span>Consent Record</span><strong>${trial.consent}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Delivery Channel *</label>
+          <select id="csr-placement-channel-select" class="form-control">
+            <option value="WhatsApp + SMS">WhatsApp + SMS Notification (High Delivery)</option>
+            <option value="WhatsApp Only">WhatsApp Direct Link</option>
+            <option value="SMS Only">SMS Direct Link</option>
+            <option value="Email">Email Diagnostic Packet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Diagnostic Test URL</label>
+          <input type="text" class="form-control" value="https://portal.ihs.edu.pk/assessment/${trial.id.toLowerCase()}" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>Custom Outreach Note (Optional)</label>
+          <textarea id="csr-placement-custom-note" class="form-control" rows="2" placeholder="Assalam-o-Alaikum! Please take 5-10 minutes with your child to complete this short diagnostic test before our scheduled trial session."></textarea>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.sendCsrPlacementLinkSubmit('${trial.id}')"><i data-lucide="send"></i> Dispatch Assessment Link</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.sendCsrPlacementLinkSubmit = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const channel = document.getElementById("csr-placement-channel-select")?.value || "WhatsApp + SMS";
+    Actions.audit("CSR_PLACEMENT_LINK_SENT", `Dispatched diagnostic placement link to ${trial.prospect} (${trial.id}) via ${channel}.`, "Low");
+    Notifications.push("Diagnostic Link Sent", `Placement link sent to ${trial.prospect} via ${channel}.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+  };
+
+  Actions.openCsrRecordPlacementScoreModal = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Record Diagnostic Placement Score: ${trial.prospect}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="award"></i>
+          <div>
+            <strong>FLOW-007 DIAGNOSTIC EVALUATION & QUALIFICATION GATE</strong>
+            <p>Score the learner's placement assessment and confirm guardian consent for live session.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${trial.prospect}</strong><small>${trial.leadId}</small></div>
+          <div class="om-flow-metric"><span>Programme Track</span><strong>${trial.course}</strong></div>
+          <div class="om-flow-metric"><span>Current Score</span><strong>${trial.placementScore}</strong></div>
+          <div class="om-flow-metric"><span>Consent</span><strong>${trial.consent}</strong></div>
+        </div>
+
+        <div class="form-group" style="margin-top:12px;">
+          <label>Diagnostic Test Result & Recommended Placement *</label>
+          <select id="csr-score-select" class="form-control">
+            <option value="92/100 (Advanced / Level 2 Ready)">92/100 (Advanced — Fast-track Level 2 Ready)</option>
+            <option value="85/100 (Standard Track Qualified)" selected>85/100 (Standard Track Qualified — Ready for Trial)</option>
+            <option value="78/100 (Foundations / Level 1 Recommended)">78/100 (Foundations — Level 1 Recommended)</option>
+            <option value="65/100 (Needs Remedial Pre-Trial Review)">65/100 (Needs Remedial Pre-Trial Review)</option>
+            <option value="Below 50 (Unqualified / Recommend Basic Nazra)">Below 50 (Unqualified — Recommend Basic Nazra)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Guardian Consent & Session Recording Agreement *</label>
+          <select id="csr-consent-select" class="form-control">
+            <option value="Verified via WhatsApp" selected>Verified via WhatsApp (Signed Consent)</option>
+            <option value="Verified via Phone Call">Verified via Recorded Phone Call</option>
+            <option value="Consent Pending Verification">Consent Pending Verification</option>
+            <option value="Refused / Opted Out">Refused / Opted Out</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Readiness Pipeline State Transition *</label>
+          <select id="csr-readiness-select" class="form-control">
+            <option value="Ready for Scheduling" selected>Ready for Scheduling (Move to Booking Queue)</option>
+            <option value="Needs Further Qualification">Needs Further Qualification</option>
+            <option value="Disqualify">Disqualify Lead</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCsrPlacementScore('${trial.id}')"><i data-lucide="check-circle"></i> Save Placement & Update Pipeline</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCsrPlacementScore = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    const score = document.getElementById("csr-score-select")?.value || "85/100 (Standard Track Qualified)";
+    const consent = document.getElementById("csr-consent-select")?.value || "Verified via WhatsApp";
+    const readiness = document.getElementById("csr-readiness-select")?.value || "Ready for Scheduling";
+
+    trial.placementScore = score;
+    trial.consent = consent;
+    trial.status = readiness;
+
+    if (readiness === "Ready for Scheduling") {
+      trial.outcome = "Qualified for Trial Booking";
+      const lead = (db.csrData?.leads || []).find(l => l.id === trial.leadId);
+      if (lead) {
+        lead.stage = "Trial Ready";
+        lead.score = Math.max(lead.score || 70, 85);
+      }
+      Actions.audit("CSR_PLACEMENT_SCORED_READY", `Scored trial ${trial.id} for ${trial.prospect}: ${score}. Consent: ${consent}. Moved to Ready for Scheduling.`, "Low");
+      Notifications.push("Diagnostic Scored", `${trial.prospect} scored ${score}. Ready for slot booking.`, "success");
+    } else {
+      Actions.audit("CSR_PLACEMENT_SCORED", `Updated diagnostic score for ${trial.prospect} (${trial.id}): ${score}.`, "Low");
+      Notifications.push("Score Recorded", `Diagnostic score updated.`, "info");
+    }
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrJoinTrialRoom = function(roomUrl) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Daily.co Live Session Terminal (CSR Observer Access)`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="video" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">ACTIVE DAILY.CO ROOM TOKEN (FLOW-007)</strong>
+            <p style="color:#166534;">CSR observer mode active. Video connection and latency telemetry online.</p>
+          </div>
+        </div>
+
+        <div style="background:#0f172a; border-radius:8px; padding:32px 16px; text-align:center; color:#fff; margin:16px 0;">
+          <div style="display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; background:rgba(34,197,94,0.2); margin-bottom:12px;">
+            <i data-lucide="video" style="width:32px; height:32px; color:#22c55e;"></i>
+          </div>
+          <h4 style="color:#fff; margin-bottom:4px; font-size:16px;">Live Virtual Classroom</h4>
+          <p style="font-size:12px; color:#94a3b8; font-family:monospace; margin-bottom:16px;">${roomUrl}</p>
+          <div style="display:inline-flex; gap:16px; font-size:12px; color:#cbd5e1; background:rgba(255,255,255,0.05); padding:8px 16px; border-radius:6px;">
+            <span><i data-lucide="mic" style="width:12px;height:12px;display:inline-block;"></i> Audio: 48kHz Stereo</span>
+            <span><i data-lucide="monitor" style="width:12px;height:12px;display:inline-block;"></i> Video: 1080p HD</span>
+            <span><i data-lucide="wifi" style="width:12px;height:12px;display:inline-block;"></i> Latency: 24ms (PKT Edge)</span>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Daily.co Room ID</span><strong>trial-daily-active</strong></div>
+          <div class="om-flow-metric"><span>Host Privileges</span><strong>Assigned Faculty</strong></div>
+          <div class="om-flow-metric"><span>CSR Role</span><strong>Silent Auditor / Observer</strong></div>
+          <div class="om-flow-metric"><span>Recording State</span><strong class="success-text">Cloud Recording ON</strong></div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Session Viewer</button>
+      <button class="btn btn-primary" onclick="window.open('${roomUrl}', '_blank'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="external-link"></i> Launch in New Tab</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.sendCsrTrialReminder = function(id) {
+    const trial = (db.csrData?.trials || []).find(t => t.id === id);
+    if (!trial) return;
+
+    Actions.audit("CSR_TRIAL_REMINDER_SENT", `Dispatched automated multi-channel trial session reminder to ${trial.prospect} (${trial.id}) for slot ${trial.slot}.`, "Low");
+    Notifications.push("Reminder Dispatched", `Session reminder with Daily.co link sent to ${trial.prospect} & ${trial.trainer}.`, "success");
+  };
+
+  Actions.openCsrBatchProvisionModal = function() {
+    const pending = (db.csrData?.trials || []).filter(t => !t.room);
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Batch Daily.co Room Token Provisioning`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="layers"></i>
+          <div>
+            <strong>FLOW-007 BATCH ROOM TOKEN GENERATOR</strong>
+            <p>Provision secure Daily.co video room tokens for all pending trial sessions.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-metric" style="margin:12px 0;">
+          <span>Trials Requiring Room Tokens</span>
+          <strong style="font-size:24px; color:var(--teal-primary);">${pending.length} Records</strong>
+          <small>Will generate unique Daily.co tokens and attach co-host permissions for assigned faculty.</small>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.batchProvisionDailyRooms()"><i data-lucide="check-circle"></i> Provision All ${pending.length} Tokens</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.batchProvisionDailyRooms = function() {
+    let count = 0;
+    (db.csrData?.trials || []).forEach(t => {
+      if (!t.room) {
+        t.room = `https://ihs.daily.co/trial-${t.id.toLowerCase()}-${Date.now().toString().slice(-4)}`;
+        count++;
+      }
+    });
+
+    Actions.audit("CSR_BATCH_ROOM_PROVISION", `Batch provisioned Daily.co room tokens for ${count} trial sessions.`, "Medium");
+    Notifications.push("Tokens Provisioned", `Successfully generated Daily.co video room tokens for ${count} trials.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrNewTrialModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Book New Free Trial Session (FLOW-007)`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="calendar-plus"></i>
+          <div>
+            <strong>FLOW-007 DIRECT TRIAL SCHEDULING DISPATCH</strong>
+            <p>Schedule a 1-on-1 free trial session with certified faculty.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Prospect / Lead *</label>
+          <select id="csr-new-trial-lead-select" class="form-control">
+            ${(db.csrData?.leads || []).map(l => `<option value="${l.id}">${l.name} (${l.id} - ${l.course})</option>`).join("")}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Programme Track *</label>
+          <select id="csr-new-trial-course-select" class="form-control">
+            <option value="Quranic Studies (Hifz)">Quranic Studies (Hifz)</option>
+            <option value="Tajweed Mastery">Tajweed Mastery</option>
+            <option value="Islamic Studies Foundations">Islamic Studies Foundations</option>
+            <option value="Arabic Language (L1)">Arabic Language (L1)</option>
+            <option value="Nazra Quran with Tajweed">Nazra Quran with Tajweed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Assign Certified Faculty *</label>
+          <select id="csr-new-trial-trainer-select" class="form-control">
+            <option value="Ustadh Bilal">Ustadh Bilal (Foundations & Youth)</option>
+            <option value="Dr. Tariq Mahmood">Dr. Tariq Mahmood (Senior Hifz)</option>
+            <option value="Hafiz Usman">Hafiz Usman (Nazra & Tajweed)</option>
+            <option value="Ayesha Khan">Ayesha Khan (Female Faculty Lead)</option>
+            <option value="Zainab Raza">Zainab Raza (Female Faculty / Tajweed)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Preferred Trial Slot *</label>
+          <select id="csr-new-trial-slot-select" class="form-control">
+            <option value="Tomorrow at 16:00 PKT">Tomorrow at 16:00 PKT</option>
+            <option value="Tomorrow at 18:00 PKT">Tomorrow at 18:00 PKT</option>
+            <option value="Tomorrow at 20:30 PKT">Tomorrow at 20:30 PKT</option>
+            <option value="In 2 Days at 15:00 PKT">In 2 Days at 15:00 PKT</option>
+            <option value="In 3 Days at 17:30 PKT">In 3 Days at 17:30 PKT</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitNewCsrTrial()"><i data-lucide="check-circle"></i> Create & Book Trial</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitNewCsrTrial = function() {
+    const leadId = document.getElementById("csr-new-trial-lead-select")?.value;
+    const lead = (db.csrData?.leads || []).find(l => l.id === leadId);
+    const course = document.getElementById("csr-new-trial-course-select")?.value || "Quranic Studies";
+    const trainer = document.getElementById("csr-new-trial-trainer-select")?.value || "Ustadh Bilal";
+    const slot = document.getElementById("csr-new-trial-slot-select")?.value || "Tomorrow at 16:00 PKT";
+
+    const newId = "TRL-" + (500 + (db.csrData.trials || []).length + 1);
+    const newTrial = {
+      id: newId,
+      leadId: leadId || "LD-101",
+      prospect: lead ? lead.name : "New Prospect",
+      course: course,
+      placementScore: "85/100 (Standard)",
+      consent: "Verified via WhatsApp",
+      slot: slot,
+      trainer: trainer,
+      room: `https://ihs.daily.co/trial-${newId.toLowerCase()}-${Date.now().toString().slice(-4)}`,
+      status: "Scheduled",
+      outcome: "Scheduled for Live Delivery",
+      attendance: "Pending Session",
+      csr: "Sarah Jenkins"
+    };
+
+    if (!db.csrData.trials) db.csrData.trials = [];
+    db.csrData.trials.unshift(newTrial);
+
+    if (lead) {
+      lead.stage = "Trial Scheduled";
+      lead.preferredSlot = slot;
+    }
+
+    Actions.audit("CSR_NEW_TRIAL_CREATED", `Booked new trial ${newId} for ${newTrial.prospect} with ${trainer} at ${slot}.`, "Medium");
+    Notifications.push("Trial Session Created", `Trial ${newId} booked for ${newTrial.prospect}. Room token provisioned.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrNewPlacementModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Dispatch Placement Diagnostic (FLOW-007)`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="send"></i>
+          <div>
+            <strong>DIAGNOSTIC TEST DISPATCH TERMINAL</strong>
+            <p>Send placement assessment link to incoming prospect to evaluate readiness.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Prospect Lead *</label>
+          <select id="csr-diag-lead-select" class="form-control">
+            ${(db.csrData?.leads || []).map(l => `<option value="${l.id}">${l.name} (${l.id} - ${l.course})</option>`).join("")}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Diagnostic Test Track *</label>
+          <select id="csr-diag-course-select" class="form-control">
+            <option value="Quranic Studies (Hifz)">Quranic Studies (Hifz & Makharij Diagnostic)</option>
+            <option value="Tajweed Mastery">Tajweed Mastery (Ahkam-e-Tajweed Level 1-3)</option>
+            <option value="Islamic Studies Foundations">Islamic Studies (Foundations & Fiqh)</option>
+            <option value="Arabic Language (L1)">Arabic Language (Grammar & Vocabulary)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Dispatch Channels</label>
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px;">
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="csr-diag-wa" checked> Send WhatsApp Diagnostic Interactive Quiz
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="csr-diag-sms" checked> Send SMS backup link
+            </label>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitNewCsrPlacement()"><i data-lucide="send"></i> Dispatch Diagnostic Link</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitNewCsrPlacement = function() {
+    const leadId = document.getElementById("csr-diag-lead-select")?.value;
+    const lead = (db.csrData?.leads || []).find(l => l.id === leadId);
+    const course = document.getElementById("csr-diag-course-select")?.value || "Quranic Studies";
+
+    const newId = "TRL-" + (500 + (db.csrData.trials || []).length + 1);
+    const newTrial = {
+      id: newId,
+      leadId: leadId || "LD-101",
+      prospect: lead ? lead.name : "New Prospect",
+      course: course,
+      placementScore: "Pending Test Completion",
+      consent: "Pending Guardian Agreement",
+      slot: "To be scheduled post-quiz",
+      trainer: "TBD",
+      room: null,
+      status: "In Placement Test",
+      outcome: "Link Dispatched",
+      attendance: "Pending",
+      csr: "Sarah Jenkins"
+    };
+
+    if (!db.csrData.trials) db.csrData.trials = [];
+    db.csrData.trials.unshift(newTrial);
+
+    Actions.audit("CSR_PLACEMENT_DISPATCHED", `Dispatched placement assessment for ${newTrial.prospect} (${newId}).`, "Low");
+    Notifications.push("Diagnostic Dispatched", `Diagnostic assessment link sent to ${newTrial.prospect}.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.sendAllTrialReminders = function() {
+    const scheduled = (db.csrData?.trials || []).filter(t => t.status === "Scheduled");
+    scheduled.forEach(t => {
+      Actions.audit("CSR_TRIAL_REMINDER_SENT", `Automated reminder sent to ${t.prospect} for slot ${t.slot}.`, "Low");
+    });
+    Notifications.push("Batch Reminders Dispatched", `Sent WhatsApp & SMS slot reminders to ${scheduled.length} scheduled learners and faculty.`, "success");
+  };
+
+  Actions.openCsrBatchConversionOpportunities = function() {
+    const completedTrials = (db.csrData?.trials || []).filter(t => t.status === "Completed");
+    let count = 0;
+    completedTrials.forEach(t => {
+      let existing = (db.csrData.enrolments || []).find(e => e.leadId === t.leadId);
+      if (!existing) {
+        const newEnrId = "AEN-" + (700 + (db.csrData.enrolments || []).length + 1);
+        db.csrData.enrolments.unshift({
+          id: newEnrId,
+          leadId: t.leadId,
+          prospect: t.prospect,
+          programme: t.course,
+          membership: "1:1 Live Interactive (Monthly)",
+          amount: "PKR 18,000 / mo",
+          paymentStatus: "Conversion Pitch Dispatched",
+          csr: "Sarah Jenkins",
+          attribution: "Sarah Jenkins (100%)",
+          status: "Conversion Opportunity"
+        });
+        count++;
+      }
+    });
+
+    Actions.audit("CSR_BATCH_CONVERSION_OPPS", `Generated ${count} new assisted enrolment conversion opportunities from completed trials.`, "Medium");
+    Notifications.push("Opportunities Created", `Created ${count} new assisted enrolment cards in Hub 4.`, "success");
+
     Router.renderView(Router.currentRoute);
     RenderEngine.csrDashboard();
   };
@@ -28489,8 +29440,134 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="om-flow-banner">
           <i data-lucide="phone-outgoing"></i>
           <div>
-            <strong>SCHEDULED PROSPECT TOUCHPOINT</strong>
-            <p>Task Type: ${flp.type} · Due: ${flp.dueDate}</p>
+            <strong>SCHEDULED PROSPECT TOUCHPOINT (CSR-007)</strong>
+            <p>Task Type: ${flp.type} · Due Timing: ${flp.dueDate}</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${flp.leadName}</strong><small>${flp.contact}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${flp.programme}</strong></div>
+          <div class="om-flow-metric"><span>Current Status</span><strong>${flp.status}</strong></div>
+          <div class="om-flow-metric"><span>Assigned CSR</span><strong>${flp.csr || 'Sarah Jenkins'}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="file-text"></i> Task History & Activity Instructions</h5>
+          <p>${flp.history}</p>
+          <p><strong>Action Objective:</strong> ${flp.nextAction}</p>
+        </div>
+
+        <div class="form-group">
+          <label>Interaction Outcome & Next State Transition *</label>
+          <select id="csr-flp-outcome-select" class="form-control">
+            <option value="Answered - Qualified">Answered — Qualified (Ready for Free Trial Session)</option>
+            <option value="Answered - Schedule Trial">Answered — Book Free Trial Session Immediately</option>
+            <option value="Answered - Direct Checkout">Answered — Ready to Enrol (Proceed to Assisted Order)</option>
+            <option value="Answered - Reschedule">Answered — Requested Later Callback (Reschedule)</option>
+            <option value="No Answer - Attempt 1">No Answer — Log Attempt #1 (Send WhatsApp Template)</option>
+            <option value="No Answer - Attempt 2">No Answer — Log Attempt #2 (Send SMS Notice)</option>
+            <option value="No Answer - Unresponsive">No Answer — 3+ Attempts Unresponsive (Move to Escalation)</option>
+            <option value="Disqualify">Disqualify — Not Interested / Budget Mismatch</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Interaction Log & CSR Commercial Notes *</label>
+          <textarea id="csr-flp-outcome-notes" class="form-control" rows="2" placeholder="Called prospect via phone. Discussed curriculum options, schedule flexibility, and parent objectives..."></textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitCsrFollowupExecution('${flp.id}')"><i data-lucide="check-circle"></i> Save Outcome & Update State</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitCsrFollowupExecution = function(id) {
+    const flp = db.csrData.followups.find(f => f.id === id);
+    if (!flp) return;
+
+    const outcome = document.getElementById("csr-flp-outcome-select")?.value || "Answered - Qualified";
+    const notes = document.getElementById("csr-flp-outcome-notes")?.value.trim() || "Touchpoint executed successfully.";
+
+    const lead = (db.csrData.leads || []).find(l => l.id === flp.leadId);
+
+    if (outcome === "Answered - Qualified") {
+      flp.status = "Completed";
+      flp.history = notes;
+      flp.nextAction = "Qualified — Ready for Trial Booking";
+      if (lead && lead.stage !== "Converted") lead.stage = "Qualified";
+      Actions.audit("CSR_FOLLOWUP_QUALIFIED", `Follow-up ${flp.id} executed for ${flp.leadName}. Lead moved to Qualified.`, "Low");
+      Notifications.push("Lead Qualified", `${flp.leadName} moved to Qualified stage. Ready for trial.`, "success");
+    } else if (outcome === "Answered - Schedule Trial") {
+      flp.status = "Completed";
+      flp.history = notes;
+      flp.nextAction = "Trial Booking Initiated";
+      if (lead && lead.stage !== "Converted") lead.stage = "Qualified";
+      document.getElementById("generic-modal").classList.add("hidden");
+      Actions.openCsrScheduleTrialModal(flp.leadId);
+      return;
+    } else if (outcome === "Answered - Direct Checkout") {
+      flp.status = "Completed";
+      flp.history = notes;
+      flp.nextAction = "Direct Enrolment Initiated";
+      if (lead && lead.stage !== "Converted") lead.stage = "Qualified";
+      document.getElementById("generic-modal").classList.add("hidden");
+      Actions.openCsrDirectCheckout(flp.leadId);
+      return;
+    } else if (outcome === "Answered - Reschedule") {
+      flp.status = "Upcoming";
+      flp.dueDate = "Tomorrow 11:30 PKT";
+      flp.history = notes;
+      flp.nextAction = "Rescheduled callback";
+      Actions.audit("CSR_FOLLOWUP_RESCHEDULED", `Rescheduled follow-up ${flp.id} for ${flp.leadName}.`, "Low");
+      Notifications.push("Follow-up Rescheduled", `Callback scheduled for Tomorrow 11:30 PKT.`, "info");
+    } else if (outcome.includes("Attempt 1") || outcome.includes("Attempt 2")) {
+      flp.status = "Upcoming";
+      flp.dueDate = "Tomorrow 14:00 PKT";
+      flp.history = `Outreach logged: ${notes} (WhatsApp/SMS Notice Dispatched)`;
+      flp.nextAction = "Follow-up touchpoint scheduled";
+      Actions.audit("CSR_FOLLOWUP_ATTEMPT_LOGGED", `Logged outreach attempt for ${flp.leadName} (${flp.id}).`, "Low");
+      Notifications.push("Attempt Logged", `Automated reminder dispatched. Next touchpoint tomorrow.`, "info");
+    } else if (outcome.includes("Unresponsive")) {
+      flp.status = "No Response";
+      flp.history = `3+ Outreach attempts exhausted: ${notes}`;
+      flp.nextAction = "Escalated for secondary channel retry or supervisor review";
+      Actions.audit("CSR_FOLLOWUP_UNRESPONSIVE", `Marked ${flp.leadName} (${flp.id}) as unresponsive.`, "Medium");
+      Notifications.push("Lead Unresponsive", `Moved to No Response / Escalation queue.`, "warning");
+    } else if (outcome === "Disqualify") {
+      flp.status = "Completed";
+      flp.history = `Disqualified: ${notes}`;
+      flp.nextAction = "Archived";
+      if (lead) {
+        lead.stage = "Lost";
+        lead.reason = notes;
+      }
+      Actions.audit("CSR_FOLLOWUP_DISQUALIFIED", `Disqualified lead ${flp.leadName} (${flp.id}).`, "Medium");
+      Notifications.push("Lead Disqualified", `${flp.leadName} marked as Lost/Disqualified.`, "warning");
+    }
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.rescheduleCsrFollowupModal = function(id) {
+    const flp = db.csrData.followups.find(f => f.id === id);
+    if (!flp) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Reschedule Follow-up: ${flp.leadName} (${flp.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="clock"></i>
+          <div>
+            <strong>FLOW-037 TASK RESCHEDULING ENGINE</strong>
+            <p>Current Scheduled Timing: ${flp.dueDate}</p>
           </div>
         </div>
 
@@ -28498,38 +29575,212 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="om-flow-metric"><span>Prospect</span><strong>${flp.leadName}</strong><small>${flp.contact}</small></div>
           <div class="om-flow-metric"><span>Programme</span><strong>${flp.programme}</strong></div>
           <div class="om-flow-metric"><span>Task Type</span><strong>${flp.type}</strong></div>
-          <div class="om-flow-metric"><span>Assigned CSR</span><strong>${flp.csr}</strong></div>
-        </div>
-
-        <div class="om-flow-evidence-box">
-          <h5><i data-lucide="file-text"></i> Task History & Instructions</h5>
-          <p>${flp.history}</p>
-          <p><strong>Action Objective:</strong> ${flp.nextAction}</p>
+          <div class="om-flow-metric"><span>Assigned CSR</span><strong>${flp.csr || 'Sarah Jenkins'}</strong></div>
         </div>
 
         <div class="form-group">
-          <label>Record Interaction Outcome</label>
-          <textarea id="csr-flp-outcome" class="form-control" rows="2" placeholder="Called prospect. Answered questions on curriculum..."></textarea>
+          <label>Select New Follow-up Timing *</label>
+          <select id="csr-reschedule-preset" class="form-control" onchange="document.getElementById('csr-reschedule-custom').value = this.value">
+            <option value="Today 17:00 PKT">Today 17:00 PKT (+2 Hours)</option>
+            <option value="Tomorrow 10:30 PKT">Tomorrow 10:30 PKT (Morning slot)</option>
+            <option value="Tomorrow 15:00 PKT">Tomorrow 15:00 PKT (Afternoon slot)</option>
+            <option value="Tomorrow 18:30 PKT">Tomorrow 18:30 PKT (Evening slot)</option>
+            <option value="In 2 Days 11:00 PKT">In 2 Days 11:00 PKT</option>
+            <option value="Next Monday 10:00 PKT">Next Monday 10:00 PKT</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Adjust Due Time / Note</label>
+          <input type="text" id="csr-reschedule-custom" class="form-control" value="Today 17:00 PKT">
+        </div>
+
+        <div class="form-group">
+          <label>Reason for Rescheduling *</label>
+          <textarea id="csr-reschedule-reason" class="form-control" rows="2" placeholder="Prospect requested callback after working hours..."></textarea>
         </div>
       </div>
     `;
     document.getElementById("modal-footer").innerHTML = `
       <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
-      <button class="btn btn-primary" onclick="Actions.completeCsrFollowup('${flp.id}')">Mark Completed</button>
+      <button class="btn btn-primary" onclick="Actions.saveCsrFollowupReschedule('${flp.id}')"><i data-lucide="check"></i> Confirm Reschedule</button>
     `;
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
   };
 
-  Actions.completeCsrFollowup = function(id) {
+  Actions.saveCsrFollowupReschedule = function(id) {
     const flp = db.csrData.followups.find(f => f.id === id);
     if (!flp) return;
 
-    flp.status = "Completed";
-    Actions.audit("CSR_FOLLOWUP_COMPLETED", `Completed follow-up task ${flp.id} for ${flp.leadName}.`, "Low");
-    Notifications.push("Task Completed", `Follow-up ${flp.id} marked as completed.`, "success");
+    const newTiming = document.getElementById("csr-reschedule-custom")?.value.trim() || "Tomorrow 10:30 PKT";
+    const reason = document.getElementById("csr-reschedule-reason")?.value.trim() || "Rescheduled on prospect request.";
+
+    flp.dueDate = newTiming;
+    flp.status = newTiming.startsWith("Today") ? "Due" : "Upcoming";
+    flp.history = `Rescheduled: ${reason} (Previous timing: ${flp.dueDate})`;
+    flp.nextAction = `Execute touchpoint at ${newTiming}`;
+
+    Actions.audit("CSR_FOLLOWUP_RESCHEDULED", `Rescheduled follow-up ${flp.id} for ${flp.leadName} to ${newTiming}.`, "Low");
+    Notifications.push("Follow-up Rescheduled", `Task moved to ${newTiming}.`, "success");
 
     document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.openCsrFollowupDetailModal = function(id) {
+    const flp = db.csrData.followups.find(f => f.id === id);
+    if (!flp) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Activity Details: ${flp.leadName} (${flp.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="file-check"></i>
+          <div>
+            <strong>IMMUTABLE ACTIVITY RECORD (CSR-007 / CSR-009)</strong>
+            <p>Executed and closed on ${flp.dueDate} by ${flp.csr || 'Sarah Jenkins'}</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${flp.leadName}</strong><small>${flp.contact}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${flp.programme}</strong></div>
+          <div class="om-flow-metric"><span>Task Type</span><strong>${flp.type}</strong></div>
+          <div class="om-flow-metric"><span>Status</span><strong class="success-text">${flp.status}</strong></div>
+        </div>
+
+        <div class="om-flow-evidence-box">
+          <h5><i data-lucide="clipboard-check"></i> Interaction Outcome & Log</h5>
+          <p>${flp.history}</p>
+          <p><strong>Resulting Status / Next Action:</strong> ${flp.nextAction}</p>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Actions.openCsrLead('${flp.leadId}')"><i data-lucide="eye"></i> View Lead File</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrRetryModal = function(id) {
+    const flp = db.csrData.followups.find(f => f.id === id);
+    if (!flp) return;
+
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Retry Outreach: ${flp.leadName} (${flp.id})`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="send"></i>
+          <div>
+            <strong>FLOW-037 UNRESPONSIVE LEAD RE-ENGAGEMENT DISPATCH</strong>
+            <p>Deploy alternate contact channels before lead reaches 7-day archival horizon.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Prospect</span><strong>${flp.leadName}</strong><small>${flp.contact}</small></div>
+          <div class="om-flow-metric"><span>Programme</span><strong>${flp.programme}</strong></div>
+          <div class="om-flow-metric"><span>Current State</span><strong class="error-text">${flp.status}</strong></div>
+          <div class="om-flow-metric"><span>Attempts Logged</span><strong>3 Attempts</strong></div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Outreach Channel *</label>
+          <select id="csr-retry-channel" class="form-control">
+            <option value="WhatsApp">WhatsApp Template (Free Trial Invitation Notice)</option>
+            <option value="SMS">SMS Notice (Limited Time Batch Discount)</option>
+            <option value="Email">Email Re-engagement (Curriculum Overview & Video Tour)</option>
+            <option value="Priority Call">Priority Call Queue (CSR Supervisor Phone Reach)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Message Content Preview</label>
+          <textarea id="csr-retry-msg" class="form-control" rows="3">Assalam-o-Alaikum ${flp.leadName}! This is Sarah from Innovator LMS. We noticed you were interested in our ${flp.programme} programme. We have reserved a complimentary 1:1 Live Trial Session for you this week. Would you prefer a morning or evening slot?</textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.sendCsrRetryOutreach('${flp.id}')"><i data-lucide="send"></i> Dispatch Retry Message</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.sendCsrRetryOutreach = function(id) {
+    const flp = db.csrData.followups.find(f => f.id === id);
+    if (!flp) return;
+
+    const channel = document.getElementById("csr-retry-channel")?.value || "WhatsApp";
+
+    flp.status = "Upcoming";
+    flp.dueDate = "Tomorrow 16:00 PKT";
+    flp.history = `Dispatched ${channel} re-engagement notice on ${new Date().toLocaleTimeString()}. Awaiting response.`;
+    flp.nextAction = `Monitor reply on ${channel}`;
+
+    Actions.audit("CSR_RETRY_DISPATCHED", `Dispatched ${channel} retry to ${flp.leadName} (${flp.id}).`, "Low");
+    Notifications.push("Outreach Dispatched", `${channel} message sent to ${flp.leadName}. Moved to Upcoming schedule.`, "success");
+
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.escalateCsrFollowup = function(id) {
+    const flp = db.csrData.followups.find(f => f.id === id);
+    if (!flp) return;
+
+    flp.status = "Escalated";
+    flp.nextAction = "Escalated to Supervisor for High-Priority Reach";
+    flp.history = `Escalated by Sarah Jenkins on ${new Date().toLocaleDateString()} due to repeated unresponsive status.`;
+
+    Actions.audit("CSR_FOLLOWUP_ESCALATED", `Escalated follow-up ${flp.id} for ${flp.leadName} to supervisor.`, "High");
+    Notifications.push("Task Escalated", `Task ${flp.id} escalated to CSR Lead / Supervisor.`, "warning");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.completeAllDueCsrFollowups = function() {
+    let count = 0;
+    (db.csrData.followups || []).forEach(f => {
+      if (f.status === "Due") {
+        f.status = "Completed";
+        f.history = "Bulk logged via daily call run and verified.";
+        f.nextAction = "Touchpoint completed";
+        count++;
+      }
+    });
+
+    Actions.audit("CSR_BULK_FOLLOWUPS_COMPLETED", `Bulk completed ${count} Due Today follow-up tasks.`, "Medium");
+    Notifications.push("Tasks Completed", `All ${count} Due Today follow-ups marked as Completed.`, "success");
+
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.retryAllUnresponsiveFollowups = function() {
+    let count = 0;
+    (db.csrData.followups || []).forEach(f => {
+      if (f.status === "No Response" || f.status === "Escalated") {
+        f.status = "Upcoming";
+        f.dueDate = "Tomorrow 15:00 PKT";
+        f.history = `Batch SMS/WhatsApp re-engagement template broadcast dispatched.`;
+        f.nextAction = "Awaiting customer response";
+        count++;
+      }
+    });
+
+    Actions.audit("CSR_BULK_RETRY_DISPATCHED", `Dispatched batch retry notice to ${count} unresponsive leads.`, "Medium");
+    Notifications.push("Batch Retried", `Automated SMS/WhatsApp reminder sent to ${count} unresponsive prospects.`, "success");
+
     Router.renderView(Router.currentRoute);
     RenderEngine.csrDashboard();
   };
@@ -28568,6 +29819,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="btn btn-primary" onclick="Actions.saveNewCsrFollowup()">Schedule Follow-up</button>
     `;
     modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
   Actions.saveNewCsrFollowup = function() {
@@ -28585,16 +29837,16 @@ document.addEventListener("DOMContentLoaded", () => {
       contact: lead.contact,
       programme: lead.programme,
       csr: "Sarah Jenkins",
-      dueDate: due || "Today",
+      dueDate: due || "Today 17:30 PKT",
       type,
-      status: "Due",
+      status: due.startsWith("Today") ? "Due" : "Upcoming",
       history: notes || "Custom scheduled touchpoint.",
       nextAction: "Execute outreach"
     };
 
     db.csrData.followups.unshift(newFlp);
     Actions.audit("CSR_FOLLOWUP_SCHEDULED", `Scheduled follow-up ${newId} for ${lead.name}.`, "Low");
-    Notifications.push("Follow-up Scheduled", `Touchpoint added to your Due Today queue.`, "success");
+    Notifications.push("Follow-up Scheduled", `Touchpoint added to your task queue.`, "success");
 
     document.getElementById("generic-modal").classList.add("hidden");
     Router.renderView(Router.currentRoute);
