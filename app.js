@@ -17750,6 +17750,26 @@ const RenderEngine = {
               <button class="btn btn-primary btn-sm" onclick="Actions.openOmConflictResolveModal('TRN-03')">
                 <i data-lucide="alert-triangle"></i> Resolve Next Collision
               </button>
+            ` : route === 'om-k12-operations' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmK12SectionModal('K12-SEC-8A')">
+                <i data-lucide="school"></i> Configure Section (K12-001)
+              </button>
+            ` : route === 'om-resources' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmUploadResourceModal()">
+                <i data-lucide="upload-cloud"></i> Publish Resource (RES-001)
+              </button>
+            ` : route === 'om-cases-communications' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmTriageCaseModal('CASE-6101')">
+                <i data-lucide="life-buoy"></i> Triage Next Incident
+              </button>
+            ` : route === 'om-catalogue-operations' ? `
+              <button class="btn btn-primary btn-sm" onclick="Actions.openOmCatalogueInspectModal('CAT-LIT')">
+                <i data-lucide="book-open"></i> Inspect Programme Specs
+              </button>
+            ` : route === 'om-reports-analytics' ? `
+              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Operational KPIs Exported', 'Downloaded real-time operational scorecard.', 'success')">
+                <i data-lucide="file-spreadsheet"></i> Export Analytics Report
+              </button>
             ` : `
               <button class="btn btn-primary btn-sm" onclick="Notifications.push('Ledger Exported', 'Official records ledger downloaded.', 'info')">
                 <i data-lucide="download"></i> Export Data Ledger
@@ -19530,6 +19550,7 @@ const RenderEngine = {
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmCohortRosterModal('${k.id}')"><i data-lucide="users"></i> Class Roster</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmK12SectionModal('${k.id}')"><i data-lucide="settings"></i> Configure</button>
                       <button class="btn btn-primary btn-xs" onclick="Actions.openOmTransferStudentModal('ENR-4104', '${k.id}')"><i data-lucide="arrow-right-left"></i> Transfer Student</button>
                     </div>
                   </td>
@@ -19575,7 +19596,12 @@ const RenderEngine = {
                   <td><strong style="color:#166534;">${res.downloads || 0} Downloads</strong></td>
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('SHA-256 Verified', 'Integrity verified for ${res.id}: ${res.checksum}', 'success')"><i data-lucide="shield-check"></i> Verify Hash</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmResourceInspectModal('${res.id}')"><i data-lucide="file-text"></i> Metadata & Hash</button>
+                      ${res.status === 'Quarantined' ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.toggleOmResourceQuarantine('${res.id}')"><i data-lucide="shield-check"></i> Release</button>
+                      ` : `
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.toggleOmResourceQuarantine('${res.id}')"><i data-lucide="shield-alert"></i> Quarantine</button>
+                      `}
                       <button class="btn btn-primary btn-xs" onclick="Notifications.push('Resource Access', 'Streaming signed URL for ${res.title}.', 'info')"><i data-lucide="download"></i> Download</button>
                     </div>
                   </td>
@@ -19617,7 +19643,7 @@ const RenderEngine = {
                   <td><span class="badge ${c.status === 'Resolved' ? 'badge-success' : c.status === 'Escalated' ? 'badge-error' : 'badge-warning'}">${c.status}</span></td>
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Case Updated', 'Operational notes updated for ${c.id}.', 'info')"><i data-lucide="edit-3"></i> Triage Case</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmTriageCaseModal('${c.id}')"><i data-lucide="edit-3"></i> Triage Case</button>
                       <button class="btn btn-secondary btn-xs" onclick="Actions.openOmContactGuardianModal('${c.id}')"><i data-lucide="message-square"></i> Contact</button>
                     </div>
                   </td>
@@ -19656,8 +19682,8 @@ const RenderEngine = {
                   <td><span class="badge badge-success">${cat.status}</span></td>
                   <td style="white-space:nowrap;">
                     <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Version Locked', 'Curriculum version ${cat.activeVersion} is immutable and live.', 'info')"><i data-lucide="shield-check"></i> Audit Version Lock</button>
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Catalogue Inspected', 'Scope verified for ${cat.title}.', 'info')"><i data-lucide="eye"></i> View Details</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Version Locked', 'Curriculum version ${cat.activeVersion} is immutable and live.', 'info')"><i data-lucide="shield-check"></i> Audit Lock</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmCatalogueInspectModal('${cat.code}')"><i data-lucide="book-open"></i> View Specs</button>
                     </div>
                   </td>
                 </tr>
@@ -19668,7 +19694,7 @@ const RenderEngine = {
       `;
     } else if (dataType === "analytics") {
       tableMarkup = `
-        <div style="display:flex; flex-direction:column; gap:20px;">
+        <div style="display:flex; flex-direction:column; gap:24px;">
           <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
             ${items.map(m => `
               <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:18px;">
@@ -19681,6 +19707,63 @@ const RenderEngine = {
                 <p style="font-size:11px; color:var(--slate); margin:8px 0 0 0; padding-top:6px; border-top:1px solid rgba(124, 119, 102, 0.12);">${m.detail}</p>
               </div>
             `).join('')}
+          </div>
+
+          <!-- Detailed Telemetry & SLA Compliance Breakdown Table -->
+          <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h3 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">
+                <i data-lucide="bar-chart-2" style="color:var(--primary); width:18px; height:18px; vertical-align:middle; margin-right:6px;"></i>
+                Operational SLA & Compliance Benchmarks (DSH-008 / DSH-014)
+              </h3>
+              <span class="badge badge-primary">Real-time Telemetry</span>
+            </div>
+            <table class="data-table" style="width:100%; min-width:1150px; border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th>Operational Domain</th>
+                  <th>Target SLA Benchmark</th>
+                  <th>Observed Performance</th>
+                  <th>30-Day Trend</th>
+                  <th>Compliance Status</th>
+                  <th>Operations Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Live Class QA Turnaround</strong></td>
+                  <td>Review within 2 hours of submission</td>
+                  <td><strong style="color:#166534;">1h 14m (Median)</strong></td>
+                  <td><span class="badge badge-success">▲ 12% faster</span></td>
+                  <td><span class="badge badge-success">98.4% Compliant</span></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Log', 'QA turnaround telemetry exported.', 'info')"><i data-lucide="file-text"></i> Audit Log</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Manual Payment Review Turnaround</strong></td>
+                  <td>Verification within 3 hours of upload</td>
+                  <td><strong style="color:#166534;">1h 45m (Median)</strong></td>
+                  <td><span class="badge badge-success">▲ 8% faster</span></td>
+                  <td><span class="badge badge-success">99.1% Compliant</span></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Log', 'Payment review telemetry exported.', 'info')"><i data-lucide="file-text"></i> Audit Log</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Attendance Reconciliation Exceptions</strong></td>
+                  <td>Duration variance < 5.0%</td>
+                  <td><strong style="color:#166534;">4.1% variance rate</strong></td>
+                  <td><span class="badge badge-primary">Steady</span></td>
+                  <td><span class="badge badge-success">Within Bounds</span></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Log', 'Attendance variance breakdown exported.', 'info')"><i data-lucide="file-text"></i> Audit Log</button></td>
+                </tr>
+                <tr>
+                  <td><strong>Trial-to-Paid Conversion Funnel</strong></td>
+                  <td>Conversion target > 40.0%</td>
+                  <td><strong style="color:#166534;">43.5% (20 / 46 trials)</strong></td>
+                  <td><span class="badge badge-success">▲ 3.5% above target</span></td>
+                  <td><span class="badge badge-success">Target Exceeded</span></td>
+                  <td><button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Log', 'Conversion funnel log exported.', 'info')"><i data-lucide="file-text"></i> Audit Log</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       `;
@@ -30430,6 +30513,354 @@ Actions.openAdminRoutingRuleModal = function(category = "General Inquiry") {
   if (window.lucide) window.lucide.createIcons();
 };
 
+
+Actions.openOmK12SectionModal = function(sectionId) {
+  const k = (db.omData.k12 || []).find(sec => sec.id === sectionId) || db.omData.k12[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="school" style="color:var(--primary);"></i> K-12 Academic Section Governance (${k.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">K-12 SECTION ALLOCATION (K12-001 / K12-005)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Manage academic schedule, lead faculty assignment, and capacity bounds for ${k.grade} ${k.section} (${k.academicYear}).</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Grade & Section</label>
+          <input type="text" class="form-control" value="${k.grade} · ${k.section}" disabled>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Lead Faculty / Teacher</label>
+          <select id="om-k12-teacher" class="form-control">
+            <option value="Ayesha Noor" ${k.leadTeacher === 'Ayesha Noor' ? 'selected' : ''}>Ayesha Noor (Senior Educator)</option>
+            <option value="Huzsam Ahmed" ${k.leadTeacher === 'Huzsam Ahmed' ? 'selected' : ''}>Huzsam Ahmed (Academic Lead)</option>
+            <option value="Imran Qureshi" ${k.leadTeacher === 'Imran Qureshi' ? 'selected' : ''}>Imran Qureshi (Mathematics Specialist)</option>
+            <option value="Nadia Rahman" ${k.leadTeacher === 'Nadia Rahman' ? 'selected' : ''}>Nadia Rahman (Science Lead)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Current Enrollment / Max Cap</label>
+          <input type="text" class="form-control" value="${k.students} / 25 Students" disabled>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Daily Schedule Cadence</label>
+          <input type="text" id="om-k12-schedule" class="form-control" value="${k.schedule}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Enrolled Subject Modules</label>
+        <input type="text" class="form-control" value="${Array.isArray(k.subjects) ? k.subjects.join(', ') : k.subjects}" disabled>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmK12Section('${k.id}')"><i data-lucide="check"></i> Save Section Configuration</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmK12Section = function(sectionId) {
+  const k = (db.omData.k12 || []).find(sec => sec.id === sectionId);
+  const teacher = document.getElementById("om-k12-teacher")?.value || "Ayesha Noor";
+  const schedule = document.getElementById("om-k12-schedule")?.value || "Daily 08:30 - 13:30 PKT";
+
+  if (k) {
+    k.leadTeacher = teacher;
+    k.schedule = schedule;
+  }
+
+  this.audit("K12_SECTION_UPDATED", `Updated configuration for ${sectionId} (${k?.grade}): Lead Teacher: ${teacher}, Schedule: ${schedule}.`, "Medium", "Section Configured");
+  Notifications.push("Section Updated", `K-12 Section ${sectionId} settings saved successfully.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmResourceInspectModal = function(resId) {
+  const res = (db.omData.resources || []).find(r => r.id === resId) || db.omData.resources[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="file-text" style="color:var(--primary);"></i> Educational Resource Metadata & Security Audit (${res.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">RESOURCE REPOSITORY INTEGRITY (RES-001 / RES-005)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Versioned learning materials governed under private signed storage with SHA-256 hash checksums.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Document Title & Version</small>
+          <strong style="display:block; font-size:14px; color:var(--navy-dark);">${res.title}</strong>
+          <span style="font-size:12px; color:var(--slate);">Version: <strong style="color:var(--primary);">${res.version}</strong> · Format: <strong>${res.format} (${res.size})</strong></span>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Target Course & Cohort</small>
+          <strong style="display:block; font-size:14px; color:var(--navy-dark);">${res.course}</strong>
+          <span style="font-size:12px; color:var(--slate);">Cohort: <strong>${res.cohort || 'All Cohorts'}</strong> · Downloads: <strong>${res.downloads || 0}</strong></span>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:12px; font-weight:700; color:var(--navy-medium);">SHA-256 Checksum Hash</span>
+          <span class="badge ${res.status === 'Active' ? 'badge-success' : res.status === 'Quarantined' ? 'badge-error' : 'badge-warning'}">${res.status}</span>
+        </div>
+        <code style="font-family:monospace; font-size:12px; background:#f1f5f9; padding:6px 10px; border-radius:4px; display:block; word-break:break-all;">${res.checksum || 'sha256:91a82200f4e1903388a10bcdef54'}</code>
+        ${res.quarantineReason ? `<div style="margin-top:8px; color:#dc2626; font-size:12px;"><strong>Quarantine Reason:</strong> ${res.quarantineReason}</div>` : ''}
+      </div>
+
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--slate);">
+        <span>Uploaded By: <strong>${res.uploadedBy}</strong></span>
+        <span>Date: <strong>${res.date}</strong></span>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    ${res.status === 'Quarantined' ? `
+      <button class="btn btn-primary" onclick="Actions.toggleOmResourceQuarantine('${res.id}')"><i data-lucide="shield-check"></i> Release Quarantine</button>
+    ` : `
+      <button class="btn btn-secondary" style="color:#dc2626; border-color:#fecaca;" onclick="Actions.toggleOmResourceQuarantine('${res.id}')"><i data-lucide="shield-alert"></i> Quarantine Resource</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Resource Access', 'Generated secure signed download URL for ${res.title}.', 'success')"><i data-lucide="download"></i> Download File</button>
+    `}
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.toggleOmResourceQuarantine = function(resId) {
+  const res = (db.omData.resources || []).find(r => r.id === resId);
+  if (!res) return;
+  const isQuarantined = res.status === "Quarantined";
+  res.status = isQuarantined ? "Active" : "Quarantined";
+  if (!isQuarantined) res.quarantineReason = "Manual quarantine triggered by OM for integrity review";
+  else delete res.quarantineReason;
+
+  this.audit("RESOURCE_QUARANTINE_TOGGLED", `${isQuarantined ? 'Released' : 'Quarantined'} resource ${resId} (${res.title}).`, "High", `Status: ${res.status}`);
+  Notifications.push("Security Status Updated", `Resource ${res.title} is now ${res.status}.`, isQuarantined ? "success" : "warning");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmUploadResourceModal = function() {
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="upload" style="color:var(--primary);"></i> Publish New Learning Resource (RES-001)`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">CURRICULUM RESOURCE PUBLICATION</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Upload and link curriculum assets to course runs. Automatic antivirus scanning and SHA-256 hash generation is enforced.</p>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Resource Title</label>
+        <input type="text" id="om-res-title" class="form-control" placeholder="e.g., Module 4 Supplementary Problem Set">
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Target Programme</label>
+          <select id="om-res-course" class="form-control">
+            <option value="Basic Literacy v7.0">Basic Literacy v7.0</option>
+            <option value="Applied Numeracy v4.2">Applied Numeracy v4.2</option>
+            <option value="Vocational Technology v3.1">Vocational Technology v3.1</option>
+            <option value="K-12 Mathematics">K-12 Mathematics</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">File Format & Version</label>
+          <input type="text" id="om-res-version" class="form-control" value="PDF · v1.0">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Upload File (PDF / Word / ZIP)</label>
+        <input type="file" class="form-control">
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmUploadResource()"><i data-lucide="upload-cloud"></i> Publish Resource</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmUploadResource = function() {
+  const titleVal = document.getElementById("om-res-title")?.value || "New Supplementary Worksheet";
+  const courseVal = document.getElementById("om-res-course")?.value || "Applied Numeracy v4.2";
+  const newId = `RES-${Math.floor(100 + Math.random() * 900)}`;
+
+  db.omData.resources.push({
+    id: newId,
+    title: titleVal,
+    version: "v1.0",
+    format: "PDF",
+    size: "2.4 MB",
+    course: courseVal,
+    cohort: "All Cohorts",
+    status: "Active",
+    downloads: 0,
+    checksum: `sha256:${Math.random().toString(16).substring(2, 14)}…`,
+    uploadedBy: "Sarah Connor (OM)",
+    date: "Today"
+  });
+
+  this.audit("RESOURCE_PUBLISHED", `Published new learning resource ${newId} (${titleVal}) for ${courseVal}.`, "High", "Resource Published");
+  Notifications.push("Resource Published", `Resource ${titleVal} is now live and accessible to learners.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmTriageCaseModal = function(caseId) {
+  const c = (db.omData.cases || []).find(item => item.id === caseId) || db.omData.cases[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="life-buoy" style="color:var(--primary);"></i> Triage Operational Case (${c.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">OPERATIONAL CASE TRIAGE (MSG-001 / ADM-009)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Update case resolution status, ownership, and response actions. SLA timer: <strong>${c.sla}</strong>.</p>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+        <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Subject & Category</small>
+        <strong style="display:block; font-size:14px; color:var(--navy-dark);">${c.subject}</strong>
+        <span style="font-size:12px; color:var(--slate);">Category: <strong>${c.category}</strong> · Associated Learner: <strong>${c.learner || 'General'}</strong></span>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Resolution Status</label>
+          <select id="om-case-status" class="form-control">
+            <option value="In Review" ${c.status === 'In Review' ? 'selected' : ''}>In Review</option>
+            <option value="Waiting on Guardian" ${c.status === 'Waiting on Guardian' ? 'selected' : ''}>Waiting on Guardian / User</option>
+            <option value="Resolved" ${c.status === 'Resolved' ? 'selected' : ''}>Resolved (Issue Remediated)</option>
+            <option value="Escalated" ${c.status === 'Escalated' ? 'selected' : ''}>Escalated to Academic / COO</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Assigned Owner</label>
+          <select id="om-case-owner" class="form-control">
+            <option value="Sarah Connor" ${c.owner === 'Sarah Connor' ? 'selected' : ''}>Sarah Connor (OM)</option>
+            <option value="Support Team" ${c.owner === 'Support Team' ? 'selected' : ''}>Support Team</option>
+            <option value="Scheduling Team" ${c.owner === 'Scheduling Team' ? 'selected' : ''}>Scheduling Team</option>
+            <option value="Academic Office" ${c.owner === 'Academic Office' ? 'selected' : ''}>Academic Office</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Operational Notes & Remediation</label>
+        <textarea id="om-case-notes" class="form-control" rows="3">${c.notes || ''}</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmTriageCase('${c.id}')"><i data-lucide="check"></i> Update Case</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmTriageCase = function(caseId) {
+  const c = (db.omData.cases || []).find(item => item.id === caseId);
+  const status = document.getElementById("om-case-status")?.value || "Resolved";
+  const owner = document.getElementById("om-case-owner")?.value || "Sarah Connor";
+  const notes = document.getElementById("om-case-notes")?.value || "";
+
+  if (c) {
+    c.status = status;
+    c.owner = owner;
+    c.notes = notes;
+    if (status === "Resolved") c.sla = "Met";
+  }
+
+  this.audit("CASE_TRIAGED", `Updated operational case ${caseId} to ${status} (Owner: ${owner}).`, "Medium", `Status: ${status}`);
+  Notifications.push("Case Updated", `Case ${caseId} updated to ${status}.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmCatalogueInspectModal = function(code) {
+  const cat = (db.omData.catalogue || []).find(c => c.code === code) || db.omData.catalogue[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="book-open" style="color:var(--primary);"></i> Scoped Product & Curriculum Governance (${cat.code})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">CURRICULUM SPECIFICATION & IMMUTABLE VERSION (CAT-001 / CAT-004)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Authoritative product definitions, delivery modes, and pricing snapshots.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Programme Title & Code</small>
+          <strong style="display:block; font-size:15px; color:var(--navy-dark);">${cat.title}</strong>
+          <span style="font-size:12px; color:var(--slate);">Code: <code style="font-family:monospace; color:var(--primary);">${cat.code}</code> · Version: <strong style="color:var(--primary);">${cat.activeVersion} (Immutable Lock)</strong></span>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Delivery & Cadence</small>
+          <strong style="display:block; font-size:13.5px; color:var(--navy-dark);">${Array.isArray(cat.deliveryModes) ? cat.deliveryModes.join(' · ') : cat.deliveryModes}</strong>
+          <span style="font-size:12px; color:var(--slate);">Duration: <strong>${cat.duration}</strong></span>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+        <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase; display:block; margin-bottom:4px;">Approved Commercial Pricing</span>
+        <strong style="color:#166534; font-size:14px;">${cat.activePrices}</strong>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-primary" onclick="Notifications.push('Curriculum Version Audited', 'Verified immutable lock for ${cat.activeVersion}. All ongoing cohorts execute against this verified tree.', 'success')"><i data-lucide="shield-check"></i> Audit Version Tree</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
 
 window.Actions = Actions;
   window.Router = Router;
