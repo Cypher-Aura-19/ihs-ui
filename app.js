@@ -12363,98 +12363,409 @@ const RenderEngine = {
     }
 
     // --------------------------------------------------------------------------
-    // 3. MY LEARNERS: ROSTERS & PROGRESS
+    // 6. HUB 2 - PAGE 1: ASSIGNED COHORT ROSTERS (trainer-learners-rosters)
     // --------------------------------------------------------------------------
-    else if (route === "trainer-learners-rosters" || route === "trainer-learners-progress") {
+    else if (route === "trainer-learners-rosters") {
+      const rosterFilter = window.trainerRosterTab || "all";
+      const allLearners = data.learners || [];
+      const displayedLearners = rosterFilter === "all" ? allLearners :
+        rosterFilter === "spoken" ? allLearners.filter(l => l.course.includes("Spoken English")) :
+        rosterFilter === "webdev" ? allLearners.filter(l => l.course.includes("Web Development")) :
+        allLearners.filter(l => l.course.includes("Mathematics"));
+
       viewContent = `
-        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;">
-          ${data.learners.map(l => `
-            <div style="background:#ffffff; border:1px solid var(--outline); border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
-              <div>
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
-                  <div style="display:flex; align-items:center; gap:12px;">
-                    <div style="width:44px; height:44px; border-radius:50%; background:#e0e7ff; color:#4338ca; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:16px;">
-                      ${l.name.split(' ').map(n=>n[0]).join('')}
-                    </div>
-                    <div>
-                      <h3 style="font:800 17px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${l.name}</h3>
-                      <span style="font-size:12px; color:var(--slate);">${l.email}</span>
-                    </div>
-                  </div>
-                  <span class="badge ${l.risk === 'None' ? 'badge-success' : 'badge-error'}">
-                    ${l.risk === 'None' ? 'On Track' : l.risk}
-                  </span>
-                </div>
-
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px; font-size:13px;">
-                  <div style="display:flex; justify-content:space-between;">
-                    <span style="color:#64748b;">Enrolled Course:</span>
-                    <strong style="color:#1e293b; max-width:240px; text-align:right;">${l.course.split('&')[0]}</strong>
-                  </div>
-                  <div style="display:flex; justify-content:space-between;">
-                    <span style="color:#64748b;">Overall Attendance:</span>
-                    <strong style="color:var(--secondary);">${l.overallAttendance}</strong>
-                  </div>
-                  <div style="display:flex; justify-content:space-between;">
-                    <span style="color:#64748b;">Current Milestone:</span>
-                    <span class="badge badge-secondary" style="font-size:11px;">${l.currentMilestone}</span>
-                  </div>
-                  <div style="display:flex; justify-content:space-between;">
-                    <span style="color:#64748b;">Homework Status:</span>
-                    <span style="color:${l.homeworkStatus.includes('Overdue') ? '#e11d48' : '#166534'}; font-weight:600;">${l.homeworkStatus}</span>
-                  </div>
-                </div>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- COHORT GROUP CARDS -->
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;">
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span class="badge badge-primary">LIVE COHORT N4</span>
+                <span style="font-size:12px; font-weight:700; color:var(--primary);">4 Active</span>
               </div>
-
-              <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid #f1f5f9;">
-                <span style="font-size:11px; color:#64748b;">Last active: ${l.lastActive}</span>
-                <div style="display:flex; gap:8px;">
-                  <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')"><i data-lucide="message-square"></i> Message</button>
-                  <button class="btn btn-primary btn-xs" onclick="Router.navigate('trainer-grading-queue')">View Submissions</button>
-                </div>
-              </div>
+              <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">Spoken English Fluency</h4>
+              <span style="font-size:12px; color:var(--slate);">Slot: 10:00 AM PKT · Next: Today</span>
             </div>
-          `).join("")}
+
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span class="badge badge-secondary">1:1 MENTORSHIP</span>
+                <span style="font-size:12px; font-weight:700; color:var(--navy-medium);">2 Active</span>
+              </div>
+              <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">Modern Full-Stack Web</h4>
+              <span style="font-size:12px; color:var(--slate);">Slot: 04:30 PM PKT · Next: Today</span>
+            </div>
+
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:18px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                <span class="badge badge-success">K-12 SECTION A</span>
+                <span style="font-size:12px; font-weight:700; color:#166534;">8 Active</span>
+              </div>
+              <h4 style="font:800 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 4px 0;">Grade 8 Mathematics</h4>
+              <span style="font-size:12px; color:var(--slate);">Slot: 02:00 PM PKT · Next: Today</span>
+            </div>
+          </div>
+
+          <!-- FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${rosterFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRosterTab='all'; RenderEngine.trainerWorkspace('trainer-learners-rosters');">All Rosters (${allLearners.length})</button>
+              <button class="btn ${rosterFilter === 'spoken' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRosterTab='spoken'; RenderEngine.trainerWorkspace('trainer-learners-rosters');">Spoken English</button>
+              <button class="btn ${rosterFilter === 'webdev' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRosterTab='webdev'; RenderEngine.trainerWorkspace('trainer-learners-rosters');">Web Development</button>
+              <button class="btn ${rosterFilter === 'math' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRosterTab='math'; RenderEngine.trainerWorkspace('trainer-learners-rosters');">Grade 8 Math</button>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.exportTrainerRosterCSV()"><i data-lucide="download"></i> Export Roster CSV</button>
+          </div>
+
+          <!-- ROSTER TABLE -->
+          <div class="table-container" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); overflow:hidden;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Learner Profile</th>
+                  <th>Assigned Course & Type</th>
+                  <th>Attendance Rate</th>
+                  <th>Current Milestone</th>
+                  <th>Homework Status</th>
+                  <th>Risk Flag</th>
+                  <th>Direct Pedagogical Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${displayedLearners.map(l => `
+                  <tr>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div style="width:36px; height:36px; border-radius:50%; background:#e0e7ff; color:#4338ca; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center;">
+                          ${l.name.split(' ').map(n=>n[0]).join('')}
+                        </div>
+                        <div>
+                          <strong>${l.name}</strong>
+                          <span class="table-subline">${l.email}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <strong>${l.course.split('&')[0]}</strong>
+                      <span class="table-subline">${l.enrolmentType}</span>
+                    </td>
+                    <td><strong style="color:${parseInt(l.overallAttendance) < 80 ? '#dc2626' : '#166534'};">${l.overallAttendance}</strong></td>
+                    <td><span class="badge badge-secondary" style="font-size:10.5px;">${l.currentMilestone}</span></td>
+                    <td>
+                      <span style="font-size:12px; font-weight:600; color:${l.homeworkStatus.includes('Overdue') ? '#dc2626' : '#166534'};">
+                        ${l.homeworkStatus}
+                      </span>
+                    </td>
+                    <td>
+                      <span class="badge ${l.risk === 'None' ? 'badge-success' : 'badge-error'}" style="font-size:10px;">
+                        ${l.risk === 'None' ? 'On Track' : l.risk}
+                      </span>
+                    </td>
+                    <td>
+                      <div class="button-row" style="display:flex; gap:6px;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerStudentProgressDetailModal('${l.id}')">Profile</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')"><i data-lucide="message-square"></i></button>
+                        <button class="btn btn-primary btn-xs" onclick="Router.navigate('trainer-grading-queue')">Submissions</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         </div>
       `;
     }
 
     // --------------------------------------------------------------------------
-    // 4. MY LEARNERS: RISKS & INTERVENTIONS
+    // 7. HUB 2 - PAGE 2: LEARNER ACADEMIC PROGRESS (trainer-learners-progress)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-learners-progress") {
+      const progFilter = window.trainerProgTab || "all";
+      const allLearners = data.learners || [];
+      const displayedLearners = progFilter === "all" ? allLearners :
+        progFilter === "high" ? allLearners.filter(l => parseInt(l.overallAttendance) >= 90) :
+        progFilter === "ontrack" ? allLearners.filter(l => l.risk === "None") :
+        allLearners.filter(l => l.risk !== "None");
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${progFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerProgTab='all'; RenderEngine.trainerWorkspace('trainer-learners-progress');">All Trajectories (${allLearners.length})</button>
+              <button class="btn ${progFilter === 'high' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerProgTab='high'; RenderEngine.trainerWorkspace('trainer-learners-progress');">High Attendance (90%+)</button>
+              <button class="btn ${progFilter === 'ontrack' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerProgTab='ontrack'; RenderEngine.trainerWorkspace('trainer-learners-progress');">On Track</button>
+              <button class="btn ${progFilter === 'stalled' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerProgTab='stalled'; RenderEngine.trainerWorkspace('trainer-learners-progress');">Needs Attention</button>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Router.navigate('trainer-grading-queue')"><i data-lucide="check-square"></i> Central Grading Queue</button>
+          </div>
+
+          <!-- PROGRESS CARDS GRID -->
+          <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:18px;">
+            ${displayedLearners.map(l => {
+              const progressPct = l.id === "LNR-501" ? 88 : l.id === "LNR-502" ? 42 : l.id === "LNR-503" ? 65 : 52;
+              return `
+                <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; flex-direction:column; justify-content:space-between; gap:16px;">
+                  <div>
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                      <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:44px; height:44px; border-radius:50%; background:#fdfbf7; border:2px solid var(--primary); color:var(--primary); font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center;">
+                          ${l.name.split(' ').map(n=>n[0]).join('')}
+                        </div>
+                        <div>
+                          <h3 style="font:800 17.5px 'Manrope', sans-serif; color:var(--navy-medium); margin:0 0 2px 0;">${l.name}</h3>
+                          <span style="font-size:12px; color:var(--slate);">${l.course}</span>
+                        </div>
+                      </div>
+                      <span class="badge ${l.risk === 'None' ? 'badge-success' : 'badge-error'}" style="font-size:10px;">
+                        ${l.risk === 'None' ? 'On Track' : l.risk}
+                      </span>
+                    </div>
+
+                    <!-- PROGRESS BAR -->
+                    <div style="margin-bottom:12px;">
+                      <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px;">
+                        <span style="color:var(--slate); font-weight:600;">Curriculum Progression:</span>
+                        <strong style="color:var(--navy-medium);">${progressPct}% Completed</strong>
+                      </div>
+                      <div style="background:#f1f5f9; height:8px; border-radius:4px; overflow:hidden;">
+                        <div style="background:var(--primary); width:${progressPct}%; height:100%; border-radius:4px;"></div>
+                      </div>
+                    </div>
+
+                    <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.18); border-radius:8px; padding:12px; font-size:12.5px; display:flex; flex-direction:column; gap:6px;">
+                      <div style="display:flex; justify-content:space-between;">
+                        <span style="color:var(--slate);">Active Unit:</span>
+                        <strong style="color:var(--navy-medium);">${l.currentMilestone}</strong>
+                      </div>
+                      <div style="display:flex; justify-content:space-between;">
+                        <span style="color:var(--slate);">Attendance Rate:</span>
+                        <strong style="color:${parseInt(l.overallAttendance) < 80 ? '#dc2626' : '#166534'};">${l.overallAttendance}</strong>
+                      </div>
+                      <div style="display:flex; justify-content:space-between;">
+                        <span style="color:var(--slate);">Homework State:</span>
+                        <strong style="color:${l.homeworkStatus.includes('Overdue') ? '#dc2626' : '#166534'};">${l.homeworkStatus}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding-top:12px; border-top:1px solid rgba(124, 119, 102, 0.12); flex-wrap:wrap; gap:8px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.signOffTrainerMilestone('${l.id}', '${l.currentMilestone}')">
+                      <i data-lucide="check-circle"></i> Sign-off Unit
+                    </button>
+                    <div style="display:flex; gap:6px;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')"><i data-lucide="message-square"></i> Message</button>
+                      <button class="btn btn-primary btn-xs" onclick="Router.navigate('trainer-grading-queue')">Grade Work</button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 8. HUB 2 - PAGE 3: LEARNER RISKS & INTERVENTIONS (trainer-learners-risks)
     // --------------------------------------------------------------------------
     else if (route === "trainer-learners-risks" || route === "trainer-milestones-interventions") {
-      const risks = data.learners.filter(l => l.risk !== "None");
+      const riskFilter = window.trainerRiskTab || "all";
+      const allRisks = (data.learners || []).filter(l => l.risk !== "None");
+      const displayedRisks = riskFilter === "all" ? allRisks :
+        riskFilter === "absence" ? allRisks.filter(l => l.risk.includes("Absence")) :
+        riskFilter === "overdue" ? allRisks.filter(l => l.risk.includes("Overdue")) :
+        allRisks.filter(l => l.risk.includes("Stalled"));
+
       viewContent = `
-        <div style="display:flex; flex-direction:column; gap:16px;">
-          ${risks.map(l => `
-            <div style="background:#ffffff; border:1px solid #fecdd3; border-left:6px solid #e11d48; border-radius:12px; padding:22px; box-shadow:var(--shadow-subtle); display:flex; justify-content:space-between; align-items:center; gap:20px;">
-              <div style="display:flex; flex-direction:column; gap:6px;">
-                <div style="display:flex; align-items:center; gap:10px;">
-                  <h3 style="font:800 18px 'Manrope', sans-serif; color:var(--navy-dark); margin:0;">${l.name}</h3>
-                  <span class="badge badge-error">${l.risk}</span>
-                  <span style="font-size:12px; color:var(--slate);">${l.course}</span>
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- RISK METRIC STRIP -->
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px;">
+            <div style="background:#ffffff; border:1px solid #fecaca; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:#dc2626; text-transform:uppercase;">Active Risk Flags</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#dc2626; margin:4px 0 0 0;">${allRisks.length} Students</h3>
+              <small style="font-size:10.5px; color:#991b1b;">Telemetry Early Warning</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Attendance Dropouts</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#b45309; margin:4px 0 0 0;">1 Flagged</h3>
+              <small style="font-size:10.5px; color:var(--slate);">2 Consecutive Absences</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Overdue Submissions</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#1e40af; margin:4px 0 0 0;">1 Milestone</h3>
+              <small style="font-size:10.5px; color:var(--slate);">Capstone Task Delayed</small>
+            </div>
+            <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(70, 55, 28, 0.02);">
+              <span style="font-size:11px; font-weight:700; color:var(--slate); text-transform:uppercase;">Remediated MTD</span>
+              <h3 style="font:800 22px 'Manrope', sans-serif; color:#166534; margin:4px 0 0 0;">2 Learners</h3>
+              <small style="font-size:10.5px; color:var(--slate);">Intervention Active</small>
+            </div>
+          </div>
+
+          <!-- FILTER BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:10px; padding:12px 18px;">
+            <div style="display:flex; gap:8px;">
+              <button class="btn ${riskFilter === 'all' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRiskTab='all'; RenderEngine.trainerWorkspace('trainer-learners-risks');">All Flags (${allRisks.length})</button>
+              <button class="btn ${riskFilter === 'absence' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRiskTab='absence'; RenderEngine.trainerWorkspace('trainer-learners-risks');">Repeated Absence (1)</button>
+              <button class="btn ${riskFilter === 'overdue' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRiskTab='overdue'; RenderEngine.trainerWorkspace('trainer-learners-risks');">Overdue Capstones (1)</button>
+              <button class="btn ${riskFilter === 'stalled' ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="window.trainerRiskTab='stalled'; RenderEngine.trainerWorkspace('trainer-learners-risks');">Stalled Milestones (1)</button>
+            </div>
+            <span style="font-size:12px; color:var(--slate);">Policy: <strong>Intervene within 48h of risk signal</strong></span>
+          </div>
+
+          <!-- RISK INCIDENT CARDS -->
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            ${displayedRisks.map(l => `
+              <div style="background:#ffffff; border:1px solid #fecaca; border-left:5px solid #dc2626; border-radius:12px; padding:22px; box-shadow:0 3px 12px rgba(70, 55, 28, 0.03); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:18px;">
+                <div style="display:flex; flex-direction:column; gap:6px; flex:1; min-width:280px;">
+                  <div style="display:flex; align-items:center; gap:10px;">
+                    <h3 style="font:800 18px 'Manrope', sans-serif; color:#991b1b; margin:0;">${l.name}</h3>
+                    <span class="badge badge-error" style="font-size:10px;">${l.risk}</span>
+                    <span style="font-size:12px; color:var(--slate);">${l.course}</span>
+                  </div>
+                  <p style="font-size:13.5px; color:#475569; margin:0; line-height:1.4;">
+                    <strong style="color:var(--navy-medium);">Pedagogical Diagnosis:</strong> ${l.riskDesc}
+                  </p>
+                  <div style="display:flex; align-items:center; gap:14px; font-size:12px; color:var(--slate); margin-top:2px;">
+                    <span>Overall Attendance: <strong style="color:#dc2626;">${l.overallAttendance}</strong></span>
+                    <span>·</span>
+                    <span>Homework State: <strong style="color:#dc2626;">${l.homeworkStatus}</strong></span>
+                    <span>·</span>
+                    <span>Last In-App Activity: <strong>${l.lastActive}</strong></span>
+                  </div>
                 </div>
-                <p style="font-size:14px; color:#475569; margin:0; line-height:1.4;">
-                  <strong>Risk Description:</strong> ${l.riskDesc}
-                </p>
-                <div style="display:flex; align-items:center; gap:16px; font-size:12px; color:#64748b; margin-top:4px;">
-                  <span>Attendance: <strong>${l.overallAttendance}</strong></span>
-                  <span>·</span>
-                  <span>Homework: <strong style="color:#ba1a1a;">${l.homeworkStatus}</strong></span>
-                  <span>·</span>
-                  <span>Last Active: <strong>${l.lastActive}</strong></span>
+
+                <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0;">
+                  <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerInterventionModal('${l.id}')" style="background:#dc2626; border:none; font-weight:700;">
+                    <i data-lucide="life-buoy"></i> Log Academic Intervention
+                  </button>
+                  <div style="display:flex; gap:6px;">
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerMessageModal('${l.id}')"><i data-lucide="message-square"></i> Send Outreach</button>
+                    <button class="btn btn-secondary btn-xs" onclick="Actions.extendTrainerDeadlineModal('${l.id}')"><i data-lucide="calendar"></i> Extend Due Date</button>
+                  </div>
                 </div>
               </div>
-              <div style="display:flex; flex-direction:column; gap:8px; flex-shrink:0;">
-                <button class="btn btn-primary btn-sm" onclick="Actions.openTrainerMessageModal('${l.id}')">
-                  <i data-lucide="message-square"></i> Send Outreach
-                </button>
-                <button class="btn btn-secondary btn-sm" onclick="Actions.openTrainerRescheduleModal('CLS-101')">
-                  <i data-lucide="calendar"></i> Schedule 1:1 Check-in
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // --------------------------------------------------------------------------
+    // 9. HUB 2 - PAGE 4: CONTEXTUAL MESSAGES & CHAT (trainer-messages-learners)
+    // --------------------------------------------------------------------------
+    else if (route === "trainer-messages-learners" || route.includes("message") || route.includes("chat")) {
+      const activeLearnerId = window.trainerActiveChatId || "LNR-501";
+      const activeLearner = (data.learners || []).find(l => l.id === activeLearnerId) || data.learners[0];
+
+      const threads = [
+        { id: "LNR-501", name: "Zainab Malik", course: "Spoken English & Web Dev", unread: 2, lastMsg: "Submitted the updated custom hook pull request for review.", time: "10:14 AM" },
+        { id: "LNR-502", name: "Hamza Ahmed", course: "Spoken English Fluency", unread: 1, lastMsg: "I had an internet outage during class CLS-105. Where can I find the audio recording?", time: "Yesterday" },
+        { id: "LNR-503", name: "Bilal Khan", course: "Modern Web Dev", unread: 1, lastMsg: "Having trouble centering the 12-column grid container in ASN-301.", time: "15 Aug" },
+        { id: "LNR-504", name: "Areeba Farooq", course: "Grade 8 Math (FBISE)", unread: 1, lastMsg: "Could you review question 18 from textbook exercise 2.3?", time: "14 Aug" },
+        { id: "LD-101", name: "Zubair Hashmi", course: "Diagnostic Placement Prospect", unread: 0, lastMsg: "Looking forward to today's placement consultation at 06:00 PM.", time: "09:00 AM" }
+      ];
+
+      viewContent = `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <!-- SAFEGUARDING POLICY BAR -->
+          <div class="banner-box" style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); border-radius:10px; padding:14px 18px; display:flex; align-items:center; gap:14px;">
+            <div style="background:#fdfbf7; color:var(--primary); width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i data-lucide="shield-check" style="width:20px; height:20px;"></i>
+            </div>
+            <div>
+              <strong style="color:var(--navy-medium); font-size:13.5px;">Safeguarded Pedagogical Communication Protocol (MSG-001 - MSG-004)</strong>
+              <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">
+                All communications are context-bound to enrolled courses. Direct private contacts outside platform audit logs are blocked. Guardian oversight enabled for K-12 tuition students.
+              </p>
+            </div>
+          </div>
+
+          <!-- SPLIT PANE CHAT CONSOLE -->
+          <div style="display:grid; grid-template-columns: 360px 1fr; background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:12px; height:600px; box-shadow:0 4px 18px rgba(70, 55, 28, 0.04); overflow:hidden;">
+            
+            <!-- LEFT THREADS SIDEBAR -->
+            <div style="border-right:1px solid rgba(124, 119, 102, 0.18); display:flex; flex-direction:column; background:#fdfbf7;">
+              <div style="padding:14px 16px; border-bottom:1px solid rgba(124, 119, 102, 0.15); display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font:800 15px 'Manrope', sans-serif; color:var(--navy-medium);">Active Threads</strong>
+                <span class="badge badge-primary" style="font-size:10px;">5 Open</span>
+              </div>
+              <div style="overflow-y:auto; flex:1; display:flex; flex-direction:column;">
+                ${threads.map(t => {
+                  const isActive = t.id === activeLearnerId;
+                  return `
+                    <div style="padding:14px 16px; border-bottom:1px solid rgba(124, 119, 102, 0.1); cursor:pointer; background:${isActive ? '#ffffff' : 'transparent'}; border-left:3px solid ${isActive ? 'var(--primary)' : 'transparent'}; transition:all 0.15s;" onclick="window.trainerActiveChatId='${t.id}'; RenderEngine.trainerWorkspace('trainer-messages-learners');">
+                      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:3px;">
+                        <strong style="font-size:13.5px; color:var(--navy-medium);">${t.name}</strong>
+                        <span style="font-size:10.5px; color:var(--slate);">${t.time}</span>
+                      </div>
+                      <span style="font-size:11px; color:var(--primary); font-weight:600; display:block; margin-bottom:4px;">${t.course}</span>
+                      <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <p style="margin:0; font-size:12px; color:#5a687c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:240px;">${t.lastMsg}</p>
+                        ${t.unread > 0 ? `<span class="badge badge-warning" style="font-size:9.5px; padding:1px 6px;">${t.unread}</span>` : ''}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- RIGHT CHAT CONSOLE -->
+            <div style="display:flex; flex-direction:column; background:#ffffff;">
+              <!-- CHAT HEADER -->
+              <div style="padding:14px 20px; border-bottom:1px solid rgba(124, 119, 102, 0.15); display:flex; justify-content:space-between; align-items:center; background:#ffffff;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:38px; height:38px; border-radius:50%; background:#e0e7ff; color:#4338ca; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center;">
+                    ${activeLearner.name.split(' ').map(n=>n[0]).join('')}
+                  </div>
+                  <div>
+                    <h4 style="margin:0; font:800 15px 'Manrope', sans-serif; color:var(--navy-medium);">${activeLearner.name}</h4>
+                    <span style="font-size:11.5px; color:var(--slate);">${activeLearner.course} · <strong>${activeLearner.overallAttendance} Attendance</strong></span>
+                  </div>
+                </div>
+                <div style="display:flex; gap:6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openTrainerStudentProgressDetailModal('${activeLearner.id}')"><i data-lucide="user"></i> Profile</button>
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('trainer-grading-queue')"><i data-lucide="check-square"></i> Submissions</button>
+                </div>
+              </div>
+
+              <!-- CHAT MESSAGES BODY -->
+              <div id="trainer-active-chat-messages" style="flex:1; padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:14px; background:#fdfbf7;">
+                <!-- Student message -->
+                <div style="display:flex; justify-content:flex-start;">
+                  <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.18); padding:12px 16px; border-radius:12px 12px 12px 2px; max-width:70%; font-size:13px; line-height:1.4; color:#1e293b; box-shadow:0 2px 6px rgba(70, 55, 28, 0.02);">
+                    Hi Trainer Sara Javed, I completed the assignment exercises for the current milestone. Could you review the pitch intonation recording?
+                    <span style="display:block; font-size:10px; color:var(--slate); margin-top:4px;">Today 09:30 AM · Verified Learner</span>
+                  </div>
+                </div>
+
+                <!-- Trainer reply -->
+                <div style="display:flex; justify-content:flex-end;">
+                  <div style="background:var(--primary); color:#ffffff; padding:12px 16px; border-radius:12px 12px 2px 12px; max-width:70%; font-size:13px; line-height:1.4; box-shadow:0 2px 6px rgba(110,94,6,0.15);">
+                    Great job Zainab! I listened to your recording. Your vowel articulation is sharp. Make sure to apply downward inflection on sentence endings during formal workplace statements.
+                    <span style="display:block; font-size:10px; color:rgba(255,255,255,0.75); text-align:right; margin-top:4px;">Today 09:45 AM · Delivered</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- QUICK RESPONSE CHIPS -->
+              <div style="padding:8px 16px; background:#ffffff; border-top:1px solid rgba(124, 119, 102, 0.12); display:flex; gap:6px; overflow-x:auto;">
+                <button class="btn btn-secondary btn-xs" style="font-size:11px; white-space:nowrap;" onclick="Actions.sendTrainerQuickChatMessage('${activeLearner.id}', 'Great progress on your submission! Approved with rubric marks.')">👍 Great progress!</button>
+                <button class="btn btn-secondary btn-xs" style="font-size:11px; white-space:nowrap;" onclick="Actions.sendTrainerQuickChatMessage('${activeLearner.id}', 'Please review the recorded lecture for Module 1.1 before our next session.')">📹 Review class recording</button>
+                <button class="btn btn-secondary btn-xs" style="font-size:11px; white-space:nowrap;" onclick="Actions.sendTrainerQuickChatMessage('${activeLearner.id}', 'Your homework deadline has been extended by 3 days.')">📅 Deadline extended</button>
+              </div>
+
+              <!-- CHAT INPUT BAR -->
+              <div style="padding:12px 16px; border-top:1px solid rgba(124, 119, 102, 0.15); display:flex; gap:10px; align-items:center; background:#ffffff;">
+                <input type="text" id="trainer-chat-input" class="form-control" placeholder="Write safeguarded message to ${activeLearner.name}..." style="flex:1;" onkeydown="if(event.key==='Enter') Actions.sendTrainerQuickChatMessage('${activeLearner.id}');">
+                <button class="btn btn-primary btn-sm" onclick="Actions.sendTrainerQuickChatMessage('${activeLearner.id}')" style="font-weight:700;">
+                  <i data-lucide="send"></i> Send
                 </button>
               </div>
             </div>
-          `).join("")}
+
+          </div>
         </div>
       `;
     }
@@ -19595,6 +19906,128 @@ Actions.openTrainerWebhookModal = function(attId) {
 Actions.exportTrainerAttendanceLedger = function() {
   Notifications.push("Attendance Ledger Exported", "Reconciled CSV attendance ledger downloaded for current billing cycle.", "success");
   this.audit("ATTENDANCE_LEDGER_EXPORTED", "Exported attendance statement for effective trainer assignment scope.", "Low", "CSV Generated");
+};
+
+Actions.exportTrainerRosterCSV = function() {
+  Notifications.push("Roster Exported", "Assigned learner rosters and contact matrix downloaded.", "success");
+  this.audit("TRAINER_ROSTER_EXPORTED", "Downloaded CSV roster for assigned cohorts and sections.", "Low", "CSV Generated");
+};
+
+Actions.signOffTrainerMilestone = function(learnerId, milestoneName) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId) || { name: "Learner" };
+  this.audit("MILESTONE_SIGNED_OFF", `Signed off ${milestoneName} for ${learner.name}.`, "Medium", "Milestone Signed -> Certificate Gate Unlocked");
+  Notifications.push("Milestone Signed Off", `${milestoneName} approved for ${learner.name}. Progression gate unlocked.`, "success");
+  if (Router.currentRoute === "trainer-learners-progress") RenderEngine.trainerWorkspace("trainer-learners-progress");
+};
+
+Actions.openTrainerStudentProgressDetailModal = function(learnerId) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId) || db.trainerData.learners[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Student Academic Dossier: ${learner.name}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div style="display:flex; align-items:center; gap:14px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:16px; margin-bottom:14px;">
+        <div style="width:48px; height:48px; border-radius:50%; background:#e0e7ff; color:#4338ca; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center;">
+          ${learner.name.split(' ').map(n=>n[0]).join('')}
+        </div>
+        <div>
+          <h4 style="margin:0; font:800 16px 'Manrope', sans-serif; color:var(--navy-dark);">${learner.name}</h4>
+          <span style="font-size:12px; color:var(--slate);">${learner.email} · Enrolled: <strong>${learner.course}</strong></span>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; font-size:12.5px;">
+        <div style="background:#ffffff; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600;">Overall Attendance:</span>
+          <p style="margin:2px 0 0 0; font-size:15px; font-weight:800; color:#166534;">${learner.overallAttendance}</p>
+        </div>
+        <div style="background:#ffffff; border:1px solid #e2e8f0; padding:12px; border-radius:6px;">
+          <span style="color:var(--slate); font-weight:600;">Current Unit:</span>
+          <p style="margin:2px 0 0 0; font-size:13px; font-weight:700; color:var(--navy-dark);">${learner.currentMilestone}</p>
+        </div>
+      </div>
+
+      <div style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.2); border-left:3px solid var(--primary); padding:12px; border-radius:0 6px 6px 0; font-size:12.5px; color:#475569;">
+        <strong>Pedagogical Trajectory Note:</strong><br>
+        ${learner.riskDesc || 'Student demonstrates consistent progress across rubric dimensions.'}
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+    <button class="btn btn-primary" onclick="Actions.openTrainerMessageModal('${learner.id}')"><i data-lucide="message-square"></i> Send Message</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.extendTrainerDeadlineModal = function(learnerId) {
+  const learner = db.trainerData.learners.find(l => l.id === learnerId) || { name: "Learner" };
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.textContent = `Extend Submission Deadline: ${learner.name}`;
+  body.innerHTML = `
+    <div class="om-flow-dialog">
+      <div class="form-group">
+        <label>Proposed New Due Date</label>
+        <input type="date" id="ext-deadline-date" class="form-control" value="2026-08-25">
+      </div>
+      <div class="form-group">
+        <label>Extension Justification</label>
+        <textarea id="ext-deadline-reason" class="form-control" rows="2" placeholder="Document reason for extension...">Technical internet disruption during milestone assessment week. Authorized 3-day extension.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.saveTrainerDeadlineExtension('${learnerId}')">Approve Extension</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.saveTrainerDeadlineExtension = function(learnerId) {
+  const date = document.getElementById("ext-deadline-date")?.value || "2026-08-25";
+  this.audit("DEADLINE_EXTENDED", `Extended submission deadline for ${learnerId} to ${date}.`, "Low", "Deadline Adjusted");
+  Notifications.push("Deadline Extended", `New submission target ${date} registered for student.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute === "trainer-learners-risks") RenderEngine.trainerWorkspace("trainer-learners-risks");
+};
+
+Actions.sendTrainerQuickChatMessage = function(learnerId, text) {
+  const inputEl = document.getElementById("trainer-chat-input");
+  const msgText = text || (inputEl ? inputEl.value : "Message sent");
+  if (!msgText.trim()) return;
+
+  const threadEl = document.getElementById("trainer-active-chat-messages");
+  if (threadEl) {
+    const newBubble = document.createElement("div");
+    newBubble.style.display = "flex";
+    newBubble.style.justifyContent = "flex-end";
+    newBubble.innerHTML = `
+      <div style="background:var(--primary); color:#ffffff; padding:10px 14px; border-radius:12px 12px 2px 12px; max-width:70%; font-size:13px; line-height:1.4; box-shadow:0 2px 6px rgba(110,94,6,0.15);">
+        ${msgText}
+        <span style="display:block; font-size:10px; color:rgba(255,255,255,0.75); text-align:right; margin-top:4px;">Just now · Delivered</span>
+      </div>
+    `;
+    threadEl.appendChild(newBubble);
+    threadEl.scrollTop = threadEl.scrollHeight;
+  }
+
+  if (inputEl) inputEl.value = "";
+  Notifications.push("Message Delivered", `Message sent to learner under Safeguarded Thread (FLOW-023).`, "success");
+  this.audit("TRAINER_CHAT_MESSAGE_SENT", `Sent message to learner ${learnerId}.`, "Low", "Delivered -> Logged");
 };
 
 const Simulator = {
