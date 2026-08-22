@@ -606,204 +606,172 @@
         <button id="sidebar-stop-impersonate" class="link-btn">Stop</button>
       </div>
     
+      <!-- COURSE CREATOR NAVIGATION (STREAMLINED 6-HUB HIERARCHY) -->
       <nav class="sidebar-nav hidden" id="creator-nav" aria-label="Course Creator navigation">
-        <!-- 1. Authoring Home -->
+        
+        <!-- 1. Authoring Command Hub -->
         <div class="nav-item active" data-route="creator-dashboard" id="nav-creator-dashboard">
           <i data-lucide="layout-dashboard"></i>
           <span>Authoring Home</span>
         </div>
 
-        <!-- 2. Catalog & Versions -->
-        <div class="nav-group">
-          <div class="nav-group-title">Programmes & Courses</div>
-          <div class="nav-item" data-route="creator-courses-my" id="nav-creator-courses-my">
-            <i data-lucide="book-open"></i>
-            <span>My Courses</span>
-            <span class="badge badge-primary count-creator-my-courses">8</span>
+        <!-- 2. Hub 1: Course Catalog & Versions -->
+        <div class="nav-group collapsible open" data-group="creator-catalogue">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="book-marked" style="width:13px; height:13px; color:var(--primary);"></i> Catalog & Versions</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge count-creator-my-courses">8</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="creator-courses-draft" id="nav-creator-courses-draft">
-            <i data-lucide="file-edit"></i>
-            <span>Draft Courses</span>
-            <span class="badge badge-warning count-creator-drafts">4</span>
-          </div>
-          <div class="nav-item" data-route="creator-courses-review" id="nav-creator-courses-review">
-            <i data-lucide="file-search"></i>
-            <span>In Review</span>
-            <span class="badge badge-secondary count-creator-review">2</span>
-          </div>
-          <div class="nav-item" data-route="creator-courses-approved" id="nav-creator-courses-approved">
-            <i data-lucide="check-circle-2"></i>
-            <span>Approved</span>
-            <span class="badge badge-success count-creator-approved">1</span>
-          </div>
-          <div class="nav-item" data-route="creator-courses-published" id="nav-creator-courses-published">
-            <i data-lucide="archive"></i>
-            <span>Published / Live</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="creator-courses-my" id="nav-creator-courses-my">
+              <i data-lucide="book-open"></i>
+              <span>Course Portfolio</span>
+              <span class="badge badge-primary count-creator-my-courses">8</span>
+            </div>
+            <div class="nav-item" data-route="creator-versions-draft" id="nav-creator-versions-draft">
+              <i data-lucide="git-branch"></i>
+              <span>Version Branches</span>
+              <span class="badge badge-warning count-creator-drafts">4</span>
+            </div>
           </div>
         </div>
 
-        <!-- 3. Course Versions & Branches -->
-        <div class="nav-group">
-          <div class="nav-group-title">Course Versions</div>
-          <div class="nav-item" data-route="creator-versions-draft" id="nav-creator-versions-draft">
-            <i data-lucide="git-branch"></i>
-            <span>Draft Versions</span>
+        <!-- 3. Hub 2: 5-Tier Syllabus Builder -->
+        <div class="nav-group collapsible open" data-group="creator-syllabus">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="layers" style="width:13px; height:13px; color:var(--primary);"></i> 5-Tier Syllabus Studio</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">5 Tiers</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="creator-versions-history" id="nav-creator-versions-history">
-            <i data-lucide="history"></i>
-            <span>Version History</span>
-          </div>
-          <div class="nav-item" data-route="creator-versions-create" id="nav-creator-versions-create">
-            <i data-lucide="plus-circle"></i>
-            <span>Create Version</span>
-          </div>
-        </div>
-
-        <!-- 4. 5-Tier Syllabus Builder -->
-        <div class="nav-group">
-          <div class="nav-group-title">Syllabus Builder</div>
-          <div class="nav-item" data-route="creator-syllabus-levels" id="nav-creator-syllabus-levels">
-            <i data-lucide="layers"></i>
-            <span>Levels</span>
-          </div>
-          <div class="nav-item" data-route="creator-syllabus-milestones" id="nav-creator-syllabus-milestones">
-            <i data-lucide="flag"></i>
-            <span>Milestones</span>
-          </div>
-          <div class="nav-item" data-route="creator-syllabus-modules" id="nav-creator-syllabus-modules">
-            <i data-lucide="folder-tree"></i>
-            <span>Modules / Units</span>
-          </div>
-          <div class="nav-item" data-route="creator-syllabus-lessons" id="nav-creator-syllabus-lessons">
-            <i data-lucide="file-text"></i>
-            <span>Lessons</span>
-          </div>
-          <div class="nav-item" data-route="creator-syllabus-activities" id="nav-creator-syllabus-activities">
-            <i data-lucide="play-circle"></i>
-            <span>Activities</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="creator-syllabus-milestones" id="nav-creator-syllabus-milestones">
+              <i data-lucide="flag"></i>
+              <span>Milestones Roadmap</span>
+            </div>
+            <div class="nav-item" data-route="creator-syllabus-levels" id="nav-creator-syllabus-levels">
+              <i data-lucide="layers"></i>
+              <span>Levels Ladder</span>
+            </div>
+            <div class="nav-item" data-route="creator-syllabus-modules" id="nav-creator-syllabus-modules">
+              <i data-lucide="folder-tree"></i>
+              <span>Modules & Units</span>
+            </div>
+            <div class="nav-item" data-route="creator-syllabus-lessons" id="nav-creator-syllabus-lessons">
+              <i data-lucide="file-text"></i>
+              <span>Lessons Studio</span>
+            </div>
+            <div class="nav-item" data-route="creator-syllabus-activities" id="nav-creator-syllabus-activities">
+              <i data-lucide="play-circle"></i>
+              <span>Typed Activities</span>
+            </div>
           </div>
         </div>
 
-        <!-- 5. Assessments & Rubrics -->
-        <div class="nav-group">
-          <div class="nav-group-title">Assessments & Rubrics</div>
-          <div class="nav-item" data-route="creator-assessments-bank" id="nav-creator-assessments-bank">
-            <i data-lucide="database"></i>
-            <span>Question Bank</span>
+        <!-- 4. Hub 3: Assessments & Rubrics Bank -->
+        <div class="nav-group collapsible open" data-group="creator-assessments">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="clipboard-check" style="width:13px; height:13px; color:var(--primary);"></i> Assessments & Rubrics</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-primary nav-group-badge">4 Formats</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="creator-assessments-quizzes" id="nav-creator-assessments-quizzes">
-            <i data-lucide="help-circle"></i>
-            <span>Quizzes</span>
-          </div>
-          <div class="nav-item" data-route="creator-assessments-assignments" id="nav-creator-assessments-assignments">
-            <i data-lucide="clipboard-list"></i>
-            <span>Assignments</span>
-          </div>
-          <div class="nav-item" data-route="creator-assessments-voice" id="nav-creator-assessments-voice">
-            <i data-lucide="mic"></i>
-            <span>Voice Activities</span>
-          </div>
-          <div class="nav-item" data-route="creator-assessments-rubrics" id="nav-creator-assessments-rubrics">
-            <i data-lucide="table"></i>
-            <span>Rubrics</span>
-          </div>
-        </div>
-
-        <!-- 6. Resources & Attachments -->
-        <div class="nav-group">
-          <div class="nav-group-title">Resources</div>
-          <div class="nav-item" data-route="creator-resources-library" id="nav-creator-resources-library">
-            <i data-lucide="library"></i>
-            <span>Resource Library</span>
-          </div>
-          <div class="nav-item" data-route="creator-resources-upload" id="nav-creator-resources-upload">
-            <i data-lucide="upload-cloud"></i>
-            <span>Upload Resource</span>
-          </div>
-          <div class="nav-item" data-route="creator-resources-linked" id="nav-creator-resources-linked">
-            <i data-lucide="link-2"></i>
-            <span>Linked Resources</span>
-          </div>
-          <div class="nav-item" data-route="creator-resources-versions" id="nav-creator-resources-versions">
-            <i data-lucide="git-commit"></i>
-            <span>Resource Versions</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="creator-assessments-bank" id="nav-creator-assessments-bank">
+              <i data-lucide="database"></i>
+              <span>Question Bank</span>
+            </div>
+            <div class="nav-item" data-route="creator-assessments-quizzes" id="nav-creator-assessments-quizzes">
+              <i data-lucide="help-circle"></i>
+              <span>Diagnostic Quizzes</span>
+            </div>
+            <div class="nav-item" data-route="creator-assessments-assignments" id="nav-creator-assessments-assignments">
+              <i data-lucide="clipboard-list"></i>
+              <span>Assignments</span>
+            </div>
+            <div class="nav-item" data-route="creator-assessments-voice" id="nav-creator-assessments-voice">
+              <i data-lucide="mic"></i>
+              <span>Spoken Voice Drills</span>
+            </div>
+            <div class="nav-item" data-route="creator-assessments-rubrics" id="nav-creator-assessments-rubrics">
+              <i data-lucide="table"></i>
+              <span>CEFR Rubrics</span>
+            </div>
           </div>
         </div>
 
-        <!-- 7. Learning & Progression Rules -->
-        <div class="nav-group">
-          <div class="nav-group-title">Learning Rules</div>
-          <div class="nav-item" data-route="creator-rules-prerequisites" id="nav-creator-rules-prerequisites">
-            <i data-lucide="git-merge"></i>
-            <span>Prerequisites</span>
+        <!-- 5. Hub 4: Resource Vault & Progression Rules -->
+        <div class="nav-group collapsible open" data-group="creator-resources-rules">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="folder-archive" style="width:13px; height:13px; color:var(--primary);"></i> Vault & Progression</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">Assets</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="creator-rules-release" id="nav-creator-rules-release">
-            <i data-lucide="unlock"></i>
-            <span>Release Rules</span>
-          </div>
-          <div class="nav-item" data-route="creator-rules-completion" id="nav-creator-rules-completion">
-            <i data-lucide="award"></i>
-            <span>Completion Rules</span>
-          </div>
-          <div class="nav-item" data-route="creator-rules-attempts" id="nav-creator-rules-attempts">
-            <i data-lucide="refresh-cw"></i>
-            <span>Attempt / Retry Rules</span>
-          </div>
-        </div>
-
-        <!-- 8. Preview & Simulation -->
-        <div class="nav-group">
-          <div class="nav-group-title">Preview & Simulation</div>
-          <div class="nav-item" data-route="creator-preview" id="nav-creator-preview">
-            <i data-lucide="eye"></i>
-            <span>Learner Preview</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="creator-resources-library" id="nav-creator-resources-library">
+              <i data-lucide="library"></i>
+              <span>Resource Vault</span>
+            </div>
+            <div class="nav-item" data-route="creator-rules-prerequisites" id="nav-creator-rules-prerequisites">
+              <i data-lucide="git-merge"></i>
+              <span>Progression Rules</span>
+            </div>
           </div>
         </div>
 
-        <!-- 9. Review & Pre-Flight Submission -->
-        <div class="nav-group">
-          <div class="nav-group-title">Review & Submission</div>
-          <div class="nav-item" data-route="creator-review-validation" id="nav-creator-review-validation">
-            <i data-lucide="check-square"></i>
-            <span>Pre-Flight Validation</span>
+        <!-- 6. Hub 5: Quality Assurance & Board Review -->
+        <div class="nav-group collapsible open" data-group="creator-review">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="check-square" style="width:13px; height:13px; color:var(--primary);"></i> QA & Board Review</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-warning nav-group-badge count-creator-comments">3</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
           </div>
-          <div class="nav-item" data-route="creator-review-submit" id="nav-creator-review-submit">
-            <i data-lucide="send"></i>
-            <span>Submit for Review</span>
-          </div>
-          <div class="nav-item" data-route="creator-review-comments" id="nav-creator-review-comments">
-            <i data-lucide="message-square"></i>
-            <span>Reviewer Comments</span>
-            <span class="badge badge-warning count-creator-comments">3</span>
-          </div>
-          <div class="nav-item" data-route="creator-review-changes" id="nav-creator-review-changes">
-            <i data-lucide="alert-triangle"></i>
-            <span>Changes Requested</span>
-            <span class="badge badge-error count-creator-changes">1</span>
-          </div>
-        </div>
-
-        <!-- 10. K-12 Board Authoring -->
-        <div class="nav-group">
-          <div class="nav-group-title">K-12 Authoring</div>
-          <div class="nav-item" data-route="creator-k12-curriculum" id="nav-creator-k12-curriculum">
-            <i data-lucide="graduation-cap"></i>
-            <span>K-12 Curriculum</span>
-          </div>
-          <div class="nav-item" data-route="creator-k12-syllabi" id="nav-creator-k12-syllabi">
-            <i data-lucide="book-marked"></i>
-            <span>Subject Syllabi</span>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="creator-preview" id="nav-creator-preview">
+              <i data-lucide="eye"></i>
+              <span>Learner Simulation</span>
+            </div>
+            <div class="nav-item" data-route="creator-review-validation" id="nav-creator-review-validation">
+              <i data-lucide="shield-check"></i>
+              <span>Pre-Flight Validation</span>
+            </div>
+            <div class="nav-item" data-route="creator-review-comments" id="nav-creator-review-comments">
+              <i data-lucide="message-square"></i>
+              <span>Reviewer Feedback</span>
+              <span class="badge badge-warning count-creator-comments">3</span>
+            </div>
           </div>
         </div>
 
-        <!-- 11. Authoring Audit History -->
-        <div class="nav-group nav-group-primary">
-          <div class="nav-group-title">History & Governance</div>
-          <div class="nav-item" data-route="creator-audit-history" id="nav-creator-audit-history">
-            <i data-lucide="scroll"></i>
-            <span>Authoring Audit</span>
+        <!-- 7. Hub 6: K-12 Board Tuition & Governance -->
+        <div class="nav-group collapsible open" data-group="creator-k12-governance">
+          <div class="nav-group-header" role="button" tabindex="0" aria-expanded="true">
+            <div class="nav-group-title"><i data-lucide="graduation-cap" style="width:13px; height:13px; color:var(--primary);"></i> K-12 & Governance</div>
+            <div class="nav-group-meta">
+              <span class="badge badge-secondary nav-group-badge">FBISE</span>
+              <i data-lucide="chevron-down" class="nav-group-chevron"></i>
+            </div>
+          </div>
+          <div class="nav-group-body">
+            <div class="nav-item" data-route="creator-k12-curriculum" id="nav-creator-k12-curriculum">
+              <i data-lucide="book-marked"></i>
+              <span>K-12 Subject Syllabi</span>
+            </div>
+            <div class="nav-item" data-route="creator-audit-history" id="nav-creator-audit-history">
+              <i data-lucide="scroll"></i>
+              <span>Authoring Audit Trail</span>
+            </div>
           </div>
         </div>
+
       </nav>
     
       <!-- ACADEMIC REVIEWER NAVIGATION -->

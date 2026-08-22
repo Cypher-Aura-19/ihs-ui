@@ -181,6 +181,85 @@ body {
   transition: opacity var(--transition-fast);
 }
 
+/* Collapsible Accordion Navigation Groups */
+.nav-group.collapsible {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.nav-group.collapsible .nav-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--rounded-component);
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--transition-fast);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-group.collapsible .nav-group-header:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-group.collapsible .nav-group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  letter-spacing: 0.6px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-group.collapsible .nav-group-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-group.collapsible .nav-group-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+}
+
+.nav-group.collapsible .nav-group-chevron {
+  width: 14px;
+  height: 14px;
+  color: #94a3b8;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(-90deg);
+}
+
+.nav-group.collapsible.open .nav-group-chevron {
+  transform: rotate(0deg);
+}
+
+.nav-group.collapsible .nav-group-body {
+  display: none;
+  flex-direction: column;
+  gap: 3px;
+  padding-left: 8px;
+  margin-top: 2px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  margin-left: 12px;
+}
+
+.nav-group.collapsible.open .nav-group-body {
+  display: flex;
+}
+
+.nav-group.collapsible .nav-group-body .nav-item {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
 .sidebar-collapsed .nav-group-title {
   opacity: 0;
   height: 0;

@@ -6452,6 +6452,27 @@ const Router = {
       });
     });
 
+    // Collapsible navigation groups
+    document.querySelectorAll(".nav-group.collapsible .nav-group-header").forEach(header => {
+      header.setAttribute("role", "button");
+      header.setAttribute("tabindex", "0");
+      const toggleGroup = (e) => {
+        e?.stopPropagation();
+        const group = header.closest(".nav-group.collapsible");
+        if (group) {
+          const isOpen = group.classList.toggle("open");
+          header.setAttribute("aria-expanded", String(isOpen));
+        }
+      };
+      header.addEventListener("click", toggleGroup);
+      header.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleGroup(event);
+        }
+      });
+    });
+
     // Sidebar Collapse button
     const toggleSidebarBtn = document.getElementById("toggle-sidebar");
     const mobileMenuBtn = document.getElementById("mobile-menu-btn");
@@ -6588,13 +6609,33 @@ const Router = {
       else activeNavItem = document.getElementById("nav-dashboard");
     } else {
       activeNavItem = document.getElementById(`nav-${route}`);
-      if (!activeNavItem && Simulator.activeRole === "learner" && typeof learnerRouteParentMap !== "undefined") {
+      if (!activeNavItem && Simulator.activeRole === "course_creator") {
+        if (["creator-courses-draft", "creator-courses-review", "creator-courses-approved", "creator-courses-published"].includes(route)) {
+          activeNavItem = document.getElementById("nav-creator-courses-my");
+        } else if (["creator-versions-history", "creator-versions-create"].includes(route)) {
+          activeNavItem = document.getElementById("nav-creator-versions-draft");
+        } else if (["creator-resources-upload", "creator-resources-linked", "creator-resources-versions"].includes(route)) {
+          activeNavItem = document.getElementById("nav-creator-resources-library");
+        } else if (["creator-rules-release", "creator-rules-completion", "creator-rules-attempts"].includes(route)) {
+          activeNavItem = document.getElementById("nav-creator-rules-prerequisites");
+        } else if (["creator-review-submit", "creator-review-changes"].includes(route)) {
+          activeNavItem = document.getElementById("nav-creator-review-comments");
+        } else if (route === "creator-k12-syllabi") {
+          activeNavItem = document.getElementById("nav-creator-k12-curriculum");
+        }
+      } else if (!activeNavItem && Simulator.activeRole === "learner" && typeof learnerRouteParentMap !== "undefined") {
         const parentNavId = learnerRouteParentMap[route];
         if (parentNavId) activeNavItem = document.getElementById(parentNavId);
       }
     }
     if (activeNavItem) {
       activeNavItem.classList.add("active");
+      const parentCollapsible = activeNavItem.closest(".nav-group.collapsible");
+      if (parentCollapsible) {
+        parentCollapsible.classList.add("open");
+        const hdr = parentCollapsible.querySelector(".nav-group-header");
+        if (hdr) hdr.setAttribute("aria-expanded", "true");
+      }
     }
 
     // Toggle visible content views
