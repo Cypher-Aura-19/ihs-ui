@@ -2553,14 +2553,158 @@ const db = {
       { id: "COM-917", enrolmentId: "AEN-662", learner: "Naveed Akhtar", product: "K-12 Grade 8 Math", salesValue: "PKR 32,000", plan: "Standard CSR Sales Plan (10%)", commissionAmount: "PKR 3,200", status: "Reversed", payrollPeriod: "Aug 2026", date: "2026-08-01", refundRef: "REF-4415", reversalReason: "Guardian Relocation Withdrawal Authorization", auditNotes: "Student transferred abroad before term start. Pro-rata commission reversed." }
     ],
     cases: [
-      { id: "CAS-401", subject: "Prospect inquiring about evening 1:1 slot availability", category: "Prospect Inquiry", priority: "Medium", sla: "1h 45m remaining", prospect: "Zubair Hashmi", owner: "Sarah Jenkins", status: "In Review" },
-      { id: "CAS-402", subject: "Trial placement score discrepancy clarification", category: "Trial Issue", priority: "High", sla: "35m remaining", prospect: "Mariam Tariq", owner: "Sarah Jenkins", status: "In Review" },
-      { id: "CAS-403", subject: "Parent requesting fee instalment breakdown for K-12", category: "Payment Inquiry", priority: "Medium", sla: "4h 20m remaining", prospect: "Areeba Farooq", owner: "Sarah Jenkins", status: "Open" },
-      { id: "CAS-404", subject: "Assisted checkout bank transfer slip confirmation", category: "Enrolment Support", priority: "Low", sla: "Met", prospect: "Danish Qureshi", owner: "Sarah Jenkins", status: "Resolved" },
-      { id: "CAS-405", subject: "Learner rescheduling trial consultation due to power outage", category: "Trial Reschedule", priority: "Low", sla: "Met", prospect: "Kamran Siddiqui", owner: "Sarah Jenkins", status: "Resolved" },
-      { id: "CAS-406", subject: "Parent requesting female trainer preference for Tajweed", category: "Special Request", priority: "High", sla: "50m remaining", prospect: "Hamza Qureshi", owner: "Sarah Jenkins", status: "Open" },
-      { id: "CAS-407", subject: "Corporate invoice generation for vocational student sponsorship", category: "B2B Billing", priority: "Medium", sla: "2h 15m remaining", prospect: "Tariq Mahmood", owner: "Sarah Jenkins", status: "In Review" },
-      { id: "CAS-408", subject: "LMS mobile app login token credential reset", category: "Technical Access", priority: "Low", sla: "Met", prospect: "Bilal Ahmed", owner: "Sarah Jenkins", status: "Resolved" }
+      { 
+        id: "CAS-401", 
+        subject: "Prospect inquiring about evening 1:1 slot availability and trainer matching", 
+        category: "Prospect Inquiry", 
+        priority: "Medium", 
+        sla: "1h 45m remaining", 
+        prospect: "Zubair Hashmi", 
+        contact: "+92 300 9821045", 
+        channel: "WhatsApp", 
+        programme: "Foundations 1:1 Track", 
+        owner: "Sarah Jenkins", 
+        status: "In Review",
+        createdAt: "Today 15:10 PKT",
+        messages: [
+          { sender: "Zubair Hashmi", time: "15:10 PKT", text: "Assalam o Alaikum, I work until 6 PM. Do you have 1:1 diagnostic slots available between 7:30 PM and 9:00 PM on weekdays?" },
+          { sender: "Sarah Jenkins (CSR)", time: "15:18 PKT", text: "Wa Alaikum Assalam Zubair! Yes, our evening trainer roster has slots available at 20:00 PKT on Tuesdays and Thursdays. Let me know your preference." }
+        ]
+      },
+      { 
+        id: "CAS-402", 
+        subject: "Trial diagnostic placement score discrepancy clarification", 
+        category: "Trial Diagnostic", 
+        priority: "High", 
+        sla: "35m remaining", 
+        prospect: "Mariam Tariq", 
+        contact: "+92 321 4409128", 
+        channel: "In-App Portal", 
+        programme: "Applied Numeracy Cohort", 
+        owner: "Sarah Jenkins", 
+        status: "In Review",
+        createdAt: "Today 16:05 PKT",
+        messages: [
+          { sender: "Mariam Tariq", time: "16:05 PKT", text: "Hi Sarah, my placement test report shows Level N3, but the recommended cohort schedule says Level N4. Can you clarify which syllabus track I will be joining?" }
+        ]
+      },
+      { 
+        id: "CAS-403", 
+        subject: "Parent requesting 2-part fee instalment breakdown for K-12 Grade 8", 
+        category: "Payment Inquiry", 
+        priority: "Medium", 
+        sla: "4h 20m remaining", 
+        prospect: "Areeba Farooq (Parent: Farooq Ahmed)", 
+        contact: "+92 333 5519022", 
+        channel: "Phone / WhatsApp", 
+        programme: "K-12 Full Academic Term", 
+        owner: "Sarah Jenkins", 
+        status: "Open",
+        createdAt: "Today 14:30 PKT",
+        messages: [
+          { sender: "Farooq Ahmed", time: "14:30 PKT", text: "We would like to enrol Areeba for Grade 8 Math. Is it possible to pay the PKR 32,000 tuition in two monthly instalments of PKR 16,000?" }
+        ]
+      },
+      { 
+        id: "CAS-404", 
+        subject: "Assisted checkout bank transfer slip confirmation & receipt delivery", 
+        category: "Enrolment Support", 
+        priority: "Low", 
+        sla: "Met (Resolved)", 
+        prospect: "Danish Qureshi", 
+        contact: "+92 300 7710294", 
+        channel: "WhatsApp", 
+        programme: "Basic Literacy Foundations", 
+        owner: "Sarah Jenkins", 
+        status: "Resolved",
+        createdAt: "Yesterday 11:20 PKT",
+        resolvedAt: "Yesterday 11:55 PKT",
+        resolutionNotes: "Verified Meezan bank receipt RCP-1049 and issued digital confirmation voucher.",
+        messages: [
+          { sender: "Danish Qureshi", time: "11:20 PKT", text: "Attached is my payment transfer receipt for PKR 18,000. Please confirm if my seat is booked." },
+          { sender: "Sarah Jenkins (CSR)", time: "11:55 PKT", text: "Payment verified Danish! Your official receipt RCP-1049 is generated and your student orientation is active." }
+        ]
+      },
+      { 
+        id: "CAS-405", 
+        subject: "Learner rescheduling trial consultation due to load-shedding", 
+        category: "Trial Reschedule", 
+        priority: "Low", 
+        sla: "Met (Resolved)", 
+        prospect: "Kamran Siddiqui", 
+        contact: "+92 312 8820194", 
+        channel: "In-App Portal", 
+        programme: "Vocational Technology", 
+        owner: "Sarah Jenkins", 
+        status: "Resolved",
+        createdAt: "2026-08-20 18:00 PKT",
+        resolvedAt: "2026-08-20 18:25 PKT",
+        resolutionNotes: "Re-booked slot to Friday 17:00 PKT with trainer Huzsam Ahmed.",
+        messages: [
+          { sender: "Kamran Siddiqui", time: "18:00 PKT", text: "I have unexpected load shedding right now. Can we move my trial to Friday evening?" },
+          { sender: "Sarah Jenkins (CSR)", time: "18:25 PKT", text: "No problem Kamran! Re-scheduled to Friday 17:00 PKT. New Daily.co room link sent." }
+        ]
+      },
+      { 
+        id: "CAS-406", 
+        subject: "Parent requesting female certified Tajweed trainer preference", 
+        category: "Special Preference", 
+        priority: "Medium", 
+        sla: "Met (Resolved)", 
+        prospect: "Hamza Qureshi (Guardian)", 
+        contact: "+92 301 6610293", 
+        channel: "WhatsApp", 
+        programme: "Quranic Studies (Tajweed)", 
+        owner: "Sarah Jenkins", 
+        status: "Resolved",
+        createdAt: "2026-08-19 10:15 PKT",
+        resolvedAt: "2026-08-19 11:00 PKT",
+        resolutionNotes: "Matched with certified female instructor Ustadha Zainab.",
+        messages: [
+          { sender: "Hamza Qureshi", time: "10:15 PKT", text: "For my daughter's Tajweed classes, we request a female instructor." },
+          { sender: "Sarah Jenkins (CSR)", time: "11:00 PKT", text: "Certainly. We have assigned certified instructor Ustadha Zainab to her 1:1 sessions." }
+        ]
+      },
+      { 
+        id: "CAS-407", 
+        subject: "Corporate invoice generation for vocational student sponsorship", 
+        category: "B2B Billing", 
+        priority: "Medium", 
+        sla: "Met (Resolved)", 
+        prospect: "Tariq Mahmood", 
+        contact: "+92 300 1192834", 
+        channel: "Email", 
+        programme: "Vocational Technology Track", 
+        owner: "Sarah Jenkins", 
+        status: "Resolved",
+        createdAt: "2026-08-18 14:00 PKT",
+        resolvedAt: "2026-08-18 15:30 PKT",
+        resolutionNotes: "Issued NTN/STRN formatted tax invoice with corporate bank details.",
+        messages: [
+          { sender: "Tariq Mahmood", time: "14:00 PKT", text: "Please share official invoice with NTN 8941029-7 for our company accounts department." },
+          { sender: "Sarah Jenkins (CSR)", time: "15:30 PKT", text: "Invoice INV-2026-088 attached with bank wire instructions. Thank you!" }
+        ]
+      },
+      { 
+        id: "CAS-408", 
+        subject: "LMS mobile app login token credential reset assistance", 
+        category: "Technical Access", 
+        priority: "Low", 
+        sla: "Met (Resolved)", 
+        prospect: "Bilal Ahmed", 
+        contact: "+92 345 8810294", 
+        channel: "SMS / WhatsApp", 
+        programme: "Basic Literacy Foundations", 
+        owner: "Sarah Jenkins", 
+        status: "Resolved",
+        createdAt: "2026-08-17 09:30 PKT",
+        resolvedAt: "2026-08-17 09:45 PKT",
+        resolutionNotes: "Dispatched one-time secure magic login link via SMS.",
+        messages: [
+          { sender: "Bilal Ahmed", time: "09:30 PKT", text: "I did not receive my mobile app password reset code." },
+          { sender: "Sarah Jenkins (CSR)", time: "09:45 PKT", text: "Dispatched one-time login link to your phone number. You are now logged in." }
+        ]
+      }
     ]
   },
 
@@ -17887,6 +18031,10 @@ const RenderEngine = {
     if (!config || !container) return;
 
     if (route === "csr-analytics") {
+      const activeQuotaSales = 450000;
+      const targetQuotaSales = 600000;
+      const quotaPercent = Math.round((activeQuotaSales / targetQuotaSales) * 100);
+
       container.innerHTML = `
         <div class="coo-workspace-view">
           <header class="coo-workspace-header">
@@ -17898,7 +18046,7 @@ const RenderEngine = {
             <div class="coo-workspace-metrics-strip">
               <article class="coo-workspace-metric">
                 <span>Monthly Quota Progress</span>
-                <strong class="success-text">PKR 450,000 / 600,000 (75.0%)</strong>
+                <strong class="success-text">PKR 450,000 / 600,000 (${quotaPercent}%)</strong>
                 <small>15 days remaining in cycle</small>
               </article>
               <article class="coo-workspace-metric">
@@ -17917,8 +18065,27 @@ const RenderEngine = {
           <section class="coo-scope-notice" aria-label="CSR Authority">
             <i data-lucide="shield-check"></i>
             <div>
-              <strong>CSR SCOPE & COMPLIANCE AUTHORITY</strong>
+              <strong>CSR SCOPE & COMPLIANCE AUTHORITY (CSR-009 / DSH-001 - DSH-014)</strong>
               <p>${config.scopeAuthority}</p>
+            </div>
+          </section>
+
+          <!-- Analytics Filter & Period Toolbar -->
+          <section class="module-toolbar" style="margin-bottom:18px;">
+            <div class="search-filter-row">
+              <select id="csr-analytics-period-select" class="form-control inline" onchange="Actions.changeCsrAnalyticsPeriod(this.value)">
+                <option value="August 2026" selected>Active Billing Cycle: August 2026</option>
+                <option value="July 2026">Closed Cycle: July 2026 (Settled)</option>
+                <option value="June 2026">Closed Cycle: June 2026 (Settled)</option>
+                <option value="Trailing 90 Days">Trailing 90 Days Benchmark</option>
+                <option value="FY2026 YTD">FY2026 Year-to-Date Performance</option>
+              </select>
+              <span class="badge badge-primary" style="align-self:center;">Attributed CSR: Sarah Jenkins</span>
+            </div>
+            <div class="button-row">
+              <button class="btn btn-primary btn-xs" onclick="Actions.openCsrAnalyticsPeriodModal()"><i data-lucide="calendar"></i> Custom Attribution Window</button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrOperationalScorecard()"><i data-lucide="download"></i> Export Full Scorecard (PDF/CSV)</button>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.refreshCsrPerformanceTelemetry()"><i data-lucide="refresh-cw"></i> Recalculate Telemetry</button>
             </div>
           </section>
 
@@ -17927,53 +18094,56 @@ const RenderEngine = {
             <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
               <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Attributed Realized Sales</span>
               <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">PKR 450,000</strong>
-              <span style="font-size:12px; color:#166534; font-weight:600;"><i data-lucide="arrow-up-right" style="width:12px; height:12px; display:inline;"></i> +18.4% vs last month</span>
+              <div style="width:100%; height:6px; background:#e2e8f0; border-radius:4px; margin:8px 0; overflow:hidden;">
+                <div style="width:${quotaPercent}%; height:100%; background:var(--primary); border-radius:4px;"></div>
+              </div>
+              <span style="font-size:12px; color:#166534; font-weight:600;"><i data-lucide="arrow-up-right" style="width:12px; height:12px; display:inline;"></i> 75.0% Quota Attainment (Target: PKR 600k)</span>
             </div>
             <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
-              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Verified Commissions</span>
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Verified CSR Commissions</span>
               <strong style="display:block; font-size:22px; color:#166534; margin:4px 0 2px 0;">PKR 45,000</strong>
-              <span style="font-size:12px; color:var(--slate);">PKR 3,600 payable in Aug payroll</span>
+              <span style="font-size:12px; color:var(--slate);">10.0% Standard Tier · <strong>PKR 18,400</strong> in PR-104 batch</span>
             </div>
             <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
               <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Trials Delivered & Won</span>
               <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">19 / 21 (90.5%)</strong>
-              <span style="font-size:12px; color:var(--slate);">Only 2 no-shows across 21 booked</span>
+              <span style="font-size:12px; color:#166534; font-weight:600;"><i data-lucide="check-circle" style="width:12px; height:12px; display:inline;"></i> 14 Converted to Paid (73.7% close rate)</span>
             </div>
             <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:16px;">
-              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Owned Learner Retention</span>
-              <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">96.8%</strong>
-              <span style="font-size:12px; color:#166534; font-weight:600;">Low churn / proactive renewals</span>
+              <span style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Owned Learner Retention & SLA</span>
+              <strong style="display:block; font-size:22px; color:var(--navy-dark); margin:4px 0 2px 0;">96.8% / 100% SLA</strong>
+              <span style="font-size:12px; color:#166534; font-weight:600;"><i data-lucide="clock" style="width:12px; height:12px; display:inline;"></i> 14m median first response · 0 breaches</span>
             </div>
           </div>
 
-          <!-- Stage Conversion Funnel -->
+          <!-- Stage Conversion Funnel with interactive drilldowns -->
           <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:20px; margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
               <h4 style="margin:0; font-size:15px; color:var(--navy-dark);"><i data-lucide="filter" style="width:16px; height:16px; display:inline; vertical-align:middle; color:var(--primary);"></i> Inbound-to-Enrolment Conversion Funnel</h4>
               <span class="badge badge-success">38.9% Overall Conversion</span>
             </div>
             <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:10px; text-align:center;">
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+              <div role="button" onclick="Router.navigate('csr-leads-new')" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; cursor:pointer; transition:all 0.15s ease;">
                 <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">1. Inbound Leads</span>
                 <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">36</strong>
                 <span style="font-size:11px; color:var(--slate);">100% Top of Funnel</span>
               </div>
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+              <div role="button" onclick="Router.navigate('csr-trials-qualification')" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; cursor:pointer; transition:all 0.15s ease;">
                 <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">2. Assessed / Consent</span>
                 <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">28</strong>
-                <span style="font-size:11px; color:#166534;">77.8% Qualified</span>
+                <span style="font-size:11px; color:#166534; font-weight:600;">77.8% Qualified</span>
               </div>
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+              <div role="button" onclick="Router.navigate('csr-trials-scheduled')" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; cursor:pointer; transition:all 0.15s ease;">
                 <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">3. Trials Booked</span>
                 <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">21</strong>
-                <span style="font-size:11px; color:#166534;">75.0% Booked</span>
+                <span style="font-size:11px; color:#166534; font-weight:600;">75.0% Booked</span>
               </div>
-              <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px;">
+              <div role="button" onclick="Router.navigate('csr-trials-outcomes')" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; cursor:pointer; transition:all 0.15s ease;">
                 <span style="font-size:11px; color:var(--slate); text-transform:uppercase; font-weight:700;">4. Trials Attended</span>
                 <strong style="display:block; font-size:18px; color:var(--navy-dark); margin-top:2px;">19</strong>
-                <span style="font-size:11px; color:#166534;">90.5% Show-up</span>
+                <span style="font-size:11px; color:#166534; font-weight:600;">90.5% Show-up</span>
               </div>
-              <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px;">
+              <div role="button" onclick="Router.navigate('csr-leads-converted')" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px; cursor:pointer; transition:all 0.15s ease;">
                 <span style="font-size:11px; color:#166534; text-transform:uppercase; font-weight:700;">5. Paid Enrolments</span>
                 <strong style="display:block; font-size:18px; color:#166534; margin-top:2px;">14</strong>
                 <span style="font-size:11px; color:#166534; font-weight:700;">73.7% Post-Trial</span>
@@ -17981,75 +18151,203 @@ const RenderEngine = {
             </div>
           </div>
 
-          <!-- Performance Telemetry Table -->
-          <div class="table-container" style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
-            <table class="coo-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
-              <thead>
-                <tr>
-                  <th>Performance Dimension</th>
-                  <th>Target Benchmark</th>
-                  <th>Current Score</th>
-                  <th>Attribution Window</th>
-                  <th>SLA Compliance</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Inbound Inquiry First Touch</strong><span class="table-subline">Phone, WhatsApp, Email initial outreach</span></td>
-                  <td>&lt; 30 Minutes</td>
-                  <td><strong class="success-text">14 Minutes</strong></td>
-                  <td>August 2026</td>
-                  <td><span class="badge badge-success">98.4% Compliant</span></td>
-                  <td><span class="badge badge-success">Exceeding SLA</span></td>
-                  <td>
-                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Telemetry Exported', 'Downloaded First Touch response logs.', 'success')"><i data-lucide="download"></i> Audit Log</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Trial-to-Paid Conversion</strong><span class="table-subline">Attended trial to verified payment</span></td>
-                  <td>&gt; 35.0%</td>
-                  <td><strong class="success-text">41.6%</strong></td>
-                  <td>Lifetime / Trailing 90d</td>
-                  <td><span class="badge badge-success">118% of Target</span></td>
-                  <td><span class="badge badge-success">High Conversion</span></td>
-                  <td>
-                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Funnel Exported', 'Downloaded conversion breakdown.', 'success')"><i data-lucide="download"></i> Audit Log</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Payment Review Slip Turnaround</strong><span class="table-subline">Scoped bank receipt verification</span></td>
-                  <td>&lt; 3 Hours</td>
-                  <td><strong>1h 45m</strong></td>
-                  <td>August 2026</td>
-                  <td><span class="badge badge-success">100% Compliant</span></td>
-                  <td><span class="badge badge-success">On Track</span></td>
-                  <td>
-                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Payment Telemetry', 'Exported payment review logs.', 'success')"><i data-lucide="download"></i> Audit Log</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>Owned Learner Support Resolution</strong><span class="table-subline">Inquiries, timetable updates & requests</span></td>
-                  <td>&lt; 2 Hours</td>
-                  <td><strong class="success-text">42 Minutes</strong></td>
-                  <td>August 2026</td>
-                  <td><span class="badge badge-success">100% Compliant</span></td>
-                  <td><span class="badge badge-success">Excellent SLA</span></td>
-                  <td>
-                    <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
-                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Support Telemetry', 'Exported support case resolution logs.', 'success')"><i data-lucide="download"></i> Audit Log</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- Product-Wise Sales & Commission Breakdown Table -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:20px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h4 style="margin:0; font-size:15px; color:var(--navy-dark);"><i data-lucide="pie-chart" style="width:16px; height:16px; display:inline; vertical-align:middle; color:var(--primary);"></i> Product Track Revenue & Commission Distribution</h4>
+              <button class="btn btn-secondary btn-xs" onclick="Actions.exportCsrData('csr-analytics')"><i data-lucide="download"></i> Export Product Matrix</button>
+            </div>
+            <div class="table-container" style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
+              <table class="coo-table" style="width:100%; min-width:1100px; border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th>Programme Track</th>
+                    <th>Converted Enrolments</th>
+                    <th>Realized Revenue</th>
+                    <th>Average Ticket Size</th>
+                    <th>CSR Commission (10%)</th>
+                    <th>Conversion Share</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Basic Literacy Foundations</strong><span class="table-subline">1:1 Diagnostic & Literacy Program</span></td>
+                    <td><strong class="success-text">8 Learners</strong></td>
+                    <td><strong>PKR 144,000</strong></td>
+                    <td>PKR 18,000</td>
+                    <td><strong class="success-text">PKR 14,400</strong></td>
+                    <td><span class="badge badge-primary">42.1% Unit Share</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Basic Literacy Foundations')"><i data-lucide="eye"></i> Inspect Track</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Applied Numeracy Cohort</strong><span class="table-subline">Group & Diagnostic Remediation</span></td>
+                    <td><strong class="success-text">4 Learners</strong></td>
+                    <td><strong>PKR 96,000</strong></td>
+                    <td>PKR 24,000</td>
+                    <td><strong class="success-text">PKR 9,600</strong></td>
+                    <td><span class="badge badge-primary">21.3% Unit Share</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Applied Numeracy Cohort')"><i data-lucide="eye"></i> Inspect Track</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Vocational Technology Track</strong><span class="table-subline">Hardware & Software Engineering</span></td>
+                    <td><strong class="success-text">3 Learners</strong></td>
+                    <td><strong>PKR 105,000</strong></td>
+                    <td>PKR 35,000</td>
+                    <td><strong class="success-text">PKR 10,500</strong></td>
+                    <td><span class="badge badge-primary">23.3% Unit Share</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Vocational Technology Track')"><i data-lucide="eye"></i> Inspect Track</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>K-12 Full Academic Math</strong><span class="table-subline">Grade 8 Comprehensive Curriculum</span></td>
+                    <td><strong class="success-text">2 Learners</strong></td>
+                    <td><strong>PKR 64,000</strong></td>
+                    <td>PKR 32,000</td>
+                    <td><strong class="success-text">PKR 6,400</strong></td>
+                    <td><span class="badge badge-primary">14.2% Unit Share</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('K-12 Full Academic Math')"><i data-lucide="eye"></i> Inspect Track</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Quranic Studies (Tajweed)</strong><span class="table-subline">1:1 Certified Recitation</span></td>
+                    <td><strong class="success-text">2 Learners</strong></td>
+                    <td><strong>PKR 36,000</strong></td>
+                    <td>PKR 18,000</td>
+                    <td><strong class="success-text">PKR 3,600</strong></td>
+                    <td><span class="badge badge-primary">8.0% Unit Share</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-secondary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Quranic Studies (Tajweed)')"><i data-lucide="eye"></i> Inspect Track</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 6-Dimension Operational SLA & Telemetry Table -->
+          <div style="background:#ffffff; border:1px solid rgba(124, 119, 102, 0.22); border-radius:8px; padding:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h4 style="margin:0; font-size:15px; color:var(--navy-dark);"><i data-lucide="activity" style="width:16px; height:16px; display:inline; vertical-align:middle; color:var(--primary);"></i> 6-Dimension Operational SLA & Audit Telemetry</h4>
+              <span class="badge badge-success">100% SLA Compliance Index</span>
+            </div>
+            <div class="table-container" style="overflow-x:auto; -webkit-overflow-scrolling:touch; width:100%;">
+              <table class="coo-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+                <thead>
+                  <tr>
+                    <th>Performance Dimension</th>
+                    <th>Target Benchmark</th>
+                    <th>Current Score</th>
+                    <th>Attribution Window</th>
+                    <th>SLA Compliance</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Inbound Inquiry First Touch</strong><span class="table-subline">Phone, WhatsApp, Email initial outreach</span></td>
+                    <td>&lt; 30 Minutes</td>
+                    <td><strong class="success-text">14 Minutes</strong></td>
+                    <td>August 2026</td>
+                    <td><span class="badge badge-success">98.4% Compliant</span></td>
+                    <td><span class="badge badge-success">Exceeding SLA</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Inbound Inquiry First Touch')"><i data-lucide="activity"></i> Telemetry Log</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Telemetry Exported', 'Downloaded First Touch response logs.', 'success')"><i data-lucide="download"></i> Export</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Trial-to-Paid Conversion</strong><span class="table-subline">Attended trial to verified payment</span></td>
+                    <td>&gt; 35.0%</td>
+                    <td><strong class="success-text">41.6%</strong></td>
+                    <td>Lifetime / Trailing 90d</td>
+                    <td><span class="badge badge-success">118% of Target</span></td>
+                    <td><span class="badge badge-success">High Conversion</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Trial-to-Paid Conversion')"><i data-lucide="activity"></i> Funnel Telemetry</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Funnel Exported', 'Downloaded conversion breakdown.', 'success')"><i data-lucide="download"></i> Export</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Payment Review Slip Turnaround</strong><span class="table-subline">Scoped bank receipt verification</span></td>
+                    <td>&lt; 3 Hours</td>
+                    <td><strong>1h 45m</strong></td>
+                    <td>August 2026</td>
+                    <td><span class="badge badge-success">100% Compliant</span></td>
+                    <td><span class="badge badge-success">On Track</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Payment Review Slip Turnaround')"><i data-lucide="activity"></i> Audit Log</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Payment Telemetry', 'Exported payment review logs.', 'success')"><i data-lucide="download"></i> Export</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Owned Learner Support Resolution</strong><span class="table-subline">Inquiries, timetable updates & requests</span></td>
+                    <td>&lt; 2 Hours</td>
+                    <td><strong class="success-text">42 Minutes</strong></td>
+                    <td>August 2026</td>
+                    <td><span class="badge badge-success">100% Compliant</span></td>
+                    <td><span class="badge badge-success">Excellent SLA</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Owned Learner Support Resolution')"><i data-lucide="activity"></i> Ticket SLA Log</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Support Telemetry', 'Exported support case resolution logs.', 'success')"><i data-lucide="download"></i> Export</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Trial Attendance & Show-up Rate</strong><span class="table-subline">Booked slots to delivered sessions</span></td>
+                    <td>&gt; 85.0%</td>
+                    <td><strong class="success-text">90.5% (19/21)</strong></td>
+                    <td>August 2026</td>
+                    <td><span class="badge badge-success">106% of Target</span></td>
+                    <td><span class="badge badge-success">High Attendance</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('Trial Attendance & Show-up Rate')"><i data-lucide="activity"></i> Attendance Log</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Attendance Telemetry', 'Exported trial attendance telemetry.', 'success')"><i data-lucide="download"></i> Export</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>CSR Commission Reversal / Clawback Ratio</strong><span class="table-subline">Refunds & cooling-off cancellations</span></td>
+                    <td>&lt; 5.0%</td>
+                    <td><strong class="success-text">2.8%</strong></td>
+                    <td>Lifetime / Trailing 90d</td>
+                    <td><span class="badge badge-success">Zero Audit Breaches</span></td>
+                    <td><span class="badge badge-success">Clean Ledger</span></td>
+                    <td>
+                      <div class="table-actions-row" style="display:inline-flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openCsrTelemetryDetailModal('CSR Commission Reversal Ratio')"><i data-lucide="activity"></i> Clawback Log</button>
+                        <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Clawback Telemetry', 'Exported commission clawback audit logs.', 'success')"><i data-lucide="download"></i> Export</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       `;
@@ -31968,6 +32266,377 @@ document.addEventListener("DOMContentLoaded", () => {
       if (nameInput) nameInput.value = `${prospect} (${id})`;
       if (subInput) subInput.value = `Learner support inquiry regarding schedule adjustment / curriculum progression.`;
     }, 100);
+  };
+
+  // ---------------------------------------------------------------------------
+  // CSR HUB 6: COMMISSIONS & PAYROLL INTEGRATION ACTIONS (FLOW-031 / CSR-001)
+  // ---------------------------------------------------------------------------
+
+  Actions.openCsrCommissionAuditSummaryModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "CSR Commission Calculation Ledger & Tier Policy (FLOW-031)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="calculator" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">COMMISSION TIER GOVERNANCE (CSR-001 / FIN-002)</strong>
+            <p style="color:#166534;">Tiered commission structure based on verified monthly gross sales.</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Tier 1 (Base)</span><strong>10.0%</strong><small>Sales &lt; PKR 500k</small></div>
+          <div class="om-flow-metric"><span>Tier 2 (High Performance)</span><strong>12.5%</strong><small>Sales PKR 500k - 750k</small></div>
+          <div class="om-flow-metric"><span>Tier 3 (Master Accelerator)</span><strong>15.0%</strong><small>Sales &gt; PKR 750k</small></div>
+          <div class="om-flow-metric"><span>Active MTD Sales</span><strong class="success-text">PKR 450,000</strong><small>Current Tier: 10.0%</small></div>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-top:12px;">
+          <h5 style="margin:0 0 6px 0; font-size:13px; color:var(--navy-dark);"><i data-lucide="shield" style="width:14px; height:14px; display:inline; vertical-align:middle;"></i> Anti-Self Approval & Settlement Policy</h5>
+          <p style="font-size:12px; color:var(--slate); margin:0; line-height:1.5;">CSR agents do not approve their own commission payouts. Once orders are verified and cleared, commissions enter <em>Eligible</em> state and are automatically reserved into the next institutional payroll run (<strong>28th of each month</strong>) for COO & Finance Director authorization.</p>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Actions.exportCsrCommissionPayrollStatement(); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Download Calculation Sheet</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.syncPendingCommissionsWithOrders = function() {
+    Actions.audit("CSR_COMMISSIONS_SYNCED", "Synchronized pending commission pipeline with verified learner order allocations.", "Low");
+    Notifications.push("Pipeline Synced", "Accrual calculations synchronized with latest payment records.", "success");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.requestEarlyCommissionPayoutReview = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Submit Eligible Commissions for Early Executive Review";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="send"></i>
+          <div>
+            <strong style="color:var(--navy-medium);">FINANCE & COO PAYOUT SIGN-OFF</strong>
+            <p>Submit PKR 13,000 in eligible commission accruals for early payroll batch allocation.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Target Payroll Cycle</label>
+          <input type="text" class="form-control" value="August 2026 Monthly Payroll Batch (Batch #PR-104)" disabled>
+        </div>
+
+        <div class="form-group">
+          <label>Audit & Justification Notes</label>
+          <textarea id="csr-early-payout-notes" class="form-control" rows="3" placeholder="All 2 associated learner orders (PAY-808, PAY-809) are verified and have passed the 14-day cooling-off window."></textarea>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.submitEarlyCommissionBatch()"><i data-lucide="check"></i> Submit for Sign-off</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.submitEarlyCommissionBatch = function() {
+    Actions.audit("CSR_COMMISSION_BATCH_SUBMITTED", "Submitted eligible commission candidates (PKR 13,000) for COO executive approval.", "Medium");
+    Notifications.push("Batch Submitted", "Eligible commissions submitted to Executive Management for PR-104 inclusion.", "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  Actions.downloadEligibleCommissionsSummary = function() {
+    Actions.audit("CSR_ELIGIBLE_COMMISSIONS_EXPORTED", "Exported eligible commission schedule with tax and withholding calculations.", "Low");
+    Notifications.push("Report Downloaded", "Downloaded eligible commissions preview (eligible_commissions_aug2026.csv).", "success");
+  };
+
+  Actions.viewActivePayrollBatchDetails = function(batchId) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Payroll Voucher: Batch #${batchId || 'PR-104'}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="file-check" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">RESERVED PAYROLL BATCH #${batchId || 'PR-104'}</strong>
+            <p style="color:#166534;">Status: Reserved & Queued for August 28, 2026 Bank Disbursement</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Gross Commission</span><strong>PKR 18,400</strong><small>COM-703 + COM-704</small></div>
+          <div class="om-flow-metric"><span>FBR Tax (10% Filer)</span><strong class="warning-text">-PKR 1,840</strong><small>Section 233 Withholding</small></div>
+          <div class="om-flow-metric"><span>Net Bank Deposit</span><strong class="success-text">PKR 16,560</strong><small>Meezan Bank Direct Deposit</small></div>
+          <div class="om-flow-metric"><span>Disbursement Date</span><strong>28 Aug 2026</strong><small>5 business days remaining</small></div>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-top:12px;">
+          <h5 style="margin:0 0 8px 0; font-size:12px; color:var(--navy-dark); text-transform:uppercase; font-weight:700;">Direct Deposit Account Metadata</h5>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:12px; color:var(--slate);">
+            <div>Beneficiary: <strong>Sarah Jenkins (CSR-09)</strong></div>
+            <div>Bank: <strong>Meezan Bank Limited</strong></div>
+            <div>IBAN: <strong>PK82MEZN0002840105829101</strong></div>
+            <div>Institutional Voucher: <strong>VCH-AUG26-PR104-09</strong></div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Voucher</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Voucher Downloaded', 'Downloaded signed payroll voucher PDF.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Download Voucher (PDF)</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.refreshPayrollBatchStatus = function(batchId) {
+    Actions.audit("CSR_PAYROLL_BATCH_STATUS_CHECKED", `Queried Finance Core clearing status for Batch #${batchId || 'PR-104'}.`, "Low");
+    Notifications.push("Status Verified", `Batch #${batchId || 'PR-104'} is verified and on schedule for August 28 disbursement.`, "success");
+  };
+
+  Actions.downloadCommissionTaxStatement = function() {
+    Actions.audit("CSR_TAX_STATEMENT_DOWNLOADED", "Generated annual FBR Section 233 commission tax certificate for Sarah Jenkins.", "Medium");
+    Notifications.push("Tax Certificate Generated", "Downloaded FBR Annual Commission Tax Statement (Form 233-C).", "success");
+  };
+
+  Actions.openCsrHistoricalPayoutBreakdownModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Historical Settled Commission Payout Runs";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="layers"></i>
+          <div>
+            <strong style="color:var(--navy-medium);">SETTLED PAYROLL ARCHIVE (CSR-001)</strong>
+            <p>Audited disbursement history and bank transaction references for Sarah Jenkins.</p>
+          </div>
+        </div>
+
+        <table class="coo-table" style="width:100%; border-collapse:collapse; margin-top:10px;">
+          <thead>
+            <tr>
+              <th>Payroll Period</th>
+              <th>Enrolments</th>
+              <th>Gross Earned</th>
+              <th>FBR Withheld</th>
+              <th>Net Disbursed</th>
+              <th>Bank Ref</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>July 2026</strong></td>
+              <td>14 Learners</td>
+              <td>PKR 42,000</td>
+              <td>-PKR 4,200</td>
+              <td><strong class="success-text">PKR 37,800</strong></td>
+              <td><code style="font-family:monospace;">MEZN-FT-99182</code></td>
+            </tr>
+            <tr>
+              <td><strong>June 2026</strong></td>
+              <td>12 Learners</td>
+              <td>PKR 38,500</td>
+              <td>-PKR 3,850</td>
+              <td><strong class="success-text">PKR 34,650</strong></td>
+              <td><code style="font-family:monospace;">MEZN-FT-88412</code></td>
+            </tr>
+            <tr>
+              <td><strong>May 2026</strong></td>
+              <td>11 Learners</td>
+              <td>PKR 35,000</td>
+              <td>-PKR 3,500</td>
+              <td><strong class="success-text">PKR 31,500</strong></td>
+              <td><code style="font-family:monospace;">MEZN-FT-77391</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Actions.exportCsrCommissionPayrollStatement(); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Export Full History</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCsrClawbackAuditPolicyModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "FLOW-031 Commission Clawback & Reversal Policy";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:rgba(239, 68, 68, 0.08); border-color:#fca5a5;">
+          <i data-lucide="scale" style="color:#dc2626;"></i>
+          <div>
+            <strong style="color:#dc2626;">CLAWBACK INTEGRITY GOVERNANCE (FLOW-031 / CSR-005)</strong>
+            <p style="color:#991b1b;">Reversals preserve original ledger integrity without destructive deletes.</p>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:10px; font-size:12.5px; color:var(--slate); margin-top:10px;">
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+            <strong style="color:var(--navy-dark); display:block; margin-bottom:2px;">1. 14-Day Cooling-Off Cancellation</strong>
+            <span>If a learner exercises their statutory 14-day refund right under Consumer Terms, the attributed commission is clawed back via an explicit negative offset entry.</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+            <strong style="color:var(--navy-dark); display:block; margin-bottom:2px;">2. Offset Mechanism Against Active Earnings</strong>
+            <span>Clawbacks do not require cash return; they are netted against the CSR's upcoming payroll cycle (e.g. August 2026 payroll).</span>
+          </div>
+          <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:10px;">
+            <strong style="color:var(--navy-dark); display:block; margin-bottom:2px;">3. Audit Dispute Window</strong>
+            <span>CSRs may lodge a formal dispute within 7 business days if a learner transferred tracks rather than receiving a refund.</span>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="document.getElementById('generic-modal').classList.add('hidden'); Router.navigate('csr-commissions-reversed');"><i data-lucide="eye"></i> View Reversals Queue</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.resolveAllPendingCsrCases = function() {
+    const pending = (db.csrData?.cases || []).filter(c => c.status !== "Resolved");
+    pending.forEach(c => {
+      c.status = "Resolved";
+    });
+    Actions.audit("CSR_ALL_CASES_RESOLVED", `Batch resolved ${pending.length} pending customer inquiries.`, "Medium");
+    Notifications.push("Tickets Resolved", `Successfully marked ${pending.length} customer tickets as Resolved.`, "success");
+    Router.renderView(Router.currentRoute);
+    RenderEngine.csrDashboard();
+  };
+
+  // ---------------------------------------------------------------------------
+  // CSR HUB 8: PERFORMANCE ANALYTICS & TELEMETRY ACTIONS (CSR-009 / DSH-001)
+  // ---------------------------------------------------------------------------
+
+  Actions.changeCsrAnalyticsPeriod = function(periodVal) {
+    Actions.audit("CSR_ANALYTICS_PERIOD_CHANGED", `Changed scorecard attribution window to ${periodVal}.`, "Low");
+    Notifications.push("Attribution Period Updated", `Scorecard telemetry recalculated for ${periodVal}.`, "info");
+    Router.renderView("csr-analytics");
+  };
+
+  Actions.openCsrAnalyticsPeriodModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Configure Custom Attribution Window & SLA Filter";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="calendar"></i>
+          <div>
+            <strong style="color:var(--navy-medium);">CUSTOM ATTRIBUTION WINDOW (CSR-009)</strong>
+            <p>Filter intake funnels and telemetry metrics across custom date ranges.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" class="form-control" value="2026-08-01">
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="date" class="form-control" value="2026-08-31">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Programme Track Scope</label>
+          <select class="form-control">
+            <option value="all">All Programmes (Consolidated View)</option>
+            <option value="lit">Basic Literacy Foundations</option>
+            <option value="num">Applied Numeracy Cohort</option>
+            <option value="voc">Vocational Technology</option>
+            <option value="k12">K-12 Grade 8 Math</option>
+          </select>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.applyCustomAnalyticsWindow()"><i data-lucide="check"></i> Apply Window</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.applyCustomAnalyticsWindow = function() {
+    Actions.audit("CSR_ANALYTICS_CUSTOM_WINDOW_APPLIED", "Applied custom attribution window filter to scorecard.", "Low");
+    Notifications.push("Window Applied", "Updated scorecard metrics with selected date range.", "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView("csr-analytics");
+  };
+
+  Actions.exportCsrOperationalScorecard = function() {
+    Actions.audit("CSR_SCORECARD_EXPORTED", "Exported comprehensive CSR performance scorecard and telemetry log (August 2026).", "Medium");
+    Notifications.push("Scorecard Exported", "Downloaded August 2026 Performance Scorecard (PDF & CSV).", "success");
+  };
+
+  Actions.refreshCsrPerformanceTelemetry = function() {
+    Actions.audit("CSR_TELEMETRY_REFRESHED", "Recalculated conversion funnels, quota attainment, and SLA compliance metrics.", "Low");
+    Notifications.push("Telemetry Refreshed", "Performance metrics updated with latest real-time events.", "success");
+    Router.renderView("csr-analytics");
+  };
+
+  Actions.openCsrTelemetryDetailModal = function(dimensionName) {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = `Forensic Telemetry: ${dimensionName}`;
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner" style="background:#f0fdf4; border-color:#86efac;">
+          <i data-lucide="activity" style="color:#15803d;"></i>
+          <div>
+            <strong style="color:#15803d;">SLA & TELEMETRY AUDIT TRAIL (DSH-001 / CSR-009)</strong>
+            <p style="color:#166534;">Verified event log for ${dimensionName} · Attribution: Sarah Jenkins</p>
+          </div>
+        </div>
+
+        <div class="om-flow-grid">
+          <div class="om-flow-metric"><span>Dimension</span><strong>${dimensionName}</strong></div>
+          <div class="om-flow-metric"><span>Benchmark Target</span><strong>100% Target Met</strong></div>
+          <div class="om-flow-metric"><span>SLA Breaches</span><strong class="success-text">0 Breaches</strong></div>
+          <div class="om-flow-metric"><span>Audited Period</span><strong>August 2026 MTD</strong></div>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-top:12px;">
+          <h5 style="margin:0 0 8px 0; font-size:12px; color:var(--navy-dark); text-transform:uppercase; font-weight:700;">Recent Verified Event Timestamps</h5>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--slate);">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:4px;">
+              <span>Today 15:42 PKT · Event #EVT-9921 · Lead Response</span>
+              <strong class="success-text">11 mins (Compliant)</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:4px;">
+              <span>Today 14:10 PKT · Event #EVT-9918 · Trial Verification</span>
+              <strong class="success-text">14 mins (Compliant)</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:4px;">
+              <span>Today 11:30 PKT · Event #EVT-9892 · Slip Audit</span>
+              <strong class="success-text">1h 12m (Compliant)</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span>Yesterday 17:15 PKT · Event #EVT-9844 · Case Resolution</span>
+              <strong class="success-text">38 mins (Compliant)</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Dimension Log Exported', 'Downloaded raw JSON telemetry log.', 'success'); document.getElementById('generic-modal').classList.add('hidden');"><i data-lucide="download"></i> Download Audit Trail</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
   };
 
 
