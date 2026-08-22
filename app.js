@@ -13392,61 +13392,162 @@ const RenderEngine = {
     `;
   },
 
-  renderCreatorLmsPreview(activeFormat = "video") {
+  renderCreatorLmsPreview(activeFormat, courseId, simMode) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "video",
+        activeUnitIndex: 0,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+
+    if (activeFormat) window.creatorPreviewState.activeFormat = activeFormat;
+    if (courseId) window.creatorPreviewState.activeCourseId = courseId;
+    if (simMode) window.creatorPreviewState.simMode = simMode;
+
+    const curCourseId = window.creatorPreviewState.activeCourseId;
+    const curFormat = window.creatorPreviewState.activeFormat;
+    const curMode = window.creatorPreviewState.simMode;
+    const completedUnits = window.creatorPreviewState.completedUnits || [0];
+
+    const courseCatalog = {
+      "TECH-FE-201": {
+        id: "TECH-FE-201",
+        title: "Modern Full-Stack Web Development",
+        version: "v1.2 (Draft)",
+        deliveryModel: "Self-paced Milestone (MILE-001)",
+        faculty: "Faculty of Computing & Technology",
+        progressPct: Math.round((completedUnits.length / 5) * 100),
+        units: [
+          { index: 0, title: "1. Semantic Structure & A11y", format: "video", duration: "45 min", badge: "FREE PREVIEW", badgeClass: "badge-success", level: "Level 1: Foundations", milestone: "Milestone 1: Web Architecture" },
+          { index: 1, title: "2. CSS Grid Browser Sandbox", format: "sandbox", duration: "60 min", badge: "INTERACTIVE LAB", badgeClass: "badge-primary", level: "Level 1: Foundations", milestone: "Milestone 1: Web Architecture" },
+          { index: 2, title: "3. DOM Fundamentals Quiz", format: "quiz", duration: "15 min", badge: "GATEKEEPER (80%)", badgeClass: "badge-warning", level: "Level 1: Foundations", milestone: "Milestone 1: Web Architecture" },
+          { index: 3, title: "4. Oral Project Introduction", format: "voice", duration: "20 min", badge: "SPOKEN TASK", badgeClass: "badge-secondary", level: "Level 1: Foundations", milestone: "Milestone 2: JS State" },
+          { index: 4, title: "5. Milestone 1 Credential", format: "milestone", duration: "10 min", badge: "CREDENTIAL", badgeClass: "badge-success", level: "Level 1: Foundations", milestone: "Milestone 2: JS State" }
+        ]
+      },
+      "ENG-SPK-301": {
+        id: "ENG-SPK-301",
+        title: "Spoken English Fluency & Workplace Communication",
+        version: "v1.0 (Draft)",
+        deliveryModel: "Live Scheduled Cohort (CAT-002)",
+        faculty: "Faculty of Languages",
+        progressPct: Math.round((completedUnits.length / 4) * 100),
+        units: [
+          { index: 0, title: "1. Daily.co Live Classroom", format: "video", duration: "60 min", badge: "LIVE ATTENDANCE", badgeClass: "badge-primary", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" },
+          { index: 1, title: "2. Phonetic Vowel Stress Lab", format: "voice", duration: "30 min", badge: "ACOUSTIC RUBRIC", badgeClass: "badge-secondary", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" },
+          { index: 2, title: "3. Professional Vocabulary Drill", format: "quiz", duration: "20 min", badge: "VOCAB QUIZ", badgeClass: "badge-warning", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" },
+          { index: 3, title: "4. Spoken Fluency Certification", format: "milestone", duration: "15 min", badge: "CREDENTIAL", badgeClass: "badge-success", level: "Level 1: Oral Communication", milestone: "Milestone 1: Workplace Fluency" }
+        ]
+      },
+      "K12-MTH-801": {
+        id: "K12-MTH-801",
+        title: "Grade 8 Mathematics (FBISE Curriculum)",
+        version: "v1.1 (Draft)",
+        deliveryModel: "K-12 Live Tuition (K12-001)",
+        faculty: "Faculty of Secondary Education",
+        progressPct: Math.round((completedUnits.length / 4) * 100),
+        units: [
+          { index: 0, title: "1. Algebraic Expressions Lecture", format: "video", duration: "45 min", badge: "PUBLIC PREVIEW", badgeClass: "badge-success", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" },
+          { index: 1, title: "2. Practice Worksheet & Problem Set", format: "sandbox", duration: "40 min", badge: "BOARD WORKSHEET", badgeClass: "badge-primary", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" },
+          { index: 2, title: "3. Term 1 Knowledge Check", format: "quiz", duration: "30 min", badge: "TERM TEST", badgeClass: "badge-warning", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" },
+          { index: 3, title: "4. FBISE Term 1 Milestone Badge", format: "milestone", duration: "10 min", badge: "TERM BADGE", badgeClass: "badge-success", level: "Term 1: Algebra & Sets", milestone: "Milestone 1: Core Algebra" }
+        ]
+      }
+    };
+
+    const currentCourse = courseCatalog[curCourseId] || courseCatalog["TECH-FE-201"];
+    const curUnit = currentCourse.units[window.creatorPreviewState.activeUnitIndex] || currentCourse.units[0];
+    const isGuest = curMode === "guest";
+
+    // Player Canvas Rendering
     let playerCanvasHtml = "";
 
-    if (activeFormat === "sandbox") {
+    if (curFormat === "sandbox") {
       playerCanvasHtml = `
         <div class="creator-preview-player-pane">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
+            <div>
+              <span class="badge badge-primary"><i data-lucide="code-2"></i> BROWSER MONACO IDE SANDBOX</span>
+              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
+            </div>
+            <span class="badge ${completedUnits.includes(curUnit.index) ? 'badge-success' : 'badge-secondary'}">
+              ${completedUnits.includes(curUnit.index) ? '✓ Completed' : 'In Progress'}
+            </span>
+          </div>
+
           <div class="creator-code-sandbox-mock">
             <div class="creator-code-instructions">
               <strong style="color: #60a5fa; display: block; margin-bottom: 6px; font-size: 13px;">CODING LAB CHALLENGE</strong>
               <p style="margin: 0 0 8px 0;">Build a semantic responsive card using CSS Grid with minimum 2 columns on desktop and 1 column on mobile.</p>
-              <ul style="padding-left: 18px; margin: 0; font-size: 11px;">
-                <li>Use <code>display: grid</code></li>
+              <ul style="padding-left: 18px; margin: 0; font-size: 11px; line-height: 1.5;">
+                <li>Use <code>display: grid</code> on container</li>
                 <li>Set <code>grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))</code></li>
-                <li>Validate contrast ratio &gt;= 4.5:1</li>
+                <li>Validate accessible color contrast ratio &gt;= 4.5:1</li>
               </ul>
             </div>
             <div class="creator-code-editor-pane">
               <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px;">
-                <span>styles.css · Monaco IDE</span>
-                <span style="color: #4ade80;">UTF-8</span>
+                <span>styles.css · Monaco IDE Sandbox</span>
+                <span style="color: #4ade80;">UTF-8 · Live Preview</span>
               </div>
               <div class="creator-code-line"><span style="color: #f472b6;">.grid-container</span> {</div>
               <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">display</span>: grid;</div>
               <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">grid-template-columns</span>: repeat(auto-fit, minmax(240px, 1fr));</div>
               <div class="creator-code-line">&nbsp;&nbsp;<span style="color: #38bdf8;">gap</span>: 20px;</div>
               <div class="creator-code-line">}</div>
-              <div style="margin-top: 10px; display: flex; justify-content: flex-end;">
-                <button class="btn btn-primary btn-xs" onclick="Notifications.push('Test Passed', 'All CSS Grid test assertions passed (100%).', 'success')">
-                  <i data-lucide="play"></i> Run Tests
-                </button>
+              
+              <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 11px; color: #94a3b8;"><i data-lucide="terminal" style="width:12px; height:12px;"></i> Sandbox Virtual DOM ready</span>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Hint Unlocked', 'Check repeat(auto-fit, minmax(...)) parameters.', 'info')">Hint</button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.previewRunCodeTests(${curUnit.index})">
+                    <i data-lucide="play"></i> Run Tests
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; flex-wrap: wrap;">
-            <button class="btn btn-primary btn-xs">Instructions</button>
-            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Hint Unlocked', 'Check repeat() syntax.', 'info')">Get Hint</button>
-            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Reset', 'Restored starter code template.', 'warning')">Reset Code</button>
-          </div>
+          ${window.creatorPreviewState.codeRunOutput ? `
+            <div style="background: #0f172a; color: #38bdf8; padding: 12px 16px; border-radius: 8px; font-family: monospace; font-size: 12px; border: 1px solid #334155; line-height: 1.45;">
+              <span style="color: #4ade80; font-weight: bold;">✔ Test Suite Passed (2 of 2 Assertions):</span><br>
+              <span style="color: #94a3b8;">[PASS]</span> Assertion 1: Container computes display: grid (1ms)<br>
+              <span style="color: #94a3b8;">[PASS]</span> Assertion 2: Responsive column wrap computed &gt;= 240px (2ms)<br>
+              <span style="color: #facc15;">[INFO]</span> Code sandbox challenge verified.
+            </div>
+          ` : ''}
 
-          <div>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Interactive Coding Sandbox · Lesson 2: CSS Grid</h3>
-            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
-              Learners write live CSS in the browser sandbox. The test runner evaluates responsive layout behavior against automated viewport criteria.
-            </p>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(124,119,102,0.12);">
+            <span style="font-size: 12px; color: var(--slate);">Estimated Effort: <strong>60 Minutes</strong> · Automated Assertion Engine</span>
+            <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
+              <i data-lucide="check-circle"></i> Mark Complete & Advance
+            </button>
           </div>
         </div>
       `;
-    } else if (activeFormat === "voice") {
+    } else if (curFormat === "voice") {
       playerCanvasHtml = `
         <div class="creator-preview-player-pane">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
+            <div>
+              <span class="badge badge-secondary"><i data-lucide="mic"></i> ACOUSTIC VOICE RECORDING STUDIO (CAT-002)</span>
+              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
+            </div>
+            <span class="badge ${completedUnits.includes(curUnit.index) ? 'badge-success' : 'badge-secondary'}">
+              ${completedUnits.includes(curUnit.index) ? '✓ Evaluated' : 'Pending Audio'}
+            </span>
+          </div>
+
           <div class="creator-voice-player-mock">
-            <span class="badge badge-primary"><i data-lucide="mic"></i> SPOKEN ENGLISH STUDIO</span>
-            <h3 style="font: 700 17px 'Manrope', sans-serif; margin: 6px 0; color: #ffffff;">Prompt: Workplace Self-Introduction</h3>
-            <p style="font-size: 12.5px; opacity: 0.9; margin: 0 0 12px 0; max-width: 500px;">
+            <span class="badge badge-primary"><i data-lucide="volume-2"></i> TARGET SPOKEN PROMPT</span>
+            <h3 style="font: 700 16px 'Manrope', sans-serif; margin: 6px 0; color: #ffffff;">Workplace Oral Introduction & Articulation</h3>
+            <p style="font-size: 12.5px; opacity: 0.92; margin: 0 0 14px 0; max-width: 540px; line-height: 1.5;">
               "Hello, my name is Dr. Arsalan. I am a software engineer specializing in scalable backend architectures and frontend state machines."
             </p>
 
@@ -13461,206 +13562,275 @@ const RenderEngine = {
               <div class="creator-waveform-bar" style="animation-delay: 0.3s;"></div>
             </div>
 
-            <div style="display: flex; gap: 12px; align-items: center; margin-top: 8px;">
-              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Recording Started', 'Recording 90s audio sample...', 'info')">
-                <i data-lucide="mic"></i> Start Recording
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 10px; flex-wrap: wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Recording Active', 'Simulating 90-second acoustic audio capture...', 'info')">
+                <i data-lucide="mic"></i> Start 90s Recording
               </button>
-              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Audio Evaluated', 'Pronunciation: 94% · Intonation: 90% · Pass', 'success')">
-                <i data-lucide="check-circle"></i> Submit Audio
+              <button class="btn btn-primary btn-sm" onclick="Actions.previewSubmitVoiceAudio(${curUnit.index})">
+                <i data-lucide="check-circle-2"></i> Submit for Phonetic Evaluation
               </button>
             </div>
           </div>
 
-          <div>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Spoken English Fluency & Phonetic Evaluation</h3>
-            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
-              Acoustic recordings are evaluated against phonetic rubric RUB-102 for word stress, articulation, and cadence.
-            </p>
+          <div style="background: #fdfbf7; border: 1px solid rgba(124,119,102,0.16); border-radius: 10px; padding: 14px 18px;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-size: 12px;">
+              <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Pronunciation Score</strong><span style="font-weight:700; color:#166534; font-size:14px;">94% (High Mastery)</span></div>
+              <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Intonation & Stress</strong><span style="font-weight:700; color:#166534; font-size:14px;">90% (Pass)</span></div>
+              <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Evaluated Rubric</strong><span style="font-weight:700; color:var(--primary); font-size:14px;">RUB-102 (Phonetics)</span></div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; padding-top: 8px; border-top: 1px solid rgba(124,119,102,0.12);">
+            <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
+              <i data-lucide="check-circle"></i> Mark Complete & Advance
+            </button>
           </div>
         </div>
       `;
-    } else if (activeFormat === "quiz") {
+    } else if (curFormat === "quiz") {
+      const selectedOpt = window.creatorPreviewState.quizSelectedOpt || "B";
       playerCanvasHtml = `
         <div class="creator-preview-player-pane">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
+            <div>
+              <span class="badge badge-warning"><i data-lucide="help-circle"></i> AUTOMATED GATEKEEPER QUIZ (MILE-001)</span>
+              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
+            </div>
+            <span style="font-size: 12px; color: var(--slate); font-weight:600;"><i data-lucide="clock" style="width:13px; height:13px;"></i> Limit: 15:00</span>
+          </div>
+
           <div class="creator-quiz-preview-mock">
-            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 10px;">
-              <span class="badge badge-primary">QUESTION 1 OF 5 · SINGLE CHOICE</span>
-              <span style="font-size: 12px; color: var(--slate);"><i data-lucide="clock" style="width:12px; height:12px;"></i> Time Remaining: 14:32</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px;">
+              <span class="badge badge-primary">QUESTION 1 OF 3 · SINGLE CHOICE</span>
+              <span style="font-size: 11.5px; color: #166534; font-weight:600;"><i data-lucide="shield-check" style="width:12px; height:12px;"></i> Gatekeeper Pass Mark: 80%</span>
             </div>
 
-            <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0;">
-              Which HTTP status code signifies that the client must authenticate itself to get the requested response?
+            <h3 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 10px 0;">
+              Which HTTP response status code signifies that the client request lacks valid authentication credentials?
             </h3>
 
             <div style="display: flex; flex-direction: column; gap: 8px;">
-              <label class="creator-quiz-option-label" onclick="this.classList.toggle('selected')">
-                <input type="radio" name="preview-quiz-opt">
-                <span><strong>A.</strong> 200 OK</span>
+              <label class="creator-quiz-option-label ${selectedOpt === 'A' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('A')">
+                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'A' ? 'checked' : ''}>
+                <span><strong>A.</strong> 200 OK — Standard Successful Response</span>
               </label>
-              <label class="creator-quiz-option-label selected" onclick="this.classList.toggle('selected')">
-                <input type="radio" name="preview-quiz-opt" checked>
-                <span><strong>B.</strong> 401 Unauthorized (Authentication Required)</span>
+              <label class="creator-quiz-option-label ${selectedOpt === 'B' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('B')">
+                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'B' ? 'checked' : ''}>
+                <span><strong>B.</strong> 401 Unauthorized — Authentication Required (Correct Key)</span>
               </label>
-              <label class="creator-quiz-option-label" onclick="this.classList.toggle('selected')">
-                <input type="radio" name="preview-quiz-opt">
-                <span><strong>C.</strong> 403 Forbidden</span>
+              <label class="creator-quiz-option-label ${selectedOpt === 'C' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('C')">
+                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'C' ? 'checked' : ''}>
+                <span><strong>C.</strong> 403 Forbidden — Client Known but Refused</span>
               </label>
-              <label class="creator-quiz-option-label" onclick="this.classList.toggle('selected')">
-                <input type="radio" name="preview-quiz-opt">
-                <span><strong>D.</strong> 404 Not Found</span>
+              <label class="creator-quiz-option-label ${selectedOpt === 'D' ? 'selected' : ''}" onclick="Actions.previewSelectQuizOpt('D')">
+                <input type="radio" name="preview-quiz-opt" ${selectedOpt === 'D' ? 'checked' : ''}>
+                <span><strong>D.</strong> 404 Not Found — Resource Unknown</span>
               </label>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-              <span style="font-size: 12px; color: #166534;"><strong>Instant Feedback:</strong> Correct! 401 requires authentication credentials.</span>
-              <button class="btn btn-primary btn-sm" onclick="Notifications.push('Quiz Answer Submitted', 'Score: 100% (Passed Gatekeeper Requirement)', 'success')">
-                Next Question
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12); margin-top: 6px;">
+              <span style="font-size: 12px; color: #166534;"><strong>Instant Feedback:</strong> Selected Option ${selectedOpt} verified. Pass threshold met.</span>
+              <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
+                <i data-lucide="check"></i> Submit & Unlock Next Milestone
               </button>
             </div>
           </div>
         </div>
       `;
-    } else if (activeFormat === "milestone") {
+    } else if (curFormat === "milestone") {
       playerCanvasHtml = `
         <div class="creator-preview-player-pane">
-          <div class="creator-milestone-journey-mock">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-              <div>
-                <span class="badge badge-primary">MILESTONE 1 PROGRESS (MILE-001)</span>
-                <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">Web Architecture & DOM Foundations</h3>
-                <p style="font-size: 12.5px; color: #5a687c; margin: 0;">Modern Full-Stack Web Development · Level 1: Foundations</p>
-              </div>
-              <span class="badge badge-success">COMPLETED (100%)</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
+            <div>
+              <span class="badge badge-success"><i data-lucide="award"></i> MILESTONE ACHIEVEMENT PORTAL (MILE-001)</span>
+              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
             </div>
+            <span class="badge badge-success">✓ 100% Mastery Certified</span>
+          </div>
 
+          <div class="creator-milestone-journey-mock">
             <div class="creator-certificate-frame">
-              <i data-lucide="award" style="width: 42px; height: 42px; color: #b45309; margin-bottom: 8px;"></i>
-              <strong style="font: 700 18px 'Manrope', sans-serif; color: #101c2e;">CERTIFICATE OF MILESTONE ACHIEVEMENT</strong>
-              <p style="font-size: 12px; color: #64748b; margin: 4px 0 14px 0;">This certifies that the learner has mastered semantic HTML5, CSS Grid, and DOM accessibility.</p>
-              <div style="display: flex; gap: 10px;">
-                <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Certificate Downloaded', 'Downloaded digital PDF credential.', 'success')">Download PDF</button>
-                <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-syllabus-milestones')">Unlock Milestone 2</button>
+              <i data-lucide="award" style="width: 48px; height: 48px; color: #b45309; margin-bottom: 8px;"></i>
+              <strong style="font: 700 19px 'Manrope', sans-serif; color: #101c2e; letter-spacing:0.02em;">OFFICIAL CERTIFICATE OF MILESTONE ACHIEVEMENT</strong>
+              <p style="font-size: 12.5px; color: #64748b; margin: 6px 0 16px 0; max-width: 520px; line-height: 1.5;">
+                This certifies that the registered learner has demonstrated 100% verified competency in <strong>${currentCourse.title} (${curUnit.milestone})</strong> under academic supervision.
+              </p>
+              
+              <div style="background: #ffffff; border: 1px dashed #d7c9b1; border-radius: 8px; padding: 10px 16px; margin-bottom: 16px; font-family: monospace; font-size: 11px; color: #475569;">
+                SHA-256 Token: sha256-8ef3092a47e1bc8942 · Academic Board Verified · No In-Place Drift
+              </div>
+
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Credential Downloaded', 'Downloaded verified PDF certificate.', 'success')">
+                  <i data-lucide="download"></i> Download PDF Credential
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="Router.navigate('creator-syllabus-milestones')">
+                  <i data-lucide="unlock"></i> Proceed to Milestone 2
+                </button>
               </div>
             </div>
           </div>
         </div>
       `;
     } else {
-      // Default: Video Lecture preview
+      // Default: Video Lecture & Formatted Reading Guide
       playerCanvasHtml = `
         <div class="creator-preview-player-pane">
-          <div class="creator-player-screen-mock">
-            <i data-lucide="play-circle"></i>
-            <strong style="font-size: 15px;">Interactive Video Lecture & Live Coding Demo</strong>
-            <span style="font-size: 12px; opacity: 0.85;">Lesson 1: Semantic Structure & Accessibility (45:00)</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(124,119,102,0.12); padding-bottom:12px;">
+            <div>
+              <span class="badge badge-success"><i data-lucide="video"></i> INTERACTIVE VIDEO LECTURE & FORMATTED GUIDE</span>
+              <h3 style="font:700 16px 'Manrope', sans-serif; color:var(--navy-medium); margin:4px 0 0 0;">${curUnit.title}</h3>
+            </div>
+            <span class="badge ${completedUnits.includes(curUnit.index) ? 'badge-success' : 'badge-secondary'}">
+              ${completedUnits.includes(curUnit.index) ? '✓ Completed' : 'In Progress'}
+            </span>
           </div>
 
-          <div style="display: flex; gap: 12px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 8px; flex-wrap: wrap;">
+          <div class="creator-player-screen-mock">
+            <i data-lucide="play-circle"></i>
+            <strong style="font-size: 15px; letter-spacing:0.02em;">Interactive Lecture Stream & Live Commentary</strong>
+            <span style="font-size: 12px; opacity: 0.85;">Duration: ${curUnit.duration} · High-Definition Audio/Video</span>
+          </div>
+
+          <div style="display: flex; gap: 10px; border-bottom: 1px solid rgba(124, 119, 102, 0.15); padding-bottom: 10px; flex-wrap: wrap;">
             <button class="btn btn-primary btn-xs">Lesson Guide</button>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('sandbox')">Open Sandbox</button>
-            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Attached', 'Downloaded RES-101 HTML5 Semantic PDF.', 'success')">Download Notes</button>
-            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('quiz')">Take Quiz</button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('sandbox', 1)">Open Monaco Lab</button>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Resource Downloaded', 'Downloaded RES-101 HTML5 Reference Notes PDF.', 'success')">
+              <i data-lucide="download"></i> Download Notes (PDF)
+            </button>
+            <button class="btn btn-secondary btn-xs" onclick="Actions.switchPreviewFormat('quiz', 2)">Take Gatekeeper Quiz</button>
           </div>
 
           <div>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Lesson 1: Semantic Structure & Modern Layout Tokens</h3>
-            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0;">
-              In this unit, learners master semantic HTML elements (<code style="color:var(--primary);">&lt;main&gt;</code>, <code style="color:var(--primary);">&lt;header&gt;</code>, <code style="color:var(--primary);">&lt;section&gt;</code>) and establish accessible color contrast ratios adhering to WCAG AAA standards.
+            <h4 style="font: 700 15px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 8px 0;">Unit Overview & Academic Competencies</h4>
+            <p style="font-size: 12.5px; line-height: 1.6; color: #4a586e; margin: 0 0 10px 0;">
+              In this unit, learners master semantic HTML5 elements (<code style="color:var(--primary); font-weight:600;">&lt;main&gt;</code>, <code style="color:var(--primary); font-weight:600;">&lt;header&gt;</code>, <code style="color:var(--primary); font-weight:600;">&lt;section&gt;</code>) and establish accessible color contrast ratios adhering to WCAG AAA standards.
             </p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid rgba(124,119,102,0.12);">
+            <span style="font-size: 12px; color: var(--slate);">Unit 1 of ${currentCourse.units.length} · ${curUnit.duration}</span>
+            <button class="btn btn-primary btn-sm" onclick="Actions.previewCompleteCurrentUnit(${curUnit.index})">
+              <i data-lucide="check-circle"></i> Mark Complete & Advance
+            </button>
           </div>
         </div>
       `;
     }
 
     return `
-      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
         
-        <!-- Viewport Mode & Format Selector -->
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: linear-gradient(135deg, #182232, #253852); border-radius: 10px; color: #ffffff; flex-wrap: wrap; gap: 12px;">
-          <div>
-            <strong style="font-size: 13.5px; color: #ffffff;">LMS Learner Viewport Simulator (CAT-009)</strong>
-            <span style="font-size: 12px; color: #c9d6e4; display: block;">Testing: Modern Full-Stack Web Development (v1.2 Draft)</span>
+        <!-- Top Course Scope Bar & Simulation Mode Switcher -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: linear-gradient(135deg, #101c2e, #1e3352); border-radius: 12px; color: #ffffff; flex-wrap: wrap; gap: 14px; box-shadow: 0 4px 16px rgba(16, 28, 46, 0.2);">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <span style="font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Active Simulation Scope:</span>
+            <select id="creator-lms-course-select" class="form-control" style="width: auto; min-width: 320px; font-weight: 600; font-size: 13px; background: #ffffff; color: var(--navy-medium);" onchange="Actions.previewSelectCourse(this.value)">
+              <option value="TECH-FE-201" ${curCourseId === 'TECH-FE-201' ? 'selected' : ''}>Modern Full-Stack Web Development (Self-Paced Milestone)</option>
+              <option value="ENG-SPK-301" ${curCourseId === 'ENG-SPK-301' ? 'selected' : ''}>Spoken English Fluency & Workplace (Live Scheduled Cohort)</option>
+              <option value="K12-MTH-801" ${curCourseId === 'K12-MTH-801' ? 'selected' : ''}>Grade 8 Mathematics (K-12 Board Aligned FBISE)</option>
+            </select>
           </div>
+          
           <div style="display: flex; gap: 10px; align-items: center;">
-            <span style="font-size: 12px; color: #b0c2d8;">Mode:</span>
-            <button class="btn btn-primary btn-xs" id="lms-sim-guest" onclick="Actions.switchLmsSimMode('guest')">Guest Visitor</button>
-            <button class="btn btn-secondary btn-xs" id="lms-sim-free" onclick="Actions.switchLmsSimMode('free')">Registered Free Learner</button>
+            <span style="font-size: 11.5px; color: #cbd5e1;">Viewport Mode:</span>
+            <button class="btn ${isGuest ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.switchLmsSimMode('guest')">
+              <i data-lucide="user"></i> Guest Visitor
+            </button>
+            <button class="btn ${!isGuest ? 'btn-primary' : 'btn-secondary'} btn-xs" onclick="Actions.switchLmsSimMode('free')">
+              <i data-lucide="user-check"></i> Enrolled Learner
+            </button>
           </div>
         </div>
 
-        <!-- Format Switcher Strip -->
-        <div class="creator-preview-format-tabs">
-          <button class="creator-preview-tab-btn ${activeFormat === 'video' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('video')">
-            <i data-lucide="video"></i> Video Lecture Preview
-          </button>
-          <button class="creator-preview-tab-btn ${activeFormat === 'sandbox' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('sandbox')">
-            <i data-lucide="code-2"></i> Coding Sandbox Preview
-          </button>
-          <button class="creator-preview-tab-btn ${activeFormat === 'voice' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('voice')">
-            <i data-lucide="mic"></i> Spoken Audio Preview
-          </button>
-          <button class="creator-preview-tab-btn ${activeFormat === 'quiz' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('quiz')">
-            <i data-lucide="help-circle"></i> Quiz Questionnaire Preview
-          </button>
-          <button class="creator-preview-tab-btn ${activeFormat === 'milestone' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('milestone')">
-            <i data-lucide="award"></i> Milestone Gateway & Badge
-          </button>
+        <!-- Course Header Telemetry & Progression Bar -->
+        <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span class="badge badge-primary">${currentCourse.id}</span>
+              <span class="badge badge-secondary">${currentCourse.deliveryModel}</span>
+              <span class="badge badge-warning">${currentCourse.version}</span>
+            </div>
+            <h2 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${currentCourse.title}</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 4px; min-width: 240px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: var(--navy-medium);">
+              <span>Course Completion</span>
+              <strong style="color: var(--primary);">${currentCourse.progressPct}% (${completedUnits.length} of ${currentCourse.units.length} Units)</strong>
+            </div>
+            <div style="width: 100%; height: 8px; background: #eef2f6; border-radius: 4px; overflow: hidden;">
+              <div style="width: ${currentCourse.progressPct}%; height: 100%; background: linear-gradient(90deg, var(--primary), #a45800); transition: width 0.3s ease;"></div>
+            </div>
+          </div>
         </div>
 
+        <!-- Two-Pane The Odin Project / Learner Interactive Workspace -->
         <div class="creator-preview-viewport-box">
-          <!-- Left: Multi-format Player Pane -->
+          
+          <!-- Left Multi-Format Player Pane -->
           ${playerCanvasHtml}
 
-          <!-- Right: Interactive Curriculum Drawer -->
+          <!-- Right Interactive Multi-Tier Curriculum Drawer -->
           <div class="creator-preview-drawer-pane">
-            <strong style="font-size: 13px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Outline</strong>
-            
-            <div class="creator-drawer-item ${activeFormat === 'video' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('video')">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 10px;">
               <div>
-                <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">FREE PREVIEW</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">1. Semantic Structure & A11y</strong>
-                <small style="color: #6a788e;">Video & Formatted Guide</small>
+                <strong style="font-size: 12.5px; color: var(--navy-medium); text-transform: uppercase; letter-spacing: 0.05em;">Curriculum Roadmap</strong>
+                <small style="display: block; color: var(--slate); font-size: 11px;">Odin-style Milestone Ladder</small>
               </div>
-              <i data-lucide="play" style="width: 14px; height: 14px; color: var(--primary);"></i>
+              <span class="badge badge-primary">${currentCourse.units.length} Units</span>
             </div>
 
-            <div class="creator-drawer-item ${activeFormat === 'sandbox' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('sandbox')">
-              <div>
-                <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">INTERACTIVE LAB</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">2. CSS Grid Browser Sandbox</strong>
-                <small style="color: #6a788e;">Monaco IDE Lab</small>
-              </div>
-              <i data-lucide="code-2" style="width: 14px; height: 14px; color: var(--primary);"></i>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              ${currentCourse.units.map(u => {
+                const isCompleted = completedUnits.includes(u.index);
+                const isActive = curFormat === u.format;
+                const isLocked = isGuest && u.index > 0;
+
+                let iconName = "play";
+                if (u.format === "sandbox") iconName = "code-2";
+                if (u.format === "quiz") iconName = "help-circle";
+                if (u.format === "voice") iconName = "mic";
+                if (u.format === "milestone") iconName = "award";
+
+                return `
+                  <div class="creator-drawer-item ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}" 
+                       onclick="${isLocked ? `Notifications.push('Locked in Guest Mode', 'Please switch simulation to Enrolled Learner mode to view paid lessons.', 'warning')` : `Actions.switchPreviewFormat('${u.format}', ${u.index})`}">
+                    <div style="flex: 1;">
+                      <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 2px;">
+                        <span class="badge ${u.badgeClass}" style="font-size: 9px; padding: 2px 5px;">${u.badge}</span>
+                        ${isCompleted ? `<span style="color:#16a34a; font-size:11px; font-weight:700;">✓ Mastered</span>` : ''}
+                      </div>
+                      <strong style="display: block; font-size: 12px; color: var(--navy-medium);">${u.title}</strong>
+                      <small style="color: #6a788e;">${u.duration} · ${u.milestone}</small>
+                    </div>
+                    <div>
+                      ${isLocked ? `
+                        <i data-lucide="lock" style="width: 14px; height: 14px; color: var(--slate);"></i>
+                      ` : isCompleted ? `
+                        <i data-lucide="check-circle-2" style="width: 16px; height: 16px; color: #16a34a;"></i>
+                      ` : `
+                        <i data-lucide="${iconName}" style="width: 14px; height: 14px; color: var(--primary);"></i>
+                      `}
+                    </div>
+                  </div>
+                `;
+              }).join("")}
             </div>
 
-            <div class="creator-drawer-item ${activeFormat === 'quiz' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('quiz')">
-              <div>
-                <span class="badge badge-primary" style="font-size: 9px; margin-bottom: 2px;">GATEKEEPER</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">3. DOM Fundamentals Quiz</strong>
-                <small style="color: #6a788e;">Auto-Graded Test (80%)</small>
-              </div>
-              <i data-lucide="help-circle" style="width: 14px; height: 14px; color: var(--primary);"></i>
+            <div style="margin-top: 8px; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); display: flex; flex-direction: column; gap: 6px;">
+              <button class="btn btn-secondary btn-xs" style="width: 100%;" onclick="Router.navigate('creator-syllabus-milestones')">
+                <i data-lucide="flag"></i> Open Milestones Studio
+              </button>
+              <button class="btn btn-secondary btn-xs" style="width: 100%;" onclick="Router.navigate('creator-courses-my')">
+                <i data-lucide="arrow-left"></i> Return to Course Portfolio
+              </button>
             </div>
 
-            <div class="creator-drawer-item ${activeFormat === 'voice' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('voice')">
-              <div>
-                <span class="badge badge-secondary" style="font-size: 9px; margin-bottom: 2px;">SPOKEN ENGLISH</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">4. Oral Self-Introduction</strong>
-                <small style="color: #6a788e;">Acoustic Audio Prompt</small>
-              </div>
-              <i data-lucide="mic" style="width: 14px; height: 14px; color: var(--slate);"></i>
-            </div>
-
-            <div class="creator-drawer-item ${activeFormat === 'milestone' ? 'active' : ''}" onclick="Actions.switchPreviewFormat('milestone')">
-              <div>
-                <span class="badge badge-success" style="font-size: 9px; margin-bottom: 2px;">MILESTONE CREDENTIAL</span>
-                <strong style="display: block; font-size: 12px; color: var(--navy-medium);">5. Milestone 1 Certificate</strong>
-                <small style="color: #6a788e;">Digital Verification</small>
-              </div>
-              <i data-lucide="award" style="width: 14px; height: 14px; color: #b45309;"></i>
-            </div>
           </div>
+
         </div>
+
       </div>
     `;
   },
@@ -19966,6 +20136,160 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.classList.remove("hidden");
       window.lucide?.createIcons();
     }
+  };
+
+  Actions.switchPreviewFormat = function(format, unitIdx) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "video",
+        activeUnitIndex: 0,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+    window.creatorPreviewState.activeFormat = format;
+    if (typeof unitIdx === "number") window.creatorPreviewState.activeUnitIndex = unitIdx;
+
+    if (Router.currentRoute === "creator-preview") {
+      RenderEngine.creatorWorkspace("creator-preview");
+    } else {
+      Router.navigate("creator-preview");
+    }
+  };
+
+  Actions.switchLmsSimMode = function(mode) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "video",
+        activeUnitIndex: 0,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+    window.creatorPreviewState.simMode = mode;
+    if (mode === "guest") {
+      Notifications.push("Simulation Viewport", "Switched to Guest Visitor mode. Paid syllabus units are locked.", "info");
+    } else {
+      Notifications.push("Simulation Viewport", "Switched to Enrolled Learner mode. Full syllabus roadmap unlocked.", "success");
+    }
+    RenderEngine.creatorWorkspace("creator-preview");
+  };
+
+  Actions.previewSelectCourse = function(courseId) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "video",
+        activeUnitIndex: 0,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+    window.creatorPreviewState.activeCourseId = courseId;
+    window.creatorPreviewState.activeUnitIndex = 0;
+    window.creatorPreviewState.activeFormat = "video";
+    window.creatorPreviewState.codeRunOutput = null;
+
+    Notifications.push("Course Scope Loaded", `Loaded syllabus structure for ${courseId}.`, "success");
+    RenderEngine.creatorWorkspace("creator-preview");
+  };
+
+  Actions.previewCompleteCurrentUnit = function(unitIdx) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "video",
+        activeUnitIndex: 0,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+    if (!window.creatorPreviewState.completedUnits.includes(unitIdx)) {
+      window.creatorPreviewState.completedUnits.push(unitIdx);
+    }
+
+    Notifications.push("Unit Mastered (FLOW-009)", "Marked unit complete. Next progression checkpoint unlocked.", "success");
+
+    const formats = ["video", "sandbox", "quiz", "voice", "milestone"];
+    const nextIdx = unitIdx + 1;
+    if (nextIdx < 5) {
+      Actions.switchPreviewFormat(formats[nextIdx], nextIdx);
+    } else {
+      Actions.switchPreviewFormat("milestone", 4);
+    }
+  };
+
+  Actions.previewRunCodeTests = function(unitIdx) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "sandbox",
+        activeUnitIndex: unitIdx || 1,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+    window.creatorPreviewState.codeRunOutput = true;
+    if (!window.creatorPreviewState.completedUnits.includes(unitIdx)) {
+      window.creatorPreviewState.completedUnits.push(unitIdx);
+    }
+    Notifications.push("Test Assertions Passed", "2 of 2 tests passed (100%). CSS Grid layout assertion verified.", "success");
+    RenderEngine.creatorWorkspace("creator-preview");
+  };
+
+  Actions.previewSubmitVoiceAudio = function(unitIdx) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "voice",
+        activeUnitIndex: unitIdx || 3,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: true,
+        quizSelectedOpt: "B"
+      };
+    }
+    window.creatorPreviewState.voiceSubmitted = true;
+    if (!window.creatorPreviewState.completedUnits.includes(unitIdx)) {
+      window.creatorPreviewState.completedUnits.push(unitIdx);
+    }
+    Notifications.push("Acoustic Audio Evaluated", "Pronunciation: 94% · Intonation: 90% · Pass mark met (RUB-102).", "success");
+    RenderEngine.creatorWorkspace("creator-preview");
+  };
+
+  Actions.previewSelectQuizOpt = function(opt) {
+    if (!window.creatorPreviewState) {
+      window.creatorPreviewState = {
+        activeCourseId: "TECH-FE-201",
+        activeFormat: "quiz",
+        activeUnitIndex: 2,
+        simMode: "free",
+        completedUnits: [0],
+        codeRunOutput: null,
+        voiceSubmitted: false,
+        quizSelectedOpt: "B"
+      };
+    }
+    window.creatorPreviewState.quizSelectedOpt = opt;
+    RenderEngine.creatorWorkspace("creator-preview");
   };
 
   Actions.openCreatorNewVersionModal = function(courseId) {
