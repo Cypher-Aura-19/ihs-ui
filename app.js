@@ -1933,6 +1933,32 @@ const db = {
         version: "v1.0",
         usedInQuizzes: ["QZ-203"],
         author: "Dr. Arsalan Khan"
+      },
+      {
+        id: "QST-805",
+        title: "Identify the primary stress syllable in the word 'COMMUNICATION'.",
+        type: "Single Choice",
+        category: "Phonetics & Intonation",
+        difficulty: "Beginner",
+        options: ["com-", "-mu-", "-ni-", "-CA-", "-tion"],
+        correctAnswer: "-CA- (4th syllable)",
+        tags: ["English", "Phonetics", "Stress"],
+        version: "v1.0",
+        usedInQuizzes: ["QZ-203"],
+        author: "Prof. Sarah Mitchell"
+      },
+      {
+        id: "QST-806",
+        title: "Solve for x in the algebraic equation: 3x + 7 = 22",
+        type: "Single Choice",
+        category: "Algebra (Grade 8)",
+        difficulty: "Beginner",
+        options: ["x = 3", "x = 5", "x = 7", "x = 15"],
+        correctAnswer: "x = 5",
+        tags: ["Math", "Algebra", "FBISE"],
+        version: "v1.2",
+        usedInQuizzes: ["QZ-204"],
+        author: "Dr. Arsalan Khan"
       }
     ],
 
@@ -1966,16 +1992,68 @@ const db = {
         linkedLesson: "Lesson 3: State Machines & Custom Hooks"
       },
       {
+        id: "QZ-203",
+        title: "Spoken English Professional Vocabulary Drill",
+        type: "Quiz",
+        course: "Spoken English Fluency & Workplace Voice",
+        questionsCount: 12,
+        timeLimit: "20 Mins",
+        passMark: "75%",
+        maxAttempts: 3,
+        randomization: "Enabled",
+        resultVisibility: "Immediate with Phonetic Explanations",
+        status: "Approved",
+        linkedLesson: "Lesson 3: Professional Vocabulary Drill"
+      },
+      {
+        id: "QZ-204",
+        title: "Grade 8 Mathematics Term 1 Diagnostic Test",
+        type: "Quiz",
+        course: "Grade 8 Mathematics (FBISE Curriculum)",
+        questionsCount: 18,
+        timeLimit: "30 Mins",
+        passMark: "80%",
+        maxAttempts: 2,
+        randomization: "Enabled",
+        resultVisibility: "Step-by-step solutions unlocked",
+        status: "Approved",
+        linkedLesson: "Lesson 3: Term 1 Knowledge Check"
+      },
+      {
         id: "ASN-301",
         title: "Responsive Multi-Device Operations Dashboard",
         type: "Assignment",
         course: "Modern Full-Stack Web Development",
-        submissionType: "GitHub Link & Live URL",
+        submissionType: "GitHub Link & Live Demo URL",
         deadline: "End of Milestone 1",
-        rubric: "RUB-101 (Frontend Clean Architecture Rubric)",
+        rubric: "RUB-101 (Frontend Architecture Rubric)",
         resubmissionPolicy: "Allowed up to 2 revisions",
         status: "Draft",
         linkedLesson: "Lesson 2: Responsive Grid Systems"
+      },
+      {
+        id: "ASN-302",
+        title: "REST & PostgreSQL Microservices Deployment",
+        type: "Assignment",
+        course: "Modern Full-Stack Web Development",
+        submissionType: "GitHub Link + Docker Compose Spec",
+        deadline: "End of Milestone 3",
+        rubric: "RUB-103 (Backend API Architecture Rubric)",
+        resubmissionPolicy: "1 Revision Allowed",
+        status: "Draft",
+        linkedLesson: "Lesson 6: PostgreSQL Indexing & Optimization"
+      },
+      {
+        id: "ASN-303",
+        title: "Grade 8 Geometry & Algebraic Proofs Worksheet",
+        type: "Assignment",
+        course: "Grade 8 Mathematics (FBISE Curriculum)",
+        submissionType: "PDF / Scanned Solution Sheet",
+        deadline: "Term 1 Board Milestone",
+        rubric: "RUB-104 (Step-by-Step Math Rubric)",
+        resubmissionPolicy: "Allowed",
+        status: "Approved",
+        linkedLesson: "Lesson 2: Practice Worksheet & Problem Set"
       },
       {
         id: "VOC-401",
@@ -1984,10 +2062,24 @@ const db = {
         course: "Spoken English Fluency & Professional Voice",
         submissionType: "Acoustic Voice Recording (.mp3 / .wav)",
         durationRequirement: "90 - 120 Seconds",
+        promptText: "Hello, my name is Dr. Arsalan. I am a software engineer specializing in scalable backend architectures and frontend state machines.",
         rubric: "RUB-102 (Phonetic Cadence & Pronunciation Rubric)",
         reviewRequirement: "Trainer / AI Speech Evaluation",
         status: "Approved",
-        linkedLesson: "Lesson 1: Sentence Stress in Professional Dialogues"
+        linkedLesson: "Lesson 1: Daily.co Spoken Communication"
+      },
+      {
+        id: "VOC-402",
+        title: "Phonetic Vowel Stress & Intonation Lab",
+        type: "Voice Activity",
+        course: "Spoken English Fluency & Professional Voice",
+        submissionType: "Acoustic Voice Recording (.wav)",
+        durationRequirement: "60 Seconds",
+        promptText: "The economic indicators demonstrate a significant shift towards distributed computing and asynchronous data flows.",
+        rubric: "RUB-102 (Phonetic Cadence & Stress Rubric)",
+        reviewRequirement: "Formant Acoustic Frequency Match",
+        status: "Approved",
+        linkedLesson: "Lesson 2: Phonetic Vowel Stress Lab"
       }
     ],
 
@@ -13547,29 +13639,69 @@ const RenderEngine = {
 
   renderCreatorQuestionBankStudio(questions) {
     return `
-      <div class="creator-question-cards-grid">
-        ${questions.map(q => `
-          <div class="creator-question-card">
-            <div class="creator-question-header">
-              <span class="badge badge-primary">${q.type}</span>
-              <span class="badge badge-secondary">${q.difficulty}</span>
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="database"></i> CAT-008</span>
+              <span class="badge badge-secondary">${questions.length} Active Items</span>
             </div>
-            <h4 class="creator-question-stem">${q.title}</h4>
-            
-            <div class="creator-question-choices">
-              <span style="font-size: 10.5px; text-transform: uppercase; color: var(--slate); font-weight: 700;">Answer Key & Options:</span>
-              <div class="creator-choice-item correct">
-                <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
-                <strong>Correct Key: ${q.correctAnswer}</strong>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Centralized Question Bank & Assessment Taxonomy</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Actions.openCreatorImportQuestionsModal()"><i data-lucide="upload"></i> Import CSV/JSON</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddQuestionModal()"><i data-lucide="plus"></i> + Add New Question</button>
+          </div>
+        </div>
+
+        <!-- Question Cards Grid -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;">
+          ${questions.map(q => `
+            <div style="background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 20px 22px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <div style="display: flex; gap: 6px; align-items: center;">
+                    <span style="font-family: monospace; font-weight: 700; font-size: 12px; color: var(--primary); background: #fdfbf7; padding: 3px 8px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${q.id}</span>
+                    <span class="badge badge-primary" style="font-size: 10px;">${q.type}</span>
+                    <span class="badge ${q.difficulty === 'Beginner' ? 'badge-success' : 'badge-secondary'}" style="font-size: 10px;">${q.difficulty}</span>
+                  </div>
+                  <span style="font-size: 11px; color: var(--slate);">${q.version}</span>
+                </div>
+
+                <h4 style="font: 700 14.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0 0 10px 0; line-height: 1.4;">${q.title}</h4>
+
+                <!-- Options / Answer Key Box -->
+                <div style="background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.14); border-radius: 8px; padding: 10px 14px; margin-bottom: 10px;">
+                  <span style="font-size: 10.5px; text-transform: uppercase; color: var(--slate); font-weight: 700; display: block; margin-bottom: 4px;">Verified Correct Answer:</span>
+                  <div style="display: flex; align-items: center; gap: 6px; color: #166534; font-weight: 700; font-size: 12.5px;">
+                    <i data-lucide="check-circle" style="width: 15px; height: 15px; color: #166534;"></i>
+                    <span>${q.correctAnswer}</span>
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: var(--slate);">
+                  <span>Category: <strong style="color: var(--navy-medium);">${q.category}</strong></span>
+                  <span>Used in: <strong style="color: var(--primary);">${(q.usedInQuizzes || []).join(", ")}</strong></span>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                  ${(q.tags || []).map(t => `<span style="font-size: 10px; background: #faf8f5; border: 1px solid #e2d9cc; padding: 2px 6px; border-radius: 4px; color: var(--slate);">${t}</span>`).join('')}
+                </div>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorDuplicateQuestion('${q.id}')" title="Duplicate item">
+                    <i data-lucide="copy"></i> Duplicate
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorAddQuestionModal('${q.id}')">
+                    <i data-lucide="edit"></i> Edit Item
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12); font-size: 11.5px; color: var(--slate);">
-              <span>Tags: <strong>${q.tags.join(", ")}</strong></span>
-              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuestionModal('${q.id}')">Edit Item</button>
-            </div>
-          </div>
-        `).join("")}
+          `).join("")}
+        </div>
       </div>
     `;
   },
@@ -13577,106 +13709,73 @@ const RenderEngine = {
   renderCreatorQuizzesStudio(assessments) {
     const quizzes = assessments.filter(a => a.type === "Quiz");
     return `
-      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
-        ${quizzes.map(qz => `
-          <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; gap: 14px;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span class="badge badge-primary">QUIZ ENGINE</span>
-              <span class="badge badge-warning">${qz.status}</span>
-            </div>
-            <h3 style="font: 700 15.5px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">${qz.title}</h3>
-            <span class="table-subline">${qz.course}</span>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fbf9f5; padding: 12px; border-radius: 8px; font-size: 12px;">
-              <div><span>Pass Mark:</span> <strong>${qz.passMark}</strong></div>
-              <div><span>Time Limit:</span> <strong>${qz.timeLimit}</strong></div>
-              <div><span>Max Attempts:</span> <strong>${qz.maxAttempts}</strong></div>
-              <div><span>Randomization:</span> <strong>Enabled</strong></div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-              <span style="font-size: 11.5px; color: var(--slate);">Questions: <strong>${qz.questionsCount} items</strong></span>
-              <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuizModal('${qz.id}')">Configure Rules</button>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    `;
-  },
-
-  renderCreatorVoiceStudio(assessments) {
-    const voiceTasks = assessments.filter(a => a.type === "Voice Activity");
-    return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        ${voiceTasks.map(v => `
-          <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; gap: 16px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-success"><i data-lucide="help-circle"></i> FLOW-019 / MILE-004</span>
+              <span class="badge badge-secondary">${quizzes.length} Configured Quizzes</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Diagnostic & Gatekeeper Quizzes Engine</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-assessments-bank')"><i data-lucide="database"></i> Question Bank</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddQuizModal()"><i data-lucide="plus"></i> + Create Diagnostic Quiz</button>
+          </div>
+        </div>
+
+        <!-- Quizzes Grid -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%;">
+          ${quizzes.map(qz => `
+            <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;">
               <div>
-                <span class="badge badge-primary"><i data-lucide="mic"></i> ACOUSTIC VOICE ACTIVITY</span>
-                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${v.title}</h3>
-                <span class="table-subline">${v.course} · Linked: ${v.linkedLesson}</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-family: monospace; font-weight: 700; font-size: 13px; color: var(--primary); background: #fdfbf7; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${qz.id}</span>
+                    <span class="badge badge-primary">QUIZ ENGINE</span>
+                  </div>
+                  <span class="badge ${qz.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${qz.status}</span>
+                </div>
+
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">${qz.title}</h3>
+                <span class="table-subline" style="display:block; margin-bottom:12px;">${qz.course} · Linked: ${qz.linkedLesson}</span>
+
+                <!-- Quiz Specification Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fdfbf7; border: 1px solid rgba(124, 119, 102, 0.14); padding: 12px 16px; border-radius: 8px; font-size: 12px;">
+                  <div>
+                    <span style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block;">Gatekeeper Pass Mark</span>
+                    <strong style="color: #166534; font-size: 13px;">${qz.passMark} (Required)</strong>
+                  </div>
+                  <div>
+                    <span style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block;">Time Limit</span>
+                    <strong style="color: var(--navy-medium); font-size: 13px;">${qz.timeLimit}</strong>
+                  </div>
+                  <div>
+                    <span style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block;">Attempt Policy</span>
+                    <strong style="color: var(--navy-medium); font-size: 12px;">Max ${qz.maxAttempts} (24h Cooldown)</strong>
+                  </div>
+                  <div>
+                    <span style="color: var(--slate); font-size: 10.5px; text-transform: uppercase; font-weight: 700; display: block;">Randomization</span>
+                    <strong style="color: #166534; font-size: 12px;">✓ Shuffle Distractors</strong>
+                  </div>
+                </div>
               </div>
-              <span class="badge badge-success">${v.status}</span>
-            </div>
 
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; background: #fdfbf7; padding: 14px 18px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.15);">
-              <div><strong style="font-size: 11px; color: var(--slate); text-transform: uppercase;">Duration Requirement</strong><div style="font-size: 13px; font-weight: 700; color: var(--navy-medium);">${v.durationRequirement}</div></div>
-              <div><strong style="font-size: 11px; color: var(--slate); text-transform: uppercase;">Format</strong><div style="font-size: 13px; font-weight: 700; color: var(--navy-medium);">.MP3 / .WAV (128kbps)</div></div>
-              <div><strong style="font-size: 11px; color: var(--slate); text-transform: uppercase;">Phonetic Rubric</strong><div style="font-size: 13px; font-weight: 700; color: #1e60aa;">${v.rubric}</div></div>
+              <!-- Card Footer -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+                <span style="font-size: 11.5px; color: var(--slate);">Questions: <strong>${qz.questionsCount} Linked Items</strong></span>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Actions.openCreatorAddQuizModal('${qz.id}')">
+                    <i data-lucide="settings"></i> Configure
+                  </button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.switchOdinActivityFormat('quiz'); Router.navigate('creator-syllabus-lessons');">
+                    <i data-lucide="play"></i> Test in Runner
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-              <span style="font-size: 12px; color: #5a687c;">Evaluation Mode: <strong>Trainer & AI Speech Evaluation</strong></span>
-              <button class="btn btn-primary btn-xs" onclick="Router.navigate('creator-preview')">Test Recording Flow</button>
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    `;
-  },
-
-  renderCreatorRubricsStudio() {
-    return `
-      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
-        <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04);">
-          <div style="border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <span class="badge badge-primary">RUBRIC MATRIX: RUB-101</span>
-              <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 0 0;">Frontend Clean Architecture & Component Design</h3>
-            </div>
-            <button class="btn btn-secondary btn-xs">+ Add Criteria</button>
-          </div>
-
-          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
-            <thead>
-              <tr style="background: #fdfbf7; text-align: left;">
-                <th style="padding: 10px;">Criteria & Weight</th>
-                <th style="padding: 10px;">Exemplary (100%)</th>
-                <th style="padding: 10px;">Proficient (75%)</th>
-                <th style="padding: 10px;">Developing (50%)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-top: 1px solid #eee8dc;">
-                <td style="padding: 12px 10px;"><strong>Component Modularity</strong><br><span class="table-subline">Weight: 35%</span></td>
-                <td style="padding: 12px 10px;">Zero coupled side-effects; pure components and state machines.</td>
-                <td style="padding: 12px 10px;">Clean components with minor redundant re-renders.</td>
-                <td style="padding: 12px 10px;">Monolithic files with tight prop drilling.</td>
-              </tr>
-              <tr style="border-top: 1px solid #eee8dc;">
-                <td style="padding: 12px 10px;"><strong>Mobile Responsiveness</strong><br><span class="table-subline">Weight: 35%</span></td>
-                <td style="padding: 12px 10px;">Flawless layout adaptation across 390px, 820px, and 1440px.</td>
-                <td style="padding: 12px 10px;">Minor padding truncation on small screens.</td>
-                <td style="padding: 12px 10px;">Horizontal overflow and broken flex layouts.</td>
-              </tr>
-              <tr style="border-top: 1px solid #eee8dc;">
-                <td style="padding: 12px 10px;"><strong>Accessibility (A11y)</strong><br><span class="table-subline">Weight: 30%</span></td>
-                <td style="padding: 12px 10px;">Full keyboard navigation, semantic ARIA attributes, 4.5:1 contrast.</td>
-                <td style="padding: 12px 10px;">Keyboard navigable with minor missing aria-labels.</td>
-                <td style="padding: 12px 10px;">Missing semantic landmarks and focus outlines.</td>
-              </tr>
-            </tbody>
-          </table>
+          `).join("")}
         </div>
       </div>
     `;
@@ -13686,42 +13785,277 @@ const RenderEngine = {
     const assignments = assessments.filter(a => a.type === "Assignment");
     return `
       <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
-        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 14px 20px; box-shadow: 0 3px 12px rgba(70, 55, 28, 0.03);">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
           <div>
-            <span style="font-size: 11px; font-weight: 700; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em;">Projects & Assessments Engine</span>
-            <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 2px 0 0 0;">Rubric-Linked Assignment Tasks</h3>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="clipboard-list"></i> FLOW-020</span>
+              <span class="badge badge-secondary">${assignments.length} Projects & Tasks</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Rubric-Linked Assignments & Capstone Tasks</h3>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddQuizModal()"><i data-lucide="plus"></i> New Assignment Task</button>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-assessments-rubrics')"><i data-lucide="table"></i> View Rubrics</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddQuizModal()"><i data-lucide="plus"></i> + Create Assignment Task</button>
+          </div>
         </div>
 
+        <!-- Assignments Grid -->
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
           ${assignments.map(asn => `
-            <div style="padding: 24px 26px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; gap: 14px;">
-              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div>
-                  <span class="badge badge-primary"><i data-lucide="folder-git-2"></i> CAPSTONE / PROJECT TASK</span>
-                  <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${asn.title}</h3>
-                  <span class="table-subline">${asn.course} · Linked: ${asn.linkedLesson}</span>
+            <div style="padding: 22px 24px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; justify-content: space-between; gap: 14px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-family: monospace; font-weight: 700; font-size: 13px; color: var(--primary); background: #fdfbf7; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${asn.id}</span>
+                    <span class="badge badge-primary"><i data-lucide="folder-git-2"></i> CAPSTONE / TASK</span>
+                  </div>
+                  <span class="badge ${asn.status === 'Approved' ? 'badge-success' : 'badge-warning'}">${asn.status}</span>
                 </div>
-                <span class="badge badge-warning">${asn.status}</span>
-              </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fdfbf7; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.14); font-size: 12px;">
-                <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Submission Mode</strong><strong>${asn.submissionType}</strong></div>
-                <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Deadline Gate</strong><strong>${asn.deadline}</strong></div>
-                <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Evaluation Rubric</strong><strong style="color:var(--primary);">${asn.rubric}</strong></div>
-                <div><strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Resubmissions</strong><strong>${asn.resubmissionPolicy}</strong></div>
+                <h3 style="font: 700 16px 'Manrope', sans-serif; color: var(--navy-medium); margin: 6px 0 2px 0;">${asn.title}</h3>
+                <span class="table-subline" style="display:block; margin-bottom:12px;">${asn.course} · Linked: ${asn.linkedLesson}</span>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fdfbf7; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.14); font-size: 12px;">
+                  <div>
+                    <strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Submission Mode</strong>
+                    <strong style="color:var(--navy-medium); font-size:12px;">${asn.submissionType}</strong>
+                  </div>
+                  <div>
+                    <strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Deadline Gate</strong>
+                    <strong style="color:#b45309; font-size:12px;">${asn.deadline}</strong>
+                  </div>
+                  <div>
+                    <strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Evaluation Rubric</strong>
+                    <strong style="color:var(--primary); font-size:12px;"><i data-lucide="table" style="width:11px; height:11px;"></i> ${asn.rubric}</strong>
+                  </div>
+                  <div>
+                    <strong style="color:var(--slate); font-size:10.5px; text-transform:uppercase; display:block;">Resubmissions</strong>
+                    <strong style="color:var(--navy-medium); font-size:12px;">${asn.resubmissionPolicy}</strong>
+                  </div>
+                </div>
               </div>
 
               <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
-                <span style="font-size: 11.5px; color: var(--slate);">Evaluated by assigned trainer against linked rubric</span>
+                <span style="font-size: 11.5px; color: var(--slate);">Evaluated by assigned trainer</span>
                 <div class="button-row" style="display: flex; gap: 6px;">
                   <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-assessments-rubrics')"><i data-lucide="layers"></i> Rubric</button>
-                  <button class="btn btn-primary btn-xs" onclick="Actions.openCreatorAddQuizModal('${asn.id}')">Configure</button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.switchOdinActivityFormat('project'); Router.navigate('creator-syllabus-lessons');">
+                    <i data-lucide="play"></i> Test Task
+                  </button>
                 </div>
               </div>
             </div>
           `).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  renderCreatorVoiceStudio(assessments) {
+    const voiceTasks = assessments.filter(a => a.type === "Voice Activity");
+    return `
+      <div style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="mic"></i> FLOW-020 / CAT-002</span>
+              <span class="badge badge-secondary">${voiceTasks.length} Acoustic Units</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Spoken English Acoustic Voice Activities Studio</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Router.navigate('creator-assessments-rubrics')"><i data-lucide="table"></i> Phonetic Rubrics</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddVoiceModal()"><i data-lucide="plus"></i> + Add Voice Activity</button>
+          </div>
+        </div>
+
+        <!-- Voice Cards List -->
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+          ${voiceTasks.map(v => `
+            <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04); display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-family: monospace; font-weight: 700; font-size: 13px; color: var(--primary); background: #fdfbf7; padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(124,119,102,0.2);">${v.id}</span>
+                    <span class="badge badge-primary"><i data-lucide="mic"></i> ACOUSTIC AUDIO</span>
+                  </div>
+                  <h3 style="font: 700 17px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 2px 0;">${v.title}</h3>
+                  <span class="table-subline">${v.course} · Linked: ${v.linkedLesson}</span>
+                </div>
+                <span class="badge badge-success">${v.status}</span>
+              </div>
+
+              <!-- Target Spoken Prompt -->
+              <div style="background: #fdfbf7; border-left: 4px solid var(--primary); padding: 12px 18px; border-radius: 0 8px 8px 0;">
+                <span style="font-size: 10.5px; text-transform: uppercase; color: var(--slate); font-weight: 700; display: block; margin-bottom: 4px;">Target Verbal Prompt:</span>
+                <p style="margin: 0; font-size: 13.5px; color: var(--navy-medium); font-style: italic; line-height: 1.45;">"${v.promptText || 'Demonstrate professional fluency and phonetic intonation.'}"</p>
+              </div>
+
+              <!-- Acoustic Settings Grid -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; background: #faf8f5; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(124, 119, 102, 0.14); font-size: 12px;">
+                <div>
+                  <strong style="font-size: 10.5px; color: var(--slate); text-transform: uppercase; display: block;">Duration Limit</strong>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--navy-medium);">${v.durationRequirement}</div>
+                </div>
+                <div>
+                  <strong style="font-size: 10.5px; color: var(--slate); text-transform: uppercase; display: block;">Audio Encoding</strong>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--navy-medium);">.WAV / .MP3 (128kbps)</div>
+                </div>
+                <div>
+                  <strong style="font-size: 10.5px; color: var(--slate); text-transform: uppercase; display: block;">Evaluation Engine</strong>
+                  <div style="font-size: 13px; font-weight: 700; color: #166534;">${v.reviewRequirement}</div>
+                </div>
+                <div>
+                  <strong style="font-size: 10.5px; color: var(--slate); text-transform: uppercase; display: block;">Phonetic Rubric</strong>
+                  <div style="font-size: 13px; font-weight: 700; color: var(--primary);">${v.rubric}</div>
+                </div>
+              </div>
+
+              <!-- Card Action Controls -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(124, 119, 102, 0.12);">
+                <span style="font-size: 12px; color: #5a687c;">Microphone Capture & Phonetic Rubric Verified</span>
+                <div style="display: flex; gap: 6px;">
+                  <button class="btn btn-secondary btn-xs" onclick="Router.navigate('creator-assessments-rubrics')"><i data-lucide="layers"></i> View Rubric</button>
+                  <button class="btn btn-primary btn-xs" onclick="Actions.switchOdinActivityFormat('voice'); Router.navigate('creator-syllabus-lessons');">
+                    <i data-lucide="mic"></i> Test Recording Studio
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  },
+
+  renderCreatorRubricsStudio() {
+    const activeTab = window.creatorActiveRubricTab || 'RUB-101';
+    return `
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+        <!-- Header Controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 12px; padding: 16px 20px; box-shadow: 0 4px 14px rgba(70, 55, 28, 0.035); flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge badge-primary"><i data-lucide="table"></i> CAT-008 / FLOW-020</span>
+              <span class="badge badge-secondary">Normalized 100% Weight Matrix</span>
+            </div>
+            <h3 style="font: 700 18px 'Manrope', sans-serif; color: var(--navy-medium); margin: 0;">Criteria-Based Evaluation Rubrics & CEFR Matrices</h3>
+          </div>
+          <div class="button-row" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="Notifications.push('Rubric Exported', 'Exported active rubric criteria matrix to PDF.', 'success')"><i data-lucide="download"></i> Export Matrix</button>
+            <button class="btn btn-primary btn-sm" onclick="Actions.openCreatorAddRubricModal()"><i data-lucide="plus"></i> + Create New Rubric</button>
+          </div>
+        </div>
+
+        <!-- Rubric Switcher Tabs -->
+        <div style="display: flex; gap: 10px; border-bottom: 2px solid rgba(124, 119, 102, 0.15); padding-bottom: 10px;">
+          <button class="btn ${activeTab === 'RUB-101' ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="Actions.switchRubricTab('RUB-101')">
+            <i data-lucide="code"></i> RUB-101: Frontend Architecture (35%/35%/30%)
+          </button>
+          <button class="btn ${activeTab === 'RUB-102' ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="Actions.switchRubricTab('RUB-102')">
+            <i data-lucide="mic"></i> RUB-102: CEFR Spoken Fluency (40%/30%/30%)
+          </button>
+          <button class="btn ${activeTab === 'RUB-103' ? 'btn-primary' : 'btn-secondary'} btn-sm" onclick="Actions.switchRubricTab('RUB-103')">
+            <i data-lucide="server"></i> RUB-103: Backend Microservices (35%/35%/30%)
+          </button>
+        </div>
+
+        <!-- Active Rubric Matrix Table -->
+        <div style="padding: 24px 28px; background: #ffffff; border: 1px solid rgba(124, 119, 102, 0.22); border-radius: 14px; box-shadow: 0 4px 16px rgba(70, 55, 28, 0.04);">
+          <div style="border-bottom: 1px solid rgba(124, 119, 102, 0.12); padding-bottom: 14px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span class="badge badge-primary">ACTIVE MATRIX: ${activeTab}</span>
+              <h3 style="font: 700 17px 'Manrope', sans-serif; color: var(--navy-medium); margin: 4px 0 0 0;">
+                ${activeTab === 'RUB-101' ? 'Frontend Clean Architecture & Component Design' :
+                  activeTab === 'RUB-102' ? 'CEFR Spoken English Fluency & Phonetic Cadence (B2/C1)' :
+                  'Backend Microservices & API Query Optimization'}
+              </h3>
+            </div>
+            <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Criterion Added', 'Initialized new weighted criterion row.', 'info')">+ Add Criterion</button>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+            <thead>
+              <tr style="background: #fdfbf7; text-align: left; border-bottom: 1px solid #e7dfd3;">
+                <th style="padding: 12px 14px;">Criteria & Weight</th>
+                <th style="padding: 12px 14px; color: #166534;">Exemplary / C1 (90-100%)</th>
+                <th style="padding: 12px 14px; color: var(--primary);">Proficient / B2 (75-89%)</th>
+                <th style="padding: 12px 14px; color: #b45309;">Developing / B1 (50-74%)</th>
+                <th style="padding: 12px 14px; color: #dc2626;">Novice / A2 (&lt;50%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${activeTab === 'RUB-101' ? `
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Component Modularity</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 35%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Zero coupled side-effects; pure components and state machines.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Clean components with minor redundant re-renders.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Monolithic files with tight prop drilling.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Broken lifecycle and unhandled errors.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Mobile Responsiveness</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 35%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Flawless layout adaptation across 390px, 820px, and 1440px.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Minor padding truncation on small screens.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Horizontal overflow and broken flex layouts.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Unusable on mobile viewports.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Accessibility (A11y)</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 30%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Full keyboard navigation, semantic ARIA, 4.5:1 WCAG AAA contrast.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Keyboard navigable with minor missing aria-labels.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Missing semantic landmarks and focus outlines.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Fails baseline screen reader audit.</td>
+                </tr>
+              ` : activeTab === 'RUB-102' ? `
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Phonetic Pronunciation</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 40%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Native-like phonemic accuracy; correct vowel length and minimal reduction errors.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Clear articulation with occasional L1 phonetic interference.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Frequent consonant cluster deletion requiring listener effort.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Unintelligible pronunciation patterns.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Sentence Stress & Cadence</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 30%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Natural stress-timed English rhythm with expressive pitch movements.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Accurate word stress with slightly rigid rhythm.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Syllable-timed cadence with misplaced tonic stress.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Monotone pitch with frequent hesitation.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Fluency & Lexical Coherence</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 30%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Spontaneous, fluid delivery with natural discourse markers and idioms.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Continuous speech with occasional self-correction.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Noticeable pauses for vocabulary searching.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Fragmented utterances below B1 standard.</td>
+                </tr>
+              ` : `
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>REST/GraphQL Gateway</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 35%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Idempotent APIs with OpenAPI 3.1 contract and JWT authentication.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">RESTful endpoints with minor schema inconsistencies.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Non-standard HTTP status codes and missing validation.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Vulnerable unauthenticated endpoints.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>PostgreSQL Query Indexing</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 35%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">EXPLAIN ANALYZE latency &lt;50ms with composite B-Tree indexes.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Indexed queries with occasional full sequential table scans.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Unindexed foreign keys causing join bottlenecks.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Deadlock-prone unoptimized transactions.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee8dc;">
+                  <td style="padding: 14px 12px;"><strong>Docker Container Security</strong><br><span class="table-subline" style="color:var(--primary); font-weight:700;">Weight: 30%</span></td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Multi-stage non-root container build with zero CVE vulnerabilities.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Optimized Dockerfile with minor layer caching issues.</td>
+                  <td style="padding: 14px 12px; line-height:1.4;">Running as root user with oversized image layers.</td>
+                  <td style="padding: 14px 12px; line-height:1.4; color:#dc2626;">Fails container security compliance checks.</td>
+                </tr>
+              `}
+            </tbody>
+          </table>
         </div>
       </div>
     `;
@@ -21615,6 +21949,190 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     modal.classList.remove("hidden");
     window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorImportQuestionsModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Bulk Import Questions (CSV / QTI / JSON)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="upload-cloud"></i>
+          <div>
+            <strong>QUESTION BANK INGESTION & PARSER (CAT-008)</strong>
+            <p>Upload standard CSV or QTI 2.1 question bundle. Automatic schema validation and answer key extraction.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Target Category / Taxonomy</label>
+          <select class="form-control">
+            <option value="web">Web Protocols & Architecture</option>
+            <option value="react">React 19 Engineering</option>
+            <option value="phonics">Spoken English Phonetics</option>
+            <option value="math">Grade 8 Mathematics (FBISE)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Paste JSON / CSV Payload</label>
+          <textarea class="form-control" rows="4" style="font-family:monospace; font-size:11.5px;" placeholder='[{"title":"Sample MCQ question?","type":"Single Choice","options":["A","B","C"],"correctAnswer":"A"}]'></textarea>
+        </div>
+
+        <div style="font-size:11.5px; color:var(--slate);">
+          <span>Format support: UTF-8 CSV with columns <code>title, type, difficulty, options, correct_answer, tags</code>.</span>
+        </div>
+      </div>
+    `;
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Questions Imported', 'Parsed and ingested 6 questions into pool.', 'success'); document.getElementById('generic-modal').classList.add('hidden'); Router.renderView(Router.currentRoute);">Import to Bank</button>
+    `;
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.openCreatorDuplicateQuestion = function(qid) {
+    const q = db.creatorData.questions.find(item => item.id === qid);
+    if (!q) return;
+
+    const newId = "QST-" + (800 + db.creatorData.questions.length + 1);
+    const cloned = {
+      ...q,
+      id: newId,
+      title: `${q.title} (Copy)`,
+      version: "v1.0 (Draft)"
+    };
+    db.creatorData.questions.unshift(cloned);
+    Actions.audit("CREATOR_QUESTION_DUPLICATED", `Cloned question ${qid} to ${newId}.`, "Low");
+    Notifications.push("Question Duplicated", `Cloned ${qid} as new draft item ${newId}.`, "success");
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorAddVoiceModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "New Acoustic Voice Activity (FLOW-020 / CAT-002)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="mic"></i>
+          <div>
+            <strong>SPOKEN VOICE EVALUATION UNIT CONFIGURATION</strong>
+            <p>Author verbal speaking task, configure audio duration window, and bind to phonetic rubric.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Activity Title</label>
+          <input type="text" id="cc-voice-title" class="form-control" placeholder="e.g. Professional Meeting Elevator Pitch">
+        </div>
+
+        <div class="form-group">
+          <label>Target Verbal Prompt (Shown to Learner)</label>
+          <textarea id="cc-voice-prompt" class="form-control" rows="3" placeholder="Enter target paragraph or dialogue the student must speak and record..."></textarea>
+        </div>
+
+        <div class="form-row" style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="form-group">
+            <label>Duration Window</label>
+            <input type="text" id="cc-voice-dur" class="form-control" value="60 - 90 Seconds">
+          </div>
+          <div class="form-group">
+            <label>Phonetic Rubric Matrix</label>
+            <select id="cc-voice-rubric" class="form-control">
+              <option value="RUB-102">RUB-102: CEFR Spoken English B2/C1 Cadence</option>
+              <option value="RUB-105">RUB-105: Foundational Articulation & Vowels</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Actions.saveCreatorVoiceActivity()">Create Voice Activity</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.saveCreatorVoiceActivity = function() {
+    const title = document.getElementById("cc-voice-title")?.value.trim();
+    const prompt = document.getElementById("cc-voice-prompt")?.value.trim();
+    if (!title) {
+      Notifications.push("Validation Error", "Activity title is required.", "error");
+      return;
+    }
+
+    const newId = "VOC-" + (400 + db.creatorData.assessments.filter(a => a.type === "Voice Activity").length + 1);
+    db.creatorData.assessments.push({
+      id: newId,
+      title: title,
+      type: "Voice Activity",
+      course: "Spoken English Fluency & Professional Voice",
+      submissionType: "Acoustic Voice Recording (.mp3 / .wav)",
+      durationRequirement: document.getElementById("cc-voice-dur")?.value || "60 - 90 Seconds",
+      promptText: prompt || "Demonstrate clear articulation, proper sentence stress, and natural rhythm.",
+      rubric: document.getElementById("cc-voice-rubric")?.value || "RUB-102 (Phonetic Cadence Rubric)",
+      reviewRequirement: "Trainer & AI Speech Evaluation",
+      status: "Approved",
+      linkedLesson: "Lesson 3: Professional Dialogue Drill"
+    });
+
+    Actions.audit("CREATOR_VOICE_ACTIVITY_CREATED", `Added voice unit ${newId} (${title}).`, "Low");
+    Notifications.push("Voice Activity Created", `Added acoustic activity ${title}.`, "success");
+    document.getElementById("generic-modal").classList.add("hidden");
+    Router.renderView(Router.currentRoute);
+  };
+
+  Actions.openCreatorAddRubricModal = function() {
+    const modal = document.getElementById("generic-modal");
+    document.getElementById("modal-title").textContent = "Create Criteria Evaluation Rubric (FLOW-020)";
+    document.getElementById("modal-body").innerHTML = `
+      <div class="om-flow-dialog">
+        <div class="om-flow-banner">
+          <i data-lucide="table"></i>
+          <div>
+            <strong>OBJECTIVE EVALUATION RUBRIC MATRIX</strong>
+            <p>Define multi-criteria scoring dimensions with 4 competency bands summing to 100%.</p>
+          </div>
+        </div>
+
+        <div class="form-row" style="display:grid; grid-template-columns:1fr 2fr; gap:14px;">
+          <div class="form-group">
+            <label>Rubric Code</label>
+            <input type="text" class="form-control" value="RUB-104">
+          </div>
+          <div class="form-group">
+            <label>Rubric Title</label>
+            <input type="text" id="cc-rub-title" class="form-control" placeholder="e.g. Mathematics Step-by-Step Proof Rubric">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Target Domain / Track</label>
+          <select class="form-control">
+            <option value="tech">Full-Stack Software Architecture</option>
+            <option value="spoken">CEFR Spoken English Fluency</option>
+            <option value="k12">K-12 Board Aligned Assessment</option>
+          </select>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("modal-footer").innerHTML = `
+      <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+      <button class="btn btn-primary" onclick="Notifications.push('Rubric Initialized', 'Created new rubric matrix RUB-104.', 'success'); document.getElementById('generic-modal').classList.add('hidden'); Router.renderView(Router.currentRoute);">Save Rubric Matrix</button>
+    `;
+
+    modal.classList.remove("hidden");
+    window.lucide?.createIcons();
+  };
+
+  Actions.switchRubricTab = function(rubricId) {
+    window.creatorActiveRubricTab = rubricId;
+    RenderEngine.creatorWorkspace("creator-assessments-rubrics");
   };
 
 
