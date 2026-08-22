@@ -18678,6 +18678,451 @@ const RenderEngine = {
           </table>
         </div>
       `;
+    } else if (route === "om-classes-today") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Class ID & Track</th>
+                <th>Course / Cohort</th>
+                <th>Assigned Trainer</th>
+                <th>Learner / Roster Count</th>
+                <th>Timing & Live State</th>
+                <th>Daily.co Telemetry</th>
+                <th>Report & QA Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(cls => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cls.id}</strong><br>
+                    <span class="badge badge-primary">${cls.type}</span>
+                  </td>
+                  <td><strong>${cls.title}</strong></td>
+                  <td><strong>${cls.trainer}</strong></td>
+                  <td>${cls.learner ? `<strong>${cls.learner}</strong> (1:1)` : `<strong>${cls.participants} Students</strong> (Cohort)`}</td>
+                  <td>
+                    <strong>${cls.timing}</strong><br>
+                    <span class="badge ${cls.status === 'Live' ? 'badge-success' : cls.status === 'Completed' ? 'badge-primary' : 'badge-warning'}">${cls.status}</span>
+                  </td>
+                  <td>
+                    <span class="badge ${cls.attendanceStatus.includes('Reconciled') ? 'badge-success' : cls.attendanceStatus.includes('Mismatch') ? 'badge-error' : 'badge-warning'}">${cls.attendanceStatus}</span><br>
+                    <small style="color:#166534; font-weight:600;">● WebSockets Active</small>
+                  </td>
+                  <td>
+                    <span class="badge ${cls.reportStatus.includes('Submitted') ? 'badge-primary' : cls.reportStatus.includes('Overdue') ? 'badge-error' : 'badge-warning'}">${cls.reportStatus}</span>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')"><i data-lucide="activity"></i> Telemetry</button>
+                      ${cls.status === 'Live' || cls.status === 'Upcoming' ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openTrainerJoinClassModal('${cls.id}')"><i data-lucide="video"></i> Enter Room</button>
+                      ` : cls.reportStatus.includes('Submitted') ? `
+                        <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${cls.reportStatus.replace('Submitted (', '').replace(')', '')}')"><i data-lucide="check-circle-2"></i> Review (FLOW-016)</button>
+                      ` : `
+                        <button class="btn btn-primary btn-xs" onclick="Notifications.push('Trainer Nudged', 'Urgent report submission reminder dispatched to ${cls.trainer}.', 'warning')"><i data-lucide="bell"></i> Nudge Trainer</button>
+                      `}
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-classes-upcoming") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Class ID</th>
+                <th>Course Programme</th>
+                <th>Assigned Trainer</th>
+                <th>Participants & Eligibility</th>
+                <th>Scheduled Timing</th>
+                <th>Daily.co Provisioning State</th>
+                <th>Readiness Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(cls => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cls.id}</strong><br>
+                    <span class="badge badge-primary">${cls.type}</span>
+                  </td>
+                  <td><strong>${cls.title}</strong></td>
+                  <td><strong>${cls.trainer}</strong></td>
+                  <td>${cls.learner ? `<strong>${cls.learner}</strong> (1:1)` : `<strong>${cls.participants} Students</strong> (Eligible)`}</td>
+                  <td><strong>${cls.timing}</strong></td>
+                  <td>
+                    <span class="badge badge-success">● Room Token Ready</span><br>
+                    <a href="${cls.roomUrl}" target="_blank" style="font-family:monospace; font-size:11px; color:var(--primary);">${cls.roomUrl}</a>
+                  </td>
+                  <td><span class="badge badge-primary">${cls.status}</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')"><i data-lucide="video"></i> Verify Room</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmRescheduleTrialModal('${cls.id}')"><i data-lucide="calendar"></i> Reschedule (FLOW-017)</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-attendance") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Class ID & Date</th>
+                <th>Delivery Format & Course</th>
+                <th>Trainer</th>
+                <th>Duration (Planned vs Actual)</th>
+                <th>Daily.co Join/Leave Events</th>
+                <th>Reconciliation Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(cls => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cls.id}</strong><br>
+                    <small style="color:var(--slate);">${cls.timing}</small>
+                  </td>
+                  <td><strong>${cls.title}</strong><br><span class="badge badge-primary">${cls.type}</span></td>
+                  <td><strong>${cls.trainer}</strong></td>
+                  <td>
+                    <strong style="color:#166534; font-size:13px;">45m / 45m Planned</strong><br>
+                    <small style="color:var(--slate);">Fidelity: 100%</small>
+                  </td>
+                  <td>
+                    <strong style="font-family:monospace; font-size:11.5px; color:var(--navy-medium);">2 Join Events · 0 Dropouts</strong><br>
+                    <small style="color:#166534; font-weight:600;">● Continuous WebRTC Stream</small>
+                  </td>
+                  <td>
+                    <span class="badge ${cls.attendanceStatus.includes('Reconciled') ? 'badge-success' : cls.attendanceStatus.includes('Mismatch') ? 'badge-error' : 'badge-warning'}">${cls.attendanceStatus}</span>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${cls.id}')"><i data-lucide="activity"></i> Connection Log</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmAttendanceOverrideModal('${cls.id}')"><i data-lucide="check-square"></i> Reconcile / Override</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-reports-due") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Class ID</th>
+                <th>Course & Learner</th>
+                <th>Delivering Trainer</th>
+                <th>Class Concluded Timing</th>
+                <th>Overdue Elapsed Time</th>
+                <th>SLA Breach Risk</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(cls => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${cls.id}</strong><br>
+                    <span class="badge badge-primary">${cls.type}</span>
+                  </td>
+                  <td><strong>${cls.title}</strong><br><small style="color:var(--slate);">${cls.learner || cls.participants + ' Students'}</small></td>
+                  <td><strong>${cls.trainer}</strong></td>
+                  <td><strong>${cls.timing}</strong></td>
+                  <td><strong style="color:#dc2626; font-size:13px;">${cls.reportStatus || '52m Overdue'}</strong></td>
+                  <td><span class="badge badge-error">High SLA Risk (1h Limit)</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Urgent Reminder Sent', 'Urgent WhatsApp + SMS delivery report demand sent to ${cls.trainer}.', 'warning')"><i data-lucide="bell"></i> Send Urgent Nudge</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmProxyReportModal('${cls.id}')"><i data-lucide="edit-3"></i> Submit Proxy Report</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-approval-queue" || route === "om-reports-in-review") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Review ID & Class ID</th>
+                <th>Course Track & Syllabus Unit</th>
+                <th>Delivering Trainer</th>
+                <th>Learner / Roster</th>
+                <th>Duration Logged</th>
+                <th>Reconciled Telemetry Evidence</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(r => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${r.classId}</small>
+                  </td>
+                  <td>
+                    <strong>${r.title}</strong><br>
+                    <small style="color:var(--navy-medium);"><em>"${r.syllabus}"</em></small>
+                  </td>
+                  <td><strong>${r.trainer}</strong></td>
+                  <td><strong>${r.learner}</strong></td>
+                  <td><strong style="color:#166534; font-size:13px;">${r.duration}</strong></td>
+                  <td>
+                    <span style="font-size:12px; color:var(--slate);">${r.reconciledAttendance}</span><br>
+                    <small style="color:#166534; font-weight:600;">● Verified Daily WebRTC Telemetry</small>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmReturnReportModal('${r.id}')"><i data-lucide="corner-up-left"></i> Return Note</button>
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')"><i data-lucide="check-circle-2"></i> Approve Delivery (FLOW-016)</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-attendance-exceptions") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Exception Ref & Class</th>
+                <th>Learner Involved</th>
+                <th>Delivering Trainer</th>
+                <th>Telemetry Mismatch Details</th>
+                <th>Credit Ledger Exposure</th>
+                <th>Exception State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">EXC-${c.id}</strong><br>
+                    <small style="color:var(--slate);">${c.title}</small>
+                  </td>
+                  <td><strong>${c.learner || 'Cohort Member'}</strong></td>
+                  <td><strong>${c.trainer}</strong></td>
+                  <td>
+                    <strong style="color:#dc2626;">Daily log recorded 42m connection vs marked Absent in report</strong><br>
+                    <small style="color:var(--slate);">WebSockets telemetry stream discrepancy (LIVE-012)</small>
+                  </td>
+                  <td><strong style="color:#b45309;">1 Lesson Credit At Risk</strong></td>
+                  <td><span class="badge badge-error">Mismatch Pending Resolution</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmAttendanceOverrideModal('${c.id}')"><i data-lucide="sliders"></i> Override Attendance</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmEntitlementAdjustModal('ENR-4088')"><i data-lucide="shield"></i> Adjust Ledger</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-technical-exceptions") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Incident Ref & Class ID</th>
+                <th>Learner & Trainer</th>
+                <th>Course Programme</th>
+                <th>Room Disruption Error Log</th>
+                <th>Duration Captured</th>
+                <th>Recovery State</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">TECH-${c.id}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${c.id}</small>
+                  </td>
+                  <td><strong>${c.learner || 'Learner'}</strong><br><small style="color:var(--slate);">${c.trainer}</small></td>
+                  <td><strong>${c.title}</strong></td>
+                  <td>
+                    <strong style="color:#dc2626;">Daily room token expired during reconnect</strong><br>
+                    <small style="color:var(--slate);">${c.technicalStatus}</small>
+                  </td>
+                  <td><strong style="color:var(--navy-medium);">12 mins captured</strong></td>
+                  <td><span class="badge badge-warning">Makeup Credit Required</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.issueOmMakeupCredit('${c.id}')"><i data-lucide="gift"></i> Issue Make-up Credit (LIVE-014)</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmRoomTelemetryModal('${c.id}')"><i data-lucide="activity"></i> WebRTC Logs</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-correction-requests") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Review ID & Class</th>
+                <th>Delivering Trainer</th>
+                <th>Correction Rationale / Return Note</th>
+                <th>Submission Age</th>
+                <th>Resubmission Status</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(r => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${r.classId}</small>
+                  </td>
+                  <td><strong>${r.trainer}</strong><br><small style="color:var(--slate);">${r.title}</small></td>
+                  <td>
+                    <strong style="color:#dc2626;">${r.returnReason || 'Attendance mismatch: student Tariq was marked Absent in report, but Daily log recorded 42m continuous participation.'}</strong>
+                  </td>
+                  <td><strong style="color:var(--slate);">${r.age || '20h'}</strong></td>
+                  <td><span class="badge badge-error">Awaiting Trainer Resubmission</span></td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Notifications.push('Resubmission Nudge Sent', 'Correction reminder dispatched to ${r.trainer}.', 'warning')"><i data-lucide="bell"></i> Nudge Trainer</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')"><i data-lucide="eye"></i> Re-Review Report</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-trainer-reports") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Report ID & Class</th>
+                <th>Course & Topic Delivered</th>
+                <th>Trainer Name</th>
+                <th>Verified Duration</th>
+                <th>Mastery Progress & Homework</th>
+                <th>Decision & Sign-Off</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(r => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${r.id}</strong><br>
+                    <small style="color:var(--slate); font-family:monospace;">${r.classId}</small>
+                  </td>
+                  <td>
+                    <strong>${r.title}</strong><br>
+                    <small style="color:var(--navy-medium);"><em>"${r.syllabus}"</em></small>
+                  </td>
+                  <td><strong>${r.trainer}</strong></td>
+                  <td><strong style="color:#166534; font-size:13px;">${r.duration}</strong></td>
+                  <td>
+                    <span>${r.progress || 'Mastery validated'}</span><br>
+                    <small style="color:var(--slate);">HW: ${r.homework || 'None'}</small>
+                  </td>
+                  <td>
+                    <span class="badge ${r.status === 'Approved' ? 'badge-success' : 'badge-primary'}">${r.status}</span><br>
+                    <small style="color:#166534; font-weight:600;">● Entitlement Debited (FLOW-016)</small>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-secondary btn-xs" onclick="Actions.openOmApproveClassModal('${r.id}')"><i data-lucide="file-text"></i> Full Report</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Audit Ledger', 'Entitlement ledger debit record verified.', 'info')"><i data-lucide="shield-check"></i> Audit Debit</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    } else if (route === "om-cancelled-rescheduled") {
+      tableMarkup = `
+        <div class="table-container">
+          <table class="data-table" style="width:100%; min-width:1250px; border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th>Class ID & Category</th>
+                <th>Course & Learner</th>
+                <th>Assigned Trainer</th>
+                <th>Scheduled Timing</th>
+                <th>Cancellation / Reschedule Reason</th>
+                <th>Entitlement Ledger Action</th>
+                <th>Operations Action</th>
+              </tr>
+            </thead>
+            <tbody id="om-table-body">
+              ${items.map(c => `
+                <tr>
+                  <td>
+                    <strong style="font-family:monospace; color:var(--primary); font-size:13px;">${c.id}</strong><br>
+                    <span class="badge ${c.type.includes('Makeup') ? 'badge-primary' : 'badge-error'}">${c.type}</span>
+                  </td>
+                  <td><strong>${c.title}</strong><br><small style="color:var(--slate);">${c.learner || 'Cohort'}</small></td>
+                  <td><strong>${c.trainer}</strong></td>
+                  <td><strong>${c.timing}</strong></td>
+                  <td>
+                    <strong style="color:#b45309;">${c.type.includes('Makeup') ? 'Replacement Make-up Session' : 'Cancelled due to power disruption'}</strong><br>
+                    <small style="color:var(--slate);">${c.technicalStatus}</small>
+                  </td>
+                  <td>
+                    <span class="badge badge-success">● Entitlement Released / Preserved</span>
+                  </td>
+                  <td style="white-space:nowrap;">
+                    <div class="table-actions-row" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; gap:6px; white-space:nowrap;">
+                      <button class="btn btn-primary btn-xs" onclick="Actions.openOmRescheduleTrialModal('${c.id}')"><i data-lucide="calendar-plus"></i> Schedule Makeup</button>
+                      <button class="btn btn-secondary btn-xs" onclick="Notifications.push('Ledger Audited', 'Zero credit deducted for cancelled session.', 'success')"><i data-lucide="shield-check"></i> Audit Ledger</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
     } else if (dataType === "classes") {
       tableMarkup = `
         <div class="table-container">
@@ -24324,6 +24769,436 @@ Actions.togglePauseEnrolment = function(enrolId) {
   Notifications.push(isCurrentlyActive ? "Enrolment Paused" : "Enrolment Resumed", `${enrol.learner}'s enrolment has been ${isCurrentlyActive ? 'paused' : 'resumed'}.`, "info");
   if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
   else RenderEngine.omDashboard();
+};
+
+Actions.openOmApproveClassModal = function(reviewId) {
+  const review = (db.omData.classReviews || []).find(r => r.id === reviewId || r.classId === reviewId) || db.omData.classReviews[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="check-circle-2" style="color:#166534;"></i> Review & Approve Live Class Delivery (FLOW-016)`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#f0fdf4; border:1px solid #bbf7d0; border-left:4px solid #166534; padding:12px; border-radius:8px;">
+        <strong style="color:#166534;">DELIVERY QA SIGN-OFF & CREDIT DEBIT GATEWAY (FLOW-016)</strong>
+        <p style="font-size:12px; color:#374151; margin:2px 0 0 0;">Approving this delivery verifies pedagogical syllabus coverage, creates student entitlement debits (1 lesson credit each), and generates the trainer payable earning source record.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px 12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Class / Review Ref</small>
+          <strong style="display:block; font-size:13px; color:var(--navy-dark);">${review.id} · ${review.classId}</strong>
+          <span style="font-size:12px; color:var(--slate);">${review.title}</span>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px 12px; border-radius:6px;">
+          <small style="color:var(--slate); text-transform:uppercase; font-size:10.5px; font-weight:700;">Trainer & Duration</small>
+          <strong style="display:block; font-size:13px; color:var(--navy-dark);">${review.trainer}</strong>
+          <span style="font-size:12px; color:#166534; font-weight:700;">Verified Duration: ${review.duration}</span>
+        </div>
+      </div>
+
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:12px; font-size:12.5px;">
+        <div style="margin-bottom:8px;">
+          <strong style="color:var(--navy-medium);">Syllabus Topic Delivered:</strong><br>
+          <span style="color:#374151;">"${review.syllabus}"</span>
+        </div>
+        <div style="margin-bottom:8px;">
+          <strong style="color:var(--navy-medium);">Student Progress & Mastery:</strong><br>
+          <span style="color:#374151;">${review.progress || 'Mastery evaluated and verified against learning objectives.'}</span>
+        </div>
+        <div>
+          <strong style="color:var(--navy-medium);">Assigned Homework:</strong><br>
+          <span style="color:#374151;">${review.homework || 'Workbook assignments assigned via student portal.'}</span>
+        </div>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px; font-size:12px;">
+        <strong style="color:var(--navy-dark);">Telemetry Reconciliation:</strong>
+        <p style="margin:2px 0 0 0; color:#166534; font-weight:600;">● ${review.reconciledAttendance || 'Daily.co WebRTC stream matches submitted report with zero dropout anomalies.'}</p>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-secondary" onclick="Actions.openOmReturnReportModal('${review.id}')"><i data-lucide="corner-up-left"></i> Return for Correction</button>
+    <button class="btn btn-primary" onclick="Actions.confirmOmClassApproval('${review.id}')"><i data-lucide="check-circle-2"></i> Approve & Debit Credits (FLOW-016)</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.confirmOmClassApproval = function(reviewId) {
+  const review = (db.omData.classReviews || []).find(r => r.id === reviewId || r.classId === reviewId);
+  if (review) {
+    review.status = "Approved";
+    review.decidedBy = "Sarah Connor (OM)";
+    review.decidedAt = "Just now";
+  }
+
+  const cls = (db.omData.classes || []).find(c => c.id === review?.classId || c.reportStatus?.includes(reviewId));
+  if (cls) {
+    cls.status = "Completed";
+    cls.reportStatus = "Approved (Signed Off)";
+  }
+
+  // Debit entitlement credit from demo learner
+  const enrol = (db.omData.enrolments || []).find(e => e.learner === review?.learner || e.id === "ENR-4088");
+  if (enrol && enrol.credits) {
+    const match = enrol.credits.match(/(\d+)\s*\/\s*(\d+)/);
+    if (match) {
+      const remaining = Math.max(0, parseInt(match[1], 10) - 1);
+      enrol.credits = `${remaining} / ${match[2]} Credits`;
+    }
+  }
+
+  this.audit("CLASS_DELIVERY_APPROVED", `Approved class delivery for ${review?.classId} (${review?.title}). 1 lesson credit debited from learner ledger. Payable earning source generated for ${review?.trainer}.`, "High", "FLOW-016 Executed");
+  Notifications.push("Delivery Approved", `Class ${review?.classId} approved! Entitlement debited and earning record logged.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmReturnReportModal = function(reviewId) {
+  const review = (db.omData.classReviews || []).find(r => r.id === reviewId || r.classId === reviewId) || db.omData.classReviews[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="corner-up-left" style="color:#dc2626;"></i> Return Class Report for Correction (${review.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #dc2626; padding:12px; border-radius:8px;">
+        <strong style="color:#dc2626;">REPORT REJECTION & TRAINER CORRECTION DEMAND (DEL-005)</strong>
+        <p style="font-size:12px; color:#374151; margin:2px 0 0 0;">Specify the precise discrepancy in syllabus coverage, attendance marks, or session duration. The trainer will receive an urgent notification to revise and resubmit.</p>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Correction Category</label>
+        <select id="om-return-category" class="form-control">
+          <option value="Attendance Mismatch">Attendance Discrepancy (Telemetry vs Report)</option>
+          <option value="Incomplete Progress Notes">Incomplete Progress / Mastery Evaluation</option>
+          <option value="Duration Below Threshold">Duration Below 45-Minute Minimum Requirement</option>
+          <option value="Missing Homework Details">Missing Homework / Assignment Attachment</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Mandatory Return Reason & Correction Instructions</label>
+        <textarea id="om-return-notes" class="form-control" rows="3" placeholder="Explain what the trainer must update before delivery can be approved...">Attendance discrepancy: Daily.co WebRTC telemetry shows student connected for 42 minutes continuous stream, but attendance was marked Absent in report. Please reconcile and resubmit.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" style="background:#dc2626; border-color:#dc2626;" onclick="Actions.submitOmReturnReport('${review.id}')"><i data-lucide="send"></i> Return to Trainer</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmReturnReport = function(reviewId) {
+  const review = (db.omData.classReviews || []).find(r => r.id === reviewId || r.classId === reviewId);
+  const reason = document.getElementById("om-return-notes")?.value || "Correction required";
+
+  if (review) {
+    review.status = "Correction Requested";
+    review.returnReason = reason;
+  }
+
+  this.audit("CLASS_REPORT_RETURNED", `Returned class report ${reviewId} to ${review?.trainer}. Reason: ${reason}.`, "High", "Correction Requested");
+  Notifications.push("Report Returned", `Returned report ${reviewId} to ${review?.trainer} for correction.`, "warning");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmRoomTelemetryModal = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId) || db.omData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="activity" style="color:var(--primary);"></i> WebRTC Telemetry & Join/Leave Event Stream (${cls.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:12px 16px; border-radius:8px; border:1px solid #e2e8f0;">
+        <div>
+          <strong style="color:var(--navy-dark); font-size:13.5px;">${cls.title}</strong><br>
+          <small style="color:var(--slate);">Trainer: <strong>${cls.trainer}</strong> · Scheduled: <strong>${cls.timing}</strong></small>
+        </div>
+        <div style="text-align:right;">
+          <span class="badge badge-success">● WebRTC Token Active</span><br>
+          <small style="color:var(--slate);">Daily.co Video Engine</small>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; text-align:center;">
+          <span style="font-size:11px; color:var(--slate); font-weight:700;">TOTAL DURATION</span>
+          <strong style="display:block; font-size:16px; color:#166534;">48 Mins</strong>
+          <small style="color:var(--slate);">Minimum: 45 Mins</small>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; text-align:center;">
+          <span style="font-size:11px; color:var(--slate); font-weight:700;">PACKET LOSS</span>
+          <strong style="display:block; font-size:16px; color:#166534;">0.04%</strong>
+          <small style="color:#166534;">Optimal Quality</small>
+        </div>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px; text-align:center;">
+          <span style="font-size:11px; color:var(--slate); font-weight:700;">RECONNECTS</span>
+          <strong style="display:block; font-size:16px; color:var(--navy-dark);">0 Drops</strong>
+          <small style="color:var(--slate);">100% Fidelity</small>
+        </div>
+      </div>
+
+      <div class="table-container" style="max-height:180px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:6px;">
+        <table class="data-table" style="font-size:11.5px;">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Participant / Role</th>
+              <th>Event</th>
+              <th>Bitrate / FPS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span style="font-family:monospace;">10:59:42 PKT</span></td>
+              <td><strong>${cls.trainer} (Host)</strong></td>
+              <td><span class="badge badge-success">Room Joined</span></td>
+              <td>1080p @ 30fps (2.4 Mbps)</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;">11:00:15 PKT</span></td>
+              <td><strong>${cls.learner || 'Student'}</strong></td>
+              <td><span class="badge badge-success">Room Joined</span></td>
+              <td>720p @ 30fps (1.2 Mbps)</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;">11:47:30 PKT</span></td>
+              <td><strong>${cls.learner || 'Student'}</strong></td>
+              <td><span class="badge badge-primary">Room Left</span></td>
+              <td>Session Ended Gracefully</td>
+            </tr>
+            <tr>
+              <td><span style="font-family:monospace;">11:48:02 PKT</span></td>
+              <td><strong>${cls.trainer} (Host)</strong></td>
+              <td><span class="badge badge-primary">Room Closed</span></td>
+              <td>Token Destroyed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Telemetry</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.openOmAttendanceOverrideModal = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId) || db.omData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="sliders" style="color:var(--primary);"></i> Reconcile & Override Attendance Marks (${cls.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">ATTENDANCE RECONCILIATION OVERRIDE (LIVE-012)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Manually reconcile attendance discrepancy between Daily.co WebRTC logs and trainer submission. All overrides are permanently recorded in the audit log.</p>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Learner Override Decision</label>
+        <select id="om-attend-decision" class="form-control">
+          <option value="Present (Reconciled from Telemetry 42m)">Present (Verified from Telemetry: 42 mins continuous join)</option>
+          <option value="Excused Absence">Excused Absence (Power outage verified)</option>
+          <option value="Unexcused Absence">Unexcused Absence</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Entitlement Credit Outcome</label>
+        <select id="om-attend-credit-action" class="form-control">
+          <option value="Debit 1 Credit (Standard Delivery)">Debit 1 Credit (Standard Delivery Verified)</option>
+          <option value="Preserve Credit / No Debit">Preserve Credit / No Debit (Technical Disruption)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Override Rationale</label>
+        <textarea id="om-attend-reason" class="form-control" rows="2">WebRTC event timeline proves learner participated for 42 minutes. Trainer accidentally marked absent due to late join.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmAttendanceOverride('${cls.id}')"><i data-lucide="check"></i> Confirm Attendance Override</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmAttendanceOverride = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId);
+  const decision = document.getElementById("om-attend-decision")?.value || "Present";
+  if (cls) {
+    cls.attendanceStatus = "Reconciled (Manual Override)";
+  }
+
+  this.audit("ATTENDANCE_OVERRIDE_EXECUTED", `OM overridden attendance for ${classId} to ${decision}. Discrepancy resolved.`, "High", "Attendance Reconciled");
+  Notifications.push("Attendance Reconciled", `Attendance record for ${classId} updated to ${decision}.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openOmProxyReportModal = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId) || db.omData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="edit-3" style="color:var(--primary);"></i> Submit OM Proxy Report (${cls.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div class="om-flow-banner" style="background:#fdfbf7; border:1px solid rgba(124, 119, 102, 0.22); border-left:4px solid var(--primary); padding:12px; border-radius:8px;">
+        <strong style="color:var(--navy-medium);">OPERATIONS MANAGER PROXY REPORT SUBMISSION (DEL-009)</strong>
+        <p style="font-size:12px; color:var(--slate); margin:2px 0 0 0;">Submitting report on behalf of trainer ${cls.trainer} due to overdue SLA threshold. Verifies delivery against Daily.co logs.</p>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Covered Syllabus Module</label>
+        <input type="text" id="om-proxy-syllabus" class="form-control" value="Unit 4: Foundational Literacy & Phonics Practice">
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Attendance & Duration</label>
+        <input type="text" class="form-control" value="44 minutes captured via WebSockets log" disabled>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size:11.5px; font-weight:700; color:var(--slate); text-transform:uppercase;">Proxy Justification</label>
+        <textarea id="om-proxy-notes" class="form-control" rows="2">Trainer unavailable due to power disruption; verified student participation directly from Daily.co event logs.</textarea>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Cancel</button>
+    <button class="btn btn-primary" onclick="Actions.submitOmProxyReport('${cls.id}')"><i data-lucide="check"></i> Submit Proxy Report</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
+};
+
+Actions.submitOmProxyReport = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId);
+  const syllabus = document.getElementById("om-proxy-syllabus")?.value || "Core Syllabus Delivered";
+
+  if (cls) {
+    cls.status = "Completed";
+    cls.reportStatus = "Submitted (REV-599 Proxy)";
+  }
+
+  // Add review entry
+  db.omData.classReviews.push({
+    id: `REV-599`,
+    classId: classId,
+    title: cls?.title || "Class Delivery",
+    trainer: cls?.trainer || "Trainer",
+    learner: cls?.learner || "Learner",
+    duration: "44m",
+    syllabus: syllabus,
+    progress: "Proxy verified via WebSockets telemetry",
+    homework: "Assigned in portal",
+    reconciledAttendance: "Daily.co log reconciled by OM",
+    status: "Pending Review",
+    submittedAt: "Just now",
+    age: "0m",
+    signal: "Proxy report awaiting approval"
+  });
+
+  this.audit("PROXY_REPORT_SUBMITTED", `OM submitted proxy delivery report for ${classId} (${cls?.trainer}).`, "High", "Proxy Report Created");
+  Notifications.push("Proxy Report Submitted", `Proxy delivery report created for ${classId}. Ready for QA approval.`, "success");
+  document.getElementById("generic-modal").classList.add("hidden");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.issueOmMakeupCredit = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId);
+  if (cls) {
+    cls.technicalStatus = "Make-up Credit Issued (1 Credit Released)";
+    cls.status = "Completed (Make-up Issued)";
+  }
+
+  // Grant 1 makeup credit to learner
+  const enrol = (db.omData.enrolments || []).find(e => e.id === "ENR-4088" || e.learner === cls?.learner);
+  if (enrol && enrol.credits) {
+    const match = enrol.credits.match(/(\d+)\s*\/\s*(\d+)/);
+    if (match) {
+      const balance = parseInt(match[1], 10) + 1;
+      enrol.credits = `${balance} / ${match[2]} Credits`;
+    }
+  }
+
+  this.audit("MAKEUP_CREDIT_ISSUED", `Issued 1 make-up credit for technical disruption on ${classId} (${cls?.learner}).`, "High", "Credit Restored");
+  Notifications.push("Make-up Credit Issued", `Granted 1 replacement lesson credit to ${cls?.learner || 'learner'} for technical disruption.`, "success");
+  if (Router.currentRoute.startsWith("om-")) RenderEngine.omWorkspace(Router.currentRoute);
+  else RenderEngine.omDashboard();
+};
+
+Actions.openTrainerJoinClassModal = function(classId) {
+  const cls = (db.omData.classes || []).find(c => c.id === classId) || db.omData.classes[0];
+  const modal = document.getElementById("generic-modal");
+  const title = document.getElementById("modal-title");
+  const body = document.getElementById("modal-body");
+  const footer = document.getElementById("modal-footer");
+
+  title.innerHTML = `<i data-lucide="video" style="color:var(--primary);"></i> Live Classroom Video Room (${cls.id})`;
+  body.innerHTML = `
+    <div class="om-flow-dialog" style="display:flex; flex-direction:column; gap:14px;">
+      <div style="background:#0a1128; border-radius:10px; height:240px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#ffffff; text-align:center; padding:20px; position:relative; overflow:hidden;">
+        <i data-lucide="video" style="width:48px; height:48px; color:var(--primary); margin-bottom:12px;"></i>
+        <strong style="font-size:16px; margin-bottom:4px;">Daily.co WebRTC Classroom Room Ready</strong>
+        <span style="font-size:12px; color:#94a3b8; margin-bottom:14px;">${cls.title} · Trainer: ${cls.trainer}</span>
+        <a href="${cls.roomUrl || 'https://ihs.daily.co/classroom'}" target="_blank" class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px;">
+          <i data-lucide="external-link"></i> Launch Daily.co Fullscreen Room
+        </a>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:6px; border:1px solid #e2e8f0; font-size:12px;">
+        <span>Room Token: <code style="font-family:monospace; color:var(--primary);">tok_live_992a01bf</code></span>
+        <span style="color:#166534; font-weight:700;">● WebSockets Connected</span>
+      </div>
+    </div>
+  `;
+
+  footer.innerHTML = `
+    <button class="btn btn-secondary" onclick="document.getElementById('generic-modal').classList.add('hidden')">Close Room View</button>
+  `;
+
+  modal.classList.remove("hidden");
+  if (window.lucide) window.lucide.createIcons();
 };
 
 Actions.filterOmTable = function(statusVal) {
